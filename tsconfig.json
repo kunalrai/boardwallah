@@ -27,5 +27,6 @@
                     "frontend",
                     "node_modules",
                     "data"
-                ]
+                ],
+				 "types": ["bun", "node"]
 }
