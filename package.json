@@ -15,7 +15,7 @@
     "web:build": "bun --cwd frontend/site run build"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@types/bun": "^1.4.4",
     "@types/node": "^26.6.6",
     "ajv-formats": "^3.0.1",
     "typescript": "^7.0.2"
