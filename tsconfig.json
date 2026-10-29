@@ -22,11 +22,12 @@
                             "noUnusedLocals":  false,
                             "noUnusedParameters":  false,
                             "noPropertyAccessFromIndexSignature":  false
+							,"types": ["bun", "node"]
                         },
     "exclude":  [
                     "frontend",
                     "node_modules",
                     "data"
-                ],
-				 "types": ["bun", "node"]
+                ]
+				 
 }
