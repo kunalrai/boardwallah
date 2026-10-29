@@ -10,9 +10,6 @@
                             "moduleDetection":  "force",
                             "jsx":  "react-jsx",
                             "allowJs":  true,
-                            "types":  [
-                                          "node"
-                                      ],
                             "moduleResolution":  "bundler",
                             "allowImportingTsExtensions":  true,
                             "verbatimModuleSyntax":  true,
