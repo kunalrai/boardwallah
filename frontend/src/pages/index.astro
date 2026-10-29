@@ -1,0 +1,64 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { loadContent } from "../lib/content";
+
+const { provider } = loadContent();
+---
+
+<Layout 
+  title={`${provider.name} | Expert CBSE Class 10 Home Tuition`} 
+  description={`Personalized home tuition for CBSE Class 10 by ${provider.tutor_name}.`}
+>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Master CBSE Class 10 with {provider.tutor_name}</h1>
+      <p class="lead">Expert home tuition tailored to your learning pace. Helping students excel in their board exams through conceptual clarity and consistent practice.</p>
+      <div class="actions">
+        <a href="/book/" class="button">Book Free Trial</a>
+        <a href="/plans/" class="button secondary">View Plans</a>
+      </div>
+    </section>
+
+    <section class="card provider-profile">
+      <div class="profile-text">
+        <h2>About the Tutor</h2>
+        <p>With {provider.experience_years} years of experience, I focus on simplifying complex concepts and building student confidence for the CBSE board exams.</p>
+        <ul class="qualifications">
+          {provider.qualifications.map(q => <li>{q}</li>)}
+        </ul>
+      </div>
+      <div class="profile-details">
+        <div class="detail-item">
+          <span class="label">Teaching Mode:</span>
+          <span class="value">{provider.teaching_mode.join(", ")}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Languages:</span>
+          <span class="value">{provider.languages.join(", ")}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Service Localities:</span>
+          <span class="value">{provider.service_localities.join(", ")}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="subjects-section">
+      <h2>Subjects Offered</h2>
+      <p class="subtitle">Comprehensive coverage of the CBSE Class 10 curriculum.</p>
+      <div class="subjects-grid">
+        {provider.subjects.map(s => (
+          <div class="subject-card">
+            {s.replace('_', ' ')}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="cta-banner">
+      <h2>Ready to start learning?</h2>
+      <p>Book your free trial session today and experience a personalized approach to learning that works.</p>
+      <a href="/book/" class="button">Reserve Your Free Trial</a>
+    </section>
+  </div>
+</Layout>
