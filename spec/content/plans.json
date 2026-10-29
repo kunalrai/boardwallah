@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-10-29T00:00:00+05:30",
+  "plans": [
+    {
+      "id": "monthly-all",
+      "name": "Monthly, all subjects",
+      "type": "monthly",
+      "price_paise": 0,
+      "currency": "INR",
+      "subjects": ["maths", "science", "social_science", "english", "hindi"],
+      "sessions_per_week": 3,
+      "session_minutes": 60,
+      "cancellation": "See /policies/cancellation-refund.md"
+    },
+    {
+      "id": "crash-60",
+      "name": "Final 60-day crash course",
+      "type": "crash_course",
+      "price_paise": 0,
+      "currency": "INR",
+      "subjects": ["maths", "science", "social_science", "english", "hindi"],
+      "duration_days": 60,
+      "session_minutes": 60,
+      "cancellation": "See /policies/cancellation-refund.md"
+    }
+  ]
+}

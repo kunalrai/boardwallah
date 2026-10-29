@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://[your-domain]/spec/models/consent.schema.json",
+  "title": "ConsentRecord",
+  "description": "Stored separately from bookings. Parent contact is held internally only.",
+  "type": "object",
+  "required": ["id", "request_id", "purpose", "student_ref", "channel", "status", "granted_at", "expires_at", "policy_version"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^C-[0-9a-f]{12}$" },
+    "request_id": { "type": "string" },
+    "purpose": { "enum": ["trial_booking"] },
+    "student_ref": { "type": "string", "description": "Internal reference, never the student's name" },
+    "channel": { "enum": ["whatsapp", "sms"] },
+    "status": { "enum": ["pending", "granted", "used", "expired", "revoked"] },
+    "granted_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time", "description": "Granted + 30 minutes for token use" },
+    "policy_version": { "type": "string" }
+  },
+  "additionalProperties": false
+}

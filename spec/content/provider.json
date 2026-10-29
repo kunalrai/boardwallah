@@ -1,0 +1,35 @@
+{
+  "id": "P-001",
+  "version": "1.0.0",
+  "last_updated": "2026-10-29T00:00:00+05:30",
+  "name": "CBSE Class 10 Home Tuition",
+  "tutor_name": "Your Name",
+  "qualifications": ["M.Sc. (update in spec/content/provider.json)", "B.Ed. (if applicable)"],
+  "experience_years": 0,
+  "teaching_mode": ["home_visit"],
+  "boards": ["CBSE"],
+  "classes": [10],
+  "subjects": ["maths", "science", "social_science", "english", "hindi"],
+  "languages": ["English", "Hindi"],
+  "service_localities": ["DL-NOIDA-07", "DL-NOIDA-12"],
+  "availability": {
+    "timezone": "Asia/Kolkata",
+    "days": ["mon", "tue", "wed", "thu", "fri", "sat"],
+    "window": "16:00-20:00"
+  },
+  "contact": {
+    "whatsapp": "+919800000000",
+    "email": "hello@example.com"
+  },
+  "trial": {
+    "available": true,
+    "duration_minutes": 60,
+    "fee_paise": 0,
+    "currency": "INR"
+  },
+  "policies": {
+    "refund": "See /policies/cancellation-refund.md",
+    "cancellation": "Trials: up to 4 hours before start. Paid plans: see policy.",
+    "privacy_url": "https://example.com/privacy"
+  }
+}

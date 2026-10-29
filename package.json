@@ -1,0 +1,29 @@
+{
+  "name": "home-tuition-provider",
+  "version": "0.1.0",
+  "module": "src/server.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run src/server.ts",
+    "start": "bun run src/server.ts",
+    "mcp": "bun run src/mcp-stdio.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "spec:extract": "bun run scripts/extract-spec.ts",
+    "web:dev": "bun --cwd frontend/site run dev",
+    "web:build": "bun --cwd frontend/site run build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^26.6.6",
+    "ajv-formats": "^3.0.1",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "ajv": "^8.20.0",
+    "hono": "^4.13.14",
+    "zod": "^4.6.7"
+  }
+}

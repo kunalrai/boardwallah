@@ -1,0 +1,107 @@
+---
+import "../styles/global.css";
+import { loadContent, whatsappLink } from "../lib/content";
+import { absoluteUrl } from "../lib/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { provider } = loadContent();
+const {
+  title = `${provider.name} | CBSE Class 10 home tuition`,
+  description = `CBSE Class 10 home tuition with ${provider.tutor_name}. Free trial, parent consent by one-time code, and clear policies.`,
+} = Astro.props;
+const path = Astro.url.pathname;
+const canonical = absoluteUrl(path);
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/subjects/", label: "Subjects" },
+  { href: "/plans/", label: "Plans" },
+  { href: "/book/", label: "Book a trial" },
+  { href: "/enquiry/", label: "Enquiry" },
+  { href: "/booking/", label: "Manage booking" },
+];
+const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+---
+
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f4c5c" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="/" aria-label={`${provider.name} home`}>
+          <span class="brand-mark" aria-hidden="true">10</span>
+          <span>
+            <strong>{provider.name}</strong>
+            <small>CBSE Class 10, home visit</small>
+          </span>
+        </a>
+        <nav aria-label="Main navigation">
+          <ul class="nav-list">
+            {
+              links.map((link) => (
+                <li>
+                  <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <strong>{provider.name}</strong>
+          <p>{provider.tutor_name} teaches {provider.subjects.length} CBSE Class 10 subjects in {provider.service_localities.join(" and ")}.</p>
+          <p class="muted">Provider content version {provider.version}, updated {provider.last_updated}.</p>
+        </div>
+        <div>
+          <strong>Contact</strong>
+          <p>
+            <a href={whatsappLink(provider.contact.whatsapp, `Hello, I would like to ask about Class 10 tuition.`)}>WhatsApp</a>
+            <br />
+            <a href={`mailto:${provider.contact.email}`}>{provider.contact.email}</a>
+          </p>
+        </div>
+        <div>
+          <strong>Policies</strong>
+          <p>
+            <a href="/policies/privacy/">Privacy</a><br />
+            <a href="/policies/consent/">Consent</a><br />
+            <a href="/policies/cancellation-refund/">Cancellation and refund</a>
+          </p>
+        </div>
+        <div>
+          <strong>For agents</strong>
+          <p>
+            <a href="/llms.txt">llms.txt</a><br />
+            <a href="/openapi.yaml">OpenAPI</a><br />
+            <a href="/spec/models/provider.schema.json">Schemas</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

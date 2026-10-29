@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { renderMarkdown } from "../../lib/markdown";
+import { loadPolicy, policySlugs } from "../../lib/policies";
+
+export function getStaticPaths() {
+  return policySlugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+if (!slug) throw new Error("Missing policy slug.");
+const policy = loadPolicy(slug);
+const { provider } = loadContent();
+const html = renderMarkdown(policy.markdown);
+const others = policySlugs.filter((item) => item !== slug);
+const labels: Record<string, string> = {
+  privacy: "Privacy policy",
+  consent: "Consent policy",
+  "cancellation-refund": "Cancellation and refund policy",
+};
+---
+
+<Layout title={`${policy.title} | ${provider.name}`} description={policy.description}>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Policies / {policy.title}</nav>
+    <article class="card prose">
+      <div set:html={html} />
+      <hr />
+      <p class="small muted">
+        Policy version 1.0. Other policies:
+        {
+          others.map((item) => (
+            <span>
+              <a href={`/policies/${item}/`}>{labels[item]}</a>{" "}
+            </span>
+          ))
+        }
+      </p>
+    </article>
+  </div>
+</Layout>

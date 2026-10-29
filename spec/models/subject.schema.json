@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://[your-domain]/spec/models/subject.schema.json",
+  "title": "Subject",
+  "type": "object",
+  "required": ["id", "board", "class", "name"],
+  "properties": {
+    "id": { "enum": ["maths", "science", "social_science", "english", "hindi"] },
+    "board": { "const": "CBSE" },
+    "class": { "const": 10 },
+    "name": { "type": "string" },
+    "chapters_url": { "type": "string" }
+  },
+  "additionalProperties": false
+}

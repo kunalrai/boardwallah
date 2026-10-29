@@ -1,0 +1,370 @@
+openapi: 3.1.0
+info:
+  title: Home Tuition Provider API
+  version: 0.1.0
+  description: |
+    Machine interface for a single home-tuition provider (CBSE Class 10).
+    Read endpoints are public. Writes require a parent consent token.
+    Money is always integer paise. Timestamps are ISO 8601 with +05:30.
+servers:
+  - url: https://[your-domain]/api/v1
+security:
+  - {}
+  - ApiKey: []
+
+tags:
+  - name: Provider
+  - name: Content
+  - name: Slots
+  - name: Consent
+  - name: Bookings
+  - name: Enquiries
+
+paths:
+  /provider:
+    get:
+      tags: [Provider]
+      operationId: getProvider
+      summary: Get the provider profile
+      responses:
+        "200":
+          description: Provider profile
+          headers:
+            X-RateLimit-Limit: { schema: { type: integer } }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Provider" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+  /subjects:
+    get:
+      tags: [Content]
+      operationId: listSubjects
+      summary: List subjects for a board and class
+      parameters:
+        - { name: board, in: query, schema: { type: string, enum: [CBSE], default: CBSE } }
+        - { name: class, in: query, schema: { type: integer, enum: [10], default: 10 } }
+      responses:
+        "200":
+          description: Subjects
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [version, last_updated, subjects]
+                properties:
+                  version: { type: string }
+                  last_updated: { type: string, format: date-time }
+                  subjects:
+                    type: array
+                    items: { $ref: "#/components/schemas/Subject" }
+
+  /plans:
+    get:
+      tags: [Content]
+      operationId: listPlans
+      summary: List plans with prices in paise
+      responses:
+        "200":
+          description: Plans
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [version, last_updated, plans]
+                properties:
+                  version: { type: string }
+                  last_updated: { type: string, format: date-time }
+                  plans:
+                    type: array
+                    items: { $ref: "#/components/schemas/Plan" }
+
+  /slots:
+    get:
+      tags: [Slots]
+      operationId: listSlots
+      summary: List trial slots in a time window
+      description: Returns only slots with status open. Times are in Asia/Kolkata.
+      parameters:
+        - { name: locality_code, in: query, required: true, schema: { type: string } }
+        - { name: from, in: query, required: true, schema: { type: string, format: date-time } }
+        - { name: to, in: query, required: true, schema: { type: string, format: date-time } }
+      responses:
+        "200":
+          description: Open slots
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [version, last_updated, slots]
+                properties:
+                  version: { type: string }
+                  last_updated: { type: string, format: date-time }
+                  slots:
+                    type: array
+                    items: { $ref: "#/components/schemas/TrialSlot" }
+        "400": { $ref: "#/components/responses/Problem" }
+        "422": { $ref: "#/components/responses/Problem" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+  /slots/{slot_id}/hold:
+    post:
+      tags: [Slots]
+      operationId: holdSlot
+      summary: Hold a slot for 10 minutes
+      parameters:
+        - { name: slot_id, in: path, required: true, schema: { type: string } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, maxLength: 64 } }
+      responses:
+        "201":
+          description: Slot held
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SlotHold" }
+        "409": { $ref: "#/components/responses/Problem" }
+        "404": { $ref: "#/components/responses/Problem" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+  /consent/requests:
+    post:
+      tags: [Consent]
+      operationId: createConsentRequest
+      summary: Send an OTP to the parent to confirm consent for a trial booking
+      description: |
+        The OTP is delivered to the parent's WhatsApp, or SMS if WhatsApp fails.
+        The agent never receives the OTP. The parent must pass it to the agent or enter it on the booking page.
+      parameters:
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, maxLength: 64 } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [parent_phone, student_display_name, purpose, policy_version]
+              properties:
+                parent_phone: { type: string, pattern: "^\\+91[0-9]{10}$" }
+                student_display_name: { type: string, maxLength: 20 }
+                purpose: { const: trial_booking }
+                policy_version: { type: string, description: "Version of /policies/privacy.md the parent accepted" }
+      responses:
+        "202":
+          description: OTP sent
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [request_id, channel, expires_at]
+                properties:
+                  request_id: { type: string, pattern: "^R-[0-9a-f]{12}$" }
+                  channel: { enum: [whatsapp, sms] }
+                  expires_at: { type: string, format: date-time, description: "OTP valid 10 minutes" }
+        "422": { $ref: "#/components/responses/Problem" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+  /consent/requests/{request_id}/verify:
+    post:
+      tags: [Consent]
+      operationId: verifyConsentRequest
+      summary: Verify the OTP and receive a consent token
+      parameters:
+        - { name: request_id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [otp]
+              properties:
+                otp: { type: string, pattern: "^[0-9]{6}$" }
+      responses:
+        "200":
+          description: Consent granted
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [consent_id, consent_token, expires_at]
+                properties:
+                  consent_id: { type: string, pattern: "^C-[0-9a-f]{12}$" }
+                  consent_token: { type: string, description: "Single-use, valid 30 minutes, bound to this request" }
+                  expires_at: { type: string, format: date-time }
+        "401": { $ref: "#/components/responses/Problem" }
+        "404": { $ref: "#/components/responses/Problem" }
+        "410": { $ref: "#/components/responses/Problem" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+  /trial-bookings:
+    post:
+      tags: [Bookings]
+      operationId: createTrialBooking
+      summary: Book a free trial for a held slot
+      description: |
+        Requires an active hold and a valid consent token. Idempotency-Key is required.
+        A repeated request with the same key returns the original result (200) and creates nothing new.
+        On success, the slot becomes booked and the parent receives a WhatsApp confirmation.
+        Returns a booking_access_token, which the parent uses to view or cancel the booking.
+      parameters:
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, maxLength: 64 } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [hold_id, consent_token, student, subjects, locality_code]
+              properties:
+                hold_id: { type: string, pattern: "^H-[0-9a-f]{12}$" }
+                consent_token: { type: string }
+                student:
+                  type: object
+                  required: [display_name]
+                  properties:
+                    display_name: { type: string, maxLength: 20 }
+                subjects:
+                  type: array
+                  minItems: 1
+                  items: { enum: [maths, science, social_science, english, hindi] }
+                locality_code: { type: string }
+      responses:
+        "201":
+          description: Booking confirmed
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [booking, booking_access_token]
+                properties:
+                  booking: { $ref: "#/components/schemas/Booking" }
+                  booking_access_token: { type: string, description: "Sent to the parent by WhatsApp. Not stored by agents." }
+        "200":
+          description: Idempotent replay of an existing booking
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [booking]
+                properties:
+                  booking: { $ref: "#/components/schemas/Booking" }
+        "403": { $ref: "#/components/responses/Problem" }
+        "409": { $ref: "#/components/responses/Problem" }
+        "410": { $ref: "#/components/responses/Problem" }
+        "422": { $ref: "#/components/responses/Problem" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+  /bookings/{booking_id}:
+    get:
+      tags: [Bookings]
+      operationId: getBooking
+      summary: Get a booking (parent only)
+      parameters:
+        - { name: booking_id, in: path, required: true, schema: { type: string } }
+      security:
+        - BookingToken: []
+      responses:
+        "200":
+          description: Booking
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Booking" }
+        "401": { $ref: "#/components/responses/Problem" }
+        "404": { $ref: "#/components/responses/Problem" }
+
+  /bookings/{booking_id}/cancel:
+    post:
+      tags: [Bookings]
+      operationId: cancelBooking
+      summary: Cancel a trial booking
+      description: Allowed up to 4 hours before the slot start. Releases the slot.
+      parameters:
+        - { name: booking_id, in: path, required: true, schema: { type: string } }
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, maxLength: 64 } }
+      security:
+        - BookingToken: []
+      responses:
+        "200":
+          description: Cancelled
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Booking" }
+        "401": { $ref: "#/components/responses/Problem" }
+        "404": { $ref: "#/components/responses/Problem" }
+        "409": { $ref: "#/components/responses/Problem" }
+
+  /enquiries:
+    post:
+      tags: [Enquiries]
+      operationId: createEnquiry
+      summary: Send an enquiry (no booking)
+      description: Contact details are not required in the body. The provider replies via the channel the parent chooses.
+      parameters:
+        - { name: Idempotency-Key, in: header, required: true, schema: { type: string, maxLength: 64 } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [locality_code, board, class, subjects]
+              properties:
+                locality_code: { type: string }
+                board: { const: CBSE }
+                class: { const: 10 }
+                subjects:
+                  type: array
+                  minItems: 1
+                  items: { enum: [maths, science, social_science, english, hindi] }
+                preferred_windows: { type: array, items: { type: string }, maxItems: 5 }
+                message: { type: string, maxLength: 500 }
+                channel_hint: { enum: [api, web_form, whatsapp, gbp, mcp], default: api }
+      responses:
+        "201":
+          description: Enquiry received
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Enquiry" }
+        "422": { $ref: "#/components/responses/Problem" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Optional for read endpoints. Higher rate limit when present.
+    BookingToken:
+      type: http
+      scheme: bearer
+      description: booking_access_token returned at booking creation
+
+  responses:
+    Problem:
+      description: Error (RFC 9457)
+      content:
+        application/problem+json:
+          schema: { $ref: "https://[your-domain]/spec/models/problem.schema.json" }
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After: { schema: { type: integer } }
+      content:
+        application/problem+json:
+          schema: { $ref: "https://[your-domain]/spec/models/problem.schema.json" }
+
+  schemas:
+    Provider:
+      $ref: "https://[your-domain]/spec/models/provider.schema.json"
+    Subject:
+      $ref: "https://[your-domain]/spec/models/subject.schema.json"
+    Plan:
+      $ref: "https://[your-domain]/spec/models/plan.schema.json"
+    TrialSlot:
+      $ref: "https://[your-domain]/spec/models/slot.schema.json"
+    SlotHold:
+      $ref: "https://[your-domain]/spec/models/hold.schema.json"
+    Booking:
+      $ref: "https://[your-domain]/spec/models/booking.schema.json"
+    Enquiry:
+      $ref: "https://[your-domain]/spec/models/enquiry.schema.json"

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://[your-domain]/spec/models/provider.schema.json",
+  "title": "Provider",
+  "type": "object",
+  "required": ["id", "name", "tutor_name", "qualifications", "experience_years", "teaching_mode", "boards", "classes", "subjects", "languages", "service_localities", "availability", "contact", "trial", "policies", "version", "last_updated"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^P-[0-9]{3}$" },
+    "name": { "type": "string", "maxLength": 120 },
+    "tutor_name": { "type": "string", "maxLength": 120 },
+    "qualifications": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "experience_years": { "type": "integer", "minimum": 0, "maximum": 80 },
+    "teaching_mode": { "type": "array", "items": { "enum": ["home_visit", "online"] }, "minItems": 1 },
+    "boards": { "type": "array", "items": { "enum": ["CBSE"] }, "minItems": 1 },
+    "classes": { "type": "array", "items": { "const": 10 }, "minItems": 1 },
+    "subjects": { "type": "array", "items": { "enum": ["maths", "science", "social_science", "english", "hindi"] }, "minItems": 1 },
+    "languages": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "service_localities": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z]{2}-[A-Z0-9-]+$" }, "minItems": 1 },
+    "availability": {
+      "type": "object",
+      "required": ["timezone", "days", "window"],
+      "properties": {
+        "timezone": { "const": "Asia/Kolkata" },
+        "days": { "type": "array", "items": { "enum": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] } },
+        "window": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]-[0-2][0-9]:[0-5][0-9]$" }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "required": ["whatsapp", "email"],
+      "properties": {
+        "whatsapp": { "type": "string", "pattern": "^\\+91[0-9]{10}$" },
+        "email": { "type": "string", "format": "email" }
+      }
+    },
+    "trial": {
+      "type": "object",
+      "required": ["available", "duration_minutes", "fee_paise", "currency"],
+      "properties": {
+        "available": { "type": "boolean" },
+        "duration_minutes": { "type": "integer", "minimum": 30, "maximum": 120 },
+        "fee_paise": { "type": "integer", "minimum": 0 },
+        "currency": { "const": "INR" }
+      }
+    },
+    "policies": {
+      "type": "object",
+      "required": ["refund", "cancellation", "privacy_url"],
+      "properties": {
+        "refund": { "type": "string" },
+        "cancellation": { "type": "string" },
+        "privacy_url": { "type": "string", "format": "uri" }
+      }
+    },
+    "version": { "type": "string" },
+    "last_updated": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

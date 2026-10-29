@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://[your-domain]/spec/models/hold.schema.json",
+  "title": "SlotHold",
+  "type": "object",
+  "required": ["id", "slot_id", "expires_at", "status"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^H-[0-9a-f]{12}$" },
+    "slot_id": { "type": "string" },
+    "expires_at": { "type": "string", "format": "date-time", "description": "Created time + 10 minutes" },
+    "status": { "enum": ["active", "released", "converted", "expired"] }
+  },
+  "additionalProperties": false
+}

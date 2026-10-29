@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://[your-domain]/spec/models/enquiry.schema.json",
+  "title": "Enquiry",
+  "type": "object",
+  "required": ["id", "channel", "locality_code", "board", "class", "subjects", "status", "created_at"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^E-[0-9a-f]{12}$" },
+    "channel": { "enum": ["api", "web_form", "whatsapp", "gbp", "mcp"] },
+    "locality_code": { "type": "string" },
+    "board": { "const": "CBSE" },
+    "class": { "const": 10 },
+    "subjects": { "type": "array", "items": { "enum": ["maths", "science", "social_science", "english", "hindi"] } },
+    "preferred_windows": { "type": "array", "items": { "type": "string" } },
+    "message": { "type": "string", "maxLength": 500 },
+    "status": { "enum": ["new", "contacted", "converted", "closed"] },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

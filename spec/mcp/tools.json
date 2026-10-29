@@ -1,0 +1,131 @@
+{
+  "name": "home-tuition-provider",
+  "version": "0.1.0",
+  "description": "Find and book a free CBSE Class 10 home tuition trial with one provider. Booking needs parent consent via OTP.",
+  "tools": [
+    {
+      "name": "get_provider",
+      "description": "Returns the provider's qualifications, experience, subjects, service localities, availability, contact channel and policies. Call this first to decide whether the provider fits the request.",
+      "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false },
+      "outputSchema": { "$ref": "https://[your-domain]/spec/models/provider.schema.json" },
+      "annotations": { "readOnlyHint": true }
+    },
+    {
+      "name": "get_plans",
+      "description": "Returns plans with prices in paise and INR currency, with cancellation terms. Use before quoting any price.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "subject": { "enum": ["maths", "science", "social_science", "english", "hindi"] }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": { "type": "object", "properties": { "plans": { "type": "array", "items": { "$ref": "https://[your-domain]/spec/models/plan.schema.json" } } } },
+      "annotations": { "readOnlyHint": true }
+    },
+    {
+      "name": "check_trial_slots",
+      "description": "Lists open trial slots in a locality within a time window (Asia/Kolkata). Returns only open slots. Does not reserve anything.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["locality_code", "from", "to"],
+        "properties": {
+          "locality_code": { "type": "string" },
+          "from": { "type": "string", "format": "date-time" },
+          "to": { "type": "string", "format": "date-time" }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": { "type": "object", "properties": { "slots": { "type": "array", "items": { "$ref": "https://[your-domain]/spec/models/slot.schema.json" } } } },
+      "annotations": { "readOnlyHint": true }
+    },
+    {
+      "name": "request_parent_consent",
+      "description": "Sends a one-time code to the parent's WhatsApp to confirm consent for a trial booking. The agent must ask the parent for the code. The code is never shown to the agent.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["parent_phone", "student_display_name", "policy_version", "idempotency_key"],
+        "properties": {
+          "parent_phone": { "type": "string", "pattern": "^\\+91[0-9]{10}$" },
+          "student_display_name": { "type": "string", "maxLength": 20 },
+          "policy_version": { "type": "string" },
+          "idempotency_key": { "type": "string", "maxLength": 64 }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": { "type": "object", "properties": { "request_id": { "type": "string" }, "channel": { "enum": ["whatsapp", "sms"] }, "expires_at": { "type": "string", "format": "date-time" } } },
+      "annotations": { "readOnlyHint": false, "destructiveHint": false }
+    },
+    {
+      "name": "verify_parent_consent",
+      "description": "Exchanges the parent's one-time code for a consent token valid 30 minutes. Use only with a code the parent has provided in this conversation.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["request_id", "otp"],
+        "properties": {
+          "request_id": { "type": "string" },
+          "otp": { "type": "string", "pattern": "^[0-9]{6}$" }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": { "type": "object", "properties": { "consent_id": { "type": "string" }, "consent_token": { "type": "string" }, "expires_at": { "type": "string", "format": "date-time" } } },
+      "annotations": { "readOnlyHint": false }
+    },
+    {
+      "name": "hold_trial_slot",
+      "description": "Holds one open slot for 10 minutes so it can be booked. Required before book_trial.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["slot_id", "idempotency_key"],
+        "properties": {
+          "slot_id": { "type": "string" },
+          "idempotency_key": { "type": "string", "maxLength": 64 }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": { "$ref": "https://[your-domain]/spec/models/hold.schema.json" },
+      "annotations": { "readOnlyHint": false }
+    },
+    {
+      "name": "book_trial",
+      "description": "Books a free trial for a held slot. Requires a valid consent token. Only call after the parent has explicitly confirmed the booking details in this conversation.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["hold_id", "consent_token", "student", "subjects", "locality_code", "idempotency_key"],
+        "properties": {
+          "hold_id": { "type": "string" },
+          "consent_token": { "type": "string" },
+          "student": {
+            "type": "object",
+            "required": ["display_name"],
+            "properties": { "display_name": { "type": "string", "maxLength": 20 } }
+          },
+          "subjects": { "type": "array", "minItems": 1, "items": { "enum": ["maths", "science", "social_science", "english", "hindi"] } },
+          "locality_code": { "type": "string" },
+          "idempotency_key": { "type": "string", "maxLength": 64 }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": { "$ref": "https://[your-domain]/spec/models/booking.schema.json" },
+      "annotations": { "readOnlyHint": false, "destructiveHint": false, "idempotentHint": true }
+    },
+    {
+      "name": "create_enquiry",
+      "description": "Sends a non-binding enquiry to the provider. Use when the parent wants information or a callback rather than a trial.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["locality_code", "subjects", "idempotency_key"],
+        "properties": {
+          "locality_code": { "type": "string" },
+          "subjects": { "type": "array", "minItems": 1, "items": { "enum": ["maths", "science", "social_science", "english", "hindi"] } },
+          "preferred_windows": { "type": "array", "items": { "type": "string" }, "maxItems": 5 },
+          "message": { "type": "string", "maxLength": 500 },
+          "idempotency_key": { "type": "string", "maxLength": 64 }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": { "$ref": "https://[your-domain]/spec/models/enquiry.schema.json" },
+      "annotations": { "readOnlyHint": false, "idempotentHint": true }
+    }
+  ]
+}

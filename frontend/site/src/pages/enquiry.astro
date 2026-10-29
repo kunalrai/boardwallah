@@ -1,0 +1,181 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { loadContent } from "../lib/content";
+import { apiBase } from "../lib/site";
+
+const { provider, subjects } = loadContent();
+---
+
+<Layout
+  title={`Enquiry | ${provider.name}`}
+  description={`Ask about CBSE Class 10 home tuition in ${provider.service_localities.join(" and ")}. No contact details required.`}
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Enquiry</nav>
+    <h1>Send an enquiry</h1>
+    <p class="lead">
+      Ask a question before booking. The enquiry form does not ask for a phone number, email address or the student's
+      full name.
+    </p>
+
+    <div class="grid two">
+      <section class="card" aria-labelledby="enquiry-heading">
+        <h2 id="enquiry-heading">Your question</h2>
+        <form id="enquiry-form" data-api={apiBase}>
+          <div class="field">
+            <label for="locality">Locality</label>
+            <select id="locality" name="locality_code" required>
+              {
+                provider.service_localities.map((locality) => (
+                  <option value={locality}>{locality}</option>
+                ))
+              }
+            </select>
+          </div>
+          <fieldset>
+            <legend>Subjects</legend>
+            <div class="check-grid">
+              {
+                subjects.map((subject) => (
+                  <label>
+                    <input type="checkbox" name="subjects" value={subject.id} />
+                    {subject.name}
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="windows">Preferred times (optional)</label>
+            <input
+              id="windows"
+              name="preferred_windows"
+              type="text"
+              placeholder="Weekdays after 5 pm, Saturday morning"
+              maxlength="300"
+            />
+            <span class="hint">Separate up to five times with commas.</span>
+          </div>
+          <div class="field">
+            <label for="message">Message (optional)</label>
+            <textarea id="message" name="message" maxlength="500" rows="5"></textarea>
+            <span class="hint"><span id="message-count">0</span> of 500 characters.</span>
+          </div>
+          <div>
+            <button type="submit" id="enquiry-button">Send enquiry</button>
+          </div>
+        </form>
+        <p id="enquiry-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <aside class="card">
+        <h2>What happens next</h2>
+        <p>
+          The tutor reads the enquiry and replies through the channel you used to reach this page. To book a trial
+          immediately, use the <a href="/book/">booking page</a>.
+        </p>
+        <h3>Privacy</h3>
+        <p class="muted">
+          Do not include the student's full name, date of birth, school, address, health information or ID numbers.
+          Read the <a href="/policies/privacy/">privacy policy</a>.
+        </p>
+      </aside>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  type Enquiry = { id: string; status: string; created_at: string };
+
+  class ApiFailure extends Error {
+    code: string;
+    retryAfter: string | null;
+
+    constructor(body: Record<string, unknown>, fallback: string, retryAfter: string | null) {
+      super(String(body.detail ?? body.title ?? fallback));
+      this.code = String(body.code ?? "request_failed");
+      this.retryAfter = retryAfter;
+    }
+  }
+
+  const form = document.getElementById("enquiry-form") as HTMLFormElement | null;
+  if (form) {
+    const api = form.dataset.api ?? "";
+    const button = document.getElementById("enquiry-button") as HTMLButtonElement;
+    const status = document.getElementById("enquiry-status") as HTMLElement;
+    const message = document.getElementById("message") as HTMLTextAreaElement;
+    const counter = document.getElementById("message-count") as HTMLElement;
+
+    message.addEventListener("input", () => {
+      counter.textContent = String(message.value.length);
+    });
+
+    function setStatus(text: string, tone: "info" | "error" | "success") {
+      status.textContent = text;
+      status.className = text ? `notice ${tone === "info" ? "info" : tone}` : "";
+    }
+
+    async function post<T>(path: string, body: unknown): Promise<T> {
+      const response = await fetch(`${api}${path}`, {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+          "Idempotency-Key": `ENQUIRY-${crypto.randomUUID()}`.slice(0, 64),
+        },
+        body: JSON.stringify(body),
+      });
+      const text = await response.text();
+      let data: Record<string, unknown> = {};
+      if (text) {
+        try {
+          data = JSON.parse(text) as Record<string, unknown>;
+        } catch {
+          data = { detail: text };
+        }
+      }
+      if (!response.ok) {
+        throw new ApiFailure(data, `Request failed with status ${response.status}.`, response.headers.get("Retry-After"));
+      }
+      return data as T;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const subjects = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="subjects"]:checked')).map(
+        (input) => input.value,
+      );
+      if (subjects.length === 0) {
+        setStatus("Choose at least one subject.", "error");
+        return;
+      }
+      const windows = (document.getElementById("windows") as HTMLInputElement).value
+        .split(",")
+        .map((value) => value.trim())
+        .filter(Boolean)
+        .slice(0, 5);
+      button.disabled = true;
+      setStatus("Sending the enquiry...", "info");
+      try {
+        const result = await post<Enquiry>("/api/v1/enquiries", {
+          locality_code: (document.getElementById("locality") as HTMLSelectElement).value,
+          board: "CBSE",
+          class: 10,
+          subjects,
+          ...(windows.length ? { preferred_windows: windows } : {}),
+          ...(message.value.trim() ? { message: message.value.trim() } : {}),
+          channel_hint: "web_form",
+        });
+        setStatus(`Enquiry ${result.id} received. The tutor will follow up.`, "success");
+        form.reset();
+        counter.textContent = "0";
+      } catch (error) {
+        const base = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+        const retry = error instanceof ApiFailure && error.retryAfter ? ` Try again in ${error.retryAfter} seconds.` : "";
+        setStatus(`${base}${retry}`, "error");
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+</script>

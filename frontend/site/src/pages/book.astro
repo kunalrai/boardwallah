@@ -1,0 +1,595 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { loadContent, whatsappLink } from "../lib/content";
+import { apiBase, policyVersion } from "../lib/site";
+
+const { provider, subjects } = loadContent();
+---
+
+<Layout
+  title={`Book a free CBSE Class 10 trial | ${provider.name}`}
+  description={`Choose a trial slot with ${provider.tutor_name}, then confirm parent consent by one-time code.`}
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Book a trial</nav>
+    <h1>Book a free trial</h1>
+    <p class="lead">
+      The trial lasts {provider.trial.duration_minutes} minutes and is {provider.trial.fee_paise === 0 ? "free" : "paid"}.
+      A parent or guardian must confirm consent with a six-digit code before the booking is created.
+    </p>
+
+    <div class="notice info">
+      <strong>Parent consent is required.</strong> The code is sent to the parent's WhatsApp, with SMS fallback.
+      The tutor and any AI agent never see the code.
+    </div>
+
+    <div id="booking-flow" data-api={apiBase} data-policy-version={policyVersion}>
+      <section class="card flow-step" aria-labelledby="slot-heading">
+        <h2 id="slot-heading">1. Choose a trial slot</h2>
+        <form id="slot-form">
+          <div class="field">
+            <label for="locality">Locality</label>
+            <select id="locality" name="locality" required>
+              {
+                provider.service_localities.map((locality) => (
+                  <option value={locality}>{locality}</option>
+                ))
+              }
+            </select>
+            <span class="hint">Only these localities are in the service area.</span>
+          </div>
+          <div>
+            <button type="submit" id="load-slots-button">Show open slots</button>
+          </div>
+        </form>
+        <p id="slot-status" class="slot-status" role="status" aria-live="polite"></p>
+        <div id="slot-list" class="slot-list" aria-live="polite"></div>
+        <div class="actions" id="hold-actions" hidden>
+          <button type="button" id="hold-button">Hold selected slot</button>
+        </div>
+      </section>
+
+      <section class="card flow-step" id="consent-step" hidden aria-labelledby="consent-heading">
+        <h2 id="consent-heading">2. Ask the parent for consent</h2>
+        <p id="hold-summary" class="notice success"></p>
+        <form id="consent-form">
+          <div class="field">
+            <label for="parent-phone">Parent's WhatsApp number</label>
+            <input
+              id="parent-phone"
+              name="parent_phone"
+              type="tel"
+              inputmode="tel"
+              autocomplete="tel"
+              placeholder="+919800000001"
+              pattern="\+91[0-9]{10}"
+              required
+            />
+            <span class="hint">Indian mobile number in +91XXXXXXXXXX format.</span>
+          </div>
+          <div class="field">
+            <label for="student-name">Student's first name or initials</label>
+            <input
+              id="student-name"
+              name="student_display_name"
+              type="text"
+              maxlength="20"
+              autocomplete="off"
+              placeholder="Riya or R. K."
+              required
+            />
+            <span class="hint">Do not enter a full name, date of birth, school or address.</span>
+          </div>
+          <fieldset>
+            <legend>Subjects for the trial</legend>
+            <div class="check-grid">
+              {
+                subjects.map((subject) => (
+                  <label>
+                    <input type="checkbox" name="subjects" value={subject.id} />
+                    {subject.name}
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+          <div>
+            <button type="submit" id="request-code-button">Send consent code</button>
+          </div>
+        </form>
+        <p id="consent-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card flow-step" id="otp-step" hidden aria-labelledby="otp-heading">
+        <h2 id="otp-heading">3. Parent enters the code</h2>
+        <p id="otp-summary"></p>
+        <form id="otp-form">
+          <div class="field">
+            <label for="otp">Six-digit code</label>
+            <input
+              id="otp"
+              name="otp"
+              type="text"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              pattern="[0-9]{6}"
+              maxlength="6"
+              required
+            />
+            <span class="hint">The code expires 10 minutes after it is sent.</span>
+          </div>
+          <div class="actions">
+            <button type="submit" id="verify-button">Verify code</button>
+            <button type="button" class="secondary" id="new-code-button">Send a new code</button>
+          </div>
+        </form>
+        <p id="otp-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card flow-step" id="confirm-step" hidden aria-labelledby="confirm-heading">
+        <h2 id="confirm-heading">4. Confirm the booking</h2>
+        <dl class="summary" id="booking-summary"></dl>
+        <button type="button" id="book-button">Confirm trial booking</button>
+        <p id="book-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card flow-step" id="done-step" hidden aria-labelledby="done-heading">
+        <h2 id="done-heading">Trial booked</h2>
+        <p class="notice success">
+          The booking is confirmed. The parent also receives a WhatsApp message with a private link to view or cancel it.
+        </p>
+        <dl class="summary" id="done-summary"></dl>
+        <p><strong>Private booking link</strong></p>
+        <p class="token" id="booking-link"></p>
+        <div class="actions">
+          <a class="button" id="booking-link-button" href="/booking/">View booking</a>
+          <a
+            class="button secondary"
+            href={whatsappLink(provider.contact.whatsapp, "Hello, I have booked a Class 10 trial.")}
+          >Contact the tutor</a>
+        </div>
+        <p>
+          <button type="button" class="secondary" id="restart-button">Book another trial</button>
+        </p>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  type Slot = { id: string; locality_code: string; starts_at: string; ends_at: string };
+  type Hold = { id: string; slot_id: string; expires_at: string; status: string };
+  type ConsentRequest = { request_id: string; channel: "whatsapp" | "sms"; expires_at: string };
+  type Consent = { consent_id: string; consent_token: string; expires_at: string };
+  type Booking = {
+    booking: {
+      id: string;
+      slot_id: string;
+      status: string;
+      student: { display_name: string };
+      subjects: string[];
+      locality_code: string;
+    };
+    booking_access_token: string;
+  };
+
+  class ApiFailure extends Error {
+    status: number;
+    code: string;
+    retryAfter: string | null;
+
+    constructor(status: number, body: Record<string, unknown>, fallback: string, retryAfter: string | null) {
+      super(String(body.detail ?? body.title ?? fallback));
+      this.status = status;
+      this.code = String(body.code ?? "request_failed");
+      this.retryAfter = retryAfter;
+    }
+  }
+
+  const root = document.getElementById("booking-flow") as HTMLElement | null;
+  if (root) {
+    const api = root.dataset.api ?? "";
+    const policyVersion = root.dataset.policyVersion ?? "1.0";
+    const els = {
+      slotForm: document.getElementById("slot-form") as HTMLFormElement,
+      locality: document.getElementById("locality") as HTMLSelectElement,
+      loadSlots: document.getElementById("load-slots-button") as HTMLButtonElement,
+      slotStatus: document.getElementById("slot-status") as HTMLElement,
+      slotList: document.getElementById("slot-list") as HTMLElement,
+      holdActions: document.getElementById("hold-actions") as HTMLElement,
+      holdButton: document.getElementById("hold-button") as HTMLButtonElement,
+      consentStep: document.getElementById("consent-step") as HTMLElement,
+      holdSummary: document.getElementById("hold-summary") as HTMLElement,
+      consentForm: document.getElementById("consent-form") as HTMLFormElement,
+      requestCode: document.getElementById("request-code-button") as HTMLButtonElement,
+      consentStatus: document.getElementById("consent-status") as HTMLElement,
+      otpStep: document.getElementById("otp-step") as HTMLElement,
+      otpSummary: document.getElementById("otp-summary") as HTMLElement,
+      otpForm: document.getElementById("otp-form") as HTMLFormElement,
+      otp: document.getElementById("otp") as HTMLInputElement,
+      verify: document.getElementById("verify-button") as HTMLButtonElement,
+      newCode: document.getElementById("new-code-button") as HTMLButtonElement,
+      otpStatus: document.getElementById("otp-status") as HTMLElement,
+      confirmStep: document.getElementById("confirm-step") as HTMLElement,
+      summary: document.getElementById("booking-summary") as HTMLElement,
+      book: document.getElementById("book-button") as HTMLButtonElement,
+      bookStatus: document.getElementById("book-status") as HTMLElement,
+      doneStep: document.getElementById("done-step") as HTMLElement,
+      doneSummary: document.getElementById("done-summary") as HTMLElement,
+      bookingLink: document.getElementById("booking-link") as HTMLElement,
+      bookingLinkButton: document.getElementById("booking-link-button") as HTMLAnchorElement,
+      restart: document.getElementById("restart-button") as HTMLButtonElement,
+    };
+
+    const state: {
+      slot?: Slot;
+      hold?: Hold;
+      request?: ConsentRequest;
+      consent?: Consent;
+      subjects: string[];
+      booking?: Booking;
+    } = { subjects: [] };
+
+    const subjectLabels: Record<string, string> = {
+      maths: "Mathematics",
+      science: "Science",
+      social_science: "Social Science",
+      english: "English",
+      hindi: "Hindi",
+    };
+
+    function setStatus(element: HTMLElement, message: string, tone: "info" | "error" | "success" = "info") {
+      element.textContent = message;
+      element.className = message ? `notice ${tone === "info" ? "info" : tone}` : "";
+    }
+
+    function key(prefix: string): string {
+      const token =
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      return `${prefix}-${token}`.slice(0, 64);
+    }
+
+    async function request<T>(path: string, options: { method?: string; body?: unknown; token?: string; key?: string } = {}) {
+      const headers: Record<string, string> = { accept: "application/json" };
+      if (options.body !== undefined) headers["content-type"] = "application/json";
+      if (options.key) headers["Idempotency-Key"] = options.key;
+      if (options.token) headers.authorization = `Bearer ${options.token}`;
+      const response = await fetch(`${api}${path}`, {
+        method: options.method ?? "GET",
+        headers,
+        body: options.body === undefined ? undefined : JSON.stringify(options.body),
+      });
+      const text = await response.text();
+      let body: Record<string, unknown> = {};
+      if (text) {
+        try {
+          body = JSON.parse(text) as Record<string, unknown>;
+        } catch {
+          body = { detail: text };
+        }
+      }
+      if (!response.ok) {
+        throw new ApiFailure(response.status, body, `Request failed with status ${response.status}.`, response.headers.get("Retry-After"));
+      }
+      return body as T;
+    }
+
+    function errorMessage(error: unknown): string {
+      if (!(error instanceof ApiFailure)) return "Something went wrong. Please try again.";
+      const base = error.message || "The request was refused.";
+      return error.retryAfter ? `${base} Try again in ${error.retryAfter} seconds.` : base;
+    }
+
+    function formatSlotTime(iso: string): string {
+      return new Intl.DateTimeFormat("en-IN", {
+        timeZone: "Asia/Kolkata",
+        hour: "numeric",
+        minute: "2-digit",
+      }).format(new Date(iso));
+    }
+
+    function formatSlotDate(iso: string): string {
+      return new Intl.DateTimeFormat("en-IN", {
+        timeZone: "Asia/Kolkata",
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+      }).format(new Date(iso));
+    }
+
+    function describe(slot: Slot): string {
+      return `${formatSlotDate(slot.starts_at)}, ${formatSlotTime(slot.starts_at)} to ${formatSlotTime(slot.ends_at)} IST`;
+    }
+
+    function selectedSubjects(): string[] {
+      return Array.from(els.consentForm.querySelectorAll<HTMLInputElement>('input[name="subjects"]:checked')).map(
+        (input) => input.value,
+      );
+    }
+
+    function renderSlots(slots: Slot[]) {
+      els.slotList.replaceChildren();
+      els.holdActions.hidden = true;
+      if (slots.length === 0) {
+        setStatus(els.slotStatus, "No open slots in this locality for the next 14 days. Try the enquiry form instead.", "error");
+        return;
+      }
+      setStatus(els.slotStatus, `${slots.length} open slot${slots.length === 1 ? "" : "s"} found.`, "success");
+      const groups = new Map<string, Slot[]>();
+      for (const slot of slots) {
+        const day = formatSlotDate(slot.starts_at);
+        groups.set(day, [...(groups.get(day) ?? []), slot]);
+      }
+      for (const [day, daySlots] of groups) {
+        const group = document.createElement("div");
+        group.className = "slot-group";
+        const heading = document.createElement("h3");
+        heading.textContent = day;
+        group.append(heading);
+        for (const slot of daySlots) {
+          const label = document.createElement("label");
+          label.className = "slot-option";
+          const radio = document.createElement("input");
+          radio.type = "radio";
+          radio.name = "slot";
+          radio.value = slot.id;
+          radio.addEventListener("change", () => {
+            state.slot = slot;
+            els.holdActions.hidden = false;
+          });
+          const text = document.createElement("span");
+          text.textContent = `${formatSlotTime(slot.starts_at)} to ${formatSlotTime(slot.ends_at)} IST`;
+          label.append(radio, text);
+          group.append(label);
+        }
+        els.slotList.append(group);
+      }
+    }
+
+    async function loadSlots() {
+      els.loadSlots.disabled = true;
+      setStatus(els.slotStatus, "Loading open slots...", "info");
+      try {
+        const from = new Date().toISOString();
+        const to = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
+        const params = new URLSearchParams({
+          locality_code: els.locality.value,
+          from,
+          to,
+        });
+        const data = await request<{ slots: Slot[] }>(`/api/v1/slots?${params.toString()}`);
+        renderSlots(data.slots);
+      } catch (error) {
+        setStatus(els.slotStatus, errorMessage(error), "error");
+      } finally {
+        els.loadSlots.disabled = false;
+      }
+    }
+
+    async function holdSlot() {
+      if (!state.slot) {
+        setStatus(els.slotStatus, "Choose a slot first.", "error");
+        return;
+      }
+      els.holdButton.disabled = true;
+      try {
+        const hold = await request<Hold>(`/api/v1/slots/${encodeURIComponent(state.slot.id)}/hold`, {
+          method: "POST",
+          body: {},
+          key: key("HOLD"),
+        });
+        state.hold = hold;
+        const until = new Intl.DateTimeFormat("en-IN", {
+          timeZone: "Asia/Kolkata",
+          hour: "numeric",
+          minute: "2-digit",
+        }).format(new Date(hold.expires_at));
+        setStatus(els.slotStatus, `Slot held until ${until} IST. Complete consent before the hold expires.`, "success");
+        els.holdSummary.textContent = `Held trial: ${describe(state.slot)} in ${state.slot.locality_code}.`;
+        els.consentStep.hidden = false;
+        els.consentStep.scrollIntoView({ behavior: "smooth", block: "start" });
+        (document.getElementById("parent-phone") as HTMLInputElement | null)?.focus();
+      } catch (error) {
+        setStatus(els.slotStatus, errorMessage(error), "error");
+      } finally {
+        els.holdButton.disabled = false;
+      }
+    }
+
+    async function sendCode(event?: Event) {
+      event?.preventDefault();
+      if (!state.slot) {
+        setStatus(els.consentStatus, "Choose and hold a slot first.", "error");
+        return;
+      }
+      const phone = (document.getElementById("parent-phone") as HTMLInputElement).value.trim();
+      const name = (document.getElementById("student-name") as HTMLInputElement).value.trim();
+      if (!/^\+91[0-9]{10}$/.test(phone)) {
+        setStatus(els.consentStatus, "Enter the parent's number as +91 followed by 10 digits.", "error");
+        return;
+      }
+      if (!name) {
+        setStatus(els.consentStatus, "Enter the student's first name or initials.", "error");
+        return;
+      }
+      state.subjects = selectedSubjects();
+      if (state.subjects.length === 0) {
+        setStatus(els.consentStatus, "Choose at least one subject.", "error");
+        return;
+      }
+      els.requestCode.disabled = true;
+      setStatus(els.consentStatus, "Sending the code...", "info");
+      try {
+        const result = await request<ConsentRequest>("/api/v1/consent/requests", {
+          method: "POST",
+          body: {
+            parent_phone: phone,
+            student_display_name: name,
+            purpose: "trial_booking",
+            policy_version: policyVersion,
+          },
+          key: key("CONSENT"),
+        });
+        state.request = result;
+        state.consent = undefined;
+        els.otp.value = "";
+        els.otpStep.hidden = false;
+        els.confirmStep.hidden = true;
+        els.otpSummary.textContent =
+          result.channel === "whatsapp"
+            ? "The code was sent to the parent on WhatsApp. Ask the parent to read it aloud."
+            : "WhatsApp delivery failed, so the code was sent by SMS. Ask the parent to read it aloud.";
+        setStatus(els.consentStatus, `Code sent for request ${result.request_id}.`, "success");
+        els.otpStep.scrollIntoView({ behavior: "smooth", block: "start" });
+        els.otp.focus();
+      } catch (error) {
+        setStatus(els.consentStatus, errorMessage(error), "error");
+      } finally {
+        els.requestCode.disabled = false;
+      }
+    }
+
+    async function verifyCode(event: Event) {
+      event.preventDefault();
+      if (!state.request) {
+        setStatus(els.otpStatus, "Request a new code first.", "error");
+        return;
+      }
+      els.verify.disabled = true;
+      setStatus(els.otpStatus, "Checking the code...", "info");
+      try {
+        const result = await request<Consent>(
+          `/api/v1/consent/requests/${encodeURIComponent(state.request.request_id)}/verify`,
+          {
+            method: "POST",
+            body: { otp: els.otp.value.trim() },
+            key: key("VERIFY"),
+          },
+        );
+        state.consent = result;
+        setStatus(els.otpStatus, "Code verified. The parent's consent is recorded.", "success");
+        renderSummary();
+        els.confirmStep.hidden = false;
+        els.confirmStep.scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch (error) {
+        setStatus(els.otpStatus, errorMessage(error), "error");
+      } finally {
+        els.verify.disabled = false;
+      }
+    }
+
+    function renderSummary() {
+      if (!state.slot || !state.consent) return;
+      const name = (document.getElementById("student-name") as HTMLInputElement).value.trim();
+      els.summary.replaceChildren();
+      const rows: [string, string][] = [
+        ["Trial", describe(state.slot)],
+        ["Locality", state.slot.locality_code],
+        ["Student", name],
+        ["Subjects", state.subjects.map((id) => subjectLabels[id] ?? id).join(", ")],
+        ["Consent expires", new Date(state.consent.expires_at).toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata" })],
+      ];
+      for (const [term, value] of rows) {
+        const dt = document.createElement("dt");
+        dt.textContent = term;
+        const dd = document.createElement("dd");
+        dd.textContent = value;
+        els.summary.append(dt, dd);
+      }
+    }
+
+    async function bookTrial() {
+      if (!state.hold || !state.consent || !state.slot) {
+        setStatus(els.bookStatus, "The hold or consent expired. Start again.", "error");
+        return;
+      }
+      const name = (document.getElementById("student-name") as HTMLInputElement).value.trim();
+      els.book.disabled = true;
+      setStatus(els.bookStatus, "Booking the trial...", "info");
+      try {
+        const result = await request<Booking>("/api/v1/trial-bookings", {
+          method: "POST",
+          body: {
+            hold_id: state.hold.id,
+            consent_token: state.consent.consent_token,
+            student: { display_name: name },
+            subjects: state.subjects,
+            locality_code: state.slot.locality_code,
+          },
+          key: key("BOOK"),
+        });
+        state.booking = result;
+        showDone(result);
+      } catch (error) {
+        setStatus(els.bookStatus, errorMessage(error), "error");
+        if (error instanceof ApiFailure && ["hold_expired", "consent_expired", "consent_invalid"].includes(error.code)) {
+          els.bookStatus.textContent += " Start the flow again to get a new hold and consent code.";
+        }
+      } finally {
+        els.book.disabled = false;
+      }
+    }
+
+    function showDone(result: Booking) {
+      els.consentStep.hidden = true;
+      els.otpStep.hidden = true;
+      els.confirmStep.hidden = true;
+      els.doneStep.hidden = false;
+      els.doneSummary.replaceChildren();
+      const link = `${location.origin}/booking/#id=${encodeURIComponent(result.booking.id)}&token=${encodeURIComponent(result.booking_access_token)}`;
+      const rows: [string, string][] = [
+        ["Booking", result.booking.id],
+        ["Status", result.booking.status],
+        ["Slot", result.booking.slot_id],
+        ["Locality", result.booking.locality_code],
+        ["Student", result.booking.student.display_name],
+        ["Subjects", result.booking.subjects.map((id) => subjectLabels[id] ?? id).join(", ")],
+      ];
+      for (const [term, value] of rows) {
+        const dt = document.createElement("dt");
+        dt.textContent = term;
+        const dd = document.createElement("dd");
+        dd.textContent = value;
+        els.doneSummary.append(dt, dd);
+      }
+      els.bookingLink.textContent = link;
+      els.bookingLinkButton.href = link;
+      els.doneStep.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function restart() {
+      state.slot = undefined;
+      state.hold = undefined;
+      state.request = undefined;
+      state.consent = undefined;
+      state.booking = undefined;
+      state.subjects = [];
+      els.consentStep.hidden = true;
+      els.otpStep.hidden = true;
+      els.confirmStep.hidden = true;
+      els.doneStep.hidden = true;
+      els.slotList.replaceChildren();
+      els.holdActions.hidden = true;
+      setStatus(els.slotStatus, "", "info");
+      setStatus(els.consentStatus, "", "info");
+      setStatus(els.otpStatus, "", "info");
+      setStatus(els.bookStatus, "", "info");
+      els.slotForm.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    els.slotForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      void loadSlots();
+    });
+    els.holdButton.addEventListener("click", () => void holdSlot());
+    els.consentForm.addEventListener("submit", (event) => void sendCode(event));
+    els.otpForm.addEventListener("submit", (event) => void verifyCode(event));
+    els.newCode.addEventListener("click", () => void sendCode());
+    els.book.addEventListener("click", () => void bookTrial());
+    els.restart.addEventListener("click", restart);
+
+    setStatus(els.slotStatus, "Choose a locality, then show open slots.", "info");
+  }
+</script>

@@ -1,0 +1,47 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { loadContent } from "../lib/content";
+
+const { provider, subjects } = loadContent();
+---
+
+<Layout
+  title={`CBSE Class 10 subjects | ${provider.name}`}
+  description={`Mathematics, Science, Social Science, English and Hindi for CBSE Class 10 with ${provider.tutor_name}.`}
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Subjects</nav>
+    <h1>CBSE Class 10 subjects</h1>
+    <p class="lead">
+      All lessons follow the CBSE Class 10 syllabus. Choose the subjects you need during booking.
+    </p>
+
+    <div class="grid two">
+      {
+        subjects.map((subject) => (
+          <article class="card subject-card">
+            <h2>{subject.name}</h2>
+            <p class="muted">Board: {subject.board}. Class: {subject.class}.</p>
+            <p>
+              This subject is available as part of the monthly plan and the crash course. Mention it in the
+              <a href="/enquiry/">enquiry form</a> if you want to discuss a specific topic first.
+            </p>
+            <a class="button secondary" href="/book/">Book a trial</a>
+          </article>
+        ))
+      }
+    </div>
+
+    <section class="section">
+      <div class="card">
+        <h2>Trial lesson</h2>
+        <p>
+          The {provider.trial.duration_minutes}-minute trial is {provider.trial.fee_paise === 0 ? "free" : "paid"}.
+          It is available in {provider.service_localities.join(" and ")}, on
+          {provider.availability.days.join(", ")} between {provider.availability.window} IST.
+        </p>
+        <a class="button" href="/book/">Choose a trial slot</a>
+      </div>
+    </section>
+  </div>
+</Layout>

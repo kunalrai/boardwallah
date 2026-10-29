@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "board": "CBSE",
+  "class": 10,
+  "subjects": [
+    { "id": "maths", "board": "CBSE", "class": 10, "name": "Mathematics" },
+    { "id": "science", "board": "CBSE", "class": 10, "name": "Science" },
+    { "id": "social_science", "board": "CBSE", "class": 10, "name": "Social Science" },
+    { "id": "english", "board": "CBSE", "class": 10, "name": "English" },
+    { "id": "hindi", "board": "CBSE", "class": 10, "name": "Hindi" }
+  ]
+}

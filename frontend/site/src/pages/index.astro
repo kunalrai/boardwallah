@@ -1,0 +1,155 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { formatPrice, loadContent, whatsappLink } from "../lib/content";
+
+const { provider, subjects, plans } = loadContent();
+const dayNames: Record<string, string> = {
+  mon: "Mon",
+  tue: "Tue",
+  wed: "Wed",
+  thu: "Thu",
+  fri: "Fri",
+  sat: "Sat",
+  sun: "Sun",
+};
+const availabilityDays = provider.availability.days.map((day) => dayNames[day] ?? day).join(", ");
+const trialMessage = `Hello, I would like to know more about the free Class 10 trial with ${provider.tutor_name}.`;
+---
+
+<Layout>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">CBSE Class 10 only</span>
+        <h1>Home tuition that starts with a free trial.</h1>
+        <p class="lead">
+          {provider.tutor_name} teaches {subjects.map((subject) => subject.name).join(", ")} at home in
+          {provider.service_localities.join(" and ")}. A trial is {formatPrice(provider.trial.fee_paise)} and lasts
+          {provider.trial.duration_minutes} minutes.
+        </p>
+        <div class="actions">
+          <a class="button" href="/book/">Book a free trial</a>
+          <a class="button secondary" href={whatsappLink(provider.contact.whatsapp, trialMessage)}>Ask on WhatsApp</a>
+        </div>
+      </div>
+      <aside class="card hero-card" aria-labelledby="provider-facts">
+        <h2 id="provider-facts">Provider at a glance</h2>
+        <dl class="fact-grid">
+          <div class="fact">
+            <dt>Board</dt>
+            <dd>{provider.boards.join(", ")}</dd>
+          </div>
+          <div class="fact">
+            <dt>Class</dt>
+            <dd>{provider.classes.join(", ")}</dd>
+          </div>
+          <div class="fact">
+            <dt>Mode</dt>
+            <dd>{provider.teaching_mode.map((mode) => (mode === "home_visit" ? "Home visit" : "Online")).join(", ")}</dd>
+          </div>
+          <div class="fact">
+            <dt>Languages</dt>
+            <dd>{provider.languages.join(", ")}</dd>
+          </div>
+          <div class="fact">
+            <dt>Availability</dt>
+            <dd>{availabilityDays}, {provider.availability.window} IST</dd>
+          </div>
+          <div class="fact">
+            <dt>Localities</dt>
+            <dd>{provider.service_localities.join(", ")}</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="section" aria-labelledby="subjects-heading">
+      <div class="section-head">
+        <div>
+          <h2 id="subjects-heading">Subjects taught</h2>
+          <p>One tutor for the full CBSE Class 10 syllabus.</p>
+        </div>
+        <a href="/subjects/">See subject details</a>
+      </div>
+      <div class="grid three">
+        {
+          subjects.map((subject) => (
+            <article class="card subject-card">
+              <h3>{subject.name}</h3>
+              <p class="muted">{subject.board} Class {subject.class}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="how-heading">
+      <div class="section-head">
+        <div>
+          <h2 id="how-heading">How booking works</h2>
+          <p>The parent confirms consent. The agent never receives the one-time code.</p>
+        </div>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Choose a slot</h3>
+          <p class="muted">Pick an open trial time in your locality. The slot is held for 10 minutes.</p>
+        </li>
+        <li>
+          <h3>Request consent</h3>
+          <p class="muted">Enter the parent's WhatsApp number and the student's first name or initials.</p>
+        </li>
+        <li>
+          <h3>Parent enters the code</h3>
+          <p class="muted">The parent receives a six-digit code and enters it on the booking page.</p>
+        </li>
+        <li>
+          <h3>Confirm the trial</h3>
+          <p class="muted">The booking is confirmed and the parent receives a WhatsApp message with a private booking link.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section" aria-labelledby="plans-heading">
+      <div class="section-head">
+        <div>
+          <h2 id="plans-heading">Plans</h2>
+          <p>Prices are published as integer paise in the content file.</p>
+        </div>
+        <a href="/plans/">Compare plans</a>
+      </div>
+      <div class="grid two">
+        {
+          plans.map((plan) => (
+            <article class="card plan-card">
+              <span class="tag">{plan.type === "monthly" ? "Monthly" : "Crash course"}</span>
+              <h3>{plan.name}</h3>
+              <p class="price">{formatPrice(plan.price_paise, plan.currency)}</p>
+              <p class="muted">
+                {plan.session_minutes} minute sessions
+                {plan.sessions_per_week ? `, ${plan.sessions_per_week} per week` : ""}
+                {plan.duration_days ? `, ${plan.duration_days} days` : ""}.
+              </p>
+              <p class="small">{plan.cancellation}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="policies-heading">
+      <div class="card">
+        <h2 id="policies-heading">Clear policies, written down</h2>
+        <p>
+          Read the <a href="/policies/privacy/">privacy policy</a>, the
+          <a href="/policies/consent/">consent policy</a>, and the
+          <a href="/policies/cancellation-refund/">cancellation and refund policy</a> before booking.
+        </p>
+        <p class="muted">
+          AI agents can read the same facts at <a href="/llms.txt">/llms.txt</a> and use the
+          <a href="/openapi.yaml">OpenAPI description</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+</Layout>

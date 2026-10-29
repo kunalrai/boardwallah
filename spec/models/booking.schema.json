@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://[your-domain]/spec/models/booking.schema.json",
+  "title": "Booking",
+  "description": "Public view. Parent contact details are stored internally and never returned.",
+  "type": "object",
+  "required": ["id", "type", "slot_id", "student", "subjects", "locality_code", "status", "payment_status", "consent_id", "created_at", "version", "last_updated"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^B-[0-9a-f]{12}$" },
+    "type": { "const": "trial" },
+    "slot_id": { "type": "string" },
+    "student": {
+      "type": "object",
+      "required": ["display_name", "class", "board"],
+      "properties": {
+        "display_name": { "type": "string", "maxLength": 20, "description": "First name or initials only" },
+        "class": { "const": 10 },
+        "board": { "const": "CBSE" }
+      }
+    },
+    "subjects": { "type": "array", "items": { "enum": ["maths", "science", "social_science", "english", "hindi"] }, "minItems": 1 },
+    "locality_code": { "type": "string" },
+    "status": { "enum": ["confirmed", "cancelled", "completed", "no_show"] },
+    "payment_status": { "enum": ["not_required", "pending", "paid"] },
+    "consent_id": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "version": { "type": "string" },
+    "last_updated": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

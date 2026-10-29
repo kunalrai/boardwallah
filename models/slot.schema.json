@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://[your-domain]/spec/models/slot.schema.json",
+  "title": "TrialSlot",
+  "type": "object",
+  "required": ["id", "provider_id", "locality_code", "starts_at", "ends_at", "status", "version", "last_updated"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^S-[0-9]+$" },
+    "provider_id": { "type": "string" },
+    "locality_code": { "type": "string" },
+    "starts_at": { "type": "string", "format": "date-time", "description": "ISO 8601 with +05:30 offset" },
+    "ends_at": { "type": "string", "format": "date-time" },
+    "status": { "enum": ["open", "held", "booked", "closed"] },
+    "version": { "type": "string" },
+    "last_updated": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,218 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { loadContent, subjectNames } from "../lib/content";
+import { apiBase } from "../lib/site";
+
+const content = loadContent();
+const { provider } = content;
+const names = subjectNames(content);
+---
+
+<Layout
+  title={`Manage a trial booking | ${provider.name}`}
+  description="View or cancel a confirmed CBSE Class 10 trial booking with the private access token."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Manage booking</nav>
+    <h1>Manage a trial booking</h1>
+    <p class="lead">
+      Open the private link sent to the parent on WhatsApp. If you have the booking id and access token, enter them
+      below.
+    </p>
+
+    <div id="booking-manager" data-api={apiBase} data-subjects={JSON.stringify(names)}>
+      <section class="card" aria-labelledby="lookup-heading">
+        <h2 id="lookup-heading">Open a booking</h2>
+        <form id="lookup-form">
+          <div class="field">
+            <label for="booking-id">Booking id</label>
+            <input id="booking-id" name="booking_id" type="text" placeholder="B-0123456789ab" autocomplete="off" required />
+          </div>
+          <div class="field">
+            <label for="booking-token">Access token</label>
+            <input id="booking-token" name="token" type="password" autocomplete="off" required />
+            <span class="hint">The token is in the private link after <code>token=</code>. Do not share it.</span>
+          </div>
+          <div>
+            <button type="submit" id="lookup-button">View booking</button>
+          </div>
+        </form>
+        <p id="lookup-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card flow-step" id="booking-detail" hidden aria-labelledby="detail-heading">
+        <h2 id="detail-heading">Booking details</h2>
+        <dl class="summary" id="booking-detail-list"></dl>
+        <div class="actions">
+          <button type="button" class="secondary" id="cancel-button">Cancel booking</button>
+          <a class="button secondary" href="/book/">Book another trial</a>
+        </div>
+        <p id="cancel-status" role="status" aria-live="polite"></p>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  type BookingView = {
+    id: string;
+    type: string;
+    slot_id: string;
+    student: { display_name: string; class: number; board: string };
+    subjects: string[];
+    locality_code: string;
+    status: string;
+    payment_status: string;
+    consent_id: string;
+    created_at: string;
+    last_updated: string;
+  };
+
+  class ApiFailure extends Error {
+    status: number;
+    code: string;
+    retryAfter: string | null;
+
+    constructor(status: number, body: Record<string, unknown>, fallback: string, retryAfter: string | null) {
+      super(String(body.detail ?? body.title ?? fallback));
+      this.status = status;
+      this.code = String(body.code ?? "request_failed");
+      this.retryAfter = retryAfter;
+    }
+  }
+
+  const root = document.getElementById("booking-manager") as HTMLElement | null;
+  if (root) {
+    const api = root.dataset.api ?? "";
+    const names = JSON.parse(root.dataset.subjects ?? "{}") as Record<string, string>;
+    const form = document.getElementById("lookup-form") as HTMLFormElement;
+    const idInput = document.getElementById("booking-id") as HTMLInputElement;
+    const tokenInput = document.getElementById("booking-token") as HTMLInputElement;
+    const lookupButton = document.getElementById("lookup-button") as HTMLButtonElement;
+    const lookupStatus = document.getElementById("lookup-status") as HTMLElement;
+    const detail = document.getElementById("booking-detail") as HTMLElement;
+    const detailList = document.getElementById("booking-detail-list") as HTMLElement;
+    const cancelButton = document.getElementById("cancel-button") as HTMLButtonElement;
+    const cancelStatus = document.getElementById("cancel-status") as HTMLElement;
+
+    let current: { id: string; token: string; booking?: BookingView } | undefined;
+
+    function setStatus(element: HTMLElement, text: string, tone: "info" | "error" | "success") {
+      element.textContent = text;
+      element.className = text ? `notice ${tone === "info" ? "info" : tone}` : "";
+    }
+
+    async function request<T>(path: string, options: { method?: string; token: string }): Promise<T> {
+      const response = await fetch(`${api}${path}`, {
+        method: options.method ?? "GET",
+        headers: {
+          accept: "application/json",
+          authorization: `Bearer ${options.token}`,
+          ...(options.method === "POST" ? { "Idempotency-Key": `CANCEL-${crypto.randomUUID()}`.slice(0, 64) } : {}),
+        },
+      });
+      const text = await response.text();
+      let body: Record<string, unknown> = {};
+      if (text) {
+        try {
+          body = JSON.parse(text) as Record<string, unknown>;
+        } catch {
+          body = { detail: text };
+        }
+      }
+      if (!response.ok) {
+        throw new ApiFailure(response.status, body, `Request failed with status ${response.status}.`, response.headers.get("Retry-After"));
+      }
+      return body as T;
+    }
+
+    function failureText(error: unknown): string {
+      if (!(error instanceof ApiFailure)) return "Something went wrong. Please try again.";
+      const base = error.message || "The request was refused.";
+      return error.retryAfter ? `${base} Try again in ${error.retryAfter} seconds.` : base;
+    }
+
+    function renderBooking(booking: BookingView) {
+      detailList.replaceChildren();
+      const rows: [string, string][] = [
+        ["Booking", booking.id],
+        ["Status", booking.status],
+        ["Slot", booking.slot_id],
+        ["Locality", booking.locality_code],
+        ["Student", booking.student.display_name],
+        ["Class", `${booking.student.board} ${booking.student.class}`],
+        ["Subjects", booking.subjects.map((id) => names[id] ?? id).join(", ")],
+        ["Payment", booking.payment_status],
+        ["Booked", new Date(booking.created_at).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })],
+      ];
+      for (const [term, value] of rows) {
+        const dt = document.createElement("dt");
+        dt.textContent = term;
+        const dd = document.createElement("dd");
+        dd.textContent = value;
+        detailList.append(dt, dd);
+      }
+      cancelButton.hidden = booking.status !== "confirmed";
+      detail.hidden = false;
+      detail.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    async function loadBooking(id: string, token: string) {
+      lookupButton.disabled = true;
+      setStatus(lookupStatus, "Loading booking...", "info");
+      try {
+        const booking = await request<BookingView>(`/api/v1/bookings/${encodeURIComponent(id)}`, { token });
+        current = { id, token, booking };
+        setStatus(lookupStatus, "Booking found.", "success");
+        renderBooking(booking);
+      } catch (error) {
+        detail.hidden = true;
+        current = undefined;
+        setStatus(lookupStatus, failureText(error), "error");
+      } finally {
+        lookupButton.disabled = false;
+      }
+    }
+
+    async function cancelBooking() {
+      if (!current) return;
+      if (!window.confirm("Cancel this trial booking? This cannot be undone.")) return;
+      cancelButton.disabled = true;
+      setStatus(cancelStatus, "Cancelling the booking...", "info");
+      try {
+        const booking = await request<BookingView>(`/api/v1/bookings/${encodeURIComponent(current.id)}/cancel`, {
+          method: "POST",
+          token: current.token,
+        });
+        current.booking = booking;
+        renderBooking(booking);
+        setStatus(cancelStatus, "Booking cancelled. The slot is open again.", "success");
+      } catch (error) {
+        setStatus(cancelStatus, failureText(error), "error");
+      } finally {
+        cancelButton.disabled = false;
+      }
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const id = idInput.value.trim();
+      const token = tokenInput.value.trim();
+      if (!id || !token) {
+        setStatus(lookupStatus, "Enter both the booking id and the access token.", "error");
+        return;
+      }
+      void loadBooking(id, token);
+    });
+    cancelButton.addEventListener("click", () => void cancelBooking());
+
+    const params = new URLSearchParams(location.hash.replace(/^#/, ""));
+    const id = params.get("id");
+    const token = params.get("token");
+    if (id && token) {
+      idInput.value = id;
+      tokenInput.value = token;
+      void loadBooking(id, token);
+    }
+  }
+</script>
