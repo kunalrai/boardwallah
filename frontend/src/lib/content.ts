@@ -31,6 +31,10 @@ export interface Subject {
   name: string;
 }
 
+export function teachingModeLabel(mode: "home_visit" | "online"): string {
+  return mode === "online" ? "Online" : "At your home";
+}
+
 export interface Plan {
   id: string;
   name: string;

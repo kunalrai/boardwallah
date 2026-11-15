@@ -1,8 +1,8 @@
 ---
 import { getImage, Image } from "astro:assets";
-import CalCallout from "../components/CalCallout.astro";
 import Layout from "../layouts/Layout.astro";
-import { loadContent } from "../lib/content";
+import { loadContent, teachingModeLabel } from "../lib/content";
+import { calBookingUrl } from "../lib/site";
 import adImage from "../assets/ad.png";
 
 const { provider, subjects } = loadContent();
@@ -12,8 +12,8 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
 ---
 
 <Layout 
-  title={`${provider.name} | Expert CBSE Class 10 Home Tuition`} 
-  description={`Personalized home tuition for CBSE Class 10 by ${provider.tutor_name}.`}
+  title={`${provider.name} | CBSE Class 10 Tuition, Online or At Home`} 
+  description={`One-to-one CBSE Class 10 tuition online or at home with ${provider.tutor_name}. Book a free trial slot.`}
   image={socialImage.src}
   imageAlt={posterAlt}
 >
@@ -21,9 +21,9 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
     <section class="hero">
       <div class="hero-text">
         <h1>Master CBSE Class 10 with {provider.tutor_name}</h1>
-        <p class="lead">Expert home tuition tailored to your learning pace. Helping students excel in their board exams through conceptual clarity and consistent practice.</p>
+        <p class="lead">Expert tuition online or at your home, tailored to your learning pace. Pick a slot and choose the mode when you book.</p>
         <div class="actions">
-          <a href="/book/" class="button">Book Free Trial</a>
+          <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
           <a href="/plans/" class="button secondary">View Plans</a>
         </div>
       </div>
@@ -50,7 +50,7 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
       <div class="profile-details">
         <div class="detail-item">
           <span class="label">Teaching Mode:</span>
-          <span class="value">{provider.teaching_mode.join(", ")}</span>
+          <span class="value">{provider.teaching_mode.map(teachingModeLabel).join(" or ")}</span>
         </div>
         <div class="detail-item">
           <span class="label">Languages:</span>
@@ -75,10 +75,8 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
 
     <section class="cta-banner">
       <h2>Ready to start learning?</h2>
-      <p>Book your free trial session today and experience a personalized approach to learning that works.</p>
-      <a href="/book/" class="button">Reserve Your Free Trial</a>
+      <p>Book your free trial session today. Pick online or a home visit when you choose a slot.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Reserve Your Free Trial</a>
     </section>
-
-    <CalCallout />
   </div>
 </Layout>

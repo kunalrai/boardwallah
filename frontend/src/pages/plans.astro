@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { formatPlanPrice, loadContent, subjectNames } from "../lib/content";
+import { calBookingUrl } from "../lib/site";
 
 const { provider, plans } = loadContent();
 const names = subjectNames(loadContent());
@@ -14,7 +15,7 @@ const names = subjectNames(loadContent());
     <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Plans</nav>
     <h1>Tuition plans</h1>
     <p class="lead">
-      Every plan is for CBSE Class 10. The trial is separate and {provider.trial.fee_paise === 0 ? "free" : "paid"}.
+      Every plan is for CBSE Class 10, online or at your home. The trial is separate and {provider.trial.fee_paise === 0 ? "free" : "paid"}.
     </p>
 
     <div class="grid two">
@@ -36,7 +37,7 @@ const names = subjectNames(loadContent());
               <dt>Cancellation</dt>
               <dd>{plan.cancellation}</dd>
             </dl>
-            <a class="button" href="/book/">Book a free trial first</a>
+            <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book a free trial first</a>
           </article>
         ))
       }

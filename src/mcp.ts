@@ -72,7 +72,7 @@ export function createMcpServer(services: Services): McpServer {
     { name: "home-tuition-provider", version: services.config.specVersion },
     {
       instructions:
-        "Find and book a free CBSE Class 10 home tuition trial with one provider. " +
+        "Find and book a free CBSE Class 10 online or at-home trial with one provider. " +
         "The parent must provide the one-time consent code. Never invent a code. " +
         "Confirm student display name, subjects, locality and time with the parent before booking.",
     },

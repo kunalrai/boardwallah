@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { loadContent } from "../lib/content";
+import { calBookingUrl } from "../lib/site";
 
 const { provider, subjects } = loadContent();
 ---
@@ -13,7 +14,7 @@ const { provider, subjects } = loadContent();
     <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Subjects</nav>
     <h1>CBSE Class 10 subjects</h1>
     <p class="lead">
-      All lessons follow the CBSE Class 10 syllabus. Choose the subjects you need during booking.
+      All lessons follow the CBSE Class 10 syllabus, online or at your home. Tell us which subjects you need when you book.
     </p>
 
     <div class="grid two">
@@ -26,7 +27,7 @@ const { provider, subjects } = loadContent();
               This subject is available as part of the monthly plan and the crash course. Mention it in the
               <a href="/enquiry/">enquiry form</a> if you want to discuss a specific topic first.
             </p>
-            <a class="button secondary" href="/book/">Book a trial</a>
+            <a class="button secondary" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book a trial</a>
           </article>
         ))
       }
@@ -37,10 +38,10 @@ const { provider, subjects } = loadContent();
         <h2>Trial lesson</h2>
         <p>
           The {provider.trial.duration_minutes}-minute trial is {provider.trial.fee_paise === 0 ? "free" : "paid"}.
-          It is available in {provider.service_localities.join(" and ")}, on
+          Join online from anywhere, or book a home visit in {provider.service_localities.join(" and ")}, on
           {provider.availability.days.join(", ")} between {provider.availability.window} IST.
         </p>
-        <a class="button" href="/book/">Choose a trial slot</a>
+        <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Choose a trial slot</a>
       </div>
     </section>
   </div>

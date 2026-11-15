@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { loadContent } from "../lib/content";
-import { apiBase } from "../lib/site";
+import { apiBase, calBookingUrl } from "../lib/site";
 
 const { provider } = loadContent();
 const clientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID ?? "";
@@ -45,7 +45,7 @@ const clientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID ?? "";
             <dd id="profile-email"></dd>
           </dl>
           <div class="actions">
-            <a class="button" id="continue-link" href="/book/">Book a trial</a>
+            <a class="button" id="continue-link" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book a trial</a>
             <button class="secondary" id="sign-out-button" type="button">Sign out</button>
           </div>
 
@@ -102,16 +102,9 @@ const clientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID ?? "";
     const status = document.getElementById("auth-status") as HTMLElement;
     const nameCell = document.getElementById("profile-name") as HTMLElement;
     const emailCell = document.getElementById("profile-email") as HTMLElement;
-    const continueLink = document.getElementById("continue-link") as HTMLAnchorElement;
     const signOutButton = document.getElementById("sign-out-button") as HTMLButtonElement;
     const bookingsList = document.getElementById("bookings-list") as HTMLElement;
     const bookingsStatus = document.getElementById("bookings-status") as HTMLElement;
-
-    const next = (() => {
-      const value = new URLSearchParams(window.location.search).get("next");
-      return value && value.startsWith("/") && !value.startsWith("//") ? value : "/book/";
-    })();
-    continueLink.href = next;
 
     function setStatus(text: string, tone: "info" | "error" | "success") {
       status.textContent = text;

@@ -1,6 +1,6 @@
-# Cancellation and Refund Policy (version 1.0)
+# Cancellation and Refund Policy (version 1.1)
 
-**Trial sessions:** Free. Cancel up to 4 hours before the start time through the booking link or by WhatsApp. Cancellations within 4 hours are not possible through the API; contact the provider directly.
+**Trial sessions:** Free. Cancel or reschedule up to 4 hours before the start time using the link in your Cal.com confirmation, or by WhatsApp.
 
 **Paid plans:**
 - Cancel before the first session for a full refund.
@@ -10,5 +10,3 @@
 **Missed sessions:** If the provider cancels a session, it is rescheduled or refunded at the parent's choice.
 
 **Tutor replacement:** If the parent is not satisfied after the trial, the parent can request a replacement or a refund for any paid period not yet started.
-
-[Replace bracketed amounts and timings with final terms before publishing.]

@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { formatPlanPrice, formatPrice, loadContent, subjectNames } from "../lib/content";
-import { absoluteUrl, siteOrigin } from "../lib/site";
+import { formatPlanPrice, formatPrice, loadContent, subjectNames, teachingModeLabel } from "../lib/content";
+import { absoluteUrl, calBookingUrl, siteOrigin } from "../lib/site";
 
 export const GET: APIRoute = () => {
   const { provider, subjects, plans } = loadContent();
@@ -8,7 +8,7 @@ export const GET: APIRoute = () => {
   const lines = [
     `# ${provider.name}`,
     "",
-    `> CBSE Class 10 home tuition by ${provider.tutor_name} in ${provider.service_localities.join(" and ")}. The trial is ${provider.trial.fee_paise === 0 ? "free" : formatPrice(provider.trial.fee_paise, provider.trial.currency)} and lasts ${provider.trial.duration_minutes} minutes. A parent or guardian must confirm consent with a one-time code before a booking is created.`,
+    `> CBSE Class 10 tuition by ${provider.tutor_name}, online or at the student's home in ${provider.service_localities.join(" and ")}. The trial is ${provider.trial.fee_paise === 0 ? "free" : formatPrice(provider.trial.fee_paise, provider.trial.currency)} and lasts ${provider.trial.duration_minutes} minutes. Book at ${calBookingUrl} and choose online or a home visit.`,
     "",
     "## Provider",
     "",
@@ -20,7 +20,7 @@ export const GET: APIRoute = () => {
     `- Experience: ${provider.experience_years} years`,
     `- Boards: ${provider.boards.join(", ")}`,
     `- Classes: ${provider.classes.join(", ")}`,
-    `- Teaching mode: ${provider.teaching_mode.join(", ")}`,
+    `- Teaching mode: ${provider.teaching_mode.map(teachingModeLabel).join(" or ")}`,
     `- Languages: ${provider.languages.join(", ")}`,
     `- Service localities: ${provider.service_localities.join(", ")}`,
     `- Availability: ${provider.availability.days.join(", ")} ${provider.availability.window} ${provider.availability.timezone}`,
@@ -39,7 +39,8 @@ export const GET: APIRoute = () => {
     "",
     "## Pages",
     "",
-    ...["", "subjects/", "plans/", "book/", "enquiry/", "booking/"].map((path) => `- ${absoluteUrl(path)}`),
+    ...["", "subjects/", "plans/", "enquiry/", "booking/", "login/"].map((path) => `- ${absoluteUrl(path)}`),
+    `- Booking (Cal.com): ${calBookingUrl}`,
     `- ${absoluteUrl("policies/privacy/")}`,
     `- ${absoluteUrl("policies/consent/")}`,
     `- ${absoluteUrl("policies/cancellation-refund/")}`,

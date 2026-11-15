@@ -7,6 +7,7 @@ export interface Policy {
   title: string;
   description: string;
   markdown: string;
+  version: string;
 }
 
 const metadata: Record<string, { title: string; description: string }> = {
@@ -16,7 +17,7 @@ const metadata: Record<string, { title: string; description: string }> = {
   },
   consent: {
     title: "Consent policy",
-    description: "How parent consent is requested and verified for a minor's trial booking.",
+    description: "How a parent or guardian books and confirms consent for a minor's sessions.",
   },
   "cancellation-refund": {
     title: "Cancellation and refund policy",
@@ -30,5 +31,6 @@ export function loadPolicy(slug: string): Policy {
   const meta = metadata[slug];
   if (!meta) throw new Error(`Unknown policy: ${slug}`);
   const markdown = readFileSync(join(policyDir, `${slug}.md`), "utf8");
-  return { slug, ...meta, markdown };
+  const version = markdown.match(/\bversion\s+([0-9]+(?:\.[0-9]+)*)/i)?.[1] ?? "1.0";
+  return { slug, ...meta, markdown, version };
 }

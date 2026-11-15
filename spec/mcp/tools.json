@@ -1,7 +1,7 @@
 {
   "name": "home-tuition-provider",
   "version": "0.1.0",
-  "description": "Find and book a free CBSE Class 10 home tuition trial with one provider. Booking needs parent consent via OTP.",
+  "description": "Find and book a free CBSE Class 10 online or at-home trial with one provider. Booking needs parent consent via OTP.",
   "tools": [
     {
       "name": "get_provider",

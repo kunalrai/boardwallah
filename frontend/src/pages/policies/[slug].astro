@@ -28,7 +28,7 @@ const labels: Record<string, string> = {
       <div set:html={html} />
       <hr />
       <p class="small muted">
-        Policy version 1.0. Other policies:
+        Policy version {policy.version}. Other policies:
         {
           others.map((item) => (
             <span>

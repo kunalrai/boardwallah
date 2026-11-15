@@ -156,7 +156,7 @@ export function createApp(options: AppOptions = {}): AppBundle {
 
   app.get("/", (c) =>
     c.json({
-      name: "Home Tuition Provider API",
+      name: "CBSE Class 10 Tuition Provider API",
       version: config.specVersion,
       api: "/api/v1",
       mcp: "/mcp",

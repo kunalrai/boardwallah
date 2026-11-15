@@ -2,14 +2,14 @@
 import CalCallout from "../components/CalCallout.astro";
 import Layout from "../layouts/Layout.astro";
 import { loadContent } from "../lib/content";
-import { apiBase } from "../lib/site";
+import { apiBase, calBookingUrl } from "../lib/site";
 
 const { provider, subjects } = loadContent();
 ---
 
 <Layout
   title={`Enquiry | ${provider.name}`}
-  description={`Ask about CBSE Class 10 home tuition in ${provider.service_localities.join(" and ")}. No contact details required.`}
+  description={`Ask about CBSE Class 10 tuition online or at home in ${provider.service_localities.join(" and ")}. No contact details required.`}
 >
   <div class="wrap">
     <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Enquiry</nav>
@@ -73,7 +73,7 @@ const { provider, subjects } = loadContent();
         <h2>What happens next</h2>
         <p>
           The tutor reads the enquiry and replies through the channel you used to reach this page. To book a trial
-          immediately, use the <a href="/book/">booking page</a>.
+          immediately, use the <a href={calBookingUrl} target="_blank" rel="noopener noreferrer">booking page on Cal.com</a>.
         </p>
         <h3>Privacy</h3>
         <p class="muted">
@@ -85,7 +85,7 @@ const { provider, subjects } = loadContent();
 
     <CalCallout
       heading="Would you rather talk it through?"
-      description="Pick a 15 or 30 minute slot and I will call you to discuss subjects, fees or timings. The scheduling page asks for your name and email."
+      description="Pick a slot and I will call you to discuss subjects, fees or timings. The scheduling page asks for your name and email."
     />
   </div>
 </Layout>

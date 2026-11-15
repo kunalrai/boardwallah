@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { loadContent, subjectNames } from "../lib/content";
-import { apiBase } from "../lib/site";
+import { apiBase, calBookingUrl } from "../lib/site";
 
 const content = loadContent();
 const { provider } = content;
@@ -45,7 +45,7 @@ const names = subjectNames(content);
         <dl class="summary" id="booking-detail-list"></dl>
         <div class="actions">
           <button type="button" class="secondary" id="cancel-button">Cancel booking</button>
-          <a class="button secondary" href="/book/">Book another trial</a>
+          <a class="button secondary" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book another trial</a>
         </div>
         <p id="cancel-status" role="status" aria-live="polite"></p>
       </section>

@@ -1154,20 +1154,22 @@ Feature: Privacy of minors and parents
 
 ### policies/privacy.md
 ```markdown
-# Privacy Policy (summary, version 1.0)
+# Privacy Policy (summary, version 1.1)
 
 **Who we are:** Boardwallah, run by Kunal Rai. Contact: ikunalrai@gmail.com.
 
 **Who the service is for:** Parents and guardians of students in Class 10. Students are minors. We never ask for a student's full name, date of birth, school name, address, or health information.
 
 **What we collect:**
-- Parent: name, phone number (WhatsApp), locality.
+- Parent: name, email address and phone number, plus the locality for a home visit.
 - Student: first name or initials, class, board, subjects.
-- Enquiry or booking details: preferred times and a short message.
+- Scheduling details: the date and time you pick, and a short message if you send an enquiry.
 
 **What we do not collect:** Student date of birth, school name, photos of the student, health data, or Aadhaar and other ID numbers.
 
-**Consent:** A booking requires a one-time code sent to the parent's WhatsApp. The parent confirms consent and the code is recorded with the time and policy version.
+**Consent:** A parent or guardian books every trial and confirms that role when scheduling. The tutor confirms it again before the first session. A child does not book on their own.
+
+**Scheduling provider:** Booking links open Cal.com. Cal.com collects the name, email and chosen time you enter there and processes them under its own privacy policy. We receive those details to run the session.
 
 **Retention:** Booking and enquiry records are kept for 12 months after the last session, then deleted. Consent records are kept for 3 years to show proof of consent.
 
@@ -1182,21 +1184,20 @@ Feature: Privacy of minors and parents
 
 ### policies/consent.md
 ```markdown
-# Consent Policy (version 1.0)
+# Consent Policy (version 1.1)
 
-1. Trial bookings for minors require verified parent consent.
-2. Consent is requested by a one-time code sent to the parent's WhatsApp, with SMS fallback.
-3. The code expires after 10 minutes. Five wrong attempts lock the request.
-4. A consent token is granted after successful verification. It is valid for 30 minutes, single-use, and bound to one booking.
-5. The parent can revoke consent at any time by writing to ikunalrai@gmail.com. Revoking cancels any unused hold and any future booking that depends on it.
-6. Consent is not given on the parent's behalf by an agent. The parent must provide the code.
+1. Every trial and paid session for a minor is booked by a parent or guardian.
+2. The parent or guardian confirms that role when scheduling on Cal.com, and the tutor confirms it on WhatsApp before the first session.
+3. Parents choose online or a home visit when they pick a slot.
+4. A child does not book or consent on their own.
+5. The parent can withdraw consent at any time by writing to ikunalrai@gmail.com. Withdrawing consent cancels any future session.
 ```
 
 ### policies/cancellation-refund.md
 ```markdown
-# Cancellation and Refund Policy (version 1.0)
+# Cancellation and Refund Policy (version 1.1)
 
-**Trial sessions:** Free. Cancel up to 4 hours before the start time through the booking link or by WhatsApp. Cancellations within 4 hours are not possible through the API; contact the provider directly.
+**Trial sessions:** Free. Cancel or reschedule up to 4 hours before the start time using the link in your Cal.com confirmation, or by WhatsApp.
 
 **Paid plans:**
 - Cancel before the first session for a full refund.
@@ -1206,8 +1207,6 @@ Feature: Privacy of minors and parents
 **Missed sessions:** If the provider cancels a session, it is rescheduled or refunded at the parent's choice.
 
 **Tutor replacement:** If the parent is not satisfied after the trial, the parent can request a replacement or a refund for any paid period not yet started.
-
-[Replace bracketed amounts and timings with final terms before publishing.]
 ```
 
 ---
@@ -1224,7 +1223,7 @@ Feature: Privacy of minors and parents
   "tutor_name": "Kunal Rai",
   "qualifications": ["[Degree, e.g. M.Sc. Mathematics]", "[B.Ed., if applicable]"],
   "experience_years": 0,
-  "teaching_mode": ["home_visit"],
+  "teaching_mode": ["online", "home_visit"],
   "boards": ["CBSE"],
   "classes": [10],
   "subjects": ["maths", "science", "social_science", "english", "hindi"],
