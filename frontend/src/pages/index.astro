@@ -1,22 +1,41 @@
 ---
+import { getImage, Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { loadContent } from "../lib/content";
+import adImage from "../assets/ad.png";
 
 const { provider, subjects } = loadContent();
+const posterAlt =
+  "BoardWallah CBSE Class 10 maths poster: aiming for 95%+, with NCERT and RD Sharma practice, previous year questions, chapter-wise revision and board-focused tests.";
+const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" });
 ---
 
 <Layout 
   title={`${provider.name} | Expert CBSE Class 10 Home Tuition`} 
   description={`Personalized home tuition for CBSE Class 10 by ${provider.tutor_name}.`}
+  image={socialImage.src}
+  imageAlt={posterAlt}
 >
   <div class="wrap">
     <section class="hero">
-      <h1>Master CBSE Class 10 with {provider.tutor_name}</h1>
-      <p class="lead">Expert home tuition tailored to your learning pace. Helping students excel in their board exams through conceptual clarity and consistent practice.</p>
-      <div class="actions">
-        <a href="/book/" class="button">Book Free Trial</a>
-        <a href="/plans/" class="button secondary">View Plans</a>
+      <div class="hero-text">
+        <h1>Master CBSE Class 10 with {provider.tutor_name}</h1>
+        <p class="lead">Expert home tuition tailored to your learning pace. Helping students excel in their board exams through conceptual clarity and consistent practice.</p>
+        <div class="actions">
+          <a href="/book/" class="button">Book Free Trial</a>
+          <a href="/plans/" class="button secondary">View Plans</a>
+        </div>
       </div>
+      <figure class="hero-media">
+        <Image
+          src={adImage}
+          alt={posterAlt}
+          widths={[320, 480, 640]}
+          sizes="(max-width: 820px) 90vw, 400px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
     </section>
 
     <section class="card provider-profile">

@@ -177,6 +177,26 @@ main {
   padding-block: 1.5rem 3rem;
 }
 
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero-media {
+  margin: 0;
+  justify-self: center;
+  max-width: 400px;
+}
+
+.hero-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
 .eyebrow {
   display: inline-block;
   margin-bottom: 1rem;

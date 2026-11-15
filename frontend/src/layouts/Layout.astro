@@ -6,12 +6,16 @@ import { absoluteUrl } from "../lib/site";
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 const { provider } = loadContent();
 const {
   title = `${provider.name} | CBSE Class 10 home tuition`,
   description = `CBSE Class 10 home tuition with ${provider.tutor_name}. Free trial, parent consent by one-time code, and clear policies.`,
+  image,
+  imageAlt,
 } = Astro.props;
 const path = Astro.url.pathname;
 const canonical = absoluteUrl(path);
@@ -40,6 +44,10 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    {image && <meta property="og:image" content={absoluteUrl(image)} />}
+    {image && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+    {image && <meta name="twitter:card" content="summary_large_image" />}
+    {image && <meta name="twitter:image" content={absoluteUrl(image)} />}
     <title>{title}</title>
   </head>
   <body>
