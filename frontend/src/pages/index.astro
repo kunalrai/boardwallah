@@ -1,5 +1,6 @@
 ---
 import { getImage, Image } from "astro:assets";
+import CalCallout from "../components/CalCallout.astro";
 import Layout from "../layouts/Layout.astro";
 import { loadContent } from "../lib/content";
 import adImage from "../assets/ad.png";
@@ -77,5 +78,7 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
       <p>Book your free trial session today and experience a personalized approach to learning that works.</p>
       <a href="/book/" class="button">Reserve Your Free Trial</a>
     </section>
+
+    <CalCallout />
   </div>
 </Layout>

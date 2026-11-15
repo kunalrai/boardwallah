@@ -1,0 +1,23 @@
+---
+import { calBookingUrl } from "../lib/site";
+
+interface Props {
+  heading?: string;
+  description?: string;
+}
+
+const {
+  heading = "Prefer to talk before booking?",
+  description = "Pick a 15 or 30 minute slot and I will call you to answer questions about the syllabus, fees or timings. The scheduling page asks for your name and email.",
+} = Astro.props;
+---
+
+<section class="card cal-callout" aria-labelledby="cal-callout-heading">
+  <div class="cal-callout-text">
+    <h2 id="cal-callout-heading">{heading}</h2>
+    <p>{description}</p>
+  </div>
+  <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">
+    Schedule a call
+  </a>
+</section>

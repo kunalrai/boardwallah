@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import { loadContent, whatsappLink } from "../lib/content";
-import { absoluteUrl } from "../lib/site";
+import { absoluteUrl, calBookingUrl } from "../lib/site";
 
 interface Props {
   title?: string;
@@ -92,6 +92,8 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
             <a href={whatsappLink(provider.contact.whatsapp, `Hello, I would like to ask about Class 10 tuition.`)}>WhatsApp</a>
             <br />
             <a href={`mailto:${provider.contact.email}`}>{provider.contact.email}</a>
+            <br />
+            <a href={calBookingUrl} target="_blank" rel="noopener noreferrer">Schedule a call</a>
           </p>
         </div>
         <div>
