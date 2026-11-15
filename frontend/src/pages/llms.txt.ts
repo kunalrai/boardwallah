@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { formatPrice, loadContent, subjectNames } from "../lib/content";
+import { formatPlanPrice, formatPrice, loadContent, subjectNames } from "../lib/content";
 import { absoluteUrl, siteOrigin } from "../lib/site";
 
 export const GET: APIRoute = () => {
@@ -8,7 +8,7 @@ export const GET: APIRoute = () => {
   const lines = [
     `# ${provider.name}`,
     "",
-    `> CBSE Class 10 home tuition by ${provider.tutor_name} in ${provider.service_localities.join(" and ")}. The trial is ${formatPrice(provider.trial.fee_paise)} and lasts ${provider.trial.duration_minutes} minutes. A parent or guardian must confirm consent with a one-time code before a booking is created.`,
+    `> CBSE Class 10 home tuition by ${provider.tutor_name} in ${provider.service_localities.join(" and ")}. The trial is ${provider.trial.fee_paise === 0 ? "free" : formatPrice(provider.trial.fee_paise, provider.trial.currency)} and lasts ${provider.trial.duration_minutes} minutes. A parent or guardian must confirm consent with a one-time code before a booking is created.`,
     "",
     "## Provider",
     "",
@@ -34,7 +34,7 @@ export const GET: APIRoute = () => {
     "## Plans",
     "",
     ...plans.flatMap((plan) => [
-      `- ${plan.name} (${plan.id}): ${formatPrice(plan.price_paise, plan.currency)}; ${plan.session_minutes}-minute sessions${plan.sessions_per_week ? `, ${plan.sessions_per_week} per week` : ""}${plan.duration_days ? `, ${plan.duration_days} days` : ""}; subjects: ${plan.subjects.map((id) => names[id] ?? id).join(", ")}; cancellation: ${plan.cancellation}`,
+      `- ${plan.name} (${plan.id}): ${formatPlanPrice(plan.price_paise, plan.currency)}; ${plan.session_minutes}-minute sessions${plan.sessions_per_week ? `, ${plan.sessions_per_week} per week` : ""}${plan.duration_days ? `, ${plan.duration_days} days` : ""}; subjects: ${plan.subjects.map((id) => names[id] ?? id).join(", ")}; cancellation: ${plan.cancellation}`,
     ]),
     "",
     "## Pages",

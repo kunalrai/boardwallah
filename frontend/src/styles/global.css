@@ -583,6 +583,117 @@ fieldset {
   margin-top: 0.25rem;
 }
 
+/* Home page: tutor profile, subjects and closing call to action */
+.provider-profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.6fr);
+  gap: 1.5rem 2rem;
+  margin-top: 1.5rem;
+}
+
+.profile-text h2 {
+  margin-bottom: 0.5rem;
+}
+
+.qualifications {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.qualifications li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: var(--muted);
+}
+
+.qualifications li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--success);
+  font-weight: 700;
+}
+
+.profile-details {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--paper);
+}
+
+.detail-item {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.detail-item .label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.detail-item .value {
+  font-weight: 650;
+}
+
+.subjects-section {
+  padding-block: 2.25rem 0.5rem;
+}
+
+.subtitle {
+  margin-bottom: 1.25rem;
+  color: var(--muted);
+}
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.8rem;
+}
+
+.subjects-grid .subject-card {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  font-weight: 650;
+}
+
+.cta-banner {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  color: #fff;
+  text-align: center;
+}
+
+.cta-banner h2 {
+  color: #fff;
+}
+
+.cta-banner p {
+  max-width: 55ch;
+  margin-inline: auto;
+  color: rgb(255 255 255 / 88%);
+}
+
+.cta-banner .button {
+  margin-top: 0.5rem;
+  background: var(--accent);
+}
+
+.cta-banner .button:hover {
+  background: #9c4614;
+  color: #fff;
+}
+
 .site-footer {
   border-top: 1px solid var(--line);
   background: #eff2ed;
@@ -602,7 +713,8 @@ fieldset {
 
 @media (max-width: 820px) {
   .header-inner,
-  .hero {
+  .hero,
+  .provider-profile {
     grid-template-columns: 1fr;
   }
 

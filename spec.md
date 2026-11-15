@@ -1120,7 +1120,7 @@ Feature: Public reads
     And a Retry-After header is present
 
   Scenario: Public content matches the content files
-    Given /content/provider.json has tutor_name "[Your full name]"
+    Given /content/provider.json has tutor_name "Kunal Rai"
     When the agent calls GET /provider
     Then the returned tutor_name equals the value in /content/provider.json
 ```
@@ -1156,7 +1156,7 @@ Feature: Privacy of minors and parents
 ```markdown
 # Privacy Policy (summary, version 1.0)
 
-**Who we are:** [Your trading name], run by [Your full name]. Contact: [business email].
+**Who we are:** Boardwallah, run by Kunal Rai. Contact: ikunalrai@gmail.com.
 
 **Who the service is for:** Parents and guardians of students in Class 10. Students are minors. We never ask for a student's full name, date of birth, school name, address, or health information.
 
@@ -1173,7 +1173,7 @@ Feature: Privacy of minors and parents
 
 **Sharing:** We do not sell data. AI agents receive only public provider information and the booking status for the parent who holds the access token. Agents never receive parent phone numbers.
 
-**Your rights:** Request access, correction, or deletion at [business email]. We respond within 7 days.
+**Your rights:** Request access, correction, or deletion at ikunalrai@gmail.com. We respond within 7 days.
 
 **Security:** Data is stored in encrypted form at rest and in transit, with access limited to the provider.
 
@@ -1188,7 +1188,7 @@ Feature: Privacy of minors and parents
 2. Consent is requested by a one-time code sent to the parent's WhatsApp, with SMS fallback.
 3. The code expires after 10 minutes. Five wrong attempts lock the request.
 4. A consent token is granted after successful verification. It is valid for 30 minutes, single-use, and bound to one booking.
-5. The parent can revoke consent at any time by writing to [business email]. Revoking cancels any unused hold and any future booking that depends on it.
+5. The parent can revoke consent at any time by writing to ikunalrai@gmail.com. Revoking cancels any unused hold and any future booking that depends on it.
 6. Consent is not given on the parent's behalf by an agent. The parent must provide the code.
 ```
 
@@ -1220,8 +1220,8 @@ Feature: Privacy of minors and parents
   "id": "P-001",
   "version": "1.0.0",
   "last_updated": "2026-10-29T00:00:00+05:30",
-  "name": "[Your trading name]",
-  "tutor_name": "[Your full name]",
+  "name": "Boardwallah",
+  "tutor_name": "Kunal Rai",
   "qualifications": ["[Degree, e.g. M.Sc. Mathematics]", "[B.Ed., if applicable]"],
   "experience_years": 0,
   "teaching_mode": ["home_visit"],
@@ -1237,7 +1237,7 @@ Feature: Privacy of minors and parents
   },
   "contact": {
     "whatsapp": "+91XXXXXXXXXX",
-    "email": "[business email]"
+    "email": "ikunalrai@gmail.com"
   },
   "trial": {
     "available": true,

@@ -73,6 +73,10 @@ export function formatPrice(paise: number, currency = "INR"): string {
   return `${currency} ${amount}`;
 }
 
+export function formatPlanPrice(paise: number, currency = "INR"): string {
+  return paise === 0 ? "On request" : formatPrice(paise, currency);
+}
+
 const dateFormatter = new Intl.DateTimeFormat("en-IN", {
   timeZone: "Asia/Kolkata",
   weekday: "short",

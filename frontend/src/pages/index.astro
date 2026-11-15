@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { loadContent } from "../lib/content";
 
-const { provider } = loadContent();
+const { provider, subjects } = loadContent();
 ---
 
 <Layout 
@@ -47,10 +47,8 @@ const { provider } = loadContent();
       <h2>Subjects Offered</h2>
       <p class="subtitle">Comprehensive coverage of the CBSE Class 10 curriculum.</p>
       <div class="subjects-grid">
-        {provider.subjects.map(s => (
-          <div class="subject-card">
-            {s.replace('_', ' ')}
-          </div>
+        {subjects.map((subject) => (
+          <div class="subject-card">{subject.name}</div>
         ))}
       </div>
     </section>

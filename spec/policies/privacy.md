@@ -1,6 +1,6 @@
 # Privacy Policy (summary, version 1.0)
 
-**Who we are:** [Your trading name], run by [Your full name]. Contact: [business email].
+**Who we are:** Boardwallah, run by Kunal Rai. Contact: ikunalrai@gmail.com.
 
 **Who the service is for:** Parents and guardians of students in Class 10. Students are minors. We never ask for a student's full name, date of birth, school name, address, or health information.
 
@@ -17,7 +17,7 @@
 
 **Sharing:** We do not sell data. AI agents receive only public provider information and the booking status for the parent who holds the access token. Agents never receive parent phone numbers.
 
-**Your rights:** Request access, correction, or deletion at [business email]. We respond within 7 days.
+**Your rights:** Request access, correction, or deletion at ikunalrai@gmail.com. We respond within 7 days.
 
 **Security:** Data is stored in encrypted form at rest and in transit, with access limited to the provider.
 

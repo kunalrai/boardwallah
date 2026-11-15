@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { formatPrice, loadContent, subjectNames } from "../lib/content";
+import { formatPlanPrice, loadContent, subjectNames } from "../lib/content";
 
 const { provider, plans } = loadContent();
 const names = subjectNames(loadContent());
@@ -23,7 +23,7 @@ const names = subjectNames(loadContent());
           <article class="card plan-card">
             <span class="tag">{plan.type === "monthly" ? "Monthly" : "Crash course"}</span>
             <h2>{plan.name}</h2>
-            <p class="price">{formatPrice(plan.price_paise, plan.currency)}</p>
+            <p class="price">{formatPlanPrice(plan.price_paise, plan.currency)}</p>
             <dl class="summary">
               <dt>Sessions</dt>
               <dd>{plan.sessions_per_week ? `${plan.sessions_per_week} per week` : `${plan.duration_days} day course`}</dd>
@@ -43,8 +43,8 @@ const names = subjectNames(loadContent());
     </div>
 
     <div class="notice section" role="note">
-      Plan prices are stored as integer paise in <code>spec/content/plans.json</code>. A price of 0 is a placeholder
-      in this development copy and must be confirmed before publishing.
+      Plans are confirmed on WhatsApp before the first paid session. The free trial comes first, and
+      payment is by UPI or bank transfer.
     </div>
   </div>
 </Layout>

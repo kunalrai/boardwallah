@@ -19,7 +19,7 @@
   },
   "contact": {
     "whatsapp": "+919911566229",
-    "email": "[business email]"
+    "email": "ikunalrai@gmail.com"
   },
   "trial": {
     "available": true,
@@ -30,6 +30,6 @@
   "policies": {
     "refund": "See /policies/cancellation-refund.md",
     "cancellation": "Trials: up to 4 hours before start. Paid plans: see policy.",
-    "privacy_url": "https://[your-domain]/privacy"
+    "privacy_url": "https://www.boardwallah.space/policies/privacy/"
   }
 }
