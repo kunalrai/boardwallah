@@ -534,6 +534,34 @@ fieldset {
   font-size: 0.82rem;
 }
 
+.booking-list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.booking-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+.booking-item span:not(.tag) {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.booking-item .tag {
+  margin-left: auto;
+}
+
 .slot-status {
   min-height: 1.5rem;
 }

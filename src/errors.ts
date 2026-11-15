@@ -12,6 +12,7 @@ export type ProblemCode =
   | "booking_not_cancellable"
   | "rate_limited"
   | "unauthorized"
+  | "auth_unavailable"
   | "internal_error";
 
 export interface Problem {
@@ -37,6 +38,7 @@ const titles: Record<ProblemCode, string> = {
   booking_not_cancellable: "This booking can no longer be cancelled online.",
   rate_limited: "Too many requests.",
   unauthorized: "Not authorized.",
+  auth_unavailable: "Google sign-in is not available.",
   internal_error: "An unexpected error occurred.",
 };
 

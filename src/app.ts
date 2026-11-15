@@ -10,12 +10,13 @@ import { loadContent, type Content } from "./content";
 import type { Clock } from "./services";
 import { displayNameError, Services, type Notifier } from "./services";
 import { ApiError, problemResponse } from "./errors";
-import { hashBody } from "./ids";
-import type { IdempotencyRow } from "./store";
+import { hashBody, hashToken, randomToken } from "./ids";
+import type { IdempotencyRow, UserRow } from "./store";
 import { Store } from "./store";
 import { parseInstant, toIstIso } from "./time";
 import { createNotifier } from "./notifier";
 import { handleMcpRequest } from "./mcp";
+import { createGoogleVerifier, GoogleAuthError, type GoogleVerifier } from "./auth";
 
 const subject = z.enum(["maths", "science", "social_science", "english", "hindi"]);
 const phone = z.string().regex(/^\+91[0-9]{10}$/, "Use an Indian mobile number in +91XXXXXXXXXX format.");
@@ -26,6 +27,7 @@ export interface AppOptions {
   store?: Store;
   clock?: Clock;
   notifier?: Notifier;
+  googleVerifier?: GoogleVerifier;
 }
 
 export interface AppBundle {
@@ -34,6 +36,7 @@ export interface AppBundle {
   store: Store;
   config: Config;
   content: Content;
+  googleVerifier: GoogleVerifier | null;
 }
 
 type AppEnv = { Variables: { scope: string } };
@@ -46,6 +49,9 @@ export function createApp(options: AppOptions = {}): AppBundle {
   const clock = options.clock ?? (() => Date.now());
   const services = new Services({ config, content, store, clock, notifier });
   services.ensureSlots();
+
+  const googleVerifier =
+    options.googleVerifier ?? (config.googleClientId ? createGoogleVerifier(config.googleClientId) : null);
 
   const app = new Hono<AppEnv>();
   const rateBuckets = new Map<string, { start: number; count: number }>();
@@ -176,6 +182,60 @@ export function createApp(options: AppOptions = {}): AppBundle {
     }),
   );
 
+  const sessionUser = (c: Context<AppEnv>): UserRow | null => {
+    const token = bearer(c);
+    if (!token) return null;
+    const session = store.getSession(hashToken(token));
+    if (!session || session.expires_ms <= clock()) return null;
+    return store.getUser(session.user_id);
+  };
+
+  const signedInUser = (c: Context<AppEnv>): UserRow => {
+    const user = sessionUser(c);
+    if (!user) throw new ApiError(401, "unauthorized", "Sign in with Google first.");
+    return user;
+  };
+
+  app.post("/api/v1/auth/google", async (c) => {
+    if (!googleVerifier) {
+      throw new ApiError(503, "auth_unavailable", "Set GOOGLE_CLIENT_ID to enable Google sign-in.");
+    }
+    const body = await parseBody(c, googleSchema);
+    let identity;
+    try {
+      identity = await googleVerifier(body.credential);
+    } catch (error) {
+      if (error instanceof GoogleAuthError) throw new ApiError(401, "unauthorized", error.message);
+      throw error;
+    }
+    const now = clock();
+    const user = store.upsertUser({
+      googleSub: identity.sub,
+      email: identity.email,
+      name: identity.name,
+      picture: identity.picture,
+      now,
+    });
+    const token = randomToken();
+    const expiresMs = now + config.sessionTtlMs;
+    store.createSession(hashToken(token), user.id, now, expiresMs);
+    store.deleteExpiredSessions(now);
+    return c.json({ user: publicUser(user), session_token: token, expires_at: toIstIso(expiresMs) });
+  });
+
+  app.get("/api/v1/auth/me", (c) => c.json({ user: publicUser(signedInUser(c)) }));
+
+  app.get("/api/v1/auth/me/bookings", (c) => {
+    const user = signedInUser(c);
+    return c.json({ bookings: services.listBookingsForUser(user.id) });
+  });
+
+  app.post("/api/v1/auth/logout", (c) => {
+    const token = bearer(c);
+    if (token) store.deleteSession(hashToken(token));
+    return c.body(null, 204);
+  });
+
   app.get("/api/v1/plans", (c) => {
     const subjectParam = c.req.query("subject");
     if (subjectParam) {
@@ -228,10 +288,11 @@ export function createApp(options: AppOptions = {}): AppBundle {
 
   app.post("/api/v1/trial-bookings", async (c) => {
     const body = await parseBody(c, bookingSchema);
+    const userId = sessionUser(c)?.id ?? null;
     return idempotent(
       c,
       body,
-      async () => c.json(await services.createBooking(body), 201),
+      async () => c.json(await services.createBooking(body, userId), 201),
       (stored) => {
         const parsed = JSON.parse(stored.response) as { booking: unknown };
         return new Response(JSON.stringify({ booking: parsed.booking }), {
@@ -269,7 +330,11 @@ export function createApp(options: AppOptions = {}): AppBundle {
     return problemResponse(new ApiError(500, "internal_error"), config.publicBaseUrl, c.req.path);
   });
 
-  return { app, services, store, config, content };
+  return { app, services, store, config, content, googleVerifier };
+}
+
+function publicUser(user: UserRow) {
+  return { id: user.id, email: user.email, name: user.name, picture: user.picture };
 }
 
 const consentRequestSchema = z.object({
@@ -281,6 +346,10 @@ const consentRequestSchema = z.object({
 
 const verifySchema = z.object({
   otp: z.string().regex(/^[0-9]{6}$/, "The code must be 6 digits."),
+});
+
+const googleSchema = z.object({
+  credential: z.string().min(20).max(4096),
 });
 
 const bookingSchema = z.object({

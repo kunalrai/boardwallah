@@ -80,6 +80,11 @@ export interface BookingResult {
   booking_access_token: string;
 }
 
+export interface BookingListItem extends BookingView {
+  slot_starts_at: string | null;
+  slot_ends_at: string | null;
+}
+
 export class Services {
   readonly config: Config;
   readonly content: Content;
@@ -226,13 +231,16 @@ export class Services {
     return { consent_id: consentId, consent_token: token, expires_at: toIstIso(expiresMs) };
   }
 
-  async createBooking(input: {
-    hold_id?: string;
-    consent_token?: string;
-    student: { display_name: string };
-    subjects: SubjectId[];
-    locality_code: string;
-  }): Promise<BookingResult> {
+  async createBooking(
+    input: {
+      hold_id?: string;
+      consent_token?: string;
+      student: { display_name: string };
+      subjects: SubjectId[];
+      locality_code: string;
+    },
+    userId: string | null = null,
+  ): Promise<BookingResult> {
     const now = this.now();
     this.store.expireHolds(now);
 
@@ -303,6 +311,7 @@ export class Services {
         payment_status: "not_required",
         consent_id: consent.id,
         access_token_hash: hashToken(accessToken),
+        user_id: userId,
         created_at: createdAt,
         created_ms: now,
         version: this.config.specVersion,
@@ -315,6 +324,17 @@ export class Services {
     const view = this.bookingView(booking);
     void this.sendBookingConfirmation(consent, slot, view, accessToken);
     return { booking: view, booking_access_token: accessToken };
+  }
+
+  listBookingsForUser(userId: string): BookingListItem[] {
+    return this.store.listBookingsByUser(userId).map((booking) => {
+      const slot = this.store.getSlot(booking.slot_id);
+      return {
+        ...this.bookingView(booking),
+        slot_starts_at: slot?.starts_at ?? null,
+        slot_ends_at: slot?.ends_at ?? null,
+      };
+    });
   }
 
   getBooking(bookingId: string, accessToken: string | null): BookingView {

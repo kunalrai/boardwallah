@@ -1,4 +1,5 @@
 import { createApp, type AppBundle } from "../src/app";
+import type { GoogleVerifier } from "../src/auth";
 import type { Notifier } from "../src/services";
 import { Store } from "../src/store";
 import { toIstIso } from "../src/time";
@@ -47,7 +48,12 @@ export interface TestContext {
   close: () => void;
 }
 
-export function setup(overrides: { rateLimit?: Partial<AppBundle["config"]["rateLimit"]> } = {}): TestContext {
+export function setup(
+  overrides: {
+    rateLimit?: Partial<AppBundle["config"]["rateLimit"]>;
+    googleVerifier?: GoogleVerifier;
+  } = {},
+): TestContext {
   const clock = { now: TEST_NOW };
   const notifier = new CaptureNotifier();
   const store = new Store(":memory:");
@@ -57,6 +63,7 @@ export function setup(overrides: { rateLimit?: Partial<AppBundle["config"]["rate
     clock: () => clock.now,
     config: {
       dbPath: ":memory:",
+      googleClientId: "",
       rateLimit: {
         windowMs: 60_000,
         readAnonymous: 20,
@@ -66,6 +73,7 @@ export function setup(overrides: { rateLimit?: Partial<AppBundle["config"]["rate
         ...overrides.rateLimit,
       },
     },
+    ...(overrides.googleVerifier ? { googleVerifier: overrides.googleVerifier } : {}),
   });
   return {
     bundle,
@@ -145,6 +153,7 @@ export interface BookingFlowOptions {
   phone?: string;
   consent?: boolean;
   bookingKey?: string;
+  headers?: Record<string, string>;
 }
 
 export async function bookingFlow(ctx: TestContext, options: BookingFlowOptions = {}) {
@@ -160,6 +169,9 @@ export async function bookingFlow(ctx: TestContext, options: BookingFlowOptions 
     subjects: options.subjects ?? ["maths"],
     locality_code: locality,
   };
-  const response = await postJson(ctx, "/api/v1/trial-bookings", body, { key: options.bookingKey });
+  const response = await postJson(ctx, "/api/v1/trial-bookings", body, {
+    key: options.bookingKey,
+    headers: options.headers,
+  });
   return { slot, hold, consent, body, response };
 }

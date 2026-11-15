@@ -22,6 +22,8 @@ export interface Config {
   cancelCutoffMs: number;
   idempotencyTtlMs: number;
   slotHorizonDays: number;
+  googleClientId: string;
+  sessionTtlMs: number;
   rateLimit: RateLimitConfig;
   apiKeys: string[];
 }
@@ -52,6 +54,8 @@ export function createConfig(overrides: Partial<Config> = {}): Config {
     cancelCutoffMs: 4 * hour,
     idempotencyTtlMs: 24 * hour,
     slotHorizonDays: 14,
+    googleClientId: process.env.GOOGLE_CLIENT_ID ?? "",
+    sessionTtlMs: 30 * 24 * hour,
     rateLimit: {
       windowMs: minute,
       readAnonymous: 20,

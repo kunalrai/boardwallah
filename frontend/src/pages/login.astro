@@ -1,0 +1,307 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { loadContent } from "../lib/content";
+import { apiBase } from "../lib/site";
+
+const { provider } = loadContent();
+const clientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID ?? "";
+---
+
+<Layout
+  title={`Sign in | ${provider.name}`}
+  description={`Sign in with Google to keep your trial bookings with ${provider.name} in one place.`}
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Sign in</nav>
+    <h1>Sign in</h1>
+    <p class="lead">
+      Google sign-in keeps your trial bookings and enquiries together. Booking a trial does not require an account.
+    </p>
+
+    <div class="grid two">
+      <section class="card" id="auth-card" data-api={apiBase} data-client-id={clientId} aria-labelledby="auth-heading">
+        <div id="signed-out">
+          <h2 id="auth-heading">Continue with Google</h2>
+          <p class="muted small">
+            We receive only your name, email address and profile picture from Google. We never see your Google password.
+          </p>
+          {clientId ? null : (
+            <div class="notice info">
+              <strong>Not configured yet.</strong> Set <code>GOOGLE_CLIENT_ID</code> for the API and
+              <code>PUBLIC_GOOGLE_CLIENT_ID</code> for the site, then add this origin as an authorised JavaScript origin in
+              Google Cloud Console.
+            </div>
+          )}
+          <div id="google-button"></div>
+          <p id="auth-status" role="status" aria-live="polite"></p>
+        </div>
+
+        <div id="signed-in" hidden>
+          <h2 id="profile-heading">You are signed in</h2>
+          <dl class="summary">
+            <dt>Name</dt>
+            <dd id="profile-name"></dd>
+            <dt>Email</dt>
+            <dd id="profile-email"></dd>
+          </dl>
+          <div class="actions">
+            <a class="button" id="continue-link" href="/book/">Book a trial</a>
+            <button class="secondary" id="sign-out-button" type="button">Sign out</button>
+          </div>
+
+          <h3>Your bookings</h3>
+          <p id="bookings-status" role="status" aria-live="polite"></p>
+          <ul class="booking-list" id="bookings-list"></ul>
+          <p class="hint">Use the private WhatsApp link to view or cancel a booking.</p>
+        </div>
+      </section>
+
+      <aside class="card">
+        <h2>Why sign in?</h2>
+        <ul>
+          <li>Keep your trial bookings in one place across devices.</li>
+          <li>Book a follow-up without re-entering your details.</li>
+          <li>Sign out at any time; your booking links keep working.</li>
+        </ul>
+        <h3>Privacy</h3>
+        <p class="muted small">
+          Sign-in details are stored on our server and used only to identify your account. Read the
+          <a href="/policies/privacy/">privacy policy</a>.
+        </p>
+      </aside>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  type GoogleIdApi = {
+    initialize: (options: { client_id: string; callback: (response: { credential?: string }) => void }) => void;
+    renderButton: (parent: HTMLElement, options: Record<string, unknown>) => void;
+  };
+
+  type Profile = { id: string; email: string; name: string | null; picture: string | null };
+
+  type BookingListItem = {
+    id: string;
+    status: string;
+    slot_starts_at: string | null;
+    subjects: string[];
+    locality_code: string;
+    student: { display_name: string };
+  };
+
+  const SESSION_KEY = "htp_session";
+
+  const card = document.getElementById("auth-card");
+  if (card) {
+    const api = card.dataset.api ?? "";
+    const clientId = card.dataset.clientId ?? "";
+    const signedOut = document.getElementById("signed-out") as HTMLElement;
+    const signedIn = document.getElementById("signed-in") as HTMLElement;
+    const buttonHost = document.getElementById("google-button") as HTMLElement;
+    const status = document.getElementById("auth-status") as HTMLElement;
+    const nameCell = document.getElementById("profile-name") as HTMLElement;
+    const emailCell = document.getElementById("profile-email") as HTMLElement;
+    const continueLink = document.getElementById("continue-link") as HTMLAnchorElement;
+    const signOutButton = document.getElementById("sign-out-button") as HTMLButtonElement;
+    const bookingsList = document.getElementById("bookings-list") as HTMLElement;
+    const bookingsStatus = document.getElementById("bookings-status") as HTMLElement;
+
+    const next = (() => {
+      const value = new URLSearchParams(window.location.search).get("next");
+      return value && value.startsWith("/") && !value.startsWith("//") ? value : "/book/";
+    })();
+    continueLink.href = next;
+
+    function setStatus(text: string, tone: "info" | "error" | "success") {
+      status.textContent = text;
+      status.className = text ? `notice ${tone}` : "";
+    }
+
+    function showSignedOut() {
+      signedIn.hidden = true;
+      signedOut.hidden = false;
+      buttonHost.hidden = false;
+      bookingsList.replaceChildren();
+      bookingsStatus.textContent = "";
+      bookingsStatus.className = "";
+    }
+
+    function showSignedIn(profile: Profile, token: string) {
+      nameCell.textContent = profile.name ?? "Not shared by Google";
+      emailCell.textContent = profile.email;
+      signedOut.hidden = true;
+      signedIn.hidden = false;
+      void loadBookings(token);
+    }
+
+    function formatWhen(iso: string | null): string {
+      if (!iso) return "Time to be confirmed";
+      return new Intl.DateTimeFormat("en-IN", {
+        timeZone: "Asia/Kolkata",
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        hour: "numeric",
+        minute: "2-digit",
+      }).format(new Date(iso));
+    }
+
+    async function loadBookings(token: string) {
+      bookingsList.replaceChildren();
+      bookingsStatus.textContent = "Loading your bookings...";
+      bookingsStatus.className = "notice info";
+      try {
+        const response = await fetch(`${api}/api/v1/auth/me/bookings`, {
+          headers: { authorization: `Bearer ${token}` },
+        });
+        if (!response.ok) throw new Error("Request failed.");
+        const body = (await response.json()) as { bookings: BookingListItem[] };
+        if (body.bookings.length === 0) {
+          bookingsStatus.textContent = "No bookings yet. A trial you book while signed in shows up here.";
+          bookingsStatus.className = "notice info";
+          return;
+        }
+        bookingsStatus.textContent = "";
+        bookingsStatus.className = "";
+        for (const booking of body.bookings) {
+          const item = document.createElement("li");
+          item.className = "booking-item";
+          const when = document.createElement("strong");
+          when.textContent = formatWhen(booking.slot_starts_at);
+          const who = document.createElement("span");
+          who.textContent = `${booking.student.display_name} · ${booking.subjects.join(", ")} · ${booking.locality_code}`;
+          const status = document.createElement("span");
+          status.className = "tag";
+          status.textContent = booking.status;
+          item.append(when, who, status);
+          bookingsList.append(item);
+        }
+      } catch {
+        bookingsStatus.textContent = "Could not load your bookings right now. Reload the page to try again.";
+        bookingsStatus.className = "notice error";
+      }
+    }
+
+    async function readProblem(response: Response): Promise<string> {
+      const text = await response.text();
+      if (!text) return `Sign-in failed with status ${response.status}.`;
+      try {
+        const body = JSON.parse(text) as { detail?: string; title?: string };
+        return String(body.detail ?? body.title ?? `Sign-in failed with status ${response.status}.`);
+      } catch {
+        return `Sign-in failed with status ${response.status}.`;
+      }
+    }
+
+    async function loadProfile(token: string): Promise<Profile | null> {
+      try {
+        const response = await fetch(`${api}/api/v1/auth/me`, {
+          headers: { authorization: `Bearer ${token}` },
+        });
+        if (!response.ok) return null;
+        const body = (await response.json()) as { user: Profile };
+        return body.user;
+      } catch {
+        return null;
+      }
+    }
+
+    async function handleCredential(response: { credential?: string }) {
+      if (!response.credential) {
+        setStatus("Google did not return a credential. Try again.", "error");
+        return;
+      }
+      setStatus("Signing you in...", "info");
+      try {
+        const result = await fetch(`${api}/api/v1/auth/google`, {
+          method: "POST",
+          headers: { accept: "application/json", "content-type": "application/json" },
+          body: JSON.stringify({ credential: response.credential }),
+        });
+        if (!result.ok) {
+          setStatus(await readProblem(result), "error");
+          return;
+        }
+        const body = (await result.json()) as { user: Profile; session_token: string };
+        window.localStorage.setItem(SESSION_KEY, body.session_token);
+        setStatus("", "info");
+        showSignedIn(body.user, body.session_token);
+      } catch {
+        setStatus("Could not reach the server. Check your connection and try again.", "error");
+      }
+    }
+
+    function loadGoogleScript(): Promise<void> {
+      return new Promise((resolve, reject) => {
+        const existing = document.querySelector<HTMLScriptElement>("script[data-google-gsi]");
+        if (existing) {
+          existing.addEventListener("load", () => resolve());
+          existing.addEventListener("error", () => reject(new Error("Google script failed to load.")));
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.defer = true;
+        script.dataset.googleGsi = "true";
+        script.addEventListener("load", () => resolve());
+        script.addEventListener("error", () => reject(new Error("Google script failed to load.")));
+        document.head.appendChild(script);
+      });
+    }
+
+    signOutButton.addEventListener("click", async () => {
+      const token = window.localStorage.getItem(SESSION_KEY);
+      window.localStorage.removeItem(SESSION_KEY);
+      showSignedOut();
+      setStatus("You are signed out.", "success");
+      if (token) {
+        try {
+          await fetch(`${api}/api/v1/auth/logout`, {
+            method: "POST",
+            headers: { authorization: `Bearer ${token}` },
+          });
+        } catch {
+          // The local token is already gone; the server session expires on its own.
+        }
+      }
+    });
+
+    void (async () => {
+      const token = window.localStorage.getItem(SESSION_KEY);
+      if (token) {
+        const profile = await loadProfile(token);
+        if (profile) {
+          showSignedIn(profile, token);
+          return;
+        }
+        window.localStorage.removeItem(SESSION_KEY);
+      }
+      if (!clientId) return;
+
+      try {
+        await loadGoogleScript();
+      } catch {
+        setStatus("Could not load Google sign-in. Check your connection and reload the page.", "error");
+        return;
+      }
+
+      const google = (window as unknown as { google?: { accounts?: { id?: GoogleIdApi } } }).google;
+      const id = google?.accounts?.id;
+      if (!id) {
+        setStatus("Google sign-in is unavailable in this browser.", "error");
+        return;
+      }
+      id.initialize({ client_id: clientId, callback: (response) => void handleCredential(response) });
+      id.renderButton(buttonHost, {
+        type: "standard",
+        theme: "outline",
+        size: "large",
+        text: "signin_with",
+        shape: "rectangular",
+        width: 300,
+      });
+    })();
+  }
+</script>

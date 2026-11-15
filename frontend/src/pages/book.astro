@@ -251,6 +251,14 @@ const { provider, subjects } = loadContent();
       return `${prefix}-${token}`.slice(0, 64);
     }
 
+    function sessionToken(): string | undefined {
+      try {
+        return window.localStorage.getItem("htp_session") ?? undefined;
+      } catch {
+        return undefined;
+      }
+    }
+
     async function request<T>(path: string, options: { method?: string; body?: unknown; token?: string; key?: string } = {}) {
       const headers: Record<string, string> = { accept: "application/json" };
       if (options.body !== undefined) headers["content-type"] = "application/json";
@@ -519,6 +527,7 @@ const { provider, subjects } = loadContent();
             locality_code: state.slot.locality_code,
           },
           key: key("BOOK"),
+          token: sessionToken(),
         });
         state.booking = result;
         showDone(result);

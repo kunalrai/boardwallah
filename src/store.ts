@@ -44,6 +44,7 @@ export interface BookingRow {
   payment_status: PaymentStatus;
   consent_id: string;
   access_token_hash: string;
+  user_id: string | null;
   created_at: string;
   created_ms: number;
   version: string;
@@ -104,6 +105,31 @@ export interface IdempotencyRow {
   created_ms: number;
 }
 
+export interface UserRow {
+  id: string;
+  google_sub: string;
+  email: string;
+  name: string | null;
+  picture: string | null;
+  created_at: string;
+  last_seen_at: string;
+}
+
+export interface SessionRow {
+  token_hash: string;
+  user_id: string;
+  created_ms: number;
+  expires_ms: number;
+}
+
+export interface UpsertUserInput {
+  googleSub: string;
+  email: string;
+  name: string | null;
+  picture: string | null;
+  now: number;
+}
+
 const schema = `
 CREATE TABLE IF NOT EXISTS meta (
   key TEXT PRIMARY KEY,
@@ -142,6 +168,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   payment_status TEXT NOT NULL,
   consent_id TEXT NOT NULL,
   access_token_hash TEXT NOT NULL UNIQUE,
+  user_id TEXT,
   created_at TEXT NOT NULL,
   created_ms INTEGER NOT NULL,
   version TEXT NOT NULL,
@@ -199,6 +226,23 @@ CREATE TABLE IF NOT EXISTS idempotency (
   PRIMARY KEY (scope, method, path, key)
 );
 CREATE INDEX IF NOT EXISTS idempotency_created ON idempotency (created_ms);
+CREATE TABLE IF NOT EXISTS users (
+  id TEXT PRIMARY KEY,
+  google_sub TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL,
+  name TEXT,
+  picture TEXT,
+  created_at TEXT NOT NULL,
+  last_seen_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS users_email ON users (email);
+CREATE TABLE IF NOT EXISTS sessions (
+  token_hash TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  created_ms INTEGER NOT NULL,
+  expires_ms INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS sessions_user ON sessions (user_id, expires_ms);
 `;
 
 export class Store {
@@ -211,6 +255,14 @@ export class Store {
     this.db.exec("PRAGMA foreign_keys = ON;");
     this.db.exec("PRAGMA busy_timeout = 5000;");
     this.db.exec(schema);
+    this.ensureColumn("bookings", "user_id", "TEXT");
+    this.db.exec("CREATE INDEX IF NOT EXISTS bookings_user ON bookings (user_id, created_ms);");
+  }
+
+  private ensureColumn(table: string, column: string, type: string) {
+    const columns = this.db.query(`PRAGMA table_info(${table})`).all() as { name: string }[];
+    if (columns.some((entry) => entry.name === column)) return;
+    this.db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`);
   }
 
   close() {
@@ -425,8 +477,8 @@ export class Store {
     this.db
       .query(
         `INSERT INTO bookings
-         (id, type, slot_id, student_display_name, subjects, locality_code, status, payment_status, consent_id, access_token_hash, created_at, created_ms, version, last_updated)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         (id, type, slot_id, student_display_name, subjects, locality_code, status, payment_status, consent_id, access_token_hash, user_id, created_at, created_ms, version, last_updated)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       )
       .run(
         row.id,
@@ -439,6 +491,7 @@ export class Store {
         row.payment_status,
         row.consent_id,
         row.access_token_hash,
+        row.user_id,
         row.created_at,
         row.created_ms,
         row.version,
@@ -452,6 +505,12 @@ export class Store {
 
   getBookingByAccessTokenHash(hash: string): BookingRow | null {
     return this.db.query("SELECT * FROM bookings WHERE access_token_hash = ?").get(hash) as BookingRow | null;
+  }
+
+  listBookingsByUser(userId: string): BookingRow[] {
+    return this.db
+      .query("SELECT * FROM bookings WHERE user_id = ? ORDER BY created_ms DESC")
+      .all(userId) as BookingRow[];
   }
 
   setBookingStatus(id: string, status: BookingStatus, now: number) {
@@ -503,5 +562,55 @@ export class Store {
 
   deleteExpiredIdempotency(cutoffMs: number) {
     this.db.query("DELETE FROM idempotency WHERE created_ms < ?").run(cutoffMs);
+  }
+
+  upsertUser(input: UpsertUserInput): UserRow {
+    const nowIso = toIstIso(input.now);
+    this.db
+      .query(
+        `INSERT INTO users (id, google_sub, email, name, picture, created_at, last_seen_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?)
+         ON CONFLICT(google_sub) DO UPDATE SET
+           email = excluded.email,
+           name = excluded.name,
+           picture = excluded.picture,
+           last_seen_at = excluded.last_seen_at`,
+      )
+      .run(
+        `U-${randomHex(8)}`,
+        input.googleSub,
+        input.email,
+        input.name,
+        input.picture,
+        nowIso,
+        nowIso,
+      );
+    const row = this.db
+      .query("SELECT * FROM users WHERE google_sub = ?")
+      .get(input.googleSub) as UserRow | null;
+    if (!row) throw new Error("Failed to persist the signed-in user.");
+    return row;
+  }
+
+  getUser(id: string): UserRow | null {
+    return this.db.query("SELECT * FROM users WHERE id = ?").get(id) as UserRow | null;
+  }
+
+  createSession(tokenHash: string, userId: string, now: number, expiresMs: number) {
+    this.db
+      .query("INSERT INTO sessions (token_hash, user_id, created_ms, expires_ms) VALUES (?, ?, ?, ?)")
+      .run(tokenHash, userId, now, expiresMs);
+  }
+
+  getSession(tokenHash: string): SessionRow | null {
+    return this.db.query("SELECT * FROM sessions WHERE token_hash = ?").get(tokenHash) as SessionRow | null;
+  }
+
+  deleteSession(tokenHash: string) {
+    this.db.query("DELETE FROM sessions WHERE token_hash = ?").run(tokenHash);
+  }
+
+  deleteExpiredSessions(now: number) {
+    this.db.query("DELETE FROM sessions WHERE expires_ms <= ?").run(now);
   }
 }
