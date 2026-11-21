@@ -27,6 +27,13 @@ const { provider, subjects } = loadContent();
               This subject is available as part of the monthly plan and the crash course. Mention it in the
               <a href="/enquiry/">enquiry form</a> if you want to discuss a specific topic first.
             </p>
+            {subject.id === "science" && (
+              <p>
+                <a href="/resources/light-reflection-refraction/">
+                  📖 Chapter notes: Light – Reflection &amp; Refraction
+                </a>
+              </p>
+            )}
             <a class="button secondary" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book a trial</a>
           </article>
         ))

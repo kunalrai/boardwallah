@@ -39,7 +39,7 @@ export const GET: APIRoute = () => {
     "",
     "## Pages",
     "",
-    ...["", "subjects/", "plans/", "enquiry/", "booking/", "login/"].map((path) => `- ${absoluteUrl(path)}`),
+    ...["", "subjects/", "plans/", "enquiry/", "booking/", "login/", "resources/light-reflection-refraction/"].map((path) => `- ${absoluteUrl(path)}`),
     `- Booking (Cal.com): ${calBookingUrl}`,
     `- ${absoluteUrl("policies/privacy/")}`,
     `- ${absoluteUrl("policies/consent/")}`,

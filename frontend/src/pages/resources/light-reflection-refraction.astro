@@ -1,0 +1,596 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Light – Reflection & Refraction | CBSE Class 10 Science | ${provider.name}`}
+  description="Complete CBSE Class 10 Science chapter on Light – Reflection & Refraction. Covers laws of reflection, spherical mirrors, refraction, lenses, mirror and lens formulas, and power of a lens."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / Light – Reflection &amp; Refraction
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science · Chapter 10</span>
+      <h1>Light – Reflection &amp; Refraction</h1>
+      <p class="lead">
+        A complete one-shot revision of the full chapter: laws of reflection, spherical mirrors,
+        image formation, refraction, lenses, formulas and the power of a lens — everything you need
+        for your board exams.
+      </p>
+    </div>
+
+    <!-- Key concepts -->
+    <section class="section">
+      <h2>Key Concepts at a Glance</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>⚡ Laws of Reflection</h3>
+          <ol>
+            <li>The angle of incidence equals the angle of reflection.</li>
+            <li>The incident ray, the reflected ray and the normal all lie in the same plane.</li>
+          </ol>
+        </article>
+
+        <article class="card">
+          <h3>🪞 Spherical Mirror Terms</h3>
+          <dl class="term-list">
+            <dt>Pole (P)</dt><dd>Centre of the reflecting surface.</dd>
+            <dt>Centre of Curvature (C)</dt><dd>Centre of the sphere of which the mirror is a part.</dd>
+            <dt>Radius of Curvature (R)</dt><dd>Distance PC = R = 2f.</dd>
+            <dt>Principal Focus (F)</dt><dd>Concave: rays converge here. Convex: rays appear to diverge from here.</dd>
+            <dt>Focal Length (f)</dt><dd>Distance PF; f = R/2.</dd>
+          </dl>
+        </article>
+
+        <article class="card">
+          <h3>📐 Mirror Formula</h3>
+          <p class="formula">1/v + 1/u = 1/f</p>
+          <ul>
+            <li><strong>u</strong> – object distance (always −ve for real objects)</li>
+            <li><strong>v</strong> – image distance</li>
+            <li><strong>f</strong> – focal length (−ve concave, +ve convex)</li>
+          </ul>
+          <p class="formula-sub">Magnification: <strong>m = −v/u</strong></p>
+        </article>
+
+        <article class="card">
+          <h3>🌊 Laws of Refraction (Snell's Law)</h3>
+          <ol>
+            <li>The incident ray, refracted ray and normal are coplanar.</li>
+            <li>n₁ sin θ₁ = n₂ sin θ₂</li>
+          </ol>
+          <p>Refractive index: <strong>n = c / v</strong> (speed of light in vacuum ÷ speed in medium).</p>
+        </article>
+
+        <article class="card">
+          <h3>🔭 Spherical Lens Terms</h3>
+          <dl class="term-list">
+            <dt>Optical Centre (O)</dt><dd>Rays passing through it emerge undeviated.</dd>
+            <dt>Principal Focus (F)</dt><dd>Convex: real focus. Concave: virtual focus.</dd>
+            <dt>Focal Length (f)</dt><dd>+ve for convex, −ve for concave.</dd>
+          </dl>
+        </article>
+
+        <article class="card">
+          <h3>📏 Lens Formula &amp; Power</h3>
+          <p class="formula">1/v − 1/u = 1/f</p>
+          <p class="formula-sub">Magnification: <strong>m = v/u</strong></p>
+          <p class="formula-sub">Power: <strong>P = 1/f (metres)</strong>, unit = Dioptre (D)</p>
+          <ul>
+            <li>Convex lens → +ve power</li>
+            <li>Concave lens → −ve power</li>
+            <li>Combined lenses: P = P₁ + P₂ + …</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Image formation summary -->
+    <section class="section">
+      <h2>Image Formation — Quick Reference</h2>
+      <div class="table-wrap card">
+        <table>
+          <caption>Concave Mirror</caption>
+          <thead>
+            <tr><th>Object position</th><th>Image position</th><th>Nature</th><th>Size</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>At infinity</td><td>At F</td><td>Real, inverted</td><td>Point</td></tr>
+            <tr><td>Beyond C</td><td>Between F &amp; C</td><td>Real, inverted</td><td>Diminished</td></tr>
+            <tr><td>At C</td><td>At C</td><td>Real, inverted</td><td>Same size</td></tr>
+            <tr><td>Between C &amp; F</td><td>Beyond C</td><td>Real, inverted</td><td>Enlarged</td></tr>
+            <tr><td>At F</td><td>At infinity</td><td>Real, inverted</td><td>Highly enlarged</td></tr>
+            <tr><td>Between F &amp; P</td><td>Behind mirror</td><td>Virtual, erect</td><td>Enlarged</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap card" style="margin-top:1rem">
+        <table>
+          <caption>Convex Lens</caption>
+          <thead>
+            <tr><th>Object position</th><th>Image position</th><th>Nature</th><th>Size</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>At infinity</td><td>At F₂</td><td>Real, inverted</td><td>Point</td></tr>
+            <tr><td>Beyond 2F₁</td><td>Between F₂ &amp; 2F₂</td><td>Real, inverted</td><td>Diminished</td></tr>
+            <tr><td>At 2F₁</td><td>At 2F₂</td><td>Real, inverted</td><td>Same size</td></tr>
+            <tr><td>Between 2F₁ &amp; F₁</td><td>Beyond 2F₂</td><td>Real, inverted</td><td>Enlarged</td></tr>
+            <tr><td>At F₁</td><td>At infinity</td><td>Real, inverted</td><td>Highly enlarged</td></tr>
+            <tr><td>Between F₁ &amp; O</td><td>Same side as object</td><td>Virtual, erect</td><td>Enlarged</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="section quiz-root" id="quiz-root">
+      <h2 class="quiz-heading">🧪 Chapter Quiz — Test Yourself</h2>
+      <p class="muted" style="margin-bottom:1.5rem">20 important questions from the full chapter. Select an answer to continue.</p>
+
+      <div class="quiz-progress-bar" id="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+      <p class="quiz-counter" id="quiz-counter">Question 1 of 20</p>
+
+      <div class="quiz-card card" id="quiz-card">
+        <p class="quiz-question" id="quiz-question"></p>
+        <ul class="quiz-options" id="quiz-options"></ul>
+        <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+        <div class="quiz-actions">
+          <button class="button" id="quiz-next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="quiz-result card" id="quiz-result" hidden>
+        <h3 id="quiz-score-heading"></h3>
+        <p id="quiz-score-msg"></p>
+        <div class="actions" style="justify-content:center;margin-top:1rem">
+          <button class="button secondary" id="quiz-retry">↺ Try Again</button>
+          <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need help with this chapter?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} and get personalised guidance on Light and all other CBSE Class 10 Science topics.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script>
+const questions = [
+  {
+    q: "Which of the following is NOT a characteristic of the image formed by a plane mirror?",
+    opts: ["Virtual and erect", "Same size as object", "Laterally inverted", "Real and inverted"],
+    ans: 3,
+    exp: "A plane mirror always forms a virtual, erect, laterally inverted image of the same size as the object — never a real image."
+  },
+  {
+    q: "The radius of curvature of a spherical mirror is 30 cm. What is its focal length?",
+    opts: ["30 cm", "60 cm", "15 cm", "10 cm"],
+    ans: 2,
+    exp: "Focal length f = R/2 = 30/2 = 15 cm."
+  },
+  {
+    q: "A concave mirror has a focal length of 20 cm. Where should an object be placed to get a real, inverted image of the same size?",
+    opts: ["At F (20 cm)", "At infinity", "Between F and C", "At C (40 cm)"],
+    ans: 3,
+    exp: "When the object is at C (the centre of curvature = 2f = 40 cm), the image is real, inverted and of the same size."
+  },
+  {
+    q: "Which mirror is used as a rear-view mirror in vehicles?",
+    opts: ["Concave mirror", "Convex mirror", "Plane mirror", "Parabolic mirror"],
+    ans: 1,
+    exp: "Convex mirrors give an erect, diminished, virtual image and have a wider field of view, making them ideal as rear-view mirrors."
+  },
+  {
+    q: "The magnification produced by a mirror is +2. This means the image is:",
+    opts: ["Real and diminished", "Virtual, erect and twice the size of the object", "Real, inverted and twice the size", "Virtual and half the size"],
+    ans: 1,
+    exp: "Positive magnification means the image is virtual and erect; m = +2 means the image is twice the height of the object."
+  },
+  {
+    q: "Using the mirror formula with u = -30 cm and f = -10 cm (concave), find v.",
+    opts: ["-15 cm", "+15 cm", "-30 cm", "-20 cm"],
+    ans: 0,
+    exp: "1/v = 1/f - 1/u = 1/(-10) - 1/(-30) = -3/30 + 1/30 = -2/30, so v = -15 cm (real image in front of the mirror)."
+  },
+  {
+    q: "When a ray of light travels from a denser medium to a rarer medium, it:",
+    opts: ["Bends towards the normal", "Travels in a straight line", "Bends away from the normal", "Is totally absorbed"],
+    ans: 2,
+    exp: "Light bends away from the normal when going from a denser to a rarer medium (e.g., glass to air)."
+  },
+  {
+    q: "The refractive index of glass is 1.5. What is the speed of light in glass? (c = 3x10^8 m/s)",
+    opts: ["4.5x10^8 m/s", "2x10^8 m/s", "1.5x10^8 m/s", "3x10^8 m/s"],
+    ans: 1,
+    exp: "n = c/v means v = c/n = 3x10^8 / 1.5 = 2x10^8 m/s."
+  },
+  {
+    q: "Which colour of light has the highest refractive index in glass?",
+    opts: ["Red", "Yellow", "Green", "Violet"],
+    ans: 3,
+    exp: "Violet light has the shortest wavelength and therefore the highest refractive index — it bends the most in a prism."
+  },
+  {
+    q: "A ray of light passes through a rectangular glass slab. The emergent ray is:",
+    opts: ["Perpendicular to the incident ray", "Parallel to the incident ray but laterally displaced", "Bent towards the normal", "Bent away from the incident ray"],
+    ans: 1,
+    exp: "After passing through a glass slab, the emergent ray is parallel to the incident ray but shifted sideways (lateral displacement)."
+  },
+  {
+    q: "A convex lens (f = 25 cm) has an object 50 cm away. Where is the image?",
+    opts: ["50 cm, same side", "50 cm, other side", "25 cm, other side", "At infinity"],
+    ans: 1,
+    exp: "1/v - 1/u = 1/f => 1/v = 1/25 + 1/(-50) = 1/50 => v = +50 cm. Real, inverted, same size on the other side."
+  },
+  {
+    q: "An object is placed between the optical centre and the focus of a convex lens. The image formed is:",
+    opts: ["Real, inverted, magnified", "Virtual, erect, magnified", "Real, inverted, diminished", "Virtual, inverted, diminished"],
+    ans: 1,
+    exp: "When the object is between O and F1, the convex lens acts as a magnifying glass — image is virtual, erect and magnified."
+  },
+  {
+    q: "A concave lens always forms an image that is:",
+    opts: ["Real, inverted, diminished", "Virtual, erect, diminished", "Virtual, erect, magnified", "Real, erect, same size"],
+    ans: 1,
+    exp: "A concave (diverging) lens always forms a virtual, erect and diminished image on the same side as the object."
+  },
+  {
+    q: "The power of a lens of focal length -0.5 m is:",
+    opts: ["+2 D", "-0.5 D", "-2 D", "+0.5 D"],
+    ans: 2,
+    exp: "P = 1/f = 1/(-0.5) = -2 D. Negative power means a concave (diverging) lens."
+  },
+  {
+    q: "Two lenses of power +3 D and -1 D are placed in contact. The combined power is:",
+    opts: ["-3 D", "+4 D", "+2 D", "-4 D"],
+    ans: 2,
+    exp: "P = P1 + P2 = +3 + (-1) = +2 D."
+  },
+  {
+    q: "Which of the following uses a concave mirror?",
+    opts: ["Rear-view mirror in a car", "Security mirror in a shop", "Torch/headlight reflector", "Periscope"],
+    ans: 2,
+    exp: "Concave mirrors are used in torches and headlights to produce a parallel beam of light. Rear-view and security mirrors use convex mirrors."
+  },
+  {
+    q: "In the New Cartesian sign convention for mirrors, distances measured in the direction of incident light are taken as:",
+    opts: ["Negative", "Positive", "Zero", "Depends on the mirror type"],
+    ans: 1,
+    exp: "Distances in the direction of incident light (to the right of the pole) are positive; against the incident light are negative."
+  },
+  {
+    q: "The SI unit of power of a lens is:",
+    opts: ["Metre", "Centimetre", "Dioptre", "Watt"],
+    ans: 2,
+    exp: "The SI unit of power of a lens is the Dioptre (D), where 1 D = 1 m^-1."
+  },
+  {
+    q: "Absolute refractive index is defined as the ratio of:",
+    opts: ["Speed of light in medium to speed in vacuum", "Speed of light in vacuum to speed in medium", "Wavelength in medium to wavelength in vacuum", "Angle of incidence to angle of refraction"],
+    ans: 1,
+    exp: "Absolute refractive index n = c/v, i.e. speed of light in vacuum divided by speed in that medium."
+  },
+  {
+    q: "An object at 2f from a concave mirror is moved to between f and 2f. The screen must be moved:",
+    opts: ["Closer to the mirror", "Further away from the mirror", "No movement needed", "Image becomes virtual; screen cannot capture it"],
+    ans: 1,
+    exp: "When the object moves from 2f towards f, the image moves beyond 2f (further from the mirror). The screen must move further away."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qEl     = document.getElementById('quiz-question') as HTMLElement;
+const optsEl  = document.getElementById('quiz-options') as HTMLElement;
+const fbEl    = document.getElementById('quiz-feedback') as HTMLElement;
+const nextBtn = document.getElementById('quiz-next') as HTMLButtonElement;
+const counter = document.getElementById('quiz-counter') as HTMLElement;
+const fill    = document.getElementById('quiz-progress-fill') as HTMLElement;
+const bar     = document.getElementById('quiz-progress-bar') as HTMLElement;
+const result  = document.getElementById('quiz-result') as HTMLElement;
+const card    = document.getElementById('quiz-card') as HTMLElement;
+const retryBtn = document.getElementById('quiz-retry') as HTMLElement;
+
+function render() {
+  answered = false;
+  nextBtn.disabled = true;
+  fbEl.textContent = '';
+  fbEl.className = 'quiz-feedback';
+
+  const q = questions[current];
+  counter.textContent = `Question ${current + 1} of ${questions.length}`;
+  bar.setAttribute('aria-valuenow', String(current));
+  fill.style.width = `${(current / questions.length) * 100}%`;
+
+  qEl.textContent = q.q;
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const li  = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className = 'button secondary quiz-opt-btn';
+    btn.textContent = opt;
+    btn.dataset.idx = String(i);
+    btn.addEventListener('click', () => choose(i));
+    li.appendChild(btn);
+    optsEl.appendChild(li);
+  });
+}
+
+function choose(idx: number) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = optsEl.querySelectorAll<HTMLButtonElement>('.quiz-opt-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('opt-correct');
+    else if (i === idx) btn.classList.add('opt-wrong');
+  });
+  if (idx === q.ans) {
+    score++;
+    fbEl.textContent = '✅ Correct! ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-correct';
+  } else {
+    fbEl.textContent = '❌ ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-wrong';
+  }
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if (current >= questions.length) showResult();
+  else render();
+});
+
+function showResult() {
+  card.hidden = true;
+  counter.hidden = true;
+  result.hidden = false;
+  fill.style.width = '100%';
+  bar.setAttribute('aria-valuenow', String(questions.length));
+
+  const pct = Math.round((score / questions.length) * 100);
+  const scoreHead = document.getElementById('quiz-score-heading') as HTMLElement;
+  const scoreMsg  = document.getElementById('quiz-score-msg') as HTMLElement;
+  scoreHead.textContent = `You scored ${score} / ${questions.length}  (${pct}%)`;
+  if      (pct === 100) scoreMsg.textContent = '🏆 Perfect score! Outstanding preparation.';
+  else if (pct >= 80)   scoreMsg.textContent = '🌟 Excellent! You have a strong grasp of the chapter.';
+  else if (pct >= 60)   scoreMsg.textContent = '👍 Good effort. Review the missed concepts and try again.';
+  else if (pct >= 40)   scoreMsg.textContent = '📚 Keep revising — read the notes above and retry.';
+  else                  scoreMsg.textContent = "💡 Don't worry! Go through the key concepts carefully and try again.";
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0; score = 0;
+  card.hidden = false;
+  counter.hidden = false;
+  result.hidden = true;
+  render();
+});
+
+render();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  /* ── Concept cards ── */
+  .concept-grid {
+    margin-top: 1rem;
+  }
+
+  .concept-grid .card h3 {
+    margin-bottom: 0.75rem;
+  }
+
+  .term-list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 0.75rem;
+    margin: 0;
+  }
+
+  .term-list dt {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .term-list dd {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .formula {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--brand);
+    margin: 0.4rem 0 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .formula-sub {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── Tables ── */
+  .table-wrap {
+    overflow-x: auto;
+    padding: 1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  caption {
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    color: var(--brand);
+  }
+
+  th {
+    background: var(--paper);
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--line);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.45rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* ── CTA banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+
+  /* ── Quiz ── */
+  .quiz-heading {
+    margin-bottom: 0.4rem;
+  }
+
+  .quiz-progress-bar {
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+  }
+
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--brand);
+    border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+
+  .quiz-counter {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .quiz-card {
+    padding: 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .quiz-opt-btn {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    white-space: normal;
+    height: auto;
+    padding: 0.6rem 0.9rem;
+    font-weight: 500;
+  }
+
+  .opt-correct {
+    background: #d4f0de !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+  }
+
+  .opt-wrong {
+    background: #f8d7d7 !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+  }
+
+  .quiz-feedback {
+    font-size: 0.93rem;
+    min-height: 1.4rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .feedback-correct { color: var(--success); }
+  .feedback-wrong   { color: var(--danger); }
+
+  .quiz-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .quiz-result {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .quiz-result h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+</style>

@@ -68,7 +68,11 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
       <p class="subtitle">Comprehensive coverage of the CBSE Class 10 curriculum.</p>
       <div class="subjects-grid">
         {subjects.map((subject) => (
-          <div class="subject-card">{subject.name}</div>
+          <div class="subject-card">
+            {subject.id === "science"
+              ? <a href="/resources/light-reflection-refraction/" class="subject-link">{subject.name}</a>
+              : subject.name}
+          </div>
         ))}
       </div>
     </section>
@@ -80,3 +84,15 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
     </section>
   </div>
 </Layout>
+
+<style>
+  .subject-link {
+    color: var(--brand);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .subject-link:hover {
+    color: var(--accent);
+  }
+</style>

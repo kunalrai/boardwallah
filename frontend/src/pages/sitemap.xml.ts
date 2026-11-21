@@ -23,6 +23,7 @@ export const GET: APIRoute = () => {
     "policies/privacy/",
     "policies/consent/",
     "policies/cancellation-refund/",
+    "resources/light-reflection-refraction/",
   ];
   const urls = paths.map(
     (path) =>
