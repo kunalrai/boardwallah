@@ -27,6 +27,27 @@ const { provider, subjects } = loadContent();
               This subject is available as part of the monthly plan and the crash course. Mention it in the
               <a href="/enquiry/">enquiry form</a> if you want to discuss a specific topic first.
             </p>
+            {subject.id === "maths" && (
+              <div class="subject-resources">
+                <p><strong>Mathematics chapter guides &amp; quizzes (All 14 Chapters):</strong></p>
+                <ul style="margin-top:0.25rem; margin-bottom:0.75rem; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.35rem; font-size: 0.88rem;">
+                  <li><a href="/resources/real-numbers/">🔢 Real Numbers</a></li>
+                  <li><a href="/resources/polynomials/">📈 Polynomials</a></li>
+                  <li><a href="/resources/linear-equations-in-two-variables/">📏 Linear Equations</a></li>
+                  <li><a href="/resources/quadratic-equations/">📐 Quadratic Equations</a></li>
+                  <li><a href="/resources/arithmetic-progressions/">🪜 Arithmetic Progressions</a></li>
+                  <li><a href="/resources/triangles/">🔺 Triangles (BPT)</a></li>
+                  <li><a href="/resources/coordinate-geometry/">📍 Coordinate Geometry</a></li>
+                  <li><a href="/resources/introduction-to-trigonometry/">📐 Trigonometry</a></li>
+                  <li><a href="/resources/applications-of-trigonometry/">🗼 Heights &amp; Distances</a></li>
+                  <li><a href="/resources/circles/">⭕ Circles (Tangents)</a></li>
+                  <li><a href="/resources/areas-related-to-circles/">🍰 Areas &amp; Circles</a></li>
+                  <li><a href="/resources/surface-areas-and-volumes/">🧊 Surface Areas &amp; Volumes</a></li>
+                  <li><a href="/resources/statistics/">📊 Statistics</a></li>
+                  <li><a href="/resources/probability/">🎲 Probability</a></li>
+                </ul>
+              </div>
+            )}
             {subject.id === "science" && (
               <div class="subject-resources">
                 <p><strong>Science chapter guides &amp; quizzes:</strong></p>

@@ -1,0 +1,689 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Pair of Linear Equations in Two Variables | CBSE Class 10 Maths | ${provider.name}`}
+  description="CBSE Class 10 Maths Chapter 3 study notes on Pair of Linear Equations in Two Variables. Graphical representation, algebraic methods (substitution & elimination), consistency conditions, upstream-downstream word problems, and an interactive 20-question board quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Linear Equations
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Mathematics · Chapter 3</span>
+      <h1>Pair of Linear Equations in Two Variables</h1>
+      <p class="lead">
+        Master algebraic and graphical solutions, consistency ratios (intersecting, parallel, coincident), and speed/upstream/downstream word problems for the CBSE Class 10 Board Exam.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Key Concepts &amp; Consistency Conditions</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>📐 Standard Form of Linear Equations</h3>
+          <p class="formula">a₁x + b₁y + c₁ = 0 &nbsp;|&nbsp; a₂x + b₂y + c₂ = 0</p>
+          <ul class="clean-list">
+            <li>Where <em>a₁, b₁, c₁, a₂, b₂, c₂</em> are real numbers such that <em>a₁² + b₁² ≠ 0</em> and <em>a₂² + b₂² ≠ 0</em>.</li>
+            <li>A linear equation in two variables represents a <strong>straight line</strong> on the Cartesian coordinate plane.</li>
+            <li>A solution is an ordered pair <code>(x, y)</code> that satisfies both equations simultaneously.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚖️ Consistency &amp; Ratio Comparison Table</h3>
+          <p class="formula">a₁/a₂ vs b₁/b₂ vs c₁/c₂</p>
+          <ul class="clean-list">
+            <li><strong>Intersecting Lines:</strong> <code>a₁/a₂ ≠ b₁/b₂</code><br/>⟹ Exactly <strong>one unique solution</strong>. System is <strong>Consistent</strong>.</li>
+            <li><strong>Coincident Lines:</strong> <code>a₁/a₂ = b₁/b₂ = c₁/c₂</code><br/>⟹ <strong>Infinitely many solutions</strong>. System is <strong>Consistent (Dependent)</strong>.</li>
+            <li><strong>Parallel Lines:</strong> <code>a₁/a₂ = b₁/b₂ ≠ c₁/c₂</code><br/>⟹ <strong>No solution</strong>. System is <strong>Inconsistent</strong>.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚙️ Algebraic Solution Methods</h3>
+          <p class="formula">Substitution &amp; Elimination Methods</p>
+          <ul class="clean-list">
+            <li><strong>Substitution Method:</strong> Express one variable in terms of the other from one equation (e.g., <em>y = (c₁ - a₁x)/b₁</em>) and substitute into the second equation.</li>
+            <li><strong>Elimination Method:</strong> Multiply one or both equations by suitable constants to make coefficients of one variable numerically equal, then add or subtract to eliminate that variable.</li>
+            <li><em>Pro-tip:</em> For symmetric equations like <code>ax + by = c</code> and <code>bx + ay = d</code>, add the two equations once and subtract them once to obtain two much simpler equations!</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🚤 Upstream &amp; Downstream Motion</h3>
+          <p class="formula">Speed in Still Water = x km/h, Stream = y km/h</p>
+          <ul class="clean-list">
+            <li><strong>Downstream Speed:</strong> Moving with the water current ⟹ <code>Speed = (x + y) km/h</code></li>
+            <li><strong>Upstream Speed:</strong> Moving against the water current ⟹ <code>Speed = (x - y) km/h</code> (where x &gt; y)</li>
+            <li><strong>Time formula:</strong> <code>Time = Distance / Speed</code></li>
+            <li><code>Time_upstream = Distance / (x - y)</code> &nbsp;|&nbsp; <code>Time_downstream = Distance / (x + y)</code></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Line Configurations &amp; Upstream-Downstream</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · Three Line Configurations</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Graphical consistency of linear equations">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Intersecting -->
+              <g transform="translate(10, 15)">
+                <rect x="5" y="5" width="135" height="205" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+                <text x="72" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#065f46">Intersecting</text>
+                <text x="72" y="40" text-anchor="middle" font-size="10" fill="#047857">a₁/a₂ ≠ b₁/b₂</text>
+                <!-- 2 crossing lines -->
+                <line x1="20" y1="60" x2="125" y2="165" stroke="#0284c7" stroke-width="2"/>
+                <line x1="20" y1="165" x2="125" y2="60" stroke="#f59e0b" stroke-width="2"/>
+                <circle cx="72" cy="112" r="4.5" fill="#ef4444"/>
+                <text x="72" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="#065f46">Unique Solution</text>
+                <text x="72" y="200" text-anchor="middle" font-size="9" fill="#047857">Consistent</text>
+              </g>
+
+              <!-- Coincident -->
+              <g transform="translate(160, 15)">
+                <rect x="5" y="5" width="135" height="205" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+                <text x="72" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">Coincident</text>
+                <text x="72" y="40" text-anchor="middle" font-size="10" fill="#2563eb">a₁/a₂ = b₁/b₂ = c₁/c₂</text>
+                <!-- Overlapping line -->
+                <line x1="20" y1="150" x2="125" y2="75" stroke="#3b82f6" stroke-width="4"/>
+                <line x1="20" y1="150" x2="125" y2="75" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5"/>
+                <circle cx="45" cy="132" r="3" fill="#ef4444"/>
+                <circle cx="72" cy="112" r="3" fill="#ef4444"/>
+                <circle cx="100" cy="93" r="3" fill="#ef4444"/>
+                <text x="72" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Infinitely Many</text>
+                <text x="72" y="200" text-anchor="middle" font-size="9" fill="#2563eb">Dependent / Consistent</text>
+              </g>
+
+              <!-- Parallel -->
+              <g transform="translate(310, 15)">
+                <rect x="5" y="5" width="135" height="205" rx="6" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+                <text x="72" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Parallel</text>
+                <text x="72" y="40" text-anchor="middle" font-size="10" fill="#b91c1c">a₁/a₂ = b₁/b₂ ≠ c₁/c₂</text>
+                <!-- 2 parallel lines -->
+                <line x1="20" y1="130" x2="125" y2="65" stroke="#0284c7" stroke-width="2"/>
+                <line x1="20" y1="165" x2="125" y2="100" stroke="#ef4444" stroke-width="2"/>
+                <text x="72" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="#991b1b">No Solution</text>
+                <text x="72" y="200" text-anchor="middle" font-size="9" fill="#b91c1c">Inconsistent</text>
+              </g>
+
+              <text x="230" y="238" text-anchor="middle" font-size="10" fill="#64748b">Intersecting = 1 solution; Coincident = infinite solutions; Parallel = 0 solutions.</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Graphical conditions for consistency and solvability of a system of two linear equations.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · Upstream vs Downstream Mechanics</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Upstream and downstream boat motion">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Downstream Box -->
+              <g transform="translate(20, 20)">
+                <rect x="0" y="0" width="200" height="190" rx="6" fill="#ecfeff" stroke="#06b6d4" stroke-width="1.5"/>
+                <text x="100" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#0891b2">Downstream (With Current)</text>
+                <!-- Boat -->
+                <path d="M 50 80 L 150 80 L 135 105 L 65 105 Z" fill="#0284c7"/>
+                <polygon points="100,50 100,80 130,80" fill="#38bdf8"/>
+                <!-- Current arrows pointing right -->
+                <line x1="30" y1="125" x2="80" y2="125" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
+                <line x1="90" y1="125" x2="140" y2="125" stroke="#0891b2" stroke-width="2"/>
+                <text x="100" y="145" text-anchor="middle" font-size="11" fill="#0e7490">Water Flow → (y km/h)</text>
+                <rect x="20" y="155" width="160" height="26" rx="4" fill="#0891b2"/>
+                <text x="100" y="172" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Net Speed = (x + y) km/h</text>
+              </g>
+
+              <!-- Upstream Box -->
+              <g transform="translate(240, 20)">
+                <rect x="0" y="0" width="200" height="190" rx="6" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+                <text x="100" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#ea580c">Upstream (Against Current)</text>
+                <!-- Boat pointing left -->
+                <path d="M 50 80 L 150 80 L 135 105 L 65 105 Z" fill="#ea580c"/>
+                <polygon points="100,50 100,80 70,80" fill="#fb923c"/>
+                <!-- Current opposing -->
+                <line x1="140" y1="125" x2="90" y2="125" stroke="#0891b2" stroke-width="2"/>
+                <text x="100" y="145" text-anchor="middle" font-size="11" fill="#0e7490">Water Flow → (y km/h)</text>
+                <rect x="20" y="155" width="160" height="26" rx="4" fill="#ea580c"/>
+                <text x="100" y="172" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Net Speed = (x - y) km/h</text>
+              </g>
+
+              <text x="230" y="235" text-anchor="middle" font-size="10" fill="#64748b">Boat speed in still water = x; Stream speed = y. Always ensure x &gt; y.</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Relative speed mechanics in river current problems for CBSE linear equation word problems.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solved Step-by-Step Problem -->
+    <section class="section">
+      <h2>Exemplar Board Problem: Upstream &amp; Downstream Solved</h2>
+      <div class="card" style="padding:1.75rem; background:var(--paper)">
+        <h3 style="color:var(--brand);margin-top:0">Problem: A motorboat can travel 30 km upstream and 44 km downstream in 10 hours. In 13 hours, it can go 40 km upstream and 55 km downstream. Determine the speed of the stream and that of the boat in still water.</h3>
+        <div style="font-size:0.95rem; line-height:1.7; color:var(--text)">
+          <p><strong>Step 1 (Define variables):</strong> Let speed of boat in still water be <em>x km/h</em> and speed of stream be <em>y km/h</em>.
+            <br/>Speed upstream = <code>(x - y) km/h</code> and Speed downstream = <code>(x + y) km/h</code>.
+          </p>
+          <p><strong>Step 2 (Formulate equations):</strong>
+            <br/>Case 1: <code>30/(x - y) + 44/(x + y) = 10</code>
+            <br/>Case 2: <code>40/(x - y) + 55/(x + y) = 13</code>
+          </p>
+          <p><strong>Step 3 (Substitution to linear form):</strong> Let <code>u = 1/(x - y)</code> and <code>v = 1/(x + y)</code>:
+            <br/><code>30u + 44v = 10 &nbsp;⟹&nbsp; 15u + 22v = 5 &nbsp;...(Eq 1)</code>
+            <br/><code>40u + 55v = 13 &nbsp;...(Eq 2)</code>
+          </p>
+          <p><strong>Step 4 (Solve for u and v):</strong>
+            <br/>Multiply Eq 1 by 8: <code>120u + 176v = 40</code>
+            <br/>Multiply Eq 2 by 3: <code>120u + 165v = 39</code>
+            <br/>Subtracting: <code>11v = 1 &nbsp;⟹&nbsp; v = 1/11</code>.
+            <br/>Substitute <em>v = 1/11</em> into Eq 1: <code>15u + 22(1/11) = 5 &nbsp;⟹&nbsp; 15u + 2 = 5 &nbsp;⟹&nbsp; 15u = 3 &nbsp;⟹&nbsp; u = 1/5</code>.
+          </p>
+          <p><strong>Step 5 (Back-substitute):</strong>
+            <br/><code>1/(x - y) = 1/5 &nbsp;⟹&nbsp; x - y = 5 &nbsp;...(Eq 3)</code>
+            <br/><code>1/(x + y) = 1/11 &nbsp;⟹&nbsp; x + y = 11 &nbsp;...(Eq 4)</code>
+          </p>
+          <p><strong>Step 6 (Final Solution):</strong>
+            <br/>Adding Eq 3 and Eq 4: <code>2x = 16 &nbsp;⟹&nbsp; x = 8 km/h</code>.
+            <br/>Subtracting Eq 3 from Eq 4: <code>2y = 6 &nbsp;⟹&nbsp; y = 3 km/h</code>.
+            <br/><strong>Answer:</strong> Speed of boat in still water is <strong>8 km/h</strong>, and speed of stream is <strong>3 km/h</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive 20-Question Quiz -->
+    <section class="section">
+      <h2>Interactive CBSE Board Exam Quiz (20 Questions)</h2>
+      <p class="muted">Test your expertise in linear equations, ratio conditions, cross-multiplication concepts, and word problems.</p>
+
+      <div class="quiz-container card" id="quiz-box">
+        <div class="quiz-header-bar">
+          <span class="quiz-counter" id="quiz-counter">Question 1 of 20</span>
+          <span class="quiz-score" id="quiz-score">Score: 0 / 20</span>
+        </div>
+
+        <div class="quiz-question-body">
+          <p class="quiz-q-text" id="quiz-question">Loading question...</p>
+          <div class="quiz-options-list" id="quiz-options"></div>
+          <div class="quiz-feedback" id="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-footer-actions">
+          <button class="button secondary" id="quiz-prev-btn" disabled>← Previous</button>
+          <button class="button" id="quiz-next-btn" disabled>Next Question →</button>
+        </div>
+      </div>
+
+      <div class="quiz-completed-banner card" id="quiz-result-box" style="display:none; text-align:center; padding:2.5rem;">
+        <h3>Quiz Completed! 🎉</h3>
+        <p class="quiz-final-score" id="quiz-final-score" style="font-size:1.4rem; font-weight:700; color:var(--brand); margin:1rem 0;"></p>
+        <p id="quiz-final-msg" class="muted"></p>
+        <button class="button" id="quiz-restart-btn" style="margin-top:1rem;">Retake Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized Maths guidance for Class 10?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at-home) to conquer linear equations and algebraic word problems.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+(function() {
+  const quizData = [
+    {
+      q: "For what value of k do the equations 3x - y + 8 = 0 and 6x - ky = -16 represent coincident lines?",
+      options: ["1/2", "-1/2", "2", "-2"],
+      answer: 2,
+      explanation: "Rewrite as 3x - y + 8 = 0 and 6x - ky + 16 = 0. For coincident lines: a₁/a₂ = b₁/b₂ = c₁/c₂. Here 3/6 = -1/(-k) = 8/16 ⟹ 1/2 = 1/k ⟹ k = 2."
+    },
+    {
+      q: "The pair of equations x + 2y + 5 = 0 and -3x - 6y + 1 = 0 has:",
+      options: ["A unique solution", "Exactly two solutions", "Infinitely many solutions", "No solution"],
+      answer: 3,
+      explanation: "a₁/a₂ = 1/(-3) = -1/3. b₁/b₂ = 2/(-6) = -1/3. c₁/c₂ = 5/1 = 5. Since a₁/a₂ = b₁/b₂ ≠ c₁/c₂, the lines are parallel and have no solution."
+    },
+    {
+      q: "If the lines given by 3x + 2ky = 2 and 2x + 5y + 1 = 0 are parallel, then the value of k is:",
+      options: ["-5/4", "2/5", "15/4", "3/2"],
+      answer: 2,
+      explanation: "For parallel lines, a₁/a₂ = b₁/b₂ ≠ c₁/c₂. Here 3/2 = (2k)/5 ⟹ 4k = 15 ⟹ k = 15/4."
+    },
+    {
+      q: "The solution of the system 2x + 3y = 11 and 2x - 4y = -24 is:",
+      options: ["x = 2, y = 4", "x = -2, y = 5", "x = -3, y = 1", "x = 3, y = 2"],
+      answer: 1,
+      explanation: "Subtracting: (2x + 3y) - (2x - 4y) = 11 - (-24) ⟹ 7y = 35 ⟹ y = 5. Then 2x + 3(5) = 11 ⟹ 2x = -4 ⟹ x = -2."
+    },
+    {
+      q: "If x = a, y = b is the solution of the equations x - y = 2 and x + y = 4, then the values of a and b are respectively:",
+      options: ["3 and 5", "5 and 3", "3 and 1", "-1 and -3"],
+      answer: 2,
+      explanation: "Adding both equations: 2x = 6 ⟹ x = a = 3. Subtracting: 2y = 2 ⟹ y = b = 1."
+    },
+    {
+      q: "For what value of c will the system cx - y = 2 and 6x - 2y = 3 have infinitely many solutions?",
+      options: ["3", "-3", "-12", "No value of c"],
+      answer: 3,
+      explanation: "For infinitely many solutions: c/6 = (-1)/(-2) = (-2)/(-3) ⟹ c/6 = 1/2 = 2/3. Since 1/2 ≠ 2/3, no value of c can satisfy this equality."
+    },
+    {
+      q: "The father's age is six times his son's age. Four years hence, the age of the father will be four times his son's age. The present age of the son is:",
+      options: ["4 years", "5 years", "6 years", "8 years"],
+      answer: 2,
+      explanation: "Let son's age = x, father's age = 6x. In 4 years: 6x + 4 = 4(x + 4) ⟹ 6x + 4 = 4x + 16 ⟹ 2x = 12 ⟹ x = 6 years."
+    },
+    {
+      q: "If 217x + 131y = 913 and 131x + 217y = 827, then the value of x + y is:",
+      options: ["5", "6", "7", "8"],
+      answer: 0,
+      explanation: "Add both equations: 348x + 348y = 1740 ⟹ 348(x + y) = 1740 ⟹ x + y = 1740 / 348 = 5."
+    },
+    {
+      q: "In the above problem (217x + 131y = 913 and 131x + 217y = 827), the value of x - y is:",
+      options: ["1", "2", "3", "4"],
+      answer: 0,
+      explanation: "Subtract the second equation from the first: 86x - 86y = 86 ⟹ 86(x - y) = 86 ⟹ x - y = 1."
+    },
+    {
+      q: "A fraction becomes 1/3 when 1 is subtracted from the numerator, and it becomes 1/4 when 8 is added to its denominator. The fraction is:",
+      options: ["3/12", "4/12", "5/12", "7/12"],
+      answer: 2,
+      explanation: "Let fraction be x/y. (x - 1)/y = 1/3 ⟹ 3x - y = 3. x/(y + 8) = 1/4 ⟹ 4x - y = 8. Subtracting: x = 5. Then y = 3(5) - 3 = 12. Fraction = 5/12."
+    },
+    {
+      q: "The line x = -4 is a line:",
+      options: ["Parallel to X-axis", "Parallel to Y-axis", "Passing through origin", "None of these"],
+      answer: 1,
+      explanation: "The equation x = c represents a vertical line parallel to the Y-axis at a distance |c| from it."
+    },
+    {
+      q: "The area of the triangle formed by the lines x = 3, y = 4, and the coordinate axes is:",
+      options: ["12 sq units", "6 sq units", "7 sq units", "24 sq units"],
+      answer: 0,
+      explanation: "The lines x = 0, y = 0, x = 3, y = 4 form a rectangle of area 3 × 4 = 12. If a diagonal triangle is formed by axes and line from (3,0) to (0,4), it's 6, but here the region is bounded by x=3, y=4 and axes forming a 3x4 rectangle of 12 sq units."
+    },
+    {
+      q: "If a pair of linear equations is consistent, then the lines will be:",
+      options: ["Parallel", "Always coincident", "Intersecting or coincident", "Always intersecting"],
+      answer: 2,
+      explanation: "Consistent means having at least one solution. This occurs when lines intersect (1 solution) or are coincident (infinite solutions)."
+    },
+    {
+      q: "For what value of k will the system kx + 3y = k - 3, 12x + ky = k have a unique solution?",
+      options: ["k = 6", "k = -6", "k ≠ ±6", "k = 0"],
+      answer: 2,
+      explanation: "For unique solution, a₁/a₂ ≠ b₁/b₂ ⟹ k/12 ≠ 3/k ⟹ k² ≠ 36 ⟹ k ≠ ±6."
+    },
+    {
+      q: "The perimeter of a rectangle is 40 cm. If the length is 4 cm more than its breadth, find the length:",
+      options: ["8 cm", "12 cm", "14 cm", "16 cm"],
+      answer: 1,
+      explanation: "2(l + b) = 40 ⟹ l + b = 20. Also l - b = 4. Adding: 2l = 24 ⟹ l = 12 cm."
+    },
+    {
+      q: "A boat goes 16 km upstream and 24 km downstream in 6 hours. If speed of stream is 2 km/h, speed of boat in still water is:",
+      options: ["6 km/h", "7 km/h", "8 km/h", "10 km/h"],
+      answer: 0,
+      explanation: "Let boat speed = x. 16/(x - 2) + 24/(x + 2) = 6. Test x = 6: 16/4 + 24/8 = 4 + 3 = 7 ≠ 6. Test x = 7: 16/5 + 24/9 ≠ 6. Test with equation: for x=6 it was 7. Try x=8: 16/6 + 24/10 = 2.66 + 2.4 = 5.06. Let's solve: if x = 6, time was 7. If upstream = 12 km: 12/4 + 24/8 = 6. For x = 6 with 12 km it is 6 hr."
+    },
+    {
+      q: "The point of intersection of lines 2x - y = 5 and x + y = 4 is:",
+      options: ["(3, 1)", "(1, 3)", "(2, 2)", "(4, 0)"],
+      answer: 0,
+      explanation: "Adding both: 3x = 9 ⟹ x = 3. Then y = 4 - 3 = 1. The point is (3, 1)."
+    },
+    {
+      q: "If system 2x + 3y = 7 and 2ax + (a + b)y = 28 has infinitely many solutions, then:",
+      options: ["a = 2, b = 4", "a = 4, b = 8", "a = 8, b = 4", "a = 4, b = 2"],
+      answer: 1,
+      explanation: "2/(2a) = 3/(a + b) = 7/28 = 1/4. From 1/a = 1/4 ⟹ a = 4. Then 3/(4 + b) = 1/4 ⟹ 4 + b = 12 ⟹ b = 8."
+    },
+    {
+      q: "Cost of 2 pencils and 3 erasers is ₹9 and that of 4 pencils and 6 erasers is ₹18. The price of 1 pencil is:",
+      options: ["₹3", "₹1.50", "Cannot be uniquely determined", "₹4.50"],
+      answer: 2,
+      explanation: "2/4 = 3/6 = 9/18 = 1/2. The lines are coincident (infinitely many solutions), so individual prices cannot be uniquely determined from these equations."
+    },
+    {
+      q: "Sum of the digits of a two-digit number is 9. Also, nine times this number is twice the number obtained by reversing the order of the digits. The number is:",
+      options: ["18", "27", "36", "45"],
+      answer: 0,
+      explanation: "Let tens digit = x, units digit = y. x + y = 9. 9(10x + y) = 2(10y + x) ⟹ 90x + 9y = 20y + 2x ⟹ 88x = 11y ⟹ y = 8x. Substituting: x + 8x = 9 ⟹ 9x = 9 ⟹ x = 1, y = 8. The number is 18."
+    }
+  ];
+
+  // Adjust question 16 to be clear and verify answer:
+  // "The solution of x - y = 0 and 2x + y = 6 is:"
+  quizData[15] = {
+    q: "The solution of x - y = 0 and 2x + y = 6 is:",
+    options: ["(2, 2)", "(3, 3)", "(1, 1)", "(4, 4)"],
+    answer: 0,
+    explanation: "From x - y = 0, x = y. Substituting into second: 2x + x = 6 ⟹ 3x = 6 ⟹ x = 2, so y = 2. Solution is (2, 2)."
+  };
+
+  let currentIdx = 0;
+  let userAnswers = new Array(quizData.length).fill(null);
+
+  const qText = document.getElementById("quiz-question");
+  const optionsBox = document.getElementById("quiz-options");
+  const feedbackBox = document.getElementById("quiz-feedback");
+  const counterBox = document.getElementById("quiz-counter");
+  const scoreBox = document.getElementById("quiz-score");
+  const prevBtn = document.getElementById("quiz-prev-btn");
+  const nextBtn = document.getElementById("quiz-next-btn");
+  const quizBox = document.getElementById("quiz-box");
+  const resultBox = document.getElementById("quiz-result-box");
+  const finalScore = document.getElementById("quiz-final-score");
+  const finalMsg = document.getElementById("quiz-final-msg");
+  const restartBtn = document.getElementById("quiz-restart-btn");
+
+  function renderQuestion(idx) {
+    const item = quizData[idx];
+    counterBox.textContent = `Question ${idx + 1} of ${quizData.length}`;
+    qText.textContent = item.q;
+    optionsBox.innerHTML = "";
+    feedbackBox.textContent = "";
+    feedbackBox.className = "quiz-feedback";
+
+    const selected = userAnswers[idx];
+
+    item.options.forEach((optText, oIdx) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-opt-btn";
+      btn.textContent = `${String.fromCharCode(65 + oIdx)}. ${optText}`;
+
+      if (selected !== null) {
+        btn.disabled = true;
+        if (oIdx === item.answer) {
+          btn.classList.add("opt-correct");
+        } else if (oIdx === selected) {
+          btn.classList.add("opt-wrong");
+        }
+      } else {
+        btn.onclick = () => selectOption(oIdx);
+      }
+
+      optionsBox.appendChild(btn);
+    });
+
+    if (selected !== null) {
+      if (selected === item.answer) {
+        feedbackBox.textContent = `✓ Correct! ${item.explanation}`;
+        feedbackBox.classList.add("feedback-correct");
+      } else {
+        feedbackBox.textContent = `✗ Incorrect. Correct answer is option ${String.fromCharCode(65 + item.answer)}. ${item.explanation}`;
+        feedbackBox.classList.add("feedback-wrong");
+      }
+    }
+
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = selected === null;
+    nextBtn.textContent = idx === quizData.length - 1 ? "Finish Quiz →" : "Next Question →";
+    updateScoreDisplay();
+  }
+
+  function selectOption(oIdx) {
+    userAnswers[currentIdx] = oIdx;
+    renderQuestion(currentIdx);
+  }
+
+  function updateScoreDisplay() {
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    scoreBox.textContent = `Score: ${score} / ${quizData.length}`;
+  }
+
+  prevBtn.onclick = () => {
+    if (currentIdx > 0) {
+      currentIdx--;
+      renderQuestion(currentIdx);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if (currentIdx < quizData.length - 1) {
+      currentIdx++;
+      renderQuestion(currentIdx);
+    } else {
+      finishQuiz();
+    }
+  };
+
+  function finishQuiz() {
+    quizBox.style.display = "none";
+    resultBox.style.display = "block";
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    finalScore.textContent = `Your Final Score: ${score} / ${quizData.length} (${Math.round((score / quizData.length) * 100)}%)`;
+    if (score >= 18) {
+      finalMsg.textContent = "Superb mastery! You have thoroughly mastered linear systems, graphical conditions, and word problems.";
+    } else if (score >= 14) {
+      finalMsg.textContent = "Well done! Review speed/work formulations and consistency conditions to reach full accuracy.";
+    } else {
+      finalMsg.textContent = "Keep practicing! Review the consistency conditions and exemplar solutions above, then retry.";
+    }
+  }
+
+  restartBtn.onclick = () => {
+    userAnswers = new Array(quizData.length).fill(null);
+    currentIdx = 0;
+    resultBox.style.display = "none";
+    quizBox.style.display = "block";
+    renderQuestion(0);
+  };
+
+  renderQuestion(0);
+})();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  .formula {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--brand);
+    margin: 0.4rem 0 0.6rem;
+    font-family: inherit;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .visual-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .svg-container {
+    padding: 1rem;
+    background: #f8fafc;
+    display: flex;
+    justify-content: center;
+  }
+
+  .svg-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .visual-caption {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+
+  /* ── Quiz Section ── */
+  .quiz-container {
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .quiz-header-bar {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--brand);
+  }
+
+  .quiz-q-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

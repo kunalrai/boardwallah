@@ -1,0 +1,671 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Coordinate Geometry | CBSE Class 10 Maths | ${provider.name}`}
+  description="CBSE Class 10 Maths Chapter 7 study notes on Coordinate Geometry. Distance formula, collinearity, section formula (internal division), midpoint formula, centroid of triangle, and an interactive 20-question board exam quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Coordinate Geometry
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Mathematics · Chapter 7</span>
+      <h1>Coordinate Geometry</h1>
+      <p class="lead">
+        Connect algebra and geometry on the Cartesian plane. Master the Distance Formula, Section Formula (m₁ : m₂), Mid-point Formula, and geometric classification of shapes for the CBSE Class 10 Board Exam.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Key Concepts &amp; Formulas</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>📏 The Distance Formula</h3>
+          <p class="formula">d = √[(x₂ - x₁)² + (y₂ - y₁)²]</p>
+          <ul class="clean-list">
+            <li><strong>Distance between points P(x₁, y₁) and Q(x₂, y₂):</strong> Derived directly from Pythagoras theorem on the Cartesian plane.</li>
+            <li><strong>Distance from Origin (0, 0):</strong> <code>OP = √(x² + y²)</code>.</li>
+            <li>Distance is always a non-negative scalar quantity (<code>d ≥ 0</code>).</li>
+            <li><strong>Collinearity:</strong> Three points A, B, and C are collinear if <code>AB + BC = AC</code> (the sum of lengths of two segments equals the third).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>✂️ The Section Formula (Internal Division)</h3>
+          <p class="formula">P(x, y) = [(m₁x₂ + m₂x₁)/(m₁ + m₂), (m₁y₂ + m₂y₁)/(m₁ + m₂)]</p>
+          <ul class="clean-list">
+            <li>Coordinates of point <em>P(x, y)</em> which divides the line segment joining <em>A(x₁, y₁)</em> and <em>B(x₂, y₂)</em> internally in ratio <code>m₁ : m₂</code>.</li>
+            <li><strong>Ratio trick (k : 1):</strong> When finding the unknown ratio in which a point or axis divides a line, assume the ratio is <code>k : 1</code>.</li>
+            <li><strong>Division by X-axis:</strong> The y-coordinate of the dividing point is <strong>0</strong> (<code>y = 0</code>).</li>
+            <li><strong>Division by Y-axis:</strong> The x-coordinate of the dividing point is <strong>0</strong> (<code>x = 0</code>).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📍 Mid-Point &amp; Centroid Formulas</h3>
+          <p class="formula">Mid-point: [(x₁ + x₂)/2, (y₁ + y₂)/2]</p>
+          <ul class="clean-list">
+            <li><strong>Mid-point of AB:</strong> Special case of Section Formula when <code>m₁ : m₂ = 1 : 1</code>.
+              <br/><code>M = ((x₁ + x₂)/2, (y₁ + y₂)/2)</code>.
+            </li>
+            <li><strong>Centroid of Triangle ABC:</strong> Intersection of medians, dividing each median in ratio <code>2 : 1</code> from vertex:
+              <br/><code>G = ((x₁ + x₂ + x₃)/3, (y₁ + y₂ + y₃)/3)</code>.
+            </li>
+            <li><strong>Parallelogram 4th vertex property:</strong> Diagonals of a parallelogram bisect each other (their mid-points are identical).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔷 Identifying Geometric Quadrilaterals &amp; Triangles</h3>
+          <p class="formula">Using distance conditions</p>
+          <ul class="clean-list">
+            <li><strong>Equilateral Triangle:</strong> All 3 sides equal (<code>AB = BC = CA</code>).</li>
+            <li><strong>Isosceles Triangle:</strong> Any 2 sides equal.</li>
+            <li><strong>Right Triangle:</strong> Satisfies Pythagoras theorem: <code>AB² + BC² = AC²</code>.</li>
+            <li><strong>Square:</strong> 4 sides equal AND both diagonals equal (<code>AB=BC=CD=DA</code> and <code>AC=BD</code>).</li>
+            <li><strong>Rhombus:</strong> 4 sides equal BUT diagonals are unequal (<code>AC ≠ BD</code>).</li>
+            <li><strong>Rectangle:</strong> Opposite sides equal AND diagonals equal.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Distance Triangle &amp; Section Ratio Division</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · Pythagorean Distance Construction</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Distance formula as hypotenuse of right triangle">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Axes -->
+              <line x1="40" y1="210" x2="420" y2="210" stroke="#94a3b8" stroke-width="2"/>
+              <line x1="60" y1="30" x2="60" y2="230" stroke="#94a3b8" stroke-width="2"/>
+              <text x="425" y="214" font-size="11" fill="#64748b">X</text>
+              <text x="60" y="24" font-size="11" fill="#64748b" text-anchor="middle">Y</text>
+
+              <!-- Points P and Q -->
+              <!-- P(120, 150) -> x1, y1 -->
+              <!-- Q(340, 60) -> x2, y2 -->
+              <!-- R(340, 150) -> right angle -->
+              <polygon points="120,150 340,150 340,60" fill="#e0f2fe" stroke="#bae6fd" stroke-width="1"/>
+              
+              <!-- Hypotenuse PQ -->
+              <line x1="120" y1="150" x2="340" y2="60" stroke="#0f766e" stroke-width="3"/>
+              
+              <!-- Base PR -->
+              <line x1="120" y1="150" x2="340" y2="150" stroke="#0284c7" stroke-width="2"/>
+              <!-- Altitude RQ -->
+              <line x1="340" y1="150" x2="340" y2="60" stroke="#ef4444" stroke-width="2"/>
+
+              <!-- Right angle symbol at R -->
+              <rect x="325" y="135" width="15" height="15" fill="none" stroke="#64748b" stroke-width="1.5"/>
+
+              <!-- Point markers -->
+              <circle cx="120" cy="150" r="5" fill="#0f766e"/>
+              <text x="105" y="165" font-size="11" font-weight="700" fill="#0f766e">P(x₁, y₁)</text>
+
+              <circle cx="340" cy="60" r="5" fill="#0f766e"/>
+              <text x="355" y="60" font-size="11" font-weight="700" fill="#0f766e">Q(x₂, y₂)</text>
+
+              <!-- Dimension labels -->
+              <text x="230" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#0284c7">Base = |x₂ - x₁|</text>
+              <text x="385" y="110" font-size="11" font-weight="600" fill="#dc2626">Height = |y₂ - y₁|</text>
+              <text x="210" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">d = √[(Δx)² + (Δy)²]</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Distance formula derived from Pythagoras theorem: Hypotenuse² = (Base)² + (Height)².</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · Section Formula (Internal Division m₁ : m₂)</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Section formula internal division">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Line AB -->
+              <line x1="60" y1="130" x2="400" y2="130" stroke="#64748b" stroke-width="3"/>
+
+              <!-- Point A -->
+              <circle cx="60" cy="130" r="6" fill="#0284c7"/>
+              <text x="60" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#0284c7">A(x₁, y₁)</text>
+
+              <!-- Point B -->
+              <circle cx="400" cy="130" r="6" fill="#0284c7"/>
+              <text x="400" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#0284c7">B(x₂, y₂)</text>
+
+              <!-- Dividing Point P -->
+              <circle cx="196" cy="130" r="6" fill="#ef4444"/>
+              <text x="196" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">P(x, y)</text>
+
+              <!-- Ratio bracket m1 -->
+              <path d="M 65 145 Q 128 170 190 145" fill="none" stroke="#0284c7" stroke-width="2"/>
+              <text x="128" y="180" text-anchor="middle" font-size="12" font-weight="700" fill="#0284c7">Ratio m₁</text>
+
+              <!-- Ratio bracket m2 -->
+              <path d="M 202 145 Q 298 175 395 145" fill="none" stroke="#ea580c" stroke-width="2"/>
+              <text x="298" y="185" text-anchor="middle" font-size="12" font-weight="700" fill="#ea580c">Ratio m₂</text>
+
+              <!-- Cross multiplication schema box -->
+              <rect x="70" y="200" width="320" height="36" rx="6" fill="#ecfdf5" stroke="#10b981"/>
+              <text x="230" y="222" text-anchor="middle" font-size="11" font-weight="700" fill="#065f46">x = (m₁x₂ + m₂x₁)/(m₁ + m₂), &nbsp; y = (m₁y₂ + m₂y₁)/(m₁ + m₂)</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Internal division of a line segment with cross-ratio weighting: m₁ multiplies B's coordinates and m₂ multiplies A's.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solved Step-by-Step Problem -->
+    <section class="section">
+      <h2>Exemplar Board Problem: Ratio by X-Axis &amp; Point of Division</h2>
+      <div class="card" style="padding:1.75rem; background:var(--paper)">
+        <h3 style="color:var(--brand);margin-top:0">Problem: Find the ratio in which the line segment joining the points A(1, -5) and B(-4, 5) is divided by the X-axis. Also find the coordinates of the point of division.</h3>
+        <div style="font-size:0.95rem; line-height:1.7; color:var(--text)">
+          <p><strong>Step 1 (Formulate division point):</strong> Any point on the X-axis has its y-coordinate equal to zero.
+            <br/>Let the point of division on the X-axis be <code>P(x, 0)</code>, and let the required ratio be <code>k : 1</code>.
+          </p>
+          <p><strong>Step 2 (Apply section formula for y):</strong>
+            <br/>Here <code>y₁ = -5, y₂ = 5, m₁ = k, m₂ = 1</code>.
+            <br/><code>y = (m₁y₂ + m₂y₁) / (m₁ + m₂)</code>
+            <br/><code>0 = [k(5) + 1(-5)] / (k + 1)</code>
+            <br/><code>0 = 5k - 5 &nbsp;⟹&nbsp; 5k = 5 &nbsp;⟹&nbsp; k = 1</code>.
+            <br/>Therefore, the ratio is <code>1 : 1</code> (meaning P is the <strong>mid-point</strong> of AB!).
+          </p>
+          <p><strong>Step 3 (Find x-coordinate):</strong>
+            <br/>Using <code>k = 1</code>:
+            <br/><code>x = (m₁x₂ + m₂x₁) / (m₁ + m₂) = [1(-4) + 1(1)] / (1 + 1) = (-4 + 1) / 2 = -3/2</code>.
+          </p>
+          <p><strong>Conclusion:</strong>
+            <br/>The ratio is <strong>1 : 1</strong>, and the coordinates of the point of division are <strong>(-3/2, 0)</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive 20-Question Quiz -->
+    <section class="section">
+      <h2>Interactive CBSE Board Exam Quiz (20 Questions)</h2>
+      <p class="muted">Test your command over distance formulas, section ratio calculations, midpoints, and geometric shapes on the coordinate grid.</p>
+
+      <div class="quiz-container card" id="quiz-box">
+        <div class="quiz-header-bar">
+          <span class="quiz-counter" id="quiz-counter">Question 1 of 20</span>
+          <span class="quiz-score" id="quiz-score">Score: 0 / 20</span>
+        </div>
+
+        <div class="quiz-question-body">
+          <p class="quiz-q-text" id="quiz-question">Loading question...</p>
+          <div class="quiz-options-list" id="quiz-options"></div>
+          <div class="quiz-feedback" id="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-footer-actions">
+          <button class="button secondary" id="quiz-prev-btn" disabled>← Previous</button>
+          <button class="button" id="quiz-next-btn" disabled>Next Question →</button>
+        </div>
+      </div>
+
+      <div class="quiz-completed-banner card" id="quiz-result-box" style="display:none; text-align:center; padding:2.5rem;">
+        <h3>Quiz Completed! 🎉</h3>
+        <p class="quiz-final-score" id="quiz-final-score" style="font-size:1.4rem; font-weight:700; color:var(--brand); margin:1rem 0;"></p>
+        <p id="quiz-final-msg" class="muted"></p>
+        <button class="button" id="quiz-restart-btn" style="margin-top:1rem;">Retake Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized Maths guidance for Class 10?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at-home) to master coordinate geometry, section formulas, and full marks board presentation.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+(function() {
+  const quizData = [
+    {
+      q: "The distance of the point P(-6, 8) from the origin is:",
+      options: ["8", "2√7", "10", "6"],
+      answer: 2,
+      explanation: "Distance from origin = √(x² + y²) = √[(-6)² + 8²] = √(36 + 64) = √100 = 10 units."
+    },
+    {
+      q: "The distance between the points A(0, 6) and B(0, -2) is:",
+      options: ["6", "8", "4", "2"],
+      answer: 1,
+      explanation: "Since x-coordinates are both 0, distance is |y₂ - y₁| = |-2 - 6| = |-8| = 8 units."
+    },
+    {
+      q: "If the distance between the points (4, p) and (1, 0) is 5, then the value of p is:",
+      options: ["4 only", "±4", "-4 only", "0"],
+      answer: 1,
+      explanation: "d² = (4 - 1)² + (p - 0)² = 5² ⟹ 3² + p² = 25 ⟹ 9 + p² = 25 ⟹ p² = 16 ⟹ p = ±4."
+    },
+    {
+      q: "The coordinates of the mid-point of the line segment joining the points (-5, 4) and (7, -8) are:",
+      options: ["(1, -2)", "(-1, 2)", "(1, 2)", "(-1, -2)"],
+      answer: 0,
+      explanation: "Mid-point = [(-5 + 7)/2, (4 + (-8))/2] = [2/2, -4/2] = (1, -2)."
+    },
+    {
+      q: "If P(a/3, 4) is the mid-point of the line segment joining Q(-6, 5) and R(-2, 3), then the value of a is:",
+      options: ["-4", "-12", "12", "-6"],
+      answer: 1,
+      explanation: "x-coordinate of mid-point = (-6 + (-2))/2 = -8/2 = -4. Given a/3 = -4 ⟹ a = -12."
+    },
+    {
+      q: "The point which divides the line segment joining (7, -6) and (3, 4) in the ratio 1 : 2 internally lies in the quadrant:",
+      options: ["I", "II", "III", "IV"],
+      answer: 3,
+      explanation: "x = [1(3) + 2(7)]/(1 + 2) = (3 + 14)/3 = 17/3 > 0. y = [1(4) + 2(-6)]/3 = (4 - 12)/3 = -8/3 < 0. Point (+, -) lies in Quadrant IV."
+    },
+    {
+      q: "The perimeter of a triangle with vertices (0, 4), (0, 0), and (3, 0) is:",
+      options: ["5", "12", "11", "7 + √5"],
+      answer: 1,
+      explanation: "Sides are: Distance (0,0) to (0,4) = 4; (0,0) to (3,0) = 3; (0,4) to (3,0) = √(3² + 4²) = 5. Perimeter = 4 + 3 + 5 = 12 units."
+    },
+    {
+      q: "The ratio in which the Y-axis divides the line segment joining the points (5, -6) and (-1, -4) is:",
+      options: ["1 : 5", "5 : 1", "2 : 3", "3 : 2"],
+      answer: 1,
+      explanation: "On Y-axis, x = 0. Let ratio be k : 1. x = [k(-1) + 1(5)]/(k + 1) = 0 ⟹ -k + 5 = 0 ⟹ k = 5. Ratio is 5 : 1."
+    },
+    {
+      q: "If A(1, 3), B(-1, 2), C(2, 5), and D(x, 4) are the vertices of a parallelogram ABCD, then the value of x is:",
+      options: ["3", "4", "0", "5"],
+      answer: 1,
+      explanation: "In parallelogram, mid-point of diagonal AC = mid-point of diagonal BD. (1 + 2)/2 = (-1 + x)/2 ⟹ 3 = x - 1 ⟹ x = 4."
+    },
+    {
+      q: "The point P on the X-axis which is equidistant from the points A(2, -5) and B(-2, 9) is:",
+      options: ["(0, -7)", "(-7, 0)", "(7, 0)", "(0, 7)"],
+      answer: 1,
+      explanation: "Let P(x, 0). PA² = PB² ⟹ (x - 2)² + (0 - (-5))² = (x - (-2))² + (0 - 9)² ⟹ x² - 4x + 4 + 25 = x² + 4x + 4 + 81 ⟹ -4x + 29 = 4x + 85 ⟹ 8x = -56 ⟹ x = -7. Point is (-7, 0)."
+    },
+    {
+      q: "If three points A(0, 0), B(3, √3), and C(3, λ) form an equilateral triangle, then λ is:",
+      options: ["2", "-3", "-√3", "0"],
+      answer: 2,
+      explanation: "Distance AB = √(3² + 3) = √12. AC² = 3² + λ² = 9 + λ² = 12 ⟹ λ² = 3 ⟹ λ = ±√3. For C distinct from B, λ = -√3."
+    },
+    {
+      q: "The coordinates of the centroid of a triangle whose vertices are (0, 6), (8, 12), and (8, 0) are:",
+      options: ["(16/3, 6)", "(8, 6)", "(6, 6)", "(16, 18)"],
+      answer: 0,
+      explanation: "G = [(0 + 8 + 8)/3, (6 + 12 + 0)/3] = (16/3, 18/3) = (16/3, 6)."
+    },
+    {
+      q: "The line segment joining points (-3, -4) and (1, -2) is divided by Y-axis in ratio:",
+      options: ["1 : 3", "2 : 3", "3 : 1", "3 : 2"],
+      answer: 2,
+      explanation: "On Y-axis, x = 0. Ratio k : 1 gives x = [k(1) + 1(-3)]/(k + 1) = 0 ⟹ k - 3 = 0 ⟹ k = 3. Ratio is 3 : 1."
+    },
+    {
+      q: "Which point lies on the perpendicular bisector of the segment joining (-2, -5) and (2, 5)?",
+      options: ["(0, 0)", "(0, 2)", "(2, 0)", "(-2, 0)"],
+      answer: 0,
+      explanation: "The mid-point is [(-2 + 2)/2, (-5 + 5)/2] = (0, 0). The perpendicular bisector passes through the midpoint (0, 0)."
+    },
+    {
+      q: "The distance of point P(3, 4) from the X-axis is:",
+      options: ["3 units", "4 units", "5 units", "1 unit"],
+      answer: 1,
+      explanation: "The perpendicular distance of any point (x, y) from the X-axis is |y| = |4| = 4 units."
+    },
+    {
+      q: "If points A(k, 2k), B(3k, 3k), and C(3, 1) are collinear, then k is:",
+      options: ["-1/3", "1/3", "-1", "2"],
+      answer: 0,
+      explanation: "Slope AB = slope BC. (3k - 2k)/(3k - k) = (1 - 3k)/(3 - 3k) ⟹ k/(2k) = 1/2. 1/2 = (1 - 3k)/(3 - 3k) ⟹ 3 - 3k = 2 - 6k ⟹ 3k = -1 ⟹ k = -1/3."
+    },
+    {
+      q: "The center of a circle is (2a - 1, 7) and it passes through (-3, -1). If the diameter is 20 units, then the value of a is:",
+      options: ["-4 or 2", "4 or -2", "-4 or -2", "4 or 2"],
+      answer: 1,
+      explanation: "Radius = 20 / 2 = 10 units. Radius² = (2a - 1 - (-3))² + (7 - (-1))² = 10² ⟹ (2a + 2)² + 8² = 100 ⟹ (2a + 2)² + 64 = 100 ⟹ (2a + 2)² = 36 ⟹ 2a + 2 = ±6. If 2a + 2 = 6 ⟹ 2a = 4 ⟹ a = 2. If 2a + 2 = -6 ⟹ 2a = -8 ⟹ a = -4. Wait, let's check signs: a = 2 or -4 (option A or B). When a = -4, 2(-4)+2 = -6, (-6)²=36. When a = 2, 2(2)+2 = 6, 6²=36. So a = -4 or 2."
+    },
+    {
+      q: "If the points (1, 2), (0, 0), and (a, b) are collinear, then:",
+      options: ["a = b", "a = 2b", "2a = b", "a = -b"],
+      answer: 2,
+      explanation: "Since (0, 0) is one point, the line is y = mx. Using (1, 2), m = 2/1 = 2. Thus the equation is y = 2x. Since (a, b) lies on it, b = 2a."
+    },
+    {
+      q: "The vertices of a triangle are (4, 4), (3, -2), and (-3, 16). The area of the triangle is:",
+      options: ["30 sq units", "27 sq units", "0 sq units (Collinear)", "15 sq units"],
+      answer: 1,
+      explanation: "Area = 1/2 |4(-2 - 16) + 3(16 - 4) + (-3)(4 - (-2))| = 1/2 |4(-18) + 3(12) + (-3)(6)| = 1/2 |-72 + 36 - 18| = 1/2 |-54| = 27 sq units."
+    },
+    {
+      q: "Points P(2, 3), Q(4, 0), and R(6, -3) are:",
+      options: ["Vertices of a right triangle", "Collinear points", "Vertices of an equilateral triangle", "None of these"],
+      answer: 1,
+      explanation: "Slope PQ = (0 - 3)/(4 - 2) = -3/2. Slope QR = (-3 - 0)/(6 - 4) = -3/2. Since slopes are equal and Q is a common point, P, Q, and R are collinear."
+    }
+  ];
+
+  // Fix answer index for question 17: -4 or 2 is option 0
+  quizData[16].answer = 0;
+
+  let currentIdx = 0;
+  let userAnswers = new Array(quizData.length).fill(null);
+
+  const qText = document.getElementById("quiz-question");
+  const optionsBox = document.getElementById("quiz-options");
+  const feedbackBox = document.getElementById("quiz-feedback");
+  const counterBox = document.getElementById("quiz-counter");
+  const scoreBox = document.getElementById("quiz-score");
+  const prevBtn = document.getElementById("quiz-prev-btn");
+  const nextBtn = document.getElementById("quiz-next-btn");
+  const quizBox = document.getElementById("quiz-box");
+  const resultBox = document.getElementById("quiz-result-box");
+  const finalScore = document.getElementById("quiz-final-score");
+  const finalMsg = document.getElementById("quiz-final-msg");
+  const restartBtn = document.getElementById("quiz-restart-btn");
+
+  function renderQuestion(idx) {
+    const item = quizData[idx];
+    counterBox.textContent = `Question ${idx + 1} of ${quizData.length}`;
+    qText.textContent = item.q;
+    optionsBox.innerHTML = "";
+    feedbackBox.textContent = "";
+    feedbackBox.className = "quiz-feedback";
+
+    const selected = userAnswers[idx];
+
+    item.options.forEach((optText, oIdx) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-opt-btn";
+      btn.textContent = `${String.fromCharCode(65 + oIdx)}. ${optText}`;
+
+      if (selected !== null) {
+        btn.disabled = true;
+        if (oIdx === item.answer) {
+          btn.classList.add("opt-correct");
+        } else if (oIdx === selected) {
+          btn.classList.add("opt-wrong");
+        }
+      } else {
+        btn.onclick = () => selectOption(oIdx);
+      }
+
+      optionsBox.appendChild(btn);
+    });
+
+    if (selected !== null) {
+      if (selected === item.answer) {
+        feedbackBox.textContent = `✓ Correct! ${item.explanation}`;
+        feedbackBox.classList.add("feedback-correct");
+      } else {
+        feedbackBox.textContent = `✗ Incorrect. Correct answer is option ${String.fromCharCode(65 + item.answer)}. ${item.explanation}`;
+        feedbackBox.classList.add("feedback-wrong");
+      }
+    }
+
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = selected === null;
+    nextBtn.textContent = idx === quizData.length - 1 ? "Finish Quiz →" : "Next Question →";
+    updateScoreDisplay();
+  }
+
+  function selectOption(oIdx) {
+    userAnswers[currentIdx] = oIdx;
+    renderQuestion(currentIdx);
+  }
+
+  function updateScoreDisplay() {
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    scoreBox.textContent = `Score: ${score} / ${quizData.length}`;
+  }
+
+  prevBtn.onclick = () => {
+    if (currentIdx > 0) {
+      currentIdx--;
+      renderQuestion(currentIdx);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if (currentIdx < quizData.length - 1) {
+      currentIdx++;
+      renderQuestion(currentIdx);
+    } else {
+      finishQuiz();
+    }
+  };
+
+  function finishQuiz() {
+    quizBox.style.display = "none";
+    resultBox.style.display = "block";
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    finalScore.textContent = `Your Final Score: ${score} / ${quizData.length} (${Math.round((score / quizData.length) * 100)}%)`;
+    if (score >= 18) {
+      finalMsg.textContent = "Outstanding mastery! You have complete command over coordinate formulas, ratios, and geometric validations.";
+    } else if (score >= 14) {
+      finalMsg.textContent = "Great job! Review collinearity conditions and the k : 1 section ratio technique to reach perfection.";
+    } else {
+      finalMsg.textContent = "Keep revising! Review the formulas and exemplar problem above, then re-attempt the quiz.";
+    }
+  }
+
+  restartBtn.onclick = () => {
+    userAnswers = new Array(quizData.length).fill(null);
+    currentIdx = 0;
+    resultBox.style.display = "none";
+    quizBox.style.display = "block";
+    renderQuestion(0);
+  };
+
+  renderQuestion(0);
+})();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  .formula {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--brand);
+    margin: 0.4rem 0 0.6rem;
+    font-family: inherit;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .visual-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .svg-container {
+    padding: 1rem;
+    background: #f8fafc;
+    display: flex;
+    justify-content: center;
+  }
+
+  .svg-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .visual-caption {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+
+  /* ── Quiz Section ── */
+  .quiz-container {
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .quiz-header-bar {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--brand);
+  }
+
+  .quiz-q-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

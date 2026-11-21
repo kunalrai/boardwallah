@@ -1,0 +1,666 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Real Numbers | CBSE Class 10 Maths | ${provider.name}`}
+  description="Comprehensive CBSE Class 10 Maths chapter notes on Real Numbers. Covers Fundamental Theorem of Arithmetic, HCF & LCM relation, proofs of irrationality, decimal expansions, visual diagrams, and an interactive 20-question board quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Real Numbers
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Mathematics · Chapter 1</span>
+      <h1>Real Numbers</h1>
+      <p class="lead">
+        Master prime factorisation, the Fundamental Theorem of Arithmetic, HCF and LCM applications, and rigorous contradiction proofs of irrationality (√2, √3, √5) for the CBSE Class 10 Board Exam.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Key Concepts &amp; Formulas</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🔢 Fundamental Theorem of Arithmetic</h3>
+          <p class="formula">Every composite number = p₁ᵃ · p₂ᵇ · p₃ᶜ ···</p>
+          <ul class="clean-list">
+            <li><strong>Statement:</strong> Every composite number can be uniquely expressed (factorised) as a product of primes, apart from the order in which the prime factors occur.</li>
+            <li><strong>Uniqueness:</strong> The prime factorisation of a natural number is unique except for the order of its factors.</li>
+            <li><strong>Application:</strong> Finding the Highest Common Factor (HCF) and Lowest Common Multiple (LCM) of two or more positive integers.</li>
+            <li><strong>Ending in zero check:</strong> For any number <em>n</em>, if <em>aⁿ</em> ends with the digit zero, its prime factorisation must contain both 2 and 5 (i.e., 2 × 5 = 10). Example: 6ⁿ = (2 × 3)ⁿ cannot end with digit 0 for any natural number <em>n</em> because 5 is not a prime factor of 6.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚖️ HCF and LCM Relationship</h3>
+          <p class="formula">HCF(a, b) × LCM(a, b) = a × b</p>
+          <ul class="clean-list">
+            <li><strong>HCF (Highest Common Factor):</strong> Product of the smallest power of each common prime factor involved in the numbers.</li>
+            <li><strong>LCM (Lowest Common Multiple):</strong> Product of the greatest power of each prime factor involved in the numbers.</li>
+            <li><strong>Two-number property:</strong> For any two positive integers <em>a</em> and <em>b</em>, <code>HCF(a, b) × LCM(a, b) = a × b</code>.</li>
+            <li><em>Note:</em> This product rule does <strong>not</strong> hold for three or more numbers!</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔍 Proof of Irrationality (Contradiction Method)</h3>
+          <p class="formula">If p is prime and p | a², then p | a</p>
+          <ul class="clean-list">
+            <li><strong>Theorem:</strong> Let <em>p</em> be a prime number. If <em>p</em> divides <em>a²</em> (where <em>a</em> is a positive integer), then <em>p</em> divides <em>a</em>.</li>
+            <li><strong>Method of Contradiction:</strong> Assume √p is rational, express √p = a/b (where a and b are co-prime integers, b ≠ 0). Square both sides to reach a contradiction that both a and b share a common factor p.</li>
+            <li><strong>Sum/Difference/Product rule:</strong> The sum, difference, product, or quotient of a non-zero rational and an irrational number is always <strong>irrational</strong> (e.g., 2 + 3√5, 5 - √3, 3√2 are all irrational).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌐 Real Number System Hierarchy</h3>
+          <p class="formula">Real Numbers (ℝ) = Rational (ℚ) ∪ Irrational (ℚ')</p>
+          <ul class="clean-list">
+            <li><strong>Natural Numbers (ℕ):</strong> 1, 2, 3, 4, ...</li>
+            <li><strong>Whole Numbers (𝕎):</strong> 0, 1, 2, 3, ...</li>
+            <li><strong>Integers (ℤ):</strong> ..., -3, -2, -1, 0, 1, 2, 3, ...</li>
+            <li><strong>Rational Numbers (ℚ):</strong> Numbers in the form <em>p/q</em> where <em>p, q ∈ ℤ</em> and <em>q ≠ 0</em>. Decimals are terminating or non-terminating repeating.</li>
+            <li><strong>Irrational Numbers:</strong> Non-terminating, non-repeating decimals (e.g., π, √2, √7, 0.1010010001...).</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Factor Tree &amp; Number Classification</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · Prime Factor Tree</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 260" xmlns="http://www.w3.org/2000/svg" aria-label="Prime factor tree for 360">
+              <rect width="460" height="260" fill="#f8fafc" rx="8"/>
+              <!-- Title -->
+              <text x="230" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">Prime Factorisation of 360 = 2³ × 3² × 5</text>
+              
+              <!-- Root: 360 -->
+              <rect x="200" y="40" width="60" height="30" rx="6" fill="#0d9488" />
+              <text x="230" y="60" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">360</text>
+
+              <!-- Level 1 lines -->
+              <line x1="210" y1="70" x2="140" y2="100" stroke="#64748b" stroke-width="2"/>
+              <line x1="250" y1="70" x2="310" y2="100" stroke="#64748b" stroke-width="2"/>
+
+              <!-- Level 1 nodes: 2 (prime circle) & 180 (rect) -->
+              <circle cx="140" cy="115" r="18" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+              <text x="140" y="120" text-anchor="middle" font-size="14" font-weight="700" fill="#0369a1">2</text>
+              <rect x="280" y="100" width="60" height="30" rx="6" fill="#334155" />
+              <text x="310" y="120" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">180</text>
+
+              <!-- Level 2 lines -->
+              <line x1="290" y1="130" x2="230" y2="155" stroke="#64748b" stroke-width="2"/>
+              <line x1="330" y1="130" x2="370" y2="155" stroke="#64748b" stroke-width="2"/>
+
+              <!-- Level 2 nodes: 2 (prime) & 90 -->
+              <circle cx="230" cy="170" r="18" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+              <text x="230" y="175" text-anchor="middle" font-size="14" font-weight="700" fill="#0369a1">2</text>
+              <rect x="345" y="155" width="50" height="30" rx="6" fill="#475569"/>
+              <text x="370" y="175" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">90</text>
+
+              <!-- Level 3 lines -->
+              <line x1="355" y1="185" x2="315" y2="210" stroke="#64748b" stroke-width="2"/>
+              <line x1="385" y1="185" x2="415" y2="210" stroke="#64748b" stroke-width="2"/>
+
+              <!-- Level 3 nodes: 2 & 45 (which splits into 9 & 5 -> 3, 3, 5) -->
+              <circle cx="315" cy="225" r="15" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+              <text x="315" y="230" text-anchor="middle" font-size="12" font-weight="700" fill="#0369a1">2</text>
+              <rect x="390" y="210" width="50" height="28" rx="6" fill="#64748b"/>
+              <text x="415" y="228" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">45</text>
+
+              <!-- Factor breakdown summary box -->
+              <rect x="20" y="180" width="180" height="65" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+              <text x="110" y="202" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">Prime Factors of 360</text>
+              <text x="110" y="222" text-anchor="middle" font-size="12" fill="#047857">2 × 2 × 2 × 3 × 3 × 5</text>
+              <text x="110" y="238" text-anchor="middle" font-size="11" font-weight="600" fill="#0f766e">= 2³ × 3² × 5¹</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Fundamental Theorem of Arithmetic states every integer &gt; 1 can be factored into primes uniquely up to factor order.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · Real Numbers Hierarchy</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 260" xmlns="http://www.w3.org/2000/svg" aria-label="Real number hierarchy">
+              <rect width="460" height="260" fill="#f8fafc" rx="8"/>
+              <!-- Outer box: Real Numbers -->
+              <rect x="15" y="15" width="430" height="230" rx="10" fill="#f1f5f9" stroke="#0f766e" stroke-width="2"/>
+              <text x="30" y="38" font-size="14" font-weight="700" fill="#0f766e">Real Numbers (ℝ)</text>
+
+              <!-- Left partition: Rational Numbers -->
+              <rect x="30" y="50" width="260" height="180" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+              <text x="45" y="72" font-size="13" font-weight="700" fill="#0369a1">Rational Numbers ℚ (p/q, q ≠ 0)</text>
+
+              <!-- Nested Integers (Z) -->
+              <rect x="45" y="85" width="230" height="135" rx="6" fill="#bfdbfe" stroke="#2563eb" stroke-width="1.5"/>
+              <text x="60" y="105" font-size="12" font-weight="700" fill="#1d4ed8">Integers ℤ (..., -2, -1, 0, 1, 2, ...)</text>
+
+              <!-- Nested Whole Numbers (W) -->
+              <rect x="60" y="118" width="200" height="92" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="1.5"/>
+              <text x="75" y="136" font-size="11" font-weight="700" fill="#6d28d9">Whole Numbers 𝕎 (0, 1, 2, 3, ...)</text>
+
+              <!-- Nested Natural Numbers (N) -->
+              <rect x="75" y="148" width="170" height="52" rx="6" fill="#fae8ff" stroke="#c026d3" stroke-width="1.5"/>
+              <text x="90" y="170" font-size="11" font-weight="700" fill="#a21caf">Natural Numbers ℕ (1, 2, 3, ...)</text>
+              <text x="90" y="188" font-size="10" fill="#86198f">Counting numbers</text>
+
+              <!-- Right partition: Irrational Numbers -->
+              <rect x="305" y="50" width="125" height="180" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+              <text x="367" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="#b45309">Irrational (ℚ')</text>
+              <text x="367" y="110" text-anchor="middle" font-size="12" fill="#78350f">√2, √3, √5</text>
+              <text x="367" y="135" text-anchor="middle" font-size="12" fill="#78350f">π ≈ 3.14159...</text>
+              <text x="367" y="160" text-anchor="middle" font-size="11" fill="#78350f">3 + 2√5</text>
+              <text x="367" y="195" text-anchor="middle" font-size="10" font-weight="600" fill="#92400e">Non-terminating &amp;<br/>Non-repeating</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Real numbers partition into Rational (terminating/recurring decimals) and Irrational numbers (non-terminating non-repeating).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solved Step-by-Step Proof Section -->
+    <section class="section">
+      <h2>Essential Board Exam Theorem Proof: Irrationality of √5</h2>
+      <div class="card" style="padding:1.75rem; background:var(--paper)">
+        <h3 style="color:var(--brand);margin-top:0">Theorem: Prove that √5 is an irrational number.</h3>
+        <div style="font-size:0.95rem; line-height:1.7; color:var(--text)">
+          <p><strong>Step 1 (Assumption):</strong> Let us assume to the contrary that <strong>√5 is rational</strong>.</p>
+          <p><strong>Step 2 (Formulation):</strong> Therefore, we can find two co-prime integers <em>a</em> and <em>b</em> (where <em>b ≠ 0</em> and HCF(a, b) = 1) such that:
+          <br/><code>√5 = a / b &nbsp;⟹&nbsp; a = b√5</code></p>
+          <p><strong>Step 3 (Squaring):</strong> Squaring both sides:
+          <br/><code>a² = 5b² &nbsp;...(Equation 1)</code></p>
+          <p><strong>Step 4 (Deduction 1):</strong> Since 5 divides <em>a²</em>, by the fundamental theorem, <strong>5 divides a</strong>.
+          <br/>Therefore, we can write <code>a = 5c</code> for some integer <em>c</em>.</p>
+          <p><strong>Step 5 (Substitution):</strong> Substituting <em>a = 5c</em> into Equation 1:
+          <br/><code>(5c)² = 5b² &nbsp;⟹&nbsp; 25c² = 5b² &nbsp;⟹&nbsp; b² = 5c²</code></p>
+          <p><strong>Step 6 (Deduction 2):</strong> This means that 5 divides <em>b²</em>, which implies <strong>5 divides b</strong> as well.</p>
+          <p><strong>Step 7 (Contradiction):</strong> From Steps 4 and 6, 5 is a common factor of both <em>a</em> and <em>b</em>. But this directly contradicts our premise that <em>a</em> and <em>b</em> are co-prime (HCF = 1).</p>
+          <p><strong>Conclusion:</strong> Hence, our initial assumption was false. <strong>√5 is an irrational number.</strong> [Proved]</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive 20-Question Quiz -->
+    <section class="section">
+      <h2>Interactive CBSE Board Exam Quiz (20 Questions)</h2>
+      <p class="muted">Test your understanding with board exam standard multiple choice questions. Receive instant scoring and detailed step-by-step explanations.</p>
+
+      <div class="quiz-container card" id="quiz-box">
+        <div class="quiz-header-bar">
+          <span class="quiz-counter" id="quiz-counter">Question 1 of 20</span>
+          <span class="quiz-score" id="quiz-score">Score: 0 / 20</span>
+        </div>
+
+        <div class="quiz-question-body">
+          <p class="quiz-q-text" id="quiz-question">Loading question...</p>
+          <div class="quiz-options-list" id="quiz-options"></div>
+          <div class="quiz-feedback" id="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-footer-actions">
+          <button class="button secondary" id="quiz-prev-btn" disabled>← Previous</button>
+          <button class="button" id="quiz-next-btn" disabled>Next Question →</button>
+        </div>
+      </div>
+
+      <div class="quiz-completed-banner card" id="quiz-result-box" style="display:none; text-align:center; padding:2.5rem;">
+        <h3>Quiz Completed! 🎉</h3>
+        <p class="quiz-final-score" id="quiz-final-score" style="font-size:1.4rem; font-weight:700; color:var(--brand); margin:1rem 0;"></p>
+        <p id="quiz-final-msg" class="muted"></p>
+        <button class="button" id="quiz-restart-btn" style="margin-top:1rem;">Retake Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized Maths guidance for Class 10?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at-home) to master proofs, speed up calculations, and score 100% in Maths.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+(function() {
+  const quizData = [
+    {
+      q: "If two positive integers a and b are written as a = x³y² and b = xy³, where x and y are prime numbers, then HCF(a, b) is:",
+      options: ["xy", "xy²", "x³y³", "x²y²"],
+      answer: 1,
+      explanation: "HCF is the product of the smallest power of each common prime factor. Common prime factors are x and y. Smallest power of x is x¹, and smallest power of y is y². Thus HCF(a, b) = xy²."
+    },
+    {
+      q: "If LCM(a, 18) = 36 and HCF(a, 18) = 2, then the value of a is:",
+      options: ["2", "3", "4", "1"],
+      answer: 2,
+      explanation: "We know HCF(a, b) × LCM(a, b) = a × b. Here 2 × 36 = a × 18 ⟹ 72 = 18a ⟹ a = 72 / 18 = 4."
+    },
+    {
+      q: "The total number of factors of a prime number is always:",
+      options: ["1", "2", "0", "Infinite"],
+      answer: 1,
+      explanation: "A prime number has exactly two distinct positive factors: 1 and the number itself."
+    },
+    {
+      q: "If p and q are two co-prime numbers, then HCF(p, q) is:",
+      options: ["p", "q", "1", "pq"],
+      answer: 2,
+      explanation: "By definition, co-prime numbers have no common factor other than 1. Hence, their HCF is 1."
+    },
+    {
+      q: "The exponent of 5 in the prime factorisation of 3750 is:",
+      options: ["3", "4", "5", "6"],
+      answer: 1,
+      explanation: "3750 = 375 × 10 = (3 × 125) × (2 × 5) = 2¹ × 3¹ × 5⁴. Therefore, the exponent of 5 is 4."
+    },
+    {
+      q: "Which of the following is an irrational number?",
+      options: ["√49", "2 + √9", "5 - √3", "0.375"],
+      answer: 2,
+      explanation: "√49 = 7 (rational), 2 + √9 = 2 + 3 = 5 (rational), 0.375 is a terminating decimal (rational). Since √3 is irrational, 5 - √3 is the difference between a rational and an irrational, hence irrational."
+    },
+    {
+      q: "If n is any natural number, then 6ⁿ - 5ⁿ always ends with the unit digit:",
+      options: ["1", "3", "5", "7"],
+      answer: 0,
+      explanation: "For any natural number n, 6ⁿ always ends in digit 6 (6¹=6, 6²=36, 6³=216...). Similarly, 5ⁿ always ends in 5. Therefore, unit digit of (6ⁿ - 5ⁿ) is 6 - 5 = 1."
+    },
+    {
+      q: "The least number that is divisible by all the natural numbers from 1 to 10 (both inclusive) is:",
+      options: ["100", "504", "2520", "5040"],
+      answer: 2,
+      explanation: "The required number is LCM(1, 2, 3, 4, 5, 6, 7, 8, 9, 10) = 2³ × 3² × 5 × 7 = 8 × 9 × 5 × 7 = 2520."
+    },
+    {
+      q: "Can two numbers have 15 as their HCF and 175 as their LCM?",
+      options: ["Yes, always", "No, because HCF must completely divide LCM", "Yes, only if both are odd", "Cannot be determined"],
+      answer: 1,
+      explanation: "HCF must always be a factor of LCM. Dividing 175 by 15 gives 11 with a remainder of 10. Since 15 does not divide 175 exactly, no such pair of numbers can exist."
+    },
+    {
+      q: "The prime factorisation of natural number 4ⁿ can end with the digit 0 if:",
+      options: ["n is even", "n is a multiple of 5", "It contains prime factor 5", "It is never possible for any natural number n"],
+      answer: 3,
+      explanation: "For a number to end in 0, its prime factorisation must contain 2 and 5. Since 4ⁿ = (2²)ⁿ = 2²ⁿ, the only prime factor is 2. By the Fundamental Theorem of Arithmetic uniqueness, 5 will never be a factor, so 4ⁿ never ends in 0."
+    },
+    {
+      q: "If HCF(306, 657) = 9, then LCM(306, 657) is:",
+      options: ["22338", "21338", "22388", "23238"],
+      answer: 0,
+      explanation: "LCM = (a × b) / HCF = (306 × 657) / 9 = 34 × 657 = 22,338."
+    },
+    {
+      q: "The decimal expansion of 17 / (2³ × 5) will terminate after how many places of decimals?",
+      options: ["1", "2", "3", "4"],
+      answer: 2,
+      explanation: "The denominator is 2³ × 5¹. The number of decimal places after which it terminates is the maximum power among 2 and 5, which is max(3, 1) = 3."
+    },
+    {
+      q: "Given that HCF(26, 169) = 13, what is LCM(26, 169)?",
+      options: ["338", "169", "52", "676"],
+      answer: 0,
+      explanation: "LCM = (26 × 169) / 13 = 2 × 169 = 338."
+    },
+    {
+      q: "An army contingent of 616 members is to march behind an army band of 32 members in a parade. The maximum number of columns in which they can march is:",
+      options: ["4", "8", "16", "32"],
+      answer: 1,
+      explanation: "Maximum number of columns = HCF(616, 32). 616 = 32 × 19 + 8. 32 = 8 × 4 + 0. Thus, HCF = 8 columns."
+    },
+    {
+      q: "If the HCF of 65 and 117 is expressible in the form 65m - 117, then the value of m is:",
+      options: ["4", "2", "1", "3"],
+      answer: 1,
+      explanation: "65 = 13 × 5 and 117 = 13 × 9, so HCF(65, 117) = 13. Given 65m - 117 = 13 ⟹ 65m = 130 ⟹ m = 130 / 65 = 2."
+    },
+    {
+      q: "Three bells toll together at intervals of 9, 12, and 15 minutes respectively. If they toll together now, after how many minutes will they toll together next?",
+      options: ["180 minutes", "90 minutes", "360 minutes", "60 minutes"],
+      answer: 0,
+      explanation: "The required time is LCM(9, 12, 15). 9 = 3², 12 = 2² × 3, 15 = 3 × 5. LCM = 2² × 3² × 5 = 4 × 9 × 5 = 180 minutes (3 hours)."
+    },
+    {
+      q: "If p is a prime number, then √p is always:",
+      options: ["A rational number", "An irrational number", "A whole number", "A composite number"],
+      answer: 1,
+      explanation: "Square root of any prime number p is always irrational because it cannot be written in the form a/b where a and b are integers."
+    },
+    {
+      q: "What is the largest number that divides 70 and 125, leaving remainders 5 and 8 respectively?",
+      options: ["13", "65", "875", "1750"],
+      answer: 0,
+      explanation: "The required number is HCF of (70 - 5) and (125 - 8), which is HCF(65, 117). 65 = 5 × 13 and 117 = 9 × 13. HCF = 13."
+    },
+    {
+      q: "Which of the following is true for any two positive integers a and b?",
+      options: ["HCF(a, b) > LCM(a, b)", "HCF(a, b) divides LCM(a, b)", "LCM(a, b) divides HCF(a, b)", "HCF(a, b) + LCM(a, b) = a + b"],
+      answer: 1,
+      explanation: "The Highest Common Factor always divides the Lowest Common Multiple without leaving a remainder."
+    },
+    {
+      q: "If a = 2³ × 3, b = 2 × 3 × 5, c = 3ⁿ × 5 and LCM(a, b, c) = 2³ × 3² × 5, then n equals:",
+      options: ["1", "2", "3", "4"],
+      answer: 1,
+      explanation: "In LCM, the power of 3 is 2. The powers of 3 in a, b, c are 1, 1, and n. Therefore, the highest power of 3 must come from c, meaning n = 2."
+    }
+  ];
+
+  let currentIdx = 0;
+  let userAnswers = new Array(quizData.length).fill(null);
+
+  const qText = document.getElementById("quiz-question");
+  const optionsBox = document.getElementById("quiz-options");
+  const feedbackBox = document.getElementById("quiz-feedback");
+  const counterBox = document.getElementById("quiz-counter");
+  const scoreBox = document.getElementById("quiz-score");
+  const prevBtn = document.getElementById("quiz-prev-btn");
+  const nextBtn = document.getElementById("quiz-next-btn");
+  const quizBox = document.getElementById("quiz-box");
+  const resultBox = document.getElementById("quiz-result-box");
+  const finalScore = document.getElementById("quiz-final-score");
+  const finalMsg = document.getElementById("quiz-final-msg");
+  const restartBtn = document.getElementById("quiz-restart-btn");
+
+  function renderQuestion(idx) {
+    const item = quizData[idx];
+    counterBox.textContent = `Question ${idx + 1} of ${quizData.length}`;
+    qText.textContent = item.q;
+    optionsBox.innerHTML = "";
+    feedbackBox.textContent = "";
+    feedbackBox.className = "quiz-feedback";
+
+    const selected = userAnswers[idx];
+
+    item.options.forEach((optText, oIdx) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-opt-btn";
+      btn.textContent = `${String.fromCharCode(65 + oIdx)}. ${optText}`;
+
+      if (selected !== null) {
+        btn.disabled = true;
+        if (oIdx === item.answer) {
+          btn.classList.add("opt-correct");
+        } else if (oIdx === selected) {
+          btn.classList.add("opt-wrong");
+        }
+      } else {
+        btn.onclick = () => selectOption(oIdx);
+      }
+
+      optionsBox.appendChild(btn);
+    });
+
+    if (selected !== null) {
+      if (selected === item.answer) {
+        feedbackBox.textContent = `✓ Correct! ${item.explanation}`;
+        feedbackBox.classList.add("feedback-correct");
+      } else {
+        feedbackBox.textContent = `✗ Incorrect. Correct answer is option ${String.fromCharCode(65 + item.answer)}. ${item.explanation}`;
+        feedbackBox.classList.add("feedback-wrong");
+      }
+    }
+
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = selected === null;
+    nextBtn.textContent = idx === quizData.length - 1 ? "Finish Quiz →" : "Next Question →";
+    updateScoreDisplay();
+  }
+
+  function selectOption(oIdx) {
+    userAnswers[currentIdx] = oIdx;
+    renderQuestion(currentIdx);
+  }
+
+  function updateScoreDisplay() {
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    scoreBox.textContent = `Score: ${score} / ${quizData.length}`;
+  }
+
+  prevBtn.onclick = () => {
+    if (currentIdx > 0) {
+      currentIdx--;
+      renderQuestion(currentIdx);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if (currentIdx < quizData.length - 1) {
+      currentIdx++;
+      renderQuestion(currentIdx);
+    } else {
+      finishQuiz();
+    }
+  };
+
+  function finishQuiz() {
+    quizBox.style.display = "none";
+    resultBox.style.display = "block";
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    finalScore.textContent = `Your Final Score: ${score} / ${quizData.length} (${Math.round((score / quizData.length) * 100)}%)`;
+    if (score >= 18) {
+      finalMsg.textContent = "Outstanding mastery! You are well prepared for full marks in Real Numbers on the CBSE Board Exam.";
+    } else if (score >= 14) {
+      finalMsg.textContent = "Great job! Review the questions you missed to solidify your HCF/LCM relations and irrationality proofs.";
+    } else {
+      finalMsg.textContent = "Good revision attempt. Re-read the Key Concepts and Theorem Proof above, then try again!";
+    }
+  }
+
+  restartBtn.onclick = () => {
+    userAnswers = new Array(quizData.length).fill(null);
+    currentIdx = 0;
+    resultBox.style.display = "none";
+    quizBox.style.display = "block";
+    renderQuestion(0);
+  };
+
+  renderQuestion(0);
+})();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  .formula {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--brand);
+    margin: 0.4rem 0 0.6rem;
+    font-family: inherit;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .visual-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .svg-container {
+    padding: 1rem;
+    background: #f8fafc;
+    display: flex;
+    justify-content: center;
+  }
+
+  .svg-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .visual-caption {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+
+  /* ── Quiz Section ── */
+  .quiz-container {
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .quiz-header-bar {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--brand);
+  }
+
+  .quiz-q-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

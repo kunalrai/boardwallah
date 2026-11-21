@@ -1,0 +1,713 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Probability | CBSE Class 10 Maths | ${provider.name}`}
+  description="CBSE Class 10 Maths Chapter 14 study notes on Probability. Theoretical probability, sample spaces for coins, dice (36 outcomes), 52-card deck distribution, leap year problems, and an interactive 20-question board quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Probability
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Mathematics · Chapter 14</span>
+      <h1>Probability</h1>
+      <p class="lead">
+        Master classical theoretical probability: compute sample spaces for tossing coins, rolling dice (1 and 2 dice), drawing from a 52-card deck, and solving leap year questions for the CBSE Board Exam.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Key Concepts &amp; Formulas</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🎲 Classical Theoretical Probability</h3>
+          <p class="formula">P(E) = Number of favourable outcomes / Total outcomes</p>
+          <ul class="clean-list">
+            <li><strong>Equally Likely Outcomes:</strong> When each outcome in a sample space has the same chance of occurring (e.g., an unbiased coin or fair die).</li>
+            <li><strong>Range of Probability:</strong> <code>0 ≤ P(E) ≤ 1</code>.
+              <br/>• <strong>Impossible Event:</strong> <code>P(E) = 0</code> (e.g., rolling an 8 on a standard 6-sided die).
+              <br/>• <strong>Sure (Certain) Event:</strong> <code>P(E) = 1</code> (e.g., rolling a number &lt; 7).
+            </li>
+            <li><strong>Elementary Events:</strong> An event having only one outcome. The sum of the probabilities of all elementary events is always <strong>1</strong>: <code>Σ P(Eᵢ) = 1</code>.</li>
+            <li><strong>Complementary Events:</strong> <code>P(E) + P(not E) = 1 ⟹ P(Ē) = 1 - P(E)</code>.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🪙 Coin &amp; Dice Experiments</h3>
+          <p class="formula">Sample Space Exhaustive Outcomes</p>
+          <ul class="clean-list">
+            <li><strong>Coins:</strong>
+              <br/>• 1 coin: (H, T) ⟹ 2 outcomes.
+              <br/>• 2 coins: (HH, HT, TH, TT) ⟹ 4 outcomes (2²).
+              <br/>• 3 coins: (HHH, HHT, HTH, HTT, THH, THT, TTH, TTT) ⟹ 8 outcomes (2³).
+            </li>
+            <li><strong>Dice:</strong>
+              <br/>• 1 die: (1, 2, 3, 4, 5, 6) ⟹ 6 outcomes.
+              <br/>• 2 dice: 6 × 6 = <strong>36 outcomes</strong> (ordered pairs from (1,1) to (6,6)).
+              <br/>• Doublets: (1,1), (2,2), (3,3), (4,4), (5,5), (6,6) ⟹ 6/36 = 1/6.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🃏 Standard 52-Card Deck Breakdown</h3>
+          <p class="formula">4 Suits of 13 Cards Each</p>
+          <ul class="clean-list">
+            <li><strong>26 Red Cards:</strong> 13 Hearts (♥) and 13 Diamonds (♦).</li>
+            <li><strong>26 Black Cards:</strong> 13 Spades (♠) and 13 Clubs (♣).</li>
+            <li><strong>Each suit has:</strong> Ace, 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King.</li>
+            <li><strong>Face Cards:</strong> King, Queen, Jack (3 per suit × 4 suits = <strong>12 Face Cards</strong>: 6 red, 6 black).</li>
+            <li><strong>Honor Cards:</strong> Aces + Face Cards = 4 + 12 = <strong>16 Honor Cards</strong>.</li>
+            <li><strong>Aces:</strong> 4 Aces (2 red, 2 black). Note: An Ace is NOT a face card!</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📅 Calendar &amp; Leap Year Questions</h3>
+          <p class="formula">52 Weeks + Remainder Days</p>
+          <ul class="clean-list">
+            <li><strong>Non-Leap Year (365 days):</strong>
+              <br/><code>365 = 52 weeks × 7 + 1 day</code> (52 Sundays guaranteed).
+              <br/><code>P(53 Sundays) = 1/7</code>.
+            </li>
+            <li><strong>Leap Year (366 days):</strong>
+              <br/><code>366 = 52 weeks × 7 + 2 extra days</code>.
+              <br/>Possible pairs for 2 days: (Sun, Mon), (Mon, Tue), (Tue, Wed), (Wed, Thu), (Thu, Fri), (Fri, Sat), (Sat, Sun) ⟹ 7 pairs.
+              <br/>Favourable for Sundays: (Sat, Sun) and (Sun, Mon) ⟹ <strong>2/7</strong>.
+              <br/><code>P(53 Sundays in a leap year) = 2/7</code>.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Playing Cards Hierarchy &amp; 2-Dice 36 Outcomes Matrix</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · 52 Playing Cards Classification Tree</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="52 playing cards classification">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Root: 52 Cards -->
+              <rect x="170" y="15" width="120" height="30" rx="6" fill="#0f766e"/>
+              <text x="230" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Deck: 52 Cards</text>
+
+              <!-- Level 1 lines -->
+              <line x1="200" y1="45" x2="110" y2="75" stroke="#64748b" stroke-width="2"/>
+              <line x1="260" y1="45" x2="350" y2="75" stroke="#64748b" stroke-width="2"/>
+
+              <!-- Red vs Black -->
+              <rect x="50" y="75" width="120" height="28" rx="4" fill="#fee2e2" stroke="#ef4444"/>
+              <text x="110" y="93" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">26 Red Cards</text>
+
+              <rect x="290" y="75" width="120" height="28" rx="4" fill="#f1f5f9" stroke="#334155"/>
+              <text x="350" y="93" text-anchor="middle" font-size="11" font-weight="700" fill="#0f172a">26 Black Cards</text>
+
+              <!-- 4 Suits -->
+              <!-- Red: Hearts & Diamonds -->
+              <line x1="80" y1="103" x2="55" y2="130" stroke="#ef4444" stroke-width="1.5"/>
+              <line x1="140" y1="103" x2="165" y2="130" stroke="#ef4444" stroke-width="1.5"/>
+              <rect x="10" y="130" width="90" height="30" rx="4" fill="#fff" stroke="#ef4444"/>
+              <text x="55" y="150" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">13 Hearts ♥</text>
+              <rect x="120" y="130" width="90" height="30" rx="4" fill="#fff" stroke="#ef4444"/>
+              <text x="165" y="150" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">13 Diamonds ♦</text>
+
+              <!-- Black: Spades & Clubs -->
+              <line x1="320" y1="103" x2="295" y2="130" stroke="#334155" stroke-width="1.5"/>
+              <line x1="380" y1="103" x2="405" y2="130" stroke="#334155" stroke-width="1.5"/>
+              <rect x="250" y="130" width="90" height="30" rx="4" fill="#fff" stroke="#334155"/>
+              <text x="295" y="150" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">13 Spades ♠</text>
+              <rect x="360" y="130" width="90" height="30" rx="4" fill="#fff" stroke="#334155"/>
+              <text x="405" y="150" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">13 Clubs ♣</text>
+
+              <!-- Face Cards Summary Box -->
+              <rect x="30" y="180" width="400" height="55" rx="6" fill="#ecfdf5" stroke="#10b981"/>
+              <text x="230" y="202" text-anchor="middle" font-size="11" font-weight="700" fill="#065f46">12 Face Cards (Jack, Queen, King × 4 suits) = 6 Red + 6 Black</text>
+              <text x="230" y="222" text-anchor="middle" font-size="10" fill="#047857">4 Aces (2 Red + 2 Black) · Note: Ace is NOT a face card!</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Standard 52-card hierarchy: 2 colors, 4 suits (13 each), 12 face cards, and 4 aces.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · Two-Dice 36 Outcomes Matrix &amp; Sum Diagonal</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Two dice 36 outcomes sum matrix">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Matrix Title -->
+              <text x="230" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">36 Possible Outcomes (Die 1 vs Die 2)</text>
+
+              <!-- Table Headers -->
+              <text x="70" y="50" font-size="10" font-weight="700" fill="#64748b">Die 1 \ 2</text>
+              <text x="130" y="50" font-size="10" font-weight="700" fill="#0284c7">1</text>
+              <text x="180" y="50" font-size="10" font-weight="700" fill="#0284c7">2</text>
+              <text x="230" y="50" font-size="10" font-weight="700" fill="#0284c7">3</text>
+              <text x="280" y="50" font-size="10" font-weight="700" fill="#0284c7">4</text>
+              <text x="330" y="50" font-size="10" font-weight="700" fill="#0284c7">5</text>
+              <text x="380" y="50" font-size="10" font-weight="700" fill="#0284c7">6</text>
+
+              <!-- Rows sample -->
+              <!-- Row 1: 1 -->
+              <text x="70" y="80" font-size="10" font-weight="700" fill="#0284c7">1</text>
+              <rect x="115" y="68" width="30" height="18" rx="3" fill="#ecfdf5" stroke="#10b981"/>
+              <text x="130" y="81" font-size="9" text-anchor="middle" fill="#065f46" font-weight="700">1,1</text>
+              <text x="180" y="81" font-size="9" text-anchor="middle" fill="#64748b">1,2</text>
+              <text x="230" y="81" font-size="9" text-anchor="middle" fill="#64748b">1,3</text>
+              <text x="280" y="81" font-size="9" text-anchor="middle" fill="#64748b">1,4</text>
+              <text x="330" y="81" font-size="9" text-anchor="middle" fill="#64748b">1,5</text>
+              <text x="380" y="81" font-size="9" text-anchor="middle" fill="#64748b">1,6</text>
+
+              <!-- Row 2: 2 -->
+              <text x="70" y="105" font-size="10" font-weight="700" fill="#0284c7">2</text>
+              <text x="130" y="105" font-size="9" text-anchor="middle" fill="#64748b">2,1</text>
+              <rect x="165" y="93" width="30" height="18" rx="3" fill="#ecfdf5" stroke="#10b981"/>
+              <text x="180" y="105" font-size="9" text-anchor="middle" fill="#065f46" font-weight="700">2,2</text>
+              <text x="230" y="105" font-size="9" text-anchor="middle" fill="#64748b">2,3</text>
+              <text x="280" y="105" font-size="9" text-anchor="middle" fill="#64748b">2,4</text>
+              <text x="330" y="105" font-size="9" text-anchor="middle" fill="#64748b">2,5</text>
+              <text x="380" y="105" font-size="9" text-anchor="middle" fill="#64748b">2,6</text>
+
+              <!-- Highlighted Doublets diagonal line -->
+              <line x1="130" y1="80" x2="380" y2="180" stroke="#10b981" stroke-width="2" stroke-dasharray="4"/>
+              
+              <!-- Row 6 -->
+              <text x="70" y="180" font-size="10" font-weight="700" fill="#0284c7">6</text>
+              <text x="130" y="180" font-size="9" text-anchor="middle" fill="#64748b">6,1</text>
+              <text x="180" y="180" font-size="9" text-anchor="middle" fill="#64748b">6,2</text>
+              <text x="230" y="180" font-size="9" text-anchor="middle" fill="#64748b">6,3</text>
+              <text x="280" y="180" font-size="9" text-anchor="middle" fill="#64748b">6,4</text>
+              <text x="330" y="180" font-size="9" text-anchor="middle" fill="#64748b">6,5</text>
+              <rect x="365" y="168" width="30" height="18" rx="3" fill="#ecfdf5" stroke="#10b981"/>
+              <text x="380" y="180" font-size="9" text-anchor="middle" fill="#065f46" font-weight="700">6,6</text>
+
+              <!-- Summary callout -->
+              <rect x="50" y="205" width="360" height="34" rx="4" fill="#0f766e"/>
+              <text x="230" y="226" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Doublets = 6/36 = 1/6 &nbsp;|&nbsp; Sum 7 = 6/36 = 1/6 (Max Probability Sum)</text>
+            </svg>
+          </div>
+          <p class="visual-caption">36 outcomes when rolling two dice. Sum ranges from 2 (1,1) to 12 (6,6), with sum 7 being the most frequent.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solved Step-by-Step Problem -->
+    <section class="section">
+      <h2>Exemplar Board Problem: Playing Cards Probability Solved</h2>
+      <div class="card" style="padding:1.75rem; background:var(--paper)">
+        <h3 style="color:var(--brand);margin-top:0">Problem: One card is drawn from a well-shuffled deck of 52 cards. Find the probability of getting: (i) a king of red colour, (ii) a face card, (iii) a red face card, (iv) the jack of hearts, (v) a spade, (vi) the queen of diamonds.</h3>
+        <div style="font-size:0.95rem; line-height:1.7; color:var(--text)">
+          <p><strong>Total Elementary Outcomes:</strong> <code>Total cards n(S) = 52</code>.</p>
+          <p><strong>(i) A king of red colour:</strong>
+            <br/>Red suits are Hearts and Diamonds. Each has 1 King ⟹ Total red kings = 2.
+            <br/><code>P(Red King) = 2 / 52 = 1 / 26</code>.
+          </p>
+          <p><strong>(ii) A face card:</strong>
+            <br/>Face cards are Jacks, Queens, and Kings (3 in each of 4 suits) ⟹ <code>3 × 4 = 12</code>.
+            <br/><code>P(Face card) = 12 / 52 = 3 / 13</code>.
+          </p>
+          <p><strong>(iii) A red face card:</strong>
+            <br/>Red suits (Hearts &amp; Diamonds) have 3 face cards each ⟹ <code>2 × 3 = 6</code>.
+            <br/><code>P(Red face card) = 6 / 52 = 3 / 26</code>.
+          </p>
+          <p><strong>(iv) The jack of hearts:</strong>
+            <br/>There is only 1 Jack of hearts in the entire deck.
+            <br/><code>P(Jack of hearts) = 1 / 52</code>.
+          </p>
+          <p><strong>(v) A spade:</strong>
+            <br/>There are 13 spades in a deck.
+            <br/><code>P(Spade) = 13 / 52 = 1 / 4</code>.
+          </p>
+          <p><strong>(vi) The queen of diamonds:</strong>
+            <br/>There is only 1 Queen of diamonds in the deck.
+            <br/><code>P(Queen of diamonds) = 1 / 52</code>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive 20-Question Quiz -->
+    <section class="section">
+      <h2>Interactive CBSE Board Exam Quiz (20 Questions)</h2>
+      <p class="muted">Test your concepts on classical probability, coin tosses, 2-dice outcomes, deck cards, and leap years with board exam MCQs.</p>
+
+      <div class="quiz-container card" id="quiz-box">
+        <div class="quiz-header-bar">
+          <span class="quiz-counter" id="quiz-counter">Question 1 of 20</span>
+          <span class="quiz-score" id="quiz-score">Score: 0 / 20</span>
+        </div>
+
+        <div class="quiz-question-body">
+          <p class="quiz-q-text" id="quiz-question">Loading question...</p>
+          <div class="quiz-options-list" id="quiz-options"></div>
+          <div class="quiz-feedback" id="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-footer-actions">
+          <button class="button secondary" id="quiz-prev-btn" disabled>← Previous</button>
+          <button class="button" id="quiz-next-btn" disabled>Next Question →</button>
+        </div>
+      </div>
+
+      <div class="quiz-completed-banner card" id="quiz-result-box" style="display:none; text-align:center; padding:2.5rem;">
+        <h3>Quiz Completed! 🎉</h3>
+        <p class="quiz-final-score" id="quiz-final-score" style="font-size:1.4rem; font-weight:700; color:var(--brand); margin:1rem 0;"></p>
+        <p id="quiz-final-msg" class="muted"></p>
+        <button class="button" id="quiz-restart-btn" style="margin-top:1rem;">Retake Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized Maths guidance for Class 10?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at-home) to master Probability, speed up calculations, and score 100% in CBSE Maths.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+(function() {
+  const quizData = [
+    {
+      q: "Which of the following cannot be the probability of an event?",
+      options: ["2/3", "-1.5", "15%", "0.7"],
+      answer: 1,
+      explanation: "Probability of any event must lie between 0 and 1 (inclusive). It can never be negative, so -1.5 is impossible."
+    },
+    {
+      q: "If P(E) = 0.05, what is the probability of 'not E'?",
+      options: ["0.5", "0.95", "0.05", "1.05"],
+      answer: 1,
+      explanation: "P(not E) = 1 - P(E) = 1 - 0.05 = 0.95."
+    },
+    {
+      q: "The probability of getting a bad egg in a lot of 400 eggs is 0.035. The number of bad eggs in the lot is:",
+      options: ["7", "14", "21", "28"],
+      answer: 1,
+      explanation: "Number of bad eggs = 400 × 0.035 = 14."
+    },
+    {
+      q: "Two dice are thrown together. The probability of getting a doublet is:",
+      options: ["1/3", "1/6", "1/12", "1/36"],
+      answer: 1,
+      explanation: "Doublets are (1,1), (2,2), (3,3), (4,4), (5,5), (6,6) = 6 outcomes. Total outcomes = 36. Probability = 6/36 = 1/6."
+    },
+    {
+      q: "A card is drawn from a well-shuffled deck of 52 cards. The probability of getting a face card is:",
+      options: ["1/13", "3/13", "4/13", "1/4"],
+      answer: 1,
+      explanation: "There are 12 face cards (4 Kings, 4 Queens, 4 Jacks) in a deck of 52 cards. P(Face card) = 12 / 52 = 3 / 13."
+    },
+    {
+      q: "What is the probability of having 53 Sundays in a leap year?",
+      options: ["1/7", "2/7", "3/7", "5/7"],
+      answer: 1,
+      explanation: "A leap year has 366 days = 52 weeks + 2 days. The 2 extra days can be (Sun,Mon), (Mon,Tue), (Tue,Wed), (Wed,Thu), (Thu,Fri), (Fri,Sat), or (Sat,Sun). 2 out of 7 combinations include Sunday. Hence P = 2/7."
+    },
+    {
+      q: "What is the probability of having 53 Sundays in a non-leap year?",
+      options: ["1/7", "2/7", "5/7", "53/365"],
+      answer: 0,
+      explanation: "A non-leap year has 365 days = 52 weeks + 1 day. The 1 extra day can be any of the 7 days of the week. P(Sunday) = 1/7."
+    },
+    {
+      q: "Two coins are tossed simultaneously. The probability of getting at least one head is:",
+      options: ["1/4", "1/2", "3/4", "1"],
+      answer: 2,
+      explanation: "Outcomes: {HH, HT, TH, TT}. Outcomes with at least one head: {HH, HT, TH} = 3 outcomes. P = 3/4."
+    },
+    {
+      q: "A die is thrown once. The probability of getting a prime number is:",
+      options: ["1/3", "1/2", "2/3", "1/6"],
+      answer: 1,
+      explanation: "Prime numbers on a die are 2, 3, 5 (3 numbers). Note: 1 is neither prime nor composite. P = 3/6 = 1/2."
+    },
+    {
+      q: "From a bag containing 3 red balls, 5 black balls, and 4 white balls, a ball is drawn at random. What is the probability that it is NOT black?",
+      options: ["5/12", "7/12", "1/3", "1/4"],
+      answer: 1,
+      explanation: "Total balls = 3 + 5 + 4 = 12. Balls that are not black = 3 red + 4 white = 7 balls. P(Not black) = 7/12."
+    },
+    {
+      q: "Two dice are thrown together. The probability that the sum of the numbers is 8 is:",
+      options: ["5/36", "1/6", "7/36", "1/12"],
+      answer: 0,
+      explanation: "Pairs with sum 8: (2,6), (3,5), (4,4), (5,3), (6,2) = 5 outcomes. P = 5/36."
+    },
+    {
+      q: "A card is drawn from a deck of 52 cards. The probability of drawing a black king is:",
+      options: ["1/52", "1/26", "1/13", "2/13"],
+      answer: 1,
+      explanation: "There are 2 black kings (King of Spades and King of Clubs). P = 2 / 52 = 1 / 26."
+    },
+    {
+      q: "Three coins are tossed together. The probability of getting exactly two heads is:",
+      options: ["1/8", "3/8", "1/2", "5/8"],
+      answer: 1,
+      explanation: "Sample space (8 outcomes): HHH, HHT, HTH, HTT, THH, THT, TTH, TTT. Exactly two heads: {HHT, HTH, THH} = 3 outcomes. P = 3/8."
+    },
+    {
+      q: "A number x is chosen at random from the numbers -3, -2, -1, 0, 1, 2, 3. What is the probability that |x| < 2?",
+      options: ["2/7", "3/7", "4/7", "5/7"],
+      answer: 1,
+      explanation: "|x| < 2 means x can be -1, 0, 1 (3 values). Total numbers = 7. P = 3/7."
+    },
+    {
+      q: "A box contains 90 discs numbered 1 to 90. If one disc is drawn at random, the probability that it bears a perfect square number is:",
+      options: ["1/10", "9/90", "1/9", "9/89"],
+      answer: 0,
+      explanation: "Perfect squares from 1 to 90 are 1, 4, 9, 16, 25, 36, 49, 64, 81 (9 numbers). P = 9 / 90 = 1 / 10."
+    },
+    {
+      q: "The probability of an impossible event is:",
+      options: ["0", "1", "0.5", "Undefined"],
+      answer: 0,
+      explanation: "An impossible event can never occur, so its theoretical probability is exactly 0."
+    },
+    {
+      q: "If a card is drawn from a deck of 52 cards, the probability of getting an Ace or a King is:",
+      options: ["1/13", "2/13", "1/26", "4/13"],
+      answer: 1,
+      explanation: "Number of Aces = 4, Number of Kings = 4. Total favourable cards = 4 + 4 = 8. P = 8 / 52 = 2 / 13."
+    },
+    {
+      q: "In a lottery, there are 10 prizes and 25 blanks. What is the probability of getting a prize?",
+      options: ["10/25", "2/7", "5/7", "10/35"],
+      answer: 1,
+      explanation: "Total tickets = 10 + 25 = 35. Favourable = 10. P(Prize) = 10 / 35 = 2 / 7."
+    },
+    {
+      q: "Two friends were born in the year 2000. What is the probability that they have the same birthday?",
+      options: ["1/365", "1/366", "2/365", "1/183"],
+      answer: 1,
+      explanation: "Year 2000 was a leap year (divisible by 400), having 366 days. The probability that the second friend shares the first friend's birthday is 1 / 366."
+    },
+    {
+      q: "Two dice are thrown together. The probability of getting a sum greater than 10 is:",
+      options: ["1/12", "1/6", "5/36", "1/9"],
+      answer: 0,
+      explanation: "Sums greater than 10 are 11 and 12. Pairs: (5,6), (6,5) [sum 11] and (6,6) [sum 12] = 3 outcomes. P = 3 / 36 = 1 / 12."
+    }
+  ];
+
+  let currentIdx = 0;
+  let userAnswers = new Array(quizData.length).fill(null);
+
+  const qText = document.getElementById("quiz-question");
+  const optionsBox = document.getElementById("quiz-options");
+  const feedbackBox = document.getElementById("quiz-feedback");
+  const counterBox = document.getElementById("quiz-counter");
+  const scoreBox = document.getElementById("quiz-score");
+  const prevBtn = document.getElementById("quiz-prev-btn");
+  const nextBtn = document.getElementById("quiz-next-btn");
+  const quizBox = document.getElementById("quiz-box");
+  const resultBox = document.getElementById("quiz-result-box");
+  const finalScore = document.getElementById("quiz-final-score");
+  const finalMsg = document.getElementById("quiz-final-msg");
+  const restartBtn = document.getElementById("quiz-restart-btn");
+
+  function renderQuestion(idx) {
+    const item = quizData[idx];
+    counterBox.textContent = `Question ${idx + 1} of ${quizData.length}`;
+    qText.textContent = item.q;
+    optionsBox.innerHTML = "";
+    feedbackBox.textContent = "";
+    feedbackBox.className = "quiz-feedback";
+
+    const selected = userAnswers[idx];
+
+    item.options.forEach((optText, oIdx) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-opt-btn";
+      btn.textContent = `${String.fromCharCode(65 + oIdx)}. ${optText}`;
+
+      if (selected !== null) {
+        btn.disabled = true;
+        if (oIdx === item.answer) {
+          btn.classList.add("opt-correct");
+        } else if (oIdx === selected) {
+          btn.classList.add("opt-wrong");
+        }
+      } else {
+        btn.onclick = () => selectOption(oIdx);
+      }
+
+      optionsBox.appendChild(btn);
+    });
+
+    if (selected !== null) {
+      if (selected === item.answer) {
+        feedbackBox.textContent = `✓ Correct! ${item.explanation}`;
+        feedbackBox.classList.add("feedback-correct");
+      } else {
+        feedbackBox.textContent = `✗ Incorrect. Correct answer is option ${String.fromCharCode(65 + item.answer)}. ${item.explanation}`;
+        feedbackBox.classList.add("feedback-wrong");
+      }
+    }
+
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = selected === null;
+    nextBtn.textContent = idx === quizData.length - 1 ? "Finish Quiz →" : "Next Question →";
+    updateScoreDisplay();
+  }
+
+  function selectOption(oIdx) {
+    userAnswers[currentIdx] = oIdx;
+    renderQuestion(currentIdx);
+  }
+
+  function updateScoreDisplay() {
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    scoreBox.textContent = `Score: ${score} / ${quizData.length}`;
+  }
+
+  prevBtn.onclick = () => {
+    if (currentIdx > 0) {
+      currentIdx--;
+      renderQuestion(currentIdx);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if (currentIdx < quizData.length - 1) {
+      currentIdx++;
+      renderQuestion(currentIdx);
+    } else {
+      finishQuiz();
+    }
+  };
+
+  function finishQuiz() {
+    quizBox.style.display = "none";
+    resultBox.style.display = "block";
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    finalScore.textContent = `Your Final Score: ${score} / ${quizData.length} (${Math.round((score / quizData.length) * 100)}%)`;
+    if (score >= 18) {
+      finalMsg.textContent = "Outstanding mastery! You have 100% command over Classical Probability, cards, dice, and leap years.";
+    } else if (score >= 14) {
+      finalMsg.textContent = "Well done! Review leap year remainders and card face-card rules to achieve full marks.";
+    } else {
+      finalMsg.textContent = "Review the sample spaces and exemplar card solutions above, then re-attempt the quiz.";
+    }
+  }
+
+  restartBtn.onclick = () => {
+    userAnswers = new Array(quizData.length).fill(null);
+    currentIdx = 0;
+    resultBox.style.display = "none";
+    quizBox.style.display = "block";
+    renderQuestion(0);
+  };
+
+  renderQuestion(0);
+})();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  .formula {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--brand);
+    margin: 0.4rem 0 0.6rem;
+    font-family: inherit;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .visual-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .svg-container {
+    padding: 1rem;
+    background: #f8fafc;
+    display: flex;
+    justify-content: center;
+  }
+
+  .svg-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .visual-caption {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+
+  /* ── Quiz Section ── */
+  .quiz-container {
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .quiz-header-bar {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--brand);
+  }
+
+  .quiz-q-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

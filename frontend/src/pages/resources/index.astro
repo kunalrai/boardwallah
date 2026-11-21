@@ -5,6 +5,107 @@ import { calBookingUrl } from "../../lib/site";
 
 const { provider } = loadContent();
 
+const mathsChapters = [
+  {
+    title: "Real Numbers",
+    chapter: "Chapter 1 · Mathematics",
+    desc: "Master the Fundamental Theorem of Arithmetic, prime factor trees, HCF × LCM = a × b, and contradiction proofs of irrationality for √2, √3, and √5.",
+    href: "/resources/real-numbers/",
+    topics: ["Fundamental Theorem of Arithmetic", "HCF & LCM Property", "Proof of Irrationality", "Factor Trees", "20-Question Quiz"],
+  },
+  {
+    title: "Polynomials",
+    chapter: "Chapter 2 · Mathematics",
+    desc: "Geometrical zeroes of quadratic polynomials, parabola curves, relationship between zeroes and coefficients (α + β and αβ), and symmetric identities.",
+    href: "/resources/polynomials/",
+    topics: ["Zeroes & X-intercepts", "Sum & Product of Roots", "Parabola Graphs", "Forming Quadratics", "20-Question Quiz"],
+  },
+  {
+    title: "Pair of Linear Equations in Two Variables",
+    chapter: "Chapter 3 · Mathematics",
+    desc: "Consistency conditions for intersecting, parallel, and coincident lines. Algebraic substitution, elimination, and river upstream/downstream word problems.",
+    href: "/resources/linear-equations-in-two-variables/",
+    topics: ["Consistency Conditions (a₁/a₂)", "Substitution & Elimination", "Upstream & Downstream", "Word Problems", "20-Question Quiz"],
+  },
+  {
+    title: "Quadratic Equations",
+    chapter: "Chapter 4 · Mathematics",
+    desc: "Solving quadratic equations by factorisation and Sridharacharya quadratic formula. Discriminant analysis (D > 0, D = 0, D < 0) and speed-distance applications.",
+    href: "/resources/quadratic-equations/",
+    topics: ["Quadratic Formula", "Discriminant & Nature of Roots", "Middle Term Splitting", "Train Speed Problems", "20-Question Quiz"],
+  },
+  {
+    title: "Arithmetic Progressions",
+    chapter: "Chapter 5 · Mathematics",
+    desc: "Understand AP sequences, the nth general term formula, nth term from the end, Gauss summation pairing, and selection of symmetric terms.",
+    href: "/resources/arithmetic-progressions/",
+    topics: ["nth Term aₙ = a+(n-1)d", "Sum Sₙ = n/2[2a+(n-1)d]", "Staircase Visual", "Double Answer Sums", "20-Question Quiz"],
+  },
+  {
+    title: "Triangles",
+    chapter: "Chapter 6 · Mathematics",
+    desc: "Complete proof of the Basic Proportionality Theorem (Thales' Theorem), criteria for triangle similarity (AAA, SSS, SAS), and shadow problem applications.",
+    href: "/resources/triangles/",
+    topics: ["Thales' Theorem (BPT) Proof", "Converse of BPT", "AA, SSS, SAS Similarity", "Shadow & Pole Problems", "20-Question Quiz"],
+  },
+  {
+    title: "Coordinate Geometry",
+    chapter: "Chapter 7 · Mathematics",
+    desc: "Distance formula, collinearity of points, section formula (internal division m₁:m₂), midpoint formula, centroid of triangle, and quadrilateral classification.",
+    href: "/resources/coordinate-geometry/",
+    topics: ["Distance Formula", "Section Formula m₁:m₂", "k:1 Ratio Trick", "Midpoint & Centroid", "20-Question Quiz"],
+  },
+  {
+    title: "Introduction to Trigonometry",
+    chapter: "Chapter 8 · Mathematics",
+    desc: "Trigonometric ratios (sin, cos, tan, cot, sec, cosec), standard angle table (0° to 90°), and proofs using Pythagorean identities (sin²θ + cos²θ = 1).",
+    href: "/resources/introduction-to-trigonometry/",
+    topics: ["P/H, B/H, P/B Mnemonics", "Standard Values (0°-90°)", "Pythagorean Identities", "Trigonometric Proofs", "20-Question Quiz"],
+  },
+  {
+    title: "Some Applications of Trigonometry",
+    chapter: "Chapter 9 · Mathematics",
+    desc: "Heights and distances: line of sight, angle of elevation, angle of depression, 1-triangle and 2-triangle setups (towers, ships, clouds).",
+    href: "/resources/applications-of-trigonometry/",
+    topics: ["Angle of Elevation", "Angle of Depression", "Dual-Triangle Setups", "Tower & Shadow Problems", "20-Question Quiz"],
+  },
+  {
+    title: "Circles",
+    chapter: "Chapter 10 · Mathematics",
+    desc: "Tangents to a circle, Theorem 10.1 (radius ⊥ tangent), Theorem 10.2 (equal external tangents), circumscribed quadrilaterals, and rhombus proofs.",
+    href: "/resources/circles/",
+    topics: ["Theorem 10.1 (Radius ⊥ Tangent)", "Theorem 10.2 (PQ = PR)", "Circumscribed Polygons", "AB + CD = AD + BC", "20-Question Quiz"],
+  },
+  {
+    title: "Areas Related to Circles",
+    chapter: "Chapter 11 · Mathematics",
+    desc: "Perimeter & area of circles, length of arc of a sector, minor and major sector areas, segment area subtraction, and clock hand angle sweeps.",
+    href: "/resources/areas-related-to-circles/",
+    topics: ["Sector Area (θ/360)πr²", "Arc Length", "Minor & Major Segments", "Clock Hands & Wheels", "20-Question Quiz"],
+  },
+  {
+    title: "Surface Areas and Volumes",
+    chapter: "Chapter 12 · Mathematics",
+    desc: "3D mensuration of cubes, cuboids, cylinders, cones, spheres, hemispheres. Combinations of solids (capsules, toys) and melting/recasting conservation.",
+    href: "/resources/surface-areas-and-volumes/",
+    topics: ["Combination of Solids", "Exposed Surface Area Rule", "Melting & Recasting", "Well Embankment Models", "20-Question Quiz"],
+  },
+  {
+    title: "Statistics",
+    chapter: "Chapter 13 · Mathematics",
+    desc: "Measures of central tendency for grouped data: Mean (Direct & Assumed Mean), Mode, Median using cumulative frequency, and 3 Median = Mode + 2 Mean.",
+    href: "/resources/statistics/",
+    topics: ["Mean (Direct & Assumed)", "Modal Class & Mode Formula", "Median & Cumulative Freq", "3 Median = Mode + 2 Mean", "20-Question Quiz"],
+  },
+  {
+    title: "Probability",
+    chapter: "Chapter 14 · Mathematics",
+    desc: "Classical theoretical probability P(E), coin tosses, 2-dice 36 outcome matrix, complete 52-card deck hierarchy, and leap year probability calculations.",
+    href: "/resources/probability/",
+    topics: ["P(E) = Favourable / Total", "Coins (1, 2, 3 tosses)", "Two Dice (36 outcomes)", "52 Playing Cards", "Leap Year Calculations", "20-Question Quiz"],
+  },
+];
+
 const chemistryChapters = [
   {
     title: "Chemical Reactions & Equations",
@@ -69,8 +170,8 @@ const physicsChapters = [
 ---
 
 <Layout
-  title={`CBSE Class 10 Science Revision Notes, Diagrams & Quizzes | ${provider.name}`}
-  description="Free chapter-wise revision notes, interactive SVG diagrams, reaction setups, circuit schematics, and board exam quizzes for all CBSE Class 10 Chemistry and Physics chapters."
+  title={`CBSE Class 10 Maths & Science Revision Notes, Diagrams & Quizzes | ${provider.name}`}
+  description="Free chapter-wise revision notes, interactive SVG diagrams, geometric proofs, circuit schematics, and board exam quizzes for all CBSE Class 10 Mathematics, Chemistry, and Physics chapters."
 >
   <div class="wrap">
     <nav class="small" aria-label="Breadcrumb">
@@ -78,15 +179,41 @@ const physicsChapters = [
     </nav>
 
     <div class="resource-header">
-      <span class="eyebrow">CBSE Class 10 · Science Learning Hub</span>
-      <h1>Class 10 Science Chapter Revision Guides</h1>
+      <span class="eyebrow">CBSE Class 10 · Academic Learning Hub</span>
+      <h1>Class 10 Maths &amp; Science Chapter Revision Guides</h1>
       <p class="lead">
-        Comprehensive notes, interactive SVG diagrams, formula sheets, key reactions, and 20-question board quizzes covering 100% of the CBSE Class 10 Chemistry and Physics curriculum.
+        Comprehensive notes, interactive SVG diagrams, formula sheets, theorem proofs, and 20-question board quizzes covering 100% of the CBSE Class 10 Mathematics and Science curriculum.
       </p>
     </div>
 
-    <!-- Chemistry Section -->
+    <!-- Mathematics Section -->
     <section class="section" style="padding-top:0">
+      <div class="section-title-wrap">
+        <h2>📐 Class 10 Mathematics Chapters (All 14 Chapters)</h2>
+        <p class="muted">Master algebra, geometry, trigonometry, mensuration, and statistics with step-by-step proofs, formulas, and 20-question quizzes.</p>
+      </div>
+
+      <div class="grid two chapters-grid">
+        {mathsChapters.map((ch) => (
+          <article class="card chapter-card">
+            <span class="tag">{ch.chapter}</span>
+            <h2>{ch.title}</h2>
+            <p class="muted">{ch.desc}</p>
+            <div class="topic-tags">
+              {ch.topics.map((t) => (
+                <span class="topic-tag">{t}</span>
+              ))}
+            </div>
+            <div class="actions" style="margin-top:auto;padding-top:1rem">
+              <a href={ch.href} class="button">Explore Chapter &amp; Quiz →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Chemistry Section -->
+    <section class="section">
       <div class="section-title-wrap">
         <h2>⚗️ Class 10 Chemistry Chapters</h2>
         <p class="muted">Master chemical reactions, acids &amp; bases, metallurgy, and carbon chemistry with step-by-step balanced equations and diagrams.</p>
@@ -139,8 +266,8 @@ const physicsChapters = [
 
     <!-- CTA -->
     <section class="cta-banner" style="margin-top:3rem">
-      <h2>Need personalized guidance for CBSE Class 10 Science?</h2>
-      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at-home) to master difficult topics, reactions, and numericals.</p>
+      <h2>Need personalized guidance for CBSE Class 10?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at-home) to master difficult topics, geometric proofs, and board exam numericals.</p>
       <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
     </section>
   </div>

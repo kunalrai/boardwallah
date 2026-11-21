@@ -1,0 +1,661 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Triangles | CBSE Class 10 Maths | ${provider.name}`}
+  description="CBSE Class 10 Maths Chapter 6 study notes on Triangles. Basic Proportionality Theorem (Thales Theorem) with complete proof, similarity criteria (AAA, SSS, SAS), ratio properties, and an interactive 20-question board quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Triangles
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Mathematics · Chapter 6</span>
+      <h1>Triangles</h1>
+      <p class="lead">
+        Master similarity of geometric figures, the Basic Proportionality Theorem (Thales' Theorem), criteria for similarity (AAA, SSS, SAS), and board-level geometric proofs.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Key Concepts &amp; Theorems</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>📐 Similarity vs. Congruence</h3>
+          <p class="formula">Same Shape (Similar: ~) vs Same Size &amp; Shape (≅)</p>
+          <ul class="clean-list">
+            <li>Two polygons of the same number of sides are <strong>similar</strong> if:
+              <br/>1. Their corresponding angles are equal, and
+              <br/>2. Their corresponding sides are in the same ratio (proportional).
+            </li>
+            <li>All congruent figures are similar, but similar figures need not be congruent.</li>
+            <li>All circles are similar; all squares are similar; all equilateral triangles are similar.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🏛️ Basic Proportionality Theorem (Thales' Theorem)</h3>
+          <p class="formula">In ΔABC, if DE ∥ BC ⟹ AD / DB = AE / EC</p>
+          <ul class="clean-list">
+            <li><strong>Statement:</strong> If a line is drawn parallel to one side of a triangle intersecting the other two sides in distinct points, then the other two sides are divided in the same ratio.</li>
+            <li><strong>Corollaries:</strong>
+              <br/>• <code>AD / AB = AE / AC</code>
+              <br/>• <code>AB / DB = AC / EC</code>
+            </li>
+            <li><strong>Converse of BPT:</strong> If a line divides any two sides of a triangle in the same ratio, then the line must be parallel to the third side.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔍 Criteria for Similarity of Triangles</h3>
+          <p class="formula">AAA (AA), SSS, and SAS</p>
+          <ul class="clean-list">
+            <li><strong>AAA Criterion:</strong> If in two triangles, corresponding angles are equal, then their corresponding sides are proportional and hence the triangles are similar. (<strong>AA corollary:</strong> Two pairs of equal angles suffice!).</li>
+            <li><strong>SSS Criterion:</strong> If in two triangles, sides of one triangle are proportional to the sides of the other triangle, then corresponding angles are equal and triangles are similar.</li>
+            <li><strong>SAS Criterion:</strong> If one angle of a triangle is equal to one angle of another triangle and the sides including these angles are proportional, the triangles are similar.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>💡 Key Geometric Properties &amp; Applications</h3>
+          <p class="formula">Ratio of altitudes, medians, &amp; perimeters</p>
+          <ul class="clean-list">
+            <li>If <code>ΔABC ~ ΔDEF</code> with ratio of sides <code>k = AB/DE = BC/EF = AC/DF</code>:</li>
+            <li><strong>Perimeters:</strong> <code>Perimeter(ΔABC) / Perimeter(ΔDEF) = k</code></li>
+            <li><strong>Altitudes:</strong> Ratio of corresponding altitudes equals <code>k</code>.</li>
+            <li><strong>Medians:</strong> Ratio of corresponding medians equals <code>k</code>.</li>
+            <li><strong>Angle Bisectors:</strong> Ratio of corresponding angle bisector segments equals <code>k</code>.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Thales' Theorem &amp; Triangle Similarity Setup</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · Basic Proportionality Theorem (BPT) Construction</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Basic proportionality theorem diagram">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Triangle ABC -->
+              <polygon points="230,30 90,210 370,210" fill="#f1f5f9" stroke="#0f766e" stroke-width="2.5"/>
+              <text x="230" y="22" font-size="13" font-weight="700" fill="#0f766e" text-anchor="middle">A</text>
+              <text x="75" y="215" font-size="13" font-weight="700" fill="#0f766e">B</text>
+              <text x="380" y="215" font-size="13" font-weight="700" fill="#0f766e">C</text>
+
+              <!-- Line DE parallel to BC -->
+              <line x1="146" y1="138" x2="314" y2="138" stroke="#ef4444" stroke-width="2.5"/>
+              <circle cx="146" cy="138" r="4" fill="#ef4444"/>
+              <circle cx="314" cy="138" r="4" fill="#ef4444"/>
+              <text x="130" y="138" font-size="12" font-weight="700" fill="#dc2626">D</text>
+              <text x="325" y="138" font-size="12" font-weight="700" fill="#dc2626">E</text>
+
+              <!-- Construction diagonals BE and CD -->
+              <line x1="90" y1="210" x2="314" y2="138" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
+              <line x1="370" y1="210" x2="146" y2="138" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
+
+              <!-- Altitudes EN and DM -->
+              <line x1="314" y1="138" x2="188" y2="84" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3"/>
+              <text x="175" y="80" font-size="10" font-weight="700" fill="#0284c7">N</text>
+
+              <!-- Parallel arrows -->
+              <polygon points="225,134 235,138 225,142" fill="#ef4444"/>
+              <polygon points="225,206 235,210 225,214" fill="#0f766e"/>
+
+              <!-- Ratio formula banner -->
+              <rect x="130" y="222" width="200" height="24" rx="4" fill="#0f766e"/>
+              <text x="230" y="238" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">DE ∥ BC &nbsp;⟹&nbsp; AD / DB = AE / EC</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Standard BPT proof setup using equal areas of triangles on the same base between parallel lines.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · AA Similarity &amp; Shadow Problem Model</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="AA similarity shadow problem">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Sun ray -->
+              <circle cx="60" cy="35" r="16" fill="#f59e0b"/>
+              <line x1="75" y1="45" x2="150" y2="90" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3"/>
+
+              <!-- Vertical Pole 1 (Girl/Pole) -->
+              <line x1="160" y1="140" x2="160" y2="200" stroke="#0284c7" stroke-width="3"/>
+              <text x="145" y="170" font-size="10" font-weight="700" fill="#0284c7">h₁</text>
+              <line x1="160" y1="200" x2="220" y2="200" stroke="#64748b" stroke-width="2"/>
+              <text x="190" y="215" font-size="10" fill="#64748b" text-anchor="middle">s₁ (shadow)</text>
+              <line x1="160" y1="140" x2="220" y2="200" stroke="#f59e0b" stroke-width="1.5"/>
+              <text x="190" y="195" font-size="9" fill="#b45309">θ</text>
+
+              <!-- Vertical Tower (Big Object) -->
+              <line x1="280" y1="60" x2="280" y2="200" stroke="#0f766e" stroke-width="4"/>
+              <text x="260" y="130" font-size="11" font-weight="700" fill="#0f766e">H (Tower)</text>
+              <line x1="280" y1="200" x2="420" y2="200" stroke="#64748b" stroke-width="2"/>
+              <text x="350" y="215" font-size="10" fill="#64748b" text-anchor="middle">S (Tower shadow)</text>
+              <line x1="280" y1="60" x2="420" y2="200" stroke="#f59e0b" stroke-width="1.5"/>
+              <text x="390" y="195" font-size="9" fill="#b45309">θ</text>
+
+              <!-- Formula -->
+              <rect x="130" y="222" width="200" height="24" rx="4" fill="#0284c7"/>
+              <text x="230" y="238" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">h₁ / s₁ = H / S &nbsp;(By AA Similarity)</text>
+            </svg>
+          </div>
+          <p class="visual-caption">At the same instant, the angle of sun rays θ is equal for all objects, yielding similar right triangles.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solved Step-by-Step BPT Proof Section -->
+    <section class="section">
+      <h2>Essential Board Exam Theorem: Proof of Basic Proportionality Theorem</h2>
+      <div class="card" style="padding:1.75rem; background:var(--paper)">
+        <h3 style="color:var(--brand);margin-top:0">Theorem: If a line is drawn parallel to one side of a triangle to intersect the other two sides in distinct points, prove that the other two sides are divided in the same ratio.</h3>
+        <div style="font-size:0.95rem; line-height:1.7; color:var(--text)">
+          <p><strong>Given:</strong> A triangle <em>ABC</em> in which a line parallel to side <em>BC</em> intersects other two sides <em>AB</em> and <em>AC</em> at <em>D</em> and <em>E</em> respectively (i.e., <code>DE ∥ BC</code>).</p>
+          <p><strong>To Prove:</strong> <code>AD / DB = AE / EC</code>.</p>
+          <p><strong>Construction:</strong> Join <em>B</em> to <em>E</em> and <em>C</em> to <em>D</em>. Draw <code>DM ⊥ AC</code> and <code>EN ⊥ AB</code>.</p>
+          <p><strong>Proof:</strong>
+            <br/>Area of a triangle = <code>1/2 × base × height</code>.
+            <br/>• <code>ar(ΔADE) = 1/2 × AD × EN</code>
+            <br/>• <code>ar(ΔBDE) = 1/2 × DB × EN</code>
+            <br/>Dividing the two: <code>ar(ΔADE) / ar(ΔBDE) = (1/2 × AD × EN) / (1/2 × DB × EN) = AD / DB &nbsp;...(Eq 1)</code>
+          </p>
+          <p>Similarly:
+            <br/>• <code>ar(ΔADE) = 1/2 × AE × DM</code>
+            <br/>• <code>ar(ΔDEC) = 1/2 × EC × DM</code>
+            <br/>Dividing the two: <code>ar(ΔADE) / ar(ΔDEC) = (1/2 × AE × DM) / (1/2 × EC × DM) = AE / EC &nbsp;...(Eq 2)</code>
+          </p>
+          <p><strong>Crucial Step:</strong> Note that <em>ΔBDE</em> and <em>ΔDEC</em> are on the <strong>same base DE</strong> and between the <strong>same parallels DE and BC</strong>.
+            <br/>Therefore: <code>ar(ΔBDE) = ar(ΔDEC) &nbsp;...(Eq 3)</code>
+          </p>
+          <p><strong>Conclusion:</strong> From (Eq 1), (Eq 2), and (Eq 3):
+            <br/><code>ar(ΔADE) / ar(ΔBDE) = ar(ΔADE) / ar(ΔDEC) &nbsp;⟹&nbsp; AD / DB = AE / EC</code>. [Hence Proved]
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive 20-Question Quiz -->
+    <section class="section">
+      <h2>Interactive CBSE Board Exam Quiz (20 Questions)</h2>
+      <p class="muted">Test your concepts on Thales theorem, similarity criteria (AA, SSS, SAS), and ratio relations with board exam MCQs.</p>
+
+      <div class="quiz-container card" id="quiz-box">
+        <div class="quiz-header-bar">
+          <span class="quiz-counter" id="quiz-counter">Question 1 of 20</span>
+          <span class="quiz-score" id="quiz-score">Score: 0 / 20</span>
+        </div>
+
+        <div class="quiz-question-body">
+          <p class="quiz-q-text" id="quiz-question">Loading question...</p>
+          <div class="quiz-options-list" id="quiz-options"></div>
+          <div class="quiz-feedback" id="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-footer-actions">
+          <button class="button secondary" id="quiz-prev-btn" disabled>← Previous</button>
+          <button class="button" id="quiz-next-btn" disabled>Next Question →</button>
+        </div>
+      </div>
+
+      <div class="quiz-completed-banner card" id="quiz-result-box" style="display:none; text-align:center; padding:2.5rem;">
+        <h3>Quiz Completed! 🎉</h3>
+        <p class="quiz-final-score" id="quiz-final-score" style="font-size:1.4rem; font-weight:700; color:var(--brand); margin:1rem 0;"></p>
+        <p id="quiz-final-msg" class="muted"></p>
+        <button class="button" id="quiz-restart-btn" style="margin-top:1rem;">Retake Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized Maths guidance for Class 10?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at-home) to master geometry proofs, triangle similarity, and board exam numericals.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+(function() {
+  const quizData = [
+    {
+      q: "In ΔABC, DE ∥ BC intersecting AB at D and AC at E. If AD = 1.5 cm, DB = 3 cm, and AE = 1 cm, then EC is:",
+      options: ["1.5 cm", "2 cm", "2.5 cm", "3 cm"],
+      answer: 1,
+      explanation: "By Thales' Theorem (BPT): AD / DB = AE / EC ⟹ 1.5 / 3 = 1 / EC ⟹ 1/2 = 1 / EC ⟹ EC = 2 cm."
+    },
+    {
+      q: "If in two triangles ABC and PQR, AB/QR = BC/PR = CA/PQ, then:",
+      options: ["ΔPQR ~ ΔCAB", "ΔPQR ~ ΔABC", "ΔCBA ~ ΔPQR", "ΔBCA ~ ΔPQR"],
+      answer: 0,
+      explanation: "Matching proportional vertices: AB corresponds to QR, BC to PR, CA to PQ. The correspondence is C ↔ P, A ↔ Q, B ↔ R. Therefore, ΔPQR ~ ΔCAB."
+    },
+    {
+      q: "A vertical pole of length 6 m casts a shadow 4 m long on the ground and at the same time a tower casts a shadow 28 m long. The height of the tower is:",
+      options: ["40 m", "42 m", "44 m", "48 m"],
+      answer: 1,
+      explanation: "Since the angle of elevation of the sun is the same, both triangles are similar: Height_pole / Shadow_pole = Height_tower / Shadow_tower ⟹ 6 / 4 = H / 28 ⟹ H = (6 × 28) / 4 = 6 × 7 = 42 m."
+    },
+    {
+      q: "In ΔABC, D and E are points on sides AB and AC respectively such that DE ∥ BC. If AD/DB = 3/4 and AC = 15 cm, then AE is:",
+      options: ["6.43 cm", "6.25 cm", "6.4 cm", "5.5 cm"],
+      answer: 0,
+      explanation: "AD / AB = AE / AC. Since AD/DB = 3/4, AD/AB = 3/(3 + 4) = 3/7. AE = (3/7) × 15 = 45/7 ≈ 6.43 cm."
+    },
+    {
+      q: "If ΔABC ~ ΔDEF and ∠A = 47°, ∠E = 83°, then the measure of ∠C is:",
+      options: ["50°", "60°", "70°", "80°"],
+      answer: 0,
+      explanation: "Since ΔABC ~ ΔDEF, corresponding angles are equal: ∠B = ∠E = 83°. In ΔABC: ∠A + ∠B + ∠C = 180° ⟹ 47° + 83° + ∠C = 180° ⟹ 130° + ∠C = 180° ⟹ ∠C = 50°."
+    },
+    {
+      q: "The perimeters of two similar triangles ΔABC and ΔPQR are 36 cm and 24 cm respectively. If PQ = 10 cm, then AB is:",
+      options: ["15 cm", "12 cm", "18 cm", "20 cm"],
+      answer: 0,
+      explanation: "Perimeter(ΔABC) / Perimeter(ΔPQR) = AB / PQ ⟹ 36 / 24 = AB / 10 ⟹ 3/2 = AB / 10 ⟹ AB = 15 cm."
+    },
+    {
+      q: "In ΔABC, DE ∥ BC with D on AB and E on AC. If AD = x, DB = x - 2, AE = x + 2, and EC = x - 1, then the value of x is:",
+      options: ["3", "4", "5", "6"],
+      answer: 1,
+      explanation: "By BPT: AD / DB = AE / EC ⟹ x / (x - 2) = (x + 2) / (x - 1) ⟹ x(x - 1) = (x - 2)(x + 2) ⟹ x² - x = x² - 4 ⟹ -x = -4 ⟹ x = 4."
+    },
+    {
+      q: "Which of the following is NOT a criterion for similarity of two triangles?",
+      options: ["AAA", "SAS", "SSS", "RHS"],
+      answer: 3,
+      explanation: "RHS (Right angle-Hypotenuse-Side) is a criterion for congruence of triangles, not a standard similarity criterion."
+    },
+    {
+      q: "If in ΔABC and ΔDEF, AB/DE = BC/FD, then they will be similar when:",
+      options: ["∠B = ∠E", "∠A = ∠D", "∠B = ∠D", "∠A = ∠F"],
+      answer: 2,
+      explanation: "Sides AB and BC include ∠B. Sides DE and FD include ∠D. By the SAS similarity criterion, the included angles must be equal: ∠B = ∠D."
+    },
+    {
+      q: "In a trapezium ABCD with AB ∥ CD, diagonals AC and BD intersect at O. If AB = 2 CD and ar(ΔAOB) = 84 cm², what is the ratio AO / OC?",
+      options: ["1 : 2", "2 : 1", "4 : 1", "1 : 4"],
+      answer: 1,
+      explanation: "Since AB ∥ CD, ΔAOB ~ ΔCOD by AA similarity. Therefore, AO / OC = AB / CD = 2CD / CD = 2/1 = 2 : 1."
+    },
+    {
+      q: "All equilateral triangles are:",
+      options: ["Congruent only", "Similar only", "Both congruent and similar", "Neither"],
+      answer: 1,
+      explanation: "All equilateral triangles have interior angles equal to 60° (AAA similarity). Their shapes are identical, hence they are always similar."
+    },
+    {
+      q: "In ΔABC, if ∠B = 90° and BD ⊥ AC, which of the following is true?",
+      options: ["BD² = AD × DC", "BD² = AB × BC", "BD² = AC²", "BD = AD + DC"],
+      answer: 0,
+      explanation: "In a right-angled triangle with altitude to hypotenuse, ΔADB ~ ΔBDC. Thus AD / BD = BD / DC ⟹ BD² = AD × DC."
+    },
+    {
+      q: "If ΔABC ~ ΔEDF and ΔABC is not similar to ΔDEF, then which of the following is NOT true?",
+      options: ["BC · EF = AC · FD", "AB · EF = AC · DE", "BC · DE = AB · EF", "BC · DE = AB · FD"],
+      answer: 2,
+      explanation: "From ΔABC ~ ΔEDF: AB/ED = BC/DF = AC/EF. From AB/ED = BC/DF ⟹ AB · DF = BC · DE. Hence option C (BC · DE = AB · EF) is false."
+    },
+    {
+      q: "A line segment DE is drawn parallel to base BC of ΔABC. If ar(ΔADE) = 1/4 ar(ΔABC), then AD/AB is:",
+      options: ["1/2", "1/4", "1/√2", "1/8"],
+      answer: 0,
+      explanation: "Ratio of areas of similar triangles is the square of the ratio of their corresponding sides: ar(ΔADE)/ar(ΔABC) = (AD/AB)² = 1/4 ⟹ AD/AB = 1/2."
+    },
+    {
+      q: "A girl of height 90 cm is walking away from the base of a lamp-post at a speed of 1.2 m/s. If the lamp is 3.6 m above the ground, find the length of her shadow after 4 seconds:",
+      options: ["1.2 m", "1.6 m", "2.0 m", "2.4 m"],
+      answer: 1,
+      explanation: "Distance walked in 4 s = 1.2 × 4 = 4.8 m. Let shadow length = s. Height of girl = 0.9 m. By similar triangles: 3.6 / (4.8 + s) = 0.9 / s ⟹ 4 / (4.8 + s) = 1 / s ⟹ 4s = 4.8 + s ⟹ 3s = 4.8 ⟹ s = 1.6 m."
+    },
+    {
+      q: "In ΔABC, AD is the internal bisector of ∠A meeting BC at D. If AB = 6 cm, AC = 4 cm, and BD = 3 cm, then DC is:",
+      options: ["1.5 cm", "2 cm", "2.5 cm", "3 cm"],
+      answer: 1,
+      explanation: "By the Angle Bisector Theorem: AB / AC = BD / DC ⟹ 6 / 4 = 3 / DC ⟹ 3/2 = 3 / DC ⟹ DC = 2 cm."
+    },
+    {
+      q: "If ΔABC ~ ΔQRP and ar(ΔABC)/ar(ΔPQR) = 9/4, with AB = 18 cm and BC = 15 cm, then the length of PR is:",
+      options: ["10 cm", "12 cm", "8 cm", "6 cm"],
+      answer: 0,
+      explanation: "Corresponding side to BC in ΔQRP is RP (or PR). Ratio of sides = √(9/4) = 3/2. BC / PR = 3/2 ⟹ 15 / PR = 3/2 ⟹ PR = (15 × 2)/3 = 10 cm."
+    },
+    {
+      q: "Diagonals of a trapezium ABCD with AB ∥ DC intersect at point O. If AB = 3 CD, then the ratio of ar(ΔAOB) to ar(ΔCOD) is:",
+      options: ["3 : 1", "9 : 1", "1 : 9", "1 : 3"],
+      answer: 1,
+      explanation: "ΔAOB ~ ΔCOD by AA similarity. Ratio of areas = (AB / CD)² = (3CD / CD)² = 3² = 9 : 1."
+    },
+    {
+      q: "In ΔPQR, S and T are points on sides PQ and PR such that ST ∥ QR. If PS = 2 cm, SQ = 3 cm, and QR = 10 cm, then the length of ST is:",
+      options: ["4 cm", "5 cm", "6 cm", "3.33 cm"],
+      answer: 0,
+      explanation: "ΔPST ~ ΔPQR. PS / PQ = ST / QR. PQ = PS + SQ = 2 + 3 = 5 cm. 2 / 5 = ST / 10 ⟹ ST = 4 cm."
+    },
+    {
+      q: "If two triangles have corresponding angles equal, then the triangles are always:",
+      options: ["Congruent", "Similar", "Both congruent and similar", "Neither"],
+      answer: 1,
+      explanation: "By the AAA similarity criterion, having all corresponding angles equal guarantees similarity."
+    }
+  ];
+
+  let currentIdx = 0;
+  let userAnswers = new Array(quizData.length).fill(null);
+
+  const qText = document.getElementById("quiz-question");
+  const optionsBox = document.getElementById("quiz-options");
+  const feedbackBox = document.getElementById("quiz-feedback");
+  const counterBox = document.getElementById("quiz-counter");
+  const scoreBox = document.getElementById("quiz-score");
+  const prevBtn = document.getElementById("quiz-prev-btn");
+  const nextBtn = document.getElementById("quiz-next-btn");
+  const quizBox = document.getElementById("quiz-box");
+  const resultBox = document.getElementById("quiz-result-box");
+  const finalScore = document.getElementById("quiz-final-score");
+  const finalMsg = document.getElementById("quiz-final-msg");
+  const restartBtn = document.getElementById("quiz-restart-btn");
+
+  function renderQuestion(idx) {
+    const item = quizData[idx];
+    counterBox.textContent = `Question ${idx + 1} of ${quizData.length}`;
+    qText.textContent = item.q;
+    optionsBox.innerHTML = "";
+    feedbackBox.textContent = "";
+    feedbackBox.className = "quiz-feedback";
+
+    const selected = userAnswers[idx];
+
+    item.options.forEach((optText, oIdx) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-opt-btn";
+      btn.textContent = `${String.fromCharCode(65 + oIdx)}. ${optText}`;
+
+      if (selected !== null) {
+        btn.disabled = true;
+        if (oIdx === item.answer) {
+          btn.classList.add("opt-correct");
+        } else if (oIdx === selected) {
+          btn.classList.add("opt-wrong");
+        }
+      } else {
+        btn.onclick = () => selectOption(oIdx);
+      }
+
+      optionsBox.appendChild(btn);
+    });
+
+    if (selected !== null) {
+      if (selected === item.answer) {
+        feedbackBox.textContent = `✓ Correct! ${item.explanation}`;
+        feedbackBox.classList.add("feedback-correct");
+      } else {
+        feedbackBox.textContent = `✗ Incorrect. Correct answer is option ${String.fromCharCode(65 + item.answer)}. ${item.explanation}`;
+        feedbackBox.classList.add("feedback-wrong");
+      }
+    }
+
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = selected === null;
+    nextBtn.textContent = idx === quizData.length - 1 ? "Finish Quiz →" : "Next Question →";
+    updateScoreDisplay();
+  }
+
+  function selectOption(oIdx) {
+    userAnswers[currentIdx] = oIdx;
+    renderQuestion(currentIdx);
+  }
+
+  function updateScoreDisplay() {
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    scoreBox.textContent = `Score: ${score} / ${quizData.length}`;
+  }
+
+  prevBtn.onclick = () => {
+    if (currentIdx > 0) {
+      currentIdx--;
+      renderQuestion(currentIdx);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if (currentIdx < quizData.length - 1) {
+      currentIdx++;
+      renderQuestion(currentIdx);
+    } else {
+      finishQuiz();
+    }
+  };
+
+  function finishQuiz() {
+    quizBox.style.display = "none";
+    resultBox.style.display = "block";
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    finalScore.textContent = `Your Final Score: ${score} / ${quizData.length} (${Math.round((score / quizData.length) * 100)}%)`;
+    if (score >= 18) {
+      finalMsg.textContent = "Outstanding mastery! You have exceptional command over Thales Theorem and similarity criteria.";
+    } else if (score >= 14) {
+      finalMsg.textContent = "Good score! Review shadow problems and trapezoid similarity proportions to aim for full marks.";
+    } else {
+      finalMsg.textContent = "Keep practicing! Review the BPT theorem proof and similarity criteria above, then try again.";
+    }
+  }
+
+  restartBtn.onclick = () => {
+    userAnswers = new Array(quizData.length).fill(null);
+    currentIdx = 0;
+    resultBox.style.display = "none";
+    quizBox.style.display = "block";
+    renderQuestion(0);
+  };
+
+  renderQuestion(0);
+})();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  .formula {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--brand);
+    margin: 0.4rem 0 0.6rem;
+    font-family: inherit;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .visual-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .svg-container {
+    padding: 1rem;
+    background: #f8fafc;
+    display: flex;
+    justify-content: center;
+  }
+
+  .svg-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .visual-caption {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+
+  /* ── Quiz Section ── */
+  .quiz-container {
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .quiz-header-bar {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--brand);
+  }
+
+  .quiz-q-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>
