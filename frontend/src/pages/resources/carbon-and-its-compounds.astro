@@ -1,0 +1,764 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Carbon and its Compounds | CBSE Class 10 Science | ${provider.name}`}
+  description="Complete CBSE Class 10 Chemistry chapter on Carbon and its Compounds. Covers covalent bonding, tetravalency, catenation, homologous series, functional groups, ethanol, ethanoic acid, soap micelle cleansing mechanism, and 20-question quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Carbon &amp; Its Compounds
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science · Chemistry</span>
+      <h1>Carbon and its Compounds</h1>
+      <p class="lead">
+        Comprehensive revision notes on covalent bonding, versatile carbon nature, IUPAC homologous series, reactions of ethanol and ethanoic acid, soap micelles, and a 20-question board quiz.
+      </p>
+    </div>
+
+    <!-- Key concepts -->
+    <section class="section">
+      <h2>Key Concepts at a Glance</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>⚛️ Bonding in Carbon &amp; Covalent Bond</h3>
+          <ul class="clean-list">
+            <li>Carbon has atomic number 6 (electronic configuration: <strong>2, 4</strong>).</li>
+            <li>It cannot gain 4 electrons (forming C⁴⁻ is energetically unfavorable for a nucleus with 6 protons) or lose 4 electrons (requires huge ionization energy).</li>
+            <li>Hence, carbon overcomes this problem by <strong>sharing its valence electrons</strong> with other atoms, forming <strong>Covalent Bonds</strong>.</li>
+            <li><strong>Types of Covalent Bonds</strong>:
+              <ul>
+                <li>Single bond (shares 1 pair of electrons, e.g., H₂, CH₄)</li>
+                <li>Double bond (shares 2 pairs of electrons, e.g., O₂, C₂H₄)</li>
+                <li>Triple bond (shares 3 pairs of electrons, e.g., N₂, C₂H₂)</li>
+              </ul>
+            </li>
+            <li>Covalent compounds have low melting and boiling points and are poor conductors of electricity (no free ions).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌟 Versatile Nature of Carbon</h3>
+          <ul class="clean-list">
+            <li>Millions of carbon compounds exist due to two unique properties:
+              <ol>
+                <li><strong>Catenation</strong>: The unique ability of carbon atoms to form strong covalent bonds with other carbon atoms, giving rise to long chains, branched chains, and closed rings. C-C bond is exceptionally strong due to carbon's small size.</li>
+                <li><strong>Tetravalency</strong>: Having a valency of four, carbon can bond with four other atoms of carbon or other monovalent elements (H, Cl, O, N, S).</li>
+              </ol>
+            </li>
+            <li><strong>Allotropes of Carbon</strong>:
+              <ul>
+                <li><strong>Diamond</strong>: Rigid 3D tetrahedral structure; hardest substance; non-conductor.</li>
+                <li><strong>Graphite</strong>: Hexagonal planar layers bonded by weak van der Waals forces; soft, slippery; excellent conductor due to one free valence electron per carbon.</li>
+                <li><strong>Fullerene (C-60)</strong>: Football-shaped cage structure (Buckminsterfullerene).</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🧪 Saturated &amp; Unsaturated Hydrocarbons</h3>
+          <ul class="clean-list">
+            <li><strong>Hydrocarbons</strong>: Compounds composed solely of carbon and hydrogen.</li>
+            <li><strong>Saturated (Alkanes, CₙH₂ₙ₊₂)</strong>: Carbon atoms linked only by single covalent bonds (e.g., Methane CH₄, Ethane C₂H₆). Burn with a clean blue flame.</li>
+            <li><strong>Unsaturated</strong>: Contain double or triple bonds between carbon atoms. Burn with a sooty yellow flame.
+              <ul>
+                <li><strong>Alkenes (CₙH₂ₙ)</strong>: Contain at least one C=C double bond (e.g., Ethene C₂H₄).</li>
+                <li><strong>Alkynes (CₙH₂ₙ₋₂)</strong>: Contain at least one C≡C triple bond (e.g., Ethyne / Acetylene C₂H₂).</li>
+              </ul>
+            </li>
+            <li><strong>Homologous Series</strong>: A family of carbon compounds having the same functional group and similar chemical properties. Successive members differ by a <strong>−CH₂− unit</strong> and by <strong>14 u molecular mass</strong>.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🏷️ Functional Groups &amp; Nomenclature</h3>
+          <ul class="clean-list">
+            <li>An atom or group of atoms that determines the chemical properties of an organic compound:
+              <ul>
+                <li><strong>Alcohol (−OH)</strong>: Suffix <em>-ol</em> (e.g., Methanol, Ethanol CH₃CH₂OH)</li>
+                <li><strong>Aldehyde (−CHO)</strong>: Suffix <em>-al</em> (e.g., Methanal HCHO, Ethanal CH₃CHO)</li>
+                <li><strong>Ketone (−CO−)</strong>: Suffix <em>-one</em> (e.g., Propanone CH₃COCH₃)</li>
+                <li><strong>Carboxylic Acid (−COOH)</strong>: Suffix <em>-oic acid</em> (e.g., Ethanoic acid CH₃COOH)</li>
+                <li><strong>Haloalkanes (−Cl, −Br)</strong>: Prefix <em>chloro-</em>, <em>bromo-</em> (e.g., Chloromethane CH₃Cl)</li>
+              </ul>
+            </li>
+            <li><strong>Isomerism</strong>: Compounds having the same molecular formula but different structural arrangements (e.g., Butane C₄H₁₀ has n-butane and isobutane).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔥 Chemical Properties of Carbon Compounds</h3>
+          <ul class="clean-list">
+            <li><strong>Combustion</strong>: Complete oxidation in oxygen releases CO₂, H₂O, heat, and light.
+              <br/>CH₄ + 2O₂ ⟶ CO₂ + 2H₂O + Heat &amp; Light</li>
+            <li><strong>Oxidation</strong>: Alcohols are oxidized to carboxylic acids using Alkaline KMnO₄ or Acidified K₂Cr₂O₇ (oxidising agents):
+              <br/>CH₃CH₂OH ⟶ CH₃COOH</li>
+            <li><strong>Addition Reaction</strong>: Unsaturated hydrocarbons add hydrogen in the presence of Nickel/Palladium catalyst to form saturated hydrocarbons (Hydrogenation of vegetable oils).</li>
+            <li><strong>Substitution Reaction</strong>: In the presence of sunlight, Chlorine replaces Hydrogen atoms in saturated hydrocarbons one by one:
+              <br/>CH₄ + Cl₂ ⟶ CH₃Cl + HCl (sunlight)</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🧼 Ethanol, Ethanoic Acid, Soaps &amp; Detergents</h3>
+          <ul class="clean-list">
+            <li><strong>Ethanol (CH₃CH₂OH)</strong>: Soluble in water in all proportions; reacts with sodium to release hydrogen gas (2Na + 2CH₃CH₂OH ⟶ 2CH₃CH₂ONa + H₂↑).
+              <br/>• Dehydration with hot conc. H₂SO₄ (at 443 K) produces Ethene: CH₃CH₂OH ⟶ CH₂=CH₂ + H₂O.</li>
+            <li><strong>Ethanoic Acid (Acetic acid - CH₃COOH)</strong>: 5–8% solution in water is <strong>vinegar</strong>. Pure ethanoic acid freezes at 290 K, hence called <strong>glacial acetic acid</strong>.
+              <br/>• <strong>Esterification</strong>: Reaction of acid and alcohol gives sweet-smelling <strong>Esters</strong> (used in perfumes):
+              <br/>CH₃COOH + C₂H₅OH ⟶ CH₃COOC₂H₅ (Ethyl ethanoate) + H₂O
+              <br/>• <strong>Saponification</strong>: Alkaline hydrolysis of ester produces soap.</li>
+            <li><strong>Soaps &amp; Micelles</strong>: Sodium/potassium salts of long-chain fatty acids.
+              <br/>• <strong>Hydrophobic tail</strong> (hydrocarbon) dissolves in dirt/oil.
+              <br/>• <strong>Hydrophilic head</strong> (ionic end) faces outward into water, forming a spherical cluster called a <strong>Micelle</strong>.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section" id="visual-carbon">
+      <div class="rules-header">
+        <span class="eyebrow">Interactive Visual Schematics</span>
+        <h2>Covalent Sharing &amp; Soap Micelle Mechanism</h2>
+        <p class="lead">
+          Visual models of electron sharing and the cleansing action of soap:
+        </p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="rules-tabs" role="tablist" aria-label="Carbon diagram categories">
+        <button class="button rules-tab-btn active" id="tab-btn-micelle" type="button" role="tab" aria-selected="true" aria-controls="panel-micelle">
+          🧼 Soap Micelle Formation
+        </button>
+        <button class="button secondary rules-tab-btn" id="tab-btn-methane" type="button" role="tab" aria-selected="false" aria-controls="panel-methane">
+          ⚛️ Methane (CH₄) Electron Sharing
+        </button>
+      </div>
+
+      <!-- Panel 1: Micelle -->
+      <div class="rules-panel" id="panel-micelle" role="tabpanel" aria-labelledby="tab-btn-micelle">
+        <article class="card rule-card" style="max-width:760px;margin-inline:auto">
+          <div class="rule-badge">Cleansing Action of Soap: The Micelle Cluster</div>
+          <div class="rule-diagram">
+            <svg viewBox="0 0 460 220" class="ray-svg" aria-label="Soap Micelle Diagram">
+              <rect width="460" height="220" rx="8" fill="#f8fafc" />
+              <!-- Water background -->
+              <rect x="50" y="20" width="360" height="180" rx="8" fill="rgba(14, 165, 233, 0.08)" stroke="#0284c7" stroke-width="1.5" />
+              <!-- Central Oily Dirt Droplet -->
+              <circle cx="230" cy="110" r="32" fill="#ca8a04" stroke="#854d0e" stroke-width="2" />
+              <text x="230" y="114" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">Oil / Dirt</text>
+              <!-- Soap Molecules radiating outwards (Zigzag tail + circle head) -->
+              <!-- Top (0 deg) -->
+              <path d="M 230 78 L 226 65 L 234 52 L 230 40" stroke="#334155" stroke-width="2.5" fill="none" />
+              <circle cx="230" cy="35" r="7" fill="#dc2626" />
+              <!-- Bottom (180 deg) -->
+              <path d="M 230 142 L 234 155 L 226 168 L 230 180" stroke="#334155" stroke-width="2.5" fill="none" />
+              <circle cx="230" cy="185" r="7" fill="#dc2626" />
+              <!-- Left (270 deg) -->
+              <path d="M 198 110 L 185 106 L 172 114 L 160 110" stroke="#334155" stroke-width="2.5" fill="none" />
+              <circle cx="155" cy="110" r="7" fill="#dc2626" />
+              <!-- Right (90 deg) -->
+              <path d="M 262 110 L 275 114 L 288 106 L 300 110" stroke="#334155" stroke-width="2.5" fill="none" />
+              <circle cx="305" cy="110" r="7" fill="#dc2626" />
+              <!-- Diagonals -->
+              <path d="M 207 87 L 195 78 L 188 85 L 176 76" stroke="#334155" stroke-width="2.5" fill="none" />
+              <circle cx="172" cy="72" r="7" fill="#dc2626" />
+              <path d="M 253 87 L 265 78 L 272 85 L 284 76" stroke="#334155" stroke-width="2.5" fill="none" />
+              <circle cx="288" cy="72" r="7" fill="#dc2626" />
+              <path d="M 207 133 L 195 142 L 188 135 L 176 144" stroke="#334155" stroke-width="2.5" fill="none" />
+              <circle cx="172" cy="148" r="7" fill="#dc2626" />
+              <path d="M 253 133 L 265 142 L 272 135 L 284 144" stroke="#334155" stroke-width="2.5" fill="none" />
+              <circle cx="288" cy="148" r="7" fill="#dc2626" />
+              <!-- Labels -->
+              <text x="360" y="55" font-size="10" font-weight="bold" fill="#dc2626">Ionic Head (−COO⁻Na⁺)</text>
+              <text x="360" y="70" font-size="9" fill="#64748b">(Hydrophilic: loves water)</text>
+              <text x="75" y="150" font-size="10" font-weight="bold" fill="#334155">Hydrocarbon Tail</text>
+              <text x="75" y="165" font-size="9" fill="#64748b">(Hydrophobic: traps oil)</text>
+            </svg>
+          </div>
+          <div class="rule-body">
+            <h4>How Soap Cleans Clothes:</h4>
+            <p>1. The hydrophobic hydrocarbon tails stick inward into oily dirt, while hydrophilic ionic heads point outward into water.<br/>2. This forms an emulsion known as a <strong>Micelle</strong>. When agitated, the micelles remain suspended and are rinsed away with water.</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Panel 2: Methane Covalent Sharing -->
+      <div class="rules-panel" id="panel-methane" role="tabpanel" aria-labelledby="tab-btn-methane" hidden>
+        <article class="card rule-card" style="max-width:760px;margin-inline:auto">
+          <div class="rule-badge">Electron Dot Structure: Methane (CH₄) Tetravalency</div>
+          <div class="rule-diagram">
+            <svg viewBox="0 0 460 210" class="ray-svg" aria-label="Methane Electron Dot Diagram">
+              <rect width="460" height="210" rx="8" fill="#f8fafc" />
+              <!-- Central Carbon Shell -->
+              <circle cx="230" cy="105" r="45" fill="rgba(15, 76, 92, 0.12)" stroke="#0f4c5c" stroke-width="2" />
+              <text x="230" y="111" text-anchor="middle" font-size="18" font-weight="bold" fill="#0f4c5c">C</text>
+              <!-- 4 Hydrogen Shells overlapping -->
+              <!-- Top H -->
+              <circle cx="230" cy="45" r="28" fill="rgba(234, 88, 12, 0.12)" stroke="#ea580c" stroke-width="1.8" />
+              <text x="230" y="38" text-anchor="middle" font-size="13" font-weight="bold" fill="#ea580c">H</text>
+              <circle cx="227" cy="62" r="3" fill="#0f4c5c" />
+              <circle cx="233" cy="62" r="3" fill="#ea580c" />
+              <!-- Bottom H -->
+              <circle cx="230" cy="165" r="28" fill="rgba(234, 88, 12, 0.12)" stroke="#ea580c" stroke-width="1.8" />
+              <text x="230" y="180" text-anchor="middle" font-size="13" font-weight="bold" fill="#ea580c">H</text>
+              <circle cx="227" cy="148" r="3" fill="#0f4c5c" />
+              <circle cx="233" cy="148" r="3" fill="#ea580c" />
+              <!-- Left H -->
+              <circle cx="170" cy="105" r="28" fill="rgba(234, 88, 12, 0.12)" stroke="#ea580c" stroke-width="1.8" />
+              <text x="155" y="110" text-anchor="middle" font-size="13" font-weight="bold" fill="#ea580c">H</text>
+              <circle cx="187" cy="102" r="3" fill="#0f4c5c" />
+              <circle cx="187" cy="108" r="3" fill="#ea580c" />
+              <!-- Right H -->
+              <circle cx="290" cy="105" r="28" fill="rgba(234, 88, 12, 0.12)" stroke="#ea580c" stroke-width="1.8" />
+              <text x="305" y="110" text-anchor="middle" font-size="13" font-weight="bold" fill="#ea580c">H</text>
+              <circle cx="273" cy="102" r="3" fill="#0f4c5c" />
+              <circle cx="273" cy="108" r="3" fill="#ea580c" />
+              <!-- Explanatory note -->
+              <text x="50" y="45" font-size="11" font-weight="bold" fill="#0f4c5c">Octet of Carbon Complete (8e⁻)</text>
+              <text x="50" y="65" font-size="10" fill="#64748b">Duplet of each Hydrogen Complete (2e⁻)</text>
+              <text x="375" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#b8561c">4 Single Covalent Bonds</text>
+            </svg>
+          </div>
+          <div class="rule-body">
+            <h4>Octet Fulfillment via Shared Pairs:</h4>
+            <p>Carbon shares 4 valence electrons with 4 hydrogen atoms, completing its octet (8 electrons like Neon) and each hydrogen's duplet (2 electrons like Helium). This forms 4 strong single covalent C-H bonds.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="section quiz-root" id="quiz-root">
+      <h2 class="quiz-heading">🧪 Carbon and its Compounds Chapter Quiz — 20 Board Questions</h2>
+      <p class="muted" style="margin-bottom:1.5rem">Practice with high-yield questions on covalent bonding, homologous series, functional groups, reactions of ethanol &amp; ethanoic acid, and soaps.</p>
+
+      <div class="quiz-progress-bar" id="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+      <p class="quiz-counter" id="quiz-counter">Question 1 of 20</p>
+
+      <div class="quiz-card card" id="quiz-card">
+        <p class="quiz-question" id="quiz-question"></p>
+        <ul class="quiz-options" id="quiz-options"></ul>
+        <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+        <div class="quiz-actions">
+          <button class="button" id="quiz-next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="quiz-result card" id="quiz-result" hidden>
+        <h3 id="quiz-score-heading"></h3>
+        <p id="quiz-score-msg"></p>
+        <div class="actions" style="justify-content:center;margin-top:1rem">
+          <button class="button secondary" id="quiz-retry">↺ Try Again</button>
+          <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized help with Organic Chemistry &amp; IUPAC?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at home) for CBSE Class 10 board preparation.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script>
+const questions = [
+  {
+    q: "Carbon forms a large number of compounds due to its unique property of self-linking called:",
+    opts: ["Isomerism", "Catenation", "Allotropy", "Electronegativity"],
+    ans: 1,
+    exp: "Catenation is the unique ability of carbon atoms to form strong covalent bonds with one another, generating long chains and rings."
+  },
+  {
+    q: "Why is graphite a good conductor of electricity unlike diamond?",
+    opts: [
+      "It has ionic bonds",
+      "Each carbon atom is bonded to 3 other carbon atoms, leaving 1 free valence electron per atom to conduct electricity",
+      "Graphite contains metallic impurities",
+      "Graphite has a 3D tetrahedral network"
+    ],
+    ans: 1,
+    exp: "In graphite, each carbon atom forms 3 covalent bonds in hexagonal layers, leaving one delocalized electron free to conduct electricity."
+  },
+  {
+    q: "Successive members of a homologous series differ from each other by a molecular formula unit of:",
+    opts: ["−CH−", "−CH₂−", "−CH₃−", "−C₂H₂−"],
+    ans: 1,
+    exp: "Successive members of any homologous series differ by a −CH₂− unit and a molecular mass difference of 14 u."
+  },
+  {
+    q: "The general molecular formula for the Alkynes homologous series (triple-bonded hydrocarbons) is:",
+    opts: ["CₙH₂ₙ₊₂", "CₙH₂ₙ", "CₙH₂ₙ₋₂", "CₙH₂ₙ₊₁OH"],
+    ans: 2,
+    exp: "Alkanes = CₙH₂ₙ₊₂; Alkenes = CₙH₂ₙ; Alkynes = CₙH₂ₙ₋₂ (e.g. Ethyne C₂H₂)."
+  },
+  {
+    q: "How many structural isomers are possible for Butane (C₄H₁₀)?",
+    opts: ["1", "2 (n-butane and isobutane)", "3", "4"],
+    ans: 1,
+    exp: "Butane has 2 isomers: n-butane (unbranched straight chain) and 2-methylpropane (isobutane, branched chain)."
+  },
+  {
+    q: "Which functional group is present in Propanone (CH₃COCH₃)?",
+    opts: ["Alcohol", "Aldehyde", "Ketone", "Carboxylic acid"],
+    ans: 2,
+    exp: "Propanone contains the carbonyl ketone group (−CO−) bonded between two carbon atoms."
+  },
+  {
+    q: "In the conversion of ethanol into ethanoic acid (CH₃CH₂OH ⟶ CH₃COOH), alkaline KMnO₄ acts as an:",
+    opts: ["Reducing agent", "Oxidising agent", "Catalyst", "Dehydrating agent"],
+    ans: 1,
+    exp: "Alkaline potassium permanganate (KMnO₄) adds oxygen to ethanol, functioning as a powerful oxidising agent."
+  },
+  {
+    q: "When vegetable oils are converted into vegetable ghee (vanaspati), the reaction is an example of:",
+    opts: ["Substitution reaction", "Addition (Hydrogenation) reaction", "Esterification reaction", "Combustion reaction"],
+    ans: 1,
+    exp: "Hydrogen is added across double bonds in unsaturated vegetable oils in the presence of Nickel catalyst to yield saturated vegetable fats."
+  },
+  {
+    q: "Methane reacts with chlorine gas in the presence of sunlight to form chloromethane and HCl. This reaction is a:",
+    opts: ["Addition reaction", "Substitution reaction", "Decomposition reaction", "Neutralisation reaction"],
+    ans: 1,
+    exp: "CH₄ + Cl₂ ⟶ CH₃Cl + HCl. Chlorine substitutes for a hydrogen atom, characteristic of saturated alkanes."
+  },
+  {
+    q: "When a piece of sodium metal is dropped into absolute ethanol, the gas evolved is:",
+    opts: ["Oxygen", "Hydrogen", "Carbon dioxide", "Methane"],
+    ans: 1,
+    exp: "2CH₃CH₂OH + 2Na ⟶ 2CH₃CH₂ONa (Sodium ethoxide) + H₂↑ (burns with a pop sound)."
+  },
+  {
+    q: "Heating ethanol at 443 K with excess concentrated sulphuric acid (H₂SO₄) produces:",
+    opts: ["Ethanoic acid", "Ethene (CH₂=CH₂)", "Methane", "Ethyl ethanoate"],
+    ans: 1,
+    exp: "Hot concentrated H₂SO₄ acts as a dehydrating agent, removing water from ethanol to form Ethene: CH₃CH₂OH ⟶ CH₂=CH₂ + H₂O."
+  },
+  {
+    q: "A sweet-smelling substance formed by the reaction of an alcohol with a carboxylic acid in the presence of an acid catalyst is called an:",
+    opts: ["Aldehyde", "Ketone", "Ester", "Ether"],
+    ans: 2,
+    exp: "Esterification: Carboxylic acid + Alcohol ⟶ Ester + Water. Esters have characteristic fruity pleasant odors."
+  },
+  {
+    q: "Vinegar is a solution of:",
+    opts: [
+      "50% - 60% acetic acid in alcohol",
+      "5% - 8% acetic acid in water",
+      "100% pure ethanoic acid",
+      "10% - 20% citric acid in water"
+    ],
+    ans: 1,
+    exp: "Vinegar is a 5% to 8% aqueous solution of acetic acid (ethanoic acid), used widely as a food preservative."
+  },
+  {
+    q: "The ionic end of a soap molecule is:",
+    opts: [
+      "Hydrophobic and dissolves in oil",
+      "Hydrophilic and interacts with water",
+      "Non-polar and dissolves in kerosene",
+      "Insoluble in water"
+    ],
+    ans: 1,
+    exp: "The ionic head (−COO⁻Na⁺) is hydrophilic ('water-loving') and interacts with polar water molecules, while the hydrocarbon tail is hydrophobic."
+  },
+  {
+    q: "Why do soaps NOT form lather easily with hard water?",
+    opts: [
+      "Hard water is acidic",
+      "Soaps react with calcium and magnesium ions present in hard water to form an insoluble precipitate called scum",
+      "Hard water dissolves soap molecules too quickly",
+      "Hard water neutralizes the soap"
+    ],
+    ans: 1,
+    exp: "Calcium and magnesium ions replace sodium/potassium in soap, forming an insoluble curd-like precipitate called scum."
+  },
+  {
+    q: "Which synthetic cleaning agents can lather well even in hard water?",
+    opts: ["Soaps", "Detergents (ammonium/sulphonate salts)", "Bleaching powder", "Baking powder"],
+    ans: 1,
+    exp: "Synthetic detergents are sodium salts of sulphonic acids whose charged groups do not form insoluble precipitates with Ca²⁺ and Mg²⁺ in hard water."
+  },
+  {
+    q: "Pure ethanoic acid is also known as 'glacial acetic acid' because:",
+    opts: [
+      "It is found in glaciers",
+      "Its melting point is 290 K (17°C) and freezes into ice-like crystals in cold weather",
+      "It has a sweet fragrance like ice cream",
+      "It cools the body on touch"
+    ],
+    ans: 1,
+    exp: "With a freezing point of 17°C (290 K), pure ethanoic acid solidifies into ice-like crystals during winter, earning the name glacial acetic acid."
+  },
+  {
+    q: "How many single covalent bonds are present in a molecule of Ethane (C₂H₆)?",
+    opts: ["6", "7", "8", "9"],
+    ans: 1,
+    exp: "In Ethane, there are 6 single C-H bonds and 1 single C-C bond, giving a total of 7 covalent bonds."
+  },
+  {
+    q: "Unsaturated hydrocarbons burn with a:",
+    opts: ["Clean blue flame", "Yellow sooty flame with black smoke", "Green flame", "Colourless invisible flame"],
+    ans: 1,
+    exp: "Unsaturated hydrocarbons contain a higher percentage of carbon, leading to incomplete combustion and a characteristic yellow smoky flame."
+  },
+  {
+    q: "The alkaline hydrolysis of an ester to regenerate alcohol and sodium carboxylate salt (soap) is termed:",
+    opts: ["Esterification", "Saponification", "Hydration", "Hydrogenation"],
+    ans: 1,
+    exp: "Ester + NaOH ⟶ Alcohol + Soap. This reaction is called saponification because it is used in the commercial preparation of soaps."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qEl     = document.getElementById('quiz-question') as HTMLElement;
+const optsEl  = document.getElementById('quiz-options') as HTMLElement;
+const fbEl    = document.getElementById('quiz-feedback') as HTMLElement;
+const nextBtn = document.getElementById('quiz-next') as HTMLButtonElement;
+const counter = document.getElementById('quiz-counter') as HTMLElement;
+const fill    = document.getElementById('quiz-progress-fill') as HTMLElement;
+const bar     = document.getElementById('quiz-progress-bar') as HTMLElement;
+const result  = document.getElementById('quiz-result') as HTMLElement;
+const card    = document.getElementById('quiz-card') as HTMLElement;
+const retryBtn = document.getElementById('quiz-retry') as HTMLElement;
+
+function render() {
+  answered = false;
+  nextBtn.disabled = true;
+  fbEl.textContent = '';
+  fbEl.className = 'quiz-feedback';
+
+  const q = questions[current];
+  counter.textContent = `Question ${current + 1} of ${questions.length}`;
+  bar.setAttribute('aria-valuenow', String(current));
+  fill.style.width = `${(current / questions.length) * 100}%`;
+
+  qEl.textContent = q.q;
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const li  = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className = 'button secondary quiz-opt-btn';
+    btn.textContent = opt;
+    btn.dataset.idx = String(i);
+    btn.addEventListener('click', () => choose(i));
+    li.appendChild(btn);
+    optsEl.appendChild(li);
+  });
+}
+
+function choose(idx: number) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = optsEl.querySelectorAll<HTMLButtonElement>('.quiz-opt-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('opt-correct');
+    else if (i === idx) btn.classList.add('opt-wrong');
+  });
+  if (idx === q.ans) {
+    score++;
+    fbEl.textContent = '✅ Correct! ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-correct';
+  } else {
+    fbEl.textContent = '❌ ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-wrong';
+  }
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if (current >= questions.length) showResult();
+  else render();
+});
+
+function showResult() {
+  card.hidden = true;
+  counter.hidden = true;
+  result.hidden = false;
+  fill.style.width = '100%';
+  bar.setAttribute('aria-valuenow', String(questions.length));
+
+  const pct = Math.round((score / questions.length) * 100);
+  const scoreHead = document.getElementById('quiz-score-heading') as HTMLElement;
+  const scoreMsg  = document.getElementById('quiz-score-msg') as HTMLElement;
+  scoreHead.textContent = `You scored ${score} / ${questions.length} (${pct}%)`;
+  if      (pct === 100) scoreMsg.textContent = '🏆 Perfect score! Masterful preparation on Carbon & Organic Chemistry.';
+  else if (pct >= 80)   scoreMsg.textContent = '🌟 Excellent! Strong command of bonding, functional groups, and reactions.';
+  else if (pct >= 60)   scoreMsg.textContent = '👍 Good attempt. Review the ethanol/ethanoic acid reactions and retry.';
+  else if (pct >= 40)   scoreMsg.textContent = '📚 Keep revising — check homologous series and micelle formation and try again.';
+  else                  scoreMsg.textContent = "💡 Don't worry! Review the key concepts and give it another shot.";
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0; score = 0;
+  card.hidden = false;
+  counter.hidden = false;
+  result.hidden = true;
+  render();
+});
+
+// Tab switching
+const tabMicelle = document.getElementById("tab-btn-micelle");
+const tabMethane = document.getElementById("tab-btn-methane");
+const panelMicelle = document.getElementById("panel-micelle");
+const panelMethane = document.getElementById("panel-methane");
+
+function activateTab(activeBtn: HTMLElement, activePanel: HTMLElement) {
+  [tabMicelle, tabMethane].forEach((btn) => {
+    if (btn) {
+      btn.classList.add("secondary");
+      btn.classList.remove("active");
+      btn.setAttribute("aria-selected", "false");
+    }
+  });
+  [panelMicelle, panelMethane].forEach((p) => {
+    if (p) p.hidden = true;
+  });
+  activeBtn.classList.remove("secondary");
+  activeBtn.classList.add("active");
+  activeBtn.setAttribute("aria-selected", "true");
+  activePanel.hidden = false;
+}
+
+if (tabMicelle && panelMicelle) tabMicelle.addEventListener("click", () => activateTab(tabMicelle, panelMicelle));
+if (tabMethane && panelMethane) tabMethane.addEventListener("click", () => activateTab(tabMethane, panelMethane));
+
+render();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  /* ── Interactive Diagrams ── */
+  .rules-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .rules-tab-btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .rules-tab-btn.active {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+
+  .rule-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .rule-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .rule-diagram {
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ray-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  .rule-body {
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rule-body h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .rule-body p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── Quiz ── */
+  .quiz-heading {
+    margin-bottom: 0.4rem;
+  }
+
+  .quiz-progress-bar {
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+  }
+
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--brand);
+    border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+
+  .quiz-counter {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .quiz-card {
+    padding: 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .quiz-opt-btn {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    white-space: normal;
+    height: auto;
+    padding: 0.6rem 0.9rem;
+    font-weight: 500;
+  }
+
+  .opt-correct {
+    background: #d4f0de !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+  }
+
+  .opt-wrong {
+    background: #f8d7d7 !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+  }
+
+  .quiz-feedback {
+    font-size: 0.93rem;
+    min-height: 1.4rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .feedback-correct { color: var(--success); }
+  .feedback-wrong   { color: var(--danger); }
+
+  .quiz-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .quiz-result {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .quiz-result h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── CTA banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

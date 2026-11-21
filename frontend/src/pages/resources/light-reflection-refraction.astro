@@ -92,6 +92,376 @@ const { provider } = loadContent();
       </div>
     </section>
 
+    <!-- Visual Ray Rules Section -->
+    <section class="section" id="ray-rules">
+      <div class="rules-header">
+        <span class="eyebrow">Ray Diagram Fundamentals</span>
+        <h2>Visual Rules for Ray Diagrams</h2>
+        <p class="lead">
+          To construct any image in CBSE board exams, trace <strong>any two</strong> of these standard rays from the top of the object. Learn the rules visually below:
+        </p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="rules-tabs" role="tablist" aria-label="Ray rules categories">
+        <button class="button rules-tab-btn active" id="tab-btn-mirrors" type="button" role="tab" aria-selected="true" aria-controls="panel-mirrors">
+          🪞 Spherical Mirrors (Concave &amp; Convex)
+        </button>
+        <button class="button secondary rules-tab-btn" id="tab-btn-lenses" type="button" role="tab" aria-selected="false" aria-controls="panel-lenses">
+          🔍 Spherical Lenses (Convex &amp; Concave)
+        </button>
+      </div>
+
+      <!-- Mirrors Tab Content -->
+      <div class="rules-panel" id="panel-mirrors" role="tabpanel" aria-labelledby="tab-btn-mirrors">
+        <div class="grid two rules-grid">
+          <!-- Mirror Rule 1 -->
+          <article class="card rule-card">
+            <div class="rule-badge">Rule 1 · Ray Parallel to Principal Axis</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Rule 1: Ray parallel to axis passes through focus">
+                <defs>
+                  <marker id="m1-arr-in" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#b8561c" />
+                  </marker>
+                  <marker id="m1-arr-out" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f4c5c" />
+                  </marker>
+                </defs>
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Principal axis -->
+                <line x1="20" y1="110" x2="340" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4" />
+                <text x="25" y="103" font-size="10" fill="#64748b" font-weight="600">Principal Axis</text>
+                <!-- Mirror arc -->
+                <path d="M 285 28 Q 306 110 285 192" stroke="#334155" stroke-width="4" fill="none" />
+                <!-- Hatching -->
+                <path d="M 288 35 l 11 -8 M 294 62 l 11 -8 M 298 90 l 11 -8 M 300 110 l 11 -8 M 298 135 l 11 -8 M 294 160 l 11 -8 M 288 185 l 11 -8" stroke="#94a3b8" stroke-width="1.5" />
+                <!-- Points -->
+                <circle cx="110" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="110" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">C</text>
+                <circle cx="205" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="205" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">F</text>
+                <circle cx="298" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="312" y="114" font-size="12" font-weight="bold" fill="#0f4c5c">P</text>
+                <!-- Incident Ray -->
+                <line x1="30" y1="55" x2="165" y2="55" stroke="#b8561c" stroke-width="2.5" marker-end="url(#m1-arr-in)" />
+                <line x1="165" y1="55" x2="292" y2="55" stroke="#b8561c" stroke-width="2.5" />
+                <!-- Reflected Ray -->
+                <line x1="292" y1="55" x2="185" y2="122" stroke="#0f4c5c" stroke-width="2.5" marker-end="url(#m1-arr-out)" />
+                <line x1="185" y1="122" x2="120" y2="165" stroke="#0f4c5c" stroke-width="2.5" />
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Parallel to Principal Axis → Passes through Focus (F)</h4>
+              <p>A ray parallel to the principal axis, after reflection from a concave mirror, <strong>passes through the principal focus (F)</strong>. (In a convex mirror, it appears to diverge from F behind the mirror).</p>
+              <div class="rule-legend">
+                <span class="legend-tag inc"><span class="dot inc"></span> Incident Ray</span>
+                <span class="legend-tag ref"><span class="dot ref"></span> Reflected Ray</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Mirror Rule 2 -->
+          <article class="card rule-card">
+            <div class="rule-badge">Rule 2 · Ray Passing Through Focus</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Rule 2: Ray through focus emerges parallel to axis">
+                <defs>
+                  <marker id="m2-arr-in" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#b8561c" />
+                  </marker>
+                  <marker id="m2-arr-out" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f4c5c" />
+                  </marker>
+                </defs>
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Principal axis -->
+                <line x1="20" y1="110" x2="340" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4" />
+                <text x="25" y="103" font-size="10" fill="#64748b" font-weight="600">Principal Axis</text>
+                <!-- Mirror arc -->
+                <path d="M 285 28 Q 306 110 285 192" stroke="#334155" stroke-width="4" fill="none" />
+                <!-- Hatching -->
+                <path d="M 288 35 l 11 -8 M 294 62 l 11 -8 M 298 90 l 11 -8 M 300 110 l 11 -8 M 298 135 l 11 -8 M 294 160 l 11 -8 M 288 185 l 11 -8" stroke="#94a3b8" stroke-width="1.5" />
+                <!-- Points -->
+                <circle cx="110" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="110" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">C</text>
+                <circle cx="205" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="205" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">F</text>
+                <circle cx="298" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="312" y="114" font-size="12" font-weight="bold" fill="#0f4c5c">P</text>
+                <!-- Incident Ray through F -->
+                <line x1="120" y1="55" x2="215" y2="116" stroke="#b8561c" stroke-width="2.5" marker-end="url(#m2-arr-in)" />
+                <line x1="215" y1="116" x2="292" y2="165" stroke="#b8561c" stroke-width="2.5" />
+                <!-- Reflected Ray parallel -->
+                <line x1="292" y1="165" x2="160" y2="165" stroke="#0f4c5c" stroke-width="2.5" marker-end="url(#m2-arr-out)" />
+                <line x1="160" y1="165" x2="30" y2="165" stroke="#0f4c5c" stroke-width="2.5" />
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Through Focus (F) → Emerges Parallel to Principal Axis</h4>
+              <p>This is the exact inverse of Rule 1 (principle of reversibility of light). A ray passing through F reflects back <strong>parallel to the principal axis</strong>.</p>
+              <div class="rule-legend">
+                <span class="legend-tag inc"><span class="dot inc"></span> Incident Ray</span>
+                <span class="legend-tag ref"><span class="dot ref"></span> Reflected Ray</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Mirror Rule 3 -->
+          <article class="card rule-card">
+            <div class="rule-badge">Rule 3 · Ray Through Centre of Curvature</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Rule 3: Ray through C reflects back along same path">
+                <defs>
+                  <marker id="m3-arr-in" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#b8561c" />
+                  </marker>
+                  <marker id="m3-arr-out" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f4c5c" />
+                  </marker>
+                </defs>
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Principal axis -->
+                <line x1="20" y1="110" x2="340" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4" />
+                <text x="25" y="103" font-size="10" fill="#64748b" font-weight="600">Principal Axis</text>
+                <!-- Mirror arc -->
+                <path d="M 285 28 Q 306 110 285 192" stroke="#334155" stroke-width="4" fill="none" />
+                <!-- Hatching -->
+                <path d="M 288 35 l 11 -8 M 294 62 l 11 -8 M 298 90 l 11 -8 M 300 110 l 11 -8 M 298 135 l 11 -8 M 294 160 l 11 -8 M 288 185 l 11 -8" stroke="#94a3b8" stroke-width="1.5" />
+                <!-- Points -->
+                <circle cx="110" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="110" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">C</text>
+                <circle cx="205" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="205" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">F</text>
+                <circle cx="298" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="312" y="114" font-size="12" font-weight="bold" fill="#0f4c5c">P</text>
+                <!-- Ray through C to mirror (single line retracing) -->
+                <line x1="35" y1="87" x2="292" y2="165" stroke="#b8561c" stroke-width="2.5" />
+                <!-- Inward arrow -->
+                <line x1="160" y1="125" x2="215" y2="142" stroke="#b8561c" stroke-width="2.5" marker-end="url(#m3-arr-in)" />
+                <!-- Outward arrow -->
+                <line x1="215" y1="142" x2="160" y2="125" stroke="#0f4c5c" stroke-width="2.5" marker-end="url(#m3-arr-out)" />
+                <!-- Normal indicator -->
+                <text x="250" y="185" font-size="10" fill="#a12b2b" font-weight="600">∠i = 0°, ∠r = 0° (Normal incidence)</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Through Centre of Curvature (C) → Retraces Same Path</h4>
+              <p>Since the line from C to the mirror surface is a normal (radius), light strikes perpendicularly with <strong>angle of incidence i = 0°</strong>. It reflects straight back along the exact same path.</p>
+              <div class="rule-legend">
+                <span class="legend-tag inc"><span class="dot inc"></span> Incident Ray</span>
+                <span class="legend-tag ref"><span class="dot ref"></span> Reflected Ray (Retraces)</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Mirror Rule 4 -->
+          <article class="card rule-card">
+            <div class="rule-badge">Rule 4 · Oblique Ray Incident at Pole</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Rule 4: Ray incident at pole reflects at equal angle">
+                <defs>
+                  <marker id="m4-arr-in" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#b8561c" />
+                  </marker>
+                  <marker id="m4-arr-out" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f4c5c" />
+                  </marker>
+                </defs>
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Principal axis -->
+                <line x1="20" y1="110" x2="340" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4" />
+                <text x="25" y="103" font-size="10" fill="#64748b" font-weight="600">Principal Axis</text>
+                <!-- Mirror arc -->
+                <path d="M 285 28 Q 306 110 285 192" stroke="#334155" stroke-width="4" fill="none" />
+                <!-- Hatching -->
+                <path d="M 288 35 l 11 -8 M 294 62 l 11 -8 M 298 90 l 11 -8 M 300 110 l 11 -8 M 298 135 l 11 -8 M 294 160 l 11 -8 M 288 185 l 11 -8" stroke="#94a3b8" stroke-width="1.5" />
+                <!-- Points -->
+                <circle cx="110" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="110" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">C</text>
+                <circle cx="205" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="205" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">F</text>
+                <circle cx="298" cy="110" r="3.5" fill="#0f4c5c" />
+                <text x="312" y="114" font-size="12" font-weight="bold" fill="#0f4c5c">P</text>
+                <!-- Incident Ray to Pole -->
+                <line x1="80" y1="40" x2="195" y2="77" stroke="#b8561c" stroke-width="2.5" marker-end="url(#m4-arr-in)" />
+                <line x1="195" y1="77" x2="298" y2="110" stroke="#b8561c" stroke-width="2.5" />
+                <!-- Reflected Ray from Pole -->
+                <line x1="298" y1="110" x2="195" y2="143" stroke="#0f4c5c" stroke-width="2.5" marker-end="url(#m4-arr-out)" />
+                <line x1="195" y1="143" x2="80" y2="180" stroke="#0f4c5c" stroke-width="2.5" />
+                <!-- Angle Arcs -->
+                <path d="M 265 99 A 35 35 0 0 0 263 110" stroke="#b8561c" stroke-width="1.5" fill="none" />
+                <text x="250" y="103" font-size="11" font-weight="bold" fill="#b8561c">∠i</text>
+                <path d="M 263 110 A 35 35 0 0 0 265 121" stroke="#0f4c5c" stroke-width="1.5" fill="none" />
+                <text x="250" y="124" font-size="11" font-weight="bold" fill="#0f4c5c">∠r</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Incident Obliquely at Pole (P) → Follows ∠i = ∠r</h4>
+              <p>A ray striking the pole reflects symmetrically about the principal axis such that the <strong>angle of incidence equals the angle of reflection (∠i = ∠r)</strong>.</p>
+              <div class="rule-legend">
+                <span class="legend-tag inc"><span class="dot inc"></span> Incident Ray</span>
+                <span class="legend-tag ref"><span class="dot ref"></span> Reflected Ray</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Lenses Tab Content -->
+      <div class="rules-panel" id="panel-lenses" role="tabpanel" aria-labelledby="tab-btn-lenses" hidden>
+        <div class="grid two rules-grid">
+          <!-- Lens Rule 1 -->
+          <article class="card rule-card">
+            <div class="rule-badge">Rule 1 · Ray Parallel to Principal Axis</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Rule 1 for Lenses: Parallel ray passes through F2">
+                <defs>
+                  <marker id="l1-arr-in" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#b8561c" />
+                  </marker>
+                  <marker id="l1-arr-out" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f4c5c" />
+                  </marker>
+                </defs>
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Principal axis -->
+                <line x1="20" y1="105" x2="340" y2="105" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4" />
+                <text x="25" y="98" font-size="10" fill="#64748b" font-weight="600">Principal Axis</text>
+                <!-- Convex Lens -->
+                <path d="M 180 20 Q 164 105 180 190 Q 196 105 180 20" stroke="#0f4c5c" stroke-width="2.5" fill="rgba(15, 76, 92, 0.12)" />
+                <line x1="180" y1="20" x2="180" y2="190" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2" />
+                <!-- Points -->
+                <circle cx="45" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="45" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">2F₁</text>
+                <circle cx="110" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="110" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">F₁</text>
+                <circle cx="180" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="180" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">O</text>
+                <circle cx="250" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="250" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">F₂</text>
+                <circle cx="315" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="315" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">2F₂</text>
+                <!-- Incident Ray -->
+                <line x1="30" y1="55" x2="115" y2="55" stroke="#b8561c" stroke-width="2.5" marker-end="url(#l1-arr-in)" />
+                <line x1="115" y1="55" x2="180" y2="55" stroke="#b8561c" stroke-width="2.5" />
+                <!-- Refracted Ray through F2 -->
+                <line x1="180" y1="55" x2="260" y2="112" stroke="#0f4c5c" stroke-width="2.5" marker-end="url(#l1-arr-out)" />
+                <line x1="260" y1="112" x2="325" y2="158" stroke="#0f4c5c" stroke-width="2.5" />
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Parallel to Principal Axis → Passes through Focus F₂</h4>
+              <p>In a convex lens, a ray of light parallel to the principal axis refracts through the lens and <strong>passes through the principal focus (F₂)</strong> on the other side. (In a concave lens, it appears to diverge from F₁).</p>
+              <div class="rule-legend">
+                <span class="legend-tag inc"><span class="dot inc"></span> Incident Ray</span>
+                <span class="legend-tag ref"><span class="dot ref"></span> Refracted Ray</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Lens Rule 2 -->
+          <article class="card rule-card">
+            <div class="rule-badge">Rule 2 · Ray Through Focus F₁</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Rule 2 for Lenses: Ray through F1 emerges parallel">
+                <defs>
+                  <marker id="l2-arr-in" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#b8561c" />
+                  </marker>
+                  <marker id="l2-arr-out" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f4c5c" />
+                  </marker>
+                </defs>
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Principal axis -->
+                <line x1="20" y1="105" x2="340" y2="105" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4" />
+                <text x="25" y="98" font-size="10" fill="#64748b" font-weight="600">Principal Axis</text>
+                <!-- Convex Lens -->
+                <path d="M 180 20 Q 164 105 180 190 Q 196 105 180 20" stroke="#0f4c5c" stroke-width="2.5" fill="rgba(15, 76, 92, 0.12)" />
+                <line x1="180" y1="20" x2="180" y2="190" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2" />
+                <!-- Points -->
+                <circle cx="45" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="45" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">2F₁</text>
+                <circle cx="110" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="110" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">F₁</text>
+                <circle cx="180" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="180" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">O</text>
+                <circle cx="250" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="250" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">F₂</text>
+                <circle cx="315" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="315" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">2F₂</text>
+                <!-- Incident Ray through F1 -->
+                <line x1="45" y1="55" x2="120" y2="108" stroke="#b8561c" stroke-width="2.5" marker-end="url(#l2-arr-in)" />
+                <line x1="120" y1="108" x2="180" y2="155" stroke="#b8561c" stroke-width="2.5" />
+                <!-- Refracted Ray parallel -->
+                <line x1="180" y1="155" x2="260" y2="155" stroke="#0f4c5c" stroke-width="2.5" marker-end="url(#l2-arr-out)" />
+                <line x1="260" y1="155" x2="330" y2="155" stroke="#0f4c5c" stroke-width="2.5" />
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Through Focus F₁ → Emerges Parallel to Principal Axis</h4>
+              <p>A ray passing through the first principal focus (F₁), after refraction from a convex lens, <strong>emerges parallel to the principal axis</strong>.</p>
+              <div class="rule-legend">
+                <span class="legend-tag inc"><span class="dot inc"></span> Incident Ray</span>
+                <span class="legend-tag ref"><span class="dot ref"></span> Refracted Ray</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Lens Rule 3 -->
+          <article class="card rule-card">
+            <div class="rule-badge">Rule 3 · Ray Through Optical Centre (O)</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Rule 3 for Lenses: Ray through O passes undeviated">
+                <defs>
+                  <marker id="l3-arr-in" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#b8561c" />
+                  </marker>
+                  <marker id="l3-arr-out" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f4c5c" />
+                  </marker>
+                </defs>
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Principal axis -->
+                <line x1="20" y1="105" x2="340" y2="105" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4" />
+                <text x="25" y="98" font-size="10" fill="#64748b" font-weight="600">Principal Axis</text>
+                <!-- Convex Lens -->
+                <path d="M 180 20 Q 164 105 180 190 Q 196 105 180 20" stroke="#0f4c5c" stroke-width="2.5" fill="rgba(15, 76, 92, 0.12)" />
+                <line x1="180" y1="20" x2="180" y2="190" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2" />
+                <!-- Points -->
+                <circle cx="45" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="45" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">2F₁</text>
+                <circle cx="110" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="110" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">F₁</text>
+                <circle cx="180" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="180" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">O</text>
+                <circle cx="250" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="250" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">F₂</text>
+                <circle cx="315" cy="105" r="3.5" fill="#0f4c5c" />
+                <text x="315" y="123" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">2F₂</text>
+                <!-- Straight ray through O without deviation -->
+                <line x1="35" y1="45" x2="120" y2="80" stroke="#b8561c" stroke-width="2.5" marker-end="url(#l3-arr-in)" />
+                <line x1="120" y1="80" x2="180" y2="105" stroke="#b8561c" stroke-width="2.5" />
+                <line x1="180" y1="105" x2="255" y2="136" stroke="#0f4c5c" stroke-width="2.5" marker-end="url(#l3-arr-out)" />
+                <line x1="255" y1="136" x2="325" y2="165" stroke="#0f4c5c" stroke-width="2.5" />
+                <!-- Callout -->
+                <text x="180" y="185" text-anchor="middle" font-size="10" fill="#0f4c5c" font-weight="bold">No deviation at O</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Through Optical Centre (O) → Goes Undeviated</h4>
+              <p>A ray of light passing through the optical centre (O) of a thin lens <strong>passes without suffering any deviation or bending</strong>. This is the simplest ray to draw in exam diagrams!</p>
+              <div class="rule-legend">
+                <span class="legend-tag inc"><span class="dot inc"></span> Incident Ray</span>
+                <span class="legend-tag ref"><span class="dot ref"></span> Emerging Ray (Straight)</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- Image formation summary -->
     <section class="section">
       <h2>Image Formation — Quick Reference</h2>
@@ -385,6 +755,36 @@ retryBtn.addEventListener('click', () => {
   render();
 });
 
+// Ray rules tab switching
+const tabMirrors = document.getElementById("tab-btn-mirrors");
+const tabLenses = document.getElementById("tab-btn-lenses");
+const panelMirrors = document.getElementById("panel-mirrors");
+const panelLenses = document.getElementById("panel-lenses");
+
+if (tabMirrors && tabLenses && panelMirrors && panelLenses) {
+  tabMirrors.addEventListener("click", () => {
+    tabMirrors.classList.remove("secondary");
+    tabMirrors.classList.add("active");
+    tabMirrors.setAttribute("aria-selected", "true");
+    tabLenses.classList.add("secondary");
+    tabLenses.classList.remove("active");
+    tabLenses.setAttribute("aria-selected", "false");
+    panelMirrors.hidden = false;
+    panelLenses.hidden = true;
+  });
+
+  tabLenses.addEventListener("click", () => {
+    tabLenses.classList.remove("secondary");
+    tabLenses.classList.add("active");
+    tabLenses.setAttribute("aria-selected", "true");
+    tabMirrors.classList.add("secondary");
+    tabMirrors.classList.remove("active");
+    tabMirrors.setAttribute("aria-selected", "false");
+    panelLenses.hidden = false;
+    panelMirrors.hidden = true;
+  });
+}
+
 render();
 </script>
 
@@ -392,6 +792,108 @@ render();
   .resource-header {
     padding-block: 1.5rem 2rem;
   }
+
+  /* ── Ray Rules Section ── */
+  .rules-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .rules-tab-btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .rules-tab-btn.active {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+
+  .rule-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .rule-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .rule-diagram {
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ray-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  .rule-body {
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rule-body h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .rule-body p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .rule-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.4rem;
+    padding-top: 0.6rem;
+    border-top: 1px dashed var(--line);
+  }
+
+  .legend-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .legend-tag.inc { color: #b8561c; }
+  .legend-tag.ref { color: #0f4c5c; }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .dot.inc { background: #b8561c; }
+  .dot.ref { background: #0f4c5c; }
 
   /* ── Concept cards ── */
   .concept-grid {

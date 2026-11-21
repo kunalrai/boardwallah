@@ -1,0 +1,874 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Electricity | CBSE Class 10 Science | ${provider.name}`}
+  description="Complete CBSE Class 10 Science chapter on Electricity. Covers electric current, potential difference, Ohm's law, resistance, series and parallel circuits, Joule's heating effect, electric power, and interactive quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Electricity
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science · Physics</span>
+      <h1>Electricity</h1>
+      <p class="lead">
+        Complete chapter notes, formulas, visual circuit diagrams, and an interactive quiz for CBSE Class 10 Physics: from electric current and Ohm's law to resistor combinations and electric power.
+      </p>
+    </div>
+
+    <!-- Key concepts -->
+    <section class="section">
+      <h2>Key Concepts at a Glance</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>⚡ Electric Current &amp; Charge</h3>
+          <p class="formula">I = Q / t &nbsp;|&nbsp; Q = n · e</p>
+          <ul class="clean-list">
+            <li><strong>Current (I)</strong>: Rate of flow of electric charge. SI unit: <strong>Ampere (A)</strong>.</li>
+            <li><strong>Charge (Q)</strong>: SI unit: <strong>Coulomb (C)</strong>. Electron charge e = 1.6 × 10⁻¹⁹ C.</li>
+            <li>1 Ampere = 1 Coulomb / 1 Second.</li>
+            <li>Measured by an <strong>Ammeter</strong> connected in <strong>series</strong> (very low resistance).</li>
+            <li>Conventional current flows from <strong>positive to negative</strong> terminal (opposite to electron flow).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔋 Electric Potential &amp; Potential Difference</h3>
+          <p class="formula">V = W / Q</p>
+          <ul class="clean-list">
+            <li><strong>Potential Difference (V)</strong>: Work done (W) in moving a unit positive charge (Q) from one point to another.</li>
+            <li>SI unit: <strong>Volt (V)</strong>. 1 V = 1 Joule / 1 Coulomb.</li>
+            <li>Measured by a <strong>Voltmeter</strong> connected in <strong>parallel</strong> across the component (very high resistance).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📐 Ohm's Law &amp; Resistance</h3>
+          <p class="formula">V = I · R &nbsp;⟹&nbsp; R = V / I</p>
+          <ul class="clean-list">
+            <li><strong>Ohm's Law</strong>: Potential difference across a conductor is directly proportional to current flowing through it, provided temperature remains constant.</li>
+            <li><strong>Resistance (R)</strong>: Property of a conductor to oppose flow of charge. SI unit: <strong>Ohm (Ω)</strong>.</li>
+            <li>1 Ω = 1 Volt / 1 Ampere.</li>
+            <li>V-I graph is a <strong>straight line passing through the origin</strong>. Its slope equals resistance (R).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🧵 Factors Affecting Resistance &amp; Resistivity</h3>
+          <p class="formula">R = ρ · (l / A)</p>
+          <ul class="clean-list">
+            <li>Directly proportional to length ($R \propto l$).</li>
+            <li>Inversely proportional to area of cross-section ($R \propto 1/A$).</li>
+            <li><strong>Resistivity (ρ)</strong>: Characteristic property of the material. SI unit: <strong>Ω·m</strong>.</li>
+            <li>Alloys (e.g., Nichrome) have higher resistivity than pure metals and do not oxidize easily at high temperatures; used in heating elements.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔀 Resistor Combinations</h3>
+          <p class="formula">Series: R<sub>s</sub> = R₁ + R₂ + R₃<br/>Parallel: 1/R<sub>p</sub> = 1/R₁ + 1/R₂ + 1/R₃</p>
+          <ul class="clean-list">
+            <li><strong>Series</strong>: Current ($I$) remains same; Voltage divides ($V = V_1 + V_2$). Equivalent resistance increases.</li>
+            <li><strong>Parallel</strong>: Voltage ($V$) remains same; Current divides ($I = I_1 + I_2$). Equivalent resistance decreases.</li>
+            <li>Domestic wiring is always in <strong>parallel</strong> so each appliance gets full 220V and independent switches.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔥 Heating Effect &amp; Electric Power</h3>
+          <p class="formula">H = I² · R · t &nbsp;|&nbsp; P = V · I = I² · R = V² / R</p>
+          <ul class="clean-list">
+            <li><strong>Joule's Law of Heating</strong>: Heat produced H ∝ I², H ∝ R, H ∝ t.</li>
+            <li>SI unit of Power: <strong>Watt (W)</strong> (1 W = 1 V × 1 A = 1 J/s).</li>
+            <li><strong>Commercial unit</strong>: 1 kWh = 1 unit = 3.6 × 10⁶ Joules.</li>
+            <li><strong>Electric Fuse</strong>: Safety device with low melting point connected in series with the live wire.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Circuit Diagrams Section -->
+    <section class="section" id="visual-circuits">
+      <div class="rules-header">
+        <span class="eyebrow">Interactive Diagrams</span>
+        <h2>Visual Circuit Analysis</h2>
+        <p class="lead">
+          Explore key electrical circuits and graphs required for CBSE Class 10 board examinations:
+        </p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="rules-tabs" role="tablist" aria-label="Circuit categories">
+        <button class="button rules-tab-btn active" id="tab-btn-series-parallel" type="button" role="tab" aria-selected="true" aria-controls="panel-series-parallel">
+          🔀 Series vs. Parallel Circuits
+        </button>
+        <button class="button secondary rules-tab-btn" id="tab-btn-ohms-law" type="button" role="tab" aria-selected="false" aria-controls="panel-ohms-law">
+          📈 Ohm's Law Circuit &amp; V-I Graph
+        </button>
+      </div>
+
+      <!-- Panel 1: Series vs Parallel -->
+      <div class="rules-panel" id="panel-series-parallel" role="tabpanel" aria-labelledby="tab-btn-series-parallel">
+        <div class="grid two rules-grid">
+          <!-- Series Card -->
+          <article class="card rule-card">
+            <div class="rule-badge">Series Circuit · End-to-End Connection</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Series Circuit Diagram">
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Wires -->
+                <path d="M 50 160 L 50 60 L 100 60" stroke="#334155" stroke-width="2.5" fill="none" />
+                <!-- R1 -->
+                <path d="M 100 60 l 6 -10 l 12 20 l 12 -20 l 12 20 l 12 -20 l 6 10" stroke="#b8561c" stroke-width="2.5" fill="none" />
+                <text x="130" y="40" text-anchor="middle" font-size="12" font-weight="bold" fill="#b8561c">R₁</text>
+                <!-- Wire between R1 & R2 -->
+                <line x1="160" y1="60" x2="200" y2="60" stroke="#334155" stroke-width="2.5" />
+                <!-- R2 -->
+                <path d="M 200 60 l 6 -10 l 12 20 l 12 -20 l 12 20 l 12 -20 l 6 10" stroke="#b8561c" stroke-width="2.5" fill="none" />
+                <text x="230" y="40" text-anchor="middle" font-size="12" font-weight="bold" fill="#b8561c">R₂</text>
+                <!-- Wires to battery -->
+                <path d="M 260 60 L 310 60 L 310 160 L 220 160" stroke="#334155" stroke-width="2.5" fill="none" />
+                <path d="M 50 160 L 140 160" stroke="#334155" stroke-width="2.5" fill="none" />
+                <!-- Battery at bottom -->
+                <line x1="140" y1="145" x2="140" y2="175" stroke="#0f4c5c" stroke-width="3.5" />
+                <line x1="152" y1="152" x2="152" y2="168" stroke="#334155" stroke-width="2" />
+                <line x1="164" y1="145" x2="164" y2="175" stroke="#0f4c5c" stroke-width="3.5" />
+                <line x1="176" y1="152" x2="176" y2="168" stroke="#334155" stroke-width="2" />
+                <line x1="176" y1="160" x2="220" y2="160" stroke="#334155" stroke-width="2.5" />
+                <text x="130" y="142" font-size="11" font-weight="bold" fill="#0f4c5c">+</text>
+                <text x="182" y="142" font-size="11" font-weight="bold" fill="#334155">−</text>
+                <text x="158" y="195" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">Battery (V)</text>
+                <!-- Current arrows -->
+                <path d="M 50 100 l -4 8 l 8 0 z" fill="#b8561c" />
+                <text x="35" y="105" font-size="11" font-weight="bold" fill="#b8561c">I</text>
+                <path d="M 310 110 l -4 -8 l 8 0 z" fill="#b8561c" />
+                <text x="325" y="110" font-size="11" font-weight="bold" fill="#b8561c">I</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Same Current (I), Voltage Divides</h4>
+              <p>In a series circuit, there is only one continuous path for charge. Current <strong>I</strong> remains identical through all resistors, while total voltage divides: <strong>V = V₁ + V₂</strong>. Equivalent resistance is <strong>R<sub>s</sub> = R₁ + R₂</strong>.</p>
+            </div>
+          </article>
+
+          <!-- Parallel Card -->
+          <article class="card rule-card">
+            <div class="rule-badge">Parallel Circuit · Common Terminals</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Parallel Circuit Diagram">
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Main loop -->
+                <path d="M 45 160 L 45 95 L 90 95" stroke="#334155" stroke-width="2.5" fill="none" />
+                <path d="M 270 95 L 315 95 L 315 160 L 220 160" stroke="#334155" stroke-width="2.5" fill="none" />
+                <path d="M 45 160 L 140 160" stroke="#334155" stroke-width="2.5" fill="none" />
+                <!-- Junction nodes -->
+                <circle cx="90" cy="95" r="4.5" fill="#0f4c5c" />
+                <circle cx="270" cy="95" r="4.5" fill="#0f4c5c" />
+                <!-- Branch 1 (Top R1) -->
+                <path d="M 90 95 L 90 55 L 140 55" stroke="#334155" stroke-width="2" fill="none" />
+                <path d="M 140 55 l 6 -10 l 12 20 l 12 -20 l 12 20 l 12 -20 l 6 10" stroke="#b8561c" stroke-width="2.5" fill="none" />
+                <path d="M 200 55 L 270 55 L 270 95" stroke="#334155" stroke-width="2" fill="none" />
+                <text x="170" y="38" text-anchor="middle" font-size="12" font-weight="bold" fill="#b8561c">R₁ (I₁)</text>
+                <!-- Branch 2 (Bottom R2) -->
+                <path d="M 90 95 L 90 125 L 140 125" stroke="#334155" stroke-width="2" fill="none" />
+                <path d="M 140 125 l 6 -10 l 12 20 l 12 -20 l 12 20 l 12 -20 l 6 10" stroke="#0f4c5c" stroke-width="2.5" fill="none" />
+                <path d="M 200 125 L 270 125 L 270 95" stroke="#334155" stroke-width="2" fill="none" />
+                <text x="170" y="148" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">R₂ (I₂)</text>
+                <!-- Battery at bottom -->
+                <line x1="140" y1="145" x2="140" y2="175" stroke="#0f4c5c" stroke-width="3.5" />
+                <line x1="152" y1="152" x2="152" y2="168" stroke="#334155" stroke-width="2" />
+                <line x1="164" y1="145" x2="164" y2="175" stroke="#0f4c5c" stroke-width="3.5" />
+                <line x1="176" y1="152" x2="176" y2="168" stroke="#334155" stroke-width="2" />
+                <line x1="176" y1="160" x2="220" y2="160" stroke="#334155" stroke-width="2.5" />
+                <text x="130" y="142" font-size="11" font-weight="bold" fill="#0f4c5c">+</text>
+                <text x="182" y="142" font-size="11" font-weight="bold" fill="#334155">−</text>
+                <text x="158" y="195" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">Battery (V)</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Same Voltage (V), Current Divides</h4>
+              <p>In parallel, components connect across common junction points. Potential difference <strong>V</strong> is identical across each branch, while current branches: <strong>I = I₁ + I₂</strong>. <strong>1/R<sub>p</sub> = 1/R₁ + 1/R₂</strong>.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Panel 2: Ohm's Law & V-I Graph -->
+      <div class="rules-panel" id="panel-ohms-law" role="tabpanel" aria-labelledby="tab-btn-ohms-law" hidden>
+        <div class="grid two rules-grid">
+          <!-- Circuit Card -->
+          <article class="card rule-card">
+            <div class="rule-badge">Ohm's Law Verification Circuit</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Ohm's Law Circuit Diagram">
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Loop -->
+                <path d="M 40 160 L 40 60 L 100 60" stroke="#334155" stroke-width="2.5" fill="none" />
+                <!-- Resistor -->
+                <path d="M 100 60 l 6 -10 l 12 20 l 12 -20 l 12 20 l 12 -20 l 6 10" stroke="#b8561c" stroke-width="2.5" fill="none" />
+                <text x="130" y="42" text-anchor="middle" font-size="11" font-weight="bold" fill="#b8561c">Resistor (R)</text>
+                <!-- Voltmeter in parallel across R -->
+                <path d="M 95 60 L 95 25 L 125 25" stroke="#64748b" stroke-width="1.8" stroke-dasharray="3 3" fill="none" />
+                <circle cx="140" cy="25" r="14" fill="#fff" stroke="#0f4c5c" stroke-width="2" />
+                <text x="140" y="29" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">V</text>
+                <path d="M 154 25 L 185 25 L 185 60" stroke="#64748b" stroke-width="1.8" stroke-dasharray="3 3" fill="none" />
+                <!-- Ammeter in series -->
+                <line x1="160" y1="60" x2="200" y2="60" stroke="#334155" stroke-width="2.5" />
+                <circle cx="220" cy="60" r="14" fill="#fff" stroke="#b8561c" stroke-width="2" />
+                <text x="220" y="64" text-anchor="middle" font-size="11" font-weight="bold" fill="#b8561c">A</text>
+                <!-- Rheostat / battery / key -->
+                <path d="M 234 60 L 310 60 L 310 160 L 240 160" stroke="#334155" stroke-width="2.5" fill="none" />
+                <path d="M 40 160 L 120 160" stroke="#334155" stroke-width="2.5" fill="none" />
+                <!-- Rheostat -->
+                <path d="M 120 160 l 4 -6 l 8 12 l 8 -12 l 8 12 l 8 -12 l 4 6" stroke="#334155" stroke-width="2" fill="none" />
+                <path d="M 130 185 L 155 145" stroke="#0f4c5c" stroke-width="2" marker-end="url(#m1-arr-out)" />
+                <text x="140" y="200" font-size="10" font-weight="bold" fill="#334155">Rheostat (Rh)</text>
+                <!-- Battery -->
+                <line x1="180" y1="148" x2="180" y2="172" stroke="#0f4c5c" stroke-width="3" />
+                <line x1="190" y1="154" x2="190" y2="166" stroke="#334155" stroke-width="2" />
+                <line x1="190" y1="160" x2="240" y2="160" stroke="#334155" stroke-width="2" />
+                <text x="185" y="140" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f4c5c">Cell</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Ammeter in Series, Voltmeter in Parallel</h4>
+              <p>The ammeter measures current flowing through the circuit (placed in series). The voltmeter measures potential drop across resistor $R$ (placed in parallel).</p>
+            </div>
+          </article>
+
+          <!-- Graph Card -->
+          <article class="card rule-card">
+            <div class="rule-badge">V-I Characteristic Graph</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="V-I Graph for Ohm's Law">
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Grid lines -->
+                <line x1="50" y1="130" x2="310" y2="130" stroke="#e2e8f0" stroke-width="1" />
+                <line x1="50" y1="90" x2="310" y2="90" stroke="#e2e8f0" stroke-width="1" />
+                <line x1="50" y1="50" x2="310" y2="50" stroke="#e2e8f0" stroke-width="1" />
+                <line x1="130" y1="30" x2="130" y2="170" stroke="#e2e8f0" stroke-width="1" />
+                <line x1="210" y1="30" x2="210" y2="170" stroke="#e2e8f0" stroke-width="1" />
+                <line x1="290" y1="30" x2="290" y2="170" stroke="#e2e8f0" stroke-width="1" />
+                <!-- Axes -->
+                <line x1="50" y1="170" x2="320" y2="170" stroke="#334155" stroke-width="2.5" marker-end="url(#m1-arr-out)" />
+                <text x="325" y="174" font-size="11" font-weight="bold" fill="#334155">I (A)</text>
+                <line x1="50" y1="170" x2="50" y2="25" stroke="#334155" stroke-width="2.5" marker-end="url(#m1-arr-out)" />
+                <text x="45" y="20" font-size="11" font-weight="bold" fill="#334155">V (V)</text>
+                <!-- Origin -->
+                <text x="40" y="184" font-size="11" font-weight="bold" fill="#64748b">O</text>
+                <!-- Linear Graph -->
+                <line x1="50" y1="170" x2="280" y2="45" stroke="#b8561c" stroke-width="3" />
+                <!-- Slope indicator triangle -->
+                <path d="M 130 127 L 210 127 L 210 83" stroke="#0f4c5c" stroke-width="1.8" stroke-dasharray="3 3" fill="none" />
+                <text x="170" y="142" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f4c5c">ΔI</text>
+                <text x="225" y="108" font-size="10" font-weight="bold" fill="#0f4c5c">ΔV</text>
+                <!-- Equation label -->
+                <rect x="180" y="45" width="135" height="34" rx="6" fill="#fff" stroke="#b8561c" stroke-width="1.5" />
+                <text x="247" y="66" text-anchor="middle" font-size="11" font-weight="bold" fill="#b8561c">Slope = ΔV / ΔI = R</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Straight Line Through Origin: V ∝ I</h4>
+              <p>For an ohmic conductor at constant temperature, the V-I graph is a straight line through the origin. The <strong>slope of the line gives the resistance (R)</strong>.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formula Reference Table -->
+    <section class="section">
+      <h2>Formula &amp; SI Units Quick Reference</h2>
+      <div class="table-wrap card">
+        <table>
+          <caption>Essential Electricity Formulas for Board Exams</caption>
+          <thead>
+            <tr><th>Quantity</th><th>Symbol</th><th>Standard Formula</th><th>SI Unit</th><th>Key Note</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Electric Current</td><td>I</td><td>I = Q / t</td><td>Ampere (A)</td><td>Measured in series by Ammeter</td></tr>
+            <tr><td>Potential Difference</td><td>V</td><td>V = W / Q</td><td>Volt (V)</td><td>Measured in parallel by Voltmeter</td></tr>
+            <tr><td>Ohm's Law</td><td>R</td><td>R = V / I</td><td>Ohm (Ω)</td><td>Valid at constant temperature</td></tr>
+            <tr><td>Resistance &amp; Resistivity</td><td>R, ρ</td><td>R = ρ · l / A</td><td>ρ in Ω·m</td><td>If wire is doubled on itself, A doubles &amp; l halves</td></tr>
+            <tr><td>Series Combination</td><td>R<sub>s</sub></td><td>R<sub>s</sub> = R₁ + R₂ + …</td><td>Ohm (Ω)</td><td>Current is same; equivalent R is maximum</td></tr>
+            <tr><td>Parallel Combination</td><td>R<sub>p</sub></td><td>1/R<sub>p</sub> = 1/R₁ + 1/R₂</td><td>Ohm (Ω)</td><td>Voltage is same; equivalent R is minimum</td></tr>
+            <tr><td>Joule's Heating</td><td>H</td><td>H = I² · R · t</td><td>Joule (J)</td><td>Heat produced in conductor</td></tr>
+            <tr><td>Electric Power</td><td>P</td><td>P = V · I = I²R = V²/R</td><td>Watt (W)</td><td>1 kW = 1000 W</td></tr>
+            <tr><td>Commercial Energy</td><td>E</td><td>E = P · t</td><td>Kilowatt-hour (kWh)</td><td>1 kWh = 3.6 × 10⁶ J (1 Unit)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="section quiz-root" id="quiz-root">
+      <h2 class="quiz-heading">🧪 Electricity Chapter Quiz — 20 Board Questions</h2>
+      <p class="muted" style="margin-bottom:1.5rem">Practice with standard numerical and conceptual questions from CBSE Class 10 board examinations.</p>
+
+      <div class="quiz-progress-bar" id="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+      <p class="quiz-counter" id="quiz-counter">Question 1 of 20</p>
+
+      <div class="quiz-card card" id="quiz-card">
+        <p class="quiz-question" id="quiz-question"></p>
+        <ul class="quiz-options" id="quiz-options"></ul>
+        <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+        <div class="quiz-actions">
+          <button class="button" id="quiz-next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="quiz-result card" id="quiz-result" hidden>
+        <h3 id="quiz-score-heading"></h3>
+        <p id="quiz-score-msg"></p>
+        <div class="actions" style="justify-content:center;margin-top:1rem">
+          <button class="button secondary" id="quiz-retry">↺ Try Again</button>
+          <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized help with Electricity numericals?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} to master circuit problems, resistor combinations, and physics board questions.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script>
+const questions = [
+  {
+    q: "A current of 0.5 A is drawn by a filament of an electric bulb for 10 minutes. The amount of electric charge that flows through the circuit is:",
+    opts: ["5 C", "50 C", "300 C", "500 C"],
+    ans: 2,
+    exp: "Time t = 10 min = 600 s. Charge Q = I · t = 0.5 A × 600 s = 300 C."
+  },
+  {
+    q: "How much work is done in moving a charge of 2 C across two points having a potential difference of 12 V?",
+    opts: ["6 J", "24 J", "14 J", "0.16 J"],
+    ans: 1,
+    exp: "Work W = V · Q = 12 V × 2 C = 24 J."
+  },
+  {
+    q: "The instrument used to measure electric current in a circuit is:",
+    opts: ["Voltmeter connected in parallel", "Ammeter connected in series", "Galvanometer connected in parallel", "Rheostat connected in series"],
+    ans: 1,
+    exp: "An Ammeter measures electric current and is always connected in series because it has very low resistance."
+  },
+  {
+    q: "According to Ohm's Law, the relationship between Potential Difference (V) and Current (I) at constant temperature is:",
+    opts: ["V ∝ 1/I", "V ∝ I", "V ∝ I²", "V is independent of I"],
+    ans: 1,
+    exp: "Ohm's Law states that V ∝ I at constant temperature, giving V = IR."
+  },
+  {
+    q: "A cylindrical wire of length l and cross-sectional area A has resistance R. Another wire of same material, length 2l and area A/2 has resistance:",
+    opts: ["R", "2R", "4R", "R/4"],
+    ans: 2,
+    exp: "R' = ρ(2l) / (A/2) = 4 · (ρl/A) = 4R."
+  },
+  {
+    q: "The SI unit of electrical resistivity (ρ) is:",
+    opts: ["Ohm (Ω)", "Ohm per metre (Ω/m)", "Ohm-metre (Ω·m)", "Volt per Ampere"],
+    ans: 2,
+    exp: "From R = ρl/A, ρ = R·A/l = (Ω · m²) / m = Ω·m."
+  },
+  {
+    q: "Three resistors of 2 Ω, 3 Ω, and 6 Ω are connected in parallel. Their equivalent resistance is:",
+    opts: ["11 Ω", "1 Ω", "0.5 Ω", "1.5 Ω"],
+    ans: 1,
+    exp: "1/Rp = 1/2 + 1/3 + 1/6 = (3 + 2 + 1) / 6 = 6/6 = 1. Therefore, Rp = 1 Ω."
+  },
+  {
+    q: "Three resistors of 4 Ω, 6 Ω, and 10 Ω are connected in series with a 10 V battery. The current flowing through the 6 Ω resistor is:",
+    opts: ["0.5 A", "1 A", "2 A", "0.25 A"],
+    ans: 0,
+    exp: "Rs = 4 + 6 + 10 = 20 Ω. Total current I = V / Rs = 10 V / 20 Ω = 0.5 A. In series, current is identical through every resistor."
+  },
+  {
+    q: "Why are household electrical appliances connected in parallel rather than in series?",
+    opts: [
+      "Total resistance increases",
+      "Each appliance operates at the same 220V potential and can be controlled independently",
+      "Current through each appliance is identical",
+      "It requires thinner wires"
+    ],
+    ans: 1,
+    exp: "In parallel, all appliances get the full 220V supply voltage, total resistance decreases, and if one appliance fails, others continue working."
+  },
+  {
+    q: "According to Joule's law of heating, the heat produced in a resistor of resistance R carrying current I for time t is given by:",
+    opts: ["H = I·R·t", "H = I²·R·t", "H = I·R²·t", "H = I²·R²·t"],
+    ans: 1,
+    exp: "Joule's law states H = I²Rt. Heat is directly proportional to the square of current, resistance, and time."
+  },
+  {
+    q: "An electric iron consumes 1 kW electric power when operated at 220 V. The current flowing through it is approximately:",
+    opts: ["0.22 A", "4.55 A", "10 A", "2.2 A"],
+    ans: 1,
+    exp: "P = V · I ⟹ I = P / V = 1000 W / 220 V ≈ 4.545 A ≈ 4.55 A."
+  },
+  {
+    q: "1 Kilowatt-hour (kWh), the commercial unit of electrical energy, is equal to:",
+    opts: ["3.6 × 10⁵ J", "3.6 × 10⁶ J", "36 × 10⁶ J", "1000 J"],
+    ans: 1,
+    exp: "1 kWh = 1000 W × 3600 s = 3,600,000 J = 3.6 × 10⁶ Joules."
+  },
+  {
+    q: "An electric bulb is rated 220 V and 100 W. When it is operated on 110 V, the power consumed will be:",
+    opts: ["100 W", "75 W", "50 W", "25 W"],
+    ans: 3,
+    exp: "Resistance R = V² / P = (220)² / 100 = 484 Ω. At 110 V, P' = V'² / R = (110)² / 484 = 12100 / 484 = 25 W."
+  },
+  {
+    q: "Which material is predominantly used for making heating elements of electric toasters and irons?",
+    opts: ["Pure Copper", "Nichrome (Alloy)", "Tungsten", "Aluminium"],
+    ans: 1,
+    exp: "Nichrome has high resistivity and does not oxidize (burn) easily even at high red-hot temperatures."
+  },
+  {
+    q: "The filament of an incandescent electric bulb is made of Tungsten because:",
+    opts: [
+      "It has very low resistance",
+      "It has a very high melting point (3380°C) and glows white-hot without melting",
+      "It is a liquid metal",
+      "It reacts quickly with air"
+    ],
+    ans: 1,
+    exp: "Tungsten has an exceptionally high melting point (3380°C) and high tensile strength, retaining its structure while emitting light at high temperatures."
+  },
+  {
+    q: "An electric fuse wire should have:",
+    opts: [
+      "High melting point and high resistance",
+      "Low melting point and suitable resistance",
+      "Low melting point and zero resistance",
+      "High melting point and low resistance"
+    ],
+    ans: 1,
+    exp: "A fuse wire must have a low melting point so that it melts and breaks the circuit when excessive current flows."
+  },
+  {
+    q: "If the radius of a metallic wire is halved while its length remains unchanged, its resistance becomes:",
+    opts: ["2 times", "4 times", "8 times", "16 times"],
+    ans: 1,
+    exp: "Area A = πr². If radius is halved, area becomes A/4. Since R ∝ 1/A, resistance becomes 4 times greater."
+  },
+  {
+    q: "Two bulbs rated (60 W, 220 V) and (100 W, 220 V) are connected in parallel to 220 V. Which bulb will glow brighter?",
+    opts: ["60 W bulb", "100 W bulb", "Both equally bright", "Neither will glow"],
+    ans: 1,
+    exp: "In parallel, both bulbs receive 220 V. The 100 W bulb consumes more power (P = V²/R) and therefore glows brighter."
+  },
+  {
+    q: "What is the slope of the V-I graph for an ohmic conductor?",
+    opts: ["Conductance", "Resistance", "Electric Charge", "Electric Potential"],
+    ans: 1,
+    exp: "Slope = ΔV / ΔI = R (Resistance of the conductor)."
+  },
+  {
+    q: "A wire of resistance 20 Ω is cut into 5 equal parts. These parts are then connected in parallel. The equivalent resistance of the combination is:",
+    opts: ["4 Ω", "0.8 Ω", "1 Ω", "0.4 Ω"],
+    ans: 1,
+    exp: "Each piece has resistance r = 20 / 5 = 4 Ω. When 5 such pieces are in parallel: 1/Rp = 5 × (1/4) = 5/4 ⟹ Rp = 4/5 = 0.8 Ω."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qEl     = document.getElementById('quiz-question') as HTMLElement;
+const optsEl  = document.getElementById('quiz-options') as HTMLElement;
+const fbEl    = document.getElementById('quiz-feedback') as HTMLElement;
+const nextBtn = document.getElementById('quiz-next') as HTMLButtonElement;
+const counter = document.getElementById('quiz-counter') as HTMLElement;
+const fill    = document.getElementById('quiz-progress-fill') as HTMLElement;
+const bar     = document.getElementById('quiz-progress-bar') as HTMLElement;
+const result  = document.getElementById('quiz-result') as HTMLElement;
+const card    = document.getElementById('quiz-card') as HTMLElement;
+const retryBtn = document.getElementById('quiz-retry') as HTMLElement;
+
+function render() {
+  answered = false;
+  nextBtn.disabled = true;
+  fbEl.textContent = '';
+  fbEl.className = 'quiz-feedback';
+
+  const q = questions[current];
+  counter.textContent = `Question ${current + 1} of ${questions.length}`;
+  bar.setAttribute('aria-valuenow', String(current));
+  fill.style.width = `${(current / questions.length) * 100}%`;
+
+  qEl.textContent = q.q;
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const li  = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className = 'button secondary quiz-opt-btn';
+    btn.textContent = opt;
+    btn.dataset.idx = String(i);
+    btn.addEventListener('click', () => choose(i));
+    li.appendChild(btn);
+    optsEl.appendChild(li);
+  });
+}
+
+function choose(idx: number) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = optsEl.querySelectorAll<HTMLButtonElement>('.quiz-opt-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('opt-correct');
+    else if (i === idx) btn.classList.add('opt-wrong');
+  });
+  if (idx === q.ans) {
+    score++;
+    fbEl.textContent = '✅ Correct! ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-correct';
+  } else {
+    fbEl.textContent = '❌ ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-wrong';
+  }
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if (current >= questions.length) showResult();
+  else render();
+});
+
+function showResult() {
+  card.hidden = true;
+  counter.hidden = true;
+  result.hidden = false;
+  fill.style.width = '100%';
+  bar.setAttribute('aria-valuenow', String(questions.length));
+
+  const pct = Math.round((score / questions.length) * 100);
+  const scoreHead = document.getElementById('quiz-score-heading') as HTMLElement;
+  const scoreMsg  = document.getElementById('quiz-score-msg') as HTMLElement;
+  scoreHead.textContent = `You scored ${score} / ${questions.length} (${pct}%)`;
+  if      (pct === 100) scoreMsg.textContent = '🏆 Perfect score! Outstanding preparation on Electricity.';
+  else if (pct >= 80)   scoreMsg.textContent = '🌟 Excellent! You have strong mastery over circuit formulas and numericals.';
+  else if (pct >= 60)   scoreMsg.textContent = '👍 Good attempt. Review the formula sheet above and try again.';
+  else if (pct >= 40)   scoreMsg.textContent = '📚 Keep revising — check resistor combinations and retry.';
+  else                  scoreMsg.textContent = "💡 Don't worry! Review the concepts and give it another shot.";
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0; score = 0;
+  card.hidden = false;
+  counter.hidden = false;
+  result.hidden = true;
+  render();
+});
+
+// Circuit tabs switching
+const tabSeriesParallel = document.getElementById("tab-btn-series-parallel");
+const tabOhmsLaw = document.getElementById("tab-btn-ohms-law");
+const panelSeriesParallel = document.getElementById("panel-series-parallel");
+const panelOhmsLaw = document.getElementById("panel-ohms-law");
+
+if (tabSeriesParallel && tabOhmsLaw && panelSeriesParallel && panelOhmsLaw) {
+  tabSeriesParallel.addEventListener("click", () => {
+    tabSeriesParallel.classList.remove("secondary");
+    tabSeriesParallel.classList.add("active");
+    tabSeriesParallel.setAttribute("aria-selected", "true");
+    tabOhmsLaw.classList.add("secondary");
+    tabOhmsLaw.classList.remove("active");
+    tabOhmsLaw.setAttribute("aria-selected", "false");
+    panelSeriesParallel.hidden = false;
+    panelOhmsLaw.hidden = true;
+  });
+
+  tabOhmsLaw.addEventListener("click", () => {
+    tabOhmsLaw.classList.remove("secondary");
+    tabOhmsLaw.classList.add("active");
+    tabOhmsLaw.setAttribute("aria-selected", "true");
+    tabSeriesParallel.classList.add("secondary");
+    tabSeriesParallel.classList.remove("active");
+    tabSeriesParallel.setAttribute("aria-selected", "false");
+    panelOhmsLaw.hidden = false;
+    panelSeriesParallel.hidden = true;
+  });
+}
+
+render();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  .formula {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--brand);
+    margin: 0.4rem 0 0.6rem;
+    letter-spacing: 0.02em;
+    font-family: inherit;
+  }
+
+  /* ── Interactive Circuit Diagrams ── */
+  .rules-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .rules-tab-btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .rules-tab-btn.active {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+
+  .rule-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .rule-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .rule-diagram {
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ray-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  .rule-body {
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rule-body h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .rule-body p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── Table ── */
+  .table-wrap {
+    overflow-x: auto;
+    padding: 1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  caption {
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    color: var(--brand);
+  }
+
+  th {
+    background: var(--paper);
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--line);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.45rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* ── Quiz ── */
+  .quiz-heading {
+    margin-bottom: 0.4rem;
+  }
+
+  .quiz-progress-bar {
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+  }
+
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--brand);
+    border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+
+  .quiz-counter {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .quiz-card {
+    padding: 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .quiz-opt-btn {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    white-space: normal;
+    height: auto;
+    padding: 0.6rem 0.9rem;
+    font-weight: 500;
+  }
+
+  .opt-correct {
+    background: #d4f0de !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+  }
+
+  .opt-wrong {
+    background: #f8d7d7 !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+  }
+
+  .quiz-feedback {
+    font-size: 0.93rem;
+    min-height: 1.4rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .feedback-correct { color: var(--success); }
+  .feedback-wrong   { color: var(--danger); }
+
+  .quiz-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .quiz-result {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .quiz-result h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── CTA banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

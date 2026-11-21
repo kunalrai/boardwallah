@@ -1,0 +1,738 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Chemical Reactions and Equations | CBSE Class 10 Science | ${provider.name}`}
+  description="Complete CBSE Class 10 Chemistry chapter on Chemical Reactions and Equations. Covers balancing chemical equations, types of reactions, combination, decomposition, displacement, double displacement, redox, corrosion, rancidity, and 20-question quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Chemical Reactions
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science · Chemistry</span>
+      <h1>Chemical Reactions and Equations</h1>
+      <p class="lead">
+        Complete chapter notes, balanced equations, interactive reaction type diagrams, color-change indicators, and a 20-question quiz for CBSE Class 10 board exam preparation.
+      </p>
+    </div>
+
+    <!-- Key concepts -->
+    <section class="section">
+      <h2>Key Concepts at a Glance</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>⚗️ Characteristics of Chemical Reactions</h3>
+          <ul class="clean-list">
+            <li>A chemical reaction has taken place if there is:
+              <ul>
+                <li><strong>Change in State</strong> (e.g., H₂ (g) + O₂ (g) ⟶ H₂O (l))</li>
+                <li><strong>Change in Colour</strong> (e.g., Fe + CuSO₄ (blue) ⟶ FeSO₄ (green) + Cu (reddish-brown))</li>
+                <li><strong>Evolution of a Gas</strong> (e.g., Zn + H₂SO₄ ⟶ ZnSO₄ + H₂↑ burns with a 'pop' sound)</li>
+                <li><strong>Change in Temperature</strong> (Exothermic or Endothermic)</li>
+                <li><strong>Formation of a Precipitate</strong> (e.g., Pb(NO₃)₂ + 2KI ⟶ PbI₂↓ (yellow ppt) + 2KNO₃)</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚖️ Balanced Chemical Equations</h3>
+          <ul class="clean-list">
+            <li><strong>Law of Conservation of Mass</strong>: Mass can neither be created nor destroyed in a chemical reaction. Total mass of elements present in reactants must equal total mass in products.</li>
+            <li>Number of atoms of each element must remain equal on both sides.</li>
+            <li>Example: <strong>3Fe (s) + 4H₂O (g) ⟶ Fe₃O₄ (s) + 4H₂ (g)</strong></li>
+            <li>Physical states symbols: (s) = solid, (l) = liquid, (g) = gas, (aq) = aqueous solution in water.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔗 Combination &amp; Decomposition Reactions</h3>
+          <ul class="clean-list">
+            <li><strong>Combination Reaction</strong>: Two or more reactants combine to form a single product (A + B ⟶ AB).
+              <br/>• Quick lime to slaked lime: <strong>CaO (s) + H₂O (l) ⟶ Ca(OH)₂ (aq) + Heat</strong> (Highly exothermic).</li>
+            <li><strong>Decomposition Reaction</strong>: A single reactant breaks down into two or more simpler products (AB ⟶ A + B).
+              <ul>
+                <li><strong>Thermal Decomposition</strong>: 2FeSO₄ (green) ⟶ Fe₂O₃ (brown) + SO₂ + SO₃</li>
+                <li><strong>Photolytic Decomposition</strong>: 2AgCl (white) ⟶ 2Ag (grey) + Cl₂ (sunlight; used in black &amp; white photography)</li>
+                <li><strong>Electrolytic Decomposition</strong>: 2H₂O ⟶ 2H₂ + O₂ (volume of H₂ is double of O₂)</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔄 Displacement &amp; Double Displacement</h3>
+          <ul class="clean-list">
+            <li><strong>Displacement Reaction</strong>: A more reactive element displaces a less reactive element from its salt solution (A + BC ⟶ AC + B).
+              <br/>• <strong>Fe (s) + CuSO₄ (aq, blue) ⟶ FeSO₄ (aq, pale green) + Cu (s)</strong></li>
+            <li><strong>Double Displacement Reaction</strong>: Mutual exchange of ions between two reactants to form new compounds (AB + CD ⟶ AD + CB).
+              <br/>• <strong>Na₂SO₄ (aq) + BaCl₂ (aq) ⟶ BaSO₄ (white ppt) + 2NaCl (aq)</strong></li>
+            <li>Reactions producing an insoluble solid are called <strong>Precipitation Reactions</strong>.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔥 Exothermic &amp; Endothermic Reactions</h3>
+          <ul class="clean-list">
+            <li><strong>Exothermic Reactions</strong>: Heat is released along with product formation.
+              <ul>
+                <li>Burning of natural gas: CH₄ + 2O₂ ⟶ CO₂ + 2H₂O + Heat</li>
+                <li><strong>Respiration</strong>: C₆H₁₂O₆ + 6O₂ ⟶ 6CO₂ + 6H₂O + Energy (Exothermic process)</li>
+                <li>Decomposition of vegetable matter into compost</li>
+              </ul>
+            </li>
+            <li><strong>Endothermic Reactions</strong>: Heat energy is absorbed during the reaction.
+              <ul>
+                <li>CaCO₃ (limestone) + Heat ⟶ CaO + CO₂</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔴 Oxidation, Reduction, Corrosion &amp; Rancidity</h3>
+          <ul class="clean-list">
+            <li><strong>Oxidation</strong>: Gain of oxygen or loss of hydrogen.</li>
+            <li><strong>Reduction</strong>: Loss of oxygen or gain of hydrogen.</li>
+            <li><strong>Redox Reaction</strong>: Both oxidation and reduction occur simultaneously.
+              <br/>• <strong>CuO + H₂ ⟶ Cu + H₂O</strong> (CuO is reduced to Cu; H₂ is oxidized to H₂O).</li>
+            <li><strong>Corrosion</strong>: Gradual destruction of metals by atmospheric gases/moisture.
+              <br/>• Rusting of iron: Fe₂O₃·xH₂O (reddish-brown) | Green coating on copper | Black coating on silver (Ag₂S).</li>
+            <li><strong>Rancidity</strong>: Oxidation of fats and oils leading to unpleasant smell and taste. Prevented by antioxidants, flushing chips packets with <strong>Nitrogen gas (N₂)</strong>, and airtight containers.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Reaction Diagrams Section -->
+    <section class="section" id="visual-reactions">
+      <div class="rules-header">
+        <span class="eyebrow">Visual Chemistry Schematics</span>
+        <h2>Reaction Types &amp; Laboratory Setups</h2>
+        <p class="lead">
+          Essential experiments and observations frequently asked in CBSE board practical-based questions:
+        </p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="rules-tabs" role="tablist" aria-label="Reaction diagram categories">
+        <button class="button rules-tab-btn active" id="tab-btn-displacement" type="button" role="tab" aria-selected="true" aria-controls="panel-displacement">
+          🧪 Iron in Copper Sulphate
+        </button>
+        <button class="button secondary rules-tab-btn" id="tab-btn-electrolysis" type="button" role="tab" aria-selected="false" aria-controls="panel-electrolysis">
+          ⚡ Electrolysis of Water (2:1 Ratio)
+        </button>
+      </div>
+
+      <!-- Panel 1: Displacement -->
+      <div class="rules-panel" id="panel-displacement" role="tabpanel" aria-labelledby="tab-btn-displacement">
+        <article class="card rule-card" style="max-width:760px;margin-inline:auto">
+          <div class="rule-badge">Displacement Reaction: Fe (s) + CuSO₄ (aq) ⟶ FeSO₄ (aq) + Cu (s)</div>
+          <div class="rule-diagram">
+            <svg viewBox="0 0 460 210" class="ray-svg" aria-label="Displacement Reaction Test Tube">
+              <rect width="460" height="210" rx="8" fill="#f8fafc" />
+              <!-- Test Tube 1: Before -->
+              <rect x="70" y="30" width="45" height="120" rx="10" fill="rgba(37, 99, 235, 0.25)" stroke="#1e3a8a" stroke-width="2.5" />
+              <line x1="85" y1="50" x2="85" y2="135" stroke="#64748b" stroke-width="6" stroke-linecap="round" />
+              <text x="92" y="175" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e3a8a">Blue CuSO₄ Solution</text>
+              <text x="92" y="190" text-anchor="middle" font-size="10" fill="#64748b">Grey Iron Nail (Before)</text>
+              <!-- Reaction Arrow -->
+              <line x1="165" y1="95" x2="255" y2="95" stroke="#0f4c5c" stroke-width="3" />
+              <polygon points="265,95 250,88 250,102" fill="#0f4c5c" />
+              <text x="210" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f4c5c">After 20 mins</text>
+              <!-- Test Tube 2: After -->
+              <rect x="300" y="30" width="45" height="120" rx="10" fill="rgba(34, 197, 94, 0.25)" stroke="#15803d" stroke-width="2.5" />
+              <line x1="315" y1="50" x2="315" y2="135" stroke="#b8561c" stroke-width="7" stroke-linecap="round" />
+              <text x="322" y="175" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">Pale Green FeSO₄</text>
+              <text x="322" y="190" text-anchor="middle" font-size="10" fill="#b8561c">Brown Copper Coating</text>
+            </svg>
+          </div>
+          <div class="rule-body">
+            <h4>Key Observations for Board Exams:</h4>
+            <p>1. The blue color of copper sulphate solution fades and gradually changes to <strong>pale green</strong> due to formation of ferrous sulphate (FeSO₄).<br/>2. A <strong>reddish-brown coating of copper metal</strong> deposits on the surface of the iron nail.</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Panel 2: Electrolysis -->
+      <div class="rules-panel" id="panel-electrolysis" role="tabpanel" aria-labelledby="tab-btn-electrolysis" hidden>
+        <article class="card rule-card" style="max-width:760px;margin-inline:auto">
+          <div class="rule-badge">Electrolytic Decomposition of Water (2H₂O ⟶ 2H₂↑ + O₂↑)</div>
+          <div class="rule-diagram">
+            <svg viewBox="0 0 460 210" class="ray-svg" aria-label="Electrolysis of Water Diagram">
+              <rect width="460" height="210" rx="8" fill="#f8fafc" />
+              <!-- Water Container -->
+              <rect x="130" y="50" width="200" height="110" rx="6" fill="rgba(14, 165, 233, 0.15)" stroke="#0284c7" stroke-width="2" />
+              <!-- Cathode tube (H2 - Double Volume) -->
+              <rect x="165" y="30" width="35" height="115" rx="5" fill="#fff" stroke="#334155" stroke-width="2" />
+              <rect x="165" y="30" width="35" height="50" rx="3" fill="#e0f2fe" />
+              <text x="182" y="55" text-anchor="middle" font-size="10" font-weight="bold" fill="#0284c7">H₂ Gas</text>
+              <text x="182" y="70" text-anchor="middle" font-size="9" font-weight="bold" fill="#0284c7">(2 Vol)</text>
+              <line x1="182" y1="80" x2="182" y2="155" stroke="#334155" stroke-width="4" />
+              <!-- Anode tube (O2 - Single Volume) -->
+              <rect x="260" y="30" width="35" height="115" rx="5" fill="#fff" stroke="#334155" stroke-width="2" />
+              <rect x="260" y="30" width="35" height="25" rx="3" fill="#fef2f2" />
+              <text x="277" y="47" text-anchor="middle" font-size="10" font-weight="bold" fill="#dc2626">O₂ Gas</text>
+              <line x1="277" y1="55" x2="277" y2="155" stroke="#334155" stroke-width="4" />
+              <!-- Electrodes wiring to 6V Battery -->
+              <path d="M 182 155 L 182 185 L 210 185" stroke="#334155" stroke-width="2" fill="none" />
+              <path d="M 277 155 L 277 185 L 250 185" stroke="#334155" stroke-width="2" fill="none" />
+              <!-- Battery -->
+              <line x1="210" y1="175" x2="210" y2="195" stroke="#334155" stroke-width="2" />
+              <line x1="220" y1="170" x2="220" y2="200" stroke="#0f4c5c" stroke-width="3" />
+              <line x1="230" y1="175" x2="230" y2="195" stroke="#334155" stroke-width="2" />
+              <line x1="240" y1="170" x2="240" y2="200" stroke="#0f4c5c" stroke-width="3" />
+              <text x="170" y="200" font-size="10" font-weight="bold" fill="#334155">Cathode (−)</text>
+              <text x="290" y="200" font-size="10" font-weight="bold" fill="#dc2626">Anode (+)</text>
+            </svg>
+          </div>
+          <div class="rule-body">
+            <h4>Why Hydrogen Volume is Twice that of Oxygen:</h4>
+            <p>Water molecule contains 2 atoms of Hydrogen for every 1 atom of Oxygen (H₂O). During electrolysis, <strong>Hydrogen gas is collected at the Cathode (−)</strong> and <strong>Oxygen gas is collected at the Anode (+)</strong> in a <strong>2:1 volume ratio</strong>.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="section quiz-root" id="quiz-root">
+      <h2 class="quiz-heading">🧪 Chemical Reactions Chapter Quiz — 20 Board Questions</h2>
+      <p class="muted" style="margin-bottom:1.5rem">Practice with high-yield balancing, reaction identification, and observation-based board exam questions.</p>
+
+      <div class="quiz-progress-bar" id="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+      <p class="quiz-counter" id="quiz-counter">Question 1 of 20</p>
+
+      <div class="quiz-card card" id="quiz-card">
+        <p class="quiz-question" id="quiz-question"></p>
+        <ul class="quiz-options" id="quiz-options"></ul>
+        <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+        <div class="quiz-actions">
+          <button class="button" id="quiz-next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="quiz-result card" id="quiz-result" hidden>
+        <h3 id="quiz-score-heading"></h3>
+        <p id="quiz-score-msg"></p>
+        <div class="actions" style="justify-content:center;margin-top:1rem">
+          <button class="button secondary" id="quiz-retry">↺ Try Again</button>
+          <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized help with Chemistry balancing &amp; reactions?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at home) for CBSE Class 10 board preparation.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script>
+const questions = [
+  {
+    q: "Before burning in air, a magnesium ribbon is cleaned by rubbing with sandpaper to:",
+    opts: [
+      "Make the ribbon shiny",
+      "Remove the protective basic layer of magnesium oxide from its surface",
+      "Remove moisture from the ribbon surface",
+      "Decrease the ignition temperature of magnesium"
+    ],
+    ans: 1,
+    exp: "Magnesium ribbon reacts slowly with atmospheric oxygen to form a thin white coating of basic magnesium oxide (MgO), which must be rubbed off so it burns smoothly in air."
+  },
+  {
+    q: "When quick lime (CaO) reacts vigorously with water to produce slaked lime (Ca(OH)₂), the reaction is classified as:",
+    opts: [
+      "Combination and Endothermic",
+      "Combination and Exothermic",
+      "Decomposition and Exothermic",
+      "Displacement and Endothermic"
+    ],
+    ans: 1,
+    exp: "CaO + H₂O ⟶ Ca(OH)₂ + Heat. Two reactants form a single product (Combination) and a large amount of heat is liberated (Exothermic)."
+  },
+  {
+    q: "Which gas is evolved when zinc granules react with dilute sulphuric acid?",
+    opts: ["Sulphur dioxide (SO₂)", "Hydrogen gas (H₂)", "Oxygen gas (O₂)", "Hydrogen sulphide (H₂S)"],
+    ans: 1,
+    exp: "Zn + H₂SO₄ ⟶ ZnSO₄ + H₂↑. Hydrogen gas burns with a characteristic 'pop' sound."
+  },
+  {
+    q: "The balanced chemical equation for the reaction of iron with steam is:",
+    opts: [
+      "Fe + H₂O ⟶ FeO + H₂",
+      "2Fe + 3H₂O ⟶ Fe₂O₃ + 3H₂",
+      "3Fe + 4H₂O ⟶ Fe₃O₄ + 4H₂",
+      "Fe + 2H₂O ⟶ Fe(OH)₂ + H₂"
+    ],
+    ans: 2,
+    exp: "3Fe (s) + 4H₂O (g) ⟶ Fe₃O₄ (s) + 4H₂ (g) is the balanced equation conforming to conservation of mass."
+  },
+  {
+    q: "Ferrous sulphate crystals (FeSO₄·7H₂O) on heating lose water of crystallization and decompose to produce Fe₂O₃, SO₂ and SO₃. The color changes from:",
+    opts: ["Green to white, then to reddish-brown", "Blue to green", "Colourless to yellow", "White to green"],
+    ans: 0,
+    exp: "Green hydrated crystals lose water to become anhydrous white FeSO₄, which then thermally decomposes into reddish-brown Fe₂O₃ and suffocating SO₂ + SO₃ gases."
+  },
+  {
+    q: "A white substance used in black and white photography decomposes in sunlight into grey metal and gas. This substance is:",
+    opts: ["Silver chloride (AgCl)", "Silver nitrate (AgNO₃)", "Lead nitrate (Pb(NO₃)₂)", "Copper sulphate (CuSO₄)"],
+    ans: 0,
+    exp: "2AgCl (white) ⟶ 2Ag (grey) + Cl₂ (photolytic decomposition under sunlight)."
+  },
+  {
+    q: "During the electrolysis of water, the volume of gas collected at the cathode is:",
+    opts: [
+      "Equal to the volume at the anode",
+      "Twice the volume collected at the anode",
+      "Half the volume collected at the anode",
+      "Four times the volume at the anode"
+    ],
+    ans: 1,
+    exp: "Water contains 2 atoms of H per 1 atom of O (2H₂O ⟶ 2H₂ + O₂). Hydrogen is collected at the cathode with twice the volume of oxygen at the anode."
+  },
+  {
+    q: "When an iron nail is placed in blue copper sulphate solution, after 20 minutes the solution turns:",
+    opts: ["Dark blue", "Colourless", "Pale green", "Yellow"],
+    ans: 2,
+    exp: "Fe displaces Cu to form FeSO₄ (pale green solution), and a reddish-brown layer of copper deposits on the nail."
+  },
+  {
+    q: "On adding barium chloride solution to sodium sulphate solution, a white precipitate is formed. The precipitate is:",
+    opts: ["Sodium chloride", "Barium sulphate (BaSO₄)", "Barium sulphite", "Sodium sulphite"],
+    ans: 1,
+    exp: "Na₂SO₄ (aq) + BaCl₂ (aq) ⟶ BaSO₄↓ (white precipitate) + 2NaCl (aq). This is a double displacement precipitation reaction."
+  },
+  {
+    q: "In the reaction: CuO + H₂ ⟶ Cu + H₂O, which substance is oxidised and which is reduced?",
+    opts: [
+      "CuO is oxidised, H₂ is reduced",
+      "H₂ is oxidised, CuO is reduced",
+      "Cu is oxidised, H₂O is reduced",
+      "Both are oxidised"
+    ],
+    ans: 1,
+    exp: "H₂ gains oxygen to form H₂O (oxidation); CuO loses oxygen to form Cu (reduction)."
+  },
+  {
+    q: "Respiration is considered an exothermic reaction because:",
+    opts: [
+      "Oxygen is absorbed",
+      "Glucose combines with oxygen in cells and releases energy",
+      "Carbon dioxide is taken in",
+      "It requires high heat input"
+    ],
+    ans: 1,
+    exp: "C₆H₁₂O₆ + 6O₂ ⟶ 6CO₂ + 6H₂O + Energy. Energy is released to power cellular life, making respiration exothermic."
+  },
+  {
+    q: "When lead nitrate powder is heated in a boiling tube, brown fumes are evolved. These brown fumes are of:",
+    opts: ["Oxygen (O₂)", "Nitrogen dioxide (NO₂)", "Lead oxide (PbO)", "Nitrogen gas (N₂)"],
+    ans: 1,
+    exp: "2Pb(NO₃)₂ ⟶ 2PbO (yellow residue) + 4NO₂↑ (brown fumes) + O₂↑."
+  },
+  {
+    q: "The green coating formed on copper articles when exposed to moist air for a long time consists of:",
+    opts: ["Copper oxide", "Basic copper carbonate (CuCO₃·Cu(OH)₂)", "Copper sulphate", "Copper chloride"],
+    ans: 1,
+    exp: "Copper reacts with moist CO₂ in the air to form a green protective coating of basic copper carbonate."
+  },
+  {
+    q: "Bags of potato chips are flushed with an inert gas to prevent rancidity. That gas is:",
+    opts: ["Oxygen", "Nitrogen", "Chlorine", "Hydrogen"],
+    ans: 1,
+    exp: "Nitrogen is an unreactive inert gas that prevents oils and fats from getting oxidized (rancid)."
+  },
+  {
+    q: "A substance 'X' used for white-washing is obtained by heating limestone in the absence of air. 'X' is:",
+    opts: ["Calcium carbonate (CaCO₃)", "Calcium oxide (CaO)", "Calcium hydroxide (Ca(OH)₂)", "Calcium sulphate"],
+    ans: 1,
+    exp: "Limestone (CaCO₃) decomposes into quick lime (CaO, 'X') + CO₂. When mixed with water, CaO forms slaked lime Ca(OH)₂ for white-washing."
+  },
+  {
+    q: "Slaked lime Ca(OH)₂ applied to walls slowly reacts with CO₂ in air to form a thin shiny layer of:",
+    opts: ["Calcium oxide", "Calcium carbonate (CaCO₃)", "Calcium hydrogen carbonate", "Calcium nitrate"],
+    ans: 1,
+    exp: "Ca(OH)₂ + CO₂ ⟶ CaCO₃ + H₂O. Calcium carbonate gives a shiny white finish to walls after 2 to 3 days."
+  },
+  {
+    q: "Which of the following is an example of an endothermic reaction?",
+    opts: [
+      "Burning of natural gas",
+      "Decomposition of calcium carbonate into quicklime and carbon dioxide",
+      "Reaction of water with quicklime",
+      "Rusting of iron"
+    ],
+    ans: 1,
+    exp: "Thermal decomposition of CaCO₃ requires continuous absorption of heat energy, making it an endothermic reaction."
+  },
+  {
+    q: "In the reaction: MnO₂ + 4HCl ⟶ MnCl₂ + 2H₂O + Cl₂, the substance acting as the reducing agent is:",
+    opts: ["MnO₂", "HCl", "MnCl₂", "Cl₂"],
+    ans: 1,
+    exp: "HCl loses hydrogen to form Cl₂ (it is oxidized); hence HCl acts as the reducing agent."
+  },
+  {
+    q: "Rusting of iron requires the simultaneous presence of:",
+    opts: ["Only oxygen", "Only water", "Both oxygen and moisture (water)", "Only nitrogen"],
+    ans: 2,
+    exp: "Iron rusts to form hydrated iron(III) oxide (Fe₂O₃·xH₂O) only when both oxygen and moisture are present."
+  },
+  {
+    q: "When potassium iodide (KI) solution is added to lead nitrate (Pb(NO₃)₂) solution, the color of the precipitate formed is:",
+    opts: ["White", "Yellow", "Blue", "Black"],
+    ans: 1,
+    exp: "Pb(NO₃)₂ + 2KI ⟶ PbI₂↓ (bright yellow precipitate) + 2KNO₃."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qEl     = document.getElementById('quiz-question') as HTMLElement;
+const optsEl  = document.getElementById('quiz-options') as HTMLElement;
+const fbEl    = document.getElementById('quiz-feedback') as HTMLElement;
+const nextBtn = document.getElementById('quiz-next') as HTMLButtonElement;
+const counter = document.getElementById('quiz-counter') as HTMLElement;
+const fill    = document.getElementById('quiz-progress-fill') as HTMLElement;
+const bar     = document.getElementById('quiz-progress-bar') as HTMLElement;
+const result  = document.getElementById('quiz-result') as HTMLElement;
+const card    = document.getElementById('quiz-card') as HTMLElement;
+const retryBtn = document.getElementById('quiz-retry') as HTMLElement;
+
+function render() {
+  answered = false;
+  nextBtn.disabled = true;
+  fbEl.textContent = '';
+  fbEl.className = 'quiz-feedback';
+
+  const q = questions[current];
+  counter.textContent = `Question ${current + 1} of ${questions.length}`;
+  bar.setAttribute('aria-valuenow', String(current));
+  fill.style.width = `${(current / questions.length) * 100}%`;
+
+  qEl.textContent = q.q;
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const li  = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className = 'button secondary quiz-opt-btn';
+    btn.textContent = opt;
+    btn.dataset.idx = String(i);
+    btn.addEventListener('click', () => choose(i));
+    li.appendChild(btn);
+    optsEl.appendChild(li);
+  });
+}
+
+function choose(idx: number) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = optsEl.querySelectorAll<HTMLButtonElement>('.quiz-opt-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('opt-correct');
+    else if (i === idx) btn.classList.add('opt-wrong');
+  });
+  if (idx === q.ans) {
+    score++;
+    fbEl.textContent = '✅ Correct! ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-correct';
+  } else {
+    fbEl.textContent = '❌ ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-wrong';
+  }
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if (current >= questions.length) showResult();
+  else render();
+});
+
+function showResult() {
+  card.hidden = true;
+  counter.hidden = true;
+  result.hidden = false;
+  fill.style.width = '100%';
+  bar.setAttribute('aria-valuenow', String(questions.length));
+
+  const pct = Math.round((score / questions.length) * 100);
+  const scoreHead = document.getElementById('quiz-score-heading') as HTMLElement;
+  const scoreMsg  = document.getElementById('quiz-score-msg') as HTMLElement;
+  scoreHead.textContent = `You scored ${score} / ${questions.length} (${pct}%)`;
+  if      (pct === 100) scoreMsg.textContent = '🏆 Perfect score! Masterful preparation on Chemical Reactions & Equations.';
+  else if (pct >= 80)   scoreMsg.textContent = '🌟 Excellent! Strong command over reaction types and balancing.';
+  else if (pct >= 60)   scoreMsg.textContent = '👍 Good attempt. Review the observations and color changes and retry.';
+  else if (pct >= 40)   scoreMsg.textContent = '📚 Keep revising — check displacement and decomposition reactions and try again.';
+  else                  scoreMsg.textContent = "💡 Don't worry! Review the key concepts and give it another shot.";
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0; score = 0;
+  card.hidden = false;
+  counter.hidden = false;
+  result.hidden = true;
+  render();
+});
+
+// Tab switching
+const tabDisplacement = document.getElementById("tab-btn-displacement");
+const tabElectrolysis = document.getElementById("tab-btn-electrolysis");
+const panelDisplacement = document.getElementById("panel-displacement");
+const panelElectrolysis = document.getElementById("panel-electrolysis");
+
+function activateTab(activeBtn: HTMLElement, activePanel: HTMLElement) {
+  [tabDisplacement, tabElectrolysis].forEach((btn) => {
+    if (btn) {
+      btn.classList.add("secondary");
+      btn.classList.remove("active");
+      btn.setAttribute("aria-selected", "false");
+    }
+  });
+  [panelDisplacement, panelElectrolysis].forEach((p) => {
+    if (p) p.hidden = true;
+  });
+  activeBtn.classList.remove("secondary");
+  activeBtn.classList.add("active");
+  activeBtn.setAttribute("aria-selected", "true");
+  activePanel.hidden = false;
+}
+
+if (tabDisplacement && panelDisplacement) tabDisplacement.addEventListener("click", () => activateTab(tabDisplacement, panelDisplacement));
+if (tabElectrolysis && panelElectrolysis) tabElectrolysis.addEventListener("click", () => activateTab(tabElectrolysis, panelElectrolysis));
+
+render();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  /* ── Interactive Diagrams ── */
+  .rules-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .rules-tab-btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .rules-tab-btn.active {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+
+  .rule-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .rule-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .rule-diagram {
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ray-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  .rule-body {
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rule-body h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .rule-body p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── Quiz ── */
+  .quiz-heading {
+    margin-bottom: 0.4rem;
+  }
+
+  .quiz-progress-bar {
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+  }
+
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--brand);
+    border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+
+  .quiz-counter {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .quiz-card {
+    padding: 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .quiz-opt-btn {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    white-space: normal;
+    height: auto;
+    padding: 0.6rem 0.9rem;
+    font-weight: 500;
+  }
+
+  .opt-correct {
+    background: #d4f0de !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+  }
+
+  .opt-wrong {
+    background: #f8d7d7 !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+  }
+
+  .quiz-feedback {
+    font-size: 0.93rem;
+    min-height: 1.4rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .feedback-correct { color: var(--success); }
+  .feedback-wrong   { color: var(--danger); }
+
+  .quiz-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .quiz-result {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .quiz-result h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── CTA banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

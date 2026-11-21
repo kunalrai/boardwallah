@@ -1,0 +1,754 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Acids, Bases and Salts | CBSE Class 10 Science | ${provider.name}`}
+  description="Complete CBSE Class 10 Chemistry chapter on Acids, Bases and Salts. Covers chemical properties, indicators, pH scale, neutralization, chlor-alkali process, bleaching powder, baking soda, washing soda, plaster of Paris, and 20-question quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Acids, Bases &amp; Salts
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science · Chemistry</span>
+      <h1>Acids, Bases and Salts</h1>
+      <p class="lead">
+        Comprehensive revision notes, pH scale diagrams, chlor-alkali process chemistry, commercial salts formulas, and an interactive 20-question board quiz.
+      </p>
+    </div>
+
+    <!-- Key concepts -->
+    <section class="section">
+      <h2>Key Concepts at a Glance</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🍋 Acids &amp; Bases Definitions &amp; Indicators</h3>
+          <ul class="clean-list">
+            <li><strong>Acids</strong>: Sour in taste, turn blue litmus red, furnish <strong>H⁺ (aq) or H₃O⁺ (hydronium) ions</strong> in water. (e.g., HCl, H₂SO₄, CH₃COOH).</li>
+            <li><strong>Bases</strong>: Bitter in taste, soapy to touch, turn red litmus blue, furnish <strong>OH⁻ (hydroxide) ions</strong> in water. Bases soluble in water are called <strong>Alkalis</strong> (e.g., NaOH, KOH).</li>
+            <li><strong>Indicators Table</strong>:
+              <ul>
+                <li>Litmus: Red in acid, Blue in base</li>
+                <li>Methyl Orange: Red/Pink in acid, Yellow in base</li>
+                <li>Phenolphthalein: Colourless in acid, Pink in base</li>
+                <li>Olfactory Indicators (Clove oil, Vanilla, Onion): Retain characteristic odor in acid; lose smell in basic medium.</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚡ Chemical Properties of Acids &amp; Bases</h3>
+          <ul class="clean-list">
+            <li><strong>Reaction with Metals</strong>:
+              <br/>Acid + Metal ⟶ Salt + H₂↑ (e.g., Zn + 2HCl ⟶ ZnCl₂ + H₂↑)
+              <br/>Base + Metal ⟶ Salt + H₂↑ (e.g., 2NaOH + Zn ⟶ <strong>Na₂ZnO₂ (Sodium zincate)</strong> + H₂↑)</li>
+            <li><strong>Reaction with Carbonates &amp; Bicarbonates</strong>:
+              <br/>Acid + Metal Carbonate ⟶ Salt + CO₂↑ + H₂O
+              <br/>• Test for CO₂: Turns lime water milky (forming CaCO₃ ppt); excess CO₂ makes milkiness disappear due to soluble Ca(HCO₃)₂.</li>
+            <li><strong>Neutralisation Reaction</strong>:
+              <br/>Acid + Base ⟶ Salt + Water (e.g., HCl + NaOH ⟶ NaCl + H₂O). Exothermic!</li>
+            <li>Metallic oxides are <strong>basic</strong>; Non-metallic oxides are <strong>acidic</strong>.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📊 The pH Scale &amp; Daily Life Importance</h3>
+          <ul class="clean-list">
+            <li><strong>pH Scale</strong>: Measures hydrogen ion concentration [H⁺]. Range 0 to 14.
+              <ul>
+                <li>pH &lt; 7: Acidic (lower pH = stronger acid)</li>
+                <li>pH = 7: Neutral (Pure water, neutral salts)</li>
+                <li>pH &gt; 7: Basic (higher pH = stronger base)</li>
+              </ul>
+            </li>
+            <li><strong>Importance in Daily Life</strong>:
+              <ul>
+                <li>Human body functions best between <strong>pH 7.0 – 7.8</strong>.</li>
+                <li><strong>Acid Rain</strong>: Rainwater with pH &lt; 5.6.</li>
+                <li><strong>Tooth Decay</strong>: Starts when mouth pH falls below <strong>5.5</strong> (bacteria degrade sugars to acid, corroding enamel).</li>
+                <li><strong>Stomach Acidity</strong>: Excess HCl causes irritation; relieved by antacids like <strong>Milk of Magnesia (Mg(OH)₂)</strong> or NaHCO₃.</li>
+                <li>Bee sting injects methanoic acid (relieved by baking soda); Wasp sting is alkaline (relieved by vinegar).</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🧂 Sodium Hydroxide &amp; Chlor-Alkali Process</h3>
+          <ul class="clean-list">
+            <li>When electricity is passed through brine (concentrated aqueous NaCl solution), it decomposes:
+              <br/><strong>2NaCl (aq) + 2H₂O (l) ⟶ 2NaOH (aq) + Cl₂ (g) + H₂ (g)</strong></li>
+            <li><strong>Products &amp; Locations</strong>:
+              <ul>
+                <li><strong>Chlorine gas (Cl₂)</strong> is released at the <strong>Anode (+)</strong>: Used in water treatment, PVC, pesticides.</li>
+                <li><strong>Hydrogen gas (H₂)</strong> is released at the <strong>Cathode (−)</strong>: Used as fuel, margarine, ammonia for fertilizers.</li>
+                <li><strong>Sodium hydroxide (NaOH)</strong> forms near the cathode: Used for de-greasing metals, soaps, detergents, paper making.</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🧼 Baking Soda &amp; Washing Soda</h3>
+          <ul class="clean-list">
+            <li><strong>Baking Soda (Sodium Hydrogen Carbonate - NaHCO₃)</strong>:
+              <br/>• Preparation: NaCl + H₂O + CO₂ + NH₃ ⟶ NH₄Cl + NaHCO₃
+              <br/>• On heating: 2NaHCO₃ ⟶ Na₂CO₃ + H₂O + CO₂↑ (CO₂ makes cakes fluffy and spongy).
+              <br/>• <strong>Baking Powder</strong> is a mixture of baking soda and mild edible acid (tartaric acid).</li>
+            <li><strong>Washing Soda (Na₂CO₃·10H₂O)</strong>:
+              <br/>• Sodium carbonate decahydrate. Obtained by recrystallization of sodium carbonate.
+              <br/>• Uses: Removing permanent hardness of water, glass, soap, and paper industries.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🩹 Bleaching Powder &amp; Plaster of Paris</h3>
+          <ul class="clean-list">
+            <li><strong>Bleaching Powder (CaOCl₂)</strong>:
+              <br/>• Prepared by passing chlorine gas over dry slaked lime:
+              <br/><strong>Ca(OH)₂ + Cl₂ ⟶ CaOCl₂ + H₂O</strong>
+              <br/>• Uses: Bleaching cotton/linen, disinfectant for drinking water, oxidising agent.</li>
+            <li><strong>Plaster of Paris (CaSO₄·½H₂O)</strong>:
+              <br/>• Prepared by heating gypsum at 373 K (100°C):
+              <br/><strong>CaSO₄·2H₂O ⟶ CaSO₄·½H₂O + 1½H₂O</strong>
+              <br/>• On mixing with water, it sets into a hard solid mass (gypsum):
+              <br/>CaSO₄·½H₂O + 1½H₂O ⟶ CaSO₄·2H₂O
+              <br/>• Uses: Supporting fractured bones, making toys, statues, and smooth ceiling finishes.</li>
+            <li><strong>Water of Crystallization</strong>: Fixed number of water molecules chemically bonded in one formula unit (e.g., CuSO₄·5H₂O is blue; turns white on heating).</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section" id="visual-ph">
+      <div class="rules-header">
+        <span class="eyebrow">Interactive Visual Schematics</span>
+        <h2>pH Scale &amp; The Chlor-Alkali Cell</h2>
+        <p class="lead">
+          Visual guides for understanding acidity, alkalinity, and industrial electrolytic reactions:
+        </p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="rules-tabs" role="tablist" aria-label="Acids bases diagrams">
+        <button class="button rules-tab-btn active" id="tab-btn-ph" type="button" role="tab" aria-selected="true" aria-controls="panel-ph">
+          📊 Universal Indicator pH Scale
+        </button>
+        <button class="button secondary rules-tab-btn" id="tab-btn-chloralkali" type="button" role="tab" aria-selected="false" aria-controls="panel-chloralkali">
+          ⚡ Chlor-Alkali Membrane Cell
+        </button>
+      </div>
+
+      <!-- Panel 1: pH Scale -->
+      <div class="rules-panel" id="panel-ph" role="tabpanel" aria-labelledby="tab-btn-ph">
+        <article class="card rule-card" style="max-width:760px;margin-inline:auto">
+          <div class="rule-badge">The pH Spectrum: From Strongly Acidic to Strongly Alkaline</div>
+          <div class="rule-diagram">
+            <svg viewBox="0 0 500 200" class="ray-svg" aria-label="pH Scale Diagram">
+              <rect width="500" height="200" rx="8" fill="#f8fafc" />
+              <!-- pH Spectrum Bar -->
+              <defs>
+                <linearGradient id="phGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ef4444" />
+                  <stop offset="25%" stop-color="#f97316" />
+                  <stop offset="50%" stop-color="#22c55e" />
+                  <stop offset="75%" stop-color="#3b82f6" />
+                  <stop offset="100%" stop-color="#6b21a8" />
+                </linearGradient>
+              </defs>
+              <rect x="30" y="70" width="440" height="40" rx="6" fill="url(#phGrad)" stroke="#334155" stroke-width="2" />
+              <!-- Numbers & Ticks -->
+              <text x="35" y="60" font-size="11" font-weight="bold" fill="#dc2626">0</text>
+              <text x="135" y="60" font-size="11" font-weight="bold" fill="#ea580c">3</text>
+              <text x="250" y="60" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">7 (Neutral)</text>
+              <text x="365" y="60" font-size="11" font-weight="bold" fill="#2563eb">11</text>
+              <text x="460" y="60" font-size="11" font-weight="bold" fill="#6b21a8">14</text>
+              <!-- Arrow Indicators -->
+              <line x1="240" y1="130" x2="40" y2="130" stroke="#dc2626" stroke-width="2.5" />
+              <polygon points="30,130 45,124 45,136" fill="#dc2626" />
+              <text x="140" y="148" text-anchor="middle" font-size="11" font-weight="bold" fill="#dc2626">Increasing Acidic Nature [H⁺]</text>
+
+              <line x1="260" y1="130" x2="460" y2="130" stroke="#2563eb" stroke-width="2.5" />
+              <polygon points="470,130 455,124 455,136" fill="#2563eb" />
+              <text x="360" y="148" text-anchor="middle" font-size="11" font-weight="bold" fill="#2563eb">Increasing Basic Nature [OH⁻]</text>
+              <!-- Common Subtances -->
+              <text x="40" y="180" font-size="10" fill="#64748b">Gastric juice (~1.2)</text>
+              <text x="135" y="180" font-size="10" fill="#64748b">Lemon juice (~2.2)</text>
+              <text x="225" y="180" font-size="10" fill="#64748b">Pure water / Blood (~7.4)</text>
+              <text x="360" y="180" font-size="10" fill="#64748b">Milk of magnesia (10)</text>
+              <text x="440" y="180" font-size="10" fill="#64748b">1M NaOH (14)</text>
+            </svg>
+          </div>
+          <div class="rule-body">
+            <h4>Universal Indicator &amp; pH Range:</h4>
+            <p>A lower pH signifies a higher concentration of hydronium ions (H₃O⁺). Strong acids like HCl have a pH around 0 to 1, while strong bases like NaOH have a pH around 13 to 14. Neutral pure water has a pH of 7.</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Panel 2: Chlor-Alkali -->
+      <div class="rules-panel" id="panel-chloralkali" role="tabpanel" aria-labelledby="tab-btn-chloralkali" hidden>
+        <article class="card rule-card" style="max-width:760px;margin-inline:auto">
+          <div class="rule-badge">Industrial Chlor-Alkali Electrolysis Cell</div>
+          <div class="rule-diagram">
+            <svg viewBox="0 0 460 210" class="ray-svg" aria-label="Chlor Alkali Cell Diagram">
+              <rect width="460" height="210" rx="8" fill="#f8fafc" />
+              <!-- Outer tank -->
+              <rect x="60" y="40" width="340" height="130" rx="6" fill="rgba(14, 165, 233, 0.12)" stroke="#0284c7" stroke-width="2" />
+              <!-- Membrane divider in middle -->
+              <line x1="230" y1="40" x2="230" y2="170" stroke="#64748b" stroke-width="2.5" stroke-dasharray="4 4" />
+              <text x="230" y="32" text-anchor="middle" font-size="10" font-weight="bold" fill="#64748b">Semi-permeable Membrane</text>
+              <!-- Anode (+) side -->
+              <rect x="120" y="60" width="20" height="90" fill="#dc2626" rx="3" />
+              <text x="130" y="168" text-anchor="middle" font-size="11" font-weight="bold" fill="#dc2626">Anode (+)</text>
+              <text x="130" y="90" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">Cl₂</text>
+              <path d="M 130 50 L 130 15" stroke="#dc2626" stroke-width="2" />
+              <text x="130" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#dc2626">Cl₂ Gas Out ↑</text>
+              <!-- Cathode (-) side -->
+              <rect x="320" y="60" width="20" height="90" fill="#2563eb" rx="3" />
+              <text x="330" y="168" text-anchor="middle" font-size="11" font-weight="bold" fill="#2563eb">Cathode (−)</text>
+              <text x="330" y="90" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">H₂</text>
+              <path d="M 330 50 L 330 15" stroke="#2563eb" stroke-width="2" />
+              <text x="330" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#2563eb">H₂ Gas Out ↑</text>
+              <!-- NaOH formation near cathode -->
+              <text x="280" y="130" font-size="11" font-weight="bold" fill="#0f4c5c">NaOH (aq) formed</text>
+              <text x="75" y="100" font-size="10" font-weight="bold" fill="#0284c7">Brine in</text>
+              <text x="75" y="115" font-size="10" fill="#64748b">(NaCl + H₂O)</text>
+            </svg>
+          </div>
+          <div class="rule-body">
+            <h4>Three Valuable Industrial Products:</h4>
+            <p>1. <strong>Chlorine (Cl₂) at Anode (+)</strong>: Water disinfection, bleaching.<br/>2. <strong>Hydrogen (H₂) at Cathode (−)</strong>: Clean fuel, margarine, ammonia synthesis.<br/>3. <strong>Sodium Hydroxide (NaOH) near Cathode</strong>: Soap manufacturing, paper industry.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="section quiz-root" id="quiz-root">
+      <h2 class="quiz-heading">🧪 Acids, Bases &amp; Salts Chapter Quiz — 20 Board Questions</h2>
+      <p class="muted" style="margin-bottom:1.5rem">Practice with high-yield board questions on indicators, pH calculations, neutralization, and industrial salts.</p>
+
+      <div class="quiz-progress-bar" id="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+      <p class="quiz-counter" id="quiz-counter">Question 1 of 20</p>
+
+      <div class="quiz-card card" id="quiz-card">
+        <p class="quiz-question" id="quiz-question"></p>
+        <ul class="quiz-options" id="quiz-options"></ul>
+        <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+        <div class="quiz-actions">
+          <button class="button" id="quiz-next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="quiz-result card" id="quiz-result" hidden>
+        <h3 id="quiz-score-heading"></h3>
+        <p id="quiz-score-msg"></p>
+        <div class="actions" style="justify-content:center;margin-top:1rem">
+          <button class="button secondary" id="quiz-retry">↺ Try Again</button>
+          <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized help with Acids, Bases &amp; Salts?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at home) for CBSE Class 10 board preparation.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script>
+const questions = [
+  {
+    q: "Which of the following statements about acids is correct?",
+    opts: [
+      "Acids turn red litmus blue and furnish OH⁻ ions",
+      "Acids turn blue litmus red and furnish H⁺ (or H₃O⁺) ions in aqueous solution",
+      "Acids have a bitter taste and pH greater than 7",
+      "Acids do not conduct electricity in water"
+    ],
+    ans: 1,
+    exp: "Acids turn blue litmus red and produce hydrogen ions (H⁺ or H₃O⁺) in water, having a pH < 7."
+  },
+  {
+    q: "What color does phenolphthalein indicator turn in a basic solution like sodium hydroxide?",
+    opts: ["Colourless", "Pink", "Yellow", "Red"],
+    ans: 1,
+    exp: "Phenolphthalein is colourless in acidic and neutral solutions, but turns distinct pink in basic solutions."
+  },
+  {
+    q: "When an acid reacts with a metal, the gas evolved burns with a pop sound. This gas is:",
+    opts: ["Oxygen", "Carbon dioxide", "Hydrogen", "Nitrogen dioxide"],
+    ans: 2,
+    exp: "Acid + Metal ⟶ Salt + Hydrogen gas (H₂). Hydrogen burns with a pop sound."
+  },
+  {
+    q: "The chemical formula of Sodium Zincate formed when zinc reacts with sodium hydroxide is:",
+    opts: ["NaZnO₂", "Na₂ZnO₂", "NaZn₂O", "Na₂ZnO"],
+    ans: 1,
+    exp: "2NaOH + Zn ⟶ Na₂ZnO₂ (Sodium zincate) + H₂↑."
+  },
+  {
+    q: "When carbon dioxide gas is passed through lime water, it turns milky due to the formation of:",
+    opts: ["Calcium hydrogen carbonate", "Calcium carbonate (CaCO₃)", "Calcium oxide", "Calcium hydroxide"],
+    ans: 1,
+    exp: "Ca(OH)₂ + CO₂ ⟶ CaCO₃↓ (insoluble white precipitate) + H₂O. Excess CO₂ forms soluble Ca(HCO₃)₂, clearing the milkiness."
+  },
+  {
+    q: "A solution turns red litmus blue. Its pH is likely to be:",
+    opts: ["1", "4", "5", "10"],
+    ans: 3,
+    exp: "Turning red litmus blue indicates a basic solution with pH > 7 (i.e. pH 10)."
+  },
+  {
+    q: "Tooth decay starts when the pH of the mouth falls below:",
+    opts: ["7.0", "6.5", "5.5", "8.0"],
+    ans: 2,
+    exp: "Tooth enamel made of calcium hydroxyapatite corrodes when oral pH drops below 5.5 due to acid produced by bacterial fermentation of sugar."
+  },
+  {
+    q: "An antacid commonly used to relieve acidity in the stomach is:",
+    opts: ["Sodium hydroxide", "Magnesium hydroxide (Milk of Magnesia)", "Calcium chloride", "Hydrochloric acid"],
+    ans: 1,
+    exp: "Milk of Magnesia (Mg(OH)₂) is a mild base that neutralizes excess gastric HCl without harming tissue."
+  },
+  {
+    q: "Nettle leaf sting injects which acid into the skin, causing burning pain?",
+    opts: ["Acetic acid", "Methanoic acid (Formic acid)", "Citric acid", "Tartaric acid"],
+    ans: 1,
+    exp: "Nettle stings inject methanoic acid (HCOOH). Traditional remedy is rubbing dock plant leaves (basic)."
+  },
+  {
+    q: "In the Chlor-Alkali process for the electrolysis of brine, which gas is released at the anode (+)?",
+    opts: ["Hydrogen (H₂)", "Chlorine (Cl₂)", "Oxygen (O₂)", "Nitrogen (N₂)"],
+    ans: 1,
+    exp: "At the positive anode, 2Cl⁻ lose electrons to form Chlorine gas (Cl₂). Hydrogen gas forms at the cathode (−)."
+  },
+  {
+    q: "The chemical formula of Bleaching Powder is:",
+    opts: ["CaCl₂", "CaOCl₂", "Ca(ClO)₂", "CaCO₃"],
+    ans: 1,
+    exp: "Bleaching powder is calcium oxychloride, CaOCl₂, produced by reacting dry slaked lime with chlorine: Ca(OH)₂ + Cl₂ ⟶ CaOCl₂ + H₂O."
+  },
+  {
+    q: "The chemical name and formula of Baking Soda is:",
+    opts: [
+      "Sodium carbonate decahydrate (Na₂CO₃·10H₂O)",
+      "Sodium hydrogen carbonate (NaHCO₃)",
+      "Sodium chloride (NaCl)",
+      "Calcium hydrogen carbonate (Ca(HCO₃)₂)"
+    ],
+    ans: 1,
+    exp: "Baking soda is sodium hydrogen carbonate, NaHCO₃."
+  },
+  {
+    q: "Why is tartaric acid added to baking soda to make Baking Powder?",
+    opts: [
+      "To produce more hydrogen",
+      "To neutralize sodium carbonate formed during baking and remove its bitter taste",
+      "To change the color of the cake",
+      "To act as a preservative"
+    ],
+    ans: 1,
+    exp: "When heated, NaHCO₃ produces alkaline Na₂CO₃ which tastes bitter. Tartaric acid neutralizes it, leaving an edible pleasant salt."
+  },
+  {
+    q: "Which compound is used for removing permanent hardness of water?",
+    opts: ["Baking soda", "Washing soda (Na₂CO₃·10H₂O)", "Bleaching powder", "Plaster of Paris"],
+    ans: 1,
+    exp: "Washing soda precipitates dissolved calcium and magnesium ions as insoluble carbonates, removing permanent hardness."
+  },
+  {
+    q: "The chemical formula of Plaster of Paris is:",
+    opts: ["CaSO₄·2H₂O", "CaSO₄·½H₂O", "CaSO₄·H₂O", "2CaSO₄·H₂O"],
+    ans: 1,
+    exp: "Plaster of Paris is calcium sulphate hemihydrate, CaSO₄·½H₂O (or 2CaSO₄·H₂O)."
+  },
+  {
+    q: "What temperature should gypsum be heated to in order to produce Plaster of Paris without losing all its water?",
+    opts: ["273 K", "373 K (100°C)", "473 K", "100 K"],
+    ans: 1,
+    exp: "Gypsum is heated carefully at 373 K (100°C). Heating above this temperature creates 'dead burnt plaster' (anhydrous CaSO₄)."
+  },
+  {
+    q: "How many water molecules of crystallization are present in blue copper sulphate crystals (CuSO₄·5H₂O)?",
+    opts: ["2", "5", "7", "10"],
+    ans: 1,
+    exp: "Copper sulphate crystals have 5 water molecules of crystallization (CuSO₄·5H₂O), giving them their blue color."
+  },
+  {
+    q: "Rain is called 'acid rain' when its pH falls below:",
+    opts: ["7.0", "6.5", "5.6", "4.0"],
+    ans: 2,
+    exp: "Rainwater is classified as acid rain when its pH drops below 5.6 due to dissolved oxides of sulphur and nitrogen."
+  },
+  {
+    q: "Which of the following salts produces an acidic aqueous solution (pH < 7)?",
+    opts: ["NaCl", "Na₂CO₃", "NH₄Cl", "CH₃COONa"],
+    ans: 2,
+    exp: "NH₄Cl is the salt of a strong acid (HCl) and weak base (NH₄OH), so its aqueous solution is acidic with pH < 7."
+  },
+  {
+    q: "During the preparation of hydrogen chloride gas on a humid day, the gas is passed through a guard tube containing calcium chloride (CaCl₂) to:",
+    opts: [
+      "Absorb the evolved gas",
+      "Moisten the gas",
+      "Absorb moisture and dry the gas",
+      "Neutralize acidic fumes"
+    ],
+    ans: 2,
+    exp: "Calcium chloride (CaCl₂) is a powerful desiccating (drying) agent that absorbs moisture from the gas."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qEl     = document.getElementById('quiz-question') as HTMLElement;
+const optsEl  = document.getElementById('quiz-options') as HTMLElement;
+const fbEl    = document.getElementById('quiz-feedback') as HTMLElement;
+const nextBtn = document.getElementById('quiz-next') as HTMLButtonElement;
+const counter = document.getElementById('quiz-counter') as HTMLElement;
+const fill    = document.getElementById('quiz-progress-fill') as HTMLElement;
+const bar     = document.getElementById('quiz-progress-bar') as HTMLElement;
+const result  = document.getElementById('quiz-result') as HTMLElement;
+const card    = document.getElementById('quiz-card') as HTMLElement;
+const retryBtn = document.getElementById('quiz-retry') as HTMLElement;
+
+function render() {
+  answered = false;
+  nextBtn.disabled = true;
+  fbEl.textContent = '';
+  fbEl.className = 'quiz-feedback';
+
+  const q = questions[current];
+  counter.textContent = `Question ${current + 1} of ${questions.length}`;
+  bar.setAttribute('aria-valuenow', String(current));
+  fill.style.width = `${(current / questions.length) * 100}%`;
+
+  qEl.textContent = q.q;
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const li  = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className = 'button secondary quiz-opt-btn';
+    btn.textContent = opt;
+    btn.dataset.idx = String(i);
+    btn.addEventListener('click', () => choose(i));
+    li.appendChild(btn);
+    optsEl.appendChild(li);
+  });
+}
+
+function choose(idx: number) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = optsEl.querySelectorAll<HTMLButtonElement>('.quiz-opt-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('opt-correct');
+    else if (i === idx) btn.classList.add('opt-wrong');
+  });
+  if (idx === q.ans) {
+    score++;
+    fbEl.textContent = '✅ Correct! ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-correct';
+  } else {
+    fbEl.textContent = '❌ ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-wrong';
+  }
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if (current >= questions.length) showResult();
+  else render();
+});
+
+function showResult() {
+  card.hidden = true;
+  counter.hidden = true;
+  result.hidden = false;
+  fill.style.width = '100%';
+  bar.setAttribute('aria-valuenow', String(questions.length));
+
+  const pct = Math.round((score / questions.length) * 100);
+  const scoreHead = document.getElementById('quiz-score-heading') as HTMLElement;
+  const scoreMsg  = document.getElementById('quiz-score-msg') as HTMLElement;
+  scoreHead.textContent = `You scored ${score} / ${questions.length} (${pct}%)`;
+  if      (pct === 100) scoreMsg.textContent = '🏆 Perfect score! Masterful preparation on Acids, Bases & Salts.';
+  else if (pct >= 80)   scoreMsg.textContent = '🌟 Excellent! Strong command of pH, indicators, and salt chemistry.';
+  else if (pct >= 60)   scoreMsg.textContent = '👍 Good attempt. Review the salt preparation equations and retry.';
+  else if (pct >= 40)   scoreMsg.textContent = '📚 Keep revising — check the Chlor-alkali process and try again.';
+  else                  scoreMsg.textContent = "💡 Don't worry! Review the key concepts and give it another shot.";
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0; score = 0;
+  card.hidden = false;
+  counter.hidden = false;
+  result.hidden = true;
+  render();
+});
+
+// Tab switching
+const tabPh = document.getElementById("tab-btn-ph");
+const tabChloralkali = document.getElementById("tab-btn-chloralkali");
+const panelPh = document.getElementById("panel-ph");
+const panelChloralkali = document.getElementById("panel-chloralkali");
+
+function activateTab(activeBtn: HTMLElement, activePanel: HTMLElement) {
+  [tabPh, tabChloralkali].forEach((btn) => {
+    if (btn) {
+      btn.classList.add("secondary");
+      btn.classList.remove("active");
+      btn.setAttribute("aria-selected", "false");
+    }
+  });
+  [panelPh, panelChloralkali].forEach((p) => {
+    if (p) p.hidden = true;
+  });
+  activeBtn.classList.remove("secondary");
+  activeBtn.classList.add("active");
+  activeBtn.setAttribute("aria-selected", "true");
+  activePanel.hidden = false;
+}
+
+if (tabPh && panelPh) tabPh.addEventListener("click", () => activateTab(tabPh, panelPh));
+if (tabChloralkali && panelChloralkali) tabChloralkali.addEventListener("click", () => activateTab(tabChloralkali, panelChloralkali));
+
+render();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  /* ── Interactive Diagrams ── */
+  .rules-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .rules-tab-btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .rules-tab-btn.active {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+
+  .rule-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .rule-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .rule-diagram {
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ray-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  .rule-body {
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rule-body h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .rule-body p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── Quiz ── */
+  .quiz-heading {
+    margin-bottom: 0.4rem;
+  }
+
+  .quiz-progress-bar {
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+  }
+
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--brand);
+    border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+
+  .quiz-counter {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .quiz-card {
+    padding: 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .quiz-opt-btn {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    white-space: normal;
+    height: auto;
+    padding: 0.6rem 0.9rem;
+    font-weight: 500;
+  }
+
+  .opt-correct {
+    background: #d4f0de !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+  }
+
+  .opt-wrong {
+    background: #f8d7d7 !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+  }
+
+  .quiz-feedback {
+    font-size: 0.93rem;
+    min-height: 1.4rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .feedback-correct { color: var(--success); }
+  .feedback-wrong   { color: var(--danger); }
+
+  .quiz-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .quiz-result {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .quiz-result h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── CTA banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

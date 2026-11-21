@@ -1,0 +1,228 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+
+const chemistryChapters = [
+  {
+    title: "Chemical Reactions & Equations",
+    chapter: "Chapter 1 · Chemistry",
+    desc: "Master chemical equations, balancing techniques, reaction types (combination, decomposition, displacement, redox), exothermic/endothermic processes, rust prevention, and test your knowledge with a 20-question board quiz.",
+    href: "/resources/chemical-reactions-equations/",
+    topics: ["Balancing Equations", "Combination & Decomposition", "Displacement & Double Displacement", "Redox Reactions", "Corrosion & Rancidity", "20-Question Quiz"],
+  },
+  {
+    title: "Acids, Bases & Salts",
+    chapter: "Chapter 2 · Chemistry",
+    desc: "Complete guide covering Arrhenius theory, pH scale, chemical indicators (litmus, phenolphthalein, olfactory), chlor-alkali process, bleaching powder, baking soda, washing soda, and Plaster of Paris with an interactive quiz.",
+    href: "/resources/acids-bases-salts/",
+    topics: ["Acid-Base Indicators", "pH Scale & Daily Importance", "Chlor-Alkali Process", "Washing Soda & Baking Soda", "Plaster of Paris", "20-Question Quiz"],
+  },
+  {
+    title: "Metals & Non-Metals",
+    chapter: "Chapter 3 · Chemistry",
+    desc: "In-depth revision of physical & chemical properties, reactivity series, ionic bonding, metallurgy (roasting, calcination, thermite), electrolytic refining of copper, corrosion prevention, and alloys.",
+    href: "/resources/metals-non-metals/",
+    topics: ["Reactivity Series", "Ionic Bond Formation", "Roasting & Calcination", "Electrolytic Refining", "Corrosion & Alloys", "20-Question Quiz"],
+  },
+  {
+    title: "Carbon & Its Compounds",
+    chapter: "Chapter 4 · Chemistry",
+    desc: "Study guide on covalent bonding, versatile nature of carbon (catenation, tetravalency), homologous series, IUPAC nomenclature, combustion, substitution, saponification, soap micelle action, and a 20-question board quiz.",
+    href: "/resources/carbon-and-its-compounds/",
+    topics: ["Covalent Bonding", "Homologous Series & Isomers", "Ethanol & Ethanoic Acid", "Esterification & Saponification", "Soap Micelle Action", "20-Question Quiz"],
+  },
+];
+
+const physicsChapters = [
+  {
+    title: "Light – Reflection & Refraction",
+    chapter: "Chapter 9/10 · Physics",
+    desc: "Complete guide covering laws of reflection, spherical mirrors (concave and convex), interactive visual ray diagram rules, Snell's law, lenses, magnification, and a 20-question board quiz.",
+    href: "/resources/light-reflection-refraction/",
+    topics: ["Spherical Mirrors", "Ray Diagram Rules", "Refraction & Snell's Law", "Lenses & Power", "20-Question Quiz"],
+  },
+  {
+    title: "The Human Eye & Colourful World",
+    chapter: "Chapter 10/11 · Physics",
+    desc: "Study guide on human eye anatomy, power of accommodation, myopia and hypermetropia corrections, prism dispersion, rainbow formation, atmospheric refraction, and scattering of light with an interactive quiz.",
+    href: "/resources/human-eye-colourful-world/",
+    topics: ["Eye Defects & Corrections", "Power of Accommodation", "Prism Dispersion & VIBGYOR", "Atmospheric Refraction", "20-Question Quiz"],
+  },
+  {
+    title: "Electricity",
+    chapter: "Chapter 11/12 · Physics",
+    desc: "Comprehensive study notes covering electric current, potential difference, Ohm's law, resistance & resistivity, interactive series vs. parallel circuits, Joule's heating effect, electric power, and a 20-question board quiz.",
+    href: "/resources/electricity/",
+    topics: ["Ohm's Law & V-I Graph", "Resistance & Resistivity", "Series & Parallel Circuits", "Electric Power & kWh", "20-Question Quiz"],
+  },
+  {
+    title: "Magnetic Effects of Electric Current",
+    chapter: "Chapter 12/13 · Physics",
+    desc: "Detailed chapter notes covering magnetic field lines, Right-Hand Thumb Rule, Solenoid electromagnetism, Fleming's Left-Hand Rule (FBI), domestic AC wiring, and a 20-question board quiz.",
+    href: "/resources/magnetic-effects-electric-current/",
+    topics: ["Bar Magnet Field Lines", "Solenoid & Electromagnets", "Fleming's Left-Hand Rule", "Domestic Circuits & Fuse", "20-Question Quiz"],
+  },
+];
+---
+
+<Layout
+  title={`CBSE Class 10 Science Revision Notes, Diagrams & Quizzes | ${provider.name}`}
+  description="Free chapter-wise revision notes, interactive SVG diagrams, reaction setups, circuit schematics, and board exam quizzes for all CBSE Class 10 Chemistry and Physics chapters."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / Resources
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science Learning Hub</span>
+      <h1>Class 10 Science Chapter Revision Guides</h1>
+      <p class="lead">
+        Comprehensive notes, interactive SVG diagrams, formula sheets, key reactions, and 20-question board quizzes covering 100% of the CBSE Class 10 Chemistry and Physics curriculum.
+      </p>
+    </div>
+
+    <!-- Chemistry Section -->
+    <section class="section" style="padding-top:0">
+      <div class="section-title-wrap">
+        <h2>⚗️ Class 10 Chemistry Chapters</h2>
+        <p class="muted">Master chemical reactions, acids &amp; bases, metallurgy, and carbon chemistry with step-by-step balanced equations and diagrams.</p>
+      </div>
+
+      <div class="grid two chapters-grid">
+        {chemistryChapters.map((ch) => (
+          <article class="card chapter-card">
+            <span class="tag">{ch.chapter}</span>
+            <h2>{ch.title}</h2>
+            <p class="muted">{ch.desc}</p>
+            <div class="topic-tags">
+              {ch.topics.map((t) => (
+                <span class="topic-tag">{t}</span>
+              ))}
+            </div>
+            <div class="actions" style="margin-top:auto;padding-top:1rem">
+              <a href={ch.href} class="button">Explore Chapter &amp; Quiz →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Physics Section -->
+    <section class="section">
+      <div class="section-title-wrap">
+        <h2>⚡ Class 10 Physics Chapters</h2>
+        <p class="muted">Understand optics, ray diagrams, circuits, and electromagnetism with clear interactive visuals and solved numericals.</p>
+      </div>
+
+      <div class="grid two chapters-grid">
+        {physicsChapters.map((ch) => (
+          <article class="card chapter-card">
+            <span class="tag">{ch.chapter}</span>
+            <h2>{ch.title}</h2>
+            <p class="muted">{ch.desc}</p>
+            <div class="topic-tags">
+              {ch.topics.map((t) => (
+                <span class="topic-tag">{t}</span>
+              ))}
+            </div>
+            <div class="actions" style="margin-top:auto;padding-top:1rem">
+              <a href={ch.href} class="button">Explore Chapter &amp; Quiz →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner" style="margin-top:3rem">
+      <h2>Need personalized guidance for CBSE Class 10 Science?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at-home) to master difficult topics, reactions, and numericals.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .section-title-wrap {
+    margin-bottom: 1.25rem;
+  }
+
+  .section-title-wrap h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .chapters-grid {
+    gap: 1.5rem;
+  }
+
+  .chapter-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.75rem;
+  }
+
+  .chapter-card h2 {
+    margin-top: 0.6rem;
+    font-size: 1.45rem;
+    color: var(--brand);
+  }
+
+  .topic-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0;
+  }
+
+  .topic-tag {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    background: var(--paper);
+    color: var(--muted);
+    border: 1px solid var(--line);
+  }
+
+  /* ── CTA banner ── */
+  .cta-banner {
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

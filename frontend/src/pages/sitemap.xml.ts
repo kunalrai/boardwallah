@@ -23,7 +23,15 @@ export const GET: APIRoute = () => {
     "policies/privacy/",
     "policies/consent/",
     "policies/cancellation-refund/",
+    "resources/",
+    "resources/chemical-reactions-equations/",
+    "resources/acids-bases-salts/",
+    "resources/metals-non-metals/",
+    "resources/carbon-and-its-compounds/",
     "resources/light-reflection-refraction/",
+    "resources/human-eye-colourful-world/",
+    "resources/electricity/",
+    "resources/magnetic-effects-electric-current/",
   ];
   const urls = paths.map(
     (path) =>

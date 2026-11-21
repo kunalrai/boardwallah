@@ -28,11 +28,27 @@ const { provider, subjects } = loadContent();
               <a href="/enquiry/">enquiry form</a> if you want to discuss a specific topic first.
             </p>
             {subject.id === "science" && (
-              <p>
-                <a href="/resources/light-reflection-refraction/">
-                  📖 Chapter notes: Light – Reflection &amp; Refraction
-                </a>
-              </p>
+              <div class="subject-resources">
+                <p><strong>Science chapter guides &amp; quizzes:</strong></p>
+                <div style="margin-bottom: 0.5rem;">
+                  <strong class="small" style="color:var(--brand)">Chemistry:</strong>
+                  <ul style="margin-top:0.25rem; margin-bottom:0.5rem;">
+                    <li><a href="/resources/chemical-reactions-equations/">⚗️ Chemical Reactions &amp; Equations</a></li>
+                    <li><a href="/resources/acids-bases-salts/">🧪 Acids, Bases &amp; Salts</a></li>
+                    <li><a href="/resources/metals-non-metals/">🔩 Metals &amp; Non-Metals</a></li>
+                    <li><a href="/resources/carbon-and-its-compounds/">💎 Carbon &amp; Its Compounds</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <strong class="small" style="color:var(--brand)">Physics:</strong>
+                  <ul style="margin-top:0.25rem;">
+                    <li><a href="/resources/light-reflection-refraction/">📖 Light – Reflection &amp; Refraction</a></li>
+                    <li><a href="/resources/human-eye-colourful-world/">👁️ The Human Eye &amp; Colourful World</a></li>
+                    <li><a href="/resources/electricity/">⚡ Electricity</a></li>
+                    <li><a href="/resources/magnetic-effects-electric-current/">🧲 Magnetic Effects of Electric Current</a></li>
+                  </ul>
+                </div>
+              </div>
             )}
             <a class="button secondary" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book a trial</a>
           </article>

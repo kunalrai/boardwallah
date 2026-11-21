@@ -1,0 +1,838 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`The Human Eye & Colourful World | CBSE Class 10 Science | ${provider.name}`}
+  description="Complete CBSE Class 10 Science chapter on The Human Eye and the Colourful World. Covers structure of the human eye, power of accommodation, myopia, hypermetropia, prism dispersion, rainbow formation, atmospheric refraction, scattering of light, and 20-question quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Human Eye &amp; Colourful World
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science · Physics</span>
+      <h1>The Human Eye and the Colourful World</h1>
+      <p class="lead">
+        Complete chapter notes, interactive defect-correction diagrams, prism dispersion, optical natural phenomena, and a 20-question quiz for CBSE Class 10 board exam preparation.
+      </p>
+    </div>
+
+    <!-- Key concepts -->
+    <section class="section">
+      <h2>Key Concepts at a Glance</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>👁️ The Human Eye &amp; Accommodation</h3>
+          <ul class="clean-list">
+            <li><strong>Cornea</strong>: Thin transparent membrane that covers the front; causes maximum refraction of light entering the eye.</li>
+            <li><strong>Iris &amp; Pupil</strong>: Iris (colored diaphragm) regulates pupil size to control the amount of light entering the eye.</li>
+            <li><strong>Eye Lens</strong>: Flexible convex lens made of fibrous jelly-like material; forms a real and inverted image on the retina.</li>
+            <li><strong>Ciliary Muscles</strong>: Alter lens curvature to focus nearby and distant objects (<strong>Power of Accommodation</strong>).</li>
+            <li><strong>Near Point (Least Distance of Distinct Vision)</strong>: <strong>25 cm</strong> for a normal young adult eye.</li>
+            <li><strong>Far Point</strong>: <strong>Infinity</strong> for a normal human eye.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>👓 Defects of Vision &amp; Corrections</h3>
+          <ul class="clean-list">
+            <li><strong>Myopia (Near-sightedness)</strong>: Can see nearby objects clearly but cannot see distant objects. Image forms <strong>in front of the retina</strong>. Corrected by a <strong>Concave lens</strong> of suitable power.</li>
+            <li><strong>Hypermetropia (Far-sightedness)</strong>: Can see distant objects clearly but cannot see nearby objects. Image forms <strong>behind the retina</strong>. Corrected by a <strong>Convex lens</strong> of suitable power.</li>
+            <li><strong>Presbyopia (Old-age hypermetropia)</strong>: Gradual weakening of ciliary muscles and diminishing flexibility of eye lens. Corrected by <strong>Bifocal lenses</strong> (upper part concave, lower part convex).</li>
+            <li><strong>Astigmatism</strong>: Irregular curvature of cornea; corrected by cylindrical lenses.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌈 Refraction Through a Prism &amp; Dispersion</h3>
+          <ul class="clean-list">
+            <li><strong>Triangular Glass Prism</strong>: Has two triangular bases and three rectangular lateral surfaces inclined at an angle called the <strong>Angle of Prism (A)</strong>.</li>
+            <li><strong>Angle of Deviation (D)</strong>: The angle between incident ray extended forward and emergent ray extended backward.</li>
+            <li><strong>Dispersion</strong>: Splitting of white light into its seven component colors (<strong>VIBGYOR</strong>: Violet, Indigo, Blue, Green, Yellow, Orange, Red).</li>
+            <li><strong>Red light</strong> has the longest wavelength and bends the <strong>least</strong>.</li>
+            <li><strong>Violet light</strong> has the shortest wavelength and bends the <strong>most</strong>.</li>
+            <li><strong>Newton's Recombination Experiment</strong>: An inverted second prism recombines the seven colors back into white light.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌧️ Rainbow Formation</h3>
+          <ul class="clean-list">
+            <li>A natural spectrum appearing in the sky after a rain shower, always in a direction <strong>opposite to that of the Sun</strong>.</li>
+            <li>Caused by dispersion of sunlight by tiny water droplets present in the atmosphere.</li>
+            <li><strong>Three Optical Steps</strong>:
+              <ol>
+                <li><strong>Refraction and Dispersion</strong> of sunlight as it enters water droplet.</li>
+                <li><strong>Internal Reflection</strong> at the back surface of the droplet.</li>
+                <li><strong>Refraction</strong> again as light emerges out of the droplet into the observer's eye.</li>
+              </ol>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>✨ Atmospheric Refraction</h3>
+          <ul class="clean-list">
+            <li>Refraction of light caused by layers of earth's atmosphere having varying optical densities and temperatures.</li>
+            <li><strong>Twinkling of Stars</strong>: Apparent position of star fluctuates slightly because starlight passes through continuously changing atmospheric layers. (Planets do not twinkle because they are extended light sources).</li>
+            <li><strong>Apparent Higher Position of Stars</strong>: Starlight continuously bends towards the normal as it enters denser atmospheric layers.</li>
+            <li><strong>Advanced Sunrise &amp; Delayed Sunset</strong>: Sun is visible about <strong>2 minutes before actual sunrise</strong> and <strong>2 minutes after actual sunset</strong>, lengthening daytime by ~4 minutes.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔵 Scattering of Light &amp; Tyndall Effect</h3>
+          <ul class="clean-list">
+            <li><strong>Tyndall Effect</strong>: Scattering of a beam of light by colloidal particles, making its path visible (e.g., sunlight passing through a dense forest canopy or smoke-filled room).</li>
+            <li>According to Rayleigh scattering, intensity of scattered light is inversely proportional to the fourth power of wavelength (Intensity ∝ 1 / λ⁴).</li>
+            <li><strong>Why the Clear Sky is Blue</strong>: Air molecules (N₂, O₂) are smaller than light wavelengths and scatter shorter blue wavelengths much more strongly than longer red wavelengths.</li>
+            <li><strong>Reddish Sun at Sunrise &amp; Sunset</strong>: Near the horizon, sunlight travels through thick atmospheric layers. Blue light is scattered away; only longer red wavelengths reach our eyes.</li>
+            <li><strong>Danger Signals are Red</strong>: Red light is scattered the least by fog and smoke, making it visible from the farthest distance.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section" id="visual-optics">
+      <div class="rules-header">
+        <span class="eyebrow">Visual Ray Diagrams</span>
+        <h2>Defects of Vision &amp; Dispersion Diagrams</h2>
+        <p class="lead">
+          Visual schematics frequently tested in CBSE Class 10 board ray diagram questions:
+        </p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="rules-tabs" role="tablist" aria-label="Optical categories">
+        <button class="button rules-tab-btn active" id="tab-btn-myopia" type="button" role="tab" aria-selected="true" aria-controls="panel-myopia">
+          👓 Myopia (Defect &amp; Correction)
+        </button>
+        <button class="button secondary rules-tab-btn" id="tab-btn-hypermetropia" type="button" role="tab" aria-selected="false" aria-controls="panel-hypermetropia">
+          🔎 Hypermetropia (Defect &amp; Correction)
+        </button>
+        <button class="button secondary rules-tab-btn" id="tab-btn-prism" type="button" role="tab" aria-selected="false" aria-controls="panel-prism">
+          🌈 Prism Dispersion &amp; VIBGYOR
+        </button>
+      </div>
+
+      <!-- Panel 1: Myopia -->
+      <div class="rules-panel" id="panel-myopia" role="tabpanel" aria-labelledby="tab-btn-myopia">
+        <div class="grid two rules-grid">
+          <!-- Myopic Eye -->
+          <article class="card rule-card">
+            <div class="rule-badge">Defect: Myopic Eye (Image in front of Retina)</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Myopic Eye Diagram">
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Eyeball contour -->
+                <ellipse cx="230" cy="105" rx="75" ry="70" fill="#fff" stroke="#334155" stroke-width="2.5" />
+                <!-- Cornea bulge -->
+                <path d="M 160 85 C 145 95 145 115 160 125" fill="#e2e8f0" stroke="#0f4c5c" stroke-width="2.5" />
+                <!-- Eye lens -->
+                <ellipse cx="178" cy="105" rx="7" ry="24" fill="rgba(15, 76, 92, 0.2)" stroke="#0f4c5c" stroke-width="2" />
+                <!-- Retina label -->
+                <line x1="305" y1="105" x2="340" y2="85" stroke="#94a3b8" stroke-width="1.5" />
+                <text x="340" y="80" font-size="10" font-weight="bold" fill="#0f4c5c">Retina</text>
+                <!-- Parallel incoming rays from distant object -->
+                <line x1="20" y1="88" x2="175" y2="88" stroke="#b8561c" stroke-width="2.2" />
+                <line x1="20" y1="122" x2="175" y2="122" stroke="#b8561c" stroke-width="2.2" />
+                <!-- Converging before retina -->
+                <line x1="182" y1="88" x2="265" y2="105" stroke="#a12b2b" stroke-width="2.2" />
+                <line x1="182" y1="122" x2="265" y2="105" stroke="#a12b2b" stroke-width="2.2" />
+                <!-- Focal point indicator -->
+                <circle cx="265" cy="105" r="4" fill="#a12b2b" />
+                <line x1="265" y1="105" x2="265" y2="155" stroke="#a12b2b" stroke-width="1.5" stroke-dasharray="3 3" />
+                <text x="265" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#a12b2b">Image formed in front of retina</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Causes of Myopia:</h4>
+              <p>1. Excessive curvature of the eye lens (too thick).<br/>2. Elongation of the eyeball. Parallel rays from distant objects converge before reaching the retina.</p>
+            </div>
+          </article>
+
+          <!-- Corrected Myopic Eye -->
+          <article class="card rule-card">
+            <div class="rule-badge">Correction: Concave Lens</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Corrected Myopic Eye Diagram">
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Eyeball contour -->
+                <ellipse cx="230" cy="105" rx="75" ry="70" fill="#fff" stroke="#334155" stroke-width="2.5" />
+                <!-- Eye lens -->
+                <ellipse cx="178" cy="105" rx="7" ry="24" fill="rgba(15, 76, 92, 0.2)" stroke="#0f4c5c" stroke-width="2" />
+                <!-- Concave spectacle lens -->
+                <path d="M 85 75 Q 92 105 85 135 L 95 135 Q 88 105 95 75 Z" fill="rgba(15, 76, 92, 0.15)" stroke="#0f4c5c" stroke-width="2" />
+                <text x="90" y="65" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f4c5c">Concave Lens</text>
+                <!-- Incoming parallel rays -->
+                <line x1="20" y1="88" x2="86" y2="88" stroke="#b8561c" stroke-width="2.2" />
+                <line x1="20" y1="122" x2="86" y2="122" stroke="#b8561c" stroke-width="2.2" />
+                <!-- Diverged by concave lens -->
+                <line x1="94" y1="88" x2="175" y2="82" stroke="#b8561c" stroke-width="2.2" />
+                <line x1="94" y1="122" x2="175" y2="128" stroke="#b8561c" stroke-width="2.2" />
+                <!-- Converged exactly on retina -->
+                <line x1="182" y1="82" x2="305" y2="105" stroke="#1f6b45" stroke-width="2.2" />
+                <line x1="182" y1="128" x2="305" y2="105" stroke="#1f6b45" stroke-width="2.2" />
+                <!-- Focused image on retina -->
+                <circle cx="305" cy="105" r="4" fill="#1f6b45" />
+                <text x="260" y="170" font-size="11" font-weight="bold" fill="#1f6b45">Sharp image on retina ✓</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Correction using Concave Lens:</h4>
+              <p>A concave lens diverges incoming parallel rays so that they appear to come from the person's far point, allowing the eye lens to focus the image <strong>sharp on the retina</strong>.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Panel 2: Hypermetropia -->
+      <div class="rules-panel" id="panel-hypermetropia" role="tabpanel" aria-labelledby="tab-btn-hypermetropia" hidden>
+        <div class="grid two rules-grid">
+          <!-- Hypermetropic Eye -->
+          <article class="card rule-card">
+            <div class="rule-badge">Defect: Hypermetropic Eye (Image behind Retina)</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Hypermetropic Eye Diagram">
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Eyeball contour -->
+                <ellipse cx="220" cy="105" rx="72" ry="70" fill="#fff" stroke="#334155" stroke-width="2.5" />
+                <!-- Eye lens -->
+                <ellipse cx="168" cy="105" rx="6" ry="24" fill="rgba(15, 76, 92, 0.2)" stroke="#0f4c5c" stroke-width="2" />
+                <!-- Near point object N -->
+                <circle cx="45" cy="105" r="3.5" fill="#b8561c" />
+                <text x="45" y="125" text-anchor="middle" font-size="11" font-weight="bold" fill="#b8561c">N (25 cm)</text>
+                <!-- Diverging rays from N -->
+                <line x1="45" y1="105" x2="165" y2="88" stroke="#b8561c" stroke-width="2.2" />
+                <line x1="45" y1="105" x2="165" y2="122" stroke="#b8561c" stroke-width="2.2" />
+                <!-- Weak convergence through eye -->
+                <line x1="172" y1="88" x2="292" y2="100" stroke="#a12b2b" stroke-width="2.2" />
+                <line x1="172" y1="122" x2="292" y2="110" stroke="#a12b2b" stroke-width="2.2" />
+                <!-- Virtual focus behind retina -->
+                <line x1="292" y1="100" x2="330" y2="105" stroke="#a12b2b" stroke-width="2" stroke-dasharray="3 3" />
+                <line x1="292" y1="110" x2="330" y2="105" stroke="#a12b2b" stroke-width="2" stroke-dasharray="3 3" />
+                <circle cx="330" cy="105" r="4" fill="#a12b2b" />
+                <text x="210" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#a12b2b">Image formed behind retina</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Causes of Hypermetropia:</h4>
+              <p>1. Focal length of eye lens is too long (too flat).<br/>2. Eyeball has become too small/short. Diverging rays from nearby objects focus behind the retina.</p>
+            </div>
+          </article>
+
+          <!-- Corrected Hypermetropic Eye -->
+          <article class="card rule-card">
+            <div class="rule-badge">Correction: Convex Lens</div>
+            <div class="rule-diagram">
+              <svg viewBox="0 0 360 210" class="ray-svg" aria-label="Corrected Hypermetropic Eye Diagram">
+                <rect width="360" height="210" rx="8" fill="#f8fafc" />
+                <!-- Eyeball contour -->
+                <ellipse cx="220" cy="105" rx="72" ry="70" fill="#fff" stroke="#334155" stroke-width="2.5" />
+                <!-- Eye lens -->
+                <ellipse cx="168" cy="105" rx="6" ry="24" fill="rgba(15, 76, 92, 0.2)" stroke="#0f4c5c" stroke-width="2" />
+                <!-- Convex spectacle lens -->
+                <path d="M 90 75 Q 98 105 90 135 Q 82 105 90 75 Z" fill="rgba(15, 76, 92, 0.15)" stroke="#0f4c5c" stroke-width="2" />
+                <text x="90" y="65" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f4c5c">Convex Lens</text>
+                <!-- Rays from N -->
+                <circle cx="35" cy="105" r="3.5" fill="#b8561c" />
+                <line x1="35" y1="105" x2="88" y2="90" stroke="#b8561c" stroke-width="2.2" />
+                <line x1="35" y1="105" x2="88" y2="120" stroke="#b8561c" stroke-width="2.2" />
+                <!-- Pre-converged by spectacle lens -->
+                <line x1="92" y1="90" x2="165" y2="95" stroke="#b8561c" stroke-width="2.2" />
+                <line x1="92" y1="120" x2="165" y2="115" stroke="#b8561c" stroke-width="2.2" />
+                <!-- Sharp focus on retina -->
+                <line x1="172" y1="95" x2="292" y2="105" stroke="#1f6b45" stroke-width="2.2" />
+                <line x1="172" y1="115" x2="292" y2="105" stroke="#1f6b45" stroke-width="2.2" />
+                <circle cx="292" cy="105" r="4" fill="#1f6b45" />
+                <text x="240" y="170" font-size="11" font-weight="bold" fill="#1f6b45">Sharp image on retina ✓</text>
+              </svg>
+            </div>
+            <div class="rule-body">
+              <h4>Correction using Convex Lens:</h4>
+              <p>A convex lens provides converging power before light hits the eye, shifting the virtual image of the nearby object back to the near point ($N'$) of the hypermetropic eye.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Panel 3: Prism Dispersion -->
+      <div class="rules-panel" id="panel-prism" role="tabpanel" aria-labelledby="tab-btn-prism" hidden>
+        <article class="card rule-card" style="max-width:760px;margin-inline:auto">
+          <div class="rule-badge">Refraction &amp; Dispersion of White Light by a Prism</div>
+          <div class="rule-diagram">
+            <svg viewBox="0 0 460 230" class="ray-svg" aria-label="Dispersion of White Light in a Prism">
+              <rect width="460" height="230" rx="8" fill="#f8fafc" />
+              <!-- Prism Triangle -->
+              <polygon points="170,30 90,195 250,195" fill="rgba(15, 76, 92, 0.08)" stroke="#0f4c5c" stroke-width="2.5" />
+              <text x="170" y="22" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f4c5c">A (Angle of Prism)</text>
+              <!-- Incident White Ray -->
+              <line x1="20" y1="140" x2="125" y2="120" stroke="#475569" stroke-width="3" />
+              <text x="40" y="130" font-size="11" font-weight="bold" fill="#334155">White Light Ray</text>
+              <!-- Dispersion inside prism -->
+              <line x1="125" y1="120" x2="195" y2="110" stroke="#dc2626" stroke-width="2" />
+              <line x1="125" y1="120" x2="188" y2="135" stroke="#7c3aed" stroke-width="2" />
+              <!-- Emergent Spectrum VIBGYOR -->
+              <line x1="195" y1="110" x2="380" y2="85" stroke="#dc2626" stroke-width="2.5" />
+              <line x1="193" y1="115" x2="380" y2="105" stroke="#ea580c" stroke-width="2.2" />
+              <line x1="191" y1="120" x2="380" y2="125" stroke="#eab308" stroke-width="2.2" />
+              <line x1="190" y1="125" x2="380" y2="145" stroke="#16a34a" stroke-width="2.2" />
+              <line x1="189" y1="130" x2="380" y2="165" stroke="#2563eb" stroke-width="2.2" />
+              <line x1="188" y1="135" x2="380" y2="185" stroke="#7c3aed" stroke-width="2.5" />
+              <!-- Labels -->
+              <text x="390" y="89" font-size="11" font-weight="bold" fill="#dc2626">Red (Least Deviated)</text>
+              <text x="390" y="149" font-size="11" font-weight="bold" fill="#16a34a">Green</text>
+              <text x="390" y="189" font-size="11" font-weight="bold" fill="#7c3aed">Violet (Most Deviated)</text>
+              <!-- Screen representation -->
+              <line x1="375" y1="70" x2="375" y2="200" stroke="#334155" stroke-width="3" />
+              <text x="360" y="60" font-size="10" font-weight="bold" fill="#64748b">Screen</text>
+            </svg>
+          </div>
+          <div class="rule-body">
+            <h4>Dispersion &amp; The VIBGYOR Spectrum:</h4>
+            <p>Different colors of light have different wavelengths and travel with different speeds in glass. <strong>Violet light bends the most</strong> (shortest wavelength, highest refractive index) and <strong>Red light bends the least</strong> (longest wavelength, lowest refractive index), resulting in the visible spectrum.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="section quiz-root" id="quiz-root">
+      <h2 class="quiz-heading">🧪 Human Eye Chapter Quiz — 20 Board Questions</h2>
+      <p class="muted" style="margin-bottom:1.5rem">Practice with standard questions on eye defects, power of lenses, prism deviation, atmospheric refraction, and scattering of light.</p>
+
+      <div class="quiz-progress-bar" id="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+      <p class="quiz-counter" id="quiz-counter">Question 1 of 20</p>
+
+      <div class="quiz-card card" id="quiz-card">
+        <p class="quiz-question" id="quiz-question"></p>
+        <ul class="quiz-options" id="quiz-options"></ul>
+        <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+        <div class="quiz-actions">
+          <button class="button" id="quiz-next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <div class="quiz-result card" id="quiz-result" hidden>
+        <h3 id="quiz-score-heading"></h3>
+        <p id="quiz-score-msg"></p>
+        <div class="actions" style="justify-content:center;margin-top:1rem">
+          <button class="button secondary" id="quiz-retry">↺ Try Again</button>
+          <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need help with Physics ray diagrams &amp; concepts?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at home) for CBSE Class 10 board preparation.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script>
+const questions = [
+  {
+    q: "The least distance of distinct vision (near point) for a normal young adult eye is approximately:",
+    opts: ["25 m", "2.5 cm", "25 cm", "Infinity"],
+    ans: 2,
+    exp: "For a normal human eye, the near point (least distance of distinct vision) is 25 cm."
+  },
+  {
+    q: "The change in focal length of an eye lens to focus objects at different distances is caused by the action of:",
+    opts: ["Pupil", "Retina", "Ciliary muscles", "Iris"],
+    ans: 2,
+    exp: "Ciliary muscles modify the curvature of the crystalline eye lens, changing its focal length (Power of Accommodation)."
+  },
+  {
+    q: "A person cannot see distant objects clearly beyond 1.2 m. What type of corrective lens should be used?",
+    opts: ["Convex lens", "Concave lens", "Bifocal lens", "Cylindrical lens"],
+    ans: 1,
+    exp: "The person has myopia (near-sightedness), which is corrected using a concave lens of appropriate focal length."
+  },
+  {
+    q: "In a myopic eye, the image of a distant object is formed:",
+    opts: ["On the retina", "In front of the retina", "Behind the retina", "On the blind spot"],
+    ans: 1,
+    exp: "In myopia, parallel rays from distant objects converge in front of the retina due to elongation of the eyeball or excessive lens curvature."
+  },
+  {
+    q: "Hypermetropia is corrected by using a:",
+    opts: ["Concave lens of suitable focal length", "Convex lens of suitable focal length", "Bifocal lens", "Plano-concave lens"],
+    ans: 1,
+    exp: "Hypermetropia (far-sightedness) is corrected using a convex lens, which converges light rays before they enter the eye."
+  },
+  {
+    q: "The defect of vision arising due to the gradual weakening of ciliary muscles with old age is known as:",
+    opts: ["Myopia", "Hypermetropia", "Presbyopia", "Cataract"],
+    ans: 2,
+    exp: "Presbyopia is old-age hypermetropia caused by loss of flexibility in the crystalline lens and weakening of ciliary muscles."
+  },
+  {
+    q: "When white light enters a triangular glass prism, the color that undergoes maximum deviation is:",
+    opts: ["Red", "Yellow", "Violet", "Green"],
+    ans: 2,
+    exp: "Violet light has the shortest wavelength and slowest speed in glass, so it deviates the most. Red deviates the least."
+  },
+  {
+    q: "The splitting of white light into its component colors upon passing through a prism is called:",
+    opts: ["Reflection", "Refraction", "Dispersion", "Total internal reflection"],
+    ans: 2,
+    exp: "Dispersion is the phenomenon of splitting white light into seven constituent colors (VIBGYOR) when passing through a prism."
+  },
+  {
+    q: "A rainbow is always formed in the direction:",
+    opts: ["Towards the Sun", "Opposite to the Sun", "At 90 degrees to the Sun", "Directly overhead"],
+    ans: 1,
+    exp: "A rainbow is always formed in the sky in a direction opposite to that of the Sun."
+  },
+  {
+    q: "The three optical phenomena responsible for rainbow formation in raindrops are:",
+    opts: [
+      "Refraction, reflection, and diffraction",
+      "Dispersion, refraction, and internal reflection",
+      "Absorption, scattering, and refraction",
+      "Polarization, interference, and reflection"
+    ],
+    ans: 1,
+    exp: "Sunlight undergoes refraction and dispersion upon entering a water drop, internal reflection at the back surface, and refraction upon exit."
+  },
+  {
+    q: "Twinkling of stars at night is caused by:",
+    opts: [
+      "Scattering of starlight by dust particles",
+      "Atmospheric refraction of starlight through fluctuating layers",
+      "Internal reflection within stars",
+      "Fluctuations in the star's own brightness"
+    ],
+    ans: 1,
+    exp: "Starlight travels through atmospheric layers of changing density and temperature, continuously altering its optical path and causing twinkling."
+  },
+  {
+    q: "Why do planets NOT twinkle like stars?",
+    opts: [
+      "They are much farther than stars",
+      "They are extended light sources, so atmospheric fluctuations average out to zero",
+      "They do not emit their own light",
+      "Planets only emit polarized light"
+    ],
+    ans: 1,
+    exp: "Planets are much closer to Earth and act as extended sources (collections of point sources), averaging out intensity variations."
+  },
+  {
+    q: "Due to atmospheric refraction, sunrise is advanced and sunset is delayed by approximately:",
+    opts: ["2 seconds each", "2 minutes each", "4 minutes each", "1 minute each"],
+    ans: 1,
+    exp: "Atmospheric refraction makes the Sun visible about 2 minutes before actual sunrise and 2 minutes after actual sunset (total 4 minutes extra daylight)."
+  },
+  {
+    q: "The clear sky appears blue because:",
+    opts: [
+      "Blue light is absorbed by the atmosphere",
+      "Molecules in the air scatter blue light more strongly than red light",
+      "Water vapor reflects blue light only",
+      "Ultraviolet rays are converted to blue light"
+    ],
+    ans: 1,
+    exp: "Air molecules are smaller than visible wavelengths and scatter shorter wavelengths (blue/violet) much more effectively (Rayleigh scattering ∝ 1/λ⁴)."
+  },
+  {
+    q: "At sunrise and sunset, the Sun appears reddish because:",
+    opts: [
+      "The Sun emits only red light at those times",
+      "Light travels longer distances through the atmosphere; blue is scattered away, leaving mostly red light",
+      "The atmosphere absorbs red light",
+      "Dust particles block all colors except red"
+    ],
+    ans: 1,
+    exp: "Near the horizon, sunlight passes through greater thickness of atmosphere. Shorter blue wavelengths are scattered away, allowing longer red wavelengths to reach our eyes."
+  },
+  {
+    q: "The phenomenon of scattering of light by colloidal particles in a medium is known as:",
+    opts: ["Raman effect", "Tyndall effect", "Doppler effect", "Photoelectric effect"],
+    ans: 1,
+    exp: "The Tyndall effect is the scattering of light by colloidal particles, rendering the light path visible."
+  },
+  {
+    q: "Danger signal lights installed at the top of tall buildings and railway signals are red because:",
+    opts: [
+      "Red light is scattered the least by fog and smoke",
+      "Red light moves fastest in vacuum",
+      "Red light has the highest energy",
+      "Red light is completely absorbed by fog"
+    ],
+    ans: 0,
+    exp: "Red light has the longest wavelength in the visible spectrum and is scattered least by smoke and fog, remaining visible from the greatest distance."
+  },
+  {
+    q: "If the Earth had no atmosphere, the sky would appear:",
+    opts: ["Bright white", "Deep blue", "Dark/Black", "Reddish"],
+    ans: 2,
+    exp: "Without an atmosphere, there would be no scattering of sunlight, making the sky appear pitch black (as seen by astronauts in outer space)."
+  },
+  {
+    q: "A person needing a lens of power -2.5 D for distant vision suffers from:",
+    opts: ["Hypermetropia", "Myopia", "Presbyopia", "Cataract"],
+    ans: 1,
+    exp: "A negative power (-2.5 D) corresponds to a concave (diverging) lens with focal length f = -1/2.5 = -0.4 m = -40 cm, used to correct myopia."
+  },
+  {
+    q: "The crystalline lens of people at old age sometimes becomes milky and cloudy. This condition is called:",
+    opts: ["Glaucoma", "Myopia", "Cataract", "Presbyopia"],
+    ans: 2,
+    exp: "A cataract occurs when the crystalline lens becomes cloudy/opaque, causing partial or complete loss of vision, restored via cataract surgery."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qEl     = document.getElementById('quiz-question') as HTMLElement;
+const optsEl  = document.getElementById('quiz-options') as HTMLElement;
+const fbEl    = document.getElementById('quiz-feedback') as HTMLElement;
+const nextBtn = document.getElementById('quiz-next') as HTMLButtonElement;
+const counter = document.getElementById('quiz-counter') as HTMLElement;
+const fill    = document.getElementById('quiz-progress-fill') as HTMLElement;
+const bar     = document.getElementById('quiz-progress-bar') as HTMLElement;
+const result  = document.getElementById('quiz-result') as HTMLElement;
+const card    = document.getElementById('quiz-card') as HTMLElement;
+const retryBtn = document.getElementById('quiz-retry') as HTMLElement;
+
+function render() {
+  answered = false;
+  nextBtn.disabled = true;
+  fbEl.textContent = '';
+  fbEl.className = 'quiz-feedback';
+
+  const q = questions[current];
+  counter.textContent = `Question ${current + 1} of ${questions.length}`;
+  bar.setAttribute('aria-valuenow', String(current));
+  fill.style.width = `${(current / questions.length) * 100}%`;
+
+  qEl.textContent = q.q;
+  optsEl.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const li  = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className = 'button secondary quiz-opt-btn';
+    btn.textContent = opt;
+    btn.dataset.idx = String(i);
+    btn.addEventListener('click', () => choose(i));
+    li.appendChild(btn);
+    optsEl.appendChild(li);
+  });
+}
+
+function choose(idx: number) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = optsEl.querySelectorAll<HTMLButtonElement>('.quiz-opt-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('opt-correct');
+    else if (i === idx) btn.classList.add('opt-wrong');
+  });
+  if (idx === q.ans) {
+    score++;
+    fbEl.textContent = '✅ Correct! ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-correct';
+  } else {
+    fbEl.textContent = '❌ ' + q.exp;
+    fbEl.className = 'quiz-feedback feedback-wrong';
+  }
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if (current >= questions.length) showResult();
+  else render();
+});
+
+function showResult() {
+  card.hidden = true;
+  counter.hidden = true;
+  result.hidden = false;
+  fill.style.width = '100%';
+  bar.setAttribute('aria-valuenow', String(questions.length));
+
+  const pct = Math.round((score / questions.length) * 100);
+  const scoreHead = document.getElementById('quiz-score-heading') as HTMLElement;
+  const scoreMsg  = document.getElementById('quiz-score-msg') as HTMLElement;
+  scoreHead.textContent = `You scored ${score} / ${questions.length} (${pct}%)`;
+  if      (pct === 100) scoreMsg.textContent = '🏆 Perfect score! Masterful preparation on Human Eye & Optics.';
+  else if (pct >= 80)   scoreMsg.textContent = '🌟 Excellent! Strong command of vision defects, dispersion, and atmospheric refraction.';
+  else if (pct >= 60)   scoreMsg.textContent = '👍 Good attempt. Review the ray diagrams and retry.';
+  else if (pct >= 40)   scoreMsg.textContent = '📚 Keep revising — check eye defect correction lenses and try again.';
+  else                  scoreMsg.textContent = "💡 Don't worry! Review the key concepts and give it another shot.";
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0; score = 0;
+  card.hidden = false;
+  counter.hidden = false;
+  result.hidden = true;
+  render();
+});
+
+// Tab switching
+const tabMyopia = document.getElementById("tab-btn-myopia");
+const tabHyper = document.getElementById("tab-btn-hypermetropia");
+const tabPrism = document.getElementById("tab-btn-prism");
+const panelMyopia = document.getElementById("panel-myopia");
+const panelHyper = document.getElementById("panel-hypermetropia");
+const panelPrism = document.getElementById("panel-prism");
+
+function activateTab(activeBtn: HTMLElement, activePanel: HTMLElement) {
+  [tabMyopia, tabHyper, tabPrism].forEach((btn) => {
+    if (btn) {
+      btn.classList.add("secondary");
+      btn.classList.remove("active");
+      btn.setAttribute("aria-selected", "false");
+    }
+  });
+  [panelMyopia, panelHyper, panelPrism].forEach((p) => {
+    if (p) p.hidden = true;
+  });
+  activeBtn.classList.remove("secondary");
+  activeBtn.classList.add("active");
+  activeBtn.setAttribute("aria-selected", "true");
+  activePanel.hidden = false;
+}
+
+if (tabMyopia && panelMyopia) tabMyopia.addEventListener("click", () => activateTab(tabMyopia, panelMyopia));
+if (tabHyper && panelHyper) tabHyper.addEventListener("click", () => activateTab(tabHyper, panelHyper));
+if (tabPrism && panelPrism) tabPrism.addEventListener("click", () => activateTab(tabPrism, panelPrism));
+
+render();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  /* ── Interactive Diagrams ── */
+  .rules-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .rules-tab-btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .rules-tab-btn.active {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+
+  .rule-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .rule-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .rule-diagram {
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ray-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  .rule-body {
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rule-body h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .rule-body p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── Quiz ── */
+  .quiz-heading {
+    margin-bottom: 0.4rem;
+  }
+
+  .quiz-progress-bar {
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+  }
+
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--brand);
+    border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+
+  .quiz-counter {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .quiz-card {
+    padding: 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .quiz-opt-btn {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    white-space: normal;
+    height: auto;
+    padding: 0.6rem 0.9rem;
+    font-weight: 500;
+  }
+
+  .opt-correct {
+    background: #d4f0de !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+  }
+
+  .opt-wrong {
+    background: #f8d7d7 !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+  }
+
+  .quiz-feedback {
+    font-size: 0.93rem;
+    min-height: 1.4rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .feedback-correct { color: var(--success); }
+  .feedback-wrong   { color: var(--danger); }
+
+  .quiz-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .quiz-result {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .quiz-result h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── CTA banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>
