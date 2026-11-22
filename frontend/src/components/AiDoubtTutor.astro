@@ -22,10 +22,10 @@ import { apiBase } from "../lib/site";
   </button>
 
   <!-- Backdrop Overlay -->
-  <div id="ai-tutor-backdrop" class="ai-tutor-backdrop" aria-hidden="true"></div>
+  <div id="ai-tutor-backdrop" class="ai-tutor-backdrop" onclick="window.closeAiTutorDrawer && window.closeAiTutorDrawer()" aria-hidden="true"></div>
 
   <!-- Slide-Over Drawer Modal -->
-  <dialog id="ai-tutor-drawer" class="ai-tutor-drawer" aria-labelledby="ai-tutor-title">
+  <div id="ai-tutor-drawer" class="ai-tutor-drawer" role="dialog" aria-modal="true" aria-labelledby="ai-tutor-title">
     <div class="drawer-header">
       <div class="drawer-header-left">
         <span class="drawer-avatar">🤖</span>
@@ -34,7 +34,15 @@ import { apiBase } from "../lib/site";
           <span class="drawer-subtitle">CBSE Class 10 Socratic Problem Solver</span>
         </div>
       </div>
-      <button id="ai-tutor-close-btn" class="drawer-close-btn" type="button" aria-label="Close AI Doubt Tutor">✕</button>
+      <button
+        id="ai-tutor-close-btn"
+        class="drawer-close-btn"
+        type="button"
+        aria-label="Close AI Doubt Tutor"
+        onclick="window.closeAiTutorDrawer && window.closeAiTutorDrawer()"
+      >
+        ✕
+      </button>
     </div>
 
     <!-- Mode Selector Pills -->
@@ -119,11 +127,11 @@ import { apiBase } from "../lib/site";
         <button type="button" id="ai-clear-btn" class="ai-clear-link">Clear chat</button>
       </div>
     </form>
-  </dialog>
+  </div>
 </aside>
 
 <script is:inline define:vars={{ apiBase }}>
-  document.addEventListener('DOMContentLoaded', () => {
+  function initAiTutor() {
     const triggerBtn = document.getElementById('ai-tutor-trigger-btn');
     const drawer = document.getElementById('ai-tutor-drawer');
     const backdrop = document.getElementById('ai-tutor-backdrop');
@@ -149,37 +157,42 @@ import { apiBase } from "../lib/site";
         const slug = parts[parts.length - 1];
         if (slug) {
           const formatted = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-          contextText.textContent = `Chapter: ${formatted}`;
-          contextPill.style.display = 'inline-flex';
+          if (contextText) contextText.textContent = `Chapter: ${formatted}`;
+          if (contextPill) contextPill.style.display = 'inline-flex';
           return formatted;
         }
       }
-      contextPill.style.display = 'none';
+      if (contextPill) contextPill.style.display = 'none';
       return '';
     }
 
     const currentChapter = detectChapter();
 
     function openDrawer() {
-      drawer.setAttribute('open', '');
-      backdrop.classList.add('is-open');
-      triggerBtn.setAttribute('aria-expanded', 'true');
-      input.focus();
+      if (!drawer) return;
+      drawer.classList.add('is-open');
+      if (backdrop) backdrop.classList.add('is-open');
+      if (triggerBtn) triggerBtn.setAttribute('aria-expanded', 'true');
+      if (input) input.focus();
     }
 
     function closeDrawer() {
-      drawer.removeAttribute('open');
-      backdrop.classList.remove('is-open');
-      triggerBtn.setAttribute('aria-expanded', 'false');
+      if (!drawer) return;
+      drawer.classList.remove('is-open');
+      if (backdrop) backdrop.classList.remove('is-open');
+      if (triggerBtn) triggerBtn.setAttribute('aria-expanded', 'false');
     }
 
-    triggerBtn.addEventListener('click', openDrawer);
-    closeBtn.addEventListener('click', closeDrawer);
-    backdrop.addEventListener('click', closeDrawer);
+    window.openAiTutorDrawer = openDrawer;
+    window.closeAiTutorDrawer = closeDrawer;
+
+    if (triggerBtn) triggerBtn.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (backdrop) backdrop.addEventListener('click', closeDrawer);
 
     // Close on Escape key
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && drawer.hasAttribute('open')) {
+      if (e.key === 'Escape' && drawer && drawer.classList.contains('is-open')) {
         closeDrawer();
       }
     });
@@ -416,13 +429,21 @@ To solve this for CBSE Class 10 boards:
     });
 
     // Enter to submit without shift
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        handleSend();
-      }
-    });
-  });
+    if (input) {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          handleSend();
+        }
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAiTutor);
+  } else {
+    initAiTutor();
+  }
 </script>
 
 <style>
@@ -526,6 +547,7 @@ To solve this for CBSE Class 10 boards:
     top: 0;
     right: 0;
     bottom: 0;
+    left: auto;
     width: 100%;
     max-width: 480px;
     height: 100vh;
@@ -538,13 +560,17 @@ To solve this for CBSE Class 10 boards:
     margin: 0;
     display: flex;
     flex-direction: column;
-    z-index: 99999;
+    z-index: 999999;
     transform: translateX(100%);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
   }
 
-  .ai-tutor-drawer[open] {
+  .ai-tutor-drawer.is-open {
     transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
   /* Drawer Header */
@@ -555,6 +581,8 @@ To solve this for CBSE Class 10 boards:
     padding: 1.15rem 1.25rem;
     border-bottom: 1px solid var(--line);
     background: linear-gradient(135deg, #f0fdf4 0%, #f9fbfb 100%);
+    position: relative;
+    z-index: 10;
   }
 
   .drawer-header-left {
@@ -581,23 +609,31 @@ To solve this for CBSE Class 10 boards:
   }
 
   .drawer-close-btn {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    color: var(--muted);
+    position: relative;
+    z-index: 20;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--ink);
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: all 0.15s ease;
+    padding: 0;
+    flex-shrink: 0;
+    pointer-events: auto;
   }
 
   .drawer-close-btn:hover {
-    background: var(--line);
-    color: var(--ink);
+    background: #fee2e2;
+    border-color: #f87171;
+    color: #b91c1c;
+    transform: scale(1.06);
   }
 
   /* Mode Selector Pills */
