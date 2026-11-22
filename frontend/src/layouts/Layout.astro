@@ -68,7 +68,21 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
             <small>CBSE Class 10, online or at home</small>
           </span>
         </a>
-        <nav aria-label="Main navigation">
+        <button
+          type="button"
+          class="mobile-menu-toggle"
+          id="mobile-menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-nav-drawer"
+          aria-label="Open navigation menu"
+        >
+          <span class="hamburger-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <nav class="desktop-nav" aria-label="Main navigation">
           <ul class="nav-list">
             {
               links.map((link) => (
@@ -87,6 +101,66 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
           </ul>
         </nav>
       </div>
+
+      <!-- Mobile Navigation Drawer Backdrop -->
+      <div class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-hidden="true"></div>
+
+      <!-- Mobile Slide-Out Drawer -->
+      <aside
+        class="mobile-nav-drawer"
+        id="mobile-nav-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+      >
+        <div class="drawer-header">
+          <div class="drawer-brand">
+            <span class="brand-mark" aria-hidden="true">10</span>
+            <strong>{provider.name}</strong>
+          </div>
+          <button
+            type="button"
+            class="drawer-close-btn"
+            id="drawer-close-btn"
+            aria-label="Close navigation menu"
+          >
+            ✕
+          </button>
+        </div>
+        <nav class="drawer-nav" aria-label="Mobile navigation">
+          <ul class="drawer-nav-list">
+            {
+              links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                    aria-current={isActive(link.href) ? "page" : undefined}
+                    class={isActive(link.href) ? "active" : undefined}
+                  >
+                    <span>{link.label}</span>
+                    {link.external && <span class="external-icon" aria-hidden="true">↗</span>}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <div class="drawer-footer">
+          <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">
+            Book Free Trial Slot
+          </a>
+          <a
+            class="button drawer-wa-btn"
+            href={whatsappLink(provider.contact.whatsapp, `Hello ${provider.tutor_name}, I want to enquire about Class 10 tuition.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            💬 Chat on WhatsApp
+          </a>
+        </div>
+      </aside>
     </header>
     <main id="main">
       <slot />
@@ -250,6 +324,46 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
             subtree: true,
             childList: true,
             characterData: true
+          });
+        });
+      })();
+    </script>
+
+    <!-- Mobile Drawer Menu Controller -->
+    <script>
+      (function() {
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const closeBtn = document.getElementById('drawer-close-btn');
+        const backdrop = document.getElementById('mobile-nav-backdrop');
+        const drawer = document.getElementById('mobile-nav-drawer');
+
+        function openMenu() {
+          drawer?.classList.add('is-open');
+          backdrop?.classList.add('is-open');
+          toggleBtn?.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+          drawer?.classList.remove('is-open');
+          backdrop?.classList.remove('is-open');
+          toggleBtn?.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+
+        toggleBtn?.addEventListener('click', openMenu);
+        closeBtn?.addEventListener('click', closeMenu);
+        backdrop?.addEventListener('click', closeMenu);
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && drawer?.classList.contains('is-open')) {
+            closeMenu();
+          }
+        });
+
+        drawer?.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => {
+            closeMenu();
           });
         });
       })();
