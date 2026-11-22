@@ -47,6 +47,7 @@ export const GET: APIRoute = () => {
       "booking/",
       "login/",
       "resources/",
+      "resources/sample-papers/",
       "resources/real-numbers/",
       "resources/polynomials/",
       "resources/linear-equations-in-two-variables/",

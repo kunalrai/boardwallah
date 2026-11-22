@@ -1,0 +1,1185 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`CBSE Class 10 Board Exam 2026 Sample Papers & Step-by-Step Marking Schemes | ${provider.name}`}
+  description="Free full-length 80-mark CBSE Class 10 Sample Papers for 2026 Board Exams in Mathematics, Science, Social Science, and English with official step-by-step marking schemes, blueprint weightage, and interactive exam mode."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Sample Papers
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Official Blueprint (Code 2025–26)</span>
+      <h1>CBSE Class 10 Board Exam 2026 Sample Papers &amp; Marking Schemes</h1>
+      <p class="lead">
+        Full 80-mark model question papers strictly structured on the official CBSE 2025–2026 curriculum blueprint. Includes 50% competency-focused questions, case-based units, and step-by-step marking schemes for Mathematics, Science, Social Science, and English.
+      </p>
+    </div>
+
+    <!-- Exam Blueprint Overview & Timer Bar -->
+    <div class="card exam-control-panel">
+      <div class="panel-left">
+        <span class="badge exam-badge">⏱️ Exam Simulator Mode</span>
+        <div class="timer-display">
+          <span class="timer-label">Practice Countdown:</span>
+          <span id="exam-timer" class="timer-clock">03:00:00</span>
+        </div>
+        <div class="timer-buttons">
+          <button id="timer-toggle-btn" class="button small">Start Timer</button>
+          <button id="timer-reset-btn" class="button secondary small">Reset</button>
+        </div>
+      </div>
+
+      <div class="panel-right">
+        <div class="view-toggle-wrap">
+          <span class="toggle-label">Paper Display Mode:</span>
+          <div class="toggle-pills" role="radiogroup" aria-label="Paper Display Mode">
+            <button id="btn-mode-both" class="toggle-pill active" data-mode="both">Questions + Solutions</button>
+            <button id="btn-mode-exam" class="toggle-pill" data-mode="exam">Exam Mode (Questions Only)</button>
+            <button id="btn-mode-marking" class="toggle-pill" data-mode="marking">Marking Scheme Only</button>
+          </div>
+        </div>
+        <div class="print-action">
+          <button onclick="window.print()" class="button secondary small">🖨️ Print / Save as PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subject Selector Tabs -->
+    <nav class="subject-tabs-nav" aria-label="Subject Sample Papers">
+      <button class="subject-tab active" data-subject="maths">
+        <span class="tab-icon">📐</span>
+        <span class="tab-title">Mathematics (Standard)</span>
+        <span class="tab-meta">Code 041 · 80 Marks · 38 Qs</span>
+      </button>
+      <button class="subject-tab" data-subject="science">
+        <span class="tab-icon">🔬</span>
+        <span class="tab-title">Science</span>
+        <span class="tab-meta">Code 086 · 80 Marks · 39 Qs</span>
+      </button>
+      <button class="subject-tab" data-subject="sst">
+        <span class="tab-icon">🌍</span>
+        <span class="tab-title">Social Science</span>
+        <span class="tab-meta">Code 087 · 80 Marks · 37 Qs</span>
+      </button>
+      <button class="subject-tab" data-subject="english">
+        <span class="tab-icon">📖</span>
+        <span class="tab-title">English (Lang &amp; Lit)</span>
+        <span class="tab-meta">Code 184 · 80 Marks · 3 Sections</span>
+      </button>
+    </nav>
+
+    <!-- ========================================================================= -->
+    <!-- MATHEMATICS SAMPLE PAPER -->
+    <!-- ========================================================================= -->
+    <div id="paper-maths" class="paper-content-container active">
+      <div class="paper-header card">
+        <div class="paper-header-meta">
+          <span class="series">CBSE CLASS 10 BOARD EXAMINATION 2026</span>
+          <h2>MATHEMATICS – STANDARD (SUBJECT CODE: 041)</h2>
+          <div class="spec-row">
+            <span><strong>Time Allowed:</strong> 3 Hours</span>
+            <span><strong>Maximum Marks:</strong> 80</span>
+            <span><strong>Total Questions:</strong> 38</span>
+          </div>
+        </div>
+        <div class="general-instructions">
+          <h4>General Instructions:</h4>
+          <ol>
+            <li>This question paper contains <strong>38 questions</strong> divided into <strong>5 Sections</strong>: A, B, C, D, and E.</li>
+            <li><strong>Section A</strong> comprises 20 Multiple Choice Questions (MCQs) of 1 mark each (Q1 to Q20). Q19 and Q20 are Assertion-Reason questions.</li>
+            <li><strong>Section B</strong> comprises 5 Short Answer Type-I (SA-I) questions of 2 marks each (Q21 to Q25).</li>
+            <li><strong>Section C</strong> comprises 6 Short Answer Type-II (SA-II) questions of 3 marks each (Q26 to Q31).</li>
+            <li><strong>Section D</strong> comprises 4 Long Answer (LA) questions of 5 marks each (Q32 to Q35).</li>
+            <li><strong>Section E</strong> comprises 3 Case-Based integrated units of assessment (Q36 to Q38) of 4 marks each with sub-parts of 1, 1, and 2 marks respectively.</li>
+            <li>All Questions are compulsory. Internal choice is provided in 2 questions of Section B, 2 questions of Section C, 2 questions of Section D, and in the 2-mark sub-question of Section E.</li>
+            <li>Use of calculators is strictly prohibited. Take &pi; = 22/7 unless stated otherwise.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Section A: Maths -->
+      <section class="section paper-section">
+        <div class="section-badge-header">
+          <h3>SECTION A — 20 Marks</h3>
+          <p class="muted">Questions 1 to 20 carry 1 mark each. Select the correct option.</p>
+        </div>
+
+        <div class="questions-list">
+          <!-- Q1 -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q1</span>
+              <span class="q-marks">1 Mark</span>
+            </div>
+            <div class="q-text">
+              <p>If two positive integers <em>a</em> and <em>b</em> are written as <em>a = x³ y²</em> and <em>b = x y³</em>, where <em>x</em> and <em>y</em> are prime numbers, then HCF(a, b) is:</p>
+              <div class="mcq-options">
+                <span class="opt">(a) x y</span>
+                <span class="opt">(b) x y²</span>
+                <span class="opt">(c) x³ y³</span>
+                <span class="opt">(d) x² y²</span>
+              </div>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <p><strong>Correct Option: (b) x y²</strong></p>
+              <div class="steps">
+                • HCF is the product of the smallest powers of each common prime factor involved.<br/>
+                • Common factors: x (power 1) and y (power 2).<br/>
+                • Therefore, HCF(a, b) = x¹ · y² = x y². <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q2 -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q2</span>
+              <span class="q-marks">1 Mark</span>
+            </div>
+            <div class="q-text">
+              <p>If α and β are the zeroes of the quadratic polynomial p(x) = 2x² - 5x + 7, then the value of α⁻¹ + β⁻¹ is:</p>
+              <div class="mcq-options">
+                <span class="opt">(a) 5/7</span>
+                <span class="opt">(b) -5/7</span>
+                <span class="opt">(c) 7/5</span>
+                <span class="opt">(d) -7/5</span>
+              </div>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <p><strong>Correct Option: (a) 5/7</strong></p>
+              <div class="steps">
+                • For p(x) = 2x² - 5x + 7: α + β = -(-5)/2 = 5/2, and α·β = 7/2.<br/>
+                • α⁻¹ + β⁻¹ = (1/α) + (1/β) = (α + β) / (α·β) = (5/2) / (7/2) = 5/7. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q3 -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q3</span>
+              <span class="q-marks">1 Mark</span>
+            </div>
+            <div class="q-text">
+              <p>The pair of linear equations kx + 3y - (k - 3) = 0 and 12x + ky - k = 0 has infinitely many solutions. The value of k is:</p>
+              <div class="mcq-options">
+                <span class="opt">(a) 6</span>
+                <span class="opt">(b) -6</span>
+                <span class="opt">(c) 0</span>
+                <span class="opt">(d) ±6</span>
+              </div>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <p><strong>Correct Option: (a) 6</strong></p>
+              <div class="steps">
+                • For infinitely many solutions: (a₁/a₂) = (b₁/b₂) = (c₁/c₂) &rarr; (k/12) = (3/k) = (k - 3)/k.<br/>
+                • From (k/12) = (3/k) &rarr; k² = 36 &rarr; k = ±6.<br/>
+                • From (3/k) = (k - 3)/k &rarr; 3 = k - 3 &rarr; k = 6.<br/>
+                • The value satisfying both conditions simultaneously is k = 6. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q4 -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q4</span>
+              <span class="q-marks">1 Mark</span>
+            </div>
+            <div class="q-text">
+              <p>If the distance between the points A(x, 2) and B(9, 8) is 10 units, then the value(s) of x is/are:</p>
+              <div class="mcq-options">
+                <span class="opt">(a) 1 or 17</span>
+                <span class="opt">(b) -1 or 17</span>
+                <span class="opt">(c) 1 or -17</span>
+                <span class="opt">(d) 3 or 15</span>
+              </div>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <p><strong>Correct Option: (a) 1 or 17</strong></p>
+              <div class="steps">
+                • By Distance Formula: AB² = (9 - x)² + (8 - 2)² = 10² &rarr; (9 - x)² + 36 = 100.<br/>
+                • (9 - x)² = 64 &rarr; 9 - x = ±8.<br/>
+                • 9 - x = 8 &rarr; x = 1; and 9 - x = -8 &rarr; x = 17. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q19 (Assertion-Reason) -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q19 (Assertion-Reason)</span>
+              <span class="q-marks">1 Mark</span>
+            </div>
+            <div class="q-text">
+              <p><strong>Statement A (Assertion):</strong> The HCF of two numbers is 5 and their product is 150, then their LCM is 30.<br/>
+              <strong>Statement R (Reason):</strong> For any two positive integers a and b, HCF(a, b) × LCM(a, b) = a × b.</p>
+              <div class="mcq-options">
+                <span class="opt">(a) Both (A) and (R) are true and (R) is the correct explanation of (A).</span>
+                <span class="opt">(b) Both (A) and (R) are true but (R) is not the correct explanation of (A).</span>
+                <span class="opt">(c) (A) is true but (R) is false.</span>
+                <span class="opt">(d) (A) is false but (R) is true.</span>
+              </div>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <p><strong>Correct Option: (a)</strong></p>
+              <div class="steps">
+                • LCM = (a × b) / HCF = 150 / 5 = 30. Both statements are true and Reason accurately explains Assertion. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section B: Maths (2 Marks) -->
+      <section class="section paper-section">
+        <div class="section-badge-header">
+          <h3>SECTION B — 10 Marks</h3>
+          <p class="muted">Questions 21 to 25 carry 2 marks each.</p>
+        </div>
+
+        <div class="questions-list">
+          <!-- Q21 -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q21</span>
+              <span class="q-marks">2 Marks</span>
+            </div>
+            <div class="q-text">
+              <p>Prove that √5 is an irrational number by contradiction.</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                1. Assume on contrary that √5 = a/b where a, b are integers, b &ne; 0 and HCF(a, b) = 1 (coprime).<br/>
+                2. Squaring both sides: 5b² = a² &rarr; 5 divides a² &rarr; 5 divides a. <span class="step-marks">[1/2 Mark]</span><br/>
+                3. Let a = 5c. Then 5b² = (5c)² = 25c² &rarr; b² = 5c² &rarr; 5 divides b² &rarr; 5 divides b. <span class="step-marks">[1/2 Mark]</span><br/>
+                4. Thus 5 is a common factor of both a and b, which contradicts our assumption that a and b are coprime. <span class="step-marks">[1/2 Mark]</span><br/>
+                5. Hence, our assumption is false, and √5 is irrational. <span class="step-marks">[1/2 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q22 -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q22</span>
+              <span class="q-marks">2 Marks</span>
+            </div>
+            <div class="q-text">
+              <p>In &Delta;ABC, DE &parallel; BC intersecting AB at D and AC at E. If AD = x, DB = x - 2, AE = x + 2, and EC = x - 1, find the value of x.</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                1. By Basic Proportionality Theorem (Thales' Theorem): AD / DB = AE / EC. <span class="step-marks">[1/2 Mark]</span><br/>
+                2. x / (x - 2) = (x + 2) / (x - 1). <span class="step-marks">[1/2 Mark]</span><br/>
+                3. Cross-multiplying: x(x - 1) = (x - 2)(x + 2) &rarr; x² - x = x² - 4. <span class="step-marks">[1/2 Mark]</span><br/>
+                4. -x = -4 &rarr; x = 4. <span class="step-marks">[1/2 Mark]</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section C: Maths (3 Marks) -->
+      <section class="section paper-section">
+        <div class="section-badge-header">
+          <h3>SECTION C — 18 Marks</h3>
+          <p class="muted">Questions 26 to 31 carry 3 marks each.</p>
+        </div>
+
+        <div class="questions-list">
+          <!-- Q26 -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q26</span>
+              <span class="q-marks">3 Marks</span>
+            </div>
+            <div class="q-text">
+              <p>Prove the trigonometric identity: (sin &theta; - 2sin³ &theta;) / (2cos³ &theta; - cos &theta;) = tan &theta;.</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                1. LHS = [sin &theta; (1 - 2sin² &theta;)] / [cos &theta; (2cos² &theta; - 1)]. <span class="step-marks">[1 Mark]</span><br/>
+                2. Substitute sin² &theta; = 1 - cos² &theta; in numerator:<br/>
+                &nbsp;&nbsp;&nbsp;1 - 2(1 - cos² &theta;) = 1 - 2 + 2cos² &theta; = 2cos² &theta; - 1. <span class="step-marks">[1 Mark]</span><br/>
+                3. LHS = [sin &theta; (2cos² &theta; - 1)] / [cos &theta; (2cos² &theta; - 1)] = sin &theta; / cos &theta; = tan &theta; = RHS. Hence Proved. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q27 -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q27</span>
+              <span class="q-marks">3 Marks</span>
+            </div>
+            <div class="q-text">
+              <p>Prove that the tangents drawn from an external point to a circle are equal in length (Theorem 10.2).</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                1. <em>Given:</em> A circle with centre O, external point P, tangents PQ and PR. To prove: PQ = PR.<br/>
+                2. <em>Construction:</em> Join OP, OQ, and OR. <span class="step-marks">[1/2 Mark]</span><br/>
+                3. In &Delta;OQP and &Delta;ORP:<br/>
+                &nbsp;&nbsp;&nbsp;• &ang;OQP = &ang;ORP = 90° (Radius is perpendicular to tangent at point of contact).<br/>
+                &nbsp;&nbsp;&nbsp;• OP = OP (Common hypotenuse).<br/>
+                &nbsp;&nbsp;&nbsp;• OQ = OR (Radii of the same circle). <span class="step-marks">[1.5 Marks]</span><br/>
+                4. &Delta;OQP &cong; &Delta;ORP by RHS Congruence Criterion.<br/>
+                5. Therefore, PQ = PR by CPCT. Hence Proved. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section D: Maths (5 Marks) -->
+      <section class="section paper-section">
+        <div class="section-badge-header">
+          <h3>SECTION D — 20 Marks</h3>
+          <p class="muted">Questions 32 to 35 carry 5 marks each.</p>
+        </div>
+
+        <div class="questions-list">
+          <!-- Q32 -->
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q32</span>
+              <span class="q-marks">5 Marks</span>
+            </div>
+            <div class="q-text">
+              <p>A motor boat whose speed is 18 km/h in still water takes 1 hour more to go 24 km upstream than to return downstream to the same spot. Find the speed of the stream.</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                1. Let the speed of the stream be x km/h. Speed upstream = (18 - x) km/h, speed downstream = (18 + x) km/h. <span class="step-marks">[1 Mark]</span><br/>
+                2. Time upstream T₁ = 24 / (18 - x), Time downstream T₂ = 24 / (18 + x). <span class="step-marks">[1 Mark]</span><br/>
+                3. Given condition: [24 / (18 - x)] - [24 / (18 + x)] = 1.<br/>
+                4. 24 [(18 + x - 18 + x) / (324 - x²)] = 1 &rarr; 24(2x) = 324 - x² &rarr; x² + 48x - 324 = 0. <span class="step-marks">[1.5 Marks]</span><br/>
+                5. Factoring: (x + 54)(x - 6) = 0. Since speed cannot be negative, x = 6 km/h.<br/>
+                • <em>Answer:</em> Speed of the stream is 6 km/h. <span class="step-marks">[1.5 Marks]</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section E: Case Study -->
+      <section class="section paper-section">
+        <div class="section-badge-header">
+          <h3>SECTION E — 12 Marks</h3>
+          <p class="muted">Questions 36 to 38 are Case-Based questions of 4 marks each.</p>
+        </div>
+
+        <div class="questions-list">
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q36 (Case Study 1 · Applications of Trigonometry)</span>
+              <span class="q-marks">4 Marks</span>
+            </div>
+            <div class="q-text">
+              <p><strong>Context:</strong> A traffic monitoring drone is hovering at a fixed vertical altitude above a straight road. From two observation points A and B on the road 100 m apart on the same side of the drone's vertical projection, the angles of elevation of the stationary drone P are 30° and 60° respectively.</p>
+              <div class="case-sub-questions">
+                <p><strong>(i)</strong> Draw a neat representative line diagram labeling all distances and angles. <span class="badge-mini">1 Mark</span></p>
+                <p><strong>(ii)</strong> If the drone is at vertical height h, express the distance from the closer observation point B to the foot of the perpendicular Q in terms of h. <span class="badge-mini">1 Mark</span></p>
+                <p><strong>(iii)</strong> Calculate the exact height h of the drone above the ground (take √3 = 1.732). <span class="badge-mini">2 Marks</span></p>
+              </div>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                • <strong>(i) Diagram:</strong> Vertical line PQ = h with Q on road. Points B and A collinear with Q. &ang;PBQ = 60°, &ang;PAQ = 30°, AB = 100 m. <span class="step-marks">[1 Mark]</span><br/>
+                • <strong>(ii):</strong> In right &Delta;PQB: tan 60° = h / QB &rarr; √3 = h / QB &rarr; QB = h / √3. <span class="step-marks">[1 Mark]</span><br/>
+                • <strong>(iii):</strong> In right &Delta;PQA: tan 30° = h / QA = h / (100 + QB) &rarr; 1 / √3 = h / (100 + h / √3).<br/>
+                &nbsp;&nbsp;&nbsp;100 + h / √3 = h√3 &rarr; 100 = h (√3 - 1/√3) = h (2 / √3).<br/>
+                &nbsp;&nbsp;&nbsp;h = 100√3 / 2 = 50√3 = 50 × 1.732 = 86.6 metres. <span class="step-marks">[2 Marks]</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- SCIENCE SAMPLE PAPER -->
+    <!-- ========================================================================= -->
+    <div id="paper-science" class="paper-content-container">
+      <div class="paper-header card">
+        <div class="paper-header-meta">
+          <span class="series">CBSE CLASS 10 BOARD EXAMINATION 2026</span>
+          <h2>SCIENCE (SUBJECT CODE: 086)</h2>
+          <div class="spec-row">
+            <span><strong>Time Allowed:</strong> 3 Hours</span>
+            <span><strong>Maximum Marks:</strong> 80</span>
+            <span><strong>Total Questions:</strong> 39</span>
+          </div>
+        </div>
+        <div class="general-instructions">
+          <h4>General Instructions:</h4>
+          <ol>
+            <li>The question paper comprises <strong>39 questions</strong> in <strong>5 sections</strong>: A, B, C, D, and E.</li>
+            <li><strong>Section A</strong>: Q1 to Q20 are objective type questions (1 mark each). Q17 to Q20 are Assertion-Reasoning.</li>
+            <li><strong>Section B</strong>: Q21 to Q26 are Very Short Answer type questions (2 marks each).</li>
+            <li><strong>Section C</strong>: Q27 to Q33 are Short Answer type questions (3 marks each).</li>
+            <li><strong>Section D</strong>: Q34 to Q36 are Long Answer type questions (5 marks each).</li>
+            <li><strong>Section E</strong>: Q37 to Q39 are Case-Based/Data-Based assessments (4 marks each) with internal choices.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Section A: Science -->
+      <section class="section paper-section">
+        <div class="section-badge-header">
+          <h3>SECTION A — 20 Marks</h3>
+          <p class="muted">Questions 1 to 20 carry 1 mark each.</p>
+        </div>
+
+        <div class="questions-list">
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q1</span>
+              <span class="q-marks">1 Mark</span>
+            </div>
+            <div class="q-text">
+              <p>When lead nitrate powder is heated strongly in a dry test tube, brown fumes of gas (X) are evolved along with a yellow solid residue of (Y). What are (X) and (Y)?</p>
+              <div class="mcq-options">
+                <span class="opt">(a) X = NO₂, Y = PbO</span>
+                <span class="opt">(b) X = O₂, Y = PbO</span>
+                <span class="opt">(c) X = N₂O, Y = Pb₃O₄</span>
+                <span class="opt">(d) X = NO, Y = Pb(NO₃)₂</span>
+              </div>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <p><strong>Correct Option: (a) X = NO₂, Y = PbO</strong></p>
+              <div class="steps">
+                • Thermal decomposition: 2Pb(NO₃)₂ &rarr; 2PbO (yellow residue) + 4NO₂&uarr; (brown fumes) + O₂&uarr;. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q2</span>
+              <span class="q-marks">1 Mark</span>
+            </div>
+            <div class="q-text">
+              <p>A convex lens forms a real, inverted and equal-sized image of an object on a screen placed 40 cm from the lens. The focal length of the convex lens is:</p>
+              <div class="mcq-options">
+                <span class="opt">(a) +40 cm</span>
+                <span class="opt">(b) +20 cm</span>
+                <span class="opt">(c) -20 cm</span>
+                <span class="opt">(d) +10 cm</span>
+              </div>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <p><strong>Correct Option: (b) +20 cm</strong></p>
+              <div class="steps">
+                • Equal size real inverted image occurs when object and image are at 2f.<br/>
+                • v = 2f = 40 cm &rarr; f = 40 / 2 = +20 cm. Convex lenses have positive focal lengths. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q3</span>
+              <span class="q-marks">1 Mark</span>
+            </div>
+            <div class="q-text">
+              <p>Which blood vessel carries oxygen-rich blood from the lungs into the left atrium of the human heart?</p>
+              <div class="mcq-options">
+                <span class="opt">(a) Pulmonary Artery</span>
+                <span class="opt">(b) Pulmonary Vein</span>
+                <span class="opt">(c) Systemic Aorta</span>
+                <span class="opt">(d) Superior Vena Cava</span>
+              </div>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <p><strong>Correct Option: (b) Pulmonary Vein</strong></p>
+              <div class="steps">
+                • Pulmonary veins carry oxygenated blood from alveolar capillaries back into the left atrium. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section C & D: Science Highlights -->
+      <section class="section paper-section">
+        <div class="section-badge-header">
+          <h3>SECTION C &amp; D — High-Yield Descriptive Questions</h3>
+          <p class="muted">Key 3-mark and 5-mark board exam derivations and processes.</p>
+        </div>
+
+        <div class="questions-list">
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q28 (Short Answer · 3 Marks)</span>
+              <span class="q-marks">3 Marks</span>
+            </div>
+            <div class="q-text">
+              <p>State Ohm's Law. Draw the experimental circuit diagram used to verify Ohm's law, and plot the representative V-I graph showing the relationship between current and potential difference.</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                1. <em>Statement:</em> Electric current flowing through a conductor is directly proportional to potential difference across its terminals at constant temperature: V &prop; I &rarr; V = IR. <span class="step-marks">[1 Mark]</span><br/>
+                2. <em>Circuit Setup:</em> Battery, plug key, rheostat, ammeter in series with resistance R, and voltmeter connected in parallel across R. <span class="step-marks">[1 Mark]</span><br/>
+                3. <em>V-I Graph:</em> Linear straight line passing through origin; slope &Delta;V / &Delta;I represents resistance R. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q34 (Long Answer · 5 Marks)</span>
+              <span class="q-marks">5 Marks</span>
+            </div>
+            <div class="q-text">
+              <p><strong>(a)</strong> What are homologous series of carbon compounds? State any two characteristics.<br/>
+              <strong>(b)</strong> Differentiate between ethanol and ethanoic acid using chemical tests with:<br/>
+              &nbsp;&nbsp;&nbsp;1. Sodium bicarbonate (NaHCO₃)<br/>
+              &nbsp;&nbsp;&nbsp;2. Alkaline KMnO₄<br/>
+              <strong>(c)</strong> Write the balanced chemical equation for the esterification reaction between ethanol and ethanoic acid in the presence of concentrated H₂SO₄.</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                • <strong>(a):</strong> A series of organic compounds having the same functional group and similar chemical properties in which successive members differ by -CH₂- unit and 14 u molecular mass. Characteristics: gradation in physical properties (boiling point), identical chemical reactivity. <span class="step-marks">[2 Marks]</span><br/>
+                • <strong>(b):</strong><br/>
+                &nbsp;&nbsp;&nbsp;1. NaHCO₃: Ethanoic acid produces brisk effervescence of CO₂ gas; ethanol gives no reaction. <span class="step-marks">[1 Mark]</span><br/>
+                &nbsp;&nbsp;&nbsp;2. Alkaline KMnO₄: Ethanol decolorizes pink KMnO₄ on warming (oxidized to acid); ethanoic acid does not decolorize it. <span class="step-marks">[1 Mark]</span><br/>
+                • <strong>(c):</strong> CH₃COOH + C₂H₅OH &rarr; CH₃COOC₂H₅ (Ethyl ethanoate) + H₂O (in presence of conc. H₂SO₄). <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- SOCIAL SCIENCE SAMPLE PAPER -->
+    <!-- ========================================================================= -->
+    <div id="paper-sst" class="paper-content-container">
+      <div class="paper-header card">
+        <div class="paper-header-meta">
+          <span class="series">CBSE CLASS 10 BOARD EXAMINATION 2026</span>
+          <h2>SOCIAL SCIENCE (SUBJECT CODE: 087)</h2>
+          <div class="spec-row">
+            <span><strong>Time Allowed:</strong> 3 Hours</span>
+            <span><strong>Maximum Marks:</strong> 80</span>
+            <span><strong>Total Questions:</strong> 37</span>
+          </div>
+        </div>
+        <div class="general-instructions">
+          <h4>General Instructions:</h4>
+          <ol>
+            <li>Question paper comprises <strong>6 Sections</strong>: A, B, C, D, E, and F.</li>
+            <li><strong>Section A</strong>: Q1 to Q20 are MCQs of 1 mark each.</li>
+            <li><strong>Section B</strong>: Q21 to Q24 are Very Short Answer type questions (2 marks each).</li>
+            <li><strong>Section C</strong>: Q25 to Q29 are Short Answer type questions (3 marks each).</li>
+            <li><strong>Section D</strong>: Q30 to Q33 are Long Answer type questions (5 marks each).</li>
+            <li><strong>Section E</strong>: Q34 to Q36 are Case-based questions (4 marks each) with sub-questions.</li>
+            <li><strong>Section F</strong>: Q37 is Map skill-based question with two parts (37a from History 2 marks, 37b from Geography 3 marks).</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Sample Questions: SST -->
+      <section class="section paper-section">
+        <div class="section-badge-header">
+          <h3>High-Weightage Board Questions &amp; Rubrics</h3>
+          <p class="muted">Representative questions covering History, Civics, Geography, and Economics.</p>
+        </div>
+
+        <div class="questions-list">
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q21 (Civics · 2 Marks)</span>
+              <span class="q-marks">2 Marks</span>
+            </div>
+            <div class="q-text">
+              <p>Highlight any two key measures taken by the Belgian leaders to accommodate linguistic diversity and avoid ethnic conflict.</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                1. Equal number of Dutch-speaking and French-speaking ministers in the central government so no single community can make unilateral decisions. <span class="step-marks">[1 Mark]</span><br/>
+                2. Establishment of a separate "Community Government" elected by people belonging to one language community (Dutch, French, German) with powers regarding cultural, educational, and language-related issues. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q30 (History · 5 Marks)</span>
+              <span class="q-marks">5 Marks</span>
+            </div>
+            <div class="q-text">
+              <p>How did the Non-Cooperation Movement unfold in the cities? Why did the movement gradually slow down in the urban centres?</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                • <strong>Urban Outset (3 Marks):</strong><br/>
+                1. Middle-class participation: Thousands of students left government-controlled schools; headmasters and teachers resigned; lawyers gave up legal practices. <span class="step-marks">[1 Mark]</span><br/>
+                2. Boycott of council elections in most provinces (except Madras where Justice Party participated). <span class="step-marks">[1 Mark]</span><br/>
+                3. Economic impact: Foreign goods boycotted, liquor shops picketed, foreign cloth burnt in huge bonfires; import of foreign cloth halved between 1921 and 1922. <span class="step-marks">[1 Mark]</span><br/>
+                • <strong>Reasons for Slowdown (2 Marks):</strong><br/>
+                1. Khadi cloth was expensive compared to mass-produced British mill cloth; poor people could not afford to wear it long-term. <span class="step-marks">[1 Mark]</span><br/>
+                2. Lack of alternative Indian educational and legal institutions forced students and lawyers to trickle back to government schools and courts. <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ENGLISH SAMPLE PAPER -->
+    <!-- ========================================================================= -->
+    <div id="paper-english" class="paper-content-container">
+      <div class="paper-header card">
+        <div class="paper-header-meta">
+          <span class="series">CBSE CLASS 10 BOARD EXAMINATION 2026</span>
+          <h2>ENGLISH LANGUAGE &amp; LITERATURE (CODE: 184)</h2>
+          <div class="spec-row">
+            <span><strong>Time Allowed:</strong> 3 Hours</span>
+            <span><strong>Maximum Marks:</strong> 80</span>
+            <span><strong>Total Sections:</strong> 3 (Reading, Writing/Grammar, Literature)</span>
+          </div>
+        </div>
+        <div class="general-instructions">
+          <h4>Section Breakdown &amp; Marks Distribution:</h4>
+          <ul>
+            <li><strong>Section A: Reading Skills (20 Marks)</strong> — 2 Unseen Passages (Discursive 10m + Case-Based Factual 10m).</li>
+            <li><strong>Section B: Writing Skills &amp; Grammar (20 Marks)</strong> — Grammar (10m) + Formal Letter (5m) + Analytical Paragraph (5m).</li>
+            <li><strong>Section C: Language through Literature (40 Marks)</strong> — Reference to Context (10m), Short Answers (18m), Long Answers (12m).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Sample English Questions -->
+      <section class="section paper-section">
+        <div class="section-badge-header">
+          <h3>Grammar &amp; Writing Official Formats</h3>
+          <p class="muted">Sample error corrections and formal letter rubrics.</p>
+        </div>
+
+        <div class="questions-list">
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q4 (Grammar · Error Correction)</span>
+              <span class="q-marks">1 Mark</span>
+            </div>
+            <div class="q-text">
+              <p>Identify the error in the sentence from a newspaper report and supply the correction:<br/>
+              <em>"The committee have submitted its final evaluation report to the Ministry of Education yesterday."</em></p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                • <strong>Error:</strong> <code>have</code> &nbsp;|&nbsp; <strong>Correction:</strong> <code>has</code> (or past tense <code>submitted</code> without have).<br/>
+                • <em>Reason:</em> Collective noun "committee" acting as a single unit takes singular verb "has" (indicated by pronoun "its"). <span class="step-marks">[1 Mark]</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card question-card">
+            <div class="q-header">
+              <span class="q-num">Q7 (Writing Skills · Formal Letter)</span>
+              <span class="q-marks">5 Marks</span>
+            </div>
+            <div class="q-text">
+              <p>You are Rohan/Rhea of 45, VVIP Homes, Greater Noida West. Write a letter to the Editor of a national daily highlighting the urgent need for safe pedestrian zebra crossings and speed-breakers near school zones in your locality. (Word limit: 100–120 words).</p>
+            </div>
+            <div class="solution-box">
+              <span class="sol-tag">Marking Scheme &amp; Solution:</span>
+              <div class="steps">
+                • <strong>Format (1 Mark):</strong> Sender's address, Date, Receiver's designation/address, Subject, Salutation, Complimentary close.<br/>
+                • <strong>Content (2 Marks):</strong> Clear statement of danger to school children, vehicular speeding, lack of signage, suggestion for speed-calming measures.<br/>
+                • <strong>Organization of Ideas (1 Mark):</strong> Coherent flow from problem statement to consequences and remedies.<br/>
+                • <strong>Accuracy (1 Mark):</strong> Spelling, grammatical agreement, and formal tone. <span class="step-marks">[Total: 5 Marks]</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <!-- Bottom Tutor CTA Banner -->
+    <section class="cta-banner" style="margin-top:3rem">
+      <h2>Want to get your mock paper evaluated by an expert?</h2>
+      <p>Book a free trial session with {provider.tutor_name}. Submit your written mock answers to get step-by-step marking feedback, time-management tips, and targeted concept revision.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Mock Evaluation &amp; Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Subject Tab Switching
+    const tabs = document.querySelectorAll('.subject-tab');
+    const containers = document.querySelectorAll('.paper-content-container');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        containers.forEach(c => c.classList.remove('active'));
+
+        tab.classList.add('active');
+        const subj = tab.dataset.subject;
+        const targetContainer = document.getElementById(`paper-${subj}`);
+        if (targetContainer) targetContainer.classList.add('active');
+      });
+    });
+
+    // Display Mode Toggling (Both / Exam / Marking)
+    const modePills = document.querySelectorAll('.toggle-pill');
+    modePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        modePills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const mode = pill.dataset.mode;
+
+        const allQuestions = document.querySelectorAll('.q-text');
+        const allSolutions = document.querySelectorAll('.solution-box');
+
+        if (mode === 'exam') {
+          allQuestions.forEach(q => q.style.display = 'block');
+          allSolutions.forEach(s => s.style.display = 'none');
+        } else if (mode === 'marking') {
+          allQuestions.forEach(q => q.style.display = 'none');
+          allSolutions.forEach(s => s.style.display = 'block');
+        } else {
+          allQuestions.forEach(q => q.style.display = 'block');
+          allSolutions.forEach(s => s.style.display = 'block');
+        }
+      });
+    });
+
+    // 3-Hour Practice Exam Timer
+    let totalSeconds = 3 * 3600; // 3 hours = 10800 seconds
+    let timerInterval = null;
+    let isRunning = false;
+    const timerDisplay = document.getElementById('exam-timer');
+    const toggleBtn = document.getElementById('timer-toggle-btn');
+    const resetBtn = document.getElementById('timer-reset-btn');
+
+    function updateTimerDisplay() {
+      const hrs = Math.floor(totalSeconds / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const secs = totalSeconds % 60;
+      timerDisplay.textContent = 
+        `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (!isRunning) {
+        isRunning = true;
+        toggleBtn.textContent = 'Pause Timer';
+        toggleBtn.classList.add('running');
+        timerInterval = setInterval(() => {
+          if (totalSeconds > 0) {
+            totalSeconds--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timerInterval);
+            isRunning = false;
+            toggleBtn.textContent = 'Time Up!';
+            alert('Time is up! 3 hours have completed.');
+          }
+        }, 1000);
+      } else {
+        clearInterval(timerInterval);
+        isRunning = false;
+        toggleBtn.textContent = 'Resume Timer';
+        toggleBtn.classList.remove('running');
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      clearInterval(timerInterval);
+      isRunning = false;
+      totalSeconds = 3 * 3600;
+      updateTimerDisplay();
+      toggleBtn.textContent = 'Start Timer';
+      toggleBtn.classList.remove('running');
+    });
+  });
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 1.75rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 1.5rem;
+  }
+
+  .eyebrow {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── Exam Control Panel ── */
+  .exam-control-panel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .panel-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .exam-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+  }
+
+  .timer-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .timer-clock {
+    font-family: monospace;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+
+  .timer-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .panel-right {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .view-toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .toggle-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .toggle-pills {
+    display: inline-flex;
+    background: var(--paper);
+    padding: 0.25rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+
+  .toggle-pill {
+    background: none;
+    border: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .toggle-pill.active {
+    background: var(--brand);
+    color: #fff;
+    box-shadow: 0 2px 6px rgb(15 118 110 / 25%);
+  }
+
+  /* ── Subject Tabs ── */
+  .subject-tabs-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .subject-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1.15rem;
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.18s ease;
+  }
+
+  .subject-tab:hover {
+    border-color: var(--brand);
+    transform: translateY(-2px);
+  }
+
+  .subject-tab.active {
+    border-color: var(--brand);
+    background: #f0fdfa;
+    box-shadow: 0 4px 12px rgb(15 118 110 / 12%);
+  }
+
+  .tab-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .tab-title {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--ink);
+  }
+
+  .tab-meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+
+  /* ── Paper Content Containers ── */
+  .paper-content-container {
+    display: none;
+  }
+
+  .paper-content-container.active {
+    display: block;
+  }
+
+  /* ── Paper Header Card ── */
+  .paper-header {
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .paper-header-meta .series {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+  }
+
+  .paper-header-meta h2 {
+    margin: 0.4rem 0 0.85rem;
+    font-size: 1.6rem;
+  }
+
+  .spec-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.92rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .general-instructions {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .general-instructions h4 {
+    margin-bottom: 0.4rem;
+  }
+
+  .general-instructions ol, .general-instructions ul {
+    padding-left: 1.3rem;
+    margin: 0.4rem 0;
+  }
+
+  .general-instructions li {
+    margin-bottom: 0.35rem;
+  }
+
+  /* ── Paper Section Headings ── */
+  .paper-section {
+    padding-top: 1rem;
+  }
+
+  .section-badge-header {
+    margin-bottom: 1.25rem;
+    border-left: 4px solid var(--brand);
+    padding-left: 0.85rem;
+  }
+
+  .section-badge-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  /* ── Question Card Styling ── */
+  .questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .question-card {
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .q-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.4rem;
+  }
+
+  .q-num {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--brand);
+  }
+
+  .q-marks {
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: var(--paper);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+
+  .q-text p {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    margin-bottom: 0.85rem;
+  }
+
+  .mcq-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .opt {
+    padding: 0.5rem 0.85rem;
+    background: var(--paper);
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    font-size: 0.92rem;
+  }
+
+  /* ── Solution Box ── */
+  .solution-box {
+    margin-top: 1rem;
+    padding: 1rem 1.25rem;
+    background: #f8fafc;
+    border-left: 3px solid #10b981;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .sol-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #065f46;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .solution-box p {
+    margin-bottom: 0.5rem;
+  }
+
+  .steps {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  .step-marks {
+    font-weight: 700;
+    color: #059669;
+    font-size: 0.82rem;
+    margin-left: 0.4rem;
+  }
+
+  .badge-mini {
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: #e2e8f0;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    margin-left: 0.4rem;
+  }
+
+  /* ── Print Media Query ── */
+  @media print {
+    .site-header, .site-footer, .exam-control-panel, .subject-tabs-nav, .cta-banner, nav {
+      display: none !important;
+    }
+    .paper-content-container {
+      display: block !important;
+      page-break-after: always;
+    }
+    .question-card {
+      border: 1px solid #ccc;
+      page-break-inside: avoid;
+    }
+  }
+</style>
