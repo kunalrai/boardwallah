@@ -357,11 +357,41 @@ const hindiChapters = [
     topics: ["अनुच्छेद लेखन (120 शब्द)", "औपचारिक व अनौपचारिक पत्र", "स्ववृत्त लेखन (बायोडाटा)", "ई-मेल लेखन प्रारूप", "विज्ञापन व सन्देश लेखन", "20-Question Quiz"],
   },
 ];
+const englishChapters = [
+  {
+    title: "First Flight: Prose (All 9 Chapters)",
+    chapter: "Core Reader (Prose) · English (Code 184)",
+    desc: "A Letter to God, Nelson Mandela, Two Stories about Flying, Anne Frank, Glimpses of India, Mijbil the Otter, Madam Rides the Bus, The Sermon at Benares, and The Proposal.",
+    href: "/resources/english-first-flight-prose/",
+    topics: ["A Letter to God", "Nelson Mandela", "Two Stories about Flying", "Anne Frank", "Glimpses of India", "Madam Rides the Bus", "The Proposal", "20-Question Quiz"],
+  },
+  {
+    title: "First Flight: Poetry (All 10 Poems)",
+    chapter: "Core Reader (Poetry) · English (Code 184)",
+    desc: "Dust of Snow, Fire and Ice, A Tiger in the Zoo, How to Tell Wild Animals, The Ball Poem, Amanda!, The Trees, Fog, Custard the Dragon, and For Anne Gregory with poetic devices.",
+    href: "/resources/english-first-flight-poetry/",
+    topics: ["Dust of Snow", "Fire and Ice", "Tiger in Zoo", "The Ball Poem", "Amanda!", "The Trees", "Fog", "Custard Dragon", "Anne Gregory", "20-Question Quiz"],
+  },
+  {
+    title: "Footprints Without Feet (Supplementary Reader · All 9 Chapters)",
+    chapter: "Supplementary Reader · English (Code 184)",
+    desc: "A Triumph of Surgery, The Thief's Story, The Midnight Visitor, A Question of Trust, Footprints without Feet, The Making of a Scientist, The Necklace, Bholi, and The Book That Saved the Earth.",
+    href: "/resources/english-footprints-without-feet/",
+    topics: ["Triumph of Surgery", "The Thief's Story", "Midnight Visitor", "Question of Trust", "Griffin", "Making of a Scientist", "The Necklace", "Bholi", "20-Question Quiz"],
+  },
+  {
+    title: "Grammar & Creative Writing Skills (Sections A & B)",
+    chapter: "Grammar & Writing (30 Marks) · English (Code 184)",
+    desc: "Tenses, Modals, Subject-Verb Concord, Reported Speech, Determiners, CBSE Formal Letters (Editor, Complaint, Inquiry, Order) and Analytical Paragraphs with rubrics.",
+    href: "/resources/english-grammar-and-writing/",
+    topics: ["Tenses & Conditionals", "Subject-Verb Concord", "Reported Speech", "Modals & Determiners", "Formal Letter Format", "Analytical Paragraph", "20-Question Quiz"],
+  },
+];
 ---
 
 <Layout
-  title={`CBSE Class 10 Maths, Science, Social Science & Hindi Revision Notes, Diagrams & Quizzes | ${provider.name}`}
-  description="Free chapter-wise revision notes, interactive SVG diagrams, geometric proofs, and board exam quizzes for all CBSE Class 10 Mathematics, Science, Social Science, and Hindi Course 'A' chapters."
+  title={`CBSE Class 10 Maths, Science, Social Science, English & Hindi Revision Notes, Diagrams & Quizzes | ${provider.name}`}
+  description="Free chapter-wise revision notes, interactive SVG diagrams, geometric proofs, and board exam quizzes for all CBSE Class 10 Mathematics, Science, Social Science, English Language & Literature, and Hindi chapters."
 >
   <div class="wrap">
     <nav class="small" aria-label="Breadcrumb">
@@ -370,7 +400,7 @@ const hindiChapters = [
 
     <div class="resource-header">
       <span class="eyebrow">CBSE Class 10 · Academic Learning Hub</span>
-      <h1>Class 10 Maths, Science, Social Science &amp; Hindi Revision Guides</h1>
+      <h1>Class 10 Maths, Science, Social Science, English &amp; Hindi Revision Guides</h1>
       <p class="lead">
         Comprehensive notes, interactive SVG diagrams, formula sheets, literary analyses, and 20-question board quizzes covering 100% of the CBSE Class 10 curriculum.
       </p>
@@ -567,6 +597,32 @@ const hindiChapters = [
 
       <div class="grid two chapters-grid">
         {hindiChapters.map((ch) => (
+          <article class="card chapter-card">
+            <span class="tag">{ch.chapter}</span>
+            <h2>{ch.title}</h2>
+            <p class="muted">{ch.desc}</p>
+            <div class="topic-tags">
+              {ch.topics.map((t) => (
+                <span class="topic-tag">{t}</span>
+              ))}
+            </div>
+            <div class="actions" style="margin-top:auto;padding-top:1rem">
+              <a href={ch.href} class="button">Explore Chapter &amp; Quiz →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- English Language & Literature Section -->
+    <section id="english" class="section">
+      <div class="section-title-wrap">
+        <h2>📖 Class 10 English Language &amp; Literature (Code 184)</h2>
+        <p class="muted">First Flight (Prose &amp; Poetry), Footprints Without Feet (Supplementary Reader), and Grammar &amp; Creative Writing Skills with official rubrics and 20-question practice quizzes.</p>
+      </div>
+
+      <div class="grid two chapters-grid">
+        {englishChapters.map((ch) => (
           <article class="card chapter-card">
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>

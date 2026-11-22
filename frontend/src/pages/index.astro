@@ -26,7 +26,7 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
       <div class="hero-text">
         <a href="/resources/" class="hero-announcement-pill" aria-label="Explore CBSE Class 10 Resources">
           <span class="pill-badge">Free Resources</span>
-          <span class="pill-text">Explore 47+ Chapter Revision Guides, Diagrams &amp; Quizzes &rarr;</span>
+          <span class="pill-text">Explore 51+ Chapter Revision Guides, Diagrams &amp; Quizzes &rarr;</span>
         </a>
 
         <h1>Master CBSE Class 10 with {provider.tutor_name}</h1>
@@ -117,13 +117,28 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
           </ul>
           <a href="/resources/#hindi" class="hub-link">Explore Hindi Guides &rarr;</a>
         </article>
+
+        <article class="hub-card hub-english">
+          <div class="hub-header">
+            <span class="hub-icon">📖</span>
+            <span class="hub-tag">Code 184 · Complete Syllabus</span>
+          </div>
+          <h3>English Language &amp; Literature</h3>
+          <p>First Flight (Prose &amp; Poetry), Footprints Without Feet, Grammar (Tenses, Modals, Concord) &amp; Writing (Letters &amp; Paragraphs).</p>
+          <ul class="hub-features">
+            <li>✓ All 9 prose chapters &amp; 10 poems</li>
+            <li>✓ All 9 supplementary reader chapters</li>
+            <li>✓ 80+ board practice MCQs &amp; RTC extracts</li>
+          </ul>
+          <a href="/resources/#english" class="hub-link">Explore English Guides &rarr;</a>
+        </article>
       </div>
 
       <div class="hub-footer-cta">
         <div class="hub-banner">
           <div class="hub-banner-text">
             <strong>Need instant chapter revision or self-assessment?</strong>
-            <p>Browse our complete library of 47+ chapter notes, formula sheets, and 900+ questions with step-by-step solutions.</p>
+            <p>Browse our complete library of 51+ chapter notes, formula sheets, and 980+ questions with step-by-step solutions.</p>
           </div>
           <a href="/resources/" class="button">Open Complete Resources Hub &rarr;</a>
         </div>
@@ -180,10 +195,10 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
           <span class="subj-title">Hindi Course 'A'</span>
           <span class="subj-badge">Complete Syllabus &amp; Quizzes &rarr;</span>
         </a>
-        <a href="/subjects/" class="subject-card interactive-subject-card">
+        <a href="/resources/#english" class="subject-card interactive-subject-card">
           <span class="subj-icon">📖</span>
           <span class="subj-title">English</span>
-          <span class="subj-badge">Tuition Syllabus &rarr;</span>
+          <span class="subj-badge">All Chapters &amp; Grammar &rarr;</span>
         </a>
       </div>
     </section>
@@ -341,6 +356,7 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
   .hub-science .hub-tag { background: #fef3c7; color: #92400e; }
   .hub-sst .hub-tag { background: #dcfce7; color: #15803d; }
   .hub-hindi .hub-tag { background: #fae8ff; color: #86198f; }
+  .hub-english .hub-tag { background: #ede9fe; color: #6d28d9; }
 
   .hub-card h3 {
     font-size: 1.25rem;

@@ -71,6 +71,10 @@ export const GET: APIRoute = () => {
     "resources/hindi-kshitij-kavya-khand/",
     "resources/hindi-kritika/",
     "resources/hindi-rachanatmak-lekhan/",
+    "resources/english-first-flight-prose/",
+    "resources/english-first-flight-poetry/",
+    "resources/english-footprints-without-feet/",
+    "resources/english-grammar-and-writing/",
   ];
   const urls = paths.map(
     (path) =>

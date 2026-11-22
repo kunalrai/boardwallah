@@ -1,0 +1,828 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`English Grammar & Writing Skills | CBSE Class 10 English | ${provider.name}`}
+  description="Master CBSE Class 10 English Grammar (Tenses, Modals, Concord, Reported Speech, Determiners) and Writing Skills (Formal Letters & Analytical Paragraphs) with official CBSE rubrics, visual layouts, and 20 practice questions."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Grammar &amp; Writing Skills
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · English Language &amp; Literature (Code 184) · Sections A &amp; B</span>
+      <h1>English Grammar, Writing Skills &amp; Reading Masterclass</h1>
+      <p class="lead">
+        Comprehensive rules for all 5 CBSE grammar pillars (10 marks), official rubrics and blueprints for Formal Letters and Analytical Paragraphs (10 marks), reading comprehension strategies, and 20 board exam error-correction questions.
+      </p>
+    </div>
+
+    <!-- Core Concepts Section -->
+    <section class="section">
+      <h2>Section B: Applied Grammar &amp; Writing Foundations</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🕒 1. Tenses (Integrated Error Correction)</h3>
+          <p class="formula">Time-Frame Precision · Conditionals · Sequence of Tenses</p>
+          <ul class="clean-list">
+            <li><strong>Present Perfect vs. Simple Past:</strong> Use Simple Past when a past time marker is explicit ("He <em>visited</em> us yesterday", NOT "has visited"). Use Present Perfect for actions completed with current relevance ("She <em>has lived</em> here for five years").</li>
+            <li><strong>Past Perfect in Two Actions:</strong> The earlier action takes Past Perfect (had + V3), while the later action takes Simple Past ("The train <em>had left</em> before we <em>reached</em> the station").</li>
+            <li><strong>Conditional Clauses:</strong>
+              <br/>• Real Condition: If + Present Simple, will + base verb ("If it <em>rains</em>, we <em>will cancel</em> the match").
+              <br/>• Unreal Condition: If + Past Simple, would + base verb ("If I <em>had</em> wings, I <em>would fly</em>").
+            </li>
+            <li><strong>Since vs. For:</strong> 'Since' denotes a specific point in time (since 2018, since morning); 'For' denotes duration/period of time (for 3 days, for 5 hours).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚖️ 2. Subject-Verb Concord (Golden Rules)</h3>
+          <p class="formula">Proximity vs. Precedence · Collective &amp; Compound Nouns</p>
+          <ul class="clean-list">
+            <li><strong>Intervening Phrases ('As well as', 'Together with', 'Along with'):</strong> The verb agrees with the <em>first</em> subject, completely ignoring the intervening phrase:
+              <br/>• "The Captain, along with his players, <u>was</u> present." (Singular)
+            </li>
+            <li><strong>Correlative Conjunctions ('Either...or', 'Neither...nor', 'Not only...but also'):</strong> The verb agrees with the <em>nearest</em> subject:
+              <br/>• "Neither the teacher nor the students <u>were</u> satisfied." (Plural)
+              <br/>• "Neither the students nor the teacher <u>was</u> satisfied." (Singular)
+            </li>
+            <li><strong>Indefinite Pronouns:</strong> <em>Each, every, everyone, someone, nobody, neither</em> take singular verbs ("Everyone <u>has</u> submitted the assignment").</li>
+            <li><strong>Quantities &amp; Distance as a Single Unit:</strong> "Ten thousand rupees <u>is</u> a reasonable price." "Fifty kilometres <u>is</u> a long journey."</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🗣️ 3. Reported Speech (Direct to Indirect)</h3>
+          <p class="formula">Tense Shifts · Pronoun Mapping · Word Order Inversion</p>
+          <ul class="clean-list">
+            <li><strong>Tense Backshifting:</strong>
+              <br/>• Simple Present &rarr; Simple Past (writes &rarr; wrote)
+              <br/>• Simple Past &rarr; Past Perfect (wrote &rarr; had written)
+              <br/>• Present Continuous &rarr; Past Continuous (is writing &rarr; was writing)
+              <br/>• <em>Universal Truth Exception:</em> No tense change ("The teacher said that the sun rises in the east").
+            </li>
+            <li><strong>Questions (Assertive Structure):</strong>
+              <br/>• Wh-questions: Retain question word, shift to S + V order ("He asked me where I lived", NOT "where did I live").
+              <br/>• Yes/No questions: Use <em>if</em> or <em>whether</em> ("She asked if I was attending").
+            </li>
+            <li><strong>Imperatives (Commands/Requests):</strong> Converted using to-infinitive ("He ordered the guard <u>to open</u> the gate").</li>
+            <li><strong>Time/Place Modifiers:</strong> Now &rarr; then, today &rarr; that day, tomorrow &rarr; the following day, yesterday &rarr; the previous day, here &rarr; there.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🎛️ 4. Modals &amp; Determiners</h3>
+          <p class="formula">Nuances of Obligation, Deduction, and Quantification</p>
+          <ul class="clean-list">
+            <li><strong>Must vs. Should vs. Ought to:</strong>
+              <br/>• <em>Must:</em> Strong personal compulsion or logical deduction ("You must wear a helmet; it's the law").
+              <br/>• <em>Should:</em> General advice or recommendation ("You should eat more vegetables").
+              <br/>• <em>Ought to:</em> Moral duty or ethical obligation ("We ought to respect our elders").
+            </li>
+            <li><strong>Few vs. A Few vs. The Few (Countables):</strong>
+              <br/>• <em>Few:</em> Almost none (negative sense: "He has few friends, so he is lonely").
+              <br/>• <em>A few:</em> Some, a small number (positive sense: "I have a few questions").
+              <br/>• <em>The few:</em> All of the small number available ("The few books he had were stolen").
+            </li>
+            <li><strong>Little vs. A Little vs. The Little (Uncountables):</strong>
+              <br/>• <em>Little:</em> Hardly any (negative sense: "There is little water left").
+              <br/>• <em>A little:</em> Some amount (positive sense: "A little knowledge is a dangerous thing").
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>✉️ 5. Formal Letter Writing (Official CBSE Format)</h3>
+          <p class="formula">Word Limit: 100–120 Words · 5 Marks (Format 1M, Content 2M, Expression 2M)</p>
+          <ul class="clean-list">
+            <li><strong>Four Core Types:</strong>
+              <br/>1. <em>Letter to the Editor:</em> Drawing public/authority attention to social, civic, or environmental grievances.
+              <br/>2. <em>Letter of Complaint:</em> Defective consumer goods, poor customer service, municipal neglect.
+              <br/>3. <em>Letter of Inquiry:</em> Requesting details of professional courses, sports packages, coaching terms.
+              <br/>4. <em>Placing an Order:</em> Clear tabular item list, quantities, delivery specifications, payment mode.
+            </li>
+            <li><strong>Standard Format Sequence (Left-Aligned):</strong>
+              <br/>1. Sender's Address (2–3 lines)
+              <br/>2. Date (e.g., 22 November 2026)
+              <br/>3. Receiver's Designation &amp; Office Address
+              <br/>4. Subject (Concise, underlined: e.g., <em>Subject: Urgent Need for Street Light Repair in Sector 14</em>)
+              <br/>5. Salutation (Sir / Madam)
+              <br/>6. Body (3 Paragraphs: Introduction of issue &rarr; Causes &amp; impacts &rarr; Constructive remedies/appeal)
+              <br/>7. Complimentary Close (Yours sincerely / Yours faithfully) &amp; Sign-off
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📊 6. Analytical Paragraph Writing</h3>
+          <p class="formula">Word Limit: 100–120 Words · 5 Marks (Content 2M, Organization 2M, Accuracy 1M)</p>
+          <ul class="clean-list">
+            <li><strong>Input Data Types:</strong> Bar graphs, pie charts, survey tables, trend line graphs, or verbal cue outlines.</li>
+            <li><strong>Three-Tier Structure:</strong>
+              <br/>• <em>Introductory Sentence (1–2 lines):</em> Paraphrase the prompt using strong verbs: "The provided chart delineates...", "The bar graph illustrates the comparative shift in..."
+              <br/>• <em>Body Paragraph (6–8 lines):</em> Group data into patterns; highlight the highest peaks and lowest dips; use comparative linking devices: "In stark contrast to", "while", "surged by a whopping 40%", "witnessed a plateau", "gradually declined".
+              <br/>• <em>Concluding Sentence (2–3 lines):</em> Summarize the overarching trend objectively without introducing personal opinions or using first-person pronouns ("I feel").
+            </li>
+            <li><strong>Vocabulary Arsenal:</strong> Plummeted, skyrocketed, hovered around, accounted for, dominant share, negligible margin, steady progression.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Frameworks: Formal Letter &amp; Analytical Paragraph Blueprints</h2>
+
+      <div class="grid two">
+        <article class="card visual-card">
+          <span class="visual-badge">Official CBSE Template</span>
+          <h3>Formal Letter: Architectural Blueprint &amp; Rubric</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="340" fill="#f8fafc" />
+              
+              <!-- Letter Sheet -->
+              <rect x="30" y="20" width="320" height="300" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+              
+              <!-- Section Markers inside sheet -->
+              <text x="45" y="45" font-size="11" font-weight="700" fill="#0f172a">Sender's Address (2 lines)</text>
+              <text x="45" y="65" font-size="10" fill="#64748b">Date: 22 November 2026</text>
+              
+              <line x1="45" y1="75" x2="330" y2="75" stroke="#e2e8f0" stroke-width="1" />
+              <text x="45" y="95" font-size="11" font-weight="700" fill="#0f172a">The Editor, The Times of India, New Delhi</text>
+              
+              <line x1="45" y1="105" x2="330" y2="105" stroke="#e2e8f0" stroke-width="1" />
+              <text x="45" y="125" font-size="11" font-weight="700" fill="#0284c7">Subject: Need for Urban Waste Segregation</text>
+              <text x="45" y="145" font-size="11" font-weight="700" fill="#0f172a">Sir/Madam,</text>
+              
+              <!-- Body Paragraphs representation -->
+              <rect x="45" y="155" width="285" height="35" rx="4" fill="#f1f5f9" />
+              <text x="55" y="175" font-size="10" fill="#334155">Para 1: Intro ("Through the columns of your esteemed...")</text>
+              
+              <rect x="45" y="195" width="285" height="50" rx="4" fill="#f1f5f9" />
+              <text x="55" y="215" font-size="10" fill="#334155">Para 2: Main Body (Root causes, public impact, hazards)</text>
+              
+              <rect x="45" y="250" width="285" height="30" rx="4" fill="#f1f5f9" />
+              <text x="55" y="270" font-size="10" fill="#334155">Para 3: Constructive solutions &amp; earnest appeal</text>
+              
+              <text x="45" y="295" font-size="10" font-weight="700" fill="#0f172a">Yours sincerely, [Name/Designation]</text>
+
+              <!-- CBSE Rubric Sidebar -->
+              <rect x="370" y="30" width="200" height="270" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+              <text x="470" y="60" text-anchor="middle" font-size="15" font-weight="700" fill="#166534">CBSE 5M Rubric</text>
+              <line x1="390" y1="75" x2="550" y2="75" stroke="#86efac" stroke-width="1.5" />
+              
+              <text x="390" y="105" font-size="13" font-weight="700" fill="#15803d">• Format: 1 Mark</text>
+              <text x="400" y="125" font-size="11" fill="#166534">Addresses, Date, Subject,</text>
+              <text x="400" y="140" font-size="11" fill="#166534">Salutation, Sign-off</text>
+              
+              <text x="390" y="170" font-size="13" font-weight="700" fill="#15803d">• Content: 2 Marks</text>
+              <text x="400" y="190" font-size="11" fill="#166534">Clarity of points, logic,</text>
+              <text x="400" y="205" font-size="11" fill="#166534">relevance, viable solutions</text>
+              
+              <text x="390" y="235" font-size="13" font-weight="700" fill="#15803d">• Expression: 2 Marks</text>
+              <text x="400" y="255" font-size="11" fill="#166534">Grammar accuracy, tone,</text>
+              <text x="400" y="270" font-size="11" fill="#166534">vocabulary, cohesion</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 1: Standard layout and official marking criteria for CBSE Class 10 Formal Letters.</p>
+        </article>
+
+        <article class="card visual-card">
+          <span class="visual-badge">Writing Architecture</span>
+          <h3>Analytical Paragraph: Structure &amp; Vocabulary Arsenal</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="340" fill="#f8fafc" />
+              
+              <!-- Tier 1: Intro -->
+              <rect x="40" y="25" width="520" height="60" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" />
+              <text x="60" y="50" font-size="13" font-weight="700" fill="#0369a1">1. The Introduction (1–2 sentences)</text>
+              <text x="60" y="70" font-size="11" fill="#0c4a6e">Paraphrase the prompt &amp; state overarching trend · "The line graph highlights a discernible rise in..."</text>
+
+              <path d="M 300 85 L 300 110" stroke="#0284c7" stroke-width="2" />
+
+              <!-- Tier 2: Body -->
+              <rect x="40" y="110" width="520" height="110" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5" />
+              <text x="60" y="135" font-size="13" font-weight="700" fill="#92400e">2. The Analytical Body (6–8 sentences with comparative connectors)</text>
+              <text x="60" y="155" font-size="11" fill="#78350f">• Contrasting: "Whereas, In sharp contrast to, Conversely, On the other hand..."</text>
+              <text x="60" y="175" font-size="11" fill="#78350f">• Proportion &amp; Rate: "A massive surge of 35%, Doubled, Stagnated, Accounted for..."</text>
+              <text x="60" y="195" font-size="11" fill="#78350f">• Extremes: "The pinnacle of consumer preference / Plunged to an all-time low of..."</text>
+
+              <path d="M 300 220 L 300 245" stroke="#d97706" stroke-width="2" />
+
+              <!-- Tier 3: Conclusion -->
+              <rect x="40" y="245" width="520" height="65" rx="8" fill="#fdf4ff" stroke="#c084fc" stroke-width="1.5" />
+              <text x="60" y="270" font-size="13" font-weight="700" fill="#7e22ce">3. The Objective Conclusion (1–2 sentences)</text>
+              <text x="60" y="290" font-size="11" fill="#581c87">Synthesize overall deduction without personal bias ("Overall, it is evident that...") · No first person!</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 2: Three-tier logical organization and high-scoring transitional vocabulary for Analytical Paragraphs.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Practice: Grammar &amp; Editing</h2>
+          <p class="muted">20 High-yield questions testing reported speech conversion, subject-verb concord, tense correction, and modals.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizApp"></div>
+
+      <div class="quiz-footer-actions">
+        <span class="muted" id="quizProgressText">0 of 20 answered</span>
+        <button class="button secondary" id="resetQuizBtn">Reset Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-banner">
+      <h2>Score 100/100 in CBSE English Language &amp; Literature</h2>
+      <p>Targeted feedback on your writing samples, grammar drilling, and literature analysis with experienced board tutors.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Your Free Trial Class</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "Fill in the blank with the correct form of tense: 'By the time the fire brigade arrived, the residents ______ the blaze.'",
+      opts: [
+        "have extinguished",
+        "had extinguished",
+        "will extinguish",
+        "extinguish"
+      ],
+      correct: 1,
+      exp: "When two actions happened in the past, the earlier completed action takes Past Perfect (had + V3), while the subsequent action takes Simple Past (arrived)."
+    },
+    {
+      q: "Identify the error in the sentence: 'Neither the principal nor the lecturers was present at the annual convocation.'",
+      opts: [
+        "Error: 'neither' -> Correction: 'either'",
+        "Error: 'was' -> Correction: 'were'",
+        "Error: 'nor' -> Correction: 'or'",
+        "Error: 'convocation' -> Correction: 'convocations'"
+      ],
+      correct: 1,
+      exp: "In 'Neither...nor' constructions, the verb agrees in number with the nearer subject. Here, 'the lecturers' is plural, so the verb must be 'were'."
+    },
+    {
+      q: "Convert to Indirect Speech: 'The teacher said to Rahul, \"Why are you disturbing the class?\"'",
+      opts: [
+        "The teacher asked Rahul why was he disturbing the class.",
+        "The teacher asked Rahul why he was disturbing the class.",
+        "The teacher told Rahul why you are disturbing the class.",
+        "The teacher asked Rahul if he was disturbing the class."
+      ],
+      correct: 1,
+      exp: "In Wh-interrogatives in indirect speech, the word order becomes assertive (Subject + Verb: 'why he was disturbing', NOT inversion 'why was he disturbing')."
+    },
+    {
+      q: "Select the correct modal: 'You ______ submit the project report today, as tomorrow is a national holiday and no extensions will be granted.'",
+      opts: [
+        "might",
+        "must",
+        "could",
+        "may"
+      ],
+      correct: 1,
+      exp: "'Must' expresses strong obligation and strict requirement imposed by external deadlines or rules."
+    },
+    {
+      q: "Choose the correct determiner: 'Although he made ______ mistakes in the initial draft, the final thesis was deemed flawless.'",
+      opts: [
+        "little",
+        "a few",
+        "much",
+        "a little"
+      ],
+      correct: 1,
+      exp: "'Mistakes' is a countable plural noun; 'a few' signifies a small, countable quantity in a positive sense. 'Little' and 'a little' are strictly for uncountables."
+    },
+    {
+      q: "Complete the sentence with correct subject-verb agreement: 'The Captain, together with his entire crew, ______ awarded medals of honour.'",
+      opts: [
+        "were",
+        "was",
+        "are",
+        "have been"
+      ],
+      correct: 1,
+      exp: "When a singular subject is joined to another noun by parenthetical phrases like 'together with', 'along with', or 'as well as', the verb agrees with the primary subject ('The Captain' - singular: was)."
+    },
+    {
+      q: "Convert to Indirect Speech: 'Mother said to me, \"Do not go near the deep end of the pool.\"'",
+      opts: [
+        "Mother warned me not to go near the deep end of the pool.",
+        "Mother said to me that do not go near the deep end of the pool.",
+        "Mother asked me whether I went near the deep end of the pool.",
+        "Mother ordered me that I should not go near the deep end of the pool."
+      ],
+      correct: 0,
+      exp: "Negative imperative sentences are converted into indirect speech using reported verbs like 'warned' or 'forbade' followed by 'not to + base verb'."
+    },
+    {
+      q: "Identify the error in the sentence: 'Ten kilometres are a long distance to cover on foot without drinking water.'",
+      opts: [
+        "Error: 'are' -> Correction: 'is'",
+        "Error: 'distance' -> Correction: 'distances'",
+        "Error: 'on' -> Correction: 'by'",
+        "Error: 'drinking' -> Correction: 'drank'"
+      ],
+      correct: 0,
+      exp: "When a plural noun denoting distance, money, or time is regarded as a single composite unit, it takes a singular verb ('Ten kilometres is a long distance')."
+    },
+    {
+      q: "Choose the correct option: 'She ______ in this hospital since she completed her medical residency in 2016.'",
+      opts: [
+        "worked",
+        "is working",
+        "has been working",
+        "works"
+      ],
+      correct: 2,
+      exp: "For an action that began at a definite point in the past ('since 2016') and continues up to the present moment, Present Perfect Continuous ('has been working') is required."
+    },
+    {
+      q: "Fill in the blank with the appropriate modal for past ability: 'When my grandfather was young, he ______ swim across the river easily.'",
+      opts: [
+        "should",
+        "could",
+        "might",
+        "can"
+      ],
+      correct: 1,
+      exp: "'Could' is used to express general physical ability in the past."
+    },
+    {
+      q: "Convert to Indirect Speech: 'He said, \"The Earth revolves around the Sun.\"'",
+      opts: [
+        "He said that the Earth revolved around the Sun.",
+        "He said that the Earth revolves around the Sun.",
+        "He told that the Earth had revolved around the Sun.",
+        "He asked if the Earth revolves around the Sun."
+      ],
+      correct: 1,
+      exp: "When the reported clause expresses a scientific law or universal truth, its tense remains unchanged regardless of the reporting verb."
+    },
+    {
+      q: "Choose the correct determiner: '______ of the candidates was given a five-minute window to deliver their opening statement.'",
+      opts: [
+        "All",
+        "Each",
+        "Both",
+        "Many"
+      ],
+      correct: 1,
+      exp: "'Was' is singular; 'Each' takes a singular verb and emphasizes individuals in a group separately."
+    },
+    {
+      q: "Select the sentence with correct punctuation and format for a Formal Letter Subject line:",
+      opts: [
+        "subject - problem of bad roads in our area please help.",
+        "Subject: Urgent Grievance Regarding Dilapidated Roads in Ward 9",
+        "SUBJECT, I am writing to tell you about the roads",
+        "Subject: To the Editor about bad roads"
+      ],
+      correct: 1,
+      exp: "A Formal Letter subject line must be brief, formal, capitalized like a title, and clearly state the specific grievance without emotional pleading."
+    },
+    {
+      q: "In an Analytical Paragraph, which of the following is considered an error in style according to CBSE rubrics?",
+      opts: [
+        "Comparing data points using terms like 'whereas' and 'in contrast'",
+        "Writing 'In my personal opinion, I believe that students are lazy'",
+        "Paraphrasing the title in the introductory sentence",
+        "Highlighting the maximum and minimum values"
+      ],
+      correct: 1,
+      exp: "An analytical paragraph must be completely objective, third-person, and data-driven; inserting personal subjective opinions ('In my personal opinion, I believe') loses marks."
+    },
+    {
+      q: "Identify the error in the sentence: 'Bread and butter are his favourite breakfast every morning.'",
+      opts: [
+        "Error: 'are' -> Correction: 'is'",
+        "Error: 'favourite' -> Correction: 'favor'",
+        "Error: 'breakfast' -> Correction: 'breakfasts'",
+        "Error: 'every' -> Correction: 'each'"
+      ],
+      correct: 0,
+      exp: "When two nouns express a compound idea or a single combined item of food, the subject is treated as singular ('Bread and butter is his favourite breakfast')."
+    },
+    {
+      q: "Fill in the blank with the appropriate determiner: 'There was ______ milk left in the carton, so we could not prepare even one cup of tea.'",
+      opts: [
+        "a little",
+        "little",
+        "few",
+        "a few"
+      ],
+      correct: 1,
+      exp: "'Little' is used with uncountable nouns in a negative sense, meaning 'hardly any', which fits the context that not even one cup could be made."
+    },
+    {
+      q: "Convert to Indirect Speech: 'Doctor said to the patient, \"Take these medicines twice a day after meals.\"'",
+      opts: [
+        "The doctor advised the patient to take those medicines twice a day after meals.",
+        "The doctor told the patient that take these medicines twice a day after meals.",
+        "The doctor asked the patient whether he took these medicines.",
+        "The doctor ordered the patient taking those medicines twice a day."
+      ],
+      correct: 0,
+      exp: "Imperative advice uses the reporting verb 'advised', 'these' changes to 'those', and the verb takes the to-infinitive form ('to take')."
+    },
+    {
+      q: "Choose the correct modal to express moral obligation: 'We ______ defend the environmental biodiversity of our planet for future generations.'",
+      opts: [
+        "may",
+        "ought to",
+        "might",
+        "can"
+      ],
+      correct: 1,
+      exp: "'Ought to' expresses moral duty and ethical responsibility towards society or the planet."
+    },
+    {
+      q: "What is the official CBSE mark distribution for a 5-mark Formal Letter?",
+      opts: [
+        "Format: 3 Marks, Content: 1 Mark, Expression: 1 Mark",
+        "Format: 1 Mark, Content: 2 Marks, Expression: 2 Marks",
+        "Format: 2 Marks, Content: 2 Marks, Expression: 1 Mark",
+        "Format: 1 Mark, Content: 3 Marks, Expression: 1 Mark"
+      ],
+      correct: 1,
+      exp: "Official CBSE rubrics assign 1 Mark for Format (addresses, date, subject, salutation, closure), 2 Marks for Content, and 2 Marks for Expression (accuracy and coherence)."
+    },
+    {
+      q: "Which transitional phrase is best suited for the concluding sentence of an Analytical Paragraph?",
+      opts: [
+        "Now I want to conclude by saying...",
+        "Overall, the data unequivocally demonstrates that...",
+        "At last my essay is finished because...",
+        "I hope the examiner liked this data analysis..."
+      ],
+      correct: 1,
+      exp: "Phrases like 'Overall, the data unequivocally demonstrates that...' provide a formal, objective, and authoritative closure without casual or first-person language."
+    }
+  ];
+
+  let userAnswers = {};
+
+  function renderQuiz() {
+    const container = document.getElementById('quizApp');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((qItem, idx) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+
+      const qTitle = document.createElement('h3');
+      qTitle.className = 'quiz-question';
+      qTitle.textContent = `${idx + 1}. ${qItem.q}`;
+      card.appendChild(qTitle);
+
+      const optsDiv = document.createElement('div');
+      optsDiv.className = 'quiz-options';
+
+      qItem.opts.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+
+        if (userAnswers[idx] !== undefined) {
+          btn.disabled = true;
+          if (optIdx === qItem.correct) {
+            btn.classList.add('opt-correct');
+          } else if (userAnswers[idx] === optIdx) {
+            btn.classList.add('opt-wrong');
+          }
+        } else {
+          btn.addEventListener('click', () => {
+            userAnswers[idx] = optIdx;
+            renderQuiz();
+            updateScoreSummary();
+          });
+        }
+        optsDiv.appendChild(btn);
+      });
+
+      card.appendChild(optsDiv);
+
+      if (userAnswers[idx] !== undefined) {
+        const fb = document.createElement('div');
+        fb.className = 'quiz-feedback ' + (userAnswers[idx] === qItem.correct ? 'feedback-correct' : 'feedback-wrong');
+        fb.innerHTML = (userAnswers[idx] === qItem.correct ? '<strong>✓ Correct!</strong> ' : '<strong>✗ Incorrect.</strong> ') + qItem.exp;
+        card.appendChild(fb);
+      }
+
+      container.appendChild(card);
+    });
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--ink);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

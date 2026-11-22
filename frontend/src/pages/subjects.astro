@@ -116,6 +116,17 @@ const { provider, subjects } = loadContent();
                 </div>
               </div>
             )}
+            {subject.id === "english" && (
+              <div class="subject-resources">
+                <p><strong>English Language &amp; Literature chapter guides &amp; quizzes (Complete Syllabus):</strong></p>
+                <ul style="margin-top:0.25rem; margin-bottom:0.75rem; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.35rem; font-size: 0.88rem;">
+                  <li><a href="/resources/english-first-flight-prose/">📖 First Flight Prose (All 9 Chapters)</a></li>
+                  <li><a href="/resources/english-first-flight-poetry/">🪶 First Flight Poetry (All 10 Poems)</a></li>
+                  <li><a href="/resources/english-footprints-without-feet/">🐾 Footprints Without Feet (All 9 Chapters)</a></li>
+                  <li><a href="/resources/english-grammar-and-writing/">✍️ Grammar &amp; Writing (Letters &amp; Paragraphs)</a></li>
+                </ul>
+              </div>
+            )}
             {subject.id === "hindi" && (
               <div class="subject-resources">
                 <p><strong>Hindi Course 'A' chapter guides &amp; quizzes (सम्पूर्ण पाठ्यक्रम · सभी अध्याय):</strong></p>
