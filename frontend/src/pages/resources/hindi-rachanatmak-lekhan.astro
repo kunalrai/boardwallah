@@ -1,0 +1,802 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`रचनात्मक लेखन (लेखन कौशल) | CBSE Class 10 Hindi | ${provider.name}`}
+  description="CBSE कक्षा 10 हिंदी (कोर्स 'अ') रचनात्मक लेखन सम्पूर्ण गाइड (20 अंक)। अनुच्छेद लेखन, औपचारिक व अनौपचारिक पत्र लेखन, स्ववृत्त लेखन (Bio-data), ई-मेल लेखन, विज्ञापन लेखन एवं सन्देश लेखन के आधिकारिक सीबीएसई प्रारूप, आदर्श उदाहरण, आरेख एवं 20 महत्वपूर्ण बोर्ड परीक्षा प्रश्न।"
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / रचनात्मक लेखन
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Hindi Course 'A' · लेखन कौशल (20 अंक)</span>
+      <h1>रचनात्मक लेखन: आधिकारिक प्रारूप, अंक-योजना व अभ्यास</h1>
+      <p class="lead">
+        सीबीएसई 10वीं बोर्ड परीक्षा में लेखन कौशल के पूरे 20 अंक प्राप्त करने की अचूक रणनीति: अनुच्छेद लेखन, औपचारिक-अनौपचारिक पत्र, स्ववृत्त, ई-मेल, विज्ञापन और सन्देश लेखन के मानक प्रारूप, दृश्य आरेख एवं 20 बोर्ड परीक्षा प्रश्न।
+      </p>
+    </div>
+
+    <!-- Core Concepts Section -->
+    <section class="section">
+      <h2>रचनात्मक लेखन के पाँच प्रमुख आयाम (Official CBSE Rubrics)</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>📝 1. अनुच्छेद लेखन (5 अंक)</h3>
+          <p class="formula">लगभग 120 शब्द · संकेत-बिंदुओं पर आधारित सुगठित विचार</p>
+          <ul class="clean-list">
+            <li><strong>अंक विभाजन:</strong> भूमिका एवं विषय-वस्तु (3 अंक), भाषा की शुद्धता व प्रवाह (1 अंक), प्रस्तुति (1 अंक)।</li>
+            <li><strong>मुख्य नियम:</strong>
+              <br/>• दिए गए 3-4 संकेत-बिंदुओं (प्रस्तावना, कारण/प्रभाव, निवारण, उपसंहार) को केंद्र में रखकर लिखें।
+              <br/>• भूमिका में किसी प्रासंगिक सूक्ति, कविता की पंक्ति या दोहे से शुरुआत करने पर प्रभावकारी अंक मिलते हैं।
+              <br/>• भाषा सरल, स्पष्ट और व्यावहारिक होनी चाहिए; व्यर्थ की पुनरावृत्ति से बचें।
+              <br/>• अनुच्छेद में केवल एक या दो पैराग्राफ होने चाहिए, निबंध की तरह लंबे उपशीर्षक नहीं देने होते।
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>✉️ 2. पत्र लेखन: औपचारिक व अनौपचारिक (5 अंक)</h3>
+          <p class="formula">लगभग 100 शब्द · मानक प्रारूप एवं शिष्टाचार</p>
+          <ul class="clean-list">
+            <li><strong>औपचारिक पत्र (Formal Letter - प्रार्थना, शिकायती, संपादकीय पत्र):</strong>
+              <br/>1. प्रेषक का पता (परीक्षा भवन, नई दिल्ली) एवं दिनांक
+              <br/>2. सेवा में, पदनाम एवं कार्यालय का पता (जैसे: संपादक महोदय / प्रधानाचार्य)
+              <br/>3. <strong>विषय (Subject):</strong> संक्षिप्त एवं स्पष्ट (एक पंक्ति में)
+              <br/>4. महोदय / मान्यवर (संबोधन)
+              <br/>5. मुख्य विषय-वस्तु (प्रस्तावना, समस्या का विस्तृत विवरण, समाधान की अपेक्षा)
+              <br/>6. सधन्यवाद, भवदीय / प्रार्थी, क.ख.ग.
+            </li>
+            <li><strong>अनौपचारिक पत्र (Informal Letter - मित्र, सगे-संबंधी):</strong>
+              <br/>पता, दिनांक, प्रिय/आदरणीय (संबोधन), सप्रेम नमस्ते/सादर प्रणाम, कुशल-क्षेम, मुख्य समाचार, आपका स्नेही/अनुज।
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>💼 3. स्ववृत्त (बायोडाटा) एवं ई-मेल लेखन (5 अंक)</h3>
+          <p class="formula">आधुनिक कार्यालयी संचार विधाएँ (लगभग 80–100 शब्द)</p>
+          <ul class="clean-list">
+            <li><strong>स्ववृत्त लेखन (Bio-data / Curriculum Vitae):</strong>
+              <br/>• <em>व्यक्तिगत विवरण:</em> नाम, पिता का नाम, जन्मतिथि, वर्तमान पता, मोबाइल, ई-मेल।
+              <br/>• <em>शैक्षणिक योग्यता तालिका:</em> क्रम, परीक्षा (10वीं, 12वीं, स्नातक), बोर्ड/विश्वविद्यालय, वर्ष, प्रतिशत।
+              <br/>• <em>अन्य योग्यताएँ व अनुभव:</em> कंप्यूटर ज्ञान, भाषाएँ, पूर्व कार्य अनुभव।
+              <br/>• <em>उद्घोषणा व हस्ताक्षर:</em> 'मैं प्रमाणित करता हूँ कि...', दिनांक, स्थान, हस्ताक्षर।
+            </li>
+            <li><strong>ई-मेल लेखन (E-mail):</strong>
+              <br/>• <strong>To:</strong> प्राप्तकर्ता का मान्य ई-मेल पता (उदा: abc@email.com)
+              <br/>• <strong>CC / BCC:</strong> आवश्यकतानुसार
+              <br/>• <strong>Subject:</strong> स्पष्ट उद्देश्य
+              <br/>• <strong>Salutation &amp; Body:</strong> महोदय, मुख्य संदेश, सादर, नाम।
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📢 4. विज्ञापन एवं सन्देश लेखन (5 अंक)</h3>
+          <p class="formula">लगभग 40–50 शब्द · बॉक्स अनिवार्य · दृश्य संप्रेषणीयता</p>
+          <ul class="clean-list">
+            <li><strong>विज्ञापन लेखन (Advertisement Writing):</strong>
+              <br/>• चारों ओर आकर्षक <strong>बॉक्स (Box)</strong> बनाएँ।
+              <br/>• बोल्ड अक्षरों में मुख्य शीर्षक / उत्पाद का नाम।
+              <br/>• आकर्षक तुकबंदी/स्लोगन (जैसे: 'धमाका सेल!', 'गुणवत्ता में सबसे आगे')।
+              <br/>• उत्पाद की 4-5 मुख्य विशेषताएँ (बुलेट पॉइंट्स में)।
+              <br/>• छूट, ऑफर या रियायत का स्पष्ट उल्लेख ('20% की विशेष छूट', 'एक पर एक मुफ्त')।
+              <br/>• नीचे बाईं ओर संपर्क सूत्र (पता, दूरभाष, वेबसाइट)।
+            </li>
+            <li><strong>सन्देश लेखन (Message Writing):</strong>
+              <br/>• बॉक्स में ऊपर मध्य में 'शुभकामना सन्देश / शोक सन्देश' शीर्षक।
+              <br/>• बाईं ओर दिनांक और समय।
+              <br/>• संबोधन, संक्षिप्त मंगलकामना या संवेदना, प्रेषक का नाम।
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>दृश्य संकल्पना: औपचारिक पत्र एवं आधुनिक ई-मेल लेखन का मानक ढाँचा</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">आरेख 1 · सीबीएसई मानक औपचारिक पत्र का सटीक प्रारूप (Format)</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="औपचारिक पत्र प्रारूप">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Outer Letter Box -->
+              <rect x="30" y="15" width="400" height="220" fill="#ffffff" stroke="#0f766e" stroke-width="2" rx="4"/>
+              
+              <!-- 1. प्रेषक पता -->
+              <text x="50" y="38" fill="#1e293b" font-size="9" font-weight="bold">परीक्षा भवन, नई दिल्ली</text>
+              <text x="50" y="52" fill="#64748b" font-size="8.5">दिनांक: 15 मार्च 2026</text>
+
+              <!-- 2. सेवा में -->
+              <text x="50" y="74" fill="#1e293b" font-size="9" font-weight="bold">सेवा में, मुख्य संपादक महोदय, 'दैनिक जागरण', दिल्ली</text>
+
+              <!-- 3. विषय -->
+              <rect x="45" y="85" width="370" height="18" fill="#f1f5f9" rx="2"/>
+              <text x="50" y="98" fill="#0f766e" font-size="9" font-weight="bold">विषय: क्षेत्र में पेयजल की अनियमित आपूर्ति के संबंध में</text>
+
+              <!-- 4. संबोधन -->
+              <text x="50" y="120" fill="#1e293b" font-size="9" font-weight="bold">महोदय,</text>
+
+              <!-- 5. मुख्य कलेवर (3 अनुच्छेद) -->
+              <text x="65" y="136" fill="#334155" font-size="8">आपके सम्मानित समाचार-पत्र के माध्यम से मैं जल बोर्ड अधिकारियों का ध्यान...</text>
+              <text x="65" y="150" fill="#334155" font-size="8">हमारे क्षेत्र में पिछले एक माह से गंदा और अल्प मात्रा में पानी आ रहा है...</text>
+              <text x="65" y="164" fill="#334155" font-size="8">अतः आपसे विनम्र प्रार्थना है कि इस समस्या को प्राथमिकता से प्रकाशित करें।</text>
+
+              <!-- 6. स्वनिर्देश -->
+              <text x="50" y="188" fill="#1e293b" font-size="8.5">सधन्यवाद,</text>
+              <text x="50" y="202" fill="#0f766e" font-size="9" font-weight="bold">भवदीय,</text>
+              <text x="50" y="216" fill="#1e293b" font-size="8.5">क. ख. ग.</text>
+
+              <rect x="290" y="185" width="125" height="36" fill="#ecfdf5" stroke="#10b981" stroke-width="1" rx="4"/>
+              <text x="352" y="200" fill="#065f46" font-size="8.5" font-weight="bold" text-anchor="middle">पूर्ण अंक रणनीति:</text>
+              <text x="352" y="214" fill="#065f46" font-size="7.5" text-anchor="middle">बायाँ संरेखण (Left Align)</text>
+            </svg>
+          </div>
+          <p class="caption">सीबीएसई की आधुनिक लेखन शैली के अनुसार संपूर्ण पत्र बाईं ओर (Left Alignment) से ही प्रारंभ होता है।</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">आरेख 2 · मानक ई-मेल लेखन एवं विज्ञापन बॉक्स संरचना</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="ई-मेल और विज्ञापन बॉक्स प्रारूप">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Left: E-mail Box -->
+              <rect x="25" y="25" width="195" height="200" fill="#ffffff" stroke="#2563eb" stroke-width="1.5" rx="4"/>
+              <rect x="25" y="25" width="195" height="24" fill="#eff6ff" rx="4 4 0 0"/>
+              <text x="122" y="41" fill="#1d4ed8" font-size="10" font-weight="bold" text-anchor="middle">ई-मेल लेखन प्रारूप (E-mail)</text>
+              <text x="35" y="65" fill="#1e293b" font-size="8.5"><strong>To:</strong> principal@school.edu.in</text>
+              <line x1="30" y1="72" x2="215" y2="72" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="35" y="86" fill="#1e293b" font-size="8.5"><strong>CC/BCC:</strong> (रिक्त छोड़ें)</text>
+              <line x1="30" y1="93" x2="215" y2="93" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="35" y="108" fill="#0f766e" font-size="8.5"><strong>विषय:</strong> शुल्क मुक्ति हेतु आवेदन</text>
+              <line x1="30" y1="115" x2="215" y2="115" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="35" y="132" fill="#334155" font-size="8">आदरणीय महोदय, सविनय निवेदन है...</text>
+              <text x="35" y="152" fill="#334155" font-size="8">कृपा कर छात्रवृत्ति प्रदान करें...</text>
+              <text x="35" y="180" fill="#1e293b" font-size="8">आपका आज्ञाकारी शिष्य, क.ख.ग.</text>
+
+              <!-- Right: Advertisement Box -->
+              <rect x="240" y="25" width="195" height="200" fill="#ffffff" stroke="#d97706" stroke-width="1.5" rx="4"/>
+              <rect x="240" y="25" width="195" height="24" fill="#fef3c7" rx="4 4 0 0"/>
+              <text x="337" y="41" fill="#b45309" font-size="10" font-weight="bold" text-anchor="middle">विज्ञापन लेखन (Advertisement)</text>
+              <text x="337" y="68" fill="#ea580c" font-size="11" font-weight="bold" text-anchor="middle">★ नटराज पेंसिल ★</text>
+              <text x="337" y="85" fill="#166534" font-size="8" font-weight="bold" text-anchor="middle">"लिखे ऐसा कि जादू छा जाए!"</text>
+              <text x="250" y="108" fill="#334155" font-size="8">• सबसे सुंदर लिखावट</text>
+              <text x="250" y="124" fill="#334155" font-size="8">• मजबूत लेड, बार-बार न टूटे</text>
+              <text x="250" y="140" fill="#334155" font-size="8">• रबर और शार्पनर बिल्कुल मुफ्त</text>
+              <rect x="250" y="155" width="175" height="20" fill="#fee2e2" rx="3"/>
+              <text x="337" y="169" fill="#991b1b" font-size="8.5" font-weight="bold" text-anchor="middle">धमाका: 2 पैकेट पर 1 मुफ्त!</text>
+              <text x="250" y="195" fill="#475569" font-size="7.5">संपर्क: सभी प्रमुख बुक स्टोर्स पर उपलब्ध</text>
+            </svg>
+          </div>
+          <p class="caption">ई-मेल और विज्ञापन लेखन में स्पष्ट बॉक्स, आकर्षक लेआउट और बिंदुवार विवरण 100% अंक दिलाते हैं।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Board Exam Quiz Section (20 Questions) -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>सीबीएसई बोर्ड परीक्षा रचनात्मक लेखन अभ्यास (20 बहुविकल्पी प्रश्न)</h2>
+          <p class="lead" style="margin-bottom:0;">प्रारूप, अंक योजना, शब्द सीमा और शुद्ध लेखन शैली पर आधारित प्रश्नोत्तरी।</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizContainer">
+        <!-- JS rendered -->
+      </div>
+
+      <div class="quiz-footer-actions">
+        <button type="button" class="button" id="resetQuizBtn">पुनः अभ्यास करें (Reset)</button>
+        <span class="small" id="quizProgressText">0 of 20 answered</span>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+      <h2>हिंदी रचनात्मक लेखन में 20/20 अंक सुनिश्चित करें</h2>
+      <p>सीबीएसई की सटीक मार्किंग स्कीम, मॉडल फॉर्मेट्स और निबंध-पत्र लेखन की व्यक्तिगत समीक्षा प्राप्त करें।</p>
+      <a href={calBookingUrl} class="button">संदेह निवारण सत्र बुक करें (Book Trial)</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "1. सीबीएसई बोर्ड परीक्षा में 'अनुच्छेद लेखन' के लिए अनुशंसित आदर्श शब्द सीमा कितनी होती है?",
+      options: [
+        "लगभग 50 शब्द",
+        "लगभग 100 से 120 शब्द",
+        "कम से कम 500 शब्द",
+        "1000 शब्द"
+      ],
+      correct: 1,
+      explanation: "सीबीएसई कक्षा 10वीं हिंदी में अनुच्छेद लेखन के लिए निर्धारित शब्द सीमा लगभग 100 से 120 शब्द है।"
+    },
+    {
+      q: "2. औपचारिक पत्र में 'विषय' (Subject) कहाँ लिखा जाना चाहिए?",
+      options: [
+        "पत्र के सबसे अंत में हस्ताक्षर के नीचे",
+        "प्रेषक का पता, दिनांक और सेवा में (प्राप्तकर्ता के पदनाम) के ठीक बाद संबोधन से पूर्व",
+        "लिफाफे के पीछे",
+        "अनौपचारिक पत्र में ही विषय लिखा जाता है"
+      ],
+      correct: 1,
+      explanation: "औपचारिक पत्र में प्राप्तकर्ता के पदनाम व पते के ठीक नीचे और 'महोदय' संबोधन से पहले स्पष्ट 'विषय' लिखा जाता है।"
+    },
+    {
+      q: "3. आधुनिक सीबीएसई पत्र लेखन प्रारूप के अनुसार सभी पंक्तियाँ (पता, दिनांक, विषय, संबोधन, हस्ताक्षर) किस ओर संरेखित (Aligned) होनी चाहिए?",
+      options: [
+        "पूर्णतः बाईं ओर (Left Alignment)",
+        "दाईं ओर (Right Alignment)",
+        "पृष्ठ के ठीक बीच में (Center Alignment)",
+        "कहीं भी लिखी जा सकती हैं"
+      ],
+      correct: 0,
+      explanation: "वर्तमान मानक पत्र प्रारूप के अनुसार पत्र के सभी अंग पृष्ठ के बाईं ओर (Left Margin) से ही शुरू किए जाते हैं।"
+    },
+    {
+      q: "4. बोर्ड परीक्षा में पत्र लिखते समय यदि प्रश्नपत्र में नाम व पता न दिया गया हो, तो प्रेषक के स्थान पर क्या लिखना चाहिए?",
+      options: [
+        "अपना असली घर का पता और मोबाइल नंबर",
+        "परीक्षा भवन, नई दिल्ली तथा क.ख.ग.",
+        "प्रधानमंत्री कार्यालय का पता",
+        "किसी मित्र का नाम"
+      ],
+      correct: 1,
+      explanation: "बोर्ड परीक्षा की गोपनीयता बनाए रखने हेतु वास्तविक पहचान प्रकट न करके 'परीक्षा भवन' तथा नाम की जगह 'क.ख.ग.' लिखना अनिवार्य नियम है।"
+    },
+    {
+      q: "5. 'स्ववृत्त' (Bio-data / Resume) में शैक्षणिक योग्यताओं को प्रस्तुत करने का सर्वोत्तम तरीका क्या है?",
+      options: [
+        "एक लंबा पैराग्राफ लिखना",
+        "क्रम संख्या, उत्तीर्ण परीक्षा, बोर्ड/विश्वविद्यालय, वर्ष, प्राप्तांक प्रतिशत की सुव्यवस्थित तालिका (Table) बनाना",
+        "केवल प्राथमिक विद्यालय का नाम लिखना",
+        "अपनी मार्कशीट की फोटोकॉपी चिपकाना"
+      ],
+      correct: 1,
+      explanation: "स्ववृत्त में शैक्षणिक योग्यताओं को एक स्पष्ट तालिका (Table) में क्रमवार प्रस्तुत करना मानक और प्रभावकारी माना जाता है।"
+    },
+    {
+      q: "6. विज्ञापन लेखन की सबसे अनिवार्य बाह्य आवश्यकता क्या है?",
+      options: [
+        "उसे पूरे 10 पृष्ठों में लिखना",
+        "उसे एक आकर्षक बॉक्स (Border/Box) के भीतर प्रस्तुत करना",
+        "उसमें केवल अंग्रेजी शब्दों का प्रयोग करना",
+        "उसमें मूल्य न लिखना"
+      ],
+      correct: 1,
+      explanation: "विज्ञापन को आकर्षक चौकोर बॉक्स (Border) के भीतर ही लिखा जाना चाहिए; बिना बॉक्स के विज्ञापन अधूरा माना जाता है।"
+    },
+    {
+      q: "7. विज्ञापन में ग्राहकों को आकर्षित करने के लिए क्या जोड़ना सबसे प्रभावी होता है?",
+      options: [
+        "आकर्षक स्लोगन, तुकबंदी, छूट (डिस्काउंट/ऑफर) और संपर्क सूत्र",
+        "कठिन संस्कृत के श्लोक",
+        "अदालत के कानूनी नियम",
+        "फैक्ट्री का नक्शा"
+      ],
+      correct: 0,
+      explanation: "तुकबंदी वाले स्लोगन (जैसे: 'एक पर एक मुफ्त!', 'धमाका सेल') और छूट ग्राहकों का ध्यान तुरंत खींचते हैं।"
+    },
+    {
+      q: "8. 'ई-मेल' लेखन में 'To' फ़ील्ड में क्या भरा जाता है?",
+      options: [
+        "भेजने वाले का घर का पता",
+        "प्राप्तकर्ता (Recipient) का मान्य ई-मेल पता (जैसे: xyz@gmail.com)",
+        "आज की तारीख",
+        "टेलीफोन नंबर"
+      ],
+      correct: 1,
+      explanation: "'To' फील्ड में उस व्यक्ति या संस्था का ई-मेल आईडी लिखा जाता है जिसे पत्र भेजा जा रहा है।"
+    },
+    {
+      q: "9. 'सन्देश लेखन' (Message Writing) की अनुशंसित शब्द सीमा कितनी होती है?",
+      options: [
+        "लगभग 30 से 40 शब्द",
+        "लगभग 200 शब्द",
+        "500 शब्द",
+        "केवल एक शब्द"
+      ],
+      correct: 0,
+      explanation: "सन्देश लेखन संक्षिप्त, सारगर्भित और लगभग 30 से 40 शब्दों में बॉक्स के भीतर लिखा जाता है।"
+    },
+    {
+      q: "10. सन्देश लेखन में मुख्य संदेश से पूर्व बाईं ओर किन दो सूचनाओं का उल्लेख अनिवार्य है?",
+      options: [
+        "दिनांक (Date) और समय (Time)",
+        "पासपोर्ट नंबर और बैंक खाता",
+        "स्कूल का नाम और रोल नंबर",
+        "मौसम का तापमान"
+      ],
+      correct: 0,
+      explanation: "सन्देश में यह जानना आवश्यक है कि वह कब भेजा गया, इसलिए दिनांक और समय लिखना अनिवार्य होता है।"
+    },
+    {
+      q: "11. अनौपचारिक पत्र में अपने से बड़ों (माता-पिता, गुरुजन) के लिए उचित संबोधन और अभिवादन क्या होना चाहिए?",
+      options: [
+        "संबोधन: 'आदरणीय / पूज्य', अभिवादन: 'सादर प्रणाम / चरण स्पर्श'",
+        "संबोधन: 'हाय ब्रो', अभिवादन: 'बाय'",
+        "संबोधन: 'महोदय', अभिवादन: 'सधन्यवाद'",
+        "संबोधन: 'प्रिय', अभिवादन: 'नमस्ते'"
+      ],
+      correct: 0,
+      explanation: "बड़ों के प्रति आदरभाव प्रकट करने हेतु 'आदरणीय' या 'पूजनीय' संबोधन और 'सादर चरण स्पर्श' अभिवादन उपयुक्त होता है।"
+    },
+    {
+      q: "12. समाचार-पत्र के संपादक को लिखे जाने वाले पत्र का मुख्य उद्देश्य क्या होता है?",
+      options: [
+        "संपादक से व्यक्तिगत मित्रता करना",
+        "संपादक के समाचार-पत्र के माध्यम से जनसमस्या या विचार को संबंधित अधिकारियों और जनता तक पहुँचाना",
+        "संपादक से नौकरी माँगना",
+        "समाचार-पत्र को बंद करवाना"
+      ],
+      correct: 1,
+      explanation: "संपादकीय पत्र आम जनता की समस्याओं को शासन-प्रशासन और समाज के ध्यान में लाने का प्रभावी जनसंचार माध्यम है।"
+    },
+    {
+      q: "13. अनुच्छेद लेखन करते समय संकेत-बिंदुओं (Outlines) का क्या महत्व है?",
+      options: [
+        "संकेत-बिंदुओं को छोड़ देना चाहिए",
+        "संकेत-बिंदुओं के आधार पर ही विचारों को क्रमबद्ध और संतुलित रूप से 100-120 शब्दों में विस्तार देना चाहिए",
+        "केवल संकेत-बिंदुओं को तीन बार नकल करना चाहिए",
+        "संकेत-बिंदु केवल चित्र बनाने के लिए होते हैं"
+      ],
+      correct: 1,
+      explanation: "दिए गए संकेत-बिंदु परीक्षक द्वारा निर्धारित रूपरेखा होते हैं, उन पर आधारित लेखन ही पूर्ण अंक दिलाता है।"
+    },
+    {
+      q: "14. औपचारिक पत्र में 'भवदीय' या 'प्रार्थी' शब्द कहाँ लिखा जाता है?",
+      options: [
+        "पत्र के शीर्ष पर",
+        "पत्र के अंत में बाईं ओर हस्ताक्षर व नाम से ठीक ऊपर",
+        "विषय के अंदर",
+        "लिफाफे पर"
+      ],
+      correct: 1,
+      explanation: "स्वनिर्देश के रूप में 'भवदीय' (स्त्रियों के लिए 'भवदीया') मुख्य पत्र के अंत में नाम/हस्ताक्षर से ऊपर लिखा जाता है।"
+    },
+    {
+      q: "15. विज्ञापन में 'संपर्क सूत्र' (Contact Details) देना क्यों आवश्यक है?",
+      options: [
+        "ताकि ग्राहक उत्पाद की खरीदारी या पूछताछ हेतु स्थान, फोन नंबर या वेबसाइट पर संपर्क कर सकें",
+        "ताकि पुलिस छापा मार सके",
+        "ताकि पेज भर सके",
+        "यह अनिवार्य नहीं होता"
+      ],
+      correct: 0,
+      explanation: "संपर्क सूत्र के बिना विज्ञापन का व्यावसायिक उद्देश्य पूरा नहीं हो सकता, ग्राहक संपर्क कहाँ करेगा यह स्पष्ट होना चाहिए।"
+    },
+    {
+      q: "16. स्ववृत्त के अंत में 'घोषणा' (Declaration) का क्या तात्पर्य है?",
+      options: [
+        "यह प्रमाणित करना कि स्ववृत्त में दी गई सभी जानकारियाँ मेरी जानकारी के अनुसार सत्य और प्रामाणिक हैं",
+        "युद्ध की घोषणा करना",
+        "कंपनी की संपत्ति अपने नाम करना",
+        "सरकारी नियमों का विरोध करना"
+      ],
+      correct: 0,
+      explanation: "घोषणा द्वारा आवेदक अपनी दी गई शैक्षणिक व व्यक्तिगत सूचनाओं की सत्यता की वैधानिक जिम्मेदारी लेता है।"
+    },
+    {
+      q: "17. किसी राष्ट्रीय पर्व (जैसे स्वतंत्रता दिवस या गणतंत्र दिवस) पर देशवासियों को दिए जाने वाले सन्देश को क्या कहा जाता है?",
+      options: [
+        "शोक सन्देश",
+        "शुभकामना सन्देश",
+        "शिकायती सन्देश",
+        "गुप्त सन्देश"
+      ],
+      correct: 1,
+      explanation: "राष्ट्रीय या धार्मिक पर्वों पर सौहार्द, उल्लास और देश-प्रेम की भावना व्यक्त करने वाला सन्देश 'शुभकामना सन्देश' कहलाता है।"
+    },
+    {
+      q: "18. 'ई-मेल' में 'CC' (कार्बन कॉपी) का क्या कार्य होता है?",
+      options: [
+        "ई-मेल को कंप्यूटर से हटाना",
+        "वही ई-मेल मुख्य प्राप्तकर्ता के साथ-साथ किसी अन्य व्यक्ति को सूचनात्मक प्रति के रूप में भेजना",
+        "ई-मेल का पासवर्ड बदलना",
+        "प्रिंट आउट निकालना"
+      ],
+      correct: 1,
+      explanation: "CC (Carbon Copy) का प्रयोग तब किया जाता है जब ई-मेल की प्रति किसी तीसरे पक्ष को केवल जानकारी (FYI) के लिए भेजनी हो।"
+    },
+    {
+      q: "19. अनुच्छेद लेखन में उच्च अंक प्राप्त करने के लिए किस बात का ध्यान रखना आवश्यक है?",
+      options: [
+        "विषय से न भटकना, मुहावरेदार व सटीक भाषा का प्रयोग और विराम-चिह्नों की शुद्धता",
+        "अशुद्ध वर्तनी लिखना",
+        "एक ही बात को बार-बार दोहराना",
+        "केवल अंग्रेजी शब्दों में लिखना"
+      ],
+      correct: 0,
+      explanation: "सटीक शब्दावली, कसावट, विषय-बद्धता और शुद्ध व्याकरणिक वर्तनी परीक्षक को सर्वाधिक प्रभावित करती है।"
+    },
+    {
+      q: "20. यदि किसी उत्पाद के विज्ञापन में 'छूट' या 'ऑफर' का उल्लेख करना हो, तो उसे कैसे प्रदर्शित करना चाहिए?",
+      options: [
+        "उसे छोटे अक्षरों में कहीं छुपाकर लिखना चाहिए",
+        "उसे किसी तारे (Star), वृत्त या आकर्षक डिज़ाइन वाले बॉक्स में उभारकर लिखना चाहिए ताकि ग्राहक की नज़र तुरंत पड़े",
+        "उसे लिखना ही नहीं चाहिए",
+        "उसे केवल पत्र के अंत में लिखना चाहिए"
+      ],
+      correct: 1,
+      explanation: "विज्ञापन में विशेष छूट या स्कीम को किसी आकर्षक स्टार बस्ट या हाईलाइटेड बॉक्स में दिखाना दृश्य प्रभाव को कई गुना बढ़ा देता है।"
+    }
+  ];
+
+  function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((item, idx) => {
+      const qCard = document.createElement('div');
+      qCard.className = 'quiz-card';
+      qCard.id = `qCard_${idx}`;
+
+      const title = document.createElement('h3');
+      title.className = 'quiz-question';
+      title.textContent = item.q;
+      qCard.appendChild(title);
+
+      const optList = document.createElement('div');
+      optList.className = 'quiz-options';
+
+      item.options.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+        btn.addEventListener('click', () => handleSelectOption(idx, optIdx));
+        optList.appendChild(btn);
+      });
+      qCard.appendChild(optList);
+
+      const feedback = document.createElement('div');
+      feedback.className = 'quiz-feedback';
+      feedback.id = `feedback_${idx}`;
+      qCard.appendChild(feedback);
+
+      container.appendChild(qCard);
+    });
+  }
+
+  let userAnswers = {};
+
+  function handleSelectOption(qIdx, optIdx) {
+    if (userAnswers[qIdx] !== undefined) return;
+    userAnswers[qIdx] = optIdx;
+
+    const q = questions[qIdx];
+    const isCorrect = (optIdx === q.correct);
+    const card = document.getElementById(`qCard_${qIdx}`);
+    const btns = card.querySelectorAll('.quiz-opt-btn');
+    const fb = document.getElementById(`feedback_${qIdx}`);
+
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.correct) {
+        btn.classList.add('opt-correct');
+      } else if (i === optIdx) {
+        btn.classList.add('opt-wrong');
+      }
+    });
+
+    if (isCorrect) {
+      fb.className = 'quiz-feedback feedback-correct';
+      fb.innerHTML = `<strong>शुद्ध उत्तर!</strong> ${q.explanation}`;
+    } else {
+      fb.className = 'quiz-feedback feedback-wrong';
+      fb.innerHTML = `<strong>अशुद्ध उत्तर।</strong> ${q.explanation}`;
+    }
+
+    updateScoreSummary();
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

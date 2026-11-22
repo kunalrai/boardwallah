@@ -116,6 +116,18 @@ const { provider, subjects } = loadContent();
                 </div>
               </div>
             )}
+            {subject.id === "hindi" && (
+              <div class="subject-resources">
+                <p><strong>Hindi Course 'A' chapter guides &amp; quizzes (सम्पूर्ण पाठ्यक्रम · सभी अध्याय):</strong></p>
+                <ul style="margin-top:0.25rem; margin-bottom:0.75rem; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.35rem; font-size: 0.88rem;">
+                  <li><a href="/resources/hindi-vyavaharik-vyakaran/">🌿 व्यावहारिक व्याकरण (व्याकरण के 4 स्तम्भ · 16 अंक)</a></li>
+                  <li><a href="/resources/hindi-kshitij-gadhya-khand/">📖 क्षितिज भाग-2 (गद्य खंड – सभी 8 पाठ)</a></li>
+                  <li><a href="/resources/hindi-kshitij-kavya-khand/">🦚 क्षितिज भाग-2 (काव्य खंड – सभी 11 कविताएँ)</a></li>
+                  <li><a href="/resources/hindi-kritika/">🏡 कृतिका भाग-2 (पूरक पाठ्यपुस्तक – सभी 5 पाठ)</a></li>
+                  <li><a href="/resources/hindi-rachanatmak-lekhan/">📝 रचनात्मक लेखन (लेखन कौशल के 6 आयाम · 20 अंक)</a></li>
+                </ul>
+              </div>
+            )}
             <a class="button secondary" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book a trial</a>
           </article>
         ))

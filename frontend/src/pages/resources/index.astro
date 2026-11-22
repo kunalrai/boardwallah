@@ -319,11 +319,49 @@ const geographyChapters = [
     topics: ["Golden Quadrilateral & BRO", "Pipelines & NW-1/NW-2", "12 Major Seaports", "Balance of Trade & Tourism", "20-Question Quiz"],
   },
 ];
+
+const hindiChapters = [
+  {
+    title: "व्यावहारिक व्याकरण (Core Applied Grammar)",
+    chapter: "व्याकरण (16 अंक) · Hindi Course 'A'",
+    desc: "रचना के आधार पर वाक्य भेद (सरल, संयुक्त, मिश्र), वाच्य व वाच्य परिवर्तन, पद परिचय (संज्ञा से अव्यय तक) और अलंकार (श्लेष, उत्प्रेक्षा, अतिशयोक्ति, मानवीकरण) के सम्पूर्ण नियम व आरेख।",
+    href: "/resources/hindi-vyavaharik-vyakaran/",
+    topics: ["वाक्य रूपांतरण", "कर्तृ, कर्म व भाववाच्य", "पद परिचय तालिका", "श्लेष व उत्प्रेक्षा", "अतिशयोक्ति व मानवीकरण", "20-Question Quiz"],
+  },
+  {
+    title: "क्षितिज भाग-2: गद्य खंड (Prose · सभी 8 पाठ)",
+    chapter: "पाठ्यपुस्तक गद्य (All 8 Chapters) · Hindi Course 'A'",
+    desc: "नेताजी का चश्मा, बालगोबिन भगत, लखनवी अंदाज़, मानवीय करुणा की दिव्य चमक, एक कहानी यह भी, स्त्री शिक्षा के विरोधी कुतर्कों का खंडन, नौबतखाने में इबादत और संस्कृति के सम्पूर्ण व्याख्यात्मक नोट्स।",
+    href: "/resources/hindi-kshitij-gadhya-khand/",
+    topics: ["नेताजी का चश्मा", "बालगोबिन भगत", "लखनवी अंदाज़", "मानवीय करुणा की दिव्य चमक", "एक कहानी यह भी", "नौबतखाने में इबादत", "संस्कृति", "20-Question Quiz"],
+  },
+  {
+    title: "क्षितिज भाग-2: काव्य खंड (Poetry · सभी 11 कविताएँ)",
+    chapter: "पाठ्यपुस्तक काव्य (All 11 Poems) · Hindi Course 'A'",
+    desc: "सूरदास (पद), तुलसीदास (राम-लक्ष्मण-परशुराम संवाद), देव (सवैया/कवित्त), जयशंकर प्रसाद (आत्मकथ्य), निराला (उत्साह व अट नहीं रही है), नागार्जुन (दंतुरित मुस्कान व फसल), गिरिजाकुमार माथुर (छाया मत छूना), ऋतुराज (कन्यादान) और मंगलेश डबराल (संगतकार)।",
+    href: "/resources/hindi-kshitij-kavya-khand/",
+    topics: ["सूरदास (भ्रमरगीत)", "राम-लक्ष्मण-परशुराम संवाद", "सवैया/कवित्त", "आत्मकथ्य", "उत्साह व अट नहीं रही", "दंतुरित मुस्कान व फसल", "छाया मत छूना", "कन्यादान", "संगतकार", "20-Question Quiz"],
+  },
+  {
+    title: "कृतिका भाग-2 (Supplementary Reader · सभी 5 पाठ)",
+    chapter: "पूरक पाठ्यपुस्तक (All 5 Chapters) · Hindi Course 'A'",
+    desc: "माता का अँचल, जॉर्ज पंचम की नाक, साना-साना हाथ जोड़ि..., एही ठैयाँ झुलनी हेरानी हो रामा!, और मैं क्यों लिखता हूँ? के विस्तृत सारांश, मूल संवेदना व प्रश्नोत्तरी।",
+    href: "/resources/hindi-kritika/",
+    topics: ["माता का अँचल", "जॉर्ज पंचम की नाक", "साना-साना हाथ जोड़ि...", "एही ठैयाँ झुलनी हेरानी हो रामा!", "मैं क्यों लिखता हूँ?", "20-Question Quiz"],
+  },
+  {
+    title: "रचनात्मक लेखन (Writing Skills · सभी 6 प्रारूप)",
+    chapter: "लेखन कौशल (20 अंक) · Hindi Course 'A'",
+    desc: "सीबीएसई आधिकारिक प्रारूप: संकेत-बिंदुओं पर अनुच्छेद लेखन, औपचारिक व अनौपचारिक पत्र, स्ववृत्त लेखन (Bio-data), ई-मेल लेखन, विज्ञापन लेखन एवं सन्देश लेखन की आदर्श अंक-योजना।",
+    href: "/resources/hindi-rachanatmak-lekhan/",
+    topics: ["अनुच्छेद लेखन (120 शब्द)", "औपचारिक व अनौपचारिक पत्र", "स्ववृत्त लेखन (बायोडाटा)", "ई-मेल लेखन प्रारूप", "विज्ञापन व सन्देश लेखन", "20-Question Quiz"],
+  },
+];
 ---
 
 <Layout
-  title={`CBSE Class 10 Maths, Science & Social Science Revision Notes, Diagrams & Quizzes | ${provider.name}`}
-  description="Free chapter-wise revision notes, interactive SVG diagrams, geometric proofs, and board exam quizzes for all CBSE Class 10 Mathematics, Science, and Social Science (History, Civics, Economics, Geography) chapters."
+  title={`CBSE Class 10 Maths, Science, Social Science & Hindi Revision Notes, Diagrams & Quizzes | ${provider.name}`}
+  description="Free chapter-wise revision notes, interactive SVG diagrams, geometric proofs, and board exam quizzes for all CBSE Class 10 Mathematics, Science, Social Science, and Hindi Course 'A' chapters."
 >
   <div class="wrap">
     <nav class="small" aria-label="Breadcrumb">
@@ -332,9 +370,9 @@ const geographyChapters = [
 
     <div class="resource-header">
       <span class="eyebrow">CBSE Class 10 · Academic Learning Hub</span>
-      <h1>Class 10 Maths, Science &amp; Social Science Revision Guides</h1>
+      <h1>Class 10 Maths, Science, Social Science &amp; Hindi Revision Guides</h1>
       <p class="lead">
-        Comprehensive notes, interactive SVG diagrams, formula sheets, case studies, and 20-question board quizzes covering 100% of the CBSE Class 10 Mathematics, Science, and Social Science syllabus.
+        Comprehensive notes, interactive SVG diagrams, formula sheets, literary analyses, and 20-question board quizzes covering 100% of the CBSE Class 10 curriculum.
       </p>
     </div>
 
@@ -503,6 +541,32 @@ const geographyChapters = [
 
       <div class="grid two chapters-grid">
         {geographyChapters.map((ch) => (
+          <article class="card chapter-card">
+            <span class="tag">{ch.chapter}</span>
+            <h2>{ch.title}</h2>
+            <p class="muted">{ch.desc}</p>
+            <div class="topic-tags">
+              {ch.topics.map((t) => (
+                <span class="topic-tag">{t}</span>
+              ))}
+            </div>
+            <div class="actions" style="margin-top:auto;padding-top:1rem">
+              <a href={ch.href} class="button">Explore Chapter &amp; Quiz →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Hindi Course 'A' Section -->
+    <section class="section">
+      <div class="section-title-wrap">
+        <h2>📚 Class 10 Hindi Course 'A' (क्षितिज, कृतिका, व्याकरण व लेखन)</h2>
+        <p class="muted">व्यावहारिक व्याकरण (वाक्य, वाच्य, पद परिचय, अलंकार), पाठ्यपुस्तक क्षितिज (गद्य व काव्य), पूरक पाठ्यपुस्तक कृतिका, और रचनात्मक लेखन के आधिकारिक प्रारूप एवं 20-20 बहुविकल्पी प्रश्न।</p>
+      </div>
+
+      <div class="grid two chapters-grid">
+        {hindiChapters.map((ch) => (
           <article class="card chapter-card">
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
