@@ -47,8 +47,9 @@ Requested Mode: ${mode}
 
 Please respond adhering strictly to your Socratic CBSE Mentor instructions.`;
 
+      const modelName = "gemini-2.5-flash";
       const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiApiKey}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
