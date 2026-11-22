@@ -17,13 +17,23 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
   image={socialImage.src}
   imageAlt={posterAlt}
 >
+  <!-- Full-page Ambient Mathematical Pattern Background Layer -->
+  <div class="math-ambient-bg" aria-hidden="true"></div>
+
   <div class="wrap">
+    <!-- Hero Section -->
     <section class="hero">
       <div class="hero-text">
+        <a href="/resources/" class="hero-announcement-pill" aria-label="Explore CBSE Class 10 Resources">
+          <span class="pill-badge">Free Resources</span>
+          <span class="pill-text">Explore 47+ Chapter Revision Guides, Diagrams &amp; Quizzes &rarr;</span>
+        </a>
+
         <h1>Master CBSE Class 10 with {provider.tutor_name}</h1>
         <p class="lead">Expert tuition online or at your home, tailored to your learning pace. Pick a slot and choose the mode when you book.</p>
         <div class="actions">
           <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+          <a href="/resources/" class="button resource-cta-btn">📚 Free Study Resources</a>
           <a href="/plans/" class="button secondary">View Plans</a>
         </div>
       </div>
@@ -39,6 +49,88 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
       </figure>
     </section>
 
+    <!-- Free CBSE Class 10 Resources Showcase Section -->
+    <section class="home-resources-section">
+      <div class="section-head">
+        <span class="eyebrow">Free CBSE Class 10 Academic Hub</span>
+        <h2>Explore Chapter Guides, Visual Diagrams &amp; Board Quizzes</h2>
+        <p class="subtitle">Comprehensive revision notes, interactive SVG diagrams, formula sheets, and 20-question practice quizzes covering 100% of the syllabus.</p>
+      </div>
+
+      <div class="resource-hub-grid">
+        <article class="hub-card hub-maths">
+          <div class="hub-header">
+            <span class="hub-icon">📐</span>
+            <span class="hub-tag">14 Chapters · 100% Complete</span>
+          </div>
+          <h3>Mathematics</h3>
+          <p>Real Numbers to Probability, step-by-step proofs, circle theorems, trigonometry ratios &amp; 20-question quizzes.</p>
+          <ul class="hub-features">
+            <li>✓ All NCERT &amp; RD Sharma core theorems</li>
+            <li>✓ Interactive circle &amp; triangle proofs</li>
+            <li>✓ 280+ board practice MCQs</li>
+          </ul>
+          <a href="/resources/#maths" class="hub-link">Explore Maths Guides &rarr;</a>
+        </article>
+
+        <article class="hub-card hub-science">
+          <div class="hub-header">
+            <span class="hub-icon">🔬</span>
+            <span class="hub-tag">8 Chapters · Physics &amp; Chemistry</span>
+          </div>
+          <h3>Science</h3>
+          <p>Concave/convex ray rules, human eye defects, Ohm's law, circuit diagrams, chemical reactions &amp; carbon compounds.</p>
+          <ul class="hub-features">
+            <li>✓ Custom SVG optical ray diagrams</li>
+            <li>✓ Chemical equations &amp; carbon allotropes</li>
+            <li>✓ 160+ interactive science MCQs</li>
+          </ul>
+          <a href="/resources/#science" class="hub-link">Explore Science Guides &rarr;</a>
+        </article>
+
+        <article class="hub-card hub-sst">
+          <div class="hub-header">
+            <span class="hub-icon">🌍</span>
+            <span class="hub-tag">20 Chapters · All 4 Disciplines</span>
+          </div>
+          <h3>Social Science</h3>
+          <p>History revolutions &amp; nationalism, Civics power-sharing, Geography resources &amp; Economics development.</p>
+          <ul class="hub-features">
+            <li>✓ History timelines &amp; visual maps</li>
+            <li>✓ Civics federalism &amp; democracy flowcharts</li>
+            <li>✓ 400+ board exam practice questions</li>
+          </ul>
+          <a href="/resources/#social-science" class="hub-link">Explore Social Science &rarr;</a>
+        </article>
+
+        <article class="hub-card hub-hindi">
+          <div class="hub-header">
+            <span class="hub-icon">✍️</span>
+            <span class="hub-tag">Course 'A' · सम्पूर्ण पाठ्यक्रम</span>
+          </div>
+          <h3>Hindi Course 'A'</h3>
+          <p>क्षितिज भाग-2 (सभी 8 गद्य व 11 पद्य), कृतिका भाग-2 (सभी 5 पाठ), व्यावहारिक व्याकरण एवं रचनात्मक लेखन।</p>
+          <ul class="hub-features">
+            <li>✓ सभी गद्य पाठ व काव्य भावार्थ</li>
+            <li>✓ व्याकरण स्तम्भ (16 अंक) व लेखन प्रारूप (20 अंक)</li>
+            <li>✓ 100+ सीबीएसई बोर्ड अभ्यास प्रश्न</li>
+          </ul>
+          <a href="/resources/#hindi" class="hub-link">Explore Hindi Guides &rarr;</a>
+        </article>
+      </div>
+
+      <div class="hub-footer-cta">
+        <div class="hub-banner">
+          <div class="hub-banner-text">
+            <strong>Need instant chapter revision or self-assessment?</strong>
+            <p>Browse our complete library of 47+ chapter notes, formula sheets, and 900+ questions with step-by-step solutions.</p>
+          </div>
+          <a href="/resources/" class="button">Open Complete Resources Hub &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About the Tutor Profile -->
     <section class="card provider-profile">
       <div class="profile-text">
         <h2>About the Tutor</h2>
@@ -63,20 +155,40 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
       </div>
     </section>
 
+    <!-- Subjects Offered Section with Direct Resource Links -->
     <section class="subjects-section">
       <h2>Subjects Offered</h2>
-      <p class="subtitle">Comprehensive coverage of the CBSE Class 10 curriculum.</p>
+      <p class="subtitle">Comprehensive coverage of the CBSE Class 10 curriculum with dedicated chapter notes &amp; quizzes.</p>
       <div class="subjects-grid">
-        {subjects.map((subject) => (
-          <div class="subject-card">
-            {subject.id === "science"
-              ? <a href="/resources/light-reflection-refraction/" class="subject-link">{subject.name}</a>
-              : subject.name}
-          </div>
-        ))}
+        <a href="/resources/#maths" class="subject-card interactive-subject-card">
+          <span class="subj-icon">📐</span>
+          <span class="subj-title">Mathematics</span>
+          <span class="subj-badge">14 Chapter Guides &amp; Quizzes &rarr;</span>
+        </a>
+        <a href="/resources/#science" class="subject-card interactive-subject-card">
+          <span class="subj-icon">🔬</span>
+          <span class="subj-title">Science</span>
+          <span class="subj-badge">8 Physics &amp; Chemistry Guides &rarr;</span>
+        </a>
+        <a href="/resources/#social-science" class="subject-card interactive-subject-card">
+          <span class="subj-icon">🌍</span>
+          <span class="subj-title">Social Science</span>
+          <span class="subj-badge">20 History, Civics, Geo &amp; Eco Guides &rarr;</span>
+        </a>
+        <a href="/resources/#hindi" class="subject-card interactive-subject-card">
+          <span class="subj-icon">✍️</span>
+          <span class="subj-title">Hindi Course 'A'</span>
+          <span class="subj-badge">Complete Syllabus &amp; Quizzes &rarr;</span>
+        </a>
+        <a href="/subjects/" class="subject-card interactive-subject-card">
+          <span class="subj-icon">📖</span>
+          <span class="subj-title">English</span>
+          <span class="subj-badge">Tuition Syllabus &rarr;</span>
+        </a>
       </div>
     </section>
 
+    <!-- Bottom CTA Banner -->
     <section class="cta-banner">
       <h2>Ready to start learning?</h2>
       <p>Book your free trial session today. Pick online or a home visit when you choose a slot.</p>
@@ -86,13 +198,267 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
 </Layout>
 
 <style>
-  .subject-link {
-    color: var(--brand);
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+  /* Full-page Ambient Mathematical Pattern Background Layer */
+  :global(body:has(.math-ambient-bg)) {
+    background-color: var(--paper);
+    background-image: url("/math-pattern.svg");
+    background-repeat: repeat;
+    background-size: 580px 580px;
+    background-attachment: fixed;
   }
-  .subject-link:hover {
+
+  .math-ambient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    background-image: url("/math-pattern.svg");
+    background-repeat: repeat;
+    background-size: 580px 580px;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Hero Announcement Pill */
+  .hero-announcement-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.35rem 0.85rem;
+    margin-bottom: 1.25rem;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 8px rgb(21 37 43 / 6%);
+    text-decoration: none;
+    font-size: 0.86rem;
+    color: var(--ink);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .hero-announcement-pill:hover {
+    transform: translateY(-1px);
+    border-color: var(--brand);
+    box-shadow: 0 4px 12px rgb(15 76 92 / 12%);
+  }
+  .pill-badge {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: #7c3a12;
+    font-weight: 700;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .pill-text {
+    font-weight: 600;
+    color: var(--brand);
+  }
+
+  /* Resource CTA Button in Hero */
+  .resource-cta-btn {
+    background: #e8f4f6;
+    color: var(--brand);
+    border: 1px solid #b5d8de;
+  }
+  .resource-cta-btn:hover {
+    background: #d6ecf0;
+    color: var(--brand-dark);
+  }
+
+  /* Home Resources Showcase Section */
+  .home-resources-section {
+    margin-block: 2.5rem 3.5rem;
+  }
+  .section-head {
+    text-align: center;
+    max-width: 72ch;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+  }
+  .section-head h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  .resource-hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .hub-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hub-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--brand);
+    box-shadow: 0 16px 36px rgb(15 76 92 / 12%);
+  }
+
+  .hub-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+  }
+  .hub-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+  .hub-tag {
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: #eef2f1;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .hub-maths .hub-tag { background: #e0f2fe; color: #0369a1; }
+  .hub-science .hub-tag { background: #fef3c7; color: #92400e; }
+  .hub-sst .hub-tag { background: #dcfce7; color: #15803d; }
+  .hub-hindi .hub-tag { background: #fae8ff; color: #86198f; }
+
+  .hub-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+  .hub-card p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .hub-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem 0;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+  .hub-features li {
+    padding: 0.22rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .hub-link {
+    margin-top: auto;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--brand);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: gap 0.15s ease, color 0.15s ease;
+  }
+  .hub-link:hover {
+    gap: 0.5rem;
     color: var(--accent);
+  }
+
+  /* Hub Footer Banner */
+  .hub-footer-cta {
+    margin-top: 1.5rem;
+  }
+  .hub-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.4rem 1.75rem;
+    background: linear-gradient(135deg, #f7faf9 0%, #edf5f5 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .hub-banner-text strong {
+    font-size: 1.05rem;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .hub-banner-text p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* Interactive Subject Cards */
+  .interactive-subject-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 1.15rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: 0 4px 14px rgb(21 37 43 / 4%);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .interactive-subject-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--brand);
+    box-shadow: 0 10px 24px rgb(15 76 92 / 10%);
+  }
+  .subj-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+  .subj-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .subj-badge {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--brand);
+  }
+  .interactive-subject-card:hover .subj-badge {
+    color: var(--accent);
+  }
+
+  @media (max-width: 680px) {
+    .hub-banner {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: left;
+    }
+    .hero-announcement-pill {
+      font-size: 0.8rem;
+      flex-wrap: wrap;
+    }
   }
 </style>

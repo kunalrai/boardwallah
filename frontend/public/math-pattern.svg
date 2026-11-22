@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640">
+  <defs>
+    <style>
+      .eq {
+        font-family: 'Cambria Math', 'KaTeX_Math', 'Times New Roman', serif;
+        font-style: italic;
+        fill: #0f4c5c;
+        opacity: 0.075;
+      }
+      .sym {
+        font-family: 'Cambria Math', 'Times New Roman', serif;
+        fill: #0f4c5c;
+        opacity: 0.065;
+        font-weight: 400;
+      }
+      .line {
+        stroke: #0f4c5c;
+        stroke-width: 1.2;
+        opacity: 0.075;
+        fill: none;
+      }
+    </style>
+  </defs>
+
+  <!-- Quadratic Formula (Top Left) -->
+  <g transform="translate(30, 75) rotate(-6)">
+    <text class="eq" font-size="21">x = </text>
+    <text class="eq" font-size="19" x="42" y="-10">-b ± √(b² - 4ac)</text>
+    <line class="line" x1="38" y1="-4" x2="195" y2="-4" />
+    <text class="eq" font-size="19" x="105" y="18">2a</text>
+  </g>
+
+  <!-- Trigonometric Pythagorean Identity (Top Right) -->
+  <g transform="translate(390, 70) rotate(4)">
+    <text class="eq" font-size="20">sin²θ + cos²θ = 1</text>
+  </g>
+
+  <!-- Small geometric right-triangle sketch (Top Center) -->
+  <g transform="translate(260, 40) rotate(8)">
+    <polygon points="0,50 65,50 65,0" class="line" />
+    <rect x="53" y="38" width="12" height="12" class="line" />
+    <text class="eq" font-size="13" x="25" y="65">a</text>
+    <text class="eq" font-size="13" x="72" y="28">b</text>
+    <text class="eq" font-size="13" x="22" y="20">c</text>
+  </g>
+
+  <!-- Arithmetic Progression: nth term (Upper Middle) -->
+  <g transform="translate(45, 185) rotate(5)">
+    <text class="eq" font-size="20">aₙ = a + (n - 1)d</text>
+  </g>
+
+  <!-- Coordinate Distance Formula (Center Left) -->
+  <g transform="translate(280, 165) rotate(-5)">
+    <text class="eq" font-size="19">d = √[(x₂ - x₁)² + (y₂ - y₁)²]</text>
+  </g>
+
+  <!-- Pi & Infinity Glyphs (Background accents) -->
+  <text class="sym" font-size="44" x="550" y="195" transform="rotate(12 550 195)">π</text>
+  <text class="sym" font-size="38" x="220" y="150" transform="rotate(-15 220 150)">∞</text>
+  <text class="sym" font-size="32" x="15" y="270">∑</text>
+
+  <!-- Sum of AP formula (Middle) -->
+  <g transform="translate(50, 290) rotate(-4)">
+    <text class="eq" font-size="20">Sₙ = </text>
+    <text class="eq" font-size="18" x="42" y="-9">n</text>
+    <line class="line" x1="38" y1="-4" x2="60" y2="-4" />
+    <text class="eq" font-size="18" x="42" y="16">2</text>
+    <text class="eq" font-size="20" x="66" y="3">[2a + (n - 1)d]</text>
+  </g>
+
+  <!-- Circle Area & Sector Area (Center Right) -->
+  <g transform="translate(360, 275) rotate(6)">
+    <text class="eq" font-size="20">A = πr²</text>
+    <text class="eq" font-size="16" x="110" y="0">Sector = </text>
+    <text class="eq" font-size="14" x="175" y="-9">θ</text>
+    <line class="line" x1="170" y1="-4" x2="215" y2="-4" />
+    <text class="eq" font-size="14" x="172" y="15">360°</text>
+    <text class="eq" font-size="16" x="220" y="0">× πr²</text>
+  </g>
+
+  <!-- Small circle with tangent line sketch -->
+  <g transform="translate(300, 360)">
+    <circle cx="35" cy="35" r="28" class="line" />
+    <line x1="0" y1="63" x2="75" y2="63" class="line" />
+    <circle cx="35" cy="63" r="2" fill="#0f4c5c" opacity="0.08" />
+    <line x1="35" y1="35" x2="35" y2="63" class="line" stroke-dasharray="2,2" />
+    <text class="eq" font-size="12" x="38" y="52">r</text>
+    <text class="eq" font-size="11" x="80" y="66">T</text>
+  </g>
+
+  <!-- Trigonometric Ratio (Lower Left) -->
+  <g transform="translate(35, 410) rotate(7)">
+    <text class="eq" font-size="19">tan θ = </text>
+    <text class="eq" font-size="17" x="65" y="-8">sin θ</text>
+    <line class="line" x1="60" y1="-3" x2="105" y2="-3" />
+    <text class="eq" font-size="17" x="63" y="16">cos θ</text>
+  </g>
+
+  <!-- Quadratic Roots Relations (Vieta's Formulas) (Lower Center) -->
+  <g transform="translate(190, 445) rotate(-3)">
+    <text class="eq" font-size="18">α + β = -b/a</text>
+    <text class="eq" font-size="18" x="145" y="0">αβ = c/a</text>
+  </g>
+
+  <!-- Probability Formula (Lower Right) -->
+  <g transform="translate(420, 420) rotate(-5)">
+    <text class="eq" font-size="19">P(E) = </text>
+    <text class="eq" font-size="17" x="55" y="-8">n(E)</text>
+    <line class="line" x1="50" y1="-3" x2="95" y2="-3" />
+    <text class="eq" font-size="17" x="53" y="16">n(S)</text>
+  </g>
+
+  <!-- Statistics Mean Formula (Bottom Left) -->
+  <g transform="translate(40, 545) rotate(-5)">
+    <text class="eq" font-size="20">x̄ = </text>
+    <text class="eq" font-size="17" x="35" y="-9">∑ fᵢxᵢ</text>
+    <line class="line" x1="30" y1="-4" x2="85" y2="-4" />
+    <text class="eq" font-size="17" x="42" y="16">∑ fᵢ</text>
+  </g>
+
+  <!-- Discriminant condition (Bottom Center) -->
+  <g transform="translate(240, 560) rotate(4)">
+    <text class="eq" font-size="19">Δ = b² - 4ac ≥ 0</text>
+  </g>
+
+  <!-- Cone Volume (Bottom Right) -->
+  <g transform="translate(450, 540) rotate(6)">
+    <text class="eq" font-size="19">V = </text>
+    <text class="eq" font-size="17" x="32" y="-8">1</text>
+    <line class="line" x1="28" y1="-3" x2="44" y2="-3" />
+    <text class="eq" font-size="17" x="32" y="16">3</text>
+    <text class="eq" font-size="19" x="48" y="2">πr²h</text>
+  </g>
+
+  <!-- Floating Math Symbols scatter -->
+  <text class="sym" font-size="34" x="580" y="340">√</text>
+  <text class="sym" font-size="28" x="180" y="230">θ</text>
+  <text class="sym" font-size="30" x="590" y="490">Δ</text>
+  <text class="sym" font-size="32" x="160" y="500">λ</text>
+  <text class="sym" font-size="34" x="370" y="520">∫</text>
+  <text class="sym" font-size="26" x="20" y="470">±</text>
+  <text class="sym" font-size="26" x="340" y="115">≈</text>
+  <text class="sym" font-size="28" x="500" y="140">∠</text>
+  <text class="sym" font-size="24" x="480" y="230">≠</text>
+</svg>
