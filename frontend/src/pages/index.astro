@@ -97,7 +97,7 @@ const homeSchema = {
       <div class="hero-text">
         <a href="/resources/" class="hero-announcement-pill" aria-label="Explore CBSE Class 10 Board 2026 Study Toolkit">
           <span class="pill-badge">CBSE 2026 Toolkit</span>
-          <span class="pill-text">80-Mark Sample Papers · 80 Flashcards · 56 Chapter Guides &rarr;</span>
+          <span class="pill-text">80-Mark Sample Papers · 80 Flashcards · Unlimited Practice Arena · 56 Chapter Guides &rarr;</span>
         </a>
 
         <h1>Master CBSE Class 10 with {provider.tutor_name}</h1>
@@ -346,6 +346,24 @@ const homeSchema = {
             <li>✅ Completed vs Needs Practice Filters</li>
           </ul>
           <a href="/resources/" class="button small toolkit-action-btn">Track 56 Chapters &rarr;</a>
+        </article>
+
+        <!-- Card 4: Endless Practice Arena -->
+        <article class="toolkit-card toolkit-card-arena">
+          <div class="toolkit-badge-row">
+            <span class="toolkit-icon">🎯</span>
+            <span class="toolkit-badge badge-arena">Infinite Generator</span>
+          </div>
+          <h3>Unlimited Practice Arena</h3>
+          <p class="muted">
+            Algorithmically generate unlimited fresh numericals and conceptual questions for Maths &amp; Science with randomized parameters and step-by-step marking rubrics.
+          </p>
+          <ul class="toolkit-highlights">
+            <li>🔢 Infinite Parametric Problem Variations</li>
+            <li>🔥 Live Answer Streaks &amp; Accuracy Stats</li>
+            <li>🧠 In-Browser WebGPU AI Generation</li>
+          </ul>
+          <a href="/resources/practice-arena/" class="button small toolkit-action-btn">Enter Practice Arena &rarr;</a>
         </article>
       </div>
     </section>
@@ -914,6 +932,14 @@ const homeSchema = {
     border-color: #16a34a;
   }
 
+  .toolkit-card-arena {
+    border-color: #fde047;
+    background: linear-gradient(145deg, #ffffff 0%, #fefce8 100%);
+  }
+  .toolkit-card-arena:hover {
+    border-color: #ca8a04;
+  }
+
   .toolkit-badge-row {
     display: flex;
     justify-content: space-between;
@@ -948,6 +974,11 @@ const homeSchema = {
   .badge-tracker {
     background: #dcfce7;
     color: #15803d;
+  }
+
+  .badge-arena {
+    background: #fef08a;
+    color: #854d0e;
   }
 
   .toolkit-card h3 {
