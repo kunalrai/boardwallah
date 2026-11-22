@@ -1168,6 +1168,66 @@ const { provider } = loadContent();
     margin-left: 0.4rem;
   }
 
+  @media (max-width: 768px) {
+    .exam-control-panel {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.85rem;
+      padding: 1rem;
+    }
+    .panel-left,
+    .panel-right {
+      justify-content: space-between;
+      width: 100%;
+    }
+    .panel-right {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.65rem;
+    }
+    .view-toggle-wrap {
+      justify-content: space-between;
+      width: 100%;
+    }
+    .timer-clock {
+      font-size: 1.15rem;
+      padding: 0.2rem 0.5rem;
+    }
+    .subject-tabs-nav {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+    .subject-tab {
+      padding: 0.75rem 0.85rem;
+    }
+    .paper-header {
+      padding: 1.25rem 1rem;
+    }
+    .paper-header-meta h2 {
+      font-size: 1.3rem;
+    }
+    .question-card {
+      padding: 1.15rem 1rem;
+    }
+    .mcq-options {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .subject-tabs-nav {
+      grid-template-columns: 1fr;
+    }
+    .panel-left {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.6rem;
+    }
+    .timer-display {
+      justify-content: space-between;
+    }
+  }
+
   /* ── Print Media Query ── */
   @media print {
     .site-header, .site-footer, .exam-control-panel, .subject-tabs-nav, .cta-banner, nav {
