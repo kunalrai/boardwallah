@@ -19,7 +19,7 @@ const { provider } = loadContent();
       <span class="eyebrow arena-eyebrow">⚡ Endless Question Generator · 100% Free</span>
       <h1>Unlimited CBSE Class 10 Maths &amp; Science Practice Arena</h1>
       <p class="lead">
-        Never run out of questions. Every click algorithmically generates fresh numericals and conceptual problems with randomized parameters, zero hallucinations, step-by-step marking rubrics, and optional in-browser WebLLM generation.
+        Never run out of questions. Every click algorithmically generates fresh numericals and conceptual problems with randomized parameters, zero hallucinations, and step-by-step CBSE marking rubrics.
       </p>
     </div>
 
@@ -48,15 +48,7 @@ const { provider } = loadContent();
         </div>
       </div>
       <div class="engine-switch-wrap">
-        <span class="engine-label">Generator Engine:</span>
-        <div class="engine-toggle-pills" role="radiogroup">
-          <button id="engine-algorithmic" class="engine-pill active" data-engine="algorithmic" type="button">
-            ⚡ Parametric (Instant &amp; Infinite)
-          </button>
-          <button id="engine-webllm" class="engine-pill" data-engine="webllm" type="button" title="Use in-browser WebGPU AI for conceptual generation">
-            🧠 In-Browser AI (WebLLM)
-          </button>
-        </div>
+        <span class="engine-badge-tag">⚡ Parametric Generator · 100% Free &amp; Offline</span>
       </div>
     </div>
 
@@ -196,12 +188,9 @@ const { provider } = loadContent();
     const solBadge = document.getElementById("sol-badge");
     const solutionContent = document.getElementById("solution-content");
     const nextQuestionBtn = document.getElementById("next-question-btn");
-    const engineAlgorithmicBtn = document.getElementById("engine-algorithmic");
-    const engineWebllmBtn = document.getElementById("engine-webllm");
 
     let currentSubject = "all";
     let currentTopic = "all";
-    let activeEngine = "algorithmic";
     let currentQuestion = null;
     let isAnswered = false;
 
