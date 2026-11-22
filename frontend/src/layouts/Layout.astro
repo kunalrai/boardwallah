@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   image?: string;
   imageAlt?: string;
+  schema?: Record<string, any> | Record<string, any>[];
 }
 
 const { provider } = loadContent();
@@ -16,6 +17,7 @@ const {
   description = `CBSE Class 10 tuition online or at home with ${provider.tutor_name}. Book a free trial slot, online or as a home visit.`,
   image,
   imageAlt,
+  schema,
 } = Astro.props;
 const path = Astro.url.pathname;
 const canonical = absoluteUrl(path);
@@ -50,6 +52,9 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     {image && <meta name="twitter:card" content="summary_large_image" />}
     {image && <meta name="twitter:image" content={absoluteUrl(image)} />}
     <title>{title}</title>
+    {schema && (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

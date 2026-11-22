@@ -2,13 +2,78 @@
 import { getImage, Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { loadContent, teachingModeLabel } from "../lib/content";
-import { calBookingUrl } from "../lib/site";
+import { calBookingUrl, siteOrigin } from "../lib/site";
 import adImage from "../assets/ad.png";
 
 const { provider, subjects } = loadContent();
 const posterAlt =
   "BoardWallah CBSE Class 10 maths banner: complete maths preparation for board exams, covering NCERT, RD Sharma, previous year questions and revision, with chapter-wise concepts, important questions and practice tests.";
 const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" });
+
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": `${siteOrigin}/#organization`,
+      "name": provider.name,
+      "url": siteOrigin,
+      "logo": `${siteOrigin}/favicon.svg`,
+      "description": `Comprehensive CBSE Class 10 tutoring and board exam preparation in ${provider.service_localities.join(", ")} by ${provider.tutor_name}.`,
+      "founder": {
+        "@type": "Person",
+        "name": provider.tutor_name,
+        "jobTitle": "Lead Educator & Founder",
+        "knowsAbout": ["CBSE Class 10 Mathematics", "Science", "Social Science", "English", "Hindi"]
+      },
+      "areaServed": provider.service_localities.map((locality) => ({
+        "@type": "Place",
+        "name": locality
+      })),
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Student Support",
+        "email": provider.contact.email,
+        "telephone": provider.contact.whatsapp,
+        "availableLanguage": provider.languages
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteOrigin}/#tutor`,
+      "name": provider.tutor_name,
+      "jobTitle": "CBSE Class 10 Educator & Tutor",
+      "description": `${provider.experience_years} years of teaching experience specializing in CBSE Class 10 board exam preparation, concept clarification, and scoring 95%+ in boards.`,
+      "hasCredential": provider.qualifications.map((q) => ({
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "degree",
+        "name": q
+      })),
+      "knowsAbout": subjects.map((s) => s.name)
+    },
+    {
+      "@type": "Course",
+      "@id": `${siteOrigin}/#course-cbse-10`,
+      "name": "CBSE Class 10 Complete Board Exam Preparation",
+      "description": "Comprehensive one-on-one and small group CBSE Class 10 tutoring covering Mathematics, Science, Social Science, English, and Hindi with NCERT solutions, chapter guides, 1,120+ MCQs, 80-mark sample papers, and active-recall flashcards.",
+      "provider": {
+        "@id": `${siteOrigin}/#organization`
+      },
+      "educationalLevel": "Secondary Education (CBSE Class 10)",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": `Free ${provider.trial.duration_minutes}-Minute Trial Session`,
+          "price": "0",
+          "priceCurrency": "INR",
+          "category": "TrialSession",
+          "url": calBookingUrl,
+          "availability": "https://schema.org/InStock"
+        }
+      ]
+    }
+  ]
+};
 ---
 
 <Layout 
@@ -16,6 +81,7 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
   description={`One-to-one CBSE Class 10 tuition online or at home with ${provider.tutor_name}. Book a free trial slot.`}
   image={socialImage.src}
   imageAlt={posterAlt}
+  schema={homeSchema}
 >
   <!-- Full-page Ambient Mathematical Pattern Background Layer -->
   <div class="math-ambient-bg" aria-hidden="true"></div>
@@ -24,9 +90,9 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-text">
-        <a href="/resources/sample-papers/" class="hero-announcement-pill" aria-label="Explore CBSE Class 10 Board 2026 Sample Papers">
-          <span class="pill-badge">New Blueprint</span>
-          <span class="pill-text">CBSE 2026 Full 80-Mark Sample Papers &amp; Marking Schemes &rarr;</span>
+        <a href="/resources/" class="hero-announcement-pill" aria-label="Explore CBSE Class 10 Board 2026 Study Toolkit">
+          <span class="pill-badge">CBSE 2026 Toolkit</span>
+          <span class="pill-text">80-Mark Sample Papers · 80 Flashcards · 56 Chapter Guides &rarr;</span>
         </a>
 
         <h1>Master CBSE Class 10 with {provider.tutor_name}</h1>
@@ -47,6 +113,71 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
           fetchpriority="high"
         />
       </figure>
+    </section>
+
+    <!-- CBSE 2026 Board Prep Toolkit Section -->
+    <section class="toolkit-showcase-section">
+      <div class="section-head">
+        <span class="eyebrow">Target 95%+ in CBSE 2026 Boards</span>
+        <h2>High-Yield Board Exam Study Toolkit</h2>
+        <p class="subtitle">Equip yourself with the three essential tools every Class 10 topper uses to prepare, test, and master the board syllabus.</p>
+      </div>
+
+      <div class="toolkit-cards-grid">
+        <!-- Card 1: Sample Papers -->
+        <article class="toolkit-card toolkit-card-papers">
+          <div class="toolkit-badge-row">
+            <span class="toolkit-icon">📝</span>
+            <span class="toolkit-badge badge-papers">Full 80 Marks</span>
+          </div>
+          <h3>CBSE 2026 Blueprint Mock Papers</h3>
+          <p class="muted">
+            Simulate authentic exam hall conditions for Maths, Science, Social Science &amp; English with a built-in 3-hour timer, question-wise marks, and marking schemes.
+          </p>
+          <ul class="toolkit-highlights">
+            <li>⏱️ 3-Hour Practice Countdown Timer</li>
+            <li>📋 Official Section Breakdown (A to E)</li>
+            <li>🔍 Step-by-Step Marking Rubrics</li>
+          </ul>
+          <a href="/resources/sample-papers/" class="button small toolkit-action-btn">Simulate 80-Mark Exam &rarr;</a>
+        </article>
+
+        <!-- Card 2: Interactive Flashcards -->
+        <article class="toolkit-card toolkit-card-flashcards">
+          <div class="toolkit-badge-row">
+            <span class="toolkit-icon">⚡</span>
+            <span class="toolkit-badge badge-flashcards">Active Recall Engine</span>
+          </div>
+          <h3>80 Interactive Revision Flashcards</h3>
+          <p class="muted">
+            Test key formulas, chemical reaction colours, ray diagram conventions, historical dates, and Hindi/English grammar with 3D flip cards and self-testing.
+          </p>
+          <ul class="toolkit-highlights">
+            <li>🔄 3D Flip Cards with Keyboard Navigation</li>
+            <li>⭐ Key CBSE Marking Scheme Keywords</li>
+            <li>🎯 Targeted Weak Cards Practice Filter</li>
+          </ul>
+          <a href="/resources/flashcards/" class="button small toolkit-action-btn">Practice 80 Flashcards &rarr;</a>
+        </article>
+
+        <!-- Card 3: Quiz Mastery Tracker -->
+        <article class="toolkit-card toolkit-card-tracker">
+          <div class="toolkit-badge-row">
+            <span class="toolkit-icon">📊</span>
+            <span class="toolkit-badge badge-tracker">Progress Tracker</span>
+          </div>
+          <h3>Syllabus Mastery &amp; Quiz Tracker</h3>
+          <p class="muted">
+            Take 20-question chapter quizzes across all 56 Class 10 chapters. Automatically saves high scores in your browser, monitors syllabus completion, and highlights weak topics.
+          </p>
+          <ul class="toolkit-highlights">
+            <li>📈 Live Syllabus Completion Percentage</li>
+            <li>🏆 Previous Best Score Tracking</li>
+            <li>✅ Completed vs Needs Practice Filters</li>
+          </ul>
+          <a href="/resources/" class="button small toolkit-action-btn">Track 56 Chapters &rarr;</a>
+        </article>
+      </div>
     </section>
 
     <!-- Free CBSE Class 10 Resources Showcase Section -->
@@ -287,6 +418,124 @@ const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" }
   .resource-cta-btn:hover {
     background: #d6ecf0;
     color: var(--brand-dark);
+  }
+
+  /* ── CBSE 2026 Board Prep Toolkit Section ── */
+  .toolkit-showcase-section {
+    margin-block: 2.25rem 3.5rem;
+  }
+
+  .toolkit-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .toolkit-card {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 16px rgb(21 37 43 / 4%);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .toolkit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgb(15 76 92 / 12%);
+  }
+
+  .toolkit-card-papers {
+    border-color: #99f6e4;
+    background: linear-gradient(145deg, #ffffff 0%, #f0fdfa 100%);
+  }
+  .toolkit-card-papers:hover {
+    border-color: #0d9488;
+  }
+
+  .toolkit-card-flashcards {
+    border-color: #c4b5fd;
+    background: linear-gradient(145deg, #ffffff 0%, #f5f3ff 100%);
+  }
+  .toolkit-card-flashcards:hover {
+    border-color: #7c3aed;
+  }
+
+  .toolkit-card-tracker {
+    border-color: #bbf7d0;
+    background: linear-gradient(145deg, #ffffff 0%, #f0fdf4 100%);
+  }
+  .toolkit-card-tracker:hover {
+    border-color: #16a34a;
+  }
+
+  .toolkit-badge-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .toolkit-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .toolkit-badge {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+  }
+
+  .badge-papers {
+    background: #ccfbf1;
+    color: #0f766e;
+  }
+
+  .badge-flashcards {
+    background: #ede9fe;
+    color: #5b21b6;
+  }
+
+  .badge-tracker {
+    background: #dcfce7;
+    color: #15803d;
+  }
+
+  .toolkit-card h3 {
+    font-size: 1.28rem;
+    margin-bottom: 0.45rem;
+    color: var(--ink);
+  }
+
+  .toolkit-card p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .toolkit-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    font-size: 0.86rem;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .toolkit-action-btn {
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 
   /* Home Resources Showcase Section */
