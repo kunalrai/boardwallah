@@ -25,6 +25,7 @@ export const GET: APIRoute = () => {
     "policies/cancellation-refund/",
     "resources/",
     "resources/sample-papers/",
+    "resources/flashcards/",
     "resources/real-numbers/",
     "resources/polynomials/",
     "resources/linear-equations-in-two-variables/",

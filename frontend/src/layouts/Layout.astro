@@ -125,7 +125,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     <script is:inline>
       (function() {
         const path = window.location.pathname;
-        if (!path.startsWith('/resources/') || path === '/resources/' || path === '/resources/sample-papers/') {
+        if (!path.startsWith('/resources/') || path === '/resources/' || path === '/resources/sample-papers/' || path === '/resources/flashcards/') {
           return;
         }
 
