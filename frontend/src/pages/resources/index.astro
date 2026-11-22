@@ -444,6 +444,59 @@ const englishChapters = [
       </p>
     </div>
 
+    <!-- Search & Subject Filter Bar -->
+    <div class="search-filter-container card" id="search-filter-box">
+      <div class="search-bar-wrap">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="search"
+          id="resource-search"
+          class="search-input"
+          placeholder="Search all 56 chapters, topics, formulas (e.g. Thales, Ohm's Law, Reflex Arc, French Revolution, Villi)..."
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Search revision guides and quizzes"
+        />
+        <button type="button" id="clear-search-btn" class="clear-search-btn" aria-label="Clear search" style="display:none;">✕</button>
+      </div>
+
+      <div class="filter-pills-row" role="tablist" aria-label="Filter by subject">
+        <button class="filter-pill active" data-filter="all" role="tab" aria-selected="true">
+          All Chapters <span class="pill-count">56</span>
+        </button>
+        <button class="filter-pill" data-filter="maths" role="tab" aria-selected="false">
+          📐 Mathematics <span class="pill-count">14</span>
+        </button>
+        <button class="filter-pill" data-filter="science" role="tab" aria-selected="false">
+          🔬 Science <span class="pill-count">13</span>
+        </button>
+        <button class="filter-pill" data-filter="social-science" role="tab" aria-selected="false">
+          🌍 Social Science <span class="pill-count">20</span>
+        </button>
+        <button class="filter-pill" data-filter="english" role="tab" aria-selected="false">
+          📖 English <span class="pill-count">4</span>
+        </button>
+        <button class="filter-pill" data-filter="hindi" role="tab" aria-selected="false">
+          ✍️ Hindi <span class="pill-count">5</span>
+        </button>
+      </div>
+
+      <div class="search-status-bar">
+        <span id="results-count-text" class="status-text">
+          Showing <strong>56 chapters</strong> across all subjects
+        </span>
+        <button id="reset-all-btn" class="reset-link" style="display:none;">Reset search &amp; filters</button>
+      </div>
+    </div>
+
+    <!-- No Results Empty State -->
+    <div id="no-results-card" class="card no-results-card" style="display:none;">
+      <div class="no-results-icon">🔍</div>
+      <h3>No chapters found</h3>
+      <p id="no-results-text" class="muted">We couldn't find any chapter or topic matching your search.</p>
+      <button id="no-results-reset-btn" class="button secondary small" style="margin-top:0.75rem;">Clear Search &amp; Show All Chapters</button>
+    </div>
+
     <!-- Mathematics Section -->
     <section id="maths" class="section" style="padding-top:0">
       <div class="section-title-wrap">
@@ -453,7 +506,11 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {mathsChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="maths"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -479,7 +536,12 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {chemistryChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="science"
+            data-subsubject="chemistry"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -505,7 +567,12 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {physicsChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="science"
+            data-subsubject="physics"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -531,7 +598,12 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {biologyChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="science"
+            data-subsubject="biology"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -557,7 +629,12 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {historyChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="social-science"
+            data-subsubject="history"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -583,7 +660,12 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {civicsChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="social-science"
+            data-subsubject="civics"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -609,7 +691,12 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {economicsChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="social-science"
+            data-subsubject="economics"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -635,7 +722,12 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {geographyChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="social-science"
+            data-subsubject="geography"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -661,7 +753,11 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {hindiChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="hindi"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -687,7 +783,11 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {englishChapters.map((ch) => (
-          <article class="card chapter-card">
+          <article 
+            class="card chapter-card"
+            data-subject="english"
+            data-searchable={`${ch.title} ${ch.chapter} ${ch.desc} ${ch.topics.join(' ')}`.toLowerCase()}
+          >
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>
             <p class="muted">{ch.desc}</p>
@@ -713,9 +813,350 @@ const englishChapters = [
   </div>
 </Layout>
 
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('resource-search');
+    const clearBtn = document.getElementById('clear-search-btn');
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const resultsCountEl = document.getElementById('results-count-text');
+    const resetAllBtn = document.getElementById('reset-all-btn');
+    const noResultsCard = document.getElementById('no-results-card');
+    const noResultsText = document.getElementById('no-results-text');
+    const noResultsResetBtn = document.getElementById('no-results-reset-btn');
+
+    const cards = Array.from(document.querySelectorAll('.chapter-card'));
+    const sections = Array.from(document.querySelectorAll('section.section:not(.cta-banner)'));
+
+    let currentSubject = 'all';
+
+    function getSubjectLabel(subj) {
+      switch (subj) {
+        case 'maths': return 'Mathematics';
+        case 'science': return 'Science (Phy, Chem, Bio)';
+        case 'social-science': return 'Social Science';
+        case 'english': return 'English Language & Literature';
+        case 'hindi': return "Hindi Course 'A'";
+        default: return 'all subjects';
+      }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function syncUrl(q, subj) {
+      const url = new URL(window.location);
+      if (q) url.searchParams.set('q', q);
+      else url.searchParams.delete('q');
+
+      if (subj && subj !== 'all') url.searchParams.set('subject', subj);
+      else url.searchParams.delete('subject');
+
+      window.history.replaceState({}, '', url.toString());
+    }
+
+    function filterResources() {
+      const rawQuery = searchInput.value.trim();
+      const query = rawQuery.toLowerCase();
+      const terms = query.split(/\s+/).filter(Boolean);
+
+      clearBtn.style.display = rawQuery.length > 0 ? 'flex' : 'none';
+
+      let totalVisible = 0;
+
+      cards.forEach((card) => {
+        const cardSubject = card.getAttribute('data-subject') || '';
+        const searchable = card.getAttribute('data-searchable') || '';
+
+        // Subject check
+        const matchesSubject = currentSubject === 'all' || cardSubject === currentSubject;
+
+        // Query check: every typed term must match within card searchable text
+        const matchesQuery = terms.length === 0 || terms.every(t => searchable.includes(t));
+
+        if (matchesSubject && matchesQuery) {
+          card.style.display = '';
+          totalVisible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Update visibility of each section based on whether any cards inside are visible
+      sections.forEach((sec) => {
+        const secCards = sec.querySelectorAll('.chapter-card');
+        if (secCards.length > 0) {
+          const hasVisibleCards = Array.from(secCards).some(c => c.style.display !== 'none');
+          sec.style.display = hasVisibleCards ? '' : 'none';
+        }
+      });
+
+      // Update status bar
+      if (currentSubject === 'all' && terms.length === 0) {
+        resultsCountEl.innerHTML = `Showing <strong>56 chapters</strong> across all subjects`;
+        resetAllBtn.style.display = 'none';
+      } else {
+        resetAllBtn.style.display = 'inline-block';
+        const label = getSubjectLabel(currentSubject);
+        if (terms.length > 0) {
+          resultsCountEl.innerHTML = `Found <strong>${totalVisible} chapter${totalVisible === 1 ? '' : 's'}</strong> matching "<em>${escapeHtml(rawQuery)}</em>"${currentSubject !== 'all' ? ` in ${label}` : ''}`;
+        } else {
+          resultsCountEl.innerHTML = `Showing <strong>${totalVisible} chapter${totalVisible === 1 ? '' : 's'}</strong> in ${label}`;
+        }
+      }
+
+      // Empty state
+      if (totalVisible === 0) {
+        noResultsCard.style.display = 'block';
+        if (terms.length > 0) {
+          noResultsText.textContent = `We couldn't find any chapter or topic matching "${rawQuery}" in ${getSubjectLabel(currentSubject)}.`;
+        } else {
+          noResultsText.textContent = `No chapters available in this category.`;
+        }
+      } else {
+        noResultsCard.style.display = 'none';
+      }
+
+      syncUrl(rawQuery, currentSubject);
+    }
+
+    // Filter pill click
+    filterPills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => {
+          p.classList.remove('active');
+          p.setAttribute('aria-selected', 'false');
+        });
+        pill.classList.add('active');
+        pill.setAttribute('aria-selected', 'true');
+        currentSubject = pill.getAttribute('data-filter') || 'all';
+        filterResources();
+      });
+    });
+
+    // Search input
+    searchInput.addEventListener('input', filterResources);
+
+    // Clear search button
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchInput.focus();
+      filterResources();
+    });
+
+    // Reset everything
+    function resetAll() {
+      searchInput.value = '';
+      currentSubject = 'all';
+      filterPills.forEach(p => {
+        const isAll = p.getAttribute('data-filter') === 'all';
+        p.classList.toggle('active', isAll);
+        p.setAttribute('aria-selected', isAll ? 'true' : 'false');
+      });
+      filterResources();
+    }
+
+    resetAllBtn.addEventListener('click', resetAll);
+    noResultsResetBtn.addEventListener('click', resetAll);
+
+    // Initial check from URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const initialQ = params.get('q');
+    const initialSubj = params.get('subject');
+
+    if (initialQ) {
+      searchInput.value = initialQ;
+    }
+    if (initialSubj && ['maths', 'science', 'social-science', 'english', 'hindi'].includes(initialSubj)) {
+      currentSubject = initialSubj;
+      filterPills.forEach(p => {
+        const matches = p.getAttribute('data-filter') === initialSubj;
+        p.classList.toggle('active', matches);
+        p.setAttribute('aria-selected', matches ? 'true' : 'false');
+      });
+    }
+
+    if (initialQ || initialSubj) {
+      filterResources();
+    }
+  });
+</script>
+
 <style>
   .resource-header {
     padding-block: 1.5rem 2rem;
+  }
+
+  /* ── Search & Filter Controls ── */
+  .search-filter-container {
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 16px rgb(21 37 43 / 4%);
+  }
+
+  .search-bar-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    font-size: 1.15rem;
+    color: var(--muted);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.85rem 2.75rem 0.85rem 2.85rem;
+    font-size: 1.02rem;
+    font-family: inherit;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    outline: none;
+  }
+
+  .search-input:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 4px rgb(15 118 110 / 12%);
+  }
+
+  .search-input::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  .clear-search-btn {
+    position: absolute;
+    right: 0.85rem;
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .clear-search-btn:hover {
+    background: var(--line);
+    color: var(--ink);
+  }
+
+  .filter-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.85rem;
+  }
+
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: inherit;
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+
+  .filter-pill:hover {
+    background: var(--line);
+    border-color: var(--brand);
+  }
+
+  .filter-pill.active {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+    box-shadow: 0 2px 8px rgb(15 118 110 / 25%);
+  }
+
+  .pill-count {
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    background: var(--line);
+    color: var(--muted);
+  }
+
+  .filter-pill.active .pill-count {
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+  }
+
+  .search-status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.88rem;
+    color: var(--muted);
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .reset-link {
+    background: none;
+    border: none;
+    color: var(--brand);
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    font-family: inherit;
+  }
+
+  .reset-link:hover {
+    color: var(--brand-dark);
+  }
+
+  /* ── No Results State ── */
+  .no-results-card {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    margin: 2rem 0;
+    border: 1.5px dashed var(--line);
+  }
+
+  .no-results-icon {
+    font-size: 2.75rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .no-results-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .no-results-card p {
+    max-width: 45ch;
+    margin-inline: auto;
+    font-size: 0.95rem;
   }
 
   .section-title-wrap {
@@ -736,6 +1177,12 @@ const englishChapters = [
     flex-direction: column;
     height: 100%;
     padding: 1.75rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .chapter-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgb(21 37 43 / 8%);
   }
 
   .chapter-card h2 {
@@ -791,5 +1238,18 @@ const englishChapters = [
   .cta-banner .button:hover {
     background: #e8f0f1;
     color: var(--brand-dark);
+  }
+
+  @media (max-width: 640px) {
+    .search-filter-container {
+      padding: 1rem;
+    }
+    .filter-pills-row {
+      gap: 0.4rem;
+    }
+    .filter-pill {
+      font-size: 0.82rem;
+      padding: 0.35rem 0.7rem;
+    }
   }
 </style>
