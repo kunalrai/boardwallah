@@ -1,7 +1,7 @@
 ---
 import { getImage, Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import { loadContent, teachingModeLabel } from "../lib/content";
+import { loadContent, teachingModeLabel, whatsappLink } from "../lib/content";
 import { calBookingUrl, siteOrigin } from "../lib/site";
 import adImage from "../assets/ad.png";
 
@@ -9,6 +9,11 @@ const { provider, subjects } = loadContent();
 const posterAlt =
   "BoardWallah CBSE Class 10 maths banner: complete maths preparation for board exams, covering NCERT, RD Sharma, previous year questions and revision, with chapter-wise concepts, important questions and practice tests.";
 const socialImage = await getImage({ src: adImage, width: 1200, format: "webp" });
+
+const waHeroLink = whatsappLink(
+  provider.contact.whatsapp,
+  `Hello ${provider.tutor_name}, I am looking for CBSE Class 10 tuition (online/home visit). Could you please share more details?`
+);
 
 const homeSchema = {
   "@context": "https://schema.org",
@@ -99,8 +104,10 @@ const homeSchema = {
         <p class="lead">Expert tuition online or at your home, tailored to your learning pace. Pick a slot and choose the mode when you book.</p>
         <div class="actions">
           <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+          <a class="button whatsapp-btn" href={waHeroLink} target="_blank" rel="noopener noreferrer">
+            <span class="wa-icon" aria-hidden="true">💬</span> Chat on WhatsApp
+          </a>
           <a href="/resources/" class="button resource-cta-btn">📚 Free Study Resources</a>
-          <a href="/plans/" class="button secondary">View Plans</a>
         </div>
       </div>
       <figure class="hero-media">
@@ -301,44 +308,123 @@ const homeSchema = {
       </div>
     </section>
 
-    <!-- Subjects Offered Section with Direct Resource Links -->
-    <section class="subjects-section">
-      <h2>Subjects Offered</h2>
-      <p class="subtitle">Comprehensive coverage of the CBSE Class 10 curriculum with dedicated chapter notes &amp; quizzes.</p>
-      <div class="subjects-grid">
-        <a href="/resources/#maths" class="subject-card interactive-subject-card">
-          <span class="subj-icon">📐</span>
-          <span class="subj-title">Mathematics</span>
-          <span class="subj-badge">14 Chapter Guides &amp; Quizzes &rarr;</span>
-        </a>
-        <a href="/resources/#science" class="subject-card interactive-subject-card">
-          <span class="subj-icon">🔬</span>
-          <span class="subj-title">Science</span>
-          <span class="subj-badge">13 Physics, Chem &amp; Bio Guides &rarr;</span>
-        </a>
-        <a href="/resources/#social-science" class="subject-card interactive-subject-card">
-          <span class="subj-icon">🌍</span>
-          <span class="subj-title">Social Science</span>
-          <span class="subj-badge">20 History, Civics, Geo &amp; Eco Guides &rarr;</span>
-        </a>
-        <a href="/resources/#hindi" class="subject-card interactive-subject-card">
-          <span class="subj-icon">✍️</span>
-          <span class="subj-title">Hindi Course 'A'</span>
-          <span class="subj-badge">Complete Syllabus &amp; Quizzes &rarr;</span>
-        </a>
-        <a href="/resources/#english" class="subject-card interactive-subject-card">
-          <span class="subj-icon">📖</span>
-          <span class="subj-title">English</span>
-          <span class="subj-badge">All Chapters &amp; Grammar &rarr;</span>
-        </a>
+    <!-- Why Learn with BoardWallah (4 Pillars of Academic Success) -->
+    <section class="why-boardwallah-section">
+      <div class="section-head">
+        <span class="eyebrow">The BoardWallah Advantage</span>
+        <h2>Why Students &amp; Parents Trust Our Mentorship</h2>
+        <p class="subtitle">Personalized 1-on-1 pedagogy designed to eliminate rote memorization and secure 95%+ marks in CBSE Class 10 board exams.</p>
+      </div>
+
+      <div class="pillars-grid">
+        <article class="pillar-card">
+          <div class="pillar-icon-wrap">
+            <span class="pillar-icon">🎯</span>
+          </div>
+          <h3>100% CBSE Blueprint &amp; Marking Scheme Mastery</h3>
+          <p class="muted">
+            Board examiners look for specific steps, theorem names, units, and keywords. We train students to write answers matching the official CBSE marking rubrics to prevent needless mark deductions.
+          </p>
+        </article>
+
+        <article class="pillar-card">
+          <div class="pillar-icon-wrap">
+            <span class="pillar-icon">💡</span>
+          </div>
+          <h3>First-Principles Concept Clarity, Not Rote Learning</h3>
+          <p class="muted">
+            From geometric proofs in Circles &amp; Triangles to chemical reaction mechanisms and ray diagram Cartesian conventions, every concept is broken down from first principles with visual intuition.
+          </p>
+        </article>
+
+        <article class="pillar-card">
+          <div class="pillar-icon-wrap">
+            <span class="pillar-icon">📚</span>
+          </div>
+          <h3>NCERT + RD Sharma + Past 10 Years PYQs</h3>
+          <p class="muted">
+            We cover every single NCERT in-text &amp; exemplar problem, supplemented with high-difficulty RD Sharma problems and chapter-wise previous years' questions (PYQs) so no board question feels unfamiliar.
+          </p>
+        </article>
+
+        <article class="pillar-card">
+          <div class="pillar-icon-wrap">
+            <span class="pillar-icon">🏡</span>
+          </div>
+          <h3>Flexible Modes: 1-on-1 Home Tuition &amp; Live Online</h3>
+          <p class="muted">
+            Convenient at-home sessions in {provider.service_localities.join(" and ")} or live interactive online classes. Zero travel fatigue for students, with customized scheduling and direct parent updates.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CBSE Class 10 Board Exam FAQ Accordion Section -->
+    <section class="faq-section">
+      <div class="section-head">
+        <span class="eyebrow">Frequently Asked Questions</span>
+        <h2>CBSE Class 10 Tuition &amp; Exam Preparation FAQs</h2>
+        <p class="subtitle">Clear, direct answers to common questions asked by Class 10 students and parents.</p>
+      </div>
+
+      <div class="faq-accordion">
+        <details class="faq-item" open>
+          <summary class="faq-summary">How does the free 60-minute trial session work?</summary>
+          <div class="faq-content">
+            <p>
+              The trial session is completely free with zero payment details required. During the 60 minutes, we assess the student's current conceptual grasp, solve difficult chapter numericals or proofs together, and lay out a personalized study roadmap to target 95%+ in the board examinations. You can choose either an interactive online session or an in-person home visit.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">Which localities are covered for in-person home tuition?</summary>
+          <div class="faq-content">
+            <p>
+              In-person home visits are available across <strong>{provider.service_localities.join(" and ")}</strong>. For students residing in other sectors or cities across India, one-on-one live interactive online classes are conducted with full digital whiteboard notes and recorded session recaps.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">Do you teach only from NCERT, or reference books like RD Sharma too?</summary>
+          <div class="faq-content">
+            <p>
+              We cover both thoroughly. We establish core fundamentals from NCERT and NCERT Exemplar first. Then, we solve selective HOTS (Higher Order Thinking Skills) and proof problems from RD Sharma and RS Aggarwal, followed by past 10-year CBSE board examination papers to ensure complete board mastery.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">How are student doubts and syllabus revision handled before exams?</summary>
+          <div class="faq-content">
+            <p>
+              Every class begins with dedicated time to resolve school and homework doubts. Between classes, students have direct WhatsApp access for urgent doubt resolution, along with unrestricted access to our 56 chapter revision guides, 80-mark blueprint mock papers, and 80 interactive active-recall flashcards.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">What is the recommended session frequency for Class 10?</summary>
+          <div class="faq-content">
+            <p>
+              Most students opt for 3 to 4 sessions per week (60 minutes each) for comprehensive coverage of Mathematics and Science. In the final 90 days before board exams, we transition into intensive timed sample paper solving and marking scheme answer writing practice.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 
     <!-- Bottom CTA Banner -->
     <section class="cta-banner">
-      <h2>Ready to start learning?</h2>
-      <p>Book your free trial session today. Pick online or a home visit when you choose a slot.</p>
-      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Reserve Your Free Trial</a>
+      <h2>Ready to score 95%+ in CBSE Class 10?</h2>
+      <p>Book your free 60-minute trial session today (online or home visit in {provider.service_localities.join(" & ")}), or message directly on WhatsApp to discuss your preparation plan.</p>
+      <div class="cta-banner-actions">
+        <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Reserve Free Trial</a>
+        <a class="button whatsapp-btn-cta" href={waHeroLink} target="_blank" rel="noopener noreferrer">
+          💬 Message on WhatsApp
+        </a>
+      </div>
     </section>
   </div>
 </Layout>
@@ -676,43 +762,170 @@ const homeSchema = {
     margin: 0;
   }
 
-  /* Interactive Subject Cards */
-  .interactive-subject-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.35rem;
-    padding: 1.15rem 1.25rem;
+  /* ── WhatsApp Hero & CTA Buttons ── */
+  .whatsapp-btn {
+    background: #16a34a;
+    color: #ffffff;
+    border-color: #15803d;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .whatsapp-btn:hover {
+    background: #15803d;
+    color: #ffffff;
+  }
+  .wa-icon {
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+
+  /* ── Why BoardWallah Pillars Section ── */
+  .why-boardwallah-section {
+    margin-block: 3.5rem 2.5rem;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .pillar-card {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    text-decoration: none;
-    color: var(--ink);
-    box-shadow: 0 4px 14px rgb(21 37 43 / 4%);
-    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    padding: 1.75rem;
+    box-shadow: 0 4px 16px rgb(21 37 43 / 4%);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .interactive-subject-card:hover {
+
+  .pillar-card:hover {
     transform: translateY(-3px);
     border-color: var(--brand);
-    box-shadow: 0 10px 24px rgb(15 76 92 / 10%);
+    box-shadow: 0 12px 28px rgb(15 76 92 / 10%);
   }
-  .subj-icon {
+
+  .pillar-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+    border: 1px solid #bbf7d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .pillar-icon {
     font-size: 1.5rem;
     line-height: 1;
-    margin-bottom: 0.2rem;
   }
-  .subj-title {
+
+  .pillar-card h3 {
+    font-size: 1.22rem;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .pillar-card p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── FAQ Section ── */
+  .faq-section {
+    margin-block: 3rem 3.5rem;
+  }
+
+  .faq-accordion {
+    max-width: 820px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .faq-item[open] {
+    border-color: var(--brand);
+    box-shadow: 0 4px 16px rgb(15 76 92 / 8%);
+  }
+
+  .faq-summary {
+    padding: 1.15rem 1.4rem;
     font-size: 1.05rem;
     font-weight: 700;
     color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
   }
-  .subj-badge {
-    font-size: 0.8rem;
-    font-weight: 600;
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-summary::after {
+    content: "+";
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--brand);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    margin-left: 1rem;
+    line-height: 1;
   }
-  .interactive-subject-card:hover .subj-badge {
+
+  .faq-item[open] .faq-summary::after {
+    content: "−";
     color: var(--accent);
+  }
+
+  .faq-content {
+    padding: 0 1.4rem 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--muted);
+    border-top: 1px dashed var(--line);
+    padding-top: 0.85rem;
+  }
+
+  .faq-content p {
+    margin: 0;
+  }
+
+  /* ── CTA Banner Actions ── */
+  .cta-banner-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .whatsapp-btn-cta {
+    background: #ffffff;
+    color: #15803d;
+    border-color: #ffffff;
+    font-weight: 700;
+  }
+
+  .whatsapp-btn-cta:hover {
+    background: #dcfce7;
+    color: #14532d;
   }
 
   @media (max-width: 680px) {
