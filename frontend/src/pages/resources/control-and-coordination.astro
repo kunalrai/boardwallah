@@ -1,0 +1,813 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Control and Coordination | CBSE Class 10 Science (Biology) | ${provider.name}`}
+  description="In-depth revision notes, neural pathways, phytohormones, endocrine glands, interactive SVG diagrams (Reflex Arc & Brain Architecture), and 20 CBSE Board MCQs for Control and Coordination."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Control and Coordination
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science (Biology) · Chapter 6/7</span>
+      <h1>Control and Coordination: Neural, Endocrine &amp; Plant Systems</h1>
+      <p class="lead">
+        Master nervous signaling, reflex arcs, brain functional anatomy, phytohormones (auxins to ABA), and human endocrine feedback loops with 20 board exam practice questions.
+      </p>
+    </div>
+
+    <!-- Core Concepts Section -->
+    <section class="section">
+      <h2>1. The Nervous System &amp; Reflex Action</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>⚡ Structure of a Neuron &amp; Synaptic Transmission</h3>
+          <p class="formula">Dendrite &rarr; Cell Body (Cyton) &rarr; Axon &rarr; Synapse (Neurotransmitter)</p>
+          <ul class="clean-list">
+            <li><strong>Dendritic Tip:</strong> Specialized receptor ends acquire information from the environment, initiating an electrical impulse.</li>
+            <li><strong>Axon Transmission:</strong> The electrical impulse travels along the long axonal projection insulated by myelin sheaths to reach the nerve ending.</li>
+            <li><strong>The Synapse:</strong> The microscopic gap between the axon terminal of one neuron and the dendrite of the next. Electrical impulses cannot jump this physical gap; they trigger the release of chemical messengers (neurotransmitters like acetylcholine) that diffuse across the synapse to initiate a fresh electrical impulse in the next neuron.</li>
+            <li><strong>Directionality:</strong> Chemical synapses ensure impulses travel in one direction only.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚡ Reflex Arc &amp; Instinctive Action</h3>
+          <p class="formula">Receptor &rarr; Sensory Neuron &rarr; Spinal Cord (Relay Neuron) &rarr; Motor Neuron &rarr; Effector</p>
+          <ul class="clean-list">
+            <li><strong>Definition:</strong> An involuntary, instantaneous unconscious response to a dangerous external stimulus (e.g., pulling your hand away immediately upon touching a hot flame).</li>
+            <li><strong>Why Reflex Arcs Evolved:</strong> The thinking tissue of the brain is complex and slow. Reflex arcs evolved in animals as an ultra-rapid survival mechanism directly mediated by the spinal cord without waiting for cerebral analysis.</li>
+            <li><strong>Five Components:</strong>
+              <br/>1. <em>Receptor:</em> Detects stimulus (heat receptors in skin).
+              <br/>2. <em>Sensory Neuron:</em> Carries signal towards spinal cord.
+              <br/>3. <em>Relay Neuron:</em> Processes and redirects signal in spinal cord gray matter.
+              <br/>4. <em>Motor Neuron:</em> Transmits response command to muscle.
+              <br/>5. <em>Effector:</em> Biceps muscle contracts to withdraw limb.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Brain & Plant Coordination -->
+    <section class="section">
+      <h2>2. Human Brain &amp; Plant Tropisms</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🧠 Human Brain: Functional Architecture</h3>
+          <p class="formula">Cranium (Skull) + 3 Meninges + Cerebrospinal Fluid (CSF) Shock Absorber</p>
+          <ul class="clean-list">
+            <li><strong>Forebrain (Cerebrum):</strong> Main thinking part. Has distinct sensory areas for sight, hearing, smell; association areas for memory and reasoning; motor areas for voluntary muscle movements; and the central hunger regulation center.</li>
+            <li><strong>Midbrain:</strong> Controls involuntary visual and auditory reflex movements of the head, neck, and trunk.</li>
+            <li><strong>Hindbrain:</strong>
+              <br/>• <em>Cerebellum:</em> Coordinates precision of voluntary actions and maintains posture, balance, and equilibrium (e.g., walking in a straight line, riding a bicycle, picking up a pen).
+              <br/>• <em>Medulla Oblongata:</em> Controls crucial involuntary survival functions: blood pressure, salivation, heartbeat, swallowing, and vomiting.
+              <br/>• <em>Pons:</em> Assists in the pneumatic regulation of breathing rate.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌱 Plant Coordination: Hormones &amp; Movements</h3>
+          <p class="formula">Growth Promoters (Auxin, GA, Cytokinin) vs. Growth Inhibitor (ABA)</p>
+          <ul class="clean-list">
+            <li><strong>Phytohormones:</strong>
+              <br/>• <em>Auxin:</em> Synthesized at shoot tips; diffuses to shaded side, causing cells there to grow longer so the shoot bends towards light (Phototropism).
+              <br/>• <em>Gibberellins:</em> Promotes longitudinal stem growth and seed germination.
+              <br/>• <em>Cytokinins:</em> Promotes rapid cell division; concentrated in fruits and seeds.
+              <br/>• <em>Abscisic Acid (ABA):</em> Growth inhibitor; signals stomatal closure during water stress and causes wilting/falling of leaves.
+            </li>
+            <li><strong>Tropic Movements (Directional Growth):</strong> Phototropism (light), Geotropism (gravity; roots down, shoots up), Hydrotropism (water), Chemotropism (growth of pollen tube towards ovule).</li>
+            <li><strong>Nastic Movements (Non-directional):</strong> E.g., <em>Mimosa pudica</em> (Touch-me-not) leaves droop immediately upon touch due to rapid osmotic water loss in pulvinus cells (no cell growth involved).</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Endocrine System Section -->
+    <section class="section">
+      <h2>3. Endocrine Glands &amp; Hormonal Feedback Loops</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>💉 Human Endocrine Glands &amp; Master Secretions</h3>
+          <p class="formula">Ductless Glands &rarr; Direct Secretion into Bloodstream &rarr; Target Organs</p>
+          <ul class="clean-list">
+            <li><strong>Pituitary Gland (Master Gland):</strong> Secretes Growth Hormone (GH). Deficiency in childhood causes dwarfism; excess secretion causes gigantism.</li>
+            <li><strong>Thyroid Gland:</strong> Secretes Thyroxine, regulating carbohydrate, protein, and fat metabolism. <em>Iodine is essential</em> for thyroxine synthesis; dietary deficiency leads to Goitre (enlarged neck).</li>
+            <li><strong>Pancreas:</strong> Secretes Insulin from Islets of Langerhans. Regulates and lowers blood glucose levels; under-secretion causes Diabetes Mellitus (treated with insulin injections).</li>
+            <li><strong>Adrenal Gland:</strong> Secretes Adrenaline (the "fight-or-flight" hormone). Prepares the body for emergency by increasing heart rate, dilating bronchioles, and shunting blood from skin/digestive organs to skeletal muscles.</li>
+            <li><strong>Testes &amp; Ovaries:</strong> Secrete Testosterone (male) and Estrogen/Progesterone (female), driving puberty changes and gametogenesis.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔄 The Hormonal Feedback Mechanism</h3>
+          <p class="formula">Homeostasis · Self-Regulating Negative Feedback Loop</p>
+          <ul class="clean-list">
+            <li><strong>Why Necessary?</strong> Hormones must be released in exact, minute quantities at specific times. Excess or deficiency causes severe clinical pathology.</li>
+            <li><strong>Blood Sugar Example:</strong>
+              <br/>1. When blood sugar levels rise after a meal, pancreatic beta-cells detect the spike.
+              <br/>2. Pancreas responds by secreting more insulin into the blood.
+              <br/>3. Insulin causes muscle and liver cells to take up glucose and convert it into glycogen.
+              <br/>4. As blood sugar drops back to baseline normal, the stimulus ceases, and insulin secretion automatically shuts down.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Neural Circuits &amp; Cerebral Architecture</h2>
+
+      <div class="grid two">
+        <article class="card visual-card">
+          <span class="visual-badge">Neural Circuitry</span>
+          <h3>The Reflex Arc Circuit</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="320" fill="#f8fafc" />
+              
+              <!-- Stimulus & Receptor (Left) -->
+              <circle cx="60" cy="80" r="30" fill="#fee2e2" stroke="#dc2626" stroke-width="2" />
+              <text x="60" y="85" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">🔥 Heat</text>
+              <text x="60" y="130" text-anchor="middle" font-size="11" font-weight="700" fill="#7f1d1d">Skin Receptor</text>
+
+              <!-- Sensory Neuron (Blue Arc) -->
+              <path d="M 90 80 Q 220 30 350 80" fill="none" stroke="#0284c7" stroke-width="3" />
+              <text x="220" y="50" font-size="11" font-weight="700" fill="#0369a1">Sensory Neuron &rarr;</text>
+
+              <!-- Spinal Cord Cross Section (Right) -->
+              <rect x="350" y="50" width="220" height="180" rx="12" fill="#fff" stroke="#475569" stroke-width="2" />
+              <path d="M 420 100 Q 460 70 500 100 Q 460 140 420 100 Z" fill="#e2e8f0" stroke="#94a3b8" />
+              <text x="460" y="35" text-anchor="middle" font-size="13" font-weight="700" fill="#334155">SPINAL CORD</text>
+
+              <!-- Relay Neuron -->
+              <line x1="380" y1="90" x2="420" y2="150" stroke="#16a34a" stroke-width="4" />
+              <text x="440" y="160" font-size="11" font-weight="700" fill="#166534">Relay Neuron</text>
+
+              <!-- Message to Brain -->
+              <path d="M 460 80 L 460 20" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3" />
+              <text x="470" y="25" font-size="9" fill="#64748b">To Brain</text>
+
+              <!-- Motor Neuron (Red Arc back) -->
+              <path d="M 420 150 Q 240 220 120 220" fill="none" stroke="#dc2626" stroke-width="3" />
+              <text x="240" y="240" font-size="11" font-weight="700" fill="#dc2626">&larr; Motor Neuron</text>
+
+              <!-- Effector (Arm Muscle) -->
+              <rect x="40" y="200" width="80" height="50" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+              <text x="80" y="225" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Biceps</text>
+              <text x="80" y="240" text-anchor="middle" font-size="10" fill="#14532d">(Effector)</text>
+
+              <text x="80" y="280" text-anchor="middle" font-size="11" font-weight="700" fill="#15803d">&rarr; Arm Withdraws!</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 1: The spinal reflex arc bypasses conscious brain processing to achieve instantaneous physical withdrawal.</p>
+        </article>
+
+        <article class="card visual-card">
+          <span class="visual-badge">Neuro-Anatomy</span>
+          <h3>Human Brain: Three Major Regions</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="320" fill="#f8fafc" />
+              
+              <!-- Forebrain (Cerebrum) -->
+              <path d="M 120 140 C 100 40, 360 20, 440 90 C 480 130, 420 180, 360 170 C 260 180, 160 180, 120 140 Z" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" />
+              <text x="260" y="100" text-anchor="middle" font-size="15" font-weight="700" fill="#0369a1">CEREBRUM (Forebrain)</text>
+              <text x="260" y="120" text-anchor="middle" font-size="11" fill="#0c4a6e">Thinking, Memory, Voluntary Action, Senses, Hunger</text>
+
+              <!-- Midbrain -->
+              <circle cx="320" cy="180" r="22" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+              <text x="320" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">Midbrain</text>
+
+              <!-- Hindbrain Components -->
+              <!-- Cerebellum -->
+              <ellipse cx="440" cy="200" rx="45" ry="30" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+              <text x="440" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Cerebellum</text>
+              <text x="440" y="215" text-anchor="middle" font-size="9" fill="#14532d">Balance &amp; Posture</text>
+
+              <!-- Pons & Medulla -->
+              <rect x="300" y="205" width="40" height="30" rx="4" fill="#fae8ff" stroke="#a855f7" stroke-width="1.5" />
+              <text x="320" y="225" text-anchor="middle" font-size="10" font-weight="700" fill="#7e22ce">Pons</text>
+
+              <rect x="300" y="240" width="40" height="40" rx="4" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5" />
+              <text x="320" y="260" text-anchor="middle" font-size="10" font-weight="700" fill="#991b1b">Medulla</text>
+
+              <!-- Spinal Cord Trunk -->
+              <rect x="310" y="280" width="20" height="35" fill="#cbd5e1" />
+              <text x="360" y="300" font-size="10" font-weight="700" fill="#475569">&rarr; Spinal Cord</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 2: The tripartite human brain integrating conscious cognition (forebrain), reflex optics (midbrain), and autonomic balance (hindbrain).</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Practice: Control &amp; Coordination</h2>
+          <p class="muted">20 High-yield questions testing neuron polarity, brain divisions, phytohormone functions, and endocrine pathologies.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizApp"></div>
+
+      <div class="quiz-footer-actions">
+        <span class="muted" id="quizProgressText">0 of 20 answered</span>
+        <button class="button secondary" id="resetQuizBtn">Reset Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-banner">
+      <h2>Master Complex Biological Mechanisms with 1-on-1 Guidance</h2>
+      <p>Clear every doubt on neurobiology, endocrinology, and plant tropisms with personalized board coaching.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Your Free Trial Class</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "In a neuron, through which structural component does environmental information initially enter as an electrical signal?",
+      opts: [
+        "Axon terminal",
+        "Dendritic tip",
+        "Myelin sheath",
+        "Synaptic vesicle"
+      ],
+      correct: 1,
+      exp: "Information in a nerve cell is acquired at the dendritic tip, which sets off an electrical impulse traveling down the cyton and axon."
+    },
+    {
+      q: "Why can nerve impulses cross a chemical synapse in only one direction?",
+      opts: [
+        "Because dendrites possess electrical gates while axons do not",
+        "Because neurotransmitter chemical vesicles are present only in axon terminals, and corresponding receptors exist on the post-synaptic dendritic membrane",
+        "Because the myelin sheath blocks backward flow",
+        "Because the spinal cord commands unidirectional gravity flow"
+      ],
+      correct: 1,
+      exp: "Neurotransmitter chemicals are stored and released solely from pre-synaptic axon terminals, diffusing across the synaptic cleft to bind receptors on the post-synaptic dendrite."
+    },
+    {
+      q: "Which specific region of the human brain is responsible for maintaining posture, equilibrium, and precision of voluntary movements like riding a bicycle?",
+      opts: [
+        "Cerebrum",
+        "Medulla Oblongata",
+        "Cerebellum",
+        "Hypothalamus"
+      ],
+      correct: 2,
+      exp: "The cerebellum (part of the hindbrain) coordinates voluntary muscle precision and bodily balance and posture."
+    },
+    {
+      q: "Which part of the brain regulates essential involuntary functions such as blood pressure, salivation, and vomiting?",
+      opts: [
+        "Cerebrum in Forebrain",
+        "Medulla in Hindbrain",
+        "Midbrain",
+        "Pons"
+      ],
+      correct: 1,
+      exp: "Involuntary actions including arterial blood pressure, salivation, swallowing, and peristalsis are controlled by the medulla oblongata in the hindbrain."
+    },
+    {
+      q: "What protective structures safeguard the human brain against mechanical injuries and shocks?",
+      opts: [
+        "Only the thick hair on the scalp",
+        "The bony cranium (skull), three protective meningeal membranes, and shock-absorbing cerebrospinal fluid (CSF)",
+        "The clavicle bone and thyroid cartilage",
+        "A dense layer of subcutaneous fat"
+      ],
+      correct: 1,
+      exp: "The brain sits inside the bony cranium, surrounded by three meninges and floating in cerebrospinal fluid, which acts as a shock absorber."
+    },
+    {
+      q: "How does the plant growth hormone Auxin cause a shoot to bend towards a unidirectional light source (phototropism)?",
+      opts: [
+        "Auxin evaporates on the illuminated side",
+        "Auxin diffuses towards the shaded side of the shoot, stimulating cells on the darker side to elongate faster than those on the illuminated side",
+        "Auxin destroys chlorophyll on the sunny side",
+        "Auxin attracts gravity towards the light"
+      ],
+      correct: 1,
+      exp: "Auxin synthesized at the shoot tip moves to the shaded side; the higher auxin concentration causes shaded cells to elongate more, bending the shoot toward light."
+    },
+    {
+      q: "Which phytohormone acts as a growth inhibitor, promoting the wilting and falling of mature leaves during dry stress?",
+      opts: [
+        "Auxin",
+        "Gibberellin",
+        "Cytokinin",
+        "Abscisic Acid (ABA)"
+      ],
+      correct: 3,
+      exp: "Abscisic Acid (ABA) is a stress hormone that inhibits plant growth, triggers stomatal closure to conserve water, and induces leaf fall (abscission)."
+    },
+    {
+      q: "What is the primary mechanism causing the leaves of the sensitive plant (Mimosa pudica) to fold and droop rapidly upon being touched?",
+      opts: [
+        "Directional cell division towards the stem",
+        "Rapid change in the turgor pressure of water inside pulvinar cells at the leaf bases",
+        "Secretions of plant digestive enzymes",
+        "Electrical contraction of muscular proteins"
+      ],
+      correct: 1,
+      exp: "The nastic movement of Mimosa pudica is non-growth; touch triggers electrical-chemical signals causing sudden water loss from cells in the pulvinus, resulting in drooping."
+    },
+    {
+      q: "The growth of a pollen tube through the style towards the ovarian ovule is a classic biological demonstration of which tropism?",
+      opts: [
+        "Phototropism",
+        "Chemotropism",
+        "Geotropism",
+        "Thigmotropism"
+      ],
+      correct: 1,
+      exp: "The growth of the pollen tube towards the ovule is guided by chemical attractants secreted by the ovary, illustrating chemotropism."
+    },
+    {
+      q: "Why is the use of iodised salt strongly recommended in our daily diet?",
+      opts: [
+        "Iodine prevents dental cavities",
+        "Iodine is essential for the thyroid gland to synthesize thyroxine hormone, which regulates carbohydrate, protein, and fat metabolism and prevents goitre",
+        "Iodine stimulates insulin secretion in the pancreas",
+        "Iodine increases hemoglobin production in bone marrow"
+      ],
+      correct: 1,
+      exp: "Iodine is required for the thyroid gland to produce thyroxine. Lack of dietary iodine causes thyroid enlargement (goitre)."
+    },
+    {
+      q: "Which hormone is administered via subcutaneous injections to patients suffering from severe Diabetes Mellitus, and why?",
+      opts: [
+        "Thyroxine; to speed up metabolic digestion",
+        "Insulin; to lower and regulate abnormally high blood glucose levels by enabling cellular uptake",
+        "Adrenaline; to increase heartbeat and blood circulation",
+        "Growth Hormone; to stimulate kidney filtration"
+      ],
+      correct: 1,
+      exp: "Insulin produced by pancreatic beta-cells regulates blood sugar; diabetic patients lacking sufficient insulin require injections to prevent hyper-glycemia."
+    },
+    {
+      q: "What physiological changes occur in the human body when adrenaline is secreted in response to a frightening emergency?",
+      opts: [
+        "Heartbeat slows down and digestion increases",
+        "Heart beats faster, breathing rate increases due to rib muscle contraction, and blood is diverted away from digestive organs to skeletal muscles",
+        "Pupils constrict and sweat glands stop functioning",
+        "Body enters a sleep state to preserve energy"
+      ],
+      correct: 1,
+      exp: "Adrenaline initiates the fight-or-flight response, boosting cardiac output, respiration, and directing blood flow to skeletal muscles for rapid action."
+    },
+    {
+      q: "Which endocrine gland is commonly designated as the 'Master Gland' of the human body, and where is it located?",
+      opts: [
+        "Thyroid gland, located in the neck",
+        "Pituitary gland, located at the base of the brain",
+        "Adrenal gland, located on top of the kidneys",
+        "Pancreas, located below the stomach"
+      ],
+      correct: 1,
+      exp: "The pituitary gland secretes tropic hormones that control and stimulate other endocrine glands, functioning as the master endocrine gland."
+    },
+    {
+      q: "How does the negative feedback mechanism regulate insulin secretion when blood glucose levels fluctuate?",
+      opts: [
+        "Insulin is secreted continuously in equal amounts 24 hours a day",
+        "High blood sugar triggers pancreas cells to secrete insulin; as blood sugar falls to normal, insulin secretion is automatically shut off",
+        "Brain sends an electrical nerve shock to the liver",
+        "The stomach produces enzymes that destroy excess insulin"
+      ],
+      correct: 1,
+      exp: "Pancreatic islet cells detect blood glucose levels directly; when levels drop to normal, the stimulus for insulin secretion ceases."
+    },
+    {
+      q: "Which of the following is an involuntary action, yet NOT a reflex action?",
+      opts: [
+        "Blinking when dust blows into the eyes",
+        "Withdrawing the foot when stepping on a sharp nail",
+        "Regular beating of the heart and peristaltic movement of the gut",
+        "Sneezing when pepper enters the nostrils"
+      ],
+      correct: 2,
+      exp: "Heartbeat and peristalsis are continuous autonomic involuntary actions governed by the medulla, whereas reflex actions are immediate protective responses to specific external stimuli."
+    },
+    {
+      q: "What causes dwarfism in human children?",
+      opts: [
+        "Deficiency of thyroxine in infancy",
+        "Deficiency of growth hormone secreted by the pituitary gland during childhood",
+        "Excess secretion of adrenaline",
+        "Lack of calcium in the liver"
+      ],
+      correct: 1,
+      exp: "Growth hormone (GH) secreted by the anterior pituitary regulates longitudinal bone and somatic growth; childhood deficiency results in dwarfism."
+    },
+    {
+      q: "Which plant hormone is present in highest concentrations in areas of rapid cell division, such as developing fruits and seeds?",
+      opts: [
+        "Cytokinin",
+        "Abscisic Acid",
+        "Ethylene gas",
+        "Auxin"
+      ],
+      correct: 0,
+      exp: "Cytokinins promote cytokinesis (cell division) and are naturally concentrated in rapidly growing tissues like young fruits, seeds, and shoot buds."
+    },
+    {
+      q: "What is the correct pathway followed by a nerve impulse in a spinal reflex arc?",
+      opts: [
+        "Effector &rarr; Motor neuron &rarr; Spinal cord &rarr; Sensory neuron &rarr; Receptor",
+        "Receptor &rarr; Sensory neuron &rarr; Relay neuron in spinal cord &rarr; Motor neuron &rarr; Effector muscle",
+        "Receptor &rarr; Brain &rarr; Motor neuron &rarr; Sensory neuron &rarr; Effector",
+        "Sensory neuron &rarr; Receptor &rarr; Effector &rarr; Motor neuron"
+      ],
+      correct: 1,
+      exp: "The reflex arc sequence is: Receptor detects &rarr; Sensory neuron conducts to spinal cord &rarr; Relay neuron integrates &rarr; Motor neuron commands &rarr; Effector executes."
+    },
+    {
+      q: "Which hormone is responsible for the dramatic physical changes associated with puberty in teenage boys?",
+      opts: [
+        "Estrogen",
+        "Thyroxine",
+        "Testosterone secreted by the testes",
+        "Insulin"
+      ],
+      correct: 2,
+      exp: "Testosterone secreted by the interstitial Leydig cells of the testes stimulates male secondary sexual characteristics (deep voice, facial hair, muscle mass)."
+    },
+    {
+      q: "Why do roots exhibit positive geotropism while plant shoots exhibit negative geotropism?",
+      opts: [
+        "Because roots dislike sunlight",
+        "Roots grow downward in the direction of the Earth's gravitational pull to anchor and find water, whereas shoots grow upward against gravity towards light",
+        "Because earthworms pull root tips down",
+        "Because gravity only exists in the soil"
+      ],
+      correct: 1,
+      exp: "Downward growth of roots with the gravity vector is positive geotropism; upward growth of stems away from the gravitational pull is negative geotropism."
+    }
+  ];
+
+  let userAnswers = {};
+
+  function renderQuiz() {
+    const container = document.getElementById('quizApp');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((qItem, idx) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+
+      const qTitle = document.createElement('h3');
+      qTitle.className = 'quiz-question';
+      qTitle.textContent = `${idx + 1}. ${qItem.q}`;
+      card.appendChild(qTitle);
+
+      const optsDiv = document.createElement('div');
+      optsDiv.className = 'quiz-options';
+
+      qItem.opts.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+
+        if (userAnswers[idx] !== undefined) {
+          btn.disabled = true;
+          if (optIdx === qItem.correct) {
+            btn.classList.add('opt-correct');
+          } else if (userAnswers[idx] === optIdx) {
+            btn.classList.add('opt-wrong');
+          }
+        } else {
+          btn.addEventListener('click', () => {
+            userAnswers[idx] = optIdx;
+            renderQuiz();
+            updateScoreSummary();
+          });
+        }
+        optsDiv.appendChild(btn);
+      });
+
+      card.appendChild(optsDiv);
+
+      if (userAnswers[idx] !== undefined) {
+        const fb = document.createElement('div');
+        fb.className = 'quiz-feedback ' + (userAnswers[idx] === qItem.correct ? 'feedback-correct' : 'feedback-wrong');
+        fb.innerHTML = (userAnswers[idx] === qItem.correct ? '<strong>✓ Correct!</strong> ' : '<strong>✗ Incorrect.</strong> ') + qItem.exp;
+        card.appendChild(fb);
+      }
+
+      container.appendChild(card);
+    });
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--ink);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

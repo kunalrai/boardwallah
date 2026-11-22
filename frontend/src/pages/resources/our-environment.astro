@@ -1,0 +1,849 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Our Environment | CBSE Class 10 Science (Biology) | ${provider.name}`}
+  description="CBSE Class 10 Biology revision notes for Our Environment: Ecosystems, Food Chains & Webs, 10% Energy Law, Biological Magnification, Ozone Depletion, Waste Management, and 20 Board MCQs."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Our Environment
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science (Biology) · Chapter 13</span>
+      <h1>Our Environment: Ecosystems, Food Webs, Ozone &amp; Waste Management</h1>
+      <p class="lead">
+        Comprehensive revision guide covering biotic/abiotic interactions, Lindeman's 10% energy transfer rule, biomagnification of DDT, CFC-induced stratospheric ozone depletion, and modern eco-friendly waste management with 20 board MCQs.
+      </p>
+    </div>
+
+    <!-- Section 1: Ecosystems & Trophic Levels -->
+    <section class="section">
+      <h2>1. Ecosystem Structure &amp; Energy Flow</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🌿 Ecosystem: Biotic &amp; Abiotic Components</h3>
+          <p class="formula">Ecosystem = Biotic Community (Living) + Abiotic Habitat (Physical Environment)</p>
+          <ul class="clean-list">
+            <li><strong>Natural vs. Artificial Ecosystems:</strong>
+              <br/>• <em>Natural:</em> Forests, ponds, lakes, oceans, deserts (self-sustaining without human intervention).
+              <br/>• <em>Artificial (Man-made):</em> Crop fields, gardens, aquariums (require constant human maintenance and energy input).
+            </li>
+            <li><strong>Biotic Functional Groups:</strong>
+              <br/>• <em>Producers (Autotrophs):</em> Green plants and photosynthetic cyanobacteria that trap solar energy to manufacture organic glucose via photosynthesis.
+              <br/>• <em>Consumers (Heterotrophs):</em> Primary consumers (herbivores: deer, cattle), secondary consumers (carnivores: frog, fox), tertiary consumers (apex predators: tiger, eagle).
+              <br/>• <em>Decomposers:</em> Microscopic saprophytic bacteria and fungi that secrete extracellular enzymes to digest dead organic remains, returning essential inorganic mineral ions back to the soil and air.
+            </li>
+            <li><strong>Ecological Importance of Decomposers:</strong> Without decomposers, nutrient cycling would halt, biogeochemical cycles would lock up, and dead organismal waste would pile up endlessly.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚡ Lindeman's 10% Energy Law &amp; Unidirectional Flow</h3>
+          <p class="formula">Energy Available at Next Trophic Level = 10% of Previous Level (90% dissipated as heat &amp; metabolism)</p>
+          <ul class="clean-list">
+            <li><strong>Initial Solar Capture:</strong> Green terrestrial plants capture merely <strong>~1%</strong> of the total incident solar energy falling upon their leaves and convert it into photochemical food energy.</li>
+            <li><strong>The 10% Law (Raymond Lindeman, 1942):</strong> Only 10% of the energy consumed by a trophic level is converted into new body biomass available for consumption by the next higher level. The remaining 90% is dissipated as thermal metabolic heat (respiration, movement, digestion, excretion) into the environment.</li>
+            <li><strong>Why Food Chains Are Limited to 3–4 Levels:</strong> Because energy diminishes exponentially by 90% across every trophic transfer, the residual energy at the 4th or 5th trophic level becomes so minuscule that it cannot sustain viable populations of higher carnivores.</li>
+            <li><strong>Strictly Unidirectional Energy Flow:</strong> Unlike mineral nutrients which cycle cyclically through decomposers, energy captured from the sun cannot revert backwards from carnivores to herbivores or producers.</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- SVG Diagram 1: Energy Pyramid & 10% Law -->
+      <div class="diagram-wrapper">
+        <div class="diagram-header">
+          <h4>Figure 1: Trophic Level Energy Pyramid &amp; Raymond Lindeman's 10% Law</h4>
+          <span class="badge">Visual Concept</span>
+        </div>
+        <div class="svg-container">
+          <svg viewBox="0 0 880 440" xmlns="http://www.w3.org/2000/svg" class="responsive-svg" aria-label="Energy Pyramid and 10% Law Diagram">
+            <rect width="880" height="440" fill="#f8fafc" rx="12" />
+
+            <!-- Sun Energy Input -->
+            <circle cx="110" cy="80" r="45" fill="#fef08a" stroke="#eab308" stroke-width="3" />
+            <text x="110" y="75" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="14" fill="#854d0e">Sunlight</text>
+            <text x="110" y="95" text-anchor="middle" font-family="system-ui" font-weight="600" font-size="11" fill="#a16207">1,000,000 J</text>
+
+            <!-- Arrow Sun to Producers (1% capture) -->
+            <path d="M 160 95 Q 230 130 250 360" fill="none" stroke="#eab308" stroke-width="2.5" stroke-dasharray="5 3" />
+            <polygon points="250,365 245,353 255,353" fill="#eab308" />
+            <rect x="145" y="160" width="105" height="40" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="1.5" />
+            <text x="197" y="177" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="11" fill="#713f12">~1% Solar Capture</text>
+            <text x="197" y="192" text-anchor="middle" font-family="system-ui" font-size="10" fill="#854d0e">by Chlorophyll</text>
+
+            <!-- Pyramid Blocks -->
+            <!-- Level 1: Producers (Base) -->
+            <polygon points="260,390 760,390 710,320 310,320" fill="#10b981" fill-opacity="0.25" stroke="#059669" stroke-width="2.5" />
+            <text x="510" y="350" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="15" fill="#065f46">Trophic Level 1: Producers (Autotrophs / Green Plants)</text>
+            <text x="510" y="372" text-anchor="middle" font-family="system-ui" font-weight="600" font-size="13" fill="#047857">Available Energy: 10,000 Joules (10 kJ)</text>
+
+            <!-- Level 2: Primary Consumers -->
+            <polygon points="310,320 710,320 660,250 360,250" fill="#3b82f6" fill-opacity="0.25" stroke="#2563eb" stroke-width="2.5" />
+            <text x="510" y="280" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="14" fill="#1e40af">Trophic Level 2: Primary Consumers (Herbivores - Deer, Rabbits, Insects)</text>
+            <text x="510" y="302" text-anchor="middle" font-family="system-ui" font-weight="600" font-size="13" fill="#1d4ed8">Available Energy: 1,000 Joules (10% of 10,000 J)</text>
+
+            <!-- Level 3: Secondary Consumers -->
+            <polygon points="360,250 660,250 610,180 410,180" fill="#f59e0b" fill-opacity="0.25" stroke="#d97706" stroke-width="2.5" />
+            <text x="510" y="210" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="14" fill="#92400e">Trophic Level 3: Secondary Consumers (Small Carnivores - Frogs, Snakes)</text>
+            <text x="510" y="232" text-anchor="middle" font-family="system-ui" font-weight="600" font-size="13" fill="#b45309">Available Energy: 100 Joules (10% of 1,000 J)</text>
+
+            <!-- Level 4: Tertiary Consumers (Apex) -->
+            <polygon points="410,180 610,180 560,110 460,110" fill="#ef4444" fill-opacity="0.25" stroke="#dc2626" stroke-width="2.5" />
+            <text x="510" y="140" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="14" fill="#991b1b">Trophic Level 4: Tertiary Consumers (Apex Predators - Tiger, Eagle)</text>
+            <text x="510" y="162" text-anchor="middle" font-family="system-ui" font-weight="600" font-size="13" fill="#b91c1c">Available Energy: 10 Joules (10% of 100 J)</text>
+
+            <!-- Heat Loss callouts on right side -->
+            <path d="M 720 355 L 790 355" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
+            <text x="800" y="360" font-family="system-ui" font-size="12" fill="#64748b">90% (9,000 J) Lost as Heat &amp; Respiration</text>
+
+            <path d="M 675 285 L 790 285" stroke="#94a3b8" stroke-width="2" />
+            <text x="800" y="290" font-family="system-ui" font-size="12" fill="#64748b">90% (900 J) Lost as Heat &amp; Respiration</text>
+
+            <path d="M 625 215 L 790 215" stroke="#94a3b8" stroke-width="2" />
+            <text x="800" y="220" font-family="system-ui" font-size="12" fill="#64748b">90% (90 J) Lost as Heat &amp; Respiration</text>
+
+            <path d="M 575 145 L 790 145" stroke="#94a3b8" stroke-width="2" />
+            <text x="800" y="150" font-family="system-ui" font-size="12" fill="#64748b">90% (9 J) Lost as Heat &amp; Respiration</text>
+
+            <!-- Bottom summary note -->
+            <rect x="230" y="405" width="460" height="26" rx="6" fill="#f1f5f9" stroke="#cbd5e1" />
+            <text x="460" y="422" text-anchor="middle" font-family="system-ui" font-weight="600" font-size="11" fill="#334155">
+              Notice: Energy flow is strictly unidirectional and progressive dissipation prohibits viable 5th-level predators.
+            </text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Biological Magnification & Ozone Layer -->
+    <section class="section">
+      <h2>2. Biological Magnification &amp; Stratospheric Ozone Depletion</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>☣️ Biological Magnification (Biomagnification)</h3>
+          <p class="formula">Toxic Concentration increases progressively up the food chain: Producers &lt; Herbivores &lt; Carnivores &lt; Humans (Apex)</p>
+          <ul class="clean-list">
+            <li><strong>Mechanism:</strong> Non-biodegradable synthetic agricultural chemicals (e.g., DDT, endosulfan, organochlorine pesticides, heavy metals like mercury and lead) wash into water bodies or soil.</li>
+            <li><strong>Inability to Metabolize or Excrete:</strong> Because living organisms possess no biological catabolic enzymes to metabolize or void non-biodegradable chemicals, these fat-soluble toxins permanently accumulate inside adipose body tissues.</li>
+            <li><strong>Maximum Concentration at Apex:</strong> Since human beings occupy the topmost position in multiple domestic and terrestrial food chains, the highest concentration of toxic chemical residue invariably accumulates within human bodies, causing neurotoxicity and endocrine disruptions.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🛡️ Stratospheric Ozone ($O_3$) &amp; Montreal Protocol</h3>
+          <p class="formula">O₂ + UV &rarr; O + O &nbsp;|&nbsp; O + O₂ &rarr; O₃ &nbsp;|&nbsp; Cl• + O₃ &rarr; ClO• + O₂</p>
+          <ul class="clean-list">
+            <li><strong>The Ozone Shield:</strong> Ozone ($O_3$) at ground level is a lethal cellular poison, but in the stratosphere (15–30 km above Earth) it forms a crucial shield filtering lethal ultraviolet-B (UV-B) radiation. UV-B causes malignant melanoma (skin cancer), cataracts, damaged eye retinas, and kills marine phytoplankton.</li>
+            <li><strong>Photochemical Formation:</strong> High-energy solar UV photons split molecular oxygen ($O_2$) into highly reactive nascent free oxygen atoms ($O$). A free oxygen atom then combines with molecular oxygen to generate ozone ($O_3$).</li>
+            <li><strong>CFC Destruction Catalyst:</strong> Chlorofluorocarbons (CFCs) from refrigerants and aerosol propellants rise into the stratosphere. UV breaks down CFCs to liberate chlorine free radicals ($Cl^\bullet$). A single chlorine radical catalytically destroys over 100,000 ozone molecules before being deactivated!</li>
+            <li><strong>UNEP Montreal Protocol (1987):</strong> Historic international treaty where global nations agreed to freeze and phase out CFC production at 1986 levels, successfully halting Antarctic ozone hole expansion.</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- SVG Diagram 2: Ozone Formation and Catalytic Destruction -->
+      <div class="diagram-wrapper">
+        <div class="diagram-header">
+          <h4>Figure 2: Mechanism of Stratospheric Ozone ($O_3$) Formation &amp; Catalytic Depletion by CFCs</h4>
+          <span class="badge">Biochemical Mechanism</span>
+        </div>
+        <div class="svg-container">
+          <svg viewBox="0 0 880 380" xmlns="http://www.w3.org/2000/svg" class="responsive-svg" aria-label="Ozone Formation and Depletion Mechanism">
+            <rect width="880" height="380" fill="#f8fafc" rx="12" />
+
+            <!-- Left Box: Natural Ozone Formation Cycle -->
+            <rect x="30" y="30" width="390" height="320" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
+            <text x="225" y="60" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="16" fill="#166534">Natural Photochemical Ozone Synthesis</text>
+
+            <!-- Step 1: O2 Photolysis -->
+            <circle cx="100" cy="115" r="18" fill="#bae6fd" stroke="#0284c7" stroke-width="2" />
+            <text x="100" y="120" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="12" fill="#0369a1">O₂</text>
+            <text x="100" y="145" text-anchor="middle" font-family="system-ui" font-size="11" fill="#0284c7">Oxygen Molecule</text>
+
+            <!-- UV light strike -->
+            <path d="M 125 115 L 175 115" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 2" />
+            <text x="150" y="105" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="10" fill="#b45309">High-energy UV</text>
+
+            <!-- Two nascent oxygen atoms -->
+            <circle cx="215" cy="100" r="13" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
+            <text x="215" y="104" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="11" fill="#854d0e">O</text>
+
+            <circle cx="215" cy="135" r="13" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
+            <text x="215" y="139" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="11" fill="#854d0e">O</text>
+            <text x="270" y="120" font-family="system-ui" font-size="11" fill="#713f12">2 Nascent Free Atoms</text>
+
+            <!-- Step 2: Combination -->
+            <path d="M 228 100 Q 280 100 280 200" fill="none" stroke="#65a30d" stroke-width="2" />
+            <circle cx="160" cy="220" r="18" fill="#bae6fd" stroke="#0284c7" stroke-width="2" />
+            <text x="160" y="225" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="12" fill="#0369a1">O₂</text>
+
+            <text x="215" y="225" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="16" fill="#15803d">+</text>
+
+            <circle cx="270" cy="220" r="13" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
+            <text x="270" y="224" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="11" fill="#854d0e">O</text>
+
+            <path d="M 295 220 L 330 220" stroke="#15803d" stroke-width="2.5" />
+            <polygon points="335,220 326,216 326,224" fill="#15803d" />
+
+            <!-- Ozone Molecule -->
+            <circle cx="365" cy="220" r="22" fill="#86efac" stroke="#16a34a" stroke-width="2.5" />
+            <text x="365" y="226" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="14" fill="#14532d">O₃</text>
+            <text x="365" y="255" text-anchor="middle" font-family="system-ui" font-weight="600" font-size="11" fill="#15803d">Ozone Shield</text>
+
+            <rect x="50" y="280" width="350" height="50" rx="6" fill="#ffffff" stroke="#bbf7d0" />
+            <text x="225" y="300" text-anchor="middle" font-family="system-ui" font-weight="600" font-size="11" fill="#166534">
+              Shields Biosphere from UV-B Radiation (290–320 nm)
+            </text>
+            <text x="225" y="318" text-anchor="middle" font-family="system-ui" font-size="10" fill="#15803d">
+              Prevents Melanoma, Cataracts, Phytoplankton Loss
+            </text>
+
+            <!-- Right Box: Catalytic Ozone Depletion by CFCs -->
+            <rect x="460" y="30" width="390" height="320" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="2" />
+            <text x="655" y="60" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="16" fill="#991b1b">Catalytic Ozone Depletion by CFCs</text>
+
+            <!-- CFC photolysis -->
+            <rect x="480" y="90" width="90" height="32" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5" />
+            <text x="525" y="111" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="12" fill="#991b1b">CF₂Cl₂ (CFC)</text>
+
+            <path d="M 575 106 L 625 106" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 2" />
+            <text x="600" y="98" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="10" fill="#b45309">UV Split</text>
+
+            <circle cx="655" cy="106" r="16" fill="#fecaca" stroke="#dc2626" stroke-width="2" />
+            <text x="655" y="111" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="12" fill="#7f1d1d">Cl•</text>
+            <text x="735" y="111" font-family="system-ui" font-weight="600" font-size="11" fill="#b91c1c">Free Chlorine Radical</text>
+
+            <!-- Catalytic Cycle -->
+            <!-- Cl• + O3 -> ClO• + O2 -->
+            <path d="M 655 125 L 655 170" stroke="#dc2626" stroke-width="2" />
+            <circle cx="600" cy="195" r="18" fill="#86efac" stroke="#16a34a" stroke-width="2" />
+            <text x="600" y="200" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="12" fill="#14532d">O₃</text>
+            <text x="635" y="200" font-family="system-ui" font-weight="700" font-size="14" fill="#991b1b">+</text>
+            <circle cx="670" cy="195" r="15" fill="#fecaca" stroke="#dc2626" stroke-width="2" />
+            <text x="670" y="200" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="11" fill="#7f1d1d">Cl•</text>
+
+            <path d="M 695 195 L 725 195" stroke="#dc2626" stroke-width="2" />
+            <polygon points="730,195 722,191 722,199" fill="#dc2626" />
+
+            <text x="770" y="190" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="12" fill="#991b1b">ClO• + O₂</text>
+            <text x="770" y="206" text-anchor="middle" font-family="system-ui" font-size="10" fill="#b91c1c">(Ozone Destroyed!)</text>
+
+            <!-- Regeneration of Cl• -->
+            <path d="M 770 215 C 770 265 670 265 655 135" fill="none" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4 2" />
+            <text x="710" y="255" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="10" fill="#7f1d1d">ClO• + O &rarr; Cl• + O₂ (Catalytic Regeneration)</text>
+
+            <rect x="480" y="280" width="350" height="50" rx="6" fill="#ffffff" stroke="#fecaca" />
+            <text x="655" y="300" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="11" fill="#991b1b">
+              1 Chlorine Radical destroys &gt;100,000 Ozone molecules!
+            </text>
+            <text x="655" y="318" text-anchor="middle" font-family="system-ui" font-size="10" fill="#7f1d1d">
+              Montreal Protocol (1987) froze and phased out CFC propellants
+            </text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Waste Management -->
+    <section class="section">
+      <h2>3. Waste Management: Biodegradable vs. Non-Biodegradable</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🗑️ Biodegradable vs. Non-Biodegradable Waste</h3>
+          <ul class="clean-list">
+            <li><strong>Biodegradable Waste:</strong> Substances that can be broken down into non-toxic simpler substances by biological action of microorganisms (bacteria &amp; fungi) through enzymatic digestion.
+              <br/>• <em>Examples:</em> Fruit &amp; vegetable peels, paper, cow dung, cotton, wool, fallen leaves.
+              <br/>• <em>Enzymatic Specificity:</em> Bacteria possess specific enzymes that act only on specific chemical linkages (like cellulose or starch glycosidic bonds).
+            </li>
+            <li><strong>Non-Biodegradable Waste:</strong> Substances that cannot be broken down by microorganisms because decomposers lack enzymes capable of breaking synthetic polymeric bonds.
+              <br/>• <em>Examples:</em> Plastic bottles, polythene bags, nylon, glass, aluminum foil, DDT, electronic waste (e-waste).
+              <br/>• <em>Ecological Hazards:</em> Choke city drainage systems, kill grazing cows that ingest plastics, cause microplastic contamination of groundwater, persist for centuries.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>♻️ Eco-Friendly Solid Waste Disposal Methods</h3>
+          <ul class="clean-list">
+            <li><strong>1. Segregation at Source:</strong> Separating wet organic waste (green bin) from dry recyclable waste (blue bin) at homes and schools before collection.</li>
+            <li><strong>2. Composting &amp; Vermicomposting:</strong> Converting kitchen scraps and garden leaves into nutrient-rich organic manure using aerobic bacteria or earthworms (<em>Eisenia fetida</em>).</li>
+            <li><strong>3. Biogas (Gobar Gas) Plants:</strong> Anaerobic microbial digestion of animal dung and organic sewage produces clean combustible methane gas ($CH_4$) and nutrient-rich slurry fertilizer.</li>
+            <li><strong>4. Incineration:</strong> Controlled high-temperature (over 1000°C) combustion used specifically for toxic biomedical and hospital waste (syringes, dressings) to convert them into sterile ash.</li>
+            <li><strong>5. Sanitary Landfills:</strong> Non-recyclable solid trash compressed and layered below ground with impermeable leachate barriers to prevent hazardous chemical runoff into groundwater aquifers.</li>
+            <li><strong>6. Disposable Cups Trade-off (Board Classic Question):</strong>
+              <br/>• <em>Plastic cups:</em> Non-biodegradable and environmental hazard.
+              <br/>• <em>Clay cups (Kulhads):</em> Biodegradable but stripping massive fertile topsoil on an industrial scale damaged agricultural topsoil.
+              <br/>• <em>Disposable paper cups:</em> Environmentally superior alternative, being both biodegradable and recyclable.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Interactive 20-Question CBSE Board Quiz -->
+    <section class="section">
+      <div class="section-title-wrap">
+        <h2>20-Question CBSE Board Practice Quiz</h2>
+        <p class="muted">Test your concepts on Lindeman's 10% law, food chains, biomagnification, ozone chemistry, and waste management with instant step-by-step solutions.</p>
+      </div>
+
+      <div class="card quiz-card">
+        <div class="quiz-header">
+          <span class="quiz-progress" id="quiz-progress">Question 1 of 20</span>
+          <span class="quiz-score" id="quiz-score">Score: 0 / 20</span>
+        </div>
+
+        <div class="quiz-body">
+          <p class="quiz-question" id="quiz-question">Loading question...</p>
+          <div class="quiz-options" id="quiz-options"></div>
+          <div class="quiz-feedback" id="quiz-feedback" style="display:none;"></div>
+        </div>
+
+        <div class="quiz-footer-actions">
+          <button id="prev-btn" class="button secondary small" disabled>&larr; Previous</button>
+          <button id="next-btn" class="button small">Next &rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Tutor CTA Banner -->
+    <section class="cta-banner">
+      <h2>Struggling with CBSE Class 10 Biology?</h2>
+      <p>Master all 5 Biology chapters with personalized 1-on-1 mentorship, diagrammatic precision, and full board exam question drills.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Your Free Trial Session</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "According to Raymond Lindeman's 10% law of energy transfer, how much energy is transferred from one trophic level to the next higher level?",
+      opts: [
+        "1%",
+        "10%",
+        "50%",
+        "90%"
+      ],
+      correct: 1,
+      exp: "According to the 10% law (Lindeman, 1942), only about 10% of the energy entering a trophic level is incorporated into new biomass and made available to the next trophic level; 90% is dissipated as metabolic heat and respiration."
+    },
+    {
+      q: "What percentage of the total incident solar energy do green terrestrial plants capture and convert into food energy via photosynthesis?",
+      opts: [
+        "Approximately 1%",
+        "Approximately 10%",
+        "Approximately 50%",
+        "Nearly 100%"
+      ],
+      correct: 0,
+      exp: "NCERT Biology specifies that terrestrial green plants capture merely about 1% of the total incident solar energy falling upon their leaves and convert it into photochemical energy."
+    },
+    {
+      q: "In an ecosystem consisting of: Grass (10,000 J) → Deer → Tiger, what is the amount of energy available to the Tiger?",
+      opts: [
+        "1,000 J",
+        "100 J",
+        "10 J",
+        "1 J"
+      ],
+      correct: 1,
+      exp: "Grass = 10,000 J. Deer (10% of 10,000 J) = 1,000 J. Tiger (10% of 1,000 J) = 100 J."
+    },
+    {
+      q: "Why are food chains in nature generally limited to a maximum of 3 or 4 trophic levels?",
+      opts: [
+        "Apex predators refuse to eat herbivores",
+        "The loss of energy at each step is so great that very little usable energy remains after 4 trophic levels",
+        "Decomposers eliminate higher trophic levels",
+        "Solar radiation decreases at higher elevations"
+      ],
+      correct: 1,
+      exp: "Because 90% of energy is lost as heat/metabolism at every successive trophic level, by the 4th level the remaining energy is too small to support another viable reproductive population."
+    },
+    {
+      q: "Which biological process leads to the progressive accumulation of non-biodegradable pesticides (like DDT) at higher trophic levels?",
+      opts: [
+        "Biofortification",
+        "Eutrophication",
+        "Biological Magnification (Biomagnification)",
+        "Biodegradation"
+      ],
+      correct: 2,
+      exp: "Biological magnification is the progressive bio-accumulation and increasing concentration of toxic non-biodegradable chemicals at successive trophic levels."
+    },
+    {
+      q: "In a lake ecosystem affected by pesticide runoff containing Phytoplankton → Zooplankton → Small Fish → Fish-eating Bird, which organism will harbor the HIGHEST concentration of pesticide?",
+      opts: [
+        "Phytoplankton",
+        "Zooplankton",
+        "Small Fish",
+        "Fish-eating Bird"
+      ],
+      correct: 3,
+      exp: "Because non-biodegradable chemicals cannot be metabolized or excreted, the organism at the apex trophic level (Fish-eating Bird) accumulates the highest biomagnified concentration."
+    },
+    {
+      q: "Why does energy flow in an ecosystem occur strictly in a unidirectional manner?",
+      opts: [
+        "Energy captured by autotrophs does not revert back to the solar input, and energy passed to herbivores cannot return to autotrophs",
+        "Decomposers pump energy directly back to the sun",
+        "Carnivores give energy back to green plants",
+        "Producers absorb energy from top predators"
+      ],
+      correct: 0,
+      exp: "Energy flow is strictly unidirectional: solar energy captured by autotrophs never returns to the sun, and energy transferred from one trophic level to the next cannot flow backwards."
+    },
+    {
+      q: "What role do decomposers (bacteria and saprophytic fungi) perform in an ecosystem?",
+      opts: [
+        "They capture solar energy to produce glucose",
+        "They break down dead organic remains into simple inorganic substances that replenish the soil and biogeochemical cycles",
+        "They convert oxygen into ozone",
+        "They synthesize synthetic non-biodegradable polymers"
+      ],
+      correct: 1,
+      exp: "Decomposers secrete extracellular digestive enzymes that break down complex dead organic tissue into simple inorganic minerals, ensuring natural nutrient recycling."
+    },
+    {
+      q: "Which of the following represents an artificial (man-made) ecosystem?",
+      opts: [
+        "Tropical rainforest",
+        "Deep freshwater lake",
+        "Crop field / Aquarium",
+        "Ocean coral reef"
+      ],
+      correct: 2,
+      exp: "Crop fields, gardens, and aquariums are artificial ecosystems created and sustained by human management and external inputs."
+    },
+    {
+      q: "Ozone ($O_3$) in the stratosphere is chemically synthesized through which of the following reactions?",
+      opts: [
+        "CO₂ + H₂O → O₃ + CH₄",
+        "O₂ split by UV radiation into nascent O atoms; nascent O then combines with molecular O₂ to form O₃",
+        "Thermal burning of fossil fuels releasing O₃ gas",
+        "Respiration of marine phytoplankton releasing O₃"
+      ],
+      correct: 1,
+      exp: "High-energy UV photons split molecular oxygen ($O_2 \\xrightarrow{UV} O + O$). A free nascent oxygen atom ($O$) combines with an oxygen molecule ($O + O_2 \\to O_3$) to generate stratospheric ozone."
+    },
+    {
+      q: "Why is the stratospheric ozone layer essential for the preservation of terrestrial life?",
+      opts: [
+        "It traps heat to maintain atmospheric pressure",
+        "It shields the surface of the Earth by absorbing lethal solar ultraviolet (UV) radiation",
+        "It supplies breathing oxygen directly to birds",
+        "It acts as a cloud seed to induce monsoon rain"
+      ],
+      correct: 1,
+      exp: "The stratospheric ozone shield absorbs dangerous UV-B rays which cause skin cancer (melanoma), retinal cataracts, immune system suppression, and loss of oceanic phytoplankton."
+    },
+    {
+      q: "Which chemical group is primarily responsible for the anthropogenic depletion of the stratospheric ozone shield?",
+      opts: [
+        "Methane gas (CH₄)",
+        "Chlorofluorocarbons (CFCs)",
+        "Carbon dioxide (CO₂)",
+        "Nitrogen gas (N₂)"
+      ],
+      correct: 1,
+      exp: "Chlorofluorocarbons (CFCs), formerly utilized as refrigerants and aerosol propellants, release catalytic chlorine free radicals upon UV exposure that destroy ozone molecules."
+    },
+    {
+      q: "In which year did the United Nations Environment Programme (UNEP) successfully forge the Montreal Protocol to freeze CFC production?",
+      opts: [
+        "1972",
+        "1987",
+        "1995",
+        "2005"
+      ],
+      correct: 1,
+      exp: "In 1987, the UNEP forged the historic Montreal Protocol agreement to freeze CFC production at 1986 levels, leading to a worldwide phaseout."
+    },
+    {
+      q: "Why can saprophytic bacteria not break down synthetic plastics and polythene bags?",
+      opts: [
+        "Bacteria are repelled by plastic colors",
+        "Microbial enzymes are highly specific in their action and lack the specific biocatalysts needed to cleave synthetic polymeric bonds",
+        "Plastics are composed of natural cellulose",
+        "Plastics absorb all bacterial moisture instantly"
+      ],
+      correct: 1,
+      exp: "Enzymatic action is chemically specific. Bacteria and fungi have evolved enzymes to break down natural organic bonds (like peptide or glycosidic bonds), but lack enzymes capable of breaking synthetic plastic polymers."
+    },
+    {
+      q: "Which of the following waste materials is completely BIODEGRADABLE?",
+      opts: [
+        "Aluminum beverage can",
+        "Banana peel, cotton rag, and scrap cardboard",
+        "Polythene carry bag",
+        "DDT chemical powder"
+      ],
+      correct: 1,
+      exp: "Banana peels, pure cotton fabrics, and cardboard are organic plant products that decomposers easily break down into simple inorganic nutrients."
+    },
+    {
+      q: "Why did the introduction of disposable earthen cups ('Kulhads') on Indian Railways face environmental pushback despite being biodegradable?",
+      opts: [
+        "Kulhads release toxic chlorine gas when wet",
+        "Manufacturing kulhads on a massive scale resulted in the catastrophic stripping of fertile agricultural topsoil",
+        "Kulhads cannot hold hot tea",
+        "Clay takes thousands of years to dissolve in rain"
+      ],
+      correct: 1,
+      exp: "NCERT highlights that producing millions of disposable kulhads daily required stripping immense quantities of fertile agricultural topsoil, creating severe soil depletion."
+    },
+    {
+      q: "Which method is specifically mandated for the safe, sterile disposal of infectious hospital and biomedical waste?",
+      opts: [
+        "Vermicomposting",
+        "Open-field dumping",
+        "High-temperature controlled incineration",
+        "Domestic sewage disposal"
+      ],
+      correct: 2,
+      exp: "High-temperature incineration (combustion exceeding 1000°C) is required for hospital waste to incinerate pathogens, syringes, and anatomical waste into sterile non-infectious ash."
+    },
+    {
+      q: "What is an interconnected network of multiple individual food chains in an ecosystem called?",
+      opts: [
+        "Trophic pyramid",
+        "Food web",
+        "Biomass scale",
+        "Ecological niche"
+      ],
+      correct: 1,
+      exp: "A food web is a network of branching, interconnected food chains that reflects the realistic feeding relationships in natural ecosystems and provides ecological stability."
+    },
+    {
+      q: "In an aquatic food chain containing Algae → Protozoa → Small Fish → Big Fish, if 50,000 J of energy is synthesized by Algae, how much energy reaches the Big Fish?",
+      opts: [
+        "5,000 J",
+        "500 J",
+        "50 J",
+        "5 J"
+      ],
+      correct: 2,
+      exp: "Algae = 50,000 J. Protozoa = 5,000 J (10%). Small Fish = 500 J (10%). Big Fish = 50 J (10%)."
+    },
+    {
+      q: "Why is ozone ($O_3$) considered both a deadly poison and an indispensable protector?",
+      opts: [
+        "It is toxic when inhaled at ground level (troposphere), yet shields Earth from lethal UV radiation in the stratosphere",
+        "It creates oxygen at night but absorbs nitrogen during the day",
+        "It fertilizes crops in rain but damages clouds",
+        "It cools glaciers while heating ocean floors"
+      ],
+      correct: 0,
+      exp: "At tropospheric ground level, ozone is an aggressive oxidizing pollutant toxic to respiratory tissue, but in the upper stratosphere it forms the vital shield filtering lethal UV radiation."
+    }
+  ];
+
+  let currentQ = 0;
+  const userAnswers = new Array(questions.length).fill(null);
+
+  function renderQuiz() {
+    const q = questions[currentQ];
+    document.getElementById("quiz-progress").textContent = `Question ${currentQ + 1} of ${questions.length}`;
+    document.getElementById("quiz-question").textContent = `${currentQ + 1}. ${q.q}`;
+
+    const optsDiv = document.getElementById("quiz-options");
+    optsDiv.innerHTML = "";
+
+    const fbDiv = document.getElementById("quiz-feedback");
+    fbDiv.style.display = "none";
+    fbDiv.className = "quiz-feedback";
+
+    const answered = userAnswers[currentQ] !== null;
+
+    q.opts.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-option";
+      btn.textContent = opt;
+
+      if (answered) {
+        btn.disabled = true;
+        if (idx === q.correct) {
+          btn.classList.add("opt-correct");
+        }
+        if (userAnswers[currentQ] === idx && idx !== q.correct) {
+          btn.classList.add("opt-wrong");
+        }
+      } else {
+        btn.onclick = () => selectOption(idx);
+      }
+      optsDiv.appendChild(btn);
+    });
+
+    if (answered) {
+      fbDiv.style.display = "block";
+      const isCorrect = userAnswers[currentQ] === q.correct;
+      fbDiv.className = `quiz-feedback ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
+      fbDiv.innerHTML = `<strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect.'}</strong> ${q.exp}`;
+    }
+
+    document.getElementById("prev-btn").disabled = currentQ === 0;
+    const nextBtn = document.getElementById("next-btn");
+    nextBtn.textContent = currentQ === questions.length - 1 ? "Finish" : "Next →";
+
+    updateScore();
+  }
+
+  function selectOption(idx) {
+    userAnswers[currentQ] = idx;
+    renderQuiz();
+  }
+
+  function updateScore() {
+    let score = 0;
+    userAnswers.forEach((ans, idx) => {
+      if (ans === questions[idx].correct) score++;
+    });
+    document.getElementById("quiz-score").textContent = `Score: ${score} / ${questions.length}`;
+  }
+
+  document.getElementById("prev-btn").addEventListener("click", () => {
+    if (currentQ > 0) {
+      currentQ--;
+      renderQuiz();
+    }
+  });
+
+  document.getElementById("next-btn").addEventListener("click", () => {
+    if (currentQ < questions.length - 1) {
+      currentQ++;
+      renderQuiz();
+    }
+  });
+
+  renderQuiz();
+</script>
+
+<style>
+  .resource-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .concept-grid {
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .formula {
+    background: #f1f5f9;
+    padding: 0.6rem 0.85rem;
+    border-radius: var(--radius);
+    font-family: monospace;
+    font-size: 0.88rem;
+    color: var(--ink);
+    margin: 0.75rem 0;
+    border-left: 3px solid var(--brand);
+    overflow-x: auto;
+  }
+
+  .clean-list {
+    padding-left: 1.2rem;
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.6rem;
+  }
+
+  /* ── Diagram Styling ── */
+  .diagram-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin: 1.5rem 0 2.5rem;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 3%);
+  }
+
+  .diagram-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .diagram-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .badge {
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .svg-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .responsive-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  /* ── Interactive Quiz Styling ── */
+  .quiz-card {
+    padding: 1.5rem;
+    margin-top: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-score {
+    color: var(--brand);
+  }
+
+  .quiz-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-option {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .quiz-option:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

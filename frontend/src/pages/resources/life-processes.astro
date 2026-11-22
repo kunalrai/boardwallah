@@ -1,0 +1,828 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Life Processes | CBSE Class 10 Science (Biology) | ${provider.name}`}
+  description="Comprehensive revision notes, biochemical pathways, interactive SVG diagrams (Double Circulation & Nephron), and 20 CBSE Board MCQs for Life Processes: Nutrition, Respiration, Transportation, and Excretion."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Life Processes
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science (Biology) · Chapter 5/6</span>
+      <h1>Life Processes: Nutrition, Respiration, Circulation &amp; Excretion</h1>
+      <p class="lead">
+        Master the four foundational pillars of cellular and organismal maintenance: enzymatic digestion, ATP generation pathways, human double circulation, and nephronic filtration with 20 board exam questions.
+      </p>
+    </div>
+
+    <!-- Core Concepts Section -->
+    <section class="section">
+      <h2>1. Autotrophic &amp; Heterotrophic Nutrition</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🌱 Autotrophic Nutrition (Photosynthesis)</h3>
+          <p class="formula">6CO₂ + 12H₂O + Sunlight + Chlorophyll &rarr; C₆H₁₂O₆ + 6O₂ + 6H₂O</p>
+          <ul class="clean-list">
+            <li><strong>Three Crucial Events:</strong>
+              <br/>1. <em>Absorption</em> of light energy by chlorophyll.
+              <br/>2. <em>Conversion</em> of light energy into chemical energy and <em>photolysis</em> of water into hydrogen and oxygen.
+              <br/>3. <em>Reduction</em> of carbon dioxide to carbohydrates (glucose stored as starch).
+            </li>
+            <li><strong>Desert Plant Adaptation:</strong> Desert plants (xerophytes) take up CO₂ at night and store it as an intermediate organic acid, which is acted upon by sunlight absorbed during the day.</li>
+            <li><strong>Stomatal Mechanism:</strong> Guard cells swell when water flows into them, opening the stomatal pore; they shrink and close the pore when water leaves them.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🍽️ Heterotrophic Digestion (Human Alimentary Canal)</h3>
+          <p class="formula">Mouth &rarr; Oesophagus &rarr; Stomach &rarr; Small Intestine &rarr; Large Intestine</p>
+          <ul class="clean-list">
+            <li><strong>Mouth (Oral Cavity):</strong> Salivary amylase (ptyalin) converts starch into maltose. Tongue rolls food into a bolus; peristalsis moves it down the oesophagus.</li>
+            <li><strong>Stomach:</strong> Gastric glands secrete:
+              <br/>• <em>Hydrochloric Acid (HCl):</em> Creates an acidic medium (pH 1.5–2.5) to activate pepsin and kill microbes.
+              <br/>• <em>Pepsin:</em> Protein-digesting enzyme (active only in acidic medium).
+              <br/>• <em>Mucus:</em> Shields the inner stomach lining from excoriation by HCl.
+            </li>
+            <li><strong>Small Intestine (Site of Complete Digestion):</strong>
+              <br/>• <em>Bile (Liver):</em> Neutralizes acidic chyme and emulsifies large fat globules into micro-droplets.
+              <br/>• <em>Pancreatic Juice:</em> Trypsin (digests proteins) + Pancreatic Lipase (breaks down emulsified fats) + Amylase.
+              <br/>• <em>Villi &amp; Microvilli:</em> Finger-like projections richly supplied with blood vessels and lacteals that maximize surface area for nutrient absorption.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Respiration & Transportation -->
+    <section class="section">
+      <h2>2. Respiration &amp; Double Circulation</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>⚡ Breakdown of Glucose Pathways</h3>
+          <p class="formula">Glycolysis (Cytoplasm): 1 Glucose (6C) &rarr; 2 Pyruvate (3C) + 2 ATP</p>
+          <ul class="clean-list">
+            <li><strong>Pathway A (Absence of O₂ · Yeast Fermentation):</strong>
+              <br/>Pyruvate &rarr; Ethanol (2C) + CO₂ + 2 ATP. Used in brewing and baking.
+            </li>
+            <li><strong>Pathway B (Lack of O₂ · Human Muscle Cells during Sprinting):</strong>
+              <br/>Pyruvate &rarr; Lactic acid (3C) + 2 ATP. Accumulation of lactic acid causes muscle cramps.
+            </li>
+            <li><strong>Pathway C (Presence of O₂ · Mitochondria · Aerobic Respiration):</strong>
+              <br/>Pyruvate &rarr; 6CO₂ + 6H₂O + 36–38 ATP. High-energy yield storing energy in ATP (the cellular energy currency).
+            </li>
+            <li><strong>Alveolar Exchange:</strong> Millions of balloon-like alveoli in lungs provide an expansive surface area (~80 m²) with ultra-thin walls surrounded by capillaries for gas diffusion.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>❤️ Human Cardiovascular System &amp; Plant Transport</h3>
+          <p class="formula">Double Circulation: Pulmonary Circuit + Systemic Circuit</p>
+          <ul class="clean-list">
+            <li><strong>Why Double Circulation?</strong> Humans are warm-blooded and require high energy to maintain constant body temperature; separating oxygenated and deoxygenated blood completely prevents mixing.</li>
+            <li><strong>Heart Cycle:</strong>
+              <br/>• <em>Right Atrium &rarr; Right Ventricle:</em> Receives deoxygenated blood via Vena Cava and pumps it to lungs via Pulmonary Artery.
+              <br/>• <em>Left Atrium &rarr; Left Ventricle:</em> Receives oxygenated blood from lungs via Pulmonary Vein and pumps it to the whole body through the thick-walled Aorta.
+            </li>
+            <li><strong>Blood Vessels:</strong> Arteries (thick elastic walls, high pressure, no valves); Veins (thin walls, low pressure, internal pocket valves preventing backflow).</li>
+            <li><strong>Plant Transport Systems:</strong>
+              <br/>• <em>Xylem:</em> Unidirectional transport of water and dissolved minerals driven by root pressure and transpiration pull.
+              <br/>• <em>Phloem:</em> Bidirectional translocation of sucrose and amino acids from leaves to sinks utilizing ATP energy.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Excretion Section -->
+    <section class="section">
+      <h2>3. Human Excretory System &amp; Nephron Physiology</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🧪 Nephron: The Functional Filtration Unit</h3>
+          <p class="formula">Ultrafiltration &rarr; Selective Tubular Reabsorption &rarr; Tubular Secretion</p>
+          <ul class="clean-list">
+            <li><strong>Bowman's Capsule &amp; Glomerulus:</strong> Afferent arteriole brings blood under high pressure into the cup-shaped Bowman's capsule; initial filtrate contains glucose, amino acids, salts, urea, and excess water (~180 litres/day).</li>
+            <li><strong>Tubular Reabsorption:</strong> As the filtrate moves along the convoluted tubules and Loop of Henle, essential nutrients (100% of glucose, amino acids) and 99% of water are reabsorbed back into the peritubular capillary network depending on the body's hydration state.</li>
+            <li><strong>Final Urine:</strong> Concentrated urea, uric acid, excess salts, and water collect in the collecting duct (~1.5 to 2 litres/day), flowing through ureters to the urinary bladder.</li>
+            <li><strong>Artificial Kidney (Hemodialysis):</strong> Uses semi-permeable cellophane tubes submerged in a dialyzing fluid with the same osmotic pressure as normal blood, except lacking nitrogenous wastes. No reabsorption occurs in hemodialysis.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌿 Excretion in Plants &amp; Comparative Biology</h3>
+          <p class="formula">Gaseous Waste Diffusion · Waste Storage in Vacuoles &amp; Resins</p>
+          <ul class="clean-list">
+            <li><strong>Oxygen:</strong> Regarded as a waste byproduct of daytime photosynthesis, released directly via stomata and lenticels.</li>
+            <li><strong>Excess Water:</strong> Eliminated continuously via transpiration through stomatal pores.</li>
+            <li><strong>Cellular Waste Storage:</strong> Many plant wastes are stored in cellular vacuoles, in leaves that periodically fall off, or stored as old resins and gums in non-functional xylem heartwood.</li>
+            <li><strong>Root Excretion:</strong> Plants also excrete certain organic waste substances into the surrounding rhizosphere soil.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Cardiovascular Flow &amp; Nephronic Filtration</h2>
+
+      <div class="grid two">
+        <article class="card visual-card">
+          <span class="visual-badge">Cardiovascular Anatomy</span>
+          <h3>Human Double Circulation Circuit</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="320" fill="#f8fafc" />
+              
+              <!-- Pulmonary Capillaries (Lungs) -->
+              <rect x="220" y="20" width="160" height="40" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" />
+              <text x="300" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="#0369a1">🫁 LUNG CAPILLARIES</text>
+
+              <!-- Heart Center -->
+              <rect x="180" y="90" width="240" height="140" rx="10" fill="#fff" stroke="#475569" stroke-width="2" />
+              <line x1="300" y1="90" x2="300" y2="230" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+              <line x1="180" y1="160" x2="420" y2="160" stroke="#cbd5e1" stroke-width="2" />
+              
+              <!-- Chambers -->
+              <rect x="190" y="100" width="100" height="50" rx="4" fill="#fee2e2" />
+              <text x="240" y="130" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Right Atrium</text>
+              <rect x="310" y="100" width="100" height="50" rx="4" fill="#dbeafe" />
+              <text x="360" y="130" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">Left Atrium</text>
+
+              <rect x="190" y="170" width="100" height="50" rx="4" fill="#fee2e2" />
+              <text x="240" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Right Ventricle</text>
+              <rect x="310" y="170" width="100" height="50" rx="4" fill="#dbeafe" />
+              <text x="360" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">Left Ventricle</text>
+
+              <!-- Body Capillaries (Bottom) -->
+              <rect x="220" y="260" width="160" height="40" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+              <text x="300" y="285" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e">🧬 BODY TISSUES</text>
+
+              <!-- Circulation Paths -->
+              <!-- RV to Lungs (Pulmonary Artery - Blue) -->
+              <path d="M 210 170 C 120 130, 120 40, 220 40" fill="none" stroke="#dc2626" stroke-width="2.5" />
+              <text x="110" y="85" font-size="10" font-weight="700" fill="#dc2626">Pulmonary Artery</text>
+
+              <!-- Lungs to LA (Pulmonary Vein - Red) -->
+              <path d="M 380 40 C 480 40, 480 130, 390 120" fill="none" stroke="#2563eb" stroke-width="2.5" />
+              <text x="490" y="85" font-size="10" font-weight="700" fill="#2563eb">Pulmonary Vein</text>
+
+              <!-- LV to Body (Aorta - Red) -->
+              <path d="M 390 200 C 480 220, 480 280, 380 280" fill="none" stroke="#2563eb" stroke-width="2.5" />
+              <text x="495" y="250" font-size="10" font-weight="700" fill="#2563eb">Aorta (Systemic)</text>
+
+              <!-- Body to RA (Vena Cava - Blue) -->
+              <path d="M 220 280 C 120 280, 120 200, 210 130" fill="none" stroke="#dc2626" stroke-width="2.5" />
+              <text x="110" y="250" font-size="10" font-weight="700" fill="#dc2626">Vena Cava</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 1: Complete double circulation ensuring oxygen-rich blood remains strictly segregated from deoxygenated blood.</p>
+        </article>
+
+        <article class="card visual-card">
+          <span class="visual-badge">Renal Microscopic Anatomy</span>
+          <h3>Structure of a Nephron &amp; Filtration</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="320" fill="#f8fafc" />
+              
+              <!-- Glomerulus & Bowman's Capsule -->
+              <circle cx="90" cy="100" r="40" fill="#fee2e2" stroke="#dc2626" stroke-width="2" />
+              <circle cx="90" cy="100" r="24" fill="#f87171" />
+              <text x="90" y="160" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Bowman's Capsule</text>
+              <text x="90" y="175" text-anchor="middle" font-size="9" fill="#7f1d1d">(Glomerulus inside)</text>
+
+              <!-- Proximal Tubule -->
+              <path d="M 130 100 Q 180 40 220 100 T 260 160" fill="none" stroke="#0284c7" stroke-width="6" />
+              <text x="190" y="60" text-anchor="middle" font-size="10" font-weight="700" fill="#0369a1">PCT (Reabsorption of Glucose/Amino Acids)</text>
+
+              <!-- Loop of Henle -->
+              <path d="M 260 160 L 260 260 Q 300 290 340 260 L 340 160" fill="none" stroke="#0284c7" stroke-width="5" />
+              <text x="300" y="240" text-anchor="middle" font-size="11" font-weight="700" fill="#0284c7">Loop of Henle</text>
+              <text x="300" y="255" text-anchor="middle" font-size="9" fill="#0369a1">(Water &amp; Salt conservation)</text>
+
+              <!-- Distal Tubule & Collecting Duct -->
+              <path d="M 340 160 Q 380 90 430 140" fill="none" stroke="#0284c7" stroke-width="6" />
+              <text x="390" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#0369a1">DCT (Secretion)</text>
+
+              <rect x="440" y="40" width="30" height="240" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+              <text x="495" y="150" font-size="11" font-weight="700" fill="#92400e">Collecting Duct</text>
+              <text x="495" y="170" font-size="9" fill="#78350f">Urine &rarr; Ureter</text>
+
+              <!-- Reabsorption arrows -->
+              <path d="M 200 110 L 200 140" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)" />
+              <text x="210" y="130" font-size="9" font-weight="700" fill="#166534">99% Water back to blood</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 2: Functional nephron units execute ultrafiltration, selective tubular reabsorption, and urine concentration.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Practice: Life Processes</h2>
+          <p class="muted">20 High-yield questions testing enzymatic actions, respiration equations, cardiac valves, and nephron reabsorption.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizApp"></div>
+
+      <div class="quiz-footer-actions">
+        <span class="muted" id="quizProgressText">0 of 20 answered</span>
+        <button class="button secondary" id="resetQuizBtn">Reset Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-banner">
+      <h2>Excel in CBSE Class 10 Biology with Expert Mentorship</h2>
+      <p>Master physiological pathways, labeled diagram practice, and NCERT exemplars with 1-on-1 tutoring.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Your Free Trial Class</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "Which enzyme is present in human saliva, and what is its specific digestive action on food?",
+      opts: [
+        "Pepsin; it digests dietary proteins into peptones",
+        "Salivary amylase (ptyalin); it breaks down starch into simpler maltose sugar",
+        "Lipase; it emulsifies fats into fatty acids",
+        "Trypsin; it converts complex polysaccharides into glucose"
+      ],
+      correct: 1,
+      exp: "Salivary amylase secreted by salivary glands in the mouth initiates chemical digestion by converting starch into maltose."
+    },
+    {
+      q: "Why is the inner wall of the small intestine lined with millions of tiny finger-like projections called villi?",
+      opts: [
+        "To secrete hydrochloric acid into the chyme",
+        "To drastically increase the surface area for rapid absorption of digested nutrients into the bloodstream",
+        "To prevent food from moving backward into the stomach",
+        "To break down cellulose in herbivorous diets"
+      ],
+      correct: 1,
+      exp: "Villi and microvilli enormously increase the absorptive surface area of the ileum, equipped with capillaries and lacteals for nutrient uptake."
+    },
+    {
+      q: "What role does bile juice play in the human digestive system, considering it contains no enzymes?",
+      opts: [
+        "It digests carbohydrates into glucose",
+        "It creates an acidic medium for pepsin activation",
+        "It neutralizes the acidic chyme from the stomach and emulsifies large fat globules into tiny droplets for lipase action",
+        "It absorbs water and forms solid feces"
+      ],
+      correct: 2,
+      exp: "Bile salts provide an alkaline pH required by pancreatic enzymes and emulsify fat globules, multiplying the surface area for lipase to act."
+    },
+    {
+      q: "During vigorous exercise, what causes sudden painful muscle cramps in athletes?",
+      opts: [
+        "Excessive production of carbon dioxide and water",
+        "Accumulation of lactic acid due to anaerobic breakdown of pyruvate in muscle cells lacking sufficient oxygen",
+        "Dehydration leading to protein breakdown in mitochondria",
+        "Conversion of glucose into ethanol"
+      ],
+      correct: 1,
+      exp: "When oxygen demand outpaces supply during intense exertion, muscle cells convert pyruvate into 3-carbon lactic acid, causing cramps."
+    },
+    {
+      q: "What are the correct products formed during yeast fermentation (anaerobic respiration)?",
+      opts: [
+        "Lactic acid + Energy",
+        "Ethanol + Carbon dioxide + Energy (2 ATP)",
+        "Carbon dioxide + Water + 38 ATP",
+        "Pyruvate + Oxygen"
+      ],
+      correct: 1,
+      exp: "In the absence of oxygen, yeast cells break down pyruvate into 2-carbon ethanol, CO₂, and release a net yield of 2 ATP."
+    },
+    {
+      q: "Where does the aerobic breakdown of pyruvate into carbon dioxide, water, and 36–38 ATP molecules take place inside a eukaryotic cell?",
+      opts: [
+        "Cytoplasm",
+        "Ribosomes",
+        "Mitochondria",
+        "Endoplasmic reticulum"
+      ],
+      correct: 2,
+      exp: "While initial glycolysis occurs in the cytoplasm, aerobic respiration (Krebs cycle and oxidative phosphorylation) occurs inside mitochondria."
+    },
+    {
+      q: "Why do fishes exhibit a much faster breathing rate compared to terrestrial organisms like dogs and humans?",
+      opts: [
+        "Because fish swim continuously without rest",
+        "Because the amount of dissolved oxygen in water is fairly low compared to the high oxygen concentration in atmospheric air",
+        "Because fish lungs have smaller surface areas",
+        "Because fish blood lacks hemoglobin"
+      ],
+      correct: 1,
+      exp: "Water contains only ~0.7% dissolved oxygen by volume compared to ~21% in air, requiring aquatic animals to pass water rapidly over gills."
+    },
+    {
+      q: "Which chamber of the human heart possesses the thickest, most muscular muscular wall, and why?",
+      opts: [
+        "Right Atrium, because it receives blood from the entire body",
+        "Right Ventricle, because it pumps blood to the nearby lungs",
+        "Left Ventricle, because it must pump oxygenated blood under high pressure through the aorta to the entire systemic body",
+        "Left Atrium, because it receives oxygenated blood from the pulmonary vein"
+      ],
+      correct: 2,
+      exp: "The left ventricle pumps blood across the entire systemic circulation to all distant body tissues against high arterial resistance, necessitating a thick muscular wall."
+    },
+    {
+      q: "What prevents the backflow of deoxygenated blood in human veins where blood pressure is relatively low?",
+      opts: [
+        "Thick elastic muscular walls",
+        "Internal pocket valves that allow blood to flow in only one direction toward the heart",
+        "Continuous suction from the liver",
+        "High capillary resistance"
+      ],
+      correct: 1,
+      exp: "Veins feature one-way valves along their length that close automatically to prevent gravity-induced retrograde flow."
+    },
+    {
+      q: "Which component of human blood is specifically responsible for initiating the clotting mechanism at sites of vessel injury?",
+      opts: [
+        "Erythrocytes (Red Blood Cells)",
+        "Blood Platelets (Thrombocytes)",
+        "Leukocytes (White Blood Cells)",
+        "Blood Plasma proteins"
+      ],
+      correct: 1,
+      exp: "Platelets aggregate at injury sites and release thromboplastin to convert prothrombin into thrombin, generating a fibrin clot."
+    },
+    {
+      q: "What is the primary physical driving force responsible for the upward movement of water in tall trees during the daytime?",
+      opts: [
+        "Active ATP pumping by root cells",
+        "Transpiration pull generated by the continuous evaporation of water molecules from leaf stomatal pores",
+        "Osmotic suction from the phloem tissue",
+        "Gravitational pull on the trunk"
+      ],
+      correct: 1,
+      exp: "Transpiration creates a negative pressure tension (transpiration pull) in xylem vessels that lifts continuous columns of water to tall heights."
+    },
+    {
+      q: "How does the translocation of sucrose in phloem tissue fundamentally differ from water transport in xylem?",
+      opts: [
+        "Xylem transport requires ATP, whereas phloem is completely passive",
+        "Phloem translocation is an active process utilizing ATP energy to generate osmotic pressure, whereas xylem relies on physical capillary/transpiration forces",
+        "Phloem only transports water downwards",
+        "Xylem moves food during winter months"
+      ],
+      correct: 1,
+      exp: "Translocation of food in phloem requires energy from ATP to build up osmotic pressure that moves sucrose bidirectionally to target tissues."
+    },
+    {
+      q: "What is the initial volume of glomerular filtrate formed daily by healthy human kidneys, and how much actual urine is excreted?",
+      opts: [
+        "50 litres filtrate; 25 litres excreted",
+        "180 litres filtrate; only about 1.5 to 2 litres excreted due to massive tubular reabsorption",
+        "5 litres filtrate; 5 litres excreted",
+        "180 litres filtrate; 180 litres excreted"
+      ],
+      correct: 1,
+      exp: "Kidneys filter ~180 litres of fluid daily through glomeruli, but ~99% of water and essential solutes are reabsorbed along nephron tubules."
+    },
+    {
+      q: "Which nitrogenous waste product is primarily eliminated by human kidneys from the deamination of excess proteins in the liver?",
+      opts: [
+        "Ammonia",
+        "Uric acid crystals",
+        "Urea",
+        "Creatine"
+      ],
+      correct: 2,
+      exp: "Humans are ureotelic; the liver converts toxic ammonia from amino acid deamination into less toxic urea, which kidneys excrete in urine."
+    },
+    {
+      q: "Which substance present in the initial glomerular filtrate is normally 100% reabsorbed in the proximal convoluted tubule (PCT) of a healthy individual?",
+      opts: [
+        "Urea",
+        "Glucose",
+        "Excess sodium ions",
+        "Uric acid"
+      ],
+      correct: 1,
+      exp: "Under healthy conditions, all filtered glucose and amino acids are completely reabsorbed by active transport in the PCT (appearance of glucose in urine indicates diabetes mellitus)."
+    },
+    {
+      q: "How does an artificial kidney machine (hemodialyzer) clean the blood of a patient with end-stage renal failure?",
+      opts: [
+        "It uses electricity to shock blood proteins",
+        "Blood passes through semi-permeable cellophane tubes surrounded by dialyzing fluid that removes urea by diffusion, with zero reabsorption",
+        "It transplants synthetic nephrons into the kidney",
+        "It boils the blood to evaporate excess water"
+      ],
+      correct: 1,
+      exp: "Hemodialysis allows nitrogenous wastes like urea to diffuse out into dialyzing solution across a semi-permeable membrane without tubular reabsorption."
+    },
+    {
+      q: "What is the primary function of the cartilaginous C-shaped rings supporting the human trachea?",
+      opts: [
+        "To produce vocal sounds during speech",
+        "To prevent the respiratory airway from collapsing when there is less air in it",
+        "To filter large dust particles before reaching lungs",
+        "To absorb oxygen directly into neck arteries"
+      ],
+      correct: 1,
+      exp: "Incomplete C-shaped hyaline cartilage rings keep the trachea continuously patent and prevent airway collapse under negative thoracic pressure."
+    },
+    {
+      q: "How do desert plants (xerophytes) manage photosynthesis without losing catastrophic amounts of water through open stomata during the day?",
+      opts: [
+        "They do not perform photosynthesis at all",
+        "They absorb sunlight during the day and take in CO₂ only at night, synthesizing an intermediate malic acid compound",
+        "They open stomata only during torrential rain",
+        "They obtain all carbohydrates from soil roots"
+      ],
+      correct: 1,
+      exp: "Desert plants perform CAM photosynthesis, opening stomata at night to fix CO₂ into an organic acid, and utilizing daytime sunlight to complete glucose synthesis."
+    },
+    {
+      q: "Why is double circulation indispensable for birds and mammals, unlike amphibians and reptiles?",
+      opts: [
+        "Birds and mammals have single-chambered hearts",
+        "Birds and mammals are warm-blooded (homeothermic) and require high, constant supplies of oxygen to maintain a constant body temperature",
+        "Reptiles possess three ventricles",
+        "Fish lack circulatory capillaries"
+      ],
+      correct: 1,
+      exp: "Endotherms (warm-blooded animals) have tremendous metabolic energy demands to sustain body temperature, necessitating complete separation of oxygenated and deoxygenated blood."
+    },
+    {
+      q: "How do plants discard their accumulated metabolic waste products without specialized renal organs?",
+      opts: [
+        "They excrete wastes as gas via flowers",
+        "They store wastes in cellular vacuoles, shedding leaves that accumulate waste, and depositing gums and resins in old non-functional xylem",
+        "They convert all wastes into cellulose",
+        "They release all waste chemicals through pollen"
+      ],
+      correct: 1,
+      exp: "Plants store wastes in dead heartwood cells as resins and gums, inside cell vacuoles, and periodically drop old leaves containing accumulated wastes."
+    }
+  ];
+
+  let userAnswers = {};
+
+  function renderQuiz() {
+    const container = document.getElementById('quizApp');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((qItem, idx) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+
+      const qTitle = document.createElement('h3');
+      qTitle.className = 'quiz-question';
+      qTitle.textContent = `${idx + 1}. ${qItem.q}`;
+      card.appendChild(qTitle);
+
+      const optsDiv = document.createElement('div');
+      optsDiv.className = 'quiz-options';
+
+      qItem.opts.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+
+        if (userAnswers[idx] !== undefined) {
+          btn.disabled = true;
+          if (optIdx === qItem.correct) {
+            btn.classList.add('opt-correct');
+          } else if (userAnswers[idx] === optIdx) {
+            btn.classList.add('opt-wrong');
+          }
+        } else {
+          btn.addEventListener('click', () => {
+            userAnswers[idx] = optIdx;
+            renderQuiz();
+            updateScoreSummary();
+          });
+        }
+        optsDiv.appendChild(btn);
+      });
+
+      card.appendChild(optsDiv);
+
+      if (userAnswers[idx] !== undefined) {
+        const fb = document.createElement('div');
+        fb.className = 'quiz-feedback ' + (userAnswers[idx] === qItem.correct ? 'feedback-correct' : 'feedback-wrong');
+        fb.innerHTML = (userAnswers[idx] === qItem.correct ? '<strong>✓ Correct!</strong> ' : '<strong>✗ Incorrect.</strong> ') + qItem.exp;
+        card.appendChild(fb);
+      }
+
+      container.appendChild(card);
+    });
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--ink);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

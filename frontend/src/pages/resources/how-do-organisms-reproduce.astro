@@ -1,0 +1,818 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`How Do Organisms Reproduce? | CBSE Class 10 Science (Biology) | ${provider.name}`}
+  description="Exhaustive chapter notes, asexual reproduction mechanisms, flower anatomy & double fertilization, human reproductive physiology, contraception methods, interactive SVG diagrams, and 20 CBSE Board MCQs."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / How Do Organisms Reproduce?
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science (Biology) · Chapter 7/8</span>
+      <h1>How Do Organisms Reproduce? Asexual, Plant &amp; Human Systems</h1>
+      <p class="lead">
+        Master DNA replication, fission, budding, angiosperm double fertilization, the menstrual cycle, placental embryonic exchange, and modern contraception with 20 board exam questions.
+      </p>
+    </div>
+
+    <!-- Core Concepts Section -->
+    <section class="section">
+      <h2>1. DNA Replication &amp; Asexual Reproduction</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🧬 DNA Copying &amp; The Importance of Variation</h3>
+          <p class="formula">DNA Replication &rarr; Cellular Division &rarr; Variation for Population Survival</p>
+          <ul class="clean-list">
+            <li><strong>The Biological Blueprint:</strong> Chromosomes in cell nuclei contain DNA (Deoxyribonucleic Acid), the master code for manufacturing cellular proteins.</li>
+            <li><strong>Inherent Inaccuracy:</strong> No biochemical copying system is 100% reliable. Subtle copying errors result in variations among offspring.</li>
+            <li><strong>Niche Survival:</strong> If a bacterial population living in temperate water suddenly faces extreme global warming, most heat-sensitive bacteria perish; only the few pre-existing heat-resistant variants survive, preventing species extinction.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🔬 Asexual Modes: Single-Parent Propagation</h3>
+          <p class="formula">Identical Clones · Rapid Multiplicative Proliferation</p>
+          <ul class="clean-list">
+            <li><strong>Fission:</strong>
+              <br/>• <em>Binary Fission:</em> In any plane in <em>Amoeba</em>; along a definite longitudinal plane in <em>Leishmania</em> (causative agent of Kala-azar with whip-like flagellum).
+              <br/>• <em>Multiple Fission:</em> In <em>Plasmodium</em> (malarial parasite), single cell divides into many daughter cells simultaneously inside a protective cyst.
+            </li>
+            <li><strong>Fragmentation:</strong> Multicellular filaments like <em>Spirogyra</em> break into smaller fragments upon maturity; each fragment grows into an individual.</li>
+            <li><strong>Regeneration:</strong> Fully differentiated organisms like <em>Planaria</em> or <em>Hydra</em> sliced into pieces regenerate complete bodies using specialized proliferating stem cells.</li>
+            <li><strong>Budding:</strong> In <em>Hydra</em> and yeast, a small bud develops from repeated cell divisions at one site, detaching when fully mature.</li>
+            <li><strong>Spore Formation:</strong> In <em>Rhizopus</em> (bread mould), hyphae produce knob-like sporangia filled with thick-walled spores that resist harsh conditions until moisture is found.</li>
+            <li><strong>Vegetative Propagation:</strong> Natural via <em>Bryophyllum</em> leaf notches, potato eyes, ginger rhizomes; artificial via cutting, layering, and grafting.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Plant & Human Sexual Reproduction -->
+    <section class="section">
+      <h2>2. Plant Fertilization &amp; Human Reproductive Anatomy</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🌺 Sexual Reproduction in Flowering Plants</h3>
+          <p class="formula">Pollination &rarr; Pollen Tube Growth &rarr; Double Fertilization</p>
+          <ul class="clean-list">
+            <li><strong>Flower Morphology:</strong>
+              <br/>• Male Stamen: Anther (produces pollen grains) + Filament.
+              <br/>• Female Carpel/Pistil: Stigma (sticky receptive surface) + Style + Ovary (contains ovules with female egg cell).
+              <br/>• Unisexual (Papaya, Watermelon) vs. Bisexual (Mustard, Hibiscus).
+            </li>
+            <li><strong>Double Fertilization:</strong>
+              <br/>1. <em>Syngamy:</em> 1st male gamete (n) fuses with female egg cell (n) &rarr; Diploid Zygote (2n), developing into embryo.
+              <br/>2. <em>Triple Fusion:</em> 2nd male gamete (n) fuses with diploid secondary nucleus (2n) &rarr; Triploid Primary Endosperm Nucleus (3n), providing nutrition.
+            </li>
+            <li><strong>Post-Fertilization Transformations:</strong> Ovule develops a tough coat and becomes the <strong>Seed</strong>; the ovary ripens and enlarges into the <strong>Fruit</strong>.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🧑‍🤝‍🧑 Human Reproductive Physiology</h3>
+          <p class="formula">Gametogenesis &rarr; Fertilization in Oviduct &rarr; Uterine Implantation</p>
+          <ul class="clean-list">
+            <li><strong>Male System:</strong> Testes located outside abdominal cavity in the scrotum to maintain 2–2.5°C lower temperature essential for spermatogenesis. Vas deferens carries sperm; prostate and seminal vesicles add alkaline fluids for mobility and nutrition.</li>
+            <li><strong>Female System:</strong> Ovaries release one mature ovum every 28 days. Fertilization occurs in the <strong>Fallopian Tube (Oviduct)</strong>.</li>
+            <li><strong>The Placenta:</strong> A specialized vascular disc embedded in the uterine wall. Contains chorionic villi on embryo's side bathed in maternal blood pools; transports glucose, O₂, and antibodies to the embryo while removing urea and CO₂.</li>
+            <li><strong>Menstruation:</strong> When an ovum is unfertilized, the thickened spongy uterine lining breaks down, shedding blood and mucus for 3–5 days.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Reproductive Health Section -->
+    <section class="section">
+      <h2>3. Reproductive Health &amp; Contraceptive Strategy</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🛡️ Contraceptive Methods &amp; Mechanisms</h3>
+          <p class="formula">Prevention of Unwanted Pregnancies &amp; Population Stabilization</p>
+          <ul class="clean-list">
+            <li><strong>Mechanical Barrier Methods:</strong> Condoms (male/female) or cervical diaphragms physically block sperm from entering the female genital tract. <em>Condoms additionally protect against STDs</em>.</li>
+            <li><strong>Hormonal/Chemical Methods:</strong> Oral pills change the body's hormonal balance, preventing egg release (ovulation). Can cause minor hormonal side effects.</li>
+            <li><strong>Intrauterine Contraceptive Devices (IUCDs):</strong> Loop or Copper-T inserted into the uterus by a doctor to prevent implantation.</li>
+            <li><strong>Surgical Methods (Permanent Sterilization):</strong>
+              <br/>• <em>Vasectomy:</em> Small portion of vas deferens is cut and tied in males; blocks sperm release.
+              <br/>• <em>Tubectomy:</em> Small portion of fallopian tubes is cut and tied in females; blocks egg transit.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚠️ Sexually Transmitted Diseases (STDs)</h3>
+          <p class="formula">Pathogenic Transmission via Unprotected Intercourse</p>
+          <ul class="clean-list">
+            <li><strong>Bacterial STDs:</strong>
+              <br/>• <em>Gonorrhoea</em> (caused by <em>Neisseria gonorrhoeae</em>).
+              <br/>• <em>Syphilis</em> (caused by <em>Treponema pallidum</em>). Curable with antibiotic regimens if detected early.
+            </li>
+            <li><strong>Viral STDs:</strong>
+              <br/>• <em>Genital Warts</em> (Human Papillomavirus / HPV).
+              <br/>• <em>HIV-AIDS</em> (Human Immunodeficiency Virus): Destroys helper T-lymphocytes, compromising the immune system; incurable but manageable with antiretrovirals.
+            </li>
+            <li><strong>Female Foeticide:</strong> Misuse of prenatal diagnostic techniques (ultrasound) to abort female fetuses; prohibited strictly under the PCPNDT Act to maintain balanced sex ratios.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Floral Fertilization &amp; Uterine Gestation</h2>
+
+      <div class="grid two">
+        <article class="card visual-card">
+          <span class="visual-badge">Botanical Anatomy</span>
+          <h3>Longitudinal Section of Flower &amp; Pollen Tube</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="320" fill="#f8fafc" />
+              
+              <!-- Petals (Pink backdrop) -->
+              <path d="M 120 180 Q 200 60 260 140" fill="none" stroke="#f472b6" stroke-width="6" />
+              <path d="M 480 180 Q 400 60 340 140" fill="none" stroke="#f472b6" stroke-width="6" />
+
+              <!-- Pistil/Carpel (Center) -->
+              <!-- Stigma -->
+              <ellipse cx="300" cy="50" rx="25" ry="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+              <text x="300" y="35" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Sticky Stigma</text>
+              <circle cx="295" cy="48" r="4" fill="#f59e0b" />
+              <text x="250" y="48" font-size="9" fill="#b45309">Pollen grain</text>
+
+              <!-- Style (Tube) -->
+              <rect x="290" y="60" width="20" height="90" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5" />
+              <line x1="300" y1="52" x2="300" y2="150" stroke="#f59e0b" stroke-width="3" stroke-dasharray="2,2" />
+              <text x="340" y="105" font-size="10" font-weight="700" fill="#166534">&larr; Pollen Tube</text>
+
+              <!-- Ovary (Swollen Base) -->
+              <ellipse cx="300" cy="190" rx="60" ry="45" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+              <text x="300" y="250" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Ovary (&rarr; Fruit)</text>
+
+              <!-- Ovule inside -->
+              <ellipse cx="300" cy="190" rx="30" ry="24" fill="#fef3c7" stroke="#d97706" stroke-width="1.5" />
+              <circle cx="300" cy="198" r="6" fill="#dc2626" />
+              <text x="300" y="185" text-anchor="middle" font-size="9" font-weight="700" fill="#92400e">Ovule (&rarr; Seed)</text>
+              <text x="300" y="215" text-anchor="middle" font-size="8" fill="#991b1b">Female Egg</text>
+
+              <!-- Stamens (Left & Right) -->
+              <rect x="190" y="90" width="16" height="12" rx="4" fill="#fef08a" stroke="#ca8a04" />
+              <path d="M 198 102 Q 190 180 250 200" fill="none" stroke="#65a30d" stroke-width="2" />
+              <text x="160" y="85" font-size="10" font-weight="700" fill="#854d0e">Anther (Stamen)</text>
+
+              <rect x="394" y="90" width="16" height="12" rx="4" fill="#fef08a" stroke="#ca8a04" />
+              <path d="M 402 102 Q 410 180 350 200" fill="none" stroke="#65a30d" stroke-width="2" />
+              <text x="400" y="85" font-size="10" font-weight="700" fill="#854d0e">Filament</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 1: Chemotropic growth of the pollen tube through the style to deliver dual male gametes to the ovule.</p>
+        </article>
+
+        <article class="card visual-card">
+          <span class="visual-badge">Human Embryology</span>
+          <h3>Female Reproductive System &amp; Implantation</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="320" fill="#f8fafc" />
+              
+              <!-- Uterus Womb -->
+              <path d="M 230 110 Q 300 80 370 110 L 350 210 Q 300 230 250 210 Z" fill="#ffe4e6" stroke="#e11d48" stroke-width="2" />
+              <text x="300" y="145" text-anchor="middle" font-size="12" font-weight="700" fill="#be123c">UTERUS (Womb)</text>
+              <circle cx="300" cy="170" r="10" fill="#f43f5e" />
+              <text x="300" y="195" text-anchor="middle" font-size="9" font-weight="700" fill="#881337">Placenta &amp; Embryo</text>
+
+              <!-- Fallopian Tubes (Left & Right) -->
+              <path d="M 230 110 C 160 80, 100 120, 110 160" fill="none" stroke="#f43f5e" stroke-width="3" />
+              <text x="120" y="75" font-size="10" font-weight="700" fill="#be123c">Fallopian Tube (Site of Fertilization)</text>
+
+              <path d="M 370 110 C 440 80, 500 120, 490 160" fill="none" stroke="#f43f5e" stroke-width="3" />
+              <text x="420" y="75" font-size="10" font-weight="700" fill="#be123c">Oviduct</text>
+
+              <!-- Ovaries -->
+              <ellipse cx="110" cy="175" rx="20" ry="14" fill="#fbcfe8" stroke="#db2777" stroke-width="2" />
+              <text x="110" y="205" text-anchor="middle" font-size="10" font-weight="700" fill="#9d174d">Ovary</text>
+
+              <ellipse cx="490" cy="175" rx="20" ry="14" fill="#fbcfe8" stroke="#db2777" stroke-width="2" />
+              <text x="490" y="205" text-anchor="middle" font-size="10" font-weight="700" fill="#9d174d">Ovary</text>
+
+              <!-- Cervix & Vagina (Bottom) -->
+              <rect x="280" y="215" width="40" height="35" fill="#fecdd3" stroke="#e11d48" />
+              <text x="300" y="235" text-anchor="middle" font-size="10" font-weight="700" fill="#9f1239">Cervix</text>
+
+              <rect x="280" y="250" width="40" height="40" fill="#fda4af" stroke="#e11d48" />
+              <text x="300" y="275" text-anchor="middle" font-size="10" font-weight="700" fill="#881337">Vagina</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 2: Architectural layout of the female tract showing ovulation from ovary, fertilization in oviduct, and uterine implantation.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Practice: How Do Organisms Reproduce?</h2>
+          <p class="muted">20 High-yield questions testing asexual fission modes, double fertilization, placental function, and contraceptive methods.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizApp"></div>
+
+      <div class="quiz-footer-actions">
+        <span class="muted" id="quizProgressText">0 of 20 answered</span>
+        <button class="button secondary" id="resetQuizBtn">Reset Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-banner">
+      <h2>Score 100% in CBSE Class 10 Science</h2>
+      <p>Master complex biological diagrams, NCERT line-by-line concepts, and board answer writing with 1-on-1 tutoring.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Your Free Trial Class</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "Why are the human male testes positioned outside the abdominal cavity within the pouch-like scrotum?",
+      opts: [
+        "To protect them from mechanical bone injuries",
+        "Because spermatogenesis requires a temperature approximately 2 to 2.5°C lower than normal internal body temperature",
+        "To allow faster diffusion of testosterone into the air",
+        "To prevent urine from mixing with semen"
+      ],
+      correct: 1,
+      exp: "Sperm development (spermatogenesis) requires a cooler thermal environment (34.5–35°C), which the extra-abdominal scrotum provides."
+    },
+    {
+      q: "In which anatomical organ of the female reproductive tract does fertilization between the sperm and ovum typically occur?",
+      opts: [
+        "Uterus",
+        "Ovary",
+        "Fallopian Tube (Oviduct)",
+        "Cervix"
+      ],
+      correct: 2,
+      exp: "Fertilization occurs in the ampullary-isthmic junction of the Fallopian tube (oviduct); the fertilized zygote then travels to implant in the uterus."
+    },
+    {
+      q: "What is the primary role of the secretions provided by the prostate gland and seminal vesicles in the male reproductive system?",
+      opts: [
+        "To generate sperm cells via meiosis",
+        "To provide a fluid medium, alkaline neutralization of vaginal acidity, and nutritional fructose to facilitate sperm transport",
+        "To store urine during copulation",
+        "To produce testosterone exclusively"
+      ],
+      correct: 1,
+      exp: "Seminal vesicle and prostate fluids nourish sperm with fructose, neutralize acidic tracts, and provide a liquid vehicle (semen) for motility."
+    },
+    {
+      q: "What is the exact biological function of the placenta during human pregnancy?",
+      opts: [
+        "It generates amniotic bone tissue",
+        "It acts as a vascular bridge containing villi that delivers glucose, oxygen, and nutrients from mother to embryo, while carrying away fetal metabolic wastes",
+        "It triggers monthly menstruation during gestation",
+        "It prevents all maternal hormones from entering the fetal bloodstream"
+      ],
+      correct: 1,
+      exp: "The placenta provides an extensive surface area for oxygen and nutrient diffusion from maternal blood into the embryo, and transfers embryo wastes into maternal circulation."
+    },
+    {
+      q: "What happens to the uterine lining in a human female if the released ovum is NOT fertilized by a sperm?",
+      opts: [
+        "It hardens into a protective fibrous cyst",
+        "It degenerates and sheds along with blood and unfertilized ovum through the vagina as menstruation",
+        "It is reabsorbed by the fallopian tube",
+        "It transforms immediately into ovarian follicles"
+      ],
+      correct: 1,
+      exp: "Without progesterone maintenance from fertilization, the thickened uterine lining sloughs off, resulting in 3 to 5 days of menstrual bleeding."
+    },
+    {
+      q: "Which mode of asexual reproduction is exhibited by the malarial parasite Plasmodium inside its protective cyst?",
+      opts: [
+        "Binary fission",
+        "Fragmentation",
+        "Multiple fission",
+        "Regeneration"
+      ],
+      correct: 2,
+      exp: "Plasmodium reproduces via multiple fission, where the single nucleus divides repeatedly into dozens of daughter cells inside a cyst, releasing them simultaneously."
+    },
+    {
+      q: "How does binary fission in Leishmania fundamentally differ from binary fission in Amoeba?",
+      opts: [
+        "Amoeba divides only at night",
+        "Amoeba can divide in any anatomical plane, whereas Leishmania has a definite whip-like flagellum and divides in a fixed longitudinal plane",
+        "Leishmania produces four daughter cells",
+        "Amoeba requires two parent cells"
+      ],
+      correct: 1,
+      exp: "Amoeba splits across any random plane, whereas Leishmania possesses a specialized flagellar structure and divides longitudinally along a definite orientation."
+    },
+    {
+      q: "Why is vegetative propagation widely practiced by horticulturists for growing plants like sugarcane, roses, and bananas?",
+      opts: [
+        "Because it produces seeds with diverse unpredictable colours",
+        "Because it allows plants that have lost the capacity to produce viable seeds to reproduce, and produces genetically identical crops with faster maturation",
+        "Because it requires zero soil nutrients",
+        "Because it eradicates all fungal spores"
+      ],
+      correct: 1,
+      exp: "Vegetative propagation preserves desirable genetic traits, produces fruits/flowers faster than seeds, and enables seedless plants (bananas, seedless grapes) to multiply."
+    },
+    {
+      q: "In angiosperm plants, what are the two distinct cellular fusions that constitute 'Double Fertilization'?",
+      opts: [
+        "Two sperms fertilizing two separate eggs",
+        "Syngamy (1 male gamete + egg &rarr; 2n Zygote) and Triple Fusion (1 male gamete + 2 polar nuclei &rarr; 3n Primary Endosperm Nucleus)",
+        "Pollination followed by wind dispersal",
+        "Mitosis followed by meiotic spore release"
+      ],
+      correct: 1,
+      exp: "Double fertilization involves Syngamy (forming the diploid zygote) and Triple Fusion (forming the triploid nutritive endosperm)."
+    },
+    {
+      q: "Following successful pollination and fertilization in a flower, what do the ovary and ovule ultimately transform into?",
+      opts: [
+        "Ovary becomes Seed; Ovule becomes Fruit",
+        "Ovary becomes Fruit; Ovule becomes Seed",
+        "Both become petals",
+        "Ovary degenerates; Ovule becomes flower bud"
+      ],
+      correct: 1,
+      exp: "Post-fertilization, the ovule develops a tough seed coat becoming the Seed, while the surrounding ovary wall swells and ripens into the Fruit."
+    },
+    {
+      q: "Which contraceptive method provides the dual advantage of preventing unwanted pregnancy AND protecting against sexually transmitted infections (STIs)?",
+      opts: [
+        "Oral contraceptive pills",
+        "Copper-T (Intrauterine device)",
+        "Condoms (Mechanical barrier)",
+        "Tubectomy"
+      ],
+      correct: 2,
+      exp: "Condoms prevent physical contact of bodily fluids, serving as the only contraceptive method that also protects against STDs like HIV and Syphilis."
+    },
+    {
+      q: "What is the surgical sterilization procedure called in which the vas deferens in human males is cut and ligated?",
+      opts: [
+        "Tubectomy",
+        "Vasectomy",
+        "Dialysis",
+        "Laparoscopy"
+      ],
+      correct: 1,
+      exp: "Vasectomy involves cutting and sealing the vas deferens, preventing sperm from entering the ejaculatory duct."
+    },
+    {
+      q: "How does an intrauterine contraceptive device like the Copper-T prevent pregnancy when inserted into a female's uterus?",
+      opts: [
+        "By killing the ovaries",
+        "By releasing copper ions that suppress sperm motility and preventing the blastocyst from implanting in the uterine wall",
+        "By blocking the vagina completely",
+        "By stopping menstruation permanently"
+      ],
+      correct: 1,
+      exp: "Copper-T releases copper ions that decrease sperm viability and motility, while generating a localized sterile reaction that prevents blastocyst implantation."
+    },
+    {
+      q: "Which of the following sexually transmitted diseases is caused by a bacterial pathogen?",
+      opts: [
+        "HIV-AIDS",
+        "Genital Warts",
+        "Syphilis",
+        "Hepatitis B"
+      ],
+      correct: 2,
+      exp: "Syphilis (caused by Treponema pallidum) and Gonorrhoea are bacterial STDs, whereas HIV-AIDS and Genital Warts are viral."
+    },
+    {
+      q: "Why is sexual reproduction evolutionary superior to asexual reproduction in driving the long-term survival of species?",
+      opts: [
+        "Because it requires less energy",
+        "Because sexual reproduction combines genetic material from two distinct individuals, creating novel variations essential for adapting to changing environments",
+        "Because it produces millions of identical clones",
+        "Because it does not involve DNA replication"
+      ],
+      correct: 1,
+      exp: "Sexual reproduction shuffles genes via meiosis and fertilization, generating phenotypic variation that fuels natural selection and adaptation."
+    },
+    {
+      q: "In Bryophyllum, where do the vegetative reproductive buds develop to produce independent new plants?",
+      opts: [
+        "Along the deep root nodes underground",
+        "Along the notches in the margins of mature leaves",
+        "Inside the flower petals",
+        "On the surface of the bark"
+      ],
+      correct: 1,
+      exp: "Bryophyllum produces adventitious buds in the serrated notches of leaf margins; when detached and touching moist soil, they grow into new plantlets."
+    },
+    {
+      q: "What is the primary role of the bloblike sporangia in the bread mould fungus Rhizopus?",
+      opts: [
+        "To absorb water from the air",
+        "To manufacture carbohydrates via photosynthesis",
+        "To produce and house hundreds of microscopic reproductive spores covered by thick protective walls",
+        "To attach the fungus to the bread"
+      ],
+      correct: 2,
+      exp: "Sporangia are reproductive structures containing resilient, thick-walled spores that disperse through the air to germinate on moist bread."
+    },
+    {
+      q: "Why is the misuse of prenatal ultrasound scanning to determine fetal sex strictly banned under the PCPNDT Act in India?",
+      opts: [
+        "Because ultrasound rays damage fetal brain development",
+        "To eradicate female foeticide and restore a balanced female-to-male sex ratio in society",
+        "Because ultrasound tests are 100% inaccurate",
+        "To prevent multiple pregnancies"
+      ],
+      correct: 1,
+      exp: "The Pre-Conception and Pre-Natal Diagnostic Techniques (PCPNDT) Act strictly criminalizes prenatal sex determination to stop female foeticide."
+    },
+    {
+      q: "What happens during regeneration if an organism like Planaria is cut into three horizontal segments?",
+      opts: [
+        "All three segments die within an hour",
+        "Only the head segment survives",
+        "Each of the three segments regenerates missing organs to form three complete, healthy Planaria individuals",
+        "The pieces fuse back into one scarred worm"
+      ],
+      correct: 2,
+      exp: "Planaria possesses specialized stem cells (neoblasts) that proliferate and differentiate to reconstruct complete organisms from cut body fragments."
+    },
+    {
+      q: "How do hormonal contraceptive pills effectively prevent pregnancy in females?",
+      opts: [
+        "By physically trapping sperm in the cervix",
+        "By altering systemic hormone levels to inhibit the release of mature ova (ovulation) from the ovaries",
+        "By neutralizing gastric acid in the stomach",
+        "By dissolving the sperm membrane chemically"
+      ],
+      correct: 1,
+      exp: "Oral pills contain synthetic estrogen and progestin that inhibit pituitary gonadotropin release, preventing ovulation."
+    }
+  ];
+
+  let userAnswers = {};
+
+  function renderQuiz() {
+    const container = document.getElementById('quizApp');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((qItem, idx) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+
+      const qTitle = document.createElement('h3');
+      qTitle.className = 'quiz-question';
+      qTitle.textContent = `${idx + 1}. ${qItem.q}`;
+      card.appendChild(qTitle);
+
+      const optsDiv = document.createElement('div');
+      optsDiv.className = 'quiz-options';
+
+      qItem.opts.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+
+        if (userAnswers[idx] !== undefined) {
+          btn.disabled = true;
+          if (optIdx === qItem.correct) {
+            btn.classList.add('opt-correct');
+          } else if (userAnswers[idx] === optIdx) {
+            btn.classList.add('opt-wrong');
+          }
+        } else {
+          btn.addEventListener('click', () => {
+            userAnswers[idx] = optIdx;
+            renderQuiz();
+            updateScoreSummary();
+          });
+        }
+        optsDiv.appendChild(btn);
+      });
+
+      card.appendChild(optsDiv);
+
+      if (userAnswers[idx] !== undefined) {
+        const fb = document.createElement('div');
+        fb.className = 'quiz-feedback ' + (userAnswers[idx] === qItem.correct ? 'feedback-correct' : 'feedback-wrong');
+        fb.innerHTML = (userAnswers[idx] === qItem.correct ? '<strong>✓ Correct!</strong> ' : '<strong>✗ Incorrect.</strong> ') + qItem.exp;
+        card.appendChild(fb);
+      }
+
+      container.appendChild(card);
+    });
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--ink);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

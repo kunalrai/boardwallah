@@ -168,6 +168,44 @@ const physicsChapters = [
   },
 ];
 
+const biologyChapters = [
+  {
+    title: "Life Processes",
+    chapter: "Chapter 5/6 · Biology",
+    desc: "Master the foundational biochemical systems of life: autotrophic photosynthesis, human heterotrophic digestion, aerobic & anaerobic respiration, double circulation, and nephronic filtration.",
+    href: "/resources/life-processes/",
+    topics: ["Photosynthesis & Stomata", "Human Digestive Enzymes", "Respiration & ATP Yield", "Double Circulation", "Nephron & Dialysis", "20-Question Quiz"],
+  },
+  {
+    title: "Control and Coordination",
+    chapter: "Chapter 6/7 · Biology",
+    desc: "Complete guide to nervous and chemical coordination: neuron structure, electrical vs. chemical synapse, reflex arc pathway, human brain anatomy, phytohormones, and endocrine feedback loops.",
+    href: "/resources/control-and-coordination/",
+    topics: ["Neuron Anatomy & Synapse", "Reflex Arc Pathway", "Forebrain, Midbrain, Hindbrain", "Plant Tropisms & Auxin", "Endocrine Hormones", "20-Question Quiz"],
+  },
+  {
+    title: "How Do Organisms Reproduce?",
+    chapter: "Chapter 7/8 · Biology",
+    desc: "Asexual reproduction (fission, budding, spore formation, vegetative propagation), sexual reproduction in angiosperms, human reproductive anatomy, menstrual cycle, and barrier/hormonal contraception.",
+    href: "/resources/how-do-organisms-reproduce/",
+    topics: ["DNA Copying & Variation", "Fission & Regeneration", "Flower LS & Double Fertilization", "Human Reproductive Systems", "Placenta & Contraception", "20-Question Quiz"],
+  },
+  {
+    title: "Heredity",
+    chapter: "Chapter 8/9 · Biology",
+    desc: "Gregor Mendel's laws of inheritance, monohybrid crosses (3:1 and 1:2:1), dihybrid crosses (9:3:3:1), law of independent assortment, and chromosome-based sex determination in humans (XX vs. XY).",
+    href: "/resources/heredity/",
+    topics: ["Mendel's Laws of Inheritance", "Monohybrid Cross (3:1)", "Dihybrid Cross (9:3:3:1)", "Human Sex Determination", "Dominant vs. Recessive", "20-Question Quiz"],
+  },
+  {
+    title: "Our Environment",
+    chapter: "Chapter 13 · Biology",
+    desc: "Ecosystem dynamics, biotic and abiotic components, food chains and food webs, Lindeman's 10% energy law, biological magnification of pesticides, CFC-induced ozone layer depletion, and solid waste management.",
+    href: "/resources/our-environment/",
+    topics: ["Ecosystem Components", "10% Law & Energy Pyramid", "Biomagnification of DDT", "Ozone Layer & CFCs", "Solid Waste Management", "20-Question Quiz"],
+  },
+];
+
 const historyChapters = [
   {
     title: "The Rise of Nationalism in Europe",
@@ -467,6 +505,32 @@ const englishChapters = [
 
       <div class="grid two chapters-grid">
         {physicsChapters.map((ch) => (
+          <article class="card chapter-card">
+            <span class="tag">{ch.chapter}</span>
+            <h2>{ch.title}</h2>
+            <p class="muted">{ch.desc}</p>
+            <div class="topic-tags">
+              {ch.topics.map((t) => (
+                <span class="topic-tag">{t}</span>
+              ))}
+            </div>
+            <div class="actions" style="margin-top:auto;padding-top:1rem">
+              <a href={ch.href} class="button">Explore Chapter &amp; Quiz →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Biology Section -->
+    <section id="biology" class="section">
+      <div class="section-title-wrap">
+        <h2>🌱 Class 10 Biology Chapters</h2>
+        <p class="muted">Master life processes, nervous and hormonal control, human &amp; plant reproduction, Mendelian heredity, and ecological food webs with interactive diagrams.</p>
+      </div>
+
+      <div class="grid two chapters-grid">
+        {biologyChapters.map((ch) => (
           <article class="card chapter-card">
             <span class="tag">{ch.chapter}</span>
             <h2>{ch.title}</h2>

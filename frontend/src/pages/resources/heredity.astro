@@ -1,0 +1,809 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Heredity | CBSE Class 10 Science (Biology) | ${provider.name}`}
+  description="Comprehensive revision notes, Mendel's monohybrid & dihybrid crosses, Punnett squares, sex determination in humans, interactive SVG diagrams, and 20 CBSE Board MCQs for Heredity."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Heredity
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Science (Biology) · Chapter 8/9</span>
+      <h1>Heredity: Mendelian Genetics &amp; Sex Determination</h1>
+      <p class="lead">
+        Master Gregor Mendel's laws of inheritance, monohybrid and dihybrid Punnett square ratios (3:1 and 9:3:3:1), chromosomal sex determination in humans, and 20 board exam questions.
+      </p>
+    </div>
+
+    <!-- Core Concepts Section -->
+    <section class="section">
+      <h2>1. Mendel's Laws &amp; Monohybrid Cross</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🌱 Gregor Mendel &amp; Pea Plant Selection</h3>
+          <p class="formula">Pisum sativum (Garden Pea) · 7 Pairs of Contrasting Alleles</p>
+          <ul class="clean-list">
+            <li><strong>Why Garden Pea?</strong>
+              <br/>• Clear, distinct contrasting physical characters (e.g., Tall vs. Dwarf, Round vs. Wrinkled seeds).
+              <br/>• Bisexual flowers naturally self-pollinating, yet easily cross-pollinated manually by emasculation.
+              <br/>• Short annual life cycle producing large numbers of offspring per generation for statistical analysis.
+            </li>
+            <li><strong>Genes &amp; Alleles:</strong> A gene is the physical functional unit of heredity; alleles are alternative forms of a gene (e.g., 'T' for tallness, 't' for dwarfness).</li>
+            <li><strong>Genotype vs. Phenotype:</strong> Genotype is the internal genetic constitution (TT, Tt, tt); Phenotype is the observable physical expression (Tall or Dwarf).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📐 Monohybrid Cross (Inheritance of One Trait)</h3>
+          <p class="formula">Pure Tall (TT) &times; Pure Dwarf (tt) &rarr; F1: All Tt (Tall)</p>
+          <ul class="clean-list">
+            <li><strong>F1 Generation:</strong> When pure breeding tall (TT) is crossed with pure dwarf (tt), 100% of F1 plants are tall (Tt). This establishes the <strong>Law of Dominance</strong>: in a heterozygous state, the dominant allele (T) fully masks the expression of the recessive allele (t).</li>
+            <li><strong>F2 Generation (Selfing F1: Tt &times; Tt):</strong>
+              <br/>• <em>Phenotypic Ratio:</em> <strong>3 Tall : 1 Dwarf</strong> (75% tall, 25% dwarf).
+              <br/>• <em>Genotypic Ratio:</em> <strong>1 TT : 2 Tt : 1 tt</strong> (25% homozygous tall, 50% heterozygous tall, 25% homozygous dwarf).
+            </li>
+            <li><strong>Law of Segregation:</strong> The two alleles for a trait do not blend; they separate cleanly into different gametes during meiosis, allowing the recessive dwarf trait to reappear intact in F2.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Dihybrid Cross & Sex Determination -->
+    <section class="section">
+      <h2>2. Dihybrid Cross &amp; Human Sex Determination</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🌿 Dihybrid Cross (Inheritance of Two Traits)</h3>
+          <p class="formula">Round Yellow (RRYY) &times; Wrinkled Green (rryy) &rarr; Ratio 9:3:3:1</p>
+          <ul class="clean-list">
+            <li><strong>F1 Progeny:</strong> 100% Round Yellow heterozygous seeds (RrYy).</li>
+            <li><strong>F2 Phenotypic Ratio:</strong> Self-pollinating F1 produces 16 combinations in a 9:3:3:1 distribution:
+              <br/>• <strong>9</strong> Round Yellow (Dominant-Dominant)
+              <br/>• <strong>3</strong> Round Green (Dominant-Recessive · Recombinant)
+              <br/>• <strong>3</strong> Wrinkled Yellow (Recessive-Dominant · Recombinant)
+              <br/>• <strong>1</strong> Wrinkled Green (Recessive-Recessive)
+            </li>
+            <li><strong>Law of Independent Assortment:</strong> Alleles of two different genes segregate completely independently of one another during gamete formation, producing novel recombinant phenotypes.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🧬 Sex Determination in Humans</h3>
+          <p class="formula">46 Chromosomes = 22 Pairs Autosomes + 1 Pair Allosomes</p>
+          <ul class="clean-list">
+            <li><strong>Chromosomal Constitution:</strong>
+              <br/>• Females possess homomorphic pair: <strong>XX</strong> (all ova carry 22 + X).
+              <br/>• Males possess heteromorphic pair: <strong>XY</strong> (50% sperm carry 22 + X; 50% sperm carry 22 + Y).
+            </li>
+            <li><strong>The Genetic Cross:</strong>
+              <br/>• Ovum (X) + Sperm (X) &rarr; <strong>XX (Female Child)</strong>.
+              <br/>• Ovum (X) + Sperm (Y) &rarr; <strong>XY (Male Child)</strong>.
+            </li>
+            <li><strong>Statistical Truth:</strong> There is an exact <strong>50% probability</strong> of a boy or girl at every conception. Because the mother contributes only an X chromosome, the father's fertilizing sperm alone determines sex. Blaming women for female offspring is scientifically baseless.</li>
+            <li><strong>Environmental Sex Determination:</strong> In some reptiles (e.g., turtles, lizards), the incubation temperature of fertilized eggs determines sex; snails can change sex, indicating sex is not genetically fixed in all species.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Punnett Squares &amp; Chromosomal Inheritance</h2>
+
+      <div class="grid two">
+        <article class="card visual-card">
+          <span class="visual-badge">Mendelian Genetics</span>
+          <h3>Monohybrid Cross: F2 Punnett Square</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="320" fill="#f8fafc" />
+              
+              <!-- Cross Header -->
+              <rect x="50" y="20" width="500" height="40" rx="6" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" />
+              <text x="300" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="#0369a1">Parents (F1 Selfing): Tt (Tall) &times; Tt (Tall)</text>
+
+              <!-- Punnett Square Grid -->
+              <!-- Header Row -->
+              <rect x="180" y="80" width="80" height="40" fill="#cbd5e1" stroke="#475569" />
+              <text x="220" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">♂ \ ♀</text>
+
+              <rect x="260" y="80" width="100" height="40" fill="#f1f5f9" stroke="#475569" />
+              <text x="310" y="105" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">T</text>
+
+              <rect x="360" y="80" width="100" height="40" fill="#f1f5f9" stroke="#475569" />
+              <text x="410" y="105" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">t</text>
+
+              <!-- Row 1 -->
+              <rect x="180" y="120" width="80" height="60" fill="#f1f5f9" stroke="#475569" />
+              <text x="220" y="155" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">T</text>
+
+              <rect x="260" y="120" width="100" height="60" fill="#dcfce7" stroke="#475569" />
+              <text x="310" y="145" text-anchor="middle" font-size="15" font-weight="700" fill="#166534">TT</text>
+              <text x="310" y="165" text-anchor="middle" font-size="10" fill="#14532d">Pure Tall</text>
+
+              <rect x="360" y="120" width="100" height="60" fill="#dcfce7" stroke="#475569" />
+              <text x="410" y="145" text-anchor="middle" font-size="15" font-weight="700" fill="#166534">Tt</text>
+              <text x="410" y="165" text-anchor="middle" font-size="10" fill="#14532d">Hybrid Tall</text>
+
+              <!-- Row 2 -->
+              <rect x="180" y="180" width="80" height="60" fill="#f1f5f9" stroke="#475569" />
+              <text x="220" y="215" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">t</text>
+
+              <rect x="260" y="180" width="100" height="60" fill="#dcfce7" stroke="#475569" />
+              <text x="310" y="205" text-anchor="middle" font-size="15" font-weight="700" fill="#166534">Tt</text>
+              <text x="310" y="225" text-anchor="middle" font-size="10" fill="#14532d">Hybrid Tall</text>
+
+              <rect x="360" y="180" width="100" height="60" fill="#fee2e2" stroke="#475569" />
+              <text x="410" y="205" text-anchor="middle" font-size="15" font-weight="700" fill="#991b1b">tt</text>
+              <text x="410" y="225" text-anchor="middle" font-size="10" fill="#7f1d1d">Pure Dwarf</text>
+
+              <!-- Ratios Footer -->
+              <rect x="50" y="255" width="500" height="50" rx="8" fill="#fff" stroke="#94a3b8" />
+              <text x="175" y="285" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">Phenotypic Ratio: 3 Tall : 1 Dwarf</text>
+              <text x="425" y="285" text-anchor="middle" font-size="13" font-weight="700" fill="#0369a1">Genotypic Ratio: 1 TT : 2 Tt : 1 tt</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 1: Punnett square derivation of the classic 3:1 phenotypic and 1:2:1 genotypic Mendelian ratios.</p>
+        </article>
+
+        <article class="card visual-card">
+          <span class="visual-badge">Human Cytogenetics</span>
+          <h3>Chromosomal Mechanism of Sex Determination</h3>
+          <div class="svg-container">
+            <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="320" fill="#f8fafc" />
+              
+              <!-- Father and Mother Boxes -->
+              <rect x="60" y="30" width="180" height="60" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" />
+              <text x="150" y="55" text-anchor="middle" font-size="14" font-weight="700" fill="#0369a1">Father (XY)</text>
+              <text x="150" y="75" text-anchor="middle" font-size="11" fill="#0c4a6e">Heterogametic 44 + XY</text>
+
+              <rect x="360" y="30" width="180" height="60" rx="8" fill="#fce7f3" stroke="#db2777" stroke-width="2" />
+              <text x="450" y="55" text-anchor="middle" font-size="14" font-weight="700" fill="#9d174d">Mother (XX)</text>
+              <text x="450" y="75" text-anchor="middle" font-size="11" fill="#831843">Homogametic 44 + XX</text>
+
+              <!-- Gametes -->
+              <circle cx="100" cy="130" r="20" fill="#dbeafe" stroke="#2563eb" />
+              <text x="100" y="136" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af">X</text>
+
+              <circle cx="200" cy="130" r="20" fill="#dbeafe" stroke="#2563eb" />
+              <text x="200" y="136" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af">Y</text>
+
+              <circle cx="400" cy="130" r="20" fill="#fbcfe8" stroke="#db2777" />
+              <text x="400" y="136" text-anchor="middle" font-size="13" font-weight="700" fill="#9d174d">X</text>
+
+              <circle cx="500" cy="130" r="20" fill="#fbcfe8" stroke="#db2777" />
+              <text x="500" y="136" text-anchor="middle" font-size="13" font-weight="700" fill="#9d174d">X</text>
+
+              <!-- Offspring Combos -->
+              <rect x="50" y="210" width="110" height="70" rx="6" fill="#fce7f3" stroke="#db2777" />
+              <text x="105" y="240" text-anchor="middle" font-size="15" font-weight="700" fill="#9d174d">XX</text>
+              <text x="105" y="265" text-anchor="middle" font-size="11" fill="#831843">Female (Girl)</text>
+
+              <rect x="180" y="210" width="110" height="70" rx="6" fill="#fce7f3" stroke="#db2777" />
+              <text x="235" y="240" text-anchor="middle" font-size="15" font-weight="700" fill="#9d174d">XX</text>
+              <text x="235" y="265" text-anchor="middle" font-size="11" fill="#831843">Female (Girl)</text>
+
+              <rect x="310" y="210" width="110" height="70" rx="6" fill="#e0f2fe" stroke="#0284c7" />
+              <text x="365" y="240" text-anchor="middle" font-size="15" font-weight="700" fill="#0369a1">XY</text>
+              <text x="365" y="265" text-anchor="middle" font-size="11" fill="#0c4a6e">Male (Boy)</text>
+
+              <rect x="440" y="210" width="110" height="70" rx="6" fill="#e0f2fe" stroke="#0284c7" />
+              <text x="495" y="240" text-anchor="middle" font-size="15" font-weight="700" fill="#0369a1">XY</text>
+              <text x="495" y="265" text-anchor="middle" font-size="11" fill="#0c4a6e">Male (Boy)</text>
+
+              <text x="300" y="305" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">Statistical Ratio: 50% Female (XX) : 50% Male (XY)</text>
+            </svg>
+          </div>
+          <p class="caption">Figure 2: Sperm gamete type (X or Y) exclusively dictates zygotic sex determination with a 1:1 probability.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Practice: Heredity</h2>
+          <p class="muted">20 High-yield questions testing Mendelian ratios, sex determination, dominant vs. recessive alleles, and genetic crosses.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizApp"></div>
+
+      <div class="quiz-footer-actions">
+        <span class="muted" id="quizProgressText">0 of 20 answered</span>
+        <button class="button secondary" id="resetQuizBtn">Reset Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-banner">
+      <h2>Master Mendelian Genetics with Expert Guidance</h2>
+      <p>Crack complex genetic cross problems, dihybrid ratios, and Board Exam numericals with 1-on-1 personalized tutoring.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Your Free Trial Class</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "What was the observed phenotypic ratio in the F2 generation of Mendel's monohybrid cross between pure tall and pure dwarf pea plants?",
+      opts: [
+        "1 Tall : 1 Dwarf",
+        "3 Tall : 1 Dwarf",
+        "9 Tall : 3 Dwarf : 3 Tall : 1 Dwarf",
+        "2 Tall : 2 Dwarf"
+      ],
+      correct: 1,
+      exp: "Self-pollination of F1 heterozygous plants (Tt × Tt) produces an F2 phenotypic ratio of 3 tall plants to 1 dwarf plant (75% tall : 25% dwarf)."
+    },
+    {
+      q: "What is the exact genotypic ratio obtained in the F2 generation of a monohybrid cross?",
+      opts: [
+        "3 : 1",
+        "1 TT : 2 Tt : 1 tt",
+        "9 : 3 : 3 : 1",
+        "1 : 1"
+      ],
+      correct: 1,
+      exp: "The genotypic distribution of Tt × Tt is 1 homozygous dominant (TT) : 2 heterozygous dominant (Tt) : 1 homozygous recessive (tt)."
+    },
+    {
+      q: "Why were all plants in the F1 generation tall when pure tall (TT) pea plants were crossed with pure dwarf (tt) plants?",
+      opts: [
+        "Because the dwarf allele 't' was completely destroyed",
+        "Because tallness is a dominant trait governed by allele 'T', which completely masks the expression of the recessive dwarf allele 't'",
+        "Because dwarf plants cannot grow in sunlight",
+        "Because Mendel only planted tall seeds in F1"
+      ],
+      correct: 1,
+      exp: "Under Mendel's Law of Dominance, when two contrasting alleles are brought together in a hybrid, only the dominant allele expresses itself."
+    },
+    {
+      q: "What phenotypic ratio is obtained in the F2 generation of a Mendelian dihybrid cross (e.g., Round Yellow × Wrinkled Green)?",
+      opts: [
+        "3 : 1",
+        "1 : 2 : 1",
+        "9 : 3 : 3 : 1",
+        "12 : 3 : 1"
+      ],
+      correct: 2,
+      exp: "A dihybrid cross produces a phenotypic ratio of 9 Round Yellow : 3 Round Green : 3 Wrinkled Yellow : 1 Wrinkled Green."
+    },
+    {
+      q: "Which fundamental law of genetics is demonstrated by the appearance of novel recombinant phenotypes (Round Green and Wrinkled Yellow) in a dihybrid cross?",
+      opts: [
+        "Law of Dominance",
+        "Law of Segregation",
+        "Law of Independent Assortment",
+        "Law of Co-dominance"
+      ],
+      correct: 2,
+      exp: "The Law of Independent Assortment states that alleles of different genes segregate independently of one another during gamete formation."
+    },
+    {
+      q: "How many total chromosomes and pairs of chromosomes are present in a normal human diploid somatic cell?",
+      opts: [
+        "23 chromosomes (11.5 pairs)",
+        "46 chromosomes (23 pairs: 22 autosome pairs + 1 sex chromosome pair)",
+        "48 chromosomes (24 pairs)",
+        "44 chromosomes (22 pairs)"
+      ],
+      correct: 1,
+      exp: "Human cells contain 46 chromosomes organized as 23 pairs: 22 homologous pairs of autosomes and 1 pair of allosomes (sex chromosomes)."
+    },
+    {
+      q: "What are the sex chromosomes present in human males and females, respectively?",
+      opts: [
+        "Males: XX; Females: XY",
+        "Males: XY; Females: XX",
+        "Males: YY; Females: XX",
+        "Males: XO; Females: XX"
+      ],
+      correct: 1,
+      exp: "Human females possess two homomorphic X chromosomes (XX); human males possess one X and one smaller Y chromosome (XY)."
+    },
+    {
+      q: "What is the statistical probability of a human couple having a male or female baby at each pregnancy?",
+      opts: [
+        "75% male, 25% female",
+        "Exactly 50% male, 50% female (1:1 ratio)",
+        "100% dependent on the mother's diet",
+        "60% female, 40% male"
+      ],
+      correct: 1,
+      exp: "Sperm carry X and Y chromosomes in equal 50:50 proportions; thus, every fertilization has an equal 1:1 probability of yielding a boy or girl."
+    },
+    {
+      q: "Scientifically, which parent determines the sex of the child in human beings, and why?",
+      opts: [
+        "The mother, because she carries the fetus in her uterus",
+        "The father, because human males are heterogametic and produce two different types of sperm (50% X and 50% Y)",
+        "Both parents equally contribute Y chromosomes",
+        "The environment and temperature determine it"
+      ],
+      correct: 1,
+      exp: "Mothers contribute only X chromosomes. The father produces 50% X-bearing and 50% Y-bearing sperm; fertilization by an X-sperm yields a girl (XX), and by a Y-sperm yields a boy (XY)."
+    },
+    {
+      q: "In which of the following animals is sex determined environmentally by temperature rather than by sex chromosomes?",
+      opts: [
+        "Human beings and chimpanzees",
+        "Certain reptiles like turtles and lizards",
+        "Birds and domestic chickens",
+        "Pea plants"
+      ],
+      correct: 1,
+      exp: "In reptiles such as turtles and crocodiles, the temperature at which fertilized eggs are incubated during development dictates whether embryos become male or female."
+    },
+    {
+      q: "What term describes a cross between an individual with an unknown dominant phenotype and a homozygous recessive individual to determine the unknown genotype?",
+      opts: [
+        "Monohybrid cross",
+        "Test cross",
+        "Dihybrid cross",
+        "Reciprocal cross"
+      ],
+      correct: 1,
+      exp: "A test cross involves mating an organism displaying the dominant phenotype with a homozygous recessive individual to verify if it is homozygous or heterozygous."
+    },
+    {
+      q: "Which scientist is universally celebrated as the 'Father of Genetics' for his pioneering statistical breeding experiments?",
+      opts: [
+        "Charles Darwin",
+        "Gregor Johann Mendel",
+        "Jean-Baptiste Lamarck",
+        "James Watson"
+      ],
+      correct: 1,
+      exp: "Austrian monk Gregor Johann Mendel formulated the foundational laws of inheritance through garden pea experiments published in 1866."
+    },
+    {
+      q: "If a cross is made between a pure round seed plant (RR) and a wrinkled seed plant (rr), what will be the phenotype of the F1 generation?",
+      opts: [
+        "100% Wrinkled seeds",
+        "100% Round seeds",
+        "50% Round, 50% Wrinkled",
+        "25% Round, 75% Wrinkled"
+      ],
+      correct: 1,
+      exp: "Round (R) is dominant over wrinkled (r). The F1 genotype is Rr, which is 100% round in phenotype."
+    },
+    {
+      q: "What happens during gamete formation in a heterozygous individual (Tt) according to Mendel's Law of Segregation?",
+      opts: [
+        "The T and t alleles blend to form an intermediate gene",
+        "50% of the gametes receive allele 'T' and 50% receive allele 't' in pure, unblended condition",
+        "All gametes receive both T and t",
+        "The recessive allele is eliminated"
+      ],
+      correct: 1,
+      exp: "Alleles segregate cleanly during meiosis; each haploid gamete receives only one allele of the gene pair without blending."
+    },
+    {
+      q: "What is an autosome in human genetics?",
+      opts: [
+        "A chromosome that controls automobile driving",
+        "Any chromosome that is not a sex chromosome (chromosomes 1 through 22 in humans)",
+        "A defective mutated gene",
+        "The chromosome found only in bacteria"
+      ],
+      correct: 1,
+      exp: "Autosomes are non-sex chromosomes (22 pairs in humans) that carry genes for general somatic body traits."
+    },
+    {
+      q: "Can a person with blood group O have parents with blood groups A and B?",
+      opts: [
+        "No, it is biologically impossible",
+        "Yes, if both parents are heterozygous (Genotypes: IᴬIᴼ and IᴮIᴼ)",
+        "Only if the mother is homozygous A",
+        "Only through mutation"
+      ],
+      correct: 1,
+      exp: "If father is IᴬIᴼ and mother is IᴮIᴼ, there is a 25% chance of passing Iᴼ from each parent, yielding genotype IᴼIᴼ (blood group O)."
+    },
+    {
+      q: "Why do snails demonstrate that sex is not always genetically predetermined in all organisms?",
+      opts: [
+        "Snails have three sex chromosomes",
+        "Individual snails can change their sex during their lifetime based on environmental and social cues",
+        "Snails reproduce exclusively by budding",
+        "Snails lack DNA"
+      ],
+      correct: 1,
+      exp: "Snails are hermaphroditic and can change sex during their lifecycle, proving that sex is not rigidly fixed by genetics in every species."
+    },
+    {
+      q: "If a heterozygous tall pea plant (Tt) is crossed with a homozygous dwarf plant (tt), what percentage of the offspring will be dwarf?",
+      opts: [
+        "0%",
+        "25%",
+        "50%",
+        "75%"
+      ],
+      correct: 2,
+      exp: "Tt × tt cross yields 1 Tt (tall) : 1 tt (dwarf), resulting in exactly 50% dwarf offspring."
+    },
+    {
+      q: "Which cellular component carries genetic information from one generation to the next inside the nucleus?",
+      opts: [
+        "Mitochondrial matrix",
+        "DNA contained in chromosomes",
+        "Ribosomal RNA in cytoplasm",
+        "Centrosome"
+      ],
+      correct: 1,
+      exp: "Chromosomes containing Deoxyribonucleic Acid (DNA) carry the genetic instructions (genes) transmitted to offspring."
+    },
+    {
+      q: "Why is the theory of evolution by natural selection omitted from the current rationalized CBSE Class 10 Science syllabus?",
+      opts: [
+        "Because it was proven scientifically false",
+        "Because CBSE rationalized the syllabus to streamline core genetics principles (Heredity) for Class 10, deferring advanced evolutionary biology to Class 12",
+        "Because plants do not evolve",
+        "Because Mendel disagreed with Darwin"
+      ],
+      correct: 1,
+      exp: "CBSE rationalized the curriculum to focus Class 10 students deeply on Mendelian heredity and sex determination, moving speciation and evolutionary theories to senior secondary grades."
+    }
+  ];
+
+  let userAnswers = {};
+
+  function renderQuiz() {
+    const container = document.getElementById('quizApp');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((qItem, idx) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+
+      const qTitle = document.createElement('h3');
+      qTitle.className = 'quiz-question';
+      qTitle.textContent = `${idx + 1}. ${qItem.q}`;
+      card.appendChild(qTitle);
+
+      const optsDiv = document.createElement('div');
+      optsDiv.className = 'quiz-options';
+
+      qItem.opts.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+
+        if (userAnswers[idx] !== undefined) {
+          btn.disabled = true;
+          if (optIdx === qItem.correct) {
+            btn.classList.add('opt-correct');
+          } else if (userAnswers[idx] === optIdx) {
+            btn.classList.add('opt-wrong');
+          }
+        } else {
+          btn.addEventListener('click', () => {
+            userAnswers[idx] = optIdx;
+            renderQuiz();
+            updateScoreSummary();
+          });
+        }
+        optsDiv.appendChild(btn);
+      });
+
+      card.appendChild(optsDiv);
+
+      if (userAnswers[idx] !== undefined) {
+        const fb = document.createElement('div');
+        fb.className = 'quiz-feedback ' + (userAnswers[idx] === qItem.correct ? 'feedback-correct' : 'feedback-wrong');
+        fb.innerHTML = (userAnswers[idx] === qItem.correct ? '<strong>✓ Correct!</strong> ' : '<strong>✗ Incorrect.</strong> ') + qItem.exp;
+        card.appendChild(fb);
+      }
+
+      container.appendChild(card);
+    });
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--ink);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>
