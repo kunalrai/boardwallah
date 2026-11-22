@@ -242,7 +242,6 @@ import { apiBase } from "../lib/site";
     let webllmEngine = null;
     let isWebllmLoading = false;
     let webllmActive = false;
-    const hasWebGPU = typeof navigator !== 'undefined' && 'gpu' in navigator;
     const webllmToggleBtn = document.getElementById('webllm-toggle-btn');
     const engineBadge = document.getElementById('ai-engine-badge');
     const engineSub = document.getElementById('ai-engine-sub');
@@ -251,9 +250,44 @@ import { apiBase } from "../lib/site";
     const progressPercent = document.getElementById('webllm-progress-percent');
     const progressFill = document.getElementById('webllm-progress-fill');
 
-    if (!hasWebGPU && webllmToggleBtn) {
-      webllmToggleBtn.title = 'WebGPU not supported on this browser (using instant rule engine)';
-      webllmToggleBtn.style.opacity = '0.65';
+    // Diagnostic check for WebGPU environment
+    async function diagnoseWebGPU() {
+      const results = {
+        isSecureContext: typeof window !== 'undefined' && Boolean(window.isSecureContext),
+        hasNavigatorGpu: typeof navigator !== 'undefined' && 'gpu' in navigator,
+        adapterAvailable: false,
+        deviceAvailable: false,
+        details: ''
+      };
+
+      if (!results.isSecureContext) {
+        results.details = 'Insecure context (HTTP). WebGPU requires HTTPS or localhost.';
+        return results;
+      }
+
+      if (!results.hasNavigatorGpu) {
+        results.details = 'Browser does not expose navigator.gpu. Browser update or flag required.';
+        return results;
+      }
+
+      try {
+        const adapter = await navigator.gpu.requestAdapter();
+        if (!adapter) {
+          results.details = 'GPU Adapter not found. Hardware acceleration may be disabled in browser settings.';
+          return results;
+        }
+        results.adapterAvailable = true;
+
+        const device = await adapter.requestDevice();
+        if (device) {
+          results.deviceAvailable = true;
+          results.details = 'WebGPU is fully supported and ready on this hardware!';
+        }
+      } catch (e) {
+        results.details = 'GPU device request failed: ' + (e && e.message ? e.message : String(e));
+      }
+
+      return results;
     }
 
     async function toggleWebLLM() {
@@ -267,11 +301,7 @@ import { apiBase } from "../lib/site";
         if (engineBadge) engineBadge.textContent = '⚡ Instant Socratic Engine';
         if (engineSub) engineSub.textContent = 'Zero download · 100% Free';
         if (progressWrap) progressWrap.style.display = 'none';
-        return;
-      }
-
-      if (!hasWebGPU) {
-        alert('WebGPU is not enabled or supported on this device/browser. The Instant Socratic Engine will continue answering your doubts!');
+        appendMessage('bot', 'Switched back to **Instant Socratic Engine**. Zero download, instant answers!');
         return;
       }
 
@@ -284,6 +314,36 @@ import { apiBase } from "../lib/site";
         }
         if (engineBadge) engineBadge.textContent = '🧠 WebLLM (Qwen2.5 0.5B)';
         if (engineSub) engineSub.textContent = 'Running locally in your browser via WebGPU';
+        appendMessage('bot', 'Switched to **In-Browser WebLLM**. AI answers are generated locally via WebGPU on your GPU.');
+        return;
+      }
+
+      // Run diagnostics first
+      if (webllmToggleBtn) {
+        webllmToggleBtn.disabled = true;
+        webllmToggleBtn.textContent = '🔍 Checking WebGPU...';
+      }
+
+      const diag = await diagnoseWebGPU();
+
+      if (!diag.deviceAvailable) {
+        if (webllmToggleBtn) {
+          webllmToggleBtn.disabled = false;
+          webllmToggleBtn.innerHTML = '<span class="webllm-icon" aria-hidden="true">🧠</span> In-Browser AI (WebLLM)';
+        }
+
+        let diagMsg = `⚠️ **WebGPU Diagnostic: Hardware/Browser Not Ready**\n\n` +
+          `• **Secure Context (HTTPS)**: ${diag.isSecureContext ? '✅ Supported' : '❌ Failed (Requires HTTPS or localhost)'}\n` +
+          `• **WebGPU API**: ${diag.hasNavigatorGpu ? '✅ Present' : '❌ Not Available in this browser'}\n` +
+          `• **GPU Hardware Adapter**: ${diag.adapterAvailable ? '✅ Detected' : '❌ Not Found'}\n` +
+          `• **Diagnostic Note**: *${diag.details}*\n\n` +
+          `**How to enable WebGPU**:\n` +
+          `1. **Chrome / Edge (Desktop)**: Go to \`chrome://settings/system\` and turn ON **"Use graphics acceleration when available"**.\n` +
+          `2. **Firefox**: Open \`about:config\` and set \`dom.webgpu.enabled = true\`.\n` +
+          `3. **Mobile Browsers**: Many mobile browsers do not support WebGPU yet or require enabling flags in \`chrome://flags\` (search WebGPU).\n\n` +
+          `✨ *Don't worry! Your **Instant Socratic Engine** is 100% active and answering doubts instantly with zero setup.*`;
+
+        appendMessage('bot', diagMsg);
         return;
       }
 
@@ -292,8 +352,10 @@ import { apiBase } from "../lib/site";
       if (progressWrap) progressWrap.style.display = 'block';
       if (webllmToggleBtn) {
         webllmToggleBtn.disabled = true;
-        webllmToggleBtn.textContent = '⏳ Initializing...';
+        webllmToggleBtn.textContent = '⏳ Downloading Model...';
       }
+
+      appendMessage('bot', '⏳ **Initializing In-Browser WebLLM...** Downloading Qwen2.5-0.5B (~350MB) directly into your browser cache. This only happens once; future loads are cached instantly.');
 
       try {
         const { CreateMLCEngine } = await import('https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm/+esm');
@@ -327,7 +389,8 @@ import { apiBase } from "../lib/site";
           webllmToggleBtn.disabled = false;
           webllmToggleBtn.innerHTML = '<span class="webllm-icon" aria-hidden="true">🧠</span> In-Browser AI (WebLLM)';
         }
-        alert('Could not initialize WebGPU model on this browser. Reverting to the Instant Socratic Engine.');
+        const errorMsg = (err && err.message) ? err.message : String(err);
+        appendMessage('bot', `❌ **WebLLM Initialization Failed**: ${errorMsg}.\n\nFalling back to the **Instant Socratic Engine**.`);
       } finally {
         isWebllmLoading = false;
       }
