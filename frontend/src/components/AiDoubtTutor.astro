@@ -58,6 +58,34 @@ import { apiBase } from "../lib/site";
       </button>
     </div>
 
+    <!-- Engine Bar & In-Browser WebLLM Switch -->
+    <div class="ai-engine-bar">
+      <div class="engine-info">
+        <span class="engine-badge" id="ai-engine-badge">⚡ Instant Socratic Engine</span>
+        <span class="engine-sub" id="ai-engine-sub">Zero download · 100% Free</span>
+      </div>
+      <button
+        type="button"
+        class="webllm-toggle-btn"
+        id="webllm-toggle-btn"
+        aria-pressed="false"
+        title="Run free in-browser AI model (Qwen2.5 0.5B via WebGPU)"
+      >
+        <span class="webllm-icon" aria-hidden="true">🧠</span> In-Browser AI (WebLLM)
+      </button>
+    </div>
+
+    <!-- WebLLM Model Download Progress -->
+    <div id="webllm-progress-wrap" class="webllm-progress-wrap" style="display: none;">
+      <div class="webllm-progress-meta">
+        <span id="webllm-progress-text">Downloading In-Browser AI (Qwen2.5 0.5B)...</span>
+        <span id="webllm-progress-percent">0%</span>
+      </div>
+      <div class="webllm-progress-track">
+        <div id="webllm-progress-fill" class="webllm-progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
     <!-- Active Chapter Context Pill -->
     <div id="ai-context-pill" class="ai-context-pill" style="display:none;">
       <span class="context-icon">📖</span>
@@ -209,6 +237,105 @@ import { apiBase } from "../lib/site";
         currentMode = pill.getAttribute('data-mode') || 'hint';
       });
     });
+
+    // WebLLM In-Browser AI Engine Controller
+    let webllmEngine = null;
+    let isWebllmLoading = false;
+    let webllmActive = false;
+    const hasWebGPU = typeof navigator !== 'undefined' && 'gpu' in navigator;
+    const webllmToggleBtn = document.getElementById('webllm-toggle-btn');
+    const engineBadge = document.getElementById('ai-engine-badge');
+    const engineSub = document.getElementById('ai-engine-sub');
+    const progressWrap = document.getElementById('webllm-progress-wrap');
+    const progressText = document.getElementById('webllm-progress-text');
+    const progressPercent = document.getElementById('webllm-progress-percent');
+    const progressFill = document.getElementById('webllm-progress-fill');
+
+    if (!hasWebGPU && webllmToggleBtn) {
+      webllmToggleBtn.title = 'WebGPU not supported on this browser (using instant rule engine)';
+      webllmToggleBtn.style.opacity = '0.65';
+    }
+
+    async function toggleWebLLM() {
+      if (webllmActive) {
+        webllmActive = false;
+        if (webllmToggleBtn) {
+          webllmToggleBtn.classList.remove('active');
+          webllmToggleBtn.setAttribute('aria-pressed', 'false');
+          webllmToggleBtn.innerHTML = '<span class="webllm-icon" aria-hidden="true">🧠</span> In-Browser AI (WebLLM)';
+        }
+        if (engineBadge) engineBadge.textContent = '⚡ Instant Socratic Engine';
+        if (engineSub) engineSub.textContent = 'Zero download · 100% Free';
+        if (progressWrap) progressWrap.style.display = 'none';
+        return;
+      }
+
+      if (!hasWebGPU) {
+        alert('WebGPU is not enabled or supported on this device/browser. The Instant Socratic Engine will continue answering your doubts!');
+        return;
+      }
+
+      if (webllmEngine) {
+        webllmActive = true;
+        if (webllmToggleBtn) {
+          webllmToggleBtn.classList.add('active');
+          webllmToggleBtn.setAttribute('aria-pressed', 'true');
+          webllmToggleBtn.innerHTML = '✅ WebLLM Active';
+        }
+        if (engineBadge) engineBadge.textContent = '🧠 WebLLM (Qwen2.5 0.5B)';
+        if (engineSub) engineSub.textContent = 'Running locally in your browser via WebGPU';
+        return;
+      }
+
+      // Initialize WebLLM model
+      isWebllmLoading = true;
+      if (progressWrap) progressWrap.style.display = 'block';
+      if (webllmToggleBtn) {
+        webllmToggleBtn.disabled = true;
+        webllmToggleBtn.textContent = '⏳ Initializing...';
+      }
+
+      try {
+        const { CreateMLCEngine } = await import('https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm/+esm');
+        const selectedModel = 'Qwen2.5-0.5B-Instruct-q4f16_1-MLC';
+
+        webllmEngine = await CreateMLCEngine(selectedModel, {
+          initProgressCallback: (report) => {
+            if (progressText) progressText.textContent = report.text;
+            const pct = Math.round((report.progress || 0) * 100);
+            if (progressPercent) progressPercent.textContent = `${pct}%`;
+            if (progressFill) progressFill.style.width = `${pct}%`;
+          }
+        });
+
+        webllmActive = true;
+        if (progressWrap) progressWrap.style.display = 'none';
+        if (webllmToggleBtn) {
+          webllmToggleBtn.disabled = false;
+          webllmToggleBtn.classList.add('active');
+          webllmToggleBtn.setAttribute('aria-pressed', 'true');
+          webllmToggleBtn.innerHTML = '✅ WebLLM Active';
+        }
+        if (engineBadge) engineBadge.textContent = '🧠 WebLLM (Qwen2.5 0.5B)';
+        if (engineSub) engineSub.textContent = 'Running locally on device · 0 API Keys';
+
+        appendMessage('bot', '🎉 **In-Browser WebLLM Ready!** You are now running an AI model (Qwen2.5 0.5B) directly inside your browser via WebGPU. All queries run locally on your device with zero cloud servers and zero API keys.');
+      } catch (err) {
+        console.error('WebLLM load failed:', err);
+        if (progressWrap) progressWrap.style.display = 'none';
+        if (webllmToggleBtn) {
+          webllmToggleBtn.disabled = false;
+          webllmToggleBtn.innerHTML = '<span class="webllm-icon" aria-hidden="true">🧠</span> In-Browser AI (WebLLM)';
+        }
+        alert('Could not initialize WebGPU model on this browser. Reverting to the Instant Socratic Engine.');
+      } finally {
+        isWebllmLoading = false;
+      }
+    }
+
+    if (webllmToggleBtn) {
+      webllmToggleBtn.addEventListener('click', toggleWebLLM);
+    }
 
     // Quick Chips
     quickChips.forEach(chip => {
@@ -392,6 +519,37 @@ To solve this for CBSE Class 10 boards:
       isWaiting = true;
       sendBtn.disabled = true;
       showTyping();
+
+      // Check if In-Browser WebLLM is active
+      if (webllmActive && webllmEngine) {
+        try {
+          const systemMsg = `You are "Wallah AI Doubt Tutor", an expert Socratic tutor for CBSE Class 10 board examinations.
+Mode: ${currentMode}.
+${currentMode === 'hint' ? 'Give a strategic conceptual hint and ask a guiding question without revealing the full numerical answer.' : 'Give a complete step-by-step model answer adhering to CBSE marking schemes (Given, Formula, Steps, Final Answer with units).'}
+Use clean Unicode math symbols (α, β, √, θ, ², ³, ±, →, Δ, π, ·). Highlight essential CBSE keywords in bold. Strictly do not mention any third-party educators.`;
+
+          const reply = await webllmEngine.chat.completions.create({
+            messages: [
+              { role: 'system', content: systemMsg },
+              { role: 'user', content: q }
+            ],
+            temperature: 0.3,
+            max_tokens: 512,
+          });
+
+          const answerText = reply.choices[0]?.message?.content || '';
+          removeTyping();
+          const boldTerms = (answerText.match(/\*\*([^*]+)\*\*/g) || [])
+            .map(m => m.replace(/\*\*/g, '').trim())
+            .filter(w => w.length > 2 && w.length < 35)
+            .slice(0, 4);
+
+          appendMessage('bot', answerText, boldTerms);
+          return;
+        } catch (webllmErr) {
+          console.warn('WebLLM generation error, falling back to server/instant solver:', webllmErr);
+        }
+      }
 
       try {
         const response = await fetch(`${apiBase}/api/v1/ai/doubt-tutor`, {
@@ -669,6 +827,93 @@ To solve this for CBSE Class 10 boards:
     color: #ffffff;
     border-color: #0f766e;
     box-shadow: 0 2px 6px rgb(15 118 110 / 25%);
+  }
+
+  /* Engine Bar & In-Browser WebLLM Switch */
+  .ai-engine-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1.25rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+
+  .engine-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .engine-badge {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #0f766e;
+  }
+
+  .engine-sub {
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  .webllm-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+
+  .webllm-toggle-btn:hover {
+    border-color: #0f766e;
+    background: #f0fdf4;
+    color: #047857;
+  }
+
+  .webllm-toggle-btn.active {
+    background: #10b981;
+    border-color: #059669;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgb(16 185 129 / 30%);
+  }
+
+  .webllm-progress-wrap {
+    padding: 0.45rem 1.25rem;
+    background: #f0fdf4;
+    border-bottom: 1px solid #bbf7d0;
+  }
+
+  .webllm-progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #15803d;
+    margin-bottom: 0.3rem;
+  }
+
+  .webllm-progress-track {
+    height: 5px;
+    background: #dcfce7;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .webllm-progress-fill {
+    height: 100%;
+    background: #16a34a;
+    border-radius: 999px;
+    transition: width 0.2s ease;
   }
 
   /* Context Pill */
