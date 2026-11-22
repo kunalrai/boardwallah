@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { loadContent } from "../../lib/content";
 import { calBookingUrl } from "../../lib/site";
+import TutorTrialCallout from "../../components/TutorTrialCallout.astro";
 
 const { provider } = loadContent();
 ---
@@ -187,6 +188,14 @@ const { provider } = loadContent();
         </div>
       </div>
     </section>
+
+    <!-- Inline 1-on-1 Guidance Callout -->
+    <TutorTrialCallout 
+      topic="Triangles & Thales Theorem Proofs" 
+      subject="Mathematics" 
+      title="Stuck on Thales Theorem, Converse, or Criteria Proofs?"
+      subtitle={`Master board-level geometric proofs and tricky ratio problems with personalized 1-on-1 guidance from ${provider.tutor_name}. In-person in Gaur City 2 & VVIP Homes, or live online.`}
+    />
 
     <!-- Interactive 20-Question Quiz -->
     <section class="section">

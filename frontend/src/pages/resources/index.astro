@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { loadContent } from "../../lib/content";
 import { calBookingUrl } from "../../lib/site";
+import TutorTrialCallout from "../../components/TutorTrialCallout.astro";
 
 const { provider } = loadContent();
 
@@ -618,6 +619,14 @@ const englishChapters = [
         ))}
       </div>
     </section>
+
+    <!-- Inline 1-on-1 Guidance Callout -->
+    <TutorTrialCallout 
+      topic="Class 10 Maths & Science Doubts" 
+      subject="CBSE Class 10" 
+      title="Need 1-on-1 Help with Class 10 Maths or Science?"
+      subtitle={`Turn tricky proofs, chemical equations, and circuit numericals into strengths. Book a free 60-minute trial with ${provider.tutor_name} (20 yrs exp, B.Tech, ex-Samsung/HCL) in Gaur City 2 & VVIP Homes, or live online.`}
+    />
 
     <!-- Chemistry Section -->
     <section id="science" class="section">

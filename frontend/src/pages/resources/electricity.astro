@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { loadContent } from "../../lib/content";
 import { calBookingUrl } from "../../lib/site";
+import TutorTrialCallout from "../../components/TutorTrialCallout.astro";
 
 const { provider } = loadContent();
 ---
@@ -307,6 +308,14 @@ const { provider } = loadContent();
         </table>
       </div>
     </section>
+
+    <!-- Inline 1-on-1 Guidance Callout -->
+    <TutorTrialCallout 
+      topic="Electricity, Resistor Combinations & Circuit Numericals" 
+      subject="Science" 
+      title="Stuck on Equivalent Resistance or Heating Effect Numericals?"
+      subtitle={`Break down complex parallel/series circuits, Ohm's law, and power derivations with step-by-step guidance from ${provider.tutor_name}. In-person in Gaur City 2 & VVIP Homes, or live online.`}
+    />
 
     <!-- Quiz -->
     <section class="section quiz-root" id="quiz-root">

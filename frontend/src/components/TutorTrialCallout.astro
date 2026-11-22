@@ -1,0 +1,171 @@
+---
+import { loadContent, whatsappLink } from "../lib/content";
+import { calBookingUrl } from "../lib/site";
+
+interface Props {
+  topic?: string;
+  subject?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+const { provider } = loadContent();
+const {
+  topic,
+  subject = "Class 10",
+  title = "Stuck on this theorem, formula, or numerical?",
+  subtitle = `Get crystal-clear 1-on-1 guidance from ${provider.tutor_name} (20 yrs exp, B.Tech, ex-Samsung/HCL). In-person home tuition in Gaur City 2, VVIP Homes & Noida Extension, or live 1-on-1 online pan-India.`,
+} = Astro.props;
+
+const waTopicMsg = topic 
+  ? `Hello Kunal Sir, I am preparing CBSE Class 10 ${subject} (${topic}) on BoardWallah and would like to ask about 1-on-1 tuition / trial session.`
+  : `Hello Kunal Sir, I am looking for CBSE Class 10 tuition in Gaur City / Noida / Online. Could you please share more details?`;
+
+const waLink = whatsappLink(provider.contact.whatsapp, waTopicMsg);
+---
+
+<aside class="tutor-trial-callout card" aria-label="1-on-1 Tuition Callout">
+  <div class="callout-badge-row">
+    <span class="callout-pill">⭐ 1-on-1 CBSE Class 10 Mentorship</span>
+    <span class="callout-locality">📍 Gaur City 2 · VVIP Homes · Online</span>
+  </div>
+  <div class="callout-body">
+    <div class="callout-text">
+      <h3>{title}</h3>
+      <p>{subtitle}</p>
+      <ul class="callout-perks">
+        <li>✓ 100% individual attention — zero doubt hesitation</li>
+        <li>✓ Complete NCERT + RD Sharma + PYQs past 10 years</li>
+        <li>✓ Free 60-minute trial session — zero payment commitment</li>
+      </ul>
+    </div>
+    <div class="callout-actions">
+      <a class="button trial-btn" href={calBookingUrl} target="_blank" rel="noopener noreferrer">
+        Book Free 60-Min Trial &rarr;
+      </a>
+      <a class="button whatsapp-btn" href={waLink} target="_blank" rel="noopener noreferrer">
+        <span class="wa-icon" aria-hidden="true">💬</span> Chat with Kunal Sir
+      </a>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .tutor-trial-callout {
+    margin-block: 2.5rem;
+    padding: 1.75rem;
+    background: linear-gradient(135deg, #f0f7f8 0%, #ffffff 100%);
+    border: 1.5px solid #0f4c5c33;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 20px rgb(15 76 92 / 8%);
+  }
+
+  .callout-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .callout-pill {
+    background: #0f4c5c;
+    color: #ffffff;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+  }
+
+  .callout-locality {
+    background: #e6f0f2;
+    color: #0f4c5c;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid #0f4c5c22;
+  }
+
+  .callout-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .callout-body {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .callout-text {
+      flex: 1;
+      padding-right: 1.5rem;
+    }
+  }
+
+  .callout-text h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.25rem;
+    color: var(--brand);
+  }
+
+  .callout-text p {
+    margin: 0 0 0.75rem;
+    font-size: 0.94rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .callout-perks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.88rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .callout-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    min-width: 230px;
+  }
+
+  .trial-btn {
+    text-align: center;
+    background: var(--brand);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    box-shadow: 0 4px 12px rgb(15 76 92 / 20%);
+  }
+
+  .trial-btn:hover {
+    background: var(--brand-dark);
+  }
+
+  .whatsapp-btn {
+    text-align: center;
+    background: #25d366;
+    color: #0c381e;
+    border: 1px solid #20b858;
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .whatsapp-btn:hover {
+    background: #20ba59;
+    color: #072212;
+  }
+
+  .wa-icon {
+    font-size: 1.1rem;
+  }
+</style>

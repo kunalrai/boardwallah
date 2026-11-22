@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { loadContent } from "../../lib/content";
 import { calBookingUrl } from "../../lib/site";
+import TutorTrialCallout from "../../components/TutorTrialCallout.astro";
 
 const { provider } = loadContent();
 ---
@@ -51,6 +52,14 @@ const { provider } = loadContent();
         </div>
       </div>
     </div>
+
+    <!-- Inline 1-on-1 Mock Paper Evaluation Callout -->
+    <TutorTrialCallout 
+      topic="80-Mark Sample Paper Evaluation & Step-by-Step Marking Rubrics" 
+      subject="CBSE Class 10" 
+      title="Want your Mock Paper evaluated with CBSE Step-by-Step Marking Rubrics?"
+      subtitle={`Submit your handwritten mock exam answers and get detailed feedback on lost marks, formula presentation, and time-management from ${provider.tutor_name} (20 yrs exp, B.Tech, ex-Samsung/HCL).`}
+    />
 
     <!-- Subject Selector Tabs -->
     <nav class="subject-tabs-nav" aria-label="Subject Sample Papers">
