@@ -17,6 +17,7 @@ import { parseInstant, toIstIso } from "./time";
 import { createNotifier } from "./notifier";
 import { handleMcpRequest } from "./mcp";
 import { createGoogleVerifier, GoogleAuthError, type GoogleVerifier } from "./auth";
+import { solveDoubt } from "./ai";
 
 const subject = z.enum(["maths", "science", "social_science", "english", "hindi"]);
 const phone = z.string().regex(/^\+91[0-9]{10}$/, "Use an Indian mobile number in +91XXXXXXXXXX format.");
@@ -321,6 +322,19 @@ export function createApp(options: AppOptions = {}): AppBundle {
   });
 
   app.all("/mcp", async (c) => handleMcpRequest(c.req.raw, services));
+
+  const doubtTutorSchema = z.object({
+    question: z.string().min(2, "Question is too short.").max(1200, "Question is too long."),
+    subject: subject.optional(),
+    chapter: z.string().max(100).optional(),
+    mode: z.enum(["hint", "step_by_step", "find_mistake"]).optional(),
+  });
+
+  app.post("/api/v1/ai/doubt-tutor", async (c) => {
+    const body = await parseBody(c, doubtTutorSchema);
+    const result = await solveDoubt(body, config.geminiApiKey);
+    return c.json(result);
+  });
 
   app.notFound((c) => problemResponse(new ApiError(404, "not_found"), config.publicBaseUrl, c.req.path));
 

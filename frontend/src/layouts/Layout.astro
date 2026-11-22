@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import { loadContent, whatsappLink } from "../lib/content";
 import { absoluteUrl, calBookingUrl } from "../lib/site";
+import AiDoubtTutor from "../components/AiDoubtTutor.astro";
 
 interface Props {
   title?: string;
@@ -125,6 +126,9 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
         </div>
       </div>
     </footer>
+
+    <!-- Wallah AI Doubt Tutor Floating Socratic Assistant -->
+    <AiDoubtTutor />
 
     <!-- Global Quiz Progress & Mastery Tracker Script -->
     <script is:inline>

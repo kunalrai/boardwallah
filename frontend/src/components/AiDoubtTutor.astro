@@ -1,0 +1,928 @@
+---
+import { apiBase } from "../lib/site";
+---
+
+<!-- Floating Trigger Button -->
+<aside class="ai-tutor-widget-root" aria-label="Wallah AI Doubt Tutor">
+  <button
+    id="ai-tutor-trigger-btn"
+    class="ai-tutor-fab"
+    type="button"
+    aria-haspopup="dialog"
+    aria-expanded="false"
+    aria-controls="ai-tutor-drawer"
+    title="Open Wallah AI Doubt Tutor (CBSE Class 10 Socratic Problem Solver)"
+  >
+    <span class="ai-fab-icon" aria-hidden="true">🤖</span>
+    <span class="ai-fab-text">
+      <strong>Ask AI Tutor</strong>
+      <small>Socratic CBSE Coach</small>
+    </span>
+    <span class="ai-pulse-dot" aria-hidden="true"></span>
+  </button>
+
+  <!-- Backdrop Overlay -->
+  <div id="ai-tutor-backdrop" class="ai-tutor-backdrop" aria-hidden="true"></div>
+
+  <!-- Slide-Over Drawer Modal -->
+  <dialog id="ai-tutor-drawer" class="ai-tutor-drawer" aria-labelledby="ai-tutor-title">
+    <div class="drawer-header">
+      <div class="drawer-header-left">
+        <span class="drawer-avatar">🤖</span>
+        <div>
+          <h2 id="ai-tutor-title" class="drawer-title">Wallah AI Doubt Tutor</h2>
+          <span class="drawer-subtitle">CBSE Class 10 Socratic Problem Solver</span>
+        </div>
+      </div>
+      <button id="ai-tutor-close-btn" class="drawer-close-btn" type="button" aria-label="Close AI Doubt Tutor">✕</button>
+    </div>
+
+    <!-- Mode Selector Pills -->
+    <div class="ai-mode-selector-wrap" role="radiogroup" aria-label="Tutor response mode">
+      <button type="button" class="ai-mode-pill active" data-mode="hint" role="radio" aria-checked="true">
+        💡 Socratic Hint
+      </button>
+      <button type="button" class="ai-mode-pill" data-mode="step_by_step" role="radio" aria-checked="false">
+        📝 CBSE Model Solution
+      </button>
+      <button type="button" class="ai-mode-pill" data-mode="find_mistake" role="radio" aria-checked="false">
+        🔍 Check My Steps
+      </button>
+    </div>
+
+    <!-- Active Chapter Context Pill -->
+    <div id="ai-context-pill" class="ai-context-pill" style="display:none;">
+      <span class="context-icon">📖</span>
+      <span id="ai-context-text">Chapter: Loading...</span>
+    </div>
+
+    <!-- Chat Messages Stream -->
+    <div id="ai-messages-container" class="ai-messages-container" role="log" aria-live="polite">
+      <!-- Welcome message -->
+      <div class="ai-message ai-bot-message">
+        <div class="message-meta">
+          <span class="bot-badge">Wallah AI Coach</span>
+          <span class="message-time">Just now</span>
+        </div>
+        <div class="message-body">
+          <p>
+            Hello! I am your <strong>CBSE Class 10 Socratic Doubt Tutor</strong>. I help you master Maths, Science, Social Science, and Languages for the 2026 board exams.
+          </p>
+          <p>
+            Choose your mode above:
+          </p>
+          <ul>
+            <li><strong>💡 Socratic Hint:</strong> I guide you with formulas and theorems so you learn how to solve it yourself.</li>
+            <li><strong>📝 CBSE Solution:</strong> I provide the complete answer structured according to official board marking rubrics.</li>
+            <li><strong>🔍 Check My Steps:</strong> Paste your attempted calculation or proof to find where you went wrong!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Starter Question Chips -->
+    <div class="ai-quick-prompts-wrap">
+      <span class="quick-prompts-label">Try asking:</span>
+      <div id="ai-quick-chips" class="quick-chips-row">
+        <button type="button" class="quick-chip" data-query="How do I prove that √5 is irrational by contradiction?">
+          Prove √5 is irrational
+        </button>
+        <button type="button" class="quick-chip" data-query="State and prove Thales Theorem (Basic Proportionality Theorem)">
+          Thales Theorem proof
+        </button>
+        <button type="button" class="quick-chip" data-query="Explain sign conventions for concave and convex lenses">
+          Lens sign conventions
+        </button>
+        <button type="button" class="quick-chip" data-query="What colour changes happen when green FeSO4 is heated?">
+          FeSO₄ heating reaction
+        </button>
+      </div>
+    </div>
+
+    <!-- Input Bar -->
+    <form id="ai-tutor-form" class="ai-input-form">
+      <div class="input-wrap">
+        <textarea
+          id="ai-question-input"
+          class="ai-question-textarea"
+          rows="2"
+          placeholder="Ask any question, theorem proof, or paste your numerical steps..."
+          aria-label="Ask your doubt to the AI Tutor"
+          required
+        ></textarea>
+        <button id="ai-send-btn" type="submit" class="ai-send-button" aria-label="Send question">
+          <span>Ask</span> &rarr;
+        </button>
+      </div>
+      <div class="form-bottom-row">
+        <span class="ai-disclaimer">Zero fluff · Socratic hint &amp; CBSE marking rubrics</span>
+        <button type="button" id="ai-clear-btn" class="ai-clear-link">Clear chat</button>
+      </div>
+    </form>
+  </dialog>
+</aside>
+
+<script is:inline define:vars={{ apiBase }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const triggerBtn = document.getElementById('ai-tutor-trigger-btn');
+    const drawer = document.getElementById('ai-tutor-drawer');
+    const backdrop = document.getElementById('ai-tutor-backdrop');
+    const closeBtn = document.getElementById('ai-tutor-close-btn');
+    const form = document.getElementById('ai-tutor-form');
+    const input = document.getElementById('ai-question-input');
+    const sendBtn = document.getElementById('ai-send-btn');
+    const clearBtn = document.getElementById('ai-clear-btn');
+    const messagesContainer = document.getElementById('ai-messages-container');
+    const modePills = document.querySelectorAll('.ai-mode-pill');
+    const quickChips = document.querySelectorAll('.quick-chip');
+    const contextPill = document.getElementById('ai-context-pill');
+    const contextText = document.getElementById('ai-context-text');
+
+    let currentMode = 'hint';
+    let isWaiting = false;
+
+    // Detect chapter from path
+    function detectChapter() {
+      const path = window.location.pathname;
+      if (path.startsWith('/resources/') && path !== '/resources/' && path !== '/resources/sample-papers/' && path !== '/resources/flashcards/') {
+        const parts = path.split('/').filter(Boolean);
+        const slug = parts[parts.length - 1];
+        if (slug) {
+          const formatted = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+          contextText.textContent = `Chapter: ${formatted}`;
+          contextPill.style.display = 'inline-flex';
+          return formatted;
+        }
+      }
+      contextPill.style.display = 'none';
+      return '';
+    }
+
+    const currentChapter = detectChapter();
+
+    function openDrawer() {
+      drawer.setAttribute('open', '');
+      backdrop.classList.add('is-open');
+      triggerBtn.setAttribute('aria-expanded', 'true');
+      input.focus();
+    }
+
+    function closeDrawer() {
+      drawer.removeAttribute('open');
+      backdrop.classList.remove('is-open');
+      triggerBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    triggerBtn.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.hasAttribute('open')) {
+        closeDrawer();
+      }
+    });
+
+    // Mode Selector
+    modePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        modePills.forEach(p => {
+          p.classList.remove('active');
+          p.setAttribute('aria-checked', 'false');
+        });
+        pill.classList.add('active');
+        pill.setAttribute('aria-checked', 'true');
+        currentMode = pill.getAttribute('data-mode') || 'hint';
+      });
+    });
+
+    // Quick Chips
+    quickChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const query = chip.getAttribute('data-query');
+        if (query) {
+          input.value = query;
+          handleSend();
+        }
+      });
+    });
+
+    // Clear chat
+    clearBtn.addEventListener('click', () => {
+      messagesContainer.innerHTML = `
+        <div class="ai-message ai-bot-message">
+          <div class="message-meta">
+            <span class="bot-badge">Wallah AI Coach</span>
+            <span class="message-time">Just now</span>
+          </div>
+          <div class="message-body">
+            <p>Chat cleared. Ask me any question, theorem, or paste your numerical steps!</p>
+          </div>
+        </div>
+      `;
+    });
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function formatMarkdown(text) {
+      let out = escapeHtml(text);
+      // Bold
+      out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      // Inline code
+      out = out.replace(/`([^`]+)`/g, '<code>$1</code>');
+      // Numbered lists or bullet lines
+      out = out.replace(/\n\s*•\s*/g, '<br/>• ');
+      out = out.replace(/\n\s*-\s*/g, '<br/>• ');
+      // Line breaks
+      out = out.replace(/\n/g, '<br/>');
+      return out;
+    }
+
+    function appendMessage(sender, text, keyTerms) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `ai-message ${sender === 'user' ? 'ai-user-message' : 'ai-bot-message'}`;
+
+      let termsHtml = '';
+      if (keyTerms && keyTerms.length > 0) {
+        termsHtml = `
+          <div class="ai-key-terms-row">
+            <span class="terms-title">⭐ CBSE Marking Scheme Terms:</span>
+            ${keyTerms.map(t => `<span class="term-badge">${escapeHtml(t)}</span>`).join('')}
+          </div>
+        `;
+      }
+
+      msgDiv.innerHTML = `
+        <div class="message-meta">
+          <span class="${sender === 'user' ? 'user-badge' : 'bot-badge'}">
+            ${sender === 'user' ? 'You' : 'Wallah AI Tutor'}
+          </span>
+          <span class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+        </div>
+        <div class="message-body">
+          ${formatMarkdown(text)}
+          ${termsHtml}
+        </div>
+      `;
+
+      messagesContainer.appendChild(msgDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function showTyping() {
+      const typingDiv = document.createElement('div');
+      typingDiv.id = 'ai-typing-indicator';
+      typingDiv.className = 'ai-message ai-bot-message typing-indicator';
+      typingDiv.innerHTML = `
+        <div class="message-meta"><span class="bot-badge">Wallah AI Tutor</span></div>
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+      `;
+      messagesContainer.appendChild(typingDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function removeTyping() {
+      const typing = document.getElementById('ai-typing-indicator');
+      if (typing) typing.remove();
+    }
+
+    // Client-side fallback solver
+    function clientFallbackSolve(q, mode) {
+      const lower = q.toLowerCase();
+      if (lower.includes('irrational') || lower.includes('√2') || lower.includes('√5') || lower.includes('root 5')) {
+        if (mode === 'hint') {
+          return {
+            answer: `💡 **Socratic Hint for Irrationality Proof**:
+All CBSE board proofs of irrationality use **Proof by Contradiction**!
+
+1. **Step 1**: Assume to the contrary that √5 IS rational. Can you write it in the form **a / b**, where a and b are **co-prime integers**?
+2. **Step 2**: Square both sides: 5 = a²/b² ⇒ **a² = 5b²**.
+3. **Guiding Question**: Since 5 divides a², what does the Fundamental Theorem of Arithmetic state about 5 dividing 'a'? What substitution should you make next?`,
+            keyTerms: ['Proof by Contradiction', 'Co-prime integers', 'Fundamental Theorem of Arithmetic']
+          };
+        } else {
+          return {
+            answer: `📝 **Model CBSE Board Answer (3 Marks)**:
+**To Prove**: √5 is irrational.
+
+1. Assume to the contrary that √5 is rational. Let √5 = a/b where a, b are co-prime integers (b ≠ 0).
+2. Squaring both sides: 5 = a²/b²  ⇒  **a² = 5b²**  ...(1)
+3. Since 5 divides 5b², 5 divides a². By theorem, **5 divides a**.
+4. Let a = 5c for some integer c.
+   Substituting in (1): (5c)² = 5b² ⇒ 25c² = 5b² ⇒ **b² = 5c²**.
+5. Thus 5 divides b², so **5 divides b**.
+6. Therefore, 5 is a common factor of both a and b, which **contradicts** our assumption that a and b are co-prime.
+7. Hence, **√5 is irrational**. [Hence Proved]`,
+            keyTerms: ['Co-prime', 'Proof by contradiction', 'Hence Proved']
+          };
+        }
+      }
+
+      if (lower.includes('thales') || lower.includes('bpt') || lower.includes('triangle')) {
+        return {
+          answer: `💡 **Socratic Hint on Basic Proportionality Theorem (Thales' Theorem)**:
+1. **Given**: In ΔABC, line DE ∥ BC intersects AB at D and AC at E.
+2. **Key Concept**: Triangles on the **same base and between the same parallel lines** have equal areas!
+3. **Equation setup**:
+   - Area(ΔADE) / Area(ΔBDE) = AD / DB
+   - Area(ΔADE) / Area(ΔCDE) = AE / EC
+4. Since Area(ΔBDE) = Area(ΔCDE), what conclusion can you draw about the ratios AD/DB and AE/EC?`,
+          keyTerms: ['Basic Proportionality Theorem', 'Same base between parallels', 'AD / DB = AE / EC']
+        };
+      }
+
+      if (lower.includes('lens') || lower.includes('mirror') || lower.includes('sign convention')) {
+        return {
+          answer: `💡 **Socratic Guidance on Optics & Sign Conventions**:
+Remember the golden CBSE rules:
+• **Object distance (u)**: ALWAYS **negative (-)** for both mirrors and lenses.
+• **Focal length (f)**:
+  - Convex mirror / Convex lens: **Positive (+)**
+  - Concave mirror / Concave lens: **Negative (-)**
+• **Formulas**:
+  - Mirror: **1/f = 1/v + 1/u**, Magnification **m = -v/u**
+  - Lens: **1/f = 1/v - 1/u**, Magnification **m = +v/u**
+• If magnification m is negative, the image is **Real & Inverted**.`,
+          keyTerms: ['Cartesian Sign Convention', 'u is always negative', 'Lens formula: 1/f = 1/v - 1/u']
+        };
+      }
+
+      return {
+        answer: `💡 **Socratic Mentor Guidance**:
+You asked: "${q}"
+
+To solve this for CBSE Class 10 boards:
+1. **State Given Quantities**: List all values with proper SI units.
+2. **Identify the Governing Formula/Theorem**: Quote the exact NCERT theorem or equation.
+3. **Step-by-Step Substitution**: Show every intermediate step to secure full step marks in board exams.
+
+*Try asking about specific topics like "Prove √5 is irrational", "Thales theorem proof", "Ohm's law numericals", or "FeSO4 heating reaction"!*`,
+        keyTerms: ['CBSE Marking Rubric', 'SI Units', 'Step-by-Step Proof']
+      };
+    }
+
+    async function handleSend() {
+      const q = input.value.trim();
+      if (!q || isWaiting) return;
+
+      appendMessage('user', q);
+      input.value = '';
+      isWaiting = true;
+      sendBtn.disabled = true;
+      showTyping();
+
+      try {
+        const response = await fetch(`${apiBase}/api/v1/ai/doubt-tutor`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question: q,
+            chapter: currentChapter,
+            mode: currentMode,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          removeTyping();
+          appendMessage('bot', data.answer, data.keyTerms);
+        } else {
+          throw new Error('Server returned non-200');
+        }
+      } catch (err) {
+        // Graceful client fallback
+        removeTyping();
+        const fallback = clientFallbackSolve(q, currentMode);
+        appendMessage('bot', fallback.answer, fallback.keyTerms);
+      } finally {
+        isWaiting = false;
+        sendBtn.disabled = false;
+        input.focus();
+      }
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleSend();
+    });
+
+    // Enter to submit without shift
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    });
+  });
+</script>
+
+<style>
+  /* ── Floating Action Button (FAB) ── */
+  .ai-tutor-widget-root {
+    position: relative;
+    z-index: 9999;
+  }
+
+  .ai-tutor-fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 1.15rem;
+    background: linear-gradient(135deg, #0f766e 0%, #047857 100%);
+    color: #ffffff;
+    border: 2px solid #6ee7b7;
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgb(15 118 110 / 35%);
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 9999;
+  }
+
+  .ai-tutor-fab:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 32px rgb(15 118 110 / 45%);
+  }
+
+  .ai-fab-icon {
+    font-size: 1.45rem;
+    line-height: 1;
+  }
+
+  .ai-fab-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.15;
+  }
+
+  .ai-fab-text strong {
+    font-size: 0.94rem;
+    letter-spacing: 0.01em;
+  }
+
+  .ai-fab-text small {
+    font-size: 0.7rem;
+    color: #a7f3d0;
+    font-weight: 600;
+  }
+
+  .ai-pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #34d399;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+    animation: ai-pulse 2s infinite;
+  }
+
+  @keyframes ai-pulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 8px rgba(52, 211, 153, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+    }
+  }
+
+  /* ── Backdrop Overlay ── */
+  .ai-tutor-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgb(15 23 42 / 40%);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 99998;
+  }
+
+  .ai-tutor-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ── Slide-Over Drawer Modal ── */
+  .ai-tutor-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--surface);
+    border: none;
+    border-left: 1.5px solid var(--line);
+    box-shadow: -8px 0 36px rgb(15 23 42 / 16%);
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 99999;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ai-tutor-drawer[open] {
+    transform: translateX(0);
+  }
+
+  /* Drawer Header */
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.15rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(135deg, #f0fdf4 0%, #f9fbfb 100%);
+  }
+
+  .drawer-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .drawer-avatar {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .drawer-title {
+    font-size: 1.1rem;
+    margin: 0 0 0.15rem;
+    color: var(--ink);
+  }
+
+  .drawer-subtitle {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #047857;
+  }
+
+  .drawer-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--muted);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .drawer-close-btn:hover {
+    background: var(--line);
+    color: var(--ink);
+  }
+
+  /* Mode Selector Pills */
+  .ai-mode-selector-wrap {
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+  }
+
+  .ai-mode-pill {
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+
+  .ai-mode-pill:hover {
+    border-color: var(--brand);
+  }
+
+  .ai-mode-pill.active {
+    background: #0f766e;
+    color: #ffffff;
+    border-color: #0f766e;
+    box-shadow: 0 2px 6px rgb(15 118 110 / 25%);
+  }
+
+  /* Context Pill */
+  .ai-context-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--brand);
+    background: rgb(15 118 110 / 8%);
+    padding: 0.35rem 1.25rem;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  /* Chat Messages Stream */
+  .ai-messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--surface);
+  }
+
+  .ai-message {
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;
+    animation: fadeIn 0.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ai-user-message {
+    align-self: flex-end;
+  }
+
+  .ai-user-message .message-body {
+    background: #0f766e;
+    color: #ffffff;
+    border-radius: 14px 14px 2px 14px;
+    padding: 0.75rem 1rem;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .ai-bot-message {
+    align-self: flex-start;
+  }
+
+  .ai-bot-message .message-body {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: var(--ink);
+    border-radius: 14px 14px 14px 2px;
+    padding: 0.85rem 1.05rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 3%);
+  }
+
+  .ai-bot-message .message-body p {
+    margin: 0 0 0.6rem;
+  }
+
+  .ai-bot-message .message-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-bot-message .message-body ul {
+    margin: 0.4rem 0 0.6rem;
+    padding-left: 1.25rem;
+  }
+
+  .message-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.74rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .bot-badge {
+    font-weight: 700;
+    color: #0f766e;
+  }
+
+  .user-badge {
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  /* Key Terms Box in Bot Messages */
+  .ai-key-terms-row {
+    margin-top: 0.75rem;
+    padding-top: 0.6rem;
+    border-top: 1px dashed #cbd5e1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  .terms-title {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #15803d;
+    width: 100%;
+    margin-bottom: 0.2rem;
+  }
+
+  .term-badge {
+    font-size: 0.74rem;
+    font-weight: 600;
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  /* Typing Dots */
+  .typing-indicator .typing-dots {
+    display: flex;
+    gap: 4px;
+    padding: 0.6rem 0.9rem;
+    background: #f1f5f9;
+    border-radius: 12px;
+    width: fit-content;
+  }
+
+  .typing-dots span {
+    width: 6px;
+    height: 6px;
+    background: #94a3b8;
+    border-radius: 50%;
+    animation: blink 1.4s infinite both;
+  }
+
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink {
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1); }
+  }
+
+  /* Quick Prompts Row */
+  .ai-quick-prompts-wrap {
+    padding: 0.5rem 1.25rem 0.25rem;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+  }
+
+  .quick-prompts-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .quick-chips-row {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+  }
+
+  .quick-chip {
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+
+  .quick-chip:hover {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #15803d;
+  }
+
+  /* Input Form */
+  .ai-input-form {
+    padding: 0.75rem 1.25rem 1rem;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+  }
+
+  .input-wrap {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+  }
+
+  .ai-question-textarea {
+    flex: 1;
+    resize: none;
+    font-family: inherit;
+    font-size: 0.92rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+    background: var(--paper);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .ai-question-textarea:focus {
+    border-color: #0f766e;
+    box-shadow: 0 0 0 3px rgb(15 118 110 / 12%);
+  }
+
+  .ai-send-button {
+    background: #0f766e;
+    color: #ffffff;
+    border: none;
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: inherit;
+    transition: background 0.15s ease;
+    height: 48px;
+  }
+
+  .ai-send-button:hover:not(:disabled) {
+    background: #0d9488;
+  }
+
+  .ai-send-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .form-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.45rem;
+    font-size: 0.74rem;
+    color: var(--muted);
+  }
+
+  .ai-clear-link {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.74rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    font-family: inherit;
+  }
+
+  .ai-clear-link:hover {
+    color: #b91c1c;
+  }
+
+  @media (max-width: 640px) {
+    .ai-tutor-fab {
+      bottom: 1rem;
+      right: 1rem;
+      padding: 0.65rem 0.95rem;
+    }
+    .ai-fab-text small {
+      display: none;
+    }
+    .ai-tutor-drawer {
+      max-width: 100%;
+    }
+  }
+</style>

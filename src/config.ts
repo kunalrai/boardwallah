@@ -26,6 +26,7 @@ export interface Config {
   sessionTtlMs: number;
   rateLimit: RateLimitConfig;
   apiKeys: string[];
+  geminiApiKey: string;
 }
 
 const minute = 60_000;
@@ -67,6 +68,7 @@ export function createConfig(overrides: Partial<Config> = {}): Config {
       .split(",")
       .map((key) => key.trim())
       .filter(Boolean),
+    geminiApiKey: process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY ?? "",
     ...overrides,
   };
 }
