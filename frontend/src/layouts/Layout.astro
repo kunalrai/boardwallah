@@ -120,5 +120,146 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
         </div>
       </div>
     </footer>
+
+    <!-- Global Quiz Progress & Mastery Tracker Script -->
+    <script is:inline>
+      (function() {
+        const path = window.location.pathname;
+        if (!path.startsWith('/resources/') || path === '/resources/' || path === '/resources/sample-papers/') {
+          return;
+        }
+
+        const STORAGE_KEY = 'boardwallah_quiz_progress';
+
+        function getSlug() {
+          const parts = path.split('/').filter(Boolean);
+          return parts[parts.length - 1] || '';
+        }
+
+        function saveScore(score, total) {
+          if (isNaN(score) || isNaN(total) || total <= 0) return;
+          const slug = getSlug();
+          if (!slug) return;
+
+          try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            const data = raw ? JSON.parse(raw) : {};
+            const existing = data[slug];
+            const pct = Math.round((score / total) * 100);
+
+            // Save or update if better score
+            if (!existing || score > existing.score) {
+              data[slug] = {
+                score: score,
+                total: total,
+                percentage: pct,
+                updatedAt: Date.now()
+              };
+            } else {
+              data[slug].lastAttemptAt = Date.now();
+            }
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            displayBestScorePill(data[slug]);
+          } catch (e) {
+            console.error('Quiz progress save error:', e);
+          }
+        }
+
+        function displayBestScorePill(record) {
+          if (!record) return;
+          let pill = document.getElementById('bw-chapter-best-score');
+          if (!pill) {
+            const container = document.querySelector('.quiz-header') || document.querySelector('.quiz-card') || document.querySelector('.resource-header');
+            if (container) {
+              pill = document.createElement('div');
+              pill.id = 'bw-chapter-best-score';
+              pill.className = 'chapter-best-score-badge';
+              if (container.classList.contains('quiz-header')) {
+                container.appendChild(pill);
+              } else {
+                container.insertAdjacentElement('afterbegin', pill);
+              }
+            }
+          }
+          if (pill) {
+            pill.innerHTML = `🏆 <strong>Previous Best Score:</strong> ${record.score} / ${record.total} (${record.percentage}%)`;
+          }
+        }
+
+        // Display previous best on load if available
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const data = JSON.parse(raw);
+            const slug = getSlug();
+            if (data[slug]) {
+              window.addEventListener('DOMContentLoaded', () => {
+                displayBestScorePill(data[slug]);
+              });
+            }
+          }
+        } catch(e) {}
+
+        // Listen for quiz scores rendered dynamically in DOM
+        const scorePatterns = [
+          /You scored\s+(\d+)\s*\/\s*(\d+)/i,
+          /Score:\s*(\d+)\s*\/\s*(\d+)/i,
+          /Final Score:\s*(\d+)\s*\/\s*(\d+)/i,
+          /(\d+)\s*\/\s*(\d+)\s*\(\d+%\)/
+        ];
+
+        function scanForScore(node) {
+          if (!node || !node.textContent) return;
+          const text = node.textContent;
+          for (const rx of scorePatterns) {
+            const m = text.match(rx);
+            if (m) {
+              const s = parseInt(m[1], 10);
+              const t = parseInt(m[2], 10);
+              if (t >= 5 && t <= 50 && s <= t) {
+                saveScore(s, t);
+                break;
+              }
+            }
+          }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+          const observer = new MutationObserver((mutations) => {
+            for (const m of mutations) {
+              if (m.type === 'characterData') {
+                scanForScore(m.target);
+              } else if (m.type === 'childList') {
+                m.addedNodes.forEach(scanForScore);
+                if (m.target) scanForScore(m.target);
+              }
+            }
+          });
+
+          observer.observe(document.body, {
+            subtree: true,
+            childList: true,
+            characterData: true
+          });
+        });
+      })();
+    </script>
+
+    <style is:global>
+      .chapter-best-score-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.35rem 0.8rem;
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #10b981;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+    </style>
   </body>
 </html>
