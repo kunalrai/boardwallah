@@ -8,7 +8,8 @@ import { calBookingUrl } from "../lib/site";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>Booking has moved</title>
+    <meta name="description" content="Redirecting to the official CBSE Class 10 tuition trial booking page on Cal.com." />
+    <title>Booking has moved | BoardWallah</title>
     <link rel="canonical" href={calBookingUrl} />
     <meta http-equiv="refresh" content={`0; url=${calBookingUrl}`} />
     <script is:inline define:vars={{ calBookingUrl }}>
@@ -33,10 +34,13 @@ import { calBookingUrl } from "../lib/site";
     </style>
   </head>
   <body>
-    <p>
-      Booking now happens on Cal.com.
-      <br />
-      <a href={calBookingUrl}>Continue to the booking page</a>
-    </p>
+    <main>
+      <h1>Booking has moved</h1>
+      <p>
+        Booking now happens on Cal.com.
+        <br />
+        <a href={calBookingUrl}>Continue to the booking page</a>
+      </p>
+    </main>
   </body>
 </html>
