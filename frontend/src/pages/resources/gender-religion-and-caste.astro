@@ -1,0 +1,790 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Gender, Religion and Caste | CBSE Class 10 Civics | ${provider.name}`}
+  description="CBSE Class 10 Civics Chapter 3 study notes on Gender, Religion and Caste. Sexual division of labour, feminist movements, women's political representation, communalism vs secular state, caste inequalities and caste in politics with 20 board exam quiz questions."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Gender, Religion and Caste
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Social Science · Civics Chapter 3</span>
+      <h1>Gender, Religion and Caste</h1>
+      <p class="lead">
+        Examine how social differences, gender roles, religious identities, and caste divisions interact with Indian democracy and electoral politics.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Core Political Concepts &amp; Social Divisions</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>👩 Gender &amp; Politics</h3>
+          <p class="formula">Public vs. Private Division</p>
+          <ul class="clean-list">
+            <li><strong>Sexual Division of Labour:</strong> A system in which all work inside the home is either done by the women of the family or organized by them through domestic helpers, while men work outside for income.</li>
+            <li><strong>Feminist Movements:</strong> Radical women's movements aimed at equality in personal and family life, voting rights, educational and career opportunities.</li>
+            <li><strong>Patriarchy:</strong> A system that values men more and gives them power over women. Reflected in low literacy rate (54% women vs 76% men), child sex ratio, unpaid domestic work, and domestic violence.</li>
+            <li><strong>Women's Representation:</strong> Women's proportion in India's Lok Sabha remained below 15%. Local bodies (Panchayats and Municipalities) have 1/3rd (33%) reservation for women, empowering over 10 lakh elected women representatives. Nari Shakti Vandan Adhiniyam aims to extend this to Parliament and State Assemblies.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🕊️ Religion, Communalism &amp; Politics</h3>
+          <p class="formula">Secularism as Constitutional Shield</p>
+          <ul class="clean-list">
+            <li><strong>Religion in Politics:</strong> Gandhiji said politics must be guided by ethics drawn from all religions. Human rights groups demand protection of religious minorities.</li>
+            <li><strong>Communalism:</strong> When beliefs of one religion are presented as superior to those of other religions, state power is used to establish domination of one religious group.
+              <br/>• Manifests as everyday prejudices, search for political dominance, political mobilization on religious lines, and communal riots/violence.
+            </li>
+            <li><strong>Secular State Features:</strong>
+              <br/>• No official religion for the Indian State (unlike Sri Lanka-Buddhism or Pakistan-Islam).
+              <br/>• Freedom to profess, practice, and propagate any religion (Article 25).
+              <br/>• Prohibits discrimination on grounds of religion (Article 15).
+              <br/>• Allows state intervention to ensure equality (e.g., banning untouchability).
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>👥 Caste and Politics: Caste Inequalities</h3>
+          <p class="formula">Social Stratification &amp; Shifts</p>
+          <ul class="clean-list">
+            <li><strong>Caste Hierarchy:</strong> A ladder-like formation in which all caste groups are placed from the 'highest' to the 'lowest'. Based on occupational division, hereditary practice, and exclusion (untouchability).</li>
+            <li><strong>Factors Weakening Caste System:</strong>
+              <br/>• Socio-economic changes: Urbanization, growth of literacy and education, occupational mobility, and weakening of landlords' position in villages.
+              <br/>• Constitutional provisions prohibiting caste discrimination and abolishing untouchability (Article 17).
+              <br/>• Reform movements led by Jyotirao Phule, Mahatma Gandhi, B.R. Ambedkar, and Periyar Ramaswami.
+            </li>
+            <li><strong>Persistence:</strong> Endogamy (marrying within caste) continues; caste-based economic disparities still persist.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🗳️ Politics in Caste &amp; Caste in Politics</h3>
+          <p class="formula">Two-Way Interactive Relationship</p>
+          <ul class="clean-list">
+            <li><strong>Caste in Politics:</strong>
+              <br/>• Parties choose candidates based on caste composition of the constituency.
+              <br/>• Parties make appeals to caste sentiments to win elections ("vote banks").
+              <br/>• Universal adult franchise forced political leaders to mobilize backward and Dalit castes.
+            </li>
+            <li><strong>Politics in Caste (Caste Gets Politicized):</strong>
+              <br/>• Each caste group tries to become bigger by incorporating neighboring sub-castes.
+              <br/>• Coalition building between diverse caste groups for bargaining power.
+              <br/>• New caste groups emerge: 'backward' and 'forward' caste groups in public dialogue.
+            </li>
+            <li><strong>Reality Check:</strong> No constituency has a single caste majority; no party wins all votes of a caste; incumbent MPs/MLAs frequently lose elections.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Constitutional Secularism &amp; Caste-Politics Interaction</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · Pillars of the Indian Secular State</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Pillars of Indian Secular State">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              <!-- Central Dome -->
+              <path d="M 180 60 Q 230 20 280 60 Z" fill="#0d9488"/>
+              <rect x="170" y="60" width="120" height="20" fill="#0f766e" rx="4"/>
+              <text x="230" y="74" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">CONSTITUTION</text>
+              
+              <!-- 4 Pillars -->
+              <rect x="30" y="90" width="85" height="110" fill="#e2e8f0" stroke="#0d9488" stroke-width="2" rx="4"/>
+              <text x="72" y="125" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">No Official</text>
+              <text x="72" y="142" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">Religion</text>
+              <text x="72" y="165" fill="#64748b" font-size="9" text-anchor="middle">Neutral state</text>
+
+              <rect x="135" y="90" width="85" height="110" fill="#e2e8f0" stroke="#0d9488" stroke-width="2" rx="4"/>
+              <text x="177" y="125" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">Freedom of</text>
+              <text x="177" y="142" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">Faith</text>
+              <text x="177" y="165" fill="#64748b" font-size="9" text-anchor="middle">Article 25</text>
+
+              <rect x="240" y="90" width="85" height="110" fill="#e2e8f0" stroke="#0d9488" stroke-width="2" rx="4"/>
+              <text x="282" y="125" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">Non-</text>
+              <text x="282" y="142" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">Discrimination</text>
+              <text x="282" y="165" fill="#64748b" font-size="9" text-anchor="middle">Article 15</text>
+
+              <rect x="345" y="90" width="85" height="110" fill="#e2e8f0" stroke="#0d9488" stroke-width="2" rx="4"/>
+              <text x="387" y="125" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">State</text>
+              <text x="387" y="142" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">Intervention</text>
+              <text x="387" y="165" fill="#64748b" font-size="9" text-anchor="middle">Ban untouchability</text>
+
+              <!-- Base -->
+              <rect x="20" y="205" width="420" height="25" fill="#0f766e" rx="4"/>
+              <text x="230" y="222" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Equality, Fraternity &amp; Harmony in Diversity</text>
+            </svg>
+          </div>
+          <p class="caption">The four constitutional guardrails protecting India against communal hegemony and majoritarian religious dominance.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · The Two-Way Nexus: Caste and Politics</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Two-way interaction of Caste and Politics">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              <!-- Caste Box -->
+              <rect x="30" y="50" width="160" height="150" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" rx="8"/>
+              <text x="110" y="78" fill="#0369a1" font-size="14" font-weight="bold" text-anchor="middle">CASTE SYSTEM</text>
+              <text x="110" y="105" fill="#334155" font-size="10" text-anchor="middle">• Caste calculations</text>
+              <text x="110" y="125" fill="#334155" font-size="10" text-anchor="middle">• Vote bank appeals</text>
+              <text x="110" y="145" fill="#334155" font-size="10" text-anchor="middle">• Candidate selection</text>
+              <text x="110" y="170" fill="#0369a1" font-size="10" font-weight="bold" text-anchor="middle">"Caste in Politics"</text>
+
+              <!-- Arrows -->
+              <!-- Top Arrow: Right -->
+              <path d="M 200 90 L 260 90" stroke="#0d9488" stroke-width="3" marker-end="url(#arrow-head-right)" fill="none"/>
+              <polygon points="260,85 270,90 260,95" fill="#0d9488"/>
+              <text x="235" y="80" fill="#0d9488" font-size="9" font-weight="bold" text-anchor="middle">Mobilizes</text>
+
+              <!-- Bottom Arrow: Left -->
+              <polygon points="200,160 190,165 200,170" fill="#ea580c"/>
+              <path d="M 200 165 L 260 165" stroke="#ea580c" stroke-width="3" fill="none"/>
+              <text x="230" y="180" fill="#ea580c" font-size="9" font-weight="bold" text-anchor="middle">Transforms</text>
+
+              <!-- Politics Box -->
+              <rect x="270" y="50" width="160" height="150" fill="#ffedd5" stroke="#ea580c" stroke-width="2" rx="8"/>
+              <text x="350" y="78" fill="#c2410c" font-size="14" font-weight="bold" text-anchor="middle">POLITICS</text>
+              <text x="350" y="105" fill="#334155" font-size="10" text-anchor="middle">• Castes merge into blocs</text>
+              <text x="350" y="125" fill="#334155" font-size="10" text-anchor="middle">• Coalition building</text>
+              <text x="350" y="145" fill="#334155" font-size="10" text-anchor="middle">• Backward vs Forward</text>
+              <text x="350" y="170" fill="#c2410c" font-size="10" font-weight="bold" text-anchor="middle">"Politics in Caste"</text>
+            </svg>
+          </div>
+          <p class="caption">Politics does not just get caste-ridden; caste identity itself gets altered and broadened through political bargaining.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Board Exam Quiz Section (20 Questions) -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Quiz</h2>
+          <p class="lead" style="margin-bottom:0;">Test your understanding of Gender, Religion, Caste, and Constitutional principles.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizContainer">
+        <!-- Questions injected via JS or rendered -->
+      </div>
+
+      <div class="quiz-footer-actions">
+        <button type="button" class="button" id="resetQuizBtn">Reset Quiz</button>
+        <span class="small" id="quizProgressText">0 of 20 answered</span>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+      <h2>Need Guidance in Board Social Science?</h2>
+      <p>Master key terms, case studies, assertion-reasoning questions, and map work with personalized one-on-one sessions.</p>
+      <a href={calBookingUrl} class="button">Book a Doubt Clearing Session</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "1. What is meant by the 'sexual division of labour'?",
+      options: [
+        "A system where all family members work equally in the market",
+        "A system where women do all household chores while men work outside",
+        "Equal distribution of technical jobs between men and women",
+        "A constitutional mandate for women reservation in armed forces"
+      ],
+      correct: 1,
+      explanation: "Sexual division of labour refers to the societal norm where domestic work is primarily organized or performed by women, while economic and public sphere work is done by men."
+    },
+    {
+      q: "2. What is a 'feminist' defined as?",
+      options: [
+        "A woman who opposes men entering political arenas",
+        "A person who believes in equal rights and opportunities for women and men",
+        "An organization dedicated strictly to women's employment in government",
+        "A person who advocates for female-only governments"
+      ],
+      correct: 1,
+      explanation: "A feminist is a woman or a man who believes in equal rights and opportunities for women and men across social, economic, and political domains."
+    },
+    {
+      q: "3. What proportion of seats are reserved for women in local self-government bodies (Panchayats and Municipalities) in India?",
+      options: [
+        "One-tenth (10%)",
+        "One-fourth (25%)",
+        "One-third (33%)",
+        "Half (50%)"
+      ],
+      correct: 2,
+      explanation: "Under the 73rd and 74th Constitutional Amendments, one-third (33%) of seats in rural and urban local bodies are legally reserved for women."
+    },
+    {
+      q: "4. What is the fundamental idea behind communal politics?",
+      options: [
+        "Religion is the principal basis of social and political community",
+        "Caste hierarchy must be protected by civil law",
+        "Economic class alone determines civic rights",
+        "Equal reverence to all religions without prejudice"
+      ],
+      correct: 0,
+      explanation: "Communal politics is built on the belief that religion is the principal basis of social community, and people of different religions cannot belong to the same community."
+    },
+    {
+      q: "5. Which constitutional feature ensures that India remains a secular state?",
+      options: [
+        "Hinduism is declared the primary national culture",
+        "The President must belong to a minority religious group",
+        "There is no official religion for the Indian State",
+        "Only secular schools are allowed to receive public funds"
+      ],
+      correct: 2,
+      explanation: "Unlike nations with an official state religion (e.g. Buddhism in Sri Lanka), the Constitution of India does not grant the status of state religion to any faith."
+    },
+    {
+      q: "6. Which article of the Indian Constitution prohibits discrimination on grounds of religion, race, caste, sex, or place of birth?",
+      options: [
+        "Article 14",
+        "Article 15",
+        "Article 21",
+        "Article 370"
+      ],
+      correct: 1,
+      explanation: "Article 15 prohibits discrimination by the state against any citizen on grounds only of religion, race, caste, sex, place of birth, or any of them."
+    },
+    {
+      q: "7. Which social reformer fought relentlessly against caste inequalities and founded Satyashodhak Samaj?",
+      options: [
+        "Jyotirao Phule",
+        "Raja Ram Mohan Roy",
+        "Ishwar Chandra Vidyasagar",
+        "Swami Vivekananda"
+      ],
+      correct: 0,
+      explanation: "Jyotirao Phule worked against caste oppression, established the Satyashodhak Samaj, and opened schools for underprivileged girls and lower castes."
+    },
+    {
+      q: "8. What does 'occupational mobility' mean in sociology and civics?",
+      options: [
+        "Shifting from one residential district to another",
+        "Shift from one occupation to another, usually when a new generation takes up occupations other than ancestors",
+        "Travelling daily by bus to factory work",
+        "Retirement from government service to agriculture"
+      ],
+      correct: 1,
+      explanation: "Occupational mobility refers to moving away from hereditary caste occupations to new professions made possible by education and economic development."
+    },
+    {
+      q: "9. Why can caste alone NOT determine elections in India?",
+      options: [
+        "Every citizen belongs to exactly the same caste in a district",
+        "No single parliamentary constituency has a clear majority of a single caste",
+        "Political parties are prohibited from acknowledging caste identities",
+        "Caste groups vote only in municipal elections"
+      ],
+      correct: 1,
+      explanation: "No parliamentary constituency in India has a clear single-caste majority; hence every candidate and party must win the confidence of multiple castes and communities."
+    },
+    {
+      q: "10. How does politics influence caste?",
+      options: [
+        "It eliminates all caste associations overnight",
+        "Caste groups widen by incorporating neighboring sub-castes and forming coalition blocs",
+        "It prohibits any discussion of caste in newspapers",
+        "It mandates that only upper castes can form political parties"
+      ],
+      correct: 1,
+      explanation: "Politics brings caste into the arena of negotiation: caste groups attempt to expand by including sub-castes and forming larger alliances ('backward' vs 'forward')."
+    },
+    {
+      q: "11. What is the Child Sex Ratio (number of girl children per 1000 boys) situation in India caused by?",
+      options: [
+        "Higher male infant mortality",
+        "Female foeticide and deep-rooted patriarchal preference for sons",
+        "High migration of female children to foreign countries",
+        "Lack of accurate birth registration"
+      ],
+      correct: 1,
+      explanation: "A sex-selective abortion practice and patriarchal son-preference led to skewed child sex ratios in several parts of India."
+    },
+    {
+      q: "12. What was Mahatma Gandhi's view on religion and politics?",
+      options: [
+        "Religion should be completely outlawed from public discourse",
+        "Politics must be guided by ethics drawn from religion",
+        "Only one majority religion should dictate government policy",
+        "Religion and law should be identical in every court"
+      ],
+      correct: 1,
+      explanation: "Gandhiji believed that politics cannot be separated from religion, meaning moral values and ethics derived from all major religions must guide political action."
+    },
+    {
+      q: "13. What is communal mobilization in its political manifestation?",
+      options: [
+        "Using sacred symbols, religious leaders, emotional appeals, and plain fear to unite followers of one religion for votes",
+        "Conducting inter-faith dialogues at local colleges",
+        "Enforcing equal representation of all religions in the armed forces",
+        "Providing equal tax holidays to all religious shrines"
+      ],
+      correct: 0,
+      explanation: "Communal mobilization uses religious symbols, appeals from clergy, and fear of other communities to consolidate vote banks."
+    },
+    {
+      q: "14. Which article of the Indian Constitution abolished untouchability?",
+      options: [
+        "Article 14",
+        "Article 17",
+        "Article 19",
+        "Article 32"
+      ],
+      correct: 1,
+      explanation: "Article 17 of the Constitution abolished 'untouchability', and its practice in any form is forbidden and punishable by law."
+    },
+    {
+      q: "15. How does caste inequality persist in modern India despite legal abolitions?",
+      options: [
+        "Through mandatory caste-based uniforms in private firms",
+        "Through endogamy (marrying within one's caste) and historical accumulation of economic advantages",
+        "Through separate public transit for different castes",
+        "Through constitutional denial of higher education to backward groups"
+      ],
+      correct: 1,
+      explanation: "Caste continues because marriage within one's own caste remains overwhelmingly common, and historical advantages/disadvantages continue to influence wealth and education."
+    },
+    {
+      q: "16. What is the 'Equal Remuneration Act, 1976' designed to provide?",
+      options: [
+        "Equal bonuses for all corporate executives",
+        "Equal wages for equal work to both men and women",
+        "Guaranteed minimum pension for retired farmers",
+        "Tax exemptions for families with girl children"
+      ],
+      correct: 1,
+      explanation: "The Equal Remuneration Act, 1976 provides for equal pay for equal work to male and female workers, preventing wage discrimination."
+    },
+    {
+      q: "17. What is an 'urbanization' trend that has weakened the traditional caste hierarchy?",
+      options: [
+        "Strict residential zoning based on hereditary caste occupation",
+        "Anonymous living and public interaction where caste identities are less visible",
+        "Re-imposition of feudal landlord traditions in city suburbs",
+        "State registration of caste identities for metro train access"
+      ],
+      correct: 1,
+      explanation: "In urban spaces, people from different castes ride the same buses, eat in the same restaurants, and work together, breaking traditional purity-pollution taboos."
+    },
+    {
+      q: "18. What is the adverse effect of exclusive caste-based mobilization in politics?",
+      options: [
+        "It speeds up industrial automation",
+        "It can divert public attention from pressing issues like poverty, corruption, and infrastructure",
+        "It prevents all religious festivals from being celebrated",
+        "It reduces voter turnout among youth"
+      ],
+      correct: 1,
+      explanation: "When politics focuses solely on caste identities, crucial governance concerns like healthcare, poverty alleviation, jobs, and education can get neglected."
+    },
+    {
+      q: "19. Assertion (A): In India, women's political representation in Parliament has historically been very low.\nReason (R): The Indian patriarchal mindset restricts women largely to domestic duties and private life.",
+      options: [
+        "Both A and R are true and R is the correct explanation of A",
+        "Both A and R are true but R is not the correct explanation of A",
+        "A is true but R is false",
+        "A is false but R is true"
+      ],
+      correct: 0,
+      explanation: "Both statements are correct: deep-seated patriarchal structures and domestic role constraints have led to less than 15% female representation in Parliament."
+    },
+    {
+      q: "20. How has universal adult franchise transformed caste dynamics in India?",
+      options: [
+        "It allowed high castes to disenfranchise low-caste farm laborers",
+        "It gave numerical strength to lower and backward castes, compelling political leaders to listen to their demands",
+        "It made caste distinctions completely disappear from social life",
+        "It banned backward classes from forming political parties"
+      ],
+      correct: 1,
+      explanation: "One-person-one-vote made the numerically strong disadvantaged castes an indispensable voting bloc, forcing all political parties to address their aspirations."
+    }
+  ];
+
+  function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((item, idx) => {
+      const qCard = document.createElement('div');
+      qCard.className = 'quiz-card';
+      qCard.id = `qCard_${idx}`;
+
+      const title = document.createElement('h3');
+      title.className = 'quiz-question';
+      title.textContent = item.q;
+      qCard.appendChild(title);
+
+      const optList = document.createElement('div');
+      optList.className = 'quiz-options';
+
+      item.options.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+        btn.dataset.qIdx = idx;
+        btn.dataset.optIdx = optIdx;
+        btn.addEventListener('click', () => handleSelectOption(idx, optIdx));
+        optList.appendChild(btn);
+      });
+      qCard.appendChild(optList);
+
+      const feedback = document.createElement('div');
+      feedback.className = 'quiz-feedback';
+      feedback.id = `feedback_${idx}`;
+      qCard.appendChild(feedback);
+
+      container.appendChild(qCard);
+    });
+  }
+
+  let userAnswers = {};
+
+  function handleSelectOption(qIdx, optIdx) {
+    if (userAnswers[qIdx] !== undefined) return; // already answered
+    userAnswers[qIdx] = optIdx;
+
+    const q = questions[qIdx];
+    const isCorrect = (optIdx === q.correct);
+    const card = document.getElementById(`qCard_${qIdx}`);
+    const btns = card.querySelectorAll('.quiz-opt-btn');
+    const fb = document.getElementById(`feedback_${qIdx}`);
+
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.correct) {
+        btn.classList.add('opt-correct');
+      } else if (i === optIdx) {
+        btn.classList.add('opt-wrong');
+      }
+    });
+
+    if (isCorrect) {
+      fb.className = 'quiz-feedback feedback-correct';
+      fb.innerHTML = `<strong>Correct!</strong> ${q.explanation}`;
+    } else {
+      fb.className = 'quiz-feedback feedback-wrong';
+      fb.innerHTML = `<strong>Incorrect.</strong> ${q.explanation}`;
+    }
+
+    updateScoreSummary();
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

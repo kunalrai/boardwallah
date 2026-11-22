@@ -1,0 +1,774 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Resources and Development | CBSE Class 10 Geography | ${provider.name}`}
+  description="CBSE Class 10 Geography Chapter 1 study notes on Resources and Development. Classification of resources, sustainable development, Agenda 21, resource planning in India, land use pattern, land degradation and conservation, soil types (alluvial, black, red/yellow, laterite, arid, forest) and soil erosion with 20 board exam quiz questions."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Resources and Development
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Social Science · Geography Chapter 1</span>
+      <h1>Resources and Development</h1>
+      <p class="lead">
+        Study the foundation of geography: resource classification, sustainable resource planning, land utilization dynamics, soil profiles across India, and erosion mitigation measures.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Core Resource Classification &amp; Soil Profiles</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🌍 Classification of Resources &amp; Planning</h3>
+          <p class="formula">Origin, Exhaustibility, Ownership &amp; Status of Development</p>
+          <ul class="clean-list">
+            <li><strong>On the basis of Origin:</strong> Biotic (living: flora, fauna, human beings) and Abiotic (non-living: rocks, metals).</li>
+            <li><strong>Exhaustibility:</strong> Renewable (replenished: solar, wind, forests) and Non-Renewable (finite: coal, petroleum, taking millions of years to form).</li>
+            <li><strong>Ownership:</strong> Individual, Community (grazing grounds, burial spots), National (all minerals and territorial waters up to 12 nautical miles / 22.2 km from coastline), and International (Exclusive Economic Zone beyond 200 nautical miles governed by international bodies).</li>
+            <li><strong>Status of Development:</strong> Potential, Developed, Stock (hydrogen in water lack technology to extract), and Reserves (subset of stock tapped with current technology, like river water for hydro-power).</li>
+            <li><strong>Resource Planning in India:</strong> 3-stage process: (i) Identification and inventory through survey and mapping; (ii) Planning structure with appropriate technology, skill, and institutional set-up; (iii) Matching resource plans with overall national development plans.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🗺️ Land Resources &amp; Degradation</h3>
+          <p class="formula">Relief: 43% Plains, 30% Mountains, 27% Plateaus</p>
+          <ul class="clean-list">
+            <li><strong>India's Land Relief:</strong> 43% plains (agriculture &amp; industry), 30% mountains (perennial rivers, tourism), 27% plateaus (rich in minerals, fossil fuels, and forests).</li>
+            <li><strong>Land Use Pattern:</strong> Net Sown Area is over 80% in Punjab &amp; Haryana, but less than 10% in Arunachal Pradesh, Mizoram, and Andaman &amp; Nicobar. Forest cover in India is below the desired 33% outlined in the National Forest Policy (1952).</li>
+            <li><strong>Causes of Land Degradation:</strong>
+              <br/>• <em>Deforestation &amp; Mining:</em> Jharkhand, Chhattisgarh, MP, Odisha (abandoned open-cast mining sites).
+              <br/>• <em>Overgrazing:</em> Gujarat, Rajasthan, MP, Maharashtra.
+              <br/>• <em>Over-irrigation:</em> Punjab, Haryana, Western UP (waterlogging leading to soil salinity and alkalinity).
+              <br/>• <em>Industrial effluents:</em> Untreated chemical effluents polluting soil and groundwater.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌱 Soil Classification: 6 Major Soil Types</h3>
+          <p class="formula">Most Important Renewable Natural Resource</p>
+          <ul class="clean-list">
+            <li><strong>1. Alluvial Soil:</strong> Widely spread in Northern plains and coastal deltas (Mahanadi, Godavari, Krishna, Kaveri). Deposited by Indus, Ganga, Brahmaputra. Rich in potash, phosphoric acid, and lime; ideal for sugarcane, paddy, wheat. Divided into <strong>Khadar</strong> (new, fine, fertile) and <strong>Bhangar</strong> (old, high kankar nodules).</li>
+            <li><strong>2. Black Soil (Regur / Black Cotton):</strong> Formed from Deccan basalt lava traps (Maharashtra, Saurashtra, Malwa, MP). Rich in calcium carbonate, magnesium, potash, lime; highly moisture-retentive; develops deep cracks during hot weather.</li>
+            <li><strong>3. Red and Yellow Soil:</strong> Develops on crystalline igneous rocks in areas of low rainfall (Eastern &amp; Southern Deccan, Odisha, Chhattisgarh). Reddish due to iron diffusion; yellow in hydrated form.</li>
+            <li><strong>4. Laterite Soil:</strong> Formed under high temperature and heavy rainfall (leaching). Humus poor. Found in Karnataka, Kerala, Tamil Nadu, MP, Assam. Ideal for tea, coffee, and cashew nuts (with fertilizers).</li>
+            <li><strong>5. Arid Soil:</strong> Sandy, saline, dry, humus-lacking (Western Rajasthan). Cultivable only with irrigation (e.g. Indira Gandhi Canal).</li>
+            <li><strong>6. Forest/Mountain Soil:</strong> Loamy and silty in valley sides and coarse-grained in upper slopes; acidic with low humus in snow-covered areas.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🛡️ Soil Erosion &amp; Conservation</h3>
+          <p class="formula">Denudation and Washing Away of Soil Cover</p>
+          <ul class="clean-list">
+            <li><strong>Types of Water Erosion:</strong>
+              <br/>• <em>Gully Erosion:</em> Running water cuts through clayey soils making deep channels called gullies. Renders land unfit for cultivation, creating <strong>badlands / ravines</strong> (e.g. Chambal basin).
+              <br/>• <em>Sheet Erosion:</em> Water flows as a broad sheet over large areas down a slope, washing away the entire topsoil.
+              <br/>• <em>Wind Erosion:</em> Wind blows loose, dry soil off flat or sloping land.
+            </li>
+            <li><strong>Soil Conservation Methods:</strong>
+              <br/>• <strong>Contour Ploughing:</strong> Ploughing along contour lines decelerates water flow down slopes.
+              <br/>• <strong>Terrace Farming:</strong> Steps cut into slopes restrict erosion (Western and Central Himalayas).
+              <br/>• <strong>Strip Cropping:</strong> Strips of grass left between crops break the force of wind.
+              <br/>• <strong>Shelter Belts:</strong> Planting lines of trees creates windbreaks, stabilizing sand dunes in coastal/desert regions.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Soil Texture/Profile &amp; Conservation Architecture</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · Layers of Soil Profile</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Layers of Soil Profile">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Layer 1: Topsoil -->
+              <rect x="40" y="30" width="380" height="45" fill="#15803d" rx="4"/>
+              <text x="230" y="52" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Topsoil (Upper Layer): Humus &amp; Living Organisms</text>
+              <text x="230" y="66" fill="#bbf7d0" font-size="9" text-anchor="middle">Rich in organic matter, supports all plant root systems</text>
+
+              <!-- Layer 2: Subsoil -->
+              <rect x="40" y="80" width="380" height="50" fill="#b45309" rx="4"/>
+              <text x="230" y="104" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Subsoil: Weathered Rocks, Sand, Silt &amp; Clay</text>
+              <text x="230" y="120" fill="#fde68a" font-size="9" text-anchor="middle">Accumulation of minerals and iron compounds, lower humus</text>
+
+              <!-- Layer 3: Substratum -->
+              <rect x="40" y="135" width="380" height="45" fill="#64748b" rx="4"/>
+              <text x="230" y="157" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Substratum: Weathered Parent Rock Material</text>
+              <text x="230" y="171" fill="#e2e8f0" font-size="9" text-anchor="middle">Partially broken rock fragments</text>
+
+              <!-- Layer 4: Bedrock -->
+              <rect x="40" y="185" width="380" height="40" fill="#334155" rx="4"/>
+              <text x="230" y="209" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Unweathered Parent Bedrock</text>
+            </svg>
+          </div>
+          <p class="caption">Standard pedological profile showing the topsoil humus layer down to the underlying parent rock foundation.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · Soil Conservation Techniques</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Soil conservation methods">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Technique 1: Contour Ploughing -->
+              <rect x="25" y="40" width="195" height="90" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" rx="6"/>
+              <text x="122" y="65" fill="#1d4ed8" font-size="11" font-weight="bold" text-anchor="middle">Contour Ploughing</text>
+              <text x="122" y="85" fill="#334155" font-size="9" text-anchor="middle">Ploughing along altitude contours</text>
+              <text x="122" y="105" fill="#166534" font-size="9" font-weight="bold" text-anchor="middle">Slows down downhill water runoff</text>
+
+              <!-- Technique 2: Terrace Farming -->
+              <rect x="240" y="40" width="195" height="90" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5" rx="6"/>
+              <text x="337" y="65" fill="#15803d" font-size="11" font-weight="bold" text-anchor="middle">Terrace Farming</text>
+              <text x="337" y="85" fill="#334155" font-size="9" text-anchor="middle">Cutting steps into steep hill slopes</text>
+              <text x="337" y="105" fill="#166534" font-size="9" font-weight="bold" text-anchor="middle">Prevents soil wash in Himalayas</text>
+
+              <!-- Technique 3: Strip Cropping -->
+              <rect x="25" y="145" width="195" height="85" fill="#fef3c7" stroke="#d97706" stroke-width="1.5" rx="6"/>
+              <text x="122" y="170" fill="#b45309" font-size="11" font-weight="bold" text-anchor="middle">Strip Cropping</text>
+              <text x="122" y="190" fill="#334155" font-size="9" text-anchor="middle">Strips of grass grown between crops</text>
+              <text x="122" y="210" fill="#166534" font-size="9" font-weight="bold" text-anchor="middle">Breaks wind velocity</text>
+
+              <!-- Technique 4: Shelter Belts -->
+              <rect x="240" y="145" width="195" height="85" fill="#fdf4ff" stroke="#a855f7" stroke-width="1.5" rx="6"/>
+              <text x="337" y="170" fill="#7e22ce" font-size="11" font-weight="bold" text-anchor="middle">Shelter Belts</text>
+              <text x="337" y="190" fill="#334155" font-size="9" text-anchor="middle">Rows of trees planted along borders</text>
+              <text x="337" y="210" fill="#166534" font-size="9" font-weight="bold" text-anchor="middle">Stabilizes coastal &amp; desert dunes</text>
+            </svg>
+          </div>
+          <p class="caption">Four vital agricultural engineering practices that arrest soil erosion caused by wind, gravity, and water runoff.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Board Exam Quiz Section (20 Questions) -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Quiz</h2>
+          <p class="lead" style="margin-bottom:0;">Test your understanding of Resource Classification, Soils of India, Land Degradation, and Erosion.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizContainer">
+        <!-- Rendered via script -->
+      </div>
+
+      <div class="quiz-footer-actions">
+        <button type="button" class="button" id="resetQuizBtn">Reset Quiz</button>
+        <span class="small" id="quizProgressText">0 of 20 answered</span>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+      <h2>Excel in CBSE Class 10 Geography</h2>
+      <p>Master soil maps, land utilization tables, resource planning models, and board answer presentation techniques.</p>
+      <a href={calBookingUrl} class="button">Book a Doubt Clearing Session</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "1. What is the territorial water limit up to which oceanic resources belong to the nation?",
+      options: [
+        "12 nautical miles (approx 22.2 km) from the coast",
+        "200 nautical miles from the baseline",
+        "1 nautical mile only",
+        "50 kilometers from port cities"
+      ],
+      correct: 0,
+      explanation: "Oceanic area up to 12 nautical miles (22.2 km) from the coast is termed territorial water and resources therein belong to the nation."
+    },
+    {
+      q: "2. Oceanic resources beyond 200 nautical miles of the Exclusive Economic Zone (EEZ) belong to which category?",
+      options: [
+        "Individual Resources",
+        "National Resources",
+        "International Resources governed by international institutions",
+        "Community Resources"
+      ],
+      correct: 2,
+      explanation: "Open ocean resources beyond 200 nautical miles of the EEZ belong to international institutions, and no individual country can utilize them without consent."
+    },
+    {
+      q: "3. What was the historic declaration signed at the United Nations Conference on Environment and Development (UNCED) in Rio de Janeiro in 1992?",
+      options: [
+        "Kyoto Protocol",
+        "Agenda 21",
+        "Paris Climate Agreement",
+        "Montreal Protocol"
+      ],
+      correct: 1,
+      explanation: "Agenda 21 was adopted at the 1992 Rio Earth Summit to achieve global sustainable development and combat environmental damage, poverty, and disease."
+    },
+    {
+      q: "4. What desired percentage of geographical area should be under forest cover according to the National Forest Policy (1952)?",
+      options: [
+        "20%",
+        "25%",
+        "33%",
+        "50%"
+      ],
+      correct: 2,
+      explanation: "The National Forest Policy (1952) outlined that 33% of the geographical area should be under forest cover to maintain ecological equilibrium."
+    },
+    {
+      q: "5. In which Indian states is deforestation due to mining the primary cause of severe land degradation?",
+      options: [
+        "Punjab and Haryana",
+        "Jharkhand, Chhattisgarh, Madhya Pradesh, and Odisha",
+        "Gujarat and Rajasthan",
+        "Kerala and Tamil Nadu"
+      ],
+      correct: 1,
+      explanation: "Open-cast mining and left-behind deep scars in Jharkhand, Chhattisgarh, MP, and Odisha have caused extensive forest loss and land degradation."
+    },
+    {
+      q: "6. What is the major cause of land degradation in Punjab, Haryana, and Western Uttar Pradesh?",
+      options: [
+        "Overgrazing",
+        "Over-irrigation leading to waterlogging, increased salinity, and alkalinity in the soil",
+        "Industrial air pollution",
+        "Forest fires"
+      ],
+      correct: 1,
+      explanation: "Intensive canal irrigation in north-western green revolution belts causes waterlogging and soil salinization, degrading soil fertility."
+    },
+    {
+      q: "7. Which soil is the most widely spread and important soil of India, covering the northern plains and river deltas?",
+      options: [
+        "Black Soil",
+        "Alluvial Soil",
+        "Laterite Soil",
+        "Arid Soil"
+      ],
+      correct: 1,
+      explanation: "Alluvial soil is the most widespread soil in India, deposited by the Indus, Ganga, and Brahmaputra river systems."
+    },
+    {
+      q: "8. What is the difference between 'Khadar' and 'Bhangar' alluvial soil?",
+      options: [
+        "Khadar is old alluvium with kankar; Bhangar is new alluvium",
+        "Khadar is new, fine, fertile alluvium; Bhangar is older alluvium containing higher concentration of kankar nodules",
+        "Khadar is found only on mountain peaks; Bhangar is found in deserts",
+        "Khadar is black in color; Bhangar is yellow"
+      ],
+      correct: 1,
+      explanation: "Khadar is the younger, frequently flooded, more fertile alluvium, whereas Bhangar is the older terrace alluvium containing calcareous kankar nodules."
+    },
+    {
+      q: "9. Which soil type is also famously known as 'Regur Soil' and is ideal for growing cotton?",
+      options: [
+        "Laterite Soil",
+        "Black Soil",
+        "Red Soil",
+        "Forest Soil"
+      ],
+      correct: 1,
+      explanation: "Black soil is called Regur soil or black cotton soil, formed by basaltic lava flows over the Deccan trap."
+    },
+    {
+      q: "10. What unique physical property does Black Soil exhibit during the dry summer season?",
+      options: [
+        "It dissolves into liquid mud",
+        "It develops deep cracks, which aids in proper aeration of the soil",
+        "It turns into pure sand",
+        "It expands by 200% in volume"
+      ],
+      correct: 1,
+      explanation: "Because of its high clay content and moisture retention, black soil develops wide cracks during hot dry weather, facilitating natural aeration."
+    },
+    {
+      q: "11. Why does Red Soil look reddish in color?",
+      options: [
+        "Due to diffusion of iron in crystalline and metamorphic rocks",
+        "Due to chemical pollution from copper factories",
+        "Because it is mixed with brick dust",
+        "Due to high volcanic ash deposition"
+      ],
+      correct: 0,
+      explanation: "Red soils develop a reddish color due to a wide diffusion of iron compounds in crystalline igneous and metamorphic rocks (appearing yellow when hydrated)."
+    },
+    {
+      q: "12. In which regions does 'Laterite Soil' typically develop?",
+      options: [
+        "In cold alpine deserts with sub-zero temperatures",
+        "In areas with high temperatures and heavy tropical rainfall, resulting in intense leaching",
+        "In dry alluvial plains of western Rajasthan",
+        "Along glacier margins in the Himalayas"
+      ],
+      correct: 1,
+      explanation: "Laterite soil forms under conditions of high temperature and intense monsoon rainfall, which causes heavy leaching of silica and lime."
+    },
+    {
+      q: "13. Laterite soil with adequate doses of manure and fertilizers is particularly suitable for which crops in Karnataka, Kerala, and Tamil Nadu?",
+      options: [
+        "Wheat and barley",
+        "Tea, coffee, and cashew nuts",
+        "Jute and cotton",
+        "Mustard and gram"
+      ],
+      correct: 1,
+      explanation: "Laterite soil in the Western Ghats and southern states is ideal for plantation crops like tea, coffee, and cashew nut."
+    },
+    {
+      q: "14. What is 'Gully Erosion'?",
+      options: [
+        "When running water carves out deep channels through clayey soil, creating ravines or badlands",
+        "When wind blows sand over agricultural fields",
+        "When sea waves wash away sandy beaches",
+        "When glacier ice melts into mountain rivers"
+      ],
+      correct: 0,
+      explanation: "Gully erosion occurs when storm runoff cuts deep gullies into the landscape, rendering the land uncultivable (badland), as seen in the Chambal ravines."
+    },
+    {
+      q: "15. What is 'Sheet Erosion'?",
+      options: [
+        "When topsoil is washed away as a broad sheet over large areas down a gentle slope",
+        "When farmers use plastic sheets over crops",
+        "When ice sheets slide down mountain glaciers",
+        "When bedrock is cut by miners"
+      ],
+      correct: 0,
+      explanation: "Sheet erosion is the uniform removal of a thin layer of topsoil over large tracts of land by the broad sheet flow of rainwater."
+    },
+    {
+      q: "16. How does 'Contour Ploughing' prevent soil erosion?",
+      options: [
+        "By digging underground tunnels for water",
+        "By ploughing along the elevation contours of a hill, which decelerates the downhill flow of runoff water",
+        "By removing all rocks from the hillsides",
+        "By covering the hillside in concrete"
+      ],
+      correct: 1,
+      explanation: "Ploughing parallel to contour lines creates natural ridges that interrupt downhill water flow, drastically reducing erosion on slopes."
+    },
+    {
+      q: "17. In which region of India is 'Terrace Farming' extensively practiced to conserve soil on mountain slopes?",
+      options: [
+        "Thar Desert of Rajasthan",
+        "Western and Central Himalayas",
+        "Coastal plains of Odisha",
+        "Sundarbans Delta"
+      ],
+      correct: 1,
+      explanation: "Terrace cultivation is practiced on the rugged slopes of the Western and Central Himalayas (Himachal, Uttarakhand) to prevent soil runoff."
+    },
+    {
+      q: "18. What are 'Shelter Belts' and why are they planted?",
+      options: [
+        "Rows of trees planted to break the force of wind and stabilize coastal sand dunes and desert boundaries",
+        "Emergency concrete shelters built against cyclones",
+        "Fences made of metal wires to catch rainwater",
+        "Underground storage bunkers for grain"
+      ],
+      correct: 0,
+      explanation: "Shelter belts consist of linear tree plantings that act as windbreaks, preventing wind erosion and stabilizing sand dunes in arid and coastal zones."
+    },
+    {
+      q: "19. What are 'Stock' resources?",
+      options: [
+        "Materials in the environment that have the potential to satisfy human needs, but human beings do not possess appropriate technology to access them",
+        "Food items stocked in government warehouses",
+        "Shares bought on the national stock exchange",
+        "Water stored in municipal water tanks"
+      ],
+      correct: 0,
+      explanation: "Stock refers to natural substances (e.g. hydrogen and oxygen in water as clean fuel sources) that cannot be tapped currently due to technological limitations."
+    },
+    {
+      q: "20. What is 'Strip Cropping'?",
+      options: [
+        "Growing wide strips of grass between cultivated crops to break the velocity of wind",
+        "Harvesting crops with motorized combine harvesters",
+        "Stripping all trees from riverbanks",
+        "Growing only one single crop species across an entire state"
+      ],
+      correct: 0,
+      explanation: "Strip cropping involves dividing large open fields into strips where bands of grass are grown alongside crops to cushion and diminish the force of winds."
+    }
+  ];
+
+  function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((item, idx) => {
+      const qCard = document.createElement('div');
+      qCard.className = 'quiz-card';
+      qCard.id = `qCard_${idx}`;
+
+      const title = document.createElement('h3');
+      title.className = 'quiz-question';
+      title.textContent = item.q;
+      qCard.appendChild(title);
+
+      const optList = document.createElement('div');
+      optList.className = 'quiz-options';
+
+      item.options.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+        btn.addEventListener('click', () => handleSelectOption(idx, optIdx));
+        optList.appendChild(btn);
+      });
+      qCard.appendChild(optList);
+
+      const feedback = document.createElement('div');
+      feedback.className = 'quiz-feedback';
+      feedback.id = `feedback_${idx}`;
+      qCard.appendChild(feedback);
+
+      container.appendChild(qCard);
+    });
+  }
+
+  let userAnswers = {};
+
+  function handleSelectOption(qIdx, optIdx) {
+    if (userAnswers[qIdx] !== undefined) return;
+    userAnswers[qIdx] = optIdx;
+
+    const q = questions[qIdx];
+    const isCorrect = (optIdx === q.correct);
+    const card = document.getElementById(`qCard_${qIdx}`);
+    const btns = card.querySelectorAll('.quiz-opt-btn');
+    const fb = document.getElementById(`feedback_${qIdx}`);
+
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.correct) {
+        btn.classList.add('opt-correct');
+      } else if (i === optIdx) {
+        btn.classList.add('opt-wrong');
+      }
+    });
+
+    if (isCorrect) {
+      fb.className = 'quiz-feedback feedback-correct';
+      fb.innerHTML = `<strong>Correct!</strong> ${q.explanation}`;
+    } else {
+      fb.className = 'quiz-feedback feedback-wrong';
+      fb.innerHTML = `<strong>Incorrect.</strong> ${q.explanation}`;
+    }
+
+    updateScoreSummary();
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

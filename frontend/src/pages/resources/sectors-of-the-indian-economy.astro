@@ -1,0 +1,779 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Sectors of the Indian Economy | CBSE Class 10 Economics | ${provider.name}`}
+  description="CBSE Class 10 Economics Chapter 2 study notes on Sectors of the Indian Economy. Primary, secondary, tertiary sectors, historical shift, GDP calculation, disguised unemployment, organized vs unorganized sectors, public vs private sectors with 20 board exam quiz questions."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Sectors of the Indian Economy
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Social Science · Economics Chapter 2</span>
+      <h1>Sectors of the Indian Economy</h1>
+      <p class="lead">
+        Analyze the structure of India's economic machine: primary, secondary, and tertiary classifications, the rising dominance of services in GDP versus employment, disguised unemployment, organized vs. unorganized labor, and public versus private enterprises.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Economic Sectors &amp; Employment Dynamics</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🌾 Three Sectors of Economic Activities</h3>
+          <p class="formula">Interdependence of Primary, Secondary &amp; Tertiary</p>
+          <ul class="clean-list">
+            <li><strong>Primary Sector (Agriculture &amp; Allied):</strong> Goods produced by directly exploiting natural resources (agriculture, dairy, fishing, forestry, mineral extraction). Called primary because it forms the base for all other products.</li>
+            <li><strong>Secondary Sector (Industrial / Manufacturing):</strong> Natural products changed into other forms through manufacturing processes (spinning cotton yarn into cloth, sugarcane into sugar, iron ore into steel).</li>
+            <li><strong>Tertiary Sector (Services):</strong> Activities that generate services rather than goods. Helps support the production process (transport, storage, banking, communication, insurance, IT).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📈 Measuring GDP &amp; Historical Shifts</h3>
+          <p class="formula">GDP = Value of Final Goods &amp; Services Produced in 1 Year</p>
+          <ul class="clean-list">
+            <li><strong>Avoiding Double Counting:</strong> Only the value of <em>final goods and services</em> is counted, not intermediate goods (e.g., value of biscuits includes wheat, flour, sugar, and oil).</li>
+            <li><strong>Historical Shift in Developed Countries:</strong> Initially primary sector was dominant; industrial revolution made secondary sector dominant; today, tertiary sector employs most people and produces maximum output.</li>
+            <li><strong>The Indian Paradox (1973–74 vs 2013–14):</strong>
+              <br/>• Tertiary sector has emerged as the largest producing sector in GDP (over 50%).
+              <br/>• But employment did not shift similarly: primary sector still employs nearly 44% of workers, while producing less than 15% of GDP.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>👨‍🌾 Unemployment &amp; Job Creation: MGNREGA</h3>
+          <p class="formula">Underemployment / Disguised Unemployment</p>
+          <ul class="clean-list">
+            <li><strong>Disguised Unemployment:</strong> More people work on a farm or small shop than required. Even if several people are moved out, production will not be affected. People are visibly working, but all are made to work less than their potential.</li>
+            <li><strong>Open Unemployment:</strong> A person is willing to work at prevailing wages but cannot find any job.</li>
+            <li><strong>Creating Employment:</strong> Low-interest credit, dams and canals for multi-cropping, cold storage facilities, rural transport, agro-processing mills, and tourism.</li>
+            <li><strong>MGNREGA 2005:</strong> Mahatma Gandhi National Rural Employment Guarantee Act guarantees <strong>100 days of guaranteed wage employment</strong> per year to rural households; provides unemployment allowance if government fails to provide work within 15 days.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🏭 Organized vs. Unorganized &amp; Ownership</h3>
+          <p class="formula">Classification by Conditions of Work and Ownership</p>
+          <ul class="clean-list">
+            <li><strong>Organized Sector:</strong> Enterprises registered with the government that follow laws (Factories Act, Minimum Wages Act). Workers have job security, fixed working hours, overtime pay, paid leave, PF, and medical benefits.</li>
+            <li><strong>Unorganized Sector:</strong> Small, scattered units outside government control. Low, irregular wages, no job security, no paid leave or overtime, and rampant exploitation. Vast majority of Indian labor (over 80%) works here.</li>
+            <li><strong>Public Sector vs. Private Sector:</strong>
+              <br/>• <em>Public Sector:</em> Government owns assets and provides all services (Railways, BSNL, Post Office). Purpose is public welfare, not mere profit.
+              <br/>• <em>Private Sector:</em> Ownership of assets and delivery of services in hands of private individuals/companies (TATA, Reliance, Infosys). Guided by profit motive.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: The Interdependent Sectors &amp; The Employment-GDP Mismatch</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · Interdependence of Economic Sectors</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Interdependence of three sectors">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Primary Sector -->
+              <rect x="25" y="80" width="115" height="90" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="6"/>
+              <text x="82" y="105" fill="#15803d" font-size="11" font-weight="bold" text-anchor="middle">PRIMARY</text>
+              <text x="82" y="125" fill="#334155" font-size="9" text-anchor="middle">Cotton, sugarcane</text>
+              <text x="82" y="142" fill="#334155" font-size="9" text-anchor="middle">Raw materials</text>
+
+              <!-- Secondary Sector -->
+              <rect x="172" y="80" width="115" height="90" fill="#eff6ff" stroke="#2563eb" stroke-width="2" rx="6"/>
+              <text x="230" y="105" fill="#1d4ed8" font-size="11" font-weight="bold" text-anchor="middle">SECONDARY</text>
+              <text x="230" y="125" fill="#334155" font-size="9" text-anchor="middle">Textile mills, sugar</text>
+              <text x="230" y="142" fill="#334155" font-size="9" text-anchor="middle">Factory manufacturing</text>
+
+              <!-- Tertiary Sector -->
+              <rect x="320" y="80" width="115" height="90" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="6"/>
+              <text x="377" y="105" fill="#b45309" font-size="11" font-weight="bold" text-anchor="middle">TERTIARY</text>
+              <text x="377" y="125" fill="#334155" font-size="9" text-anchor="middle">Transport, banking</text>
+              <text x="377" y="142" fill="#334155" font-size="9" text-anchor="middle">Retail &amp; marketing</text>
+
+              <!-- Flow Arrows -->
+              <path d="M 140 125 L 170 125" stroke="#0d9488" stroke-width="3" fill="none"/>
+              <polygon points="170,120 177,125 170,130" fill="#0d9488"/>
+
+              <path d="M 287 125 L 317 125" stroke="#0d9488" stroke-width="3" fill="none"/>
+              <polygon points="317,120 324,125 317,130" fill="#0d9488"/>
+
+              <!-- Bottom Feedback Loop -->
+              <path d="M 377 170 Q 230 220 82 170" stroke="#64748b" stroke-dasharray="4" stroke-width="2" fill="none"/>
+              <text x="230" y="215" fill="#64748b" font-size="9" text-anchor="middle">Services support farming and manufacturing (tractors, credit, storage)</text>
+            </svg>
+          </div>
+          <p class="caption">No sector operates in isolation: tertiary services link farm inputs, factory production, and end-consumer distribution.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · The Indian Sectoral Mismatch: GDP vs. Employment</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="GDP vs Employment Mismatch">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Share in GDP Chart -->
+              <text x="120" y="40" fill="#0f172a" font-size="12" font-weight="bold" text-anchor="middle">Share in GDP (~55% Tertiary)</text>
+              <!-- Bar Primary -->
+              <rect x="40" y="160" width="40" height="40" fill="#16a34a"/>
+              <text x="60" y="150" fill="#166534" font-size="10" font-weight="bold" text-anchor="middle">14%</text>
+              <text x="60" y="215" fill="#475569" font-size="9" text-anchor="middle">Primary</text>
+              <!-- Bar Secondary -->
+              <rect x="95" y="120" width="40" height="80" fill="#2563eb"/>
+              <text x="115" y="110" fill="#1d4ed8" font-size="10" font-weight="bold" text-anchor="middle">28%</text>
+              <text x="115" y="215" fill="#475569" font-size="9" text-anchor="middle">Sec</text>
+              <!-- Bar Tertiary -->
+              <rect x="150" y="60" width="40" height="140" fill="#d97706"/>
+              <text x="170" y="50" fill="#b45309" font-size="10" font-weight="bold" text-anchor="middle">58%</text>
+              <text x="170" y="215" fill="#475569" font-size="9" text-anchor="middle">Tertiary</text>
+
+              <!-- Share in Employment Chart -->
+              <text x="340" y="40" fill="#0f172a" font-size="12" font-weight="bold" text-anchor="middle">Share in Employment (44% Primary)</text>
+              <!-- Bar Primary -->
+              <rect x="260" y="90" width="40" height="110" fill="#16a34a"/>
+              <text x="280" y="80" fill="#166534" font-size="10" font-weight="bold" text-anchor="middle">44%</text>
+              <text x="280" y="215" fill="#475569" font-size="9" text-anchor="middle">Primary</text>
+              <!-- Bar Secondary -->
+              <rect x="315" y="130" width="40" height="70" fill="#2563eb"/>
+              <text x="335" y="120" fill="#1d4ed8" font-size="10" font-weight="bold" text-anchor="middle">25%</text>
+              <text x="335" y="215" fill="#475569" font-size="9" text-anchor="middle">Sec</text>
+              <!-- Bar Tertiary -->
+              <rect x="370" y="115" width="40" height="85" fill="#d97706"/>
+              <text x="390" y="105" fill="#b45309" font-size="10" font-weight="bold" text-anchor="middle">31%</text>
+              <text x="390" y="215" fill="#475569" font-size="9" text-anchor="middle">Tertiary</text>
+            </svg>
+          </div>
+          <p class="caption">The primary structural weakness of India: services produce over half of output, but nearly half the workforce remains tied to low-yielding agriculture (disguised unemployment).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Board Exam Quiz Section (20 Questions) -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Quiz</h2>
+          <p class="lead" style="margin-bottom:0;">Test your understanding of Economic Sectors, GDP Calculation, Disguised Unemployment, and MGNREGA.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizContainer">
+        <!-- JS rendered -->
+      </div>
+
+      <div class="quiz-footer-actions">
+        <button type="button" class="button" id="resetQuizBtn">Reset Quiz</button>
+        <span class="small" id="quizProgressText">0 of 20 answered</span>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+      <h2>Excel in CBSE Class 10 Economics</h2>
+      <p>Master graphs, GDP calculations, sector shifts, and scoring methodologies with dedicated expert mentoring.</p>
+      <a href={calBookingUrl} class="button">Book a Doubt Clearing Session</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "1. Activities that produce goods by directly exploiting natural resources belong to which sector?",
+      options: [
+        "Primary Sector",
+        "Secondary Sector",
+        "Tertiary Sector",
+        "Information Sector"
+      ],
+      correct: 0,
+      explanation: "The Primary sector involves activities directly utilizing natural assets like soil, rain, and minerals (e.g. agriculture, forestry, mining)."
+    },
+    {
+      q: "2. Manufacturing cotton yarn into cloth and converting sugarcane into sugar are activities belonging to which sector?",
+      options: [
+        "Primary Sector",
+        "Secondary Sector",
+        "Tertiary Sector",
+        "Quaternary Sector"
+      ],
+      correct: 1,
+      explanation: "The Secondary sector transforms raw materials into finished consumer goods through industrial and manual manufacturing processes."
+    },
+    {
+      q: "3. Which of the following is an example of an activity in the Tertiary sector?",
+      options: [
+        "Dairy farming",
+        "Brick making",
+        "Transport and banking services",
+        "Mining coal"
+      ],
+      correct: 2,
+      explanation: "The Tertiary sector consists of services that aid production and distribution, such as transport, banking, communication, and storage."
+    },
+    {
+      q: "4. What is 'Gross Domestic Product' (GDP)?",
+      options: [
+        "Total value of all final goods and services produced within a country during a particular year",
+        "Total monetary value of all agricultural crops harvested in five years",
+        "Value of exported goods minus imported raw materials",
+        "Total wealth possessed by the richest 50 corporate firms"
+      ],
+      correct: 0,
+      explanation: "GDP is the total market value of all final goods and services produced within a nation's borders during a single accounting year."
+    },
+    {
+      q: "5. Why are intermediate goods NOT included in GDP calculations?",
+      options: [
+        "Because intermediate goods have zero economic value",
+        "To avoid double counting, since the value of intermediate goods is already included in final goods",
+        "Because intermediate goods are manufactured only by foreign companies",
+        "Because tax rates on intermediate goods are not known"
+      ],
+      correct: 1,
+      explanation: "Including intermediate goods (like flour and sugar used in making biscuits) would count their value multiple times, artificially inflating GDP."
+    },
+    {
+      q: "6. Which sector has emerged as the largest producing sector in India over the past 40 years?",
+      options: [
+        "Primary Sector",
+        "Secondary Sector",
+        "Tertiary Sector (Services)",
+        "Handicrafts Sector"
+      ],
+      correct: 2,
+      explanation: "The Tertiary (services) sector has grown most rapidly and contributes more than 50% of India's GDP."
+    },
+    {
+      q: "7. Why has the Tertiary sector grown so rapidly in India?",
+      options: [
+        "Development of agriculture and industry generates greater demand for services like transport, trade, and storage",
+        "Rise in income levels leads to increased demand for tourism, private hospitals, dining, and IT",
+        "Government provision of basic services like healthcare, education, defence, and communications",
+        "All of the above"
+      ],
+      correct: 3,
+      explanation: "All three factors—provision of basic state services, inter-sectoral demand from farming and industry, and consumer demand from rising incomes—drove services growth."
+    },
+    {
+      q: "8. What is the historical anomaly in the Indian economy's structural transformation?",
+      options: [
+        "While tertiary sector produces over half the GDP, the primary sector still employs nearly half the workforce",
+        "The country has no factories whatsoever",
+        "Secondary sector generates 90% of all national employment",
+        "Tertiary sector employs 100% of the rural population"
+      ],
+      correct: 0,
+      explanation: "Unlike developed nations where employment shifted to industry and services, in India nearly 44% of workers remain trapped in agriculture despite its small GDP share."
+    },
+    {
+      q: "9. What is 'disguised unemployment' (underemployment)?",
+      options: [
+        "A situation where workers are openly unemployed with zero jobs",
+        "A situation where more people are engaged in an activity than required, so that everyone works less than their full potential",
+        "When people wear disguises to their office jobs",
+        "When workers go on an indefinite nationwide strike"
+      ],
+      correct: 1,
+      explanation: "Underemployment or disguised unemployment occurs when more people work on a family farm or store than necessary. Removing workers does not decrease overall production."
+    },
+    {
+      q: "10. In which sector is disguised unemployment most predominantly found in India?",
+      options: [
+        "Information Technology",
+        "Agriculture",
+        "Automobile assembly plants",
+        "Commercial banking"
+      ],
+      correct: 1,
+      explanation: "Disguised unemployment is most severe in Indian agriculture, where millions of smallholders and family members work on marginal plots with low productivity."
+    },
+    {
+      q: "11. What is the full form of MGNREGA?",
+      options: [
+        "Mahatma Gandhi National Rural Employment Guarantee Act",
+        "Modern Government National Railway Expansion Group Act",
+        "Municipal Governance and Natural Resource Energy Generation Act",
+        "Mahatma Gandhi National Rehabilitation and Environment Growth Agency"
+      ],
+      correct: 0,
+      explanation: "MGNREGA stands for Mahatma Gandhi National Rural Employment Guarantee Act, enacted in 2005."
+    },
+    {
+      q: "12. Under MGNREGA 2005, how many days of guaranteed wage employment are provided per year to rural households?",
+      options: [
+        "50 days",
+        "100 days",
+        "200 days",
+        "365 days"
+      ],
+      correct: 1,
+      explanation: "MGNREGA legally guarantees 100 days of unskilled manual wage employment every financial year to any rural household demanding work."
+    },
+    {
+      q: "13. What happens under MGNREGA if the government fails to provide employment within 15 days of application?",
+      options: [
+        "The applicant is given an unemployment allowance",
+        "The applicant must reapply next year",
+        "The applicant is arrested",
+        "The scheme is permanently canceled"
+      ],
+      correct: 0,
+      explanation: "Under MGNREGA, if work is not allotted within 15 days of applying, the applicant is entitled to receive a daily unemployment allowance from the state."
+    },
+    {
+      q: "14. Which characteristic strictly applies to the 'Organized Sector'?",
+      options: [
+        "Jobs are low-paid and irregular without any contract",
+        "Enterprises are registered with the government and follow labour laws (Factories Act, PF, paid leaves)",
+        "No job security and arbitrary dismissals without notice",
+        "Employees work unlimited overtime without compensation"
+      ],
+      correct: 1,
+      explanation: "The organized sector comprises registered firms following formal labor regulations, offering job security, fixed working hours, and social security benefits."
+    },
+    {
+      q: "15. Why do workers in the 'Unorganized Sector' face rampant vulnerability and exploitation?",
+      options: [
+        "There are no fixed hours, no overtime pay, no paid holidays, and workers can be asked to leave at any time without reason",
+        "They receive higher salaries than corporate CEOs",
+        "They are protected by the Supreme Court from working on weekends",
+        "They are required to wear expensive suits to work"
+      ],
+      correct: 0,
+      explanation: "The unorganized sector operates largely outside statutory oversight; jobs are insecure, poorly paid, and devoid of medical, pension, or leave protections."
+    },
+    {
+      q: "16. Which of the following enterprises belongs to the 'Public Sector'?",
+      options: [
+        "Tata Consultancy Services (TCS)",
+        "Indian Railways",
+        "Reliance Industries Limited",
+        "Infosys Technologies"
+      ],
+      correct: 1,
+      explanation: "Indian Railways is completely owned and operated by the Government of India, making it a classic public sector enterprise."
+    },
+    {
+      q: "17. What is the primary driving motive of the 'Private Sector'?",
+      options: [
+        "Maximizing profit for the company owners and shareholders",
+        "Providing free food and shelter to all citizens unconditionally",
+        "Ensuring regional balanced development regardless of losses",
+        "Collecting income tax on behalf of the Election Commission"
+      ],
+      correct: 0,
+      explanation: "Private sector enterprises exist fundamentally to generate profit for their private investors and shareholders."
+    },
+    {
+      q: "18. Why must certain critical activities (like constructing large dams, railways, and rural power grids) be undertaken by the Public Sector?",
+      options: [
+        "Because private firms are legally prohibited from building roads",
+        "Because they require massive financial investments beyond private capacity and are meant to provide cheap services for the public good",
+        "Because foreign countries do not allow private firms in infrastructure",
+        "Because government workers work without any salaries"
+      ],
+      correct: 1,
+      explanation: "Heavy infrastructure projects require enormous capital outlays and long gestation periods with low direct profit margins, necessitating government investment."
+    },
+    {
+      q: "19. Assertion (A): In India, disguised unemployment is extremely common in the agricultural sector.\nReason (R): More people are engaged in agriculture than needed; if five people work where two are sufficient, the marginal productivity of the extra three workers is virtually zero.",
+      options: [
+        "Both A and R are true and R is the correct explanation of A",
+        "Both A and R are true but R is not the correct explanation of A",
+        "A is true but R is false",
+        "A is false but R is true"
+      ],
+      correct: 0,
+      explanation: "Both statements are correct: family farming absorbs excess labor where workers appear busy but do not add to total output, leading to disguised unemployment."
+    },
+    {
+      q: "20. How can we create sustainable employment in semi-rural areas?",
+      options: [
+        "By setting up dal mills, cold storage facilities, and honey collection centers",
+        "By providing easy credit to dig irrigation wells and buy high-yielding seeds",
+        "By developing rural roads and village tourism",
+        "All of the above"
+      ],
+      correct: 3,
+      explanation: "A combination of agricultural credit, agro-processing industries, rural transport infrastructure, and allied enterprises generates sustainable jobs in villages."
+    }
+  ];
+
+  function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((item, idx) => {
+      const qCard = document.createElement('div');
+      qCard.className = 'quiz-card';
+      qCard.id = `qCard_${idx}`;
+
+      const title = document.createElement('h3');
+      title.className = 'quiz-question';
+      title.textContent = item.q;
+      qCard.appendChild(title);
+
+      const optList = document.createElement('div');
+      optList.className = 'quiz-options';
+
+      item.options.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+        btn.addEventListener('click', () => handleSelectOption(idx, optIdx));
+        optList.appendChild(btn);
+      });
+      qCard.appendChild(optList);
+
+      const feedback = document.createElement('div');
+      feedback.className = 'quiz-feedback';
+      feedback.id = `feedback_${idx}`;
+      qCard.appendChild(feedback);
+
+      container.appendChild(qCard);
+    });
+  }
+
+  let userAnswers = {};
+
+  function handleSelectOption(qIdx, optIdx) {
+    if (userAnswers[qIdx] !== undefined) return;
+    userAnswers[qIdx] = optIdx;
+
+    const q = questions[qIdx];
+    const isCorrect = (optIdx === q.correct);
+    const card = document.getElementById(`qCard_${qIdx}`);
+    const btns = card.querySelectorAll('.quiz-opt-btn');
+    const fb = document.getElementById(`feedback_${qIdx}`);
+
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.correct) {
+        btn.classList.add('opt-correct');
+      } else if (i === optIdx) {
+        btn.classList.add('opt-wrong');
+      }
+    });
+
+    if (isCorrect) {
+      fb.className = 'quiz-feedback feedback-correct';
+      fb.innerHTML = `<strong>Correct!</strong> ${q.explanation}`;
+    } else {
+      fb.className = 'quiz-feedback feedback-wrong';
+      fb.innerHTML = `<strong>Incorrect.</strong> ${q.explanation}`;
+    }
+
+    updateScoreSummary();
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

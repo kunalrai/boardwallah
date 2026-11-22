@@ -1,0 +1,646 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Power Sharing | CBSE Class 10 Civics | ${provider.name}`}
+  description="CBSE Class 10 Civics Chapter 1 study notes on Power Sharing. Case studies of Belgium and Sri Lanka, majoritarianism vs accommodation, prudential & moral reasons, horizontal vs vertical power sharing, and an interactive 20-question board quiz."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Power Sharing
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Social Science · Civics Chapter 1</span>
+      <h1>Power Sharing</h1>
+      <p class="lead">
+        Master democratic power-sharing models: comparative analysis of ethnic compositions in Belgium and Sri Lanka, majoritarianism vs. accommodation, prudential vs. moral arguments, and four constitutional forms of power sharing.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Key Political Concepts &amp; Case Studies</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🇧🇪 Belgium: Ethnic Diversity &amp; Accommodation</h3>
+          <p class="formula">Complex Linguistic Composition</p>
+          <ul class="clean-list">
+            <li><strong>Population Distribution:</strong> 59% live in the Flemish region and speak <strong>Dutch</strong>; 40% live in the Wallonia region and speak <strong>French</strong>; 1% speak <strong>German</strong>.</li>
+            <li><strong>Capital City (Brussels):</strong> 80% speak French, while 20% speak Dutch (French minority was relatively rich and powerful).</li>
+            <li><strong>Belgian Accommodation Model (1970–1993):</strong> The constitution was amended four times to work out an ingenious arrangement:
+              <br/>• Equal number of Dutch and French-speaking ministers in the central government.
+              <br/>• Many powers of central government transferred to State governments; states are not subordinate to the Centre.
+              <br/>• Brussels has a separate government with equal representation for both communities.
+              <br/>• <strong>Community Government:</strong> Elected by people belonging to one language community (Dutch, French, or German) regarding cultural, educational, and language-related issues.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🇱🇰 Sri Lanka: Ethnic Composition &amp; Majoritarianism</h3>
+          <p class="formula">Sinhala Dominance &amp; Civil War</p>
+          <ul class="clean-list">
+            <li><strong>Population Distribution:</strong> 74% <strong>Sinhala speakers</strong> (predominantly Buddhist); 18% <strong>Tamil speakers</strong> (subdivided into 13% Sri Lankan Tamils in north/east, and 5% Indian Tamils).</li>
+            <li><strong>Majoritarian Measures (1956 Act):</strong>
+              <br/>• Recognized Sinhala as the only official language, disregarding Tamil.
+              <br/>• Preferential policies favoured Sinhala applicants for university positions and government jobs.
+              <br/>• New constitution mandated that the State shall foster and protect Buddhism.
+            </li>
+            <li><strong>Consequences:</strong> Alienation among Sri Lankan Tamils led to demands for an independent <em>Tamil Eelam</em> (state). Distrust turned into a bloody <strong>Civil War</strong>, devastating social, cultural, and economic life.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>⚖️ Why is Power Sharing Desirable?</h3>
+          <p class="formula">Prudential vs. Moral Reasons</p>
+          <ul class="clean-list">
+            <li><strong>Prudential Reasons (Focus on Practical Outcomes):</strong>
+              <br/>• Power sharing helps to reduce the possibility of conflict between social groups.
+              <br/>• Ensures the political stability of democratic order.
+              <br/>• Tyranny of the majority undermines minority rights and ultimately ruins the majority itself.
+            </li>
+            <li><strong>Moral Reasons (Focus on the Intrinsic Value of Democracy):</strong>
+              <br/>• Power sharing is the very <strong>spirit of democracy</strong>.
+              <br/>• A democratic rule involves sharing power with those affected by its exercise and who have to live with its effects.
+              <br/>• People have a right to be consulted on how they are to be governed.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🏛️ Four Major Forms of Power Sharing</h3>
+          <p class="formula">Institutional Arrangements in Modern Democracies</p>
+          <ul class="clean-list">
+            <li><strong>1. Horizontal Distribution of Power:</strong> Shared among different organs of government (Legislature, Executive, Judiciary). Exercises a <strong>system of checks and balances</strong>; no single organ has unlimited power.</li>
+            <li><strong>2. Vertical Distribution of Power (Federalism):</strong> Shared among governments at different levels (Central/Union, State/Provincial, and Local governments).</li>
+            <li><strong>3. Among Social Groups:</strong> Power shared among different religious and linguistic groups (e.g., Belgium's Community Government, Reserved Constituencies in India).</li>
+            <li><strong>4. Among Political Parties &amp; Pressure Groups:</strong> Coalition governments formed when no single party secures a majority; competition ensures power does not remain in one hand.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: Horizontal vs. Vertical Power Sharing</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · Horizontal Power Sharing: Checks &amp; Balances</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Horizontal power sharing organs">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- 3 Organs Placed Horizontally at Same Level -->
+              <!-- 1. Legislature -->
+              <rect x="25" y="70" width="120" height="90" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+              <text x="85" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#0369a1">Legislature</text>
+              <text x="85" y="125" text-anchor="middle" font-size="10" fill="#0c4a6e">Makes Laws</text>
+              <text x="85" y="145" text-anchor="middle" font-size="9" fill="#0284c7">(Parliament / Assembly)</text>
+
+              <!-- Two-way Arrow 1 -->
+              <line x1="145" y1="115" x2="165" y2="115" stroke="#ef4444" stroke-width="2"/>
+              <polygon points="145,111 145,119 137,115" fill="#ef4444"/>
+              <polygon points="165,111 165,119 173,115" fill="#ef4444"/>
+
+              <!-- 2. Executive -->
+              <rect x="170" y="70" width="120" height="90" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+              <text x="230" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">Executive</text>
+              <text x="230" y="125" text-anchor="middle" font-size="10" fill="#78350f">Implements Laws</text>
+              <text x="230" y="145" text-anchor="middle" font-size="9" fill="#b45309">(Ministers / Civil Servants)</text>
+
+              <!-- Two-way Arrow 2 -->
+              <line x1="290" y1="115" x2="310" y2="115" stroke="#ef4444" stroke-width="2"/>
+              <polygon points="290,111 290,119 282,115" fill="#ef4444"/>
+              <polygon points="310,111 310,119 318,115" fill="#ef4444"/>
+
+              <!-- 3. Judiciary -->
+              <rect x="315" y="70" width="120" height="90" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+              <text x="375" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">Judiciary</text>
+              <text x="375" y="125" text-anchor="middle" font-size="10" fill="#064e3b">Interprets Laws</text>
+              <text x="375" y="145" text-anchor="middle" font-size="9" fill="#059669">(Supreme &amp; High Courts)</text>
+
+              <!-- Checks and balances bottom banner -->
+              <rect x="40" y="180" width="380" height="45" rx="6" fill="#0f766e"/>
+              <text x="230" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">System of Checks &amp; Balances</text>
+              <text x="230" y="215" text-anchor="middle" font-size="9" fill="#ccfbf1">All organs are placed at the same level; each checks the other, preventing absolute power</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Horizontal power sharing places different government organs at the same horizontal tier with mutual checks.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · Vertical (Federal) Power Sharing Tiers</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Vertical power sharing tiers">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Tier 1: Union/Central Govt -->
+              <rect x="70" y="25" width="320" height="48" rx="6" fill="#0f766e"/>
+              <text x="230" y="47" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Union / Central Government</text>
+              <text x="230" y="62" text-anchor="middle" font-size="9" fill="#ccfbf1">National matters: Defence, Foreign Affairs, Currency</text>
+
+              <!-- Downward Arrow 1 -->
+              <line x1="230" y1="73" x2="230" y2="92" stroke="#64748b" stroke-width="2"/>
+              <polygon points="225,90 235,90 230,96" fill="#64748b"/>
+
+              <!-- Tier 2: State Govt -->
+              <rect x="90" y="96" width="280" height="48" rx="6" fill="#0284c7"/>
+              <text x="230" y="118" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">State / Provincial Governments</text>
+              <text x="230" y="133" text-anchor="middle" font-size="9" fill="#e0f2fe">Regional matters: Police, Agriculture, Local Trade</text>
+
+              <!-- Downward Arrow 2 -->
+              <line x1="230" y1="144" x2="230" y2="163" stroke="#64748b" stroke-width="2"/>
+              <polygon points="225,161 235,161 230,167" fill="#64748b"/>
+
+              <!-- Tier 3: Local Govt -->
+              <rect x="110" y="167" width="240" height="48" rx="6" fill="#10b981"/>
+              <text x="230" y="189" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Local Government</text>
+              <text x="230" y="204" text-anchor="middle" font-size="9" fill="#ecfdf5">Panchayats (Rural) &amp; Municipalities (Urban)</text>
+
+              <text x="230" y="235" text-anchor="middle" font-size="10" fill="#64748b">Vertical division distributes sovereign constitutional authority from higher to lower levels.</text>
+            </svg>
+          </div>
+          <p class="visual-caption">Vertical power sharing involves devolution of authority across central, state, and grassroots local tiers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive 20-Question Quiz -->
+    <section class="section">
+      <h2>Interactive CBSE Board Exam Quiz (20 Questions)</h2>
+      <p class="muted">Test your concepts on Belgium and Sri Lanka case studies, majoritarianism, and power-sharing forms with board exam standard MCQs.</p>
+
+      <div class="quiz-container card" id="quiz-box">
+        <div class="quiz-header-bar">
+          <span class="quiz-counter" id="quiz-counter">Question 1 of 20</span>
+          <span class="quiz-score" id="quiz-score">Score: 0 / 20</span>
+        </div>
+
+        <div class="quiz-question-body">
+          <p class="quiz-q-text" id="quiz-question">Loading question...</p>
+          <div class="quiz-options-list" id="quiz-options"></div>
+          <div class="quiz-feedback" id="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-footer-actions">
+          <button class="button secondary" id="quiz-prev-btn" disabled>← Previous</button>
+          <button class="button" id="quiz-next-btn" disabled>Next Question →</button>
+        </div>
+      </div>
+
+      <div class="quiz-completed-banner card" id="quiz-result-box" style="display:none; text-align:center; padding:2.5rem;">
+        <h3>Quiz Completed! 🎉</h3>
+        <p class="quiz-final-score" id="quiz-final-score" style="font-size:1.4rem; font-weight:700; color:var(--brand); margin:1rem 0;"></p>
+        <p id="quiz-final-msg" class="muted"></p>
+        <button class="button" id="quiz-restart-btn" style="margin-top:1rem;">Retake Quiz</button>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <h2>Need personalized guidance for Class 10 Social Science?</h2>
+      <p>Book a free {provider.trial.duration_minutes}-minute trial session with {provider.tutor_name} (online or at-home) to master answer-writing frameworks and score 100% in CBSE Board Exams.</p>
+      <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book Free Trial</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+(function() {
+  const quizData = [
+    {
+      q: "In Belgium, what percentage of the total population lives in the Flemish region and speaks Dutch?",
+      options: ["40%", "59%", "80%", "20%"],
+      answer: 1,
+      explanation: "In Belgium, 59% of the population lives in the Flemish region and speaks the Dutch language, while 40% live in Wallonia and speak French."
+    },
+    {
+      q: "In the capital city Brussels, what was the linguistic breakdown of the population?",
+      options: ["80% French-speaking, 20% Dutch-speaking", "59% Dutch-speaking, 40% French-speaking", "50% French-speaking, 50% Dutch-speaking", "70% German-speaking, 30% French-speaking"],
+      answer: 0,
+      explanation: "In Brussels, 80% of the people speak French, while 20% speak Dutch, which was the reverse of the countrywide majority."
+    },
+    {
+      q: "Which community in Belgium was relatively rich and powerful compared to the Dutch-speaking majority?",
+      options: ["German-speaking minority", "French-speaking minority", "Dutch-speaking majority", "English-speaking expatriates"],
+      answer: 1,
+      explanation: "The minority French-speaking community was relatively rich and powerful, which was resented by the Dutch-speaking community."
+    },
+    {
+      q: "How many times was the Constitution of Belgium amended between 1970 and 1993 to accommodate ethnic diversity?",
+      options: ["Two times", "Three times", "Four times", "Five times"],
+      answer: 2,
+      explanation: "Between 1970 and 1993, the Belgian leaders amended their constitution four times to enable everyone to live together peacefully within the same country."
+    },
+    {
+      q: "What is the unique third tier of government in Belgium called?",
+      options: ["Provincial Government", "Community Government", "District Council", "Gram Panchayat"],
+      answer: 1,
+      explanation: "Belgium has a third level called 'Community Government', elected by people belonging to one language community (Dutch, French, or German) regarding cultural and educational matters."
+    },
+    {
+      q: "Which city was chosen as the headquarters of the European Union (EU)?",
+      options: ["Paris", "Brussels", "Geneva", "Berlin"],
+      answer: 1,
+      explanation: "When many countries of Europe came together to form the European Union, Brussels was chosen as its headquarters because of its successful accommodation model."
+    },
+    {
+      q: "What was the majoritarian measure passed by the Sri Lankan parliament in 1956?",
+      options: ["Recognized Sinhala as the only official language", "Gave equal status to Tamil and Sinhala", "Granted autonomy to northern provinces", "Banned all religious institutions"],
+      answer: 0,
+      explanation: "In 1956, an Act was passed in Sri Lanka recognizing Sinhala as the only official language, thus disregarding the Tamil language."
+    },
+    {
+      q: "Which religion was given constitutional protection and fosterage by the Sri Lankan state under the 1956 constitution?",
+      options: ["Hinduism", "Buddhism", "Christianity", "Islam"],
+      answer: 1,
+      explanation: "The new constitution of Sri Lanka stipulated that the state shall protect and foster Buddhism."
+    },
+    {
+      q: "What was the primary demand of Sri Lankan Tamils that was repeatedly denied?",
+      options: ["An independent state (Tamil Eelam) in north and east Sri Lanka", "Expulsion of Sinhala speakers", "Reservation in European universities", "Annexation to India"],
+      answer: 0,
+      explanation: "By the 1980s, several political organizations were formed demanding an independent Tamil state (Tamil Eelam) in northern and eastern parts of Sri Lanka."
+    },
+    {
+      q: "Which of the following is a 'Prudential' reason for power sharing?",
+      options: ["It reduces the possibility of conflict between social groups", "It is the very spirit of democracy", "People have a right to be consulted", "It reflects moral values"],
+      answer: 0,
+      explanation: "Prudential reasons emphasize that power sharing will bring out better practical outcomes, such as reducing social conflict and political instability."
+    },
+    {
+      q: "Which of the following is a 'Moral' reason for power sharing?",
+      options: ["It prevents civil war", "It is the very spirit of democracy", "It ensures economic growth", "It controls inflation"],
+      answer: 1,
+      explanation: "Moral reasons emphasize that the very act of sharing power is valuable and embodies the fundamental spirit of democracy."
+    },
+    {
+      q: "Power shared among the Legislature, Executive, and Judiciary is called:",
+      options: ["Vertical distribution of power", "Horizontal distribution of power", "Community distribution of power", "Federal distribution of power"],
+      answer: 1,
+      explanation: "Sharing power among different organs of government at the same level (Legislature, Executive, Judiciary) is called horizontal distribution."
+    },
+    {
+      q: "The system of 'Checks and Balances' is an essential feature of which form of power sharing?",
+      options: ["Vertical division of power", "Horizontal division of power", "Community government", "Pressure groups"],
+      answer: 1,
+      explanation: "In horizontal power sharing, each organ checks the other, creating a balance of power among various institutions."
+    },
+    {
+      q: "Power shared among governments at different levels (Union, State, Local) is called:",
+      options: ["Horizontal distribution of power", "Vertical distribution of power (Federalism)", "Majoritarian power sharing", "Coalition government"],
+      answer: 1,
+      explanation: "Division of power involving higher and lower levels of government is known as vertical distribution of power or federalism."
+    },
+    {
+      q: "The system of 'Reserved Constituencies' in the Indian Parliament for SCs and STs is an example of power sharing among:",
+      options: ["Different organs of government", "Different social and weaker groups", "Different political parties", "Different levels of government"],
+      answer: 1,
+      explanation: "Reserved constituencies ensure that diverse social, religious, and socially weaker groups get fair representation in legislature and administration."
+    },
+    {
+      q: "When an alliance of two or more political parties forms a government after elections, it is called a:",
+      options: ["Majoritarian Government", "Coalition Government", "Community Government", "Unitary Government"],
+      answer: 1,
+      explanation: "When no single party gets a majority and two or more parties come together to form the government, it is called a coalition government."
+    },
+    {
+      q: "Which community in Sri Lanka had ancestors who migrated from India as plantation workers during the colonial period?",
+      options: ["Sri Lankan Tamils", "Indian Tamils", "Sinhalese", "Moors"],
+      answer: 1,
+      explanation: "Indian Tamils are those whose forefathers came from India as plantation labourers during the colonial period."
+    },
+    {
+      q: "In Belgium, what principle governs the composition of the Central Government?",
+      options: ["Equal number of Dutch and French-speaking ministers", "Proportional representation based on population", "Only Dutch-speaking ministers", "Only French-speaking ministers"],
+      answer: 0,
+      explanation: "The Belgian Constitution prescribes that the number of Dutch and French-speaking ministers shall be equal in the Central Government."
+    },
+    {
+      q: "Which concept implies that the majority community should be able to rule a country in whichever way it wants, disregarding the minority?",
+      options: ["Federalism", "Majoritarianism", "Secularism", "Pluralism"],
+      answer: 1,
+      explanation: "Majoritarianism is the belief that the majority community should dominate governance, often trampling upon the wishes and rights of the minority."
+    },
+    {
+      q: "What lesson do we draw from comparing the contrasting experiences of Belgium and Sri Lanka?",
+      options: ["Ethnic minorities should be forced to assimilate", "Power sharing and respecting minority rights maintains national unity", "Democracy cannot survive in multi-ethnic countries", "Majoritarianism brings faster economic development"],
+      answer: 1,
+      explanation: "Belgium showed that national unity is possible only by respecting the interests of diverse groups, while Sri Lanka showed that majoritarian domination tears a country apart."
+    }
+  ];
+
+  let currentIdx = 0;
+  let userAnswers = new Array(quizData.length).fill(null);
+
+  const qText = document.getElementById("quiz-question");
+  const optionsBox = document.getElementById("quiz-options");
+  const feedbackBox = document.getElementById("quiz-feedback");
+  const counterBox = document.getElementById("quiz-counter");
+  const scoreBox = document.getElementById("quiz-score");
+  const prevBtn = document.getElementById("quiz-prev-btn");
+  const nextBtn = document.getElementById("quiz-next-btn");
+  const quizBox = document.getElementById("quiz-box");
+  const resultBox = document.getElementById("quiz-result-box");
+  const finalScore = document.getElementById("quiz-final-score");
+  const finalMsg = document.getElementById("quiz-final-msg");
+  const restartBtn = document.getElementById("quiz-restart-btn");
+
+  function renderQuestion(idx) {
+    const item = quizData[idx];
+    counterBox.textContent = `Question ${idx + 1} of ${quizData.length}`;
+    qText.textContent = item.q;
+    optionsBox.innerHTML = "";
+    feedbackBox.textContent = "";
+    feedbackBox.className = "quiz-feedback";
+
+    const selected = userAnswers[idx];
+
+    item.options.forEach((optText, oIdx) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-opt-btn";
+      btn.textContent = `${String.fromCharCode(65 + oIdx)}. ${optText}`;
+
+      if (selected !== null) {
+        btn.disabled = true;
+        if (oIdx === item.answer) {
+          btn.classList.add("opt-correct");
+        } else if (oIdx === selected) {
+          btn.classList.add("opt-wrong");
+        }
+      } else {
+        btn.onclick = () => selectOption(oIdx);
+      }
+
+      optionsBox.appendChild(btn);
+    });
+
+    if (selected !== null) {
+      if (selected === item.answer) {
+        feedbackBox.textContent = `✓ Correct! ${item.explanation}`;
+        feedbackBox.classList.add("feedback-correct");
+      } else {
+        feedbackBox.textContent = `✗ Incorrect. Correct answer is option ${String.fromCharCode(65 + item.answer)}. ${item.explanation}`;
+        feedbackBox.classList.add("feedback-wrong");
+      }
+    }
+
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = selected === null;
+    nextBtn.textContent = idx === quizData.length - 1 ? "Finish Quiz →" : "Next Question →";
+    updateScoreDisplay();
+  }
+
+  function selectOption(oIdx) {
+    userAnswers[currentIdx] = oIdx;
+    renderQuestion(currentIdx);
+  }
+
+  function updateScoreDisplay() {
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    scoreBox.textContent = `Score: ${score} / ${quizData.length}`;
+  }
+
+  prevBtn.onclick = () => {
+    if (currentIdx > 0) {
+      currentIdx--;
+      renderQuestion(currentIdx);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if (currentIdx < quizData.length - 1) {
+      currentIdx++;
+      renderQuestion(currentIdx);
+    } else {
+      finishQuiz();
+    }
+  };
+
+  function finishQuiz() {
+    quizBox.style.display = "none";
+    resultBox.style.display = "block";
+    let score = 0;
+    userAnswers.forEach((ans, i) => {
+      if (ans === quizData[i].answer) score++;
+    });
+    finalScore.textContent = `Your Final Score: ${score} / ${quizData.length} (${Math.round((score / quizData.length) * 100)}%)`;
+    if (score >= 18) {
+      finalMsg.textContent = "Superb mastery! You have exceptional command over Power Sharing concepts and case studies.";
+    } else if (score >= 14) {
+      finalMsg.textContent = "Great job! Review prudential vs moral reasons and checks & balances to achieve full marks.";
+    } else {
+      finalMsg.textContent = "Review the Belgium and Sri Lanka case studies and four forms of power sharing above, then retry!";
+    }
+  }
+
+  restartBtn.onclick = () => {
+    userAnswers = new Array(quizData.length).fill(null);
+    currentIdx = 0;
+    resultBox.style.display = "none";
+    quizBox.style.display = "block";
+    renderQuestion(0);
+  };
+
+  renderQuestion(0);
+})();
+</script>
+
+<style>
+  .resource-header {
+    padding-block: 1.5rem 2rem;
+  }
+
+  .clean-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .clean-list li + li {
+    margin-top: 0.35rem;
+  }
+
+  .formula {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--brand);
+    margin: 0.4rem 0 0.6rem;
+    font-family: inherit;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .visual-badge {
+    background: var(--paper);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .svg-container {
+    padding: 1rem;
+    background: #f8fafc;
+    display: flex;
+    justify-content: center;
+  }
+
+  .svg-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .visual-caption {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+
+  /* ── Quiz Section ── */
+  .quiz-container {
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .quiz-header-bar {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--brand);
+  }
+
+  .quiz-q-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

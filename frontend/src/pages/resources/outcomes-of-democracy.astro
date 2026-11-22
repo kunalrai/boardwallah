@@ -1,0 +1,768 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Outcomes of Democracy | CBSE Class 10 Civics | ${provider.name}`}
+  description="CBSE Class 10 Civics Chapter 5 study notes on Outcomes of Democracy. Accountable, responsive, and legitimate government, economic growth vs equality, accommodation of social diversity, dignity and freedom of citizens with 20 board exam quiz questions."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Outcomes of Democracy
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Social Science · Civics Chapter 5</span>
+      <h1>Outcomes of Democracy</h1>
+      <p class="lead">
+        Evaluate democracy by its real-world outcomes: assessing political legitimacy, economic growth versus reduction of inequality, accommodation of social diversities, and the promotion of human dignity and freedom.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Assessing Democratic Performance &amp; Outcomes</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🏛️ Accountable, Responsive &amp; Legitimate</h3>
+          <p class="formula">Core Political Dimensions of Democracy</p>
+          <ul class="clean-list">
+            <li><strong>Accountable Government:</strong> Democracy produces a government that is accountable to the citizens through regular, free, and fair elections, open public debate on major policies, and the right to information (RTI).</li>
+            <li><strong>Responsive Government:</strong> Expected to be attentive to the needs, demands, and grievances of people, and free of corruption. (Democracies often fall short on corruption, but still perform better than non-democracies in listening to public anger).</li>
+            <li><strong>Legitimate Government:</strong> A democratic government is <em>people's own government</em>. It may be slow, less efficient, and not always responsive, but it possesses overwhelming moral legitimacy because it derives authority from the consent of the governed.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📈 Economic Growth vs. Reduction of Inequality</h3>
+          <p class="formula">Development Realities Across Regimes</p>
+          <ul class="clean-list">
+            <li><strong>Economic Growth (1950–2000):</strong> Dictatorships have had a slightly higher rate of economic growth on average than democracies.
+              <br/>• However, economic development depends on country's population size, global situation, cooperation from other countries, and economic priorities.
+              <br/>• The difference between democracies and dictatorships in poor countries is negligible.
+            </li>
+            <li><strong>Reduction of Inequality &amp; Poverty:</strong>
+              <br/>• Democracies are based on political equality (one person, one vote, one value).
+              <br/>• But growing economic inequalities persist: a small number of ultra-rich hold a disproportionate share of wealth, while the bottom population struggles for basic food, clothing, and shelter.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🤝 Accommodation of Social Diversity</h3>
+          <p class="formula">Two Indispensable Conditions</p>
+          <ul class="clean-list">
+            <li><strong>Conflict Management:</strong> No society can fully and permanently resolve conflicts among different groups, but democracy provides peaceful mechanisms to negotiate differences.</li>
+            <li><strong>Condition 1 (Majority is not Permanent):</strong> Majority must always work with the minority so that governments represent the general national view.</li>
+            <li><strong>Condition 2 (Rule by Majority ≠ Rule by Majority Community):</strong> Rule by majority does not mean rule by majority community in terms of religion, race, or linguistic group. Every citizen must have a chance of being in the majority at some point in time.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌟 Dignity and Freedom of Citizens</h3>
+          <p class="formula">The Supreme Triumph of Democratic Ethos</p>
+          <ul class="clean-list">
+            <li><strong>Passion for Respect &amp; Freedom:</strong> Democracy stands much superior to any other form of government in promoting the dignity and freedom of the individual.</li>
+            <li><strong>Dignity of Women:</strong> Long struggles by women have created sensitivity that respect and equal treatment of women are necessary ingredients of a democratic society.</li>
+            <li><strong>Dignity of Disadvantaged Castes:</strong> Democracy in India has strengthened the legal and moral claims of disadvantaged and discriminated castes for equal status and equal opportunity.</li>
+            <li><strong>Continuous Test:</strong> The most distinctive feature of democracy is that its examination never ends. As people get some benefits, they ask for more and want to make democracy even better. Complaints themselves testify to democratic success!</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: The Three Pillars of Democratic Output &amp; The Continuous Cycle</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · The Democratic Triad of Governance</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Accountable Responsive Legitimate">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Circle 1: Accountable -->
+              <circle cx="110" cy="115" r="60" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+              <text x="110" y="105" fill="#0369a1" font-size="12" font-weight="bold" text-anchor="middle">ACCOUNTABLE</text>
+              <text x="110" y="123" fill="#334155" font-size="9" text-anchor="middle">Regular elections</text>
+              <text x="110" y="138" fill="#334155" font-size="9" text-anchor="middle">Open debate &amp; RTI</text>
+
+              <!-- Circle 2: Responsive -->
+              <circle cx="230" cy="115" r="60" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+              <text x="230" y="105" fill="#b45309" font-size="12" font-weight="bold" text-anchor="middle">RESPONSIVE</text>
+              <text x="230" y="123" fill="#334155" font-size="9" text-anchor="middle">Attentive to public</text>
+              <text x="230" y="138" fill="#334155" font-size="9" text-anchor="middle">Grievance redressal</text>
+
+              <!-- Circle 3: Legitimate -->
+              <circle cx="350" cy="115" r="60" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+              <text x="350" y="105" fill="#15803d" font-size="12" font-weight="bold" text-anchor="middle">LEGITIMATE</text>
+              <text x="350" y="123" fill="#334155" font-size="9" text-anchor="middle">People's own govt</text>
+              <text x="350" y="138" fill="#334155" font-size="9" text-anchor="middle">Consent-driven</text>
+
+              <!-- Banner at bottom -->
+              <rect x="40" y="200" width="380" height="28" fill="#0f172a" rx="4"/>
+              <text x="230" y="219" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">Democracy may be slower, but it enjoys universal moral legitimacy</text>
+            </svg>
+          </div>
+          <p class="caption">The three vital political qualities that distinguish democracy from autocracies and monarchies.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · The Perpetual Test of Democracy</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Cycle of democratic expectations">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Circular loop nodes -->
+              <!-- Node 1: Top -->
+              <rect x="150" y="25" width="160" height="42" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" rx="6"/>
+              <text x="230" y="44" fill="#1d4ed8" font-size="11" font-weight="bold" text-anchor="middle">1. Democratic Rights Given</text>
+              <text x="230" y="58" fill="#64748b" font-size="9" text-anchor="middle">Voting, speech &amp; equality</text>
+
+              <!-- Node 2: Right -->
+              <rect x="270" y="105" width="160" height="42" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5" rx="6"/>
+              <text x="350" y="124" fill="#15803d" font-size="11" font-weight="bold" text-anchor="middle">2. Benefits Experienced</text>
+              <text x="350" y="138" fill="#64748b" font-size="9" text-anchor="middle">Citizens feel empowered</text>
+
+              <!-- Node 3: Bottom -->
+              <rect x="150" y="185" width="160" height="42" fill="#fff7ed" stroke="#f97316" stroke-width="1.5" rx="6"/>
+              <text x="230" y="204" fill="#c2410c" font-size="11" font-weight="bold" text-anchor="middle">3. Higher Expectations</text>
+              <text x="230" y="218" fill="#64748b" font-size="9" text-anchor="middle">Citizens ask for more improvements</text>
+
+              <!-- Node 4: Left -->
+              <rect x="30" y="105" width="160" height="42" fill="#fdf4ff" stroke="#a855f7" stroke-width="1.5" rx="6"/>
+              <text x="110" y="124" fill="#7e22ce" font-size="11" font-weight="bold" text-anchor="middle">4. Public Complaints</text>
+              <text x="110" y="138" fill="#64748b" font-size="9" text-anchor="middle">Sign of active democratic awareness</text>
+
+              <!-- Connecting arrows -->
+              <path d="M 310 46 Q 370 46 370 105" stroke="#0d9488" stroke-width="2" fill="none"/>
+              <path d="M 370 147 Q 370 206 310 206" stroke="#0d9488" stroke-width="2" fill="none"/>
+              <path d="M 150 206 Q 90 206 90 147" stroke="#0d9488" stroke-width="2" fill="none"/>
+              <path d="M 90 105 Q 90 46 150 46" stroke="#0d9488" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <p class="caption">The paradox of democracy: public criticism and rising expectations are the ultimate proof of a thriving democratic consciousness.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Board Exam Quiz Section (20 Questions) -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Quiz</h2>
+          <p class="lead" style="margin-bottom:0;">Test your understanding of Political Legitimacy, Economic Outcomes, and Social Dignity.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizContainer">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div class="quiz-footer-actions">
+        <button type="button" class="button" id="resetQuizBtn">Reset Quiz</button>
+        <span class="small" id="quizProgressText">0 of 20 answered</span>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+      <h2>Excel in Board Social Science</h2>
+      <p>Sharpen your analytical answers on democratic institutions, constitutional ethics, and board exam marking schemes.</p>
+      <a href={calBookingUrl} class="button">Book a Doubt Clearing Session</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "1. Why is democracy considered a better form of government than dictatorship?",
+      options: [
+        "It guarantees immediate wealth for all citizens",
+        "It promotes equality among citizens and enhances the dignity of the individual",
+        "It operates without any debates or delays in Parliament",
+        "It eliminates all personal taxes automatically"
+      ],
+      correct: 1,
+      explanation: "Democracy promotes equality, enhances individual dignity, improves the quality of decision-making, and provides a method to resolve conflicts and correct mistakes."
+    },
+    {
+      q: "2. What is meant by transparency in a democracy?",
+      options: [
+        "Citizens have the right and means to examine the process of decision-making",
+        "Government buildings must have glass walls",
+        "All civil servants must display their personal bank records on social media",
+        "Court trials must be held in sports stadiums"
+      ],
+      correct: 0,
+      explanation: "Transparency means that decisions are taken following established norms and procedures, and a citizen has the right and means to inspect how decisions were reached."
+    },
+    {
+      q: "3. What does an 'accountable government' mean in democratic theory?",
+      options: [
+        "The government is answerable to citizens for its policies and actions through regular elections and public forums",
+        "The government produces balance sheets only for international banks",
+        "Ministers cannot be questioned by media reporters",
+        "Only accountants are allowed to serve as prime ministers"
+      ],
+      correct: 0,
+      explanation: "An accountable government is answerable to the people who elected it, and can be voted out of power if it fails to fulfill its promises."
+    },
+    {
+      q: "4. Why is a democratic government called a 'legitimate government'?",
+      options: [
+        "Because it is chosen by the armed forces",
+        "Because it is people's own government and derives authority from the consent of the governed",
+        "Because it never makes any mistakes in policy",
+        "Because it guarantees 100% economic growth every decade"
+      ],
+      correct: 1,
+      explanation: "A democratic government is legitimate because it is elected through the free will and consent of the citizens, giving it an undeniable moral right to govern."
+    },
+    {
+      q: "5. What does evidence show regarding economic growth in democracies versus dictatorships between 1950 and 2000?",
+      options: [
+        "Democracies grew ten times faster than all dictatorships",
+        "Dictatorships had a slightly higher rate of economic growth on average",
+        "Both forms of government experienced identical growth rates to two decimal places",
+        "Democracies experienced severe economic depression throughout the 50 years"
+      ],
+      correct: 1,
+      explanation: "On average, dictatorships recorded slightly higher economic growth between 1950 and 2000, though the difference is minimal in poor developing nations."
+    },
+    {
+      q: "6. Why can democracy NOT be blamed solely for slow economic growth?",
+      options: [
+        "Economic growth depends on multiple factors: population size, global economy, foreign cooperation, and economic policies adopted",
+        "Because economics is not taught in democratic schools",
+        "Because democracies do not participate in international trade",
+        "Because businesses only invest in monarchies"
+      ],
+      correct: 0,
+      explanation: "Economic development is driven by demographics, international trade climate, technological capacity, natural resources, and sound policy choices, not political regime type alone."
+    },
+    {
+      q: "7. Which of the following is an area where democracies have generally failed to meet expectations?",
+      options: [
+        "Providing the right to vote",
+        "Reducing economic inequalities and eradicating extreme poverty rapidly",
+        "Holding periodic elections",
+        "Allowing multiple political parties to contest"
+      ],
+      correct: 1,
+      explanation: "While democracies provide political equality, they have struggled to reduce economic inequality, with wealth disproportionately concentrated among the super-rich."
+    },
+    {
+      q: "8. What is the fundamental condition for democracy to accommodate social diversities successfully?",
+      options: [
+        "Democracy must remain rule by the majority community permanently",
+        "The majority must always work with the minority so that governance reflects the general view",
+        "All religious minorities must give up their distinct customs",
+        "Only the most populous linguistic group can contest parliamentary seats"
+      ],
+      correct: 1,
+      explanation: "Democracy is not simply rule by majority opinion; the majority must always accommodate the minority so that government represents the broad collective interest."
+    },
+    {
+      q: "9. What distinguishes 'rule by majority' in a democracy from 'rule by majority community'?",
+      options: [
+        "Rule by majority means different persons and groups can form a majority in different decisions, not permanent rule by one religion or race",
+        "There is no difference between the two terms",
+        "Rule by majority community is required in federal constitutions",
+        "Rule by majority applies only to village councils"
+      ],
+      correct: 0,
+      explanation: "Democratic majority is fluid and issue-based, where any citizen or group can be part of the majority on different matters; it is never a permanent religious or ethnic hegemony."
+    },
+    {
+      q: "10. How does democracy enhance the dignity of women?",
+      options: [
+        "By recognizing equality, non-discrimination, and equal moral status as legal and political rights",
+        "By exempting women from paying any civil penalties",
+        "By requiring women to work only in government ministries",
+        "By eliminating all domestic disputes by presidential decree"
+      ],
+      correct: 0,
+      explanation: "Democracy establishes the principle of gender equality in law and politics, providing women with a legitimate moral and legal platform to challenge discrimination."
+    },
+    {
+      q: "11. Why do caste-based claims for dignity and equal status carry weight in modern India?",
+      options: [
+        "Because democratic institutions have legally and morally legitimized equality and outlawed caste discrimination",
+        "Because caste panchayats possess nuclear weapons",
+        "Because the caste system was invented by the United Nations",
+        "Because upper castes decided to abolish all religious temples"
+      ],
+      correct: 0,
+      explanation: "The democratic constitution provides disadvantaged castes with legal remedies and moral grounds to demand equal opportunity and respect."
+    },
+    {
+      q: "12. What does widespread public complaint about governance signify in a democracy?",
+      options: [
+        "The total failure and collapse of democratic institutions",
+        "The success of democracy, showing that citizens have developed critical awareness and expect accountability",
+        "That the country is heading towards civil war",
+        "That elections should be indefinitely suspended"
+      ],
+      correct: 1,
+      explanation: "Complaints show that citizens are no longer passive subjects; they are aware of their rights and critically evaluate the performance of their rulers."
+    },
+    {
+      q: "13. What is the most distinctive feature of democracy regarding its evaluation?",
+      options: [
+        "Its examination is never over; as it passes one test, it produces another test",
+        "It can be evaluated only once every fifty years",
+        "Only foreign observers can grade a democratic regime",
+        "Democratic governments are immune from public assessment"
+      ],
+      correct: 0,
+      explanation: "Democracy is unique because its examination never finishes. Fulfilling one expectation creates new demands, driving continuous societal improvement."
+    },
+    {
+      q: "14. How does democracy compare to dictatorship in terms of decision-making process?",
+      options: [
+        "Democracy is always faster because the President decides unilaterally",
+        "Democracy takes more time because it follows procedures and negotiations, but its decisions are more acceptable and effective",
+        "Democracy does not make any decisions at all",
+        "Dictatorships always consult all citizens before passing laws"
+      ],
+      correct: 1,
+      explanation: "Democracy takes time for consultation and debate, but the resulting decisions are more widely accepted by the people and more durable."
+    },
+    {
+      q: "15. What is the status of the 'Right to Information' (RTI Act) in supporting democracy?",
+      options: [
+        "It acts as an instrument of transparency allowing citizens to inspect official records and question administrative decisions",
+        "It is a secret code used exclusively by intelligence officers",
+        "It prevents journalists from publishing investigative reports",
+        "It restricts citizens from knowing how public funds are spent"
+      ],
+      correct: 0,
+      explanation: "The RTI Act empowers citizens to seek information from public authorities, making governance accountable, transparent, and less corrupt."
+    },
+    {
+      q: "16. In which country did over 90% of respondents in South Asian surveys prefer democracy over dictatorship?",
+      options: [
+        "India, Bangladesh, Pakistan, Nepal, and Sri Lanka all show overwhelming support for democratic governance",
+        "Only in landlocked Himalayan kingdoms",
+        "Support was recorded at 0% across all South Asian states",
+        "Only in colonial territories"
+      ],
+      correct: 0,
+      explanation: "Extensive surveys across South Asia consistently demonstrate that people from diverse backgrounds overwhelmingly support democracy over non-democratic alternatives."
+    },
+    {
+      q: "17. Assertion (A): Democracy produces an accountable, responsive, and legitimate government.\nReason (R): In a democracy, decisions are made after deliberative discussions, negotiations, and adherence to legal norms.",
+      options: [
+        "Both A and R are true and R is the correct explanation of A",
+        "Both A and R are true but R is not the correct explanation of A",
+        "A is true but R is false",
+        "A is false but R is true"
+      ],
+      correct: 0,
+      explanation: "Both statements are true: deliberative debate and rule-bound decision-making make democratic governments accountable and legitimate in the eyes of citizens."
+    },
+    {
+      q: "18. What makes democracy superior in correcting its own mistakes?",
+      options: [
+        "Mistakes can never occur in a democratic system",
+        "Public debate, media scrutiny, and periodic elections allow errors to be brought into the open and corrected",
+        "The military automatically takes over whenever a mistaken law is enacted",
+        "The constitution is burned and rewritten every single year"
+      ],
+      correct: 1,
+      explanation: "In a democracy, errors cannot remain hidden for long. Open discussion and elections allow citizens and rulers to modify policies and correct wrong paths."
+    },
+    {
+      q: "19. Which social group has democracy helped transform from 'subjects' to 'citizens'?",
+      options: [
+        "Ordinary individuals, who now realize their vote makes a difference to governance and self-interest",
+        "Only hereditary royal princes",
+        "Foreign tourists visiting archaeological sites",
+        "Multinational corporate directors exclusively"
+      ],
+      correct: 0,
+      explanation: "Democracy transforms ordinary people from helpless subjects of a ruler into empowered citizens who possess rights, voice, and voting power."
+    },
+    {
+      q: "20. What is the fundamental difference between democratic and non-democratic regimes regarding public dissent?",
+      options: [
+        "Democracies suppress dissent while dictatorships encourage street protests",
+        "Democracies recognize the right to dissent and peaceful opposition, whereas non-democracies treat opposition as treason",
+        "Neither system allows disagreement with the head of state",
+        "Non-democracies have more public rallies than democracies"
+      ],
+      correct: 1,
+      explanation: "A democracy protects the right to dissent, critique, and protest as vital components of freedom, while autocratic regimes criminalize disagreement."
+    }
+  ];
+
+  function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((item, idx) => {
+      const qCard = document.createElement('div');
+      qCard.className = 'quiz-card';
+      qCard.id = `qCard_${idx}`;
+
+      const title = document.createElement('h3');
+      title.className = 'quiz-question';
+      title.textContent = item.q;
+      qCard.appendChild(title);
+
+      const optList = document.createElement('div');
+      optList.className = 'quiz-options';
+
+      item.options.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+        btn.addEventListener('click', () => handleSelectOption(idx, optIdx));
+        optList.appendChild(btn);
+      });
+      qCard.appendChild(optList);
+
+      const feedback = document.createElement('div');
+      feedback.className = 'quiz-feedback';
+      feedback.id = `feedback_${idx}`;
+      qCard.appendChild(feedback);
+
+      container.appendChild(qCard);
+    });
+  }
+
+  let userAnswers = {};
+
+  function handleSelectOption(qIdx, optIdx) {
+    if (userAnswers[qIdx] !== undefined) return;
+    userAnswers[qIdx] = optIdx;
+
+    const q = questions[qIdx];
+    const isCorrect = (optIdx === q.correct);
+    const card = document.getElementById(`qCard_${qIdx}`);
+    const btns = card.querySelectorAll('.quiz-opt-btn');
+    const fb = document.getElementById(`feedback_${qIdx}`);
+
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.correct) {
+        btn.classList.add('opt-correct');
+      } else if (i === optIdx) {
+        btn.classList.add('opt-wrong');
+      }
+    });
+
+    if (isCorrect) {
+      fb.className = 'quiz-feedback feedback-correct';
+      fb.innerHTML = `<strong>Correct!</strong> ${q.explanation}`;
+    } else {
+      fb.className = 'quiz-feedback feedback-wrong';
+      fb.innerHTML = `<strong>Incorrect.</strong> ${q.explanation}`;
+    }
+
+    updateScoreSummary();
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

@@ -1,0 +1,764 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Development | CBSE Class 10 Economics | ${provider.name}`}
+  description="CBSE Class 10 Economics Chapter 1 study notes on Development. Different goals of different people, national development, per capita income, World Bank criteria vs UNDP Human Development Index (HDI), public facilities, and sustainable development with 20 board exam quiz questions."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Development
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Social Science · Economics Chapter 1</span>
+      <h1>Development</h1>
+      <p class="lead">
+        Unpack the economics of human progress: why development goals conflict, how national income is compared, why money alone cannot measure well-being, and how sustainability preserves resources for future generations.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Foundational Economic Development Concepts</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🎯 Development Goals: Diverse &amp; Conflicting</h3>
+          <p class="formula">Different People, Different Goals</p>
+          <ul class="clean-list">
+            <li><strong>Diverse Aspirations:</strong> What may be development for one may not be development for another; it may even be destructive for the other (e.g., an industrialist wanting a large dam for electricity vs. tribal families being displaced by the reservoir).</li>
+            <li><strong>Income and Other Goals:</strong> People desire regular work, better wages, and decent price for crops, but they also seek non-material goals: freedom, security, equal treatment, and respect of others. Quality of our life depends on non-material things as well.</li>
+            <li><strong>National Development:</strong> Different individuals can have different as well as conflicting notions of a country's development. Priorities must balance benefit to the largest number of people.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📊 Comparing Countries: Income Criteria</h3>
+          <p class="formula">Average Income = Total Income / Total Population</p>
+          <ul class="clean-list">
+            <li><strong>Per Capita Income (Average Income):</strong> Total national income divided by the total population. Allows fair comparison regardless of population size differences.</li>
+            <li><strong>World Bank World Development Report:</strong>
+              <br/>• High-income (Rich) countries: Per capita income of US$ 49,300 per annum and above (2019 baseline).
+              <br/>• Low-income countries: Per capita income of US$ 2,500 or less.
+              <br/>• India falls in the <em>low-middle-income</em> category (per capita income around US$ 6,700 per annum).
+            </li>
+            <li><strong>Limitations of Average Income:</strong> It hides disparities. A country with identical average income could have 4 extremely poor citizens and 1 ultra-rich billionaire, versus a country with relatively equitable distribution.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌱 Income and Other Criteria: HDI</h3>
+          <p class="formula">UNDP Multi-Dimensional Human Development Index</p>
+          <ul class="clean-list">
+            <li><strong>Beyond Pure Income:</strong> Health and education are fundamental indicators of human development.
+              <br/>• <strong>Infant Mortality Rate (IMR):</strong> Number of children dying before age 1 per 1,000 live births.
+              <br/>• <strong>Literacy Rate:</strong> Proportion of literate population aged 7 and above.
+              <br/>• <strong>Net Attendance Ratio:</strong> Total children aged 14–15 attending school as a % of total children in that age group.
+            </li>
+            <li><strong>Case Study (Haryana vs Kerala):</strong> Haryana has higher per capita income than Kerala, but Kerala has much lower IMR and higher literacy because of adequate provision of basic healthcare and educational facilities.</li>
+            <li><strong>Body Mass Index (BMI):</strong> Weight (kg) / [Height (m)]^2. BMI &lt; 18.5 is undernourished; BMI &gt; 25 is overweight.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>♻️ Public Facilities &amp; Sustainable Development</h3>
+          <p class="formula">Preserving Resources for Posterity</p>
+          <ul class="clean-list">
+            <li><strong>Public Facilities:</strong> Money in your pocket cannot buy all goods and services needed to live well: pollution-free environment, protection from infectious diseases, unadulterated medicines, and quality schooling. Public distribution system (PDS) ensures nutritional security.</li>
+            <li><strong>Sustainable Development:</strong> Development that meets the needs of the present without compromising the ability of future generations to meet their own needs.</li>
+            <li><strong>Groundwater Depletion in India:</strong> Groundwater is an overuse renewable resource. 1/3rd of the country is overusing reserves; agricultural Punjab and Western UP face critical water-table declines.</li>
+            <li><strong>Exhaustion of Natural Resources:</strong> Crude oil reserves are non-renewable; at current extraction rates, global reserves will last roughly 50 years. Transitioning to renewable energy is essential.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: World Bank vs. UNDP Criteria &amp; The Sustainable Triangle</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · World Bank vs. UNDP Development Metrics</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Comparison of World Bank vs UNDP">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- World Bank Column -->
+              <rect x="30" y="35" width="185" height="185" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" rx="8"/>
+              <text x="122" y="65" fill="#1d4ed8" font-size="13" font-weight="bold" text-anchor="middle">WORLD BANK CRITERION</text>
+              <line x1="45" y1="75" x2="200" y2="75" stroke="#93c5fd" stroke-width="1.5"/>
+              <text x="122" y="105" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">Single Criterion Focus</text>
+              <text x="122" y="130" fill="#3b82f6" font-size="12" font-weight="bold" text-anchor="middle">Per Capita Income (PCI)</text>
+              <text x="122" y="155" fill="#64748b" font-size="9.5" text-anchor="middle">Calculated in US Dollars (PPP)</text>
+              <text x="122" y="175" fill="#ef4444" font-size="9" font-weight="bold" text-anchor="middle">Drawback: Hides Disparities</text>
+              <text x="122" y="195" fill="#64748b" font-size="8.5" text-anchor="middle">Ignores health &amp; education</text>
+
+              <!-- UNDP Column -->
+              <rect x="245" y="35" width="185" height="185" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" rx="8"/>
+              <text x="337" y="65" fill="#15803d" font-size="13" font-weight="bold" text-anchor="middle">UNDP HDI CRITERION</text>
+              <line x1="260" y1="75" x2="415" y2="75" stroke="#86efac" stroke-width="1.5"/>
+              <text x="337" y="100" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">Composite Index (3 Pillars)</text>
+              <text x="337" y="125" fill="#166534" font-size="10.5" font-weight="bold" text-anchor="middle">1. Per Capita Income</text>
+              <text x="337" y="148" fill="#166534" font-size="10.5" font-weight="bold" text-anchor="middle">2. Health (Life Expectancy)</text>
+              <text x="337" y="171" fill="#166534" font-size="10.5" font-weight="bold" text-anchor="middle">3. Education (Schooling/Lit)</text>
+              <text x="337" y="195" fill="#15803d" font-size="9" font-weight="bold" text-anchor="middle">Holistic Measure of Well-being</text>
+            </svg>
+          </div>
+          <p class="caption">The essential distinction between narrow income measurement and holistic human development index.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · Sustainable Development: Inter-Generational Equity</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Sustainable Development Triangle">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Present Generation Box -->
+              <rect x="30" y="55" width="160" height="90" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="8"/>
+              <text x="110" y="85" fill="#b45309" font-size="12" font-weight="bold" text-anchor="middle">Present Generation</text>
+              <text x="110" y="105" fill="#334155" font-size="9.5" text-anchor="middle">• Resource consumption</text>
+              <text x="110" y="122" fill="#334155" font-size="9.5" text-anchor="middle">• Economic industrialization</text>
+
+              <!-- Future Generation Box -->
+              <rect x="270" y="55" width="160" height="90" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="8"/>
+              <text x="350" y="85" fill="#15803d" font-size="12" font-weight="bold" text-anchor="middle">Future Generations</text>
+              <text x="350" y="105" fill="#334155" font-size="9.5" text-anchor="middle">• Right to clean environment</text>
+              <text x="350" y="122" fill="#334155" font-size="9.5" text-anchor="middle">• Clean water &amp; energy reserves</text>
+
+              <!-- Equilibrium Bridge -->
+              <path d="M 195 100 L 265 100" stroke="#0d9488" stroke-width="3" fill="none"/>
+              <polygon points="265,95 273,100 265,105" fill="#0d9488"/>
+              <text x="230" y="90" fill="#0d9488" font-size="9" font-weight="bold" text-anchor="middle">Sustains</text>
+
+              <!-- Bottom Principles Box -->
+              <rect x="60" y="170" width="340" height="55" fill="#f1f5f9" stroke="#64748b" stroke-width="1.5" rx="6"/>
+              <text x="230" y="192" fill="#0f172a" font-size="10.5" font-weight="bold" text-anchor="middle">"We have not inherited the world from our forefathers;</text>
+              <text x="230" y="210" fill="#0f172a" font-size="10.5" font-weight="bold" text-anchor="middle">we have borrowed it from our children."</text>
+            </svg>
+          </div>
+          <p class="caption">Sustainable development balances today's progress with environmental protection and future resource availability.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Board Exam Quiz Section (20 Questions) -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Quiz</h2>
+          <p class="lead" style="margin-bottom:0;">Test your understanding of Per Capita Income, HDI, Public Facilities, and Sustainability.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizContainer">
+        <!-- JS rendered -->
+      </div>
+
+      <div class="quiz-footer-actions">
+        <button type="button" class="button" id="resetQuizBtn">Reset Quiz</button>
+        <span class="small" id="quizProgressText">0 of 20 answered</span>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+      <h2>Master Economics with Expert Mentoring</h2>
+      <p>Crack numerical calculations, HDI ranks, and case study questions with our tailored CBSE Class 10 prep sessions.</p>
+      <a href={calBookingUrl} class="button">Book a Doubt Clearing Session</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "1. Why do different people have different developmental goals?",
+      options: [
+        "Because their life situations, needs, and aspirations are completely different",
+        "Because the government assigns different goals to every citizen",
+        "Because people change their goals every month",
+        "Because only rich people are allowed to have developmental goals"
+      ],
+      correct: 0,
+      explanation: "People have different developmental goals because their life situations differ. A landless rural labourer wants more days of work and better wages, while a prosperous Punjab farmer desires higher support prices."
+    },
+    {
+      q: "2. Which of the following is a classic example of conflicting developmental goals?",
+      options: [
+        "Construction of a large hydroelectric dam: industrialists get cheap power, but local tribal communities lose homes and livelihood",
+        "Planting trees in a community park",
+        "Opening a government primary school in a village",
+        "Improving postal delivery services across towns"
+      ],
+      correct: 0,
+      explanation: "A dam provides electricity for industrialists and city dwellers, but submerges lands and displaces indigenous tribal populations, demonstrating conflicting goals."
+    },
+    {
+      q: "3. What is 'Per Capita Income'?",
+      options: [
+        "Total income of all corporate companies in a state",
+        "Total national income divided by the total population of the country",
+        "Average income of government employees only",
+        "The income of the wealthiest 1% citizens"
+      ],
+      correct: 1,
+      explanation: "Per Capita Income is also known as Average Income, calculated by dividing the total income of the country (GDP/GNI) by its total population."
+    },
+    {
+      q: "4. What is the primary criterion used by the World Bank in its World Development Reports to classify countries?",
+      options: [
+        "Human Development Index",
+        "Per Capita Income (Average Income)",
+        "Gross Domestic Electricity Consumption",
+        "Total Military Expenditure"
+      ],
+      correct: 1,
+      explanation: "The World Bank classifies countries into high-income, middle-income, and low-income categories solely based on their Per Capita Income measured in US dollars."
+    },
+    {
+      q: "5. What is the main limitation of using Per Capita Income to measure development?",
+      options: [
+        "It is impossible to calculate mathematically",
+        "It hides disparities in the distribution of income among the population",
+        "It only measures agricultural production",
+        "It changes every single hour"
+      ],
+      correct: 1,
+      explanation: "While per capita income shows the average wealth, it hides income inequality. A country could have a high average income while the vast majority lives in extreme poverty and a tiny elite owns almost everything."
+    },
+    {
+      q: "6. Which international organization publishes the Human Development Report (HDR)?",
+      options: [
+        "World Bank",
+        "United Nations Development Programme (UNDP)",
+        "International Monetary Fund (IMF)",
+        "World Health Organization (WHO)"
+      ],
+      correct: 1,
+      explanation: "The UNDP publishes the Human Development Report, comparing countries based on educational levels, health status, and per capita income."
+    },
+    {
+      q: "7. What are the three components of the Human Development Index (HDI)?",
+      options: [
+        "Per capita income, life expectancy at birth, and educational attainment (literacy/schooling)",
+        "Gold reserves, military personnel, and oil production",
+        "Number of cars, internet speed, and airport count",
+        "Foreign exchange reserves, total exports, and tax revenue"
+      ],
+      correct: 0,
+      explanation: "HDI combines three fundamental dimensions: a decent standard of living (Per Capita Income), a long and healthy life (Life Expectancy), and access to knowledge (Mean and Expected Years of Schooling)."
+    },
+    {
+      q: "8. What does 'Infant Mortality Rate' (IMR) indicate?",
+      options: [
+        "Number of children that die before completing one year of age per 1,000 live births in that year",
+        "Number of children who drop out of primary school",
+        "Percentage of infants suffering from fever each month",
+        "Total deaths of women during childbirth per 10,000 births"
+      ],
+      correct: 0,
+      explanation: "IMR indicates the number of infants dying before attaining one year of age per 1,000 live births, serving as a critical indicator of healthcare quality."
+    },
+    {
+      q: "9. Why does Kerala have a lower Infant Mortality Rate and higher Human Development ranking than Haryana, despite lower per capita income?",
+      options: [
+        "Kerala receives huge foreign aid packages",
+        "Kerala has adequate provision of basic healthcare, high female literacy, and an effective Public Distribution System (PDS)",
+        "Haryana has no hospitals at all",
+        "Kerala has banned all industrial manufacturing"
+      ],
+      correct: 1,
+      explanation: "Kerala focused heavily on public health infrastructure, universal education, and fair food distribution, proving that non-income public facilities are vital for human well-being."
+    },
+    {
+      q: "10. What is 'Literacy Rate' defined as in the Indian Census?",
+      options: [
+        "Proportion of literate population in the 7-and-above age group",
+        "Percentage of people with university degrees",
+        "Number of children enrolled in kindergarten",
+        "People who can write computer code"
+      ],
+      correct: 0,
+      explanation: "In India, the Literacy Rate measures the proportion of the population aged 7 years and older that can read and write with understanding in any language."
+    },
+    {
+      q: "11. What is 'Net Attendance Ratio'?",
+      options: [
+        "Total number of children of age group 14–15 years attending school as a percentage of total children in the same age group",
+        "Number of teachers attending staff meetings",
+        "Average days of school attendance per semester",
+        "Percentage of university students attending lectures"
+      ],
+      correct: 0,
+      explanation: "Net Attendance Ratio is the total number of children in the official school-age group (14–15 years) attending school as a percentage of total children in that cohort."
+    },
+    {
+      q: "12. How is Body Mass Index (BMI) calculated?",
+      options: [
+        "Weight in kilograms divided by the square of height in meters",
+        "Height in centimeters divided by weight in kilograms",
+        "Chest circumference multiplied by age in years",
+        "Arm span divided by body temperature"
+      ],
+      correct: 0,
+      explanation: "BMI = Weight in kg / (Height in meters)^2. It is an internationally accepted standard to determine nutritional status."
+    },
+    {
+      q: "13. If an adult's BMI is less than 18.5, what does it indicate?",
+      options: [
+        "The person is clinically overweight",
+        "The person is considered undernourished",
+        "The person is an elite athlete",
+        "The person has high blood pressure"
+      ],
+      correct: 1,
+      explanation: "A BMI under 18.5 indicates that the individual is undernourished, while a BMI over 25 indicates overweight."
+    },
+    {
+      q: "14. Which of the following CANNOT be bought directly by individual money in your pocket?",
+      options: [
+        "A smartphone",
+        "A pollution-free environment and protection from infectious pandemics",
+        "A designer shirt",
+        "A private coaching textbook"
+      ],
+      correct: 1,
+      explanation: "Money in your pocket cannot buy a pollution-free environment or ensure disease-free communities unless the whole society takes collective preventive measures."
+    },
+    {
+      q: "15. What is the fundamental concept behind 'Sustainable Development'?",
+      options: [
+        "Maximizing natural resource extraction today to boost current quarterly GDP",
+        "Development that meets the needs of the present without compromising the ability of future generations to meet their own needs",
+        "Banning all industrial development permanently",
+        "Selling public forests to international mining firms"
+      ],
+      correct: 1,
+      explanation: "Sustainable development ensures that economic progress occurs without causing ecological degradation, preserving vital resources for future generations."
+    },
+    {
+      q: "16. Why is groundwater over-extraction considered a serious sustainability threat in India?",
+      options: [
+        "Groundwater cannot be refilled by rain at all",
+        "Over one-third of the country is pumping more water than nature replenishes, causing acute water-table crashes in agricultural belts",
+        "Groundwater turns into salt water automatically every 10 years",
+        "Borewells are prohibited by the Supreme Court"
+      ],
+      correct: 1,
+      explanation: "Groundwater is a renewable resource, but when we extract water faster than monsoon rains can replenish it, water tables collapse, threatening food security."
+    },
+    {
+      q: "17. At the current rate of global extraction, crude oil reserves are estimated to last approximately how many years?",
+      options: [
+        "About 500 years",
+        "About 50 years",
+        "Only 2 years",
+        "Crude oil reserves are infinite and will never finish"
+      ],
+      correct: 1,
+      explanation: "Crude oil is a non-renewable fossil resource; global known reserves are projected to last roughly 50 years at current extraction trajectories."
+    },
+    {
+      q: "18. Which neighboring country of India has a better Human Development Index (HDI) ranking than India in recent UNDP reports?",
+      options: [
+        "Sri Lanka",
+        "Pakistan",
+        "Nepal",
+        "Afghanistan"
+      ],
+      correct: 0,
+      explanation: "Sri Lanka has consistently outperformed India in HDI parameters, boasting higher life expectancy, higher literacy, and lower infant mortality."
+    },
+    {
+      q: "19. Assertion (A): Money in your pocket cannot buy all the goods and services that you may need to live well.\nReason (R): Collective provision of public goods (like clean water, public health, and sanitation) is cheaper and more effective than private arrangements.",
+      options: [
+        "Both A and R are true and R is the correct explanation of A",
+        "Both A and R are true but R is not the correct explanation of A",
+        "A is true but R is false",
+        "A is false but R is true"
+      ],
+      correct: 0,
+      explanation: "Both statements are correct: many essential elements of quality of life are public goods that can only be provided collectively through community and state mechanisms."
+    },
+    {
+      q: "20. What is meant by 'non-renewable resources'?",
+      options: [
+        "Resources that get replenished by nature rapidly, like solar energy",
+        "Resources that have a fixed stock on earth and get exhausted with extraction because they take millions of years to form",
+        "Resources made in laboratory test tubes",
+        "Resources that can be recycled infinitely within 24 hours"
+      ],
+      correct: 1,
+      explanation: "Non-renewable resources (such as coal, crude oil, and metallic ores) take millions of years to form and cannot be replenished once consumed."
+    }
+  ];
+
+  function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((item, idx) => {
+      const qCard = document.createElement('div');
+      qCard.className = 'quiz-card';
+      qCard.id = `qCard_${idx}`;
+
+      const title = document.createElement('h3');
+      title.className = 'quiz-question';
+      title.textContent = item.q;
+      qCard.appendChild(title);
+
+      const optList = document.createElement('div');
+      optList.className = 'quiz-options';
+
+      item.options.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+        btn.addEventListener('click', () => handleSelectOption(idx, optIdx));
+        optList.appendChild(btn);
+      });
+      qCard.appendChild(optList);
+
+      const feedback = document.createElement('div');
+      feedback.className = 'quiz-feedback';
+      feedback.id = `feedback_${idx}`;
+      qCard.appendChild(feedback);
+
+      container.appendChild(qCard);
+    });
+  }
+
+  let userAnswers = {};
+
+  function handleSelectOption(qIdx, optIdx) {
+    if (userAnswers[qIdx] !== undefined) return;
+    userAnswers[qIdx] = optIdx;
+
+    const q = questions[qIdx];
+    const isCorrect = (optIdx === q.correct);
+    const card = document.getElementById(`qCard_${qIdx}`);
+    const btns = card.querySelectorAll('.quiz-opt-btn');
+    const fb = document.getElementById(`feedback_${qIdx}`);
+
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.correct) {
+        btn.classList.add('opt-correct');
+      } else if (i === optIdx) {
+        btn.classList.add('opt-wrong');
+      }
+    });
+
+    if (isCorrect) {
+      fb.className = 'quiz-feedback feedback-correct';
+      fb.innerHTML = `<strong>Correct!</strong> ${q.explanation}`;
+    } else {
+      fb.className = 'quiz-feedback feedback-wrong';
+      fb.innerHTML = `<strong>Incorrect.</strong> ${q.explanation}`;
+    }
+
+    updateScoreSummary();
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>

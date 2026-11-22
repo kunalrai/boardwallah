@@ -1,0 +1,782 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { loadContent } from "../../lib/content";
+import { calBookingUrl } from "../../lib/site";
+
+const { provider } = loadContent();
+---
+
+<Layout
+  title={`Agriculture | CBSE Class 10 Geography | ${provider.name}`}
+  description="CBSE Class 10 Geography Chapter 4 study notes on Agriculture. Types of farming (primitive subsistence, intensive subsistence, commercial/plantation), cropping seasons (Rabi, Kharif, Zaid), major food & cash crops (rice, wheat, millets, pulses, sugarcane, tea, coffee, cotton, jute), technological & institutional reforms, and Bhoodan-Gramdan with 20 board exam quiz questions."
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <a href="/resources/">Resources</a> / Agriculture
+    </nav>
+
+    <div class="resource-header">
+      <span class="eyebrow">CBSE Class 10 · Social Science · Geography Chapter 4</span>
+      <h1>Agriculture</h1>
+      <p class="lead">
+        Study India's agrarian backbone: three farming types, Rabi, Kharif, and Zaid cropping calendars, climatic requirements of staple food grains and commercial fiber crops, green revolution reforms, and Vinoba Bhave's Bhoodan movement.
+      </p>
+    </div>
+
+    <!-- Core Concepts -->
+    <section class="section">
+      <h2>Agricultural Systems, Cropping Seasons &amp; Crops</h2>
+
+      <div class="grid two concept-grid">
+        <article class="card">
+          <h3>🚜 Types of Farming Systems</h3>
+          <p class="formula">From Primitive Jhumming to Capitalist Plantations</p>
+          <ul class="clean-list">
+            <li><strong>1. Primitive Subsistence Farming:</strong> Practised on small patches of land using primitive tools (hoe, dao, digging sticks) and family labor. Dependent on monsoon and natural soil fertility. Includes <strong>Slash and Burn (Jhumming)</strong> in Northeast (Assam, Meghalaya, Mizoram, Nagaland), Bewar/Dahiya in MP, Podu/Penda in AP.</li>
+            <li><strong>2. Intensive Subsistence Farming:</strong> Practised in areas of high population pressure on land. Labor-intensive farming using high doses of biochemical inputs and irrigation to obtain high yields from small landholdings (caused by the right of inheritance subdividing plots).</li>
+            <li><strong>3. Commercial Farming:</strong> Higher doses of modern inputs (HYV seeds, chemical fertilizers, insecticides) to obtain high productivity for market sale.</li>
+            <li><strong>4. Plantation Agriculture:</strong> A type of commercial farming where a single crop is grown over a vast estate using capital-intensive inputs and migrant labor (e.g. Tea in Assam/North Bengal, Coffee in Karnataka, Rubber in Kerala).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🗓️ Three Cropping Seasons: Rabi, Kharif, Zaid</h3>
+          <p class="formula">Agricultural Rhythm Aligned with Monsoons</p>
+          <ul class="clean-list">
+            <li><strong>Rabi Crops (Winter):</strong>
+              <br/>• Sown in winter from October to December; harvested in summer from April to June.
+              <br/>• Important crops: <strong>Wheat, barley, peas, gram, mustard</strong>.
+              <br/>• Success aided by western temperate cyclonic depressions bringing winter rains. States: Punjab, Haryana, Himachal, UP, Uttarakhand.
+            </li>
+            <li><strong>Kharif Crops (Monsoon):</strong>
+              <br/>• Sown with onset of monsoon in June–July; harvested in September–October.
+              <br/>• Important crops: <strong>Paddy (rice), maize, jowar, bajra, tur (arhar), moong, urad, cotton, jute, groundnut, soyabean</strong>.
+              <br/>• In Assam, West Bengal, and Odisha, three crops of paddy are grown in a year: <em>Aus, Aman, and Boro</em>.
+            </li>
+            <li><strong>Zaid Season (Short Summer):</strong> Between Rabi and Kharif (March–June). Watermelon, muskmelon, cucumber, vegetables, and fodder crops.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🌾 Major Crops of India &amp; Conditions</h3>
+          <p class="formula">Climatic Requirements for Board Exams</p>
+          <ul class="clean-list">
+            <li><strong>Rice (Kharif Staple):</strong> High temp (&gt; 25°C), high humidity, annual rainfall &gt; 100 cm. West Bengal, UP, Punjab, Haryana, deltaic plains. India is 2nd largest producer after China.</li>
+            <li><strong>Wheat (Rabi Staple):</strong> Cool growing season, bright sunshine at ripening, 50–75 cm rainfall. Ganga-Satluj plains (Punjab, Haryana, UP, MP).</li>
+            <li><strong>Millets (Coarse Grains with High Nutrition):</strong>
+              <br/>• <em>Jowar:</em> Rain-fed crop, 3rd most important food crop (Maharashtra, Karnataka).
+              <br/>• <em>Bajra:</em> Sandy and shallow black soils (Rajasthan, UP, Gujarat).
+              <br/>• <em>Ragi:</em> Rich in iron, calcium, roughage; dry regions on red/black/sandy soils (Karnataka, Tamil Nadu).
+            </li>
+            <li><strong>Pulses:</strong> India is largest producer and consumer. Major source of protein in vegetarian diet. Leguminous crops (except Arhar) fix atmospheric nitrogen, restoring soil fertility. (MP, Rajasthan, Maharashtra, UP).</li>
+            <li><strong>Cash &amp; Fiber Crops:</strong> Sugarcane (hot &amp; humid 21–27°C, 75–100 cm rain), Tea (subtropical, frost-free, well-drained deep loamy soil rich in humus), Coffee (Arabica variety from Yemen grown in Baba Budan Hills/Nilgiris), Cotton (black soil, high temp, light rain, 210 frost-free days), Jute (Golden fiber, well-drained floodplains, West Bengal).</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📜 Institutional Reforms &amp; Bhoodan</h3>
+          <p class="formula">Green Revolution, White Revolution &amp; Land Reforms</p>
+          <ul class="clean-list">
+            <li><strong>Institutional Reforms:</strong> Collectivization, consolidation of holdings (Chakbandi), cooperation, and abolition of the Zamindari system were given priority in the First Five Year Plan.</li>
+            <li><strong>Technological Reforms:</strong> Green Revolution (HYV seeds, chemical fertilizers) and White Revolution (Operation Flood).</li>
+            <li><strong>Comprehensive Land Development Programme (1980s &amp; 90s):</strong> Crop insurance against drought, flood, cyclone; establishment of Grameen banks and cooperative credit societies; Kissan Credit Card (KCC) and Personal Accident Insurance Scheme (PAIS); special weather bulletins and MSP announcements.</li>
+            <li><strong>Bhoodan - Gramdan (Blood-less Revolution):</strong> Initiated by <strong>Vinoba Bhave</strong>. At Pochampalli (AP), Ram Chandra Reddy donated 80 acres to 80 landless villagers (Bhoodan). Zamindars later donated entire villages (Gramdan).</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Visual Diagrams Section -->
+    <section class="section">
+      <h2>Visual Concepts: The Three Cropping Cycles &amp; Crop Requirements Matrix</h2>
+
+      <div class="grid two">
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 1 · India's Triple Cropping Calendar</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Cropping seasons Kharif Rabi Zaid">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Season 1: Kharif -->
+              <rect x="25" y="45" width="125" height="155" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="6"/>
+              <text x="87" y="72" fill="#b45309" font-size="12" font-weight="bold" text-anchor="middle">KHARIF</text>
+              <text x="87" y="90" fill="#475569" font-size="9" text-anchor="middle">Monsoon Season</text>
+              <line x1="40" y1="98" x2="135" y2="98" stroke="#fcd34d" stroke-width="1.5"/>
+              <text x="87" y="118" fill="#1e293b" font-size="9" text-anchor="middle"><strong>Sown:</strong> Jun – Jul</text>
+              <text x="87" y="136" fill="#1e293b" font-size="9" text-anchor="middle"><strong>Harvest:</strong> Sep – Oct</text>
+              <text x="87" y="160" fill="#b45309" font-size="8.5" font-weight="bold" text-anchor="middle">Rice, Maize, Cotton</text>
+              <text x="87" y="176" fill="#475569" font-size="8" text-anchor="middle">Jute, Groundnut, Soy</text>
+
+              <!-- Season 2: Rabi -->
+              <rect x="167" y="45" width="125" height="155" fill="#eff6ff" stroke="#2563eb" stroke-width="2" rx="6"/>
+              <text x="230" y="72" fill="#1d4ed8" font-size="12" font-weight="bold" text-anchor="middle">RABI</text>
+              <text x="230" y="90" fill="#475569" font-size="9" text-anchor="middle">Winter Season</text>
+              <line x1="182" y1="98" x2="277" y2="98" stroke="#93c5fd" stroke-width="1.5"/>
+              <text x="230" y="118" fill="#1e293b" font-size="9" text-anchor="middle"><strong>Sown:</strong> Oct – Dec</text>
+              <text x="230" y="136" fill="#1e293b" font-size="9" text-anchor="middle"><strong>Harvest:</strong> Apr – Jun</text>
+              <text x="230" y="160" fill="#1d4ed8" font-size="8.5" font-weight="bold" text-anchor="middle">Wheat, Mustard, Gram</text>
+              <text x="230" y="176" fill="#475569" font-size="8" text-anchor="middle">Barley, Peas (Western dist)</text>
+
+              <!-- Season 3: Zaid -->
+              <rect x="310" y="45" width="125" height="155" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="6"/>
+              <text x="372" y="72" fill="#15803d" font-size="12" font-weight="bold" text-anchor="middle">ZAID</text>
+              <text x="372" y="90" fill="#475569" font-size="9" text-anchor="middle">Short Summer</text>
+              <line x1="325" y1="98" x2="420" y2="98" stroke="#86efac" stroke-width="1.5"/>
+              <text x="372" y="118" fill="#1e293b" font-size="9" text-anchor="middle"><strong>Months:</strong> Mar – Jun</text>
+              <text x="372" y="136" fill="#1e293b" font-size="9" text-anchor="middle">Between Rabi &amp; Kharif</text>
+              <text x="372" y="160" fill="#15803d" font-size="8.5" font-weight="bold" text-anchor="middle">Watermelon, Melon</text>
+              <text x="372" y="176" fill="#475569" font-size="8" text-anchor="middle">Cucumber, Fodder crops</text>
+
+              <rect x="25" y="212" width="410" height="24" fill="#0f172a" rx="3"/>
+              <text x="230" y="228" fill="#ffffff" font-size="9.5" font-weight="bold" text-anchor="middle">Year-round Agricultural Rotation Governed by Monsoon Dynamics</text>
+            </svg>
+          </div>
+          <p class="caption">The tripartite agricultural cycle in India maximizing crop production across seasonal weather regimes.</p>
+        </div>
+
+        <div class="card visual-card">
+          <div class="visual-badge">Visual Diagram 2 · Staple Grains: Rice vs. Wheat Requirements</div>
+          <div class="svg-container">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" aria-label="Rice vs Wheat comparison">
+              <rect width="460" height="250" fill="#f8fafc" rx="8"/>
+              
+              <!-- Rice Column -->
+              <rect x="30" y="35" width="185" height="185" fill="#fef9c3" stroke="#ca8a04" stroke-width="2" rx="8"/>
+              <text x="122" y="62" fill="#854d0e" font-size="13" font-weight="bold" text-anchor="middle">🌾 RICE (Kharif)</text>
+              <line x1="45" y1="72" x2="200" y2="72" stroke="#fde047" stroke-width="1.5"/>
+              <text x="122" y="98" fill="#1e293b" font-size="10" font-weight="bold" text-anchor="middle">High Temp: &gt; 25°C</text>
+              <text x="122" y="122" fill="#1e293b" font-size="10" font-weight="bold" text-anchor="middle">High Rain: &gt; 100 cm</text>
+              <text x="122" y="146" fill="#475569" font-size="9" text-anchor="middle">Alluvial clayey soil, standing water</text>
+              <text x="122" y="170" fill="#475569" font-size="9" text-anchor="middle">WB, UP, Punjab (irrigated)</text>
+              <text x="122" y="196" fill="#854d0e" font-size="9" font-weight="bold" text-anchor="middle">India: 2nd Largest Producer</text>
+
+              <!-- Wheat Column -->
+              <rect x="245" y="35" width="185" height="185" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" rx="8"/>
+              <text x="337" y="62" fill="#1d4ed8" font-size="13" font-weight="bold" text-anchor="middle">🍞 WHEAT (Rabi)</text>
+              <line x1="260" y1="72" x2="415" y2="72" stroke="#93c5fd" stroke-width="1.5"/>
+              <text x="337" y="98" fill="#1e293b" font-size="10" font-weight="bold" text-anchor="middle">Cool climate (10–15°C)</text>
+              <text x="337" y="122" fill="#1e293b" font-size="10" font-weight="bold" text-anchor="middle">Moderate Rain: 50–75 cm</text>
+              <text x="337" y="146" fill="#475569" font-size="9" text-anchor="middle">Bright sunshine at harvest time</text>
+              <text x="337" y="170" fill="#475569" font-size="9" text-anchor="middle">Punjab, Haryana, UP, MP</text>
+              <text x="337" y="196" fill="#1d4ed8" font-size="9" font-weight="bold" text-anchor="middle">2nd Most Important Cereal</text>
+            </svg>
+          </div>
+          <p class="caption">Comparative agro-climatic conditions between India's two predominant staple food crops.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Board Exam Quiz Section (20 Questions) -->
+    <section class="section">
+      <div class="quiz-header">
+        <div>
+          <h2>CBSE Board Examination Quiz</h2>
+          <p class="lead" style="margin-bottom:0;">Test your understanding of Farming Types, Cropping Seasons, Major Crops, and Reforms.</p>
+        </div>
+        <div class="quiz-score-badge" id="quizScoreBadge">Score: 0 / 20</div>
+      </div>
+
+      <div class="quiz-container" id="quizContainer">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="quiz-footer-actions">
+        <button type="button" class="button" id="resetQuizBtn">Reset Quiz</button>
+        <span class="small" id="quizProgressText">0 of 20 answered</span>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+      <h2>Excel in CBSE Class 10 Geography</h2>
+      <p>Master agricultural map work (major areas of rice, wheat, sugarcane, tea, coffee, rubber, cotton, and jute) with dedicated one-on-one sessions.</p>
+      <a href={calBookingUrl} class="button">Book a Doubt Clearing Session</a>
+    </section>
+  </div>
+</Layout>
+
+<script is:inline>
+  const questions = [
+    {
+      q: "1. What is 'Slash and Burn' agriculture called in the north-eastern states of Assam, Meghalaya, Mizoram, and Nagaland?",
+      options: [
+        "Bewar",
+        "Jhumming",
+        "Podu",
+        "Penda"
+      ],
+      correct: 1,
+      explanation: "Slash and burn shifting cultivation is commonly known as 'Jhumming' or 'Jhum' in north-eastern India."
+    },
+    {
+      q: "2. Why is 'Intensive Subsistence Farming' practiced in densely populated countries like India?",
+      options: [
+        "Because the right of inheritance has led to division of landholdings among successive generations, making plot sizes uneconomical and requiring high manual input for maximum output",
+        "Because farmers are legally banned from using tractors",
+        "Because intensive farming produces diamond crystals",
+        "Because monsoon rains fall all 365 days of the year"
+      ],
+      correct: 0,
+      explanation: "Subdivision of agricultural landholdings through generational inheritance makes plots very small, forcing farmers to apply intensive labor and fertilizer to survive."
+    },
+    {
+      q: "3. What is a key characteristic of 'Plantation Agriculture'?",
+      options: [
+        "A single crop is grown over a vast estate using capital-intensive inputs and migrant laborers",
+        "Farmers grow 50 different crops on a half-acre field",
+        "No fertilizers or irrigation are allowed",
+        "Crops are harvested only by university professors"
+      ],
+      correct: 0,
+      explanation: "Plantations are large commercial single-crop agricultural enterprises (like tea, coffee, rubber) with an interface of agriculture and industry."
+    },
+    {
+      q: "4. Which of the following is a classic example of a plantation crop grown extensively in Assam and North Bengal?",
+      options: [
+        "Tea",
+        "Wheat",
+        "Bajra",
+        "Mustard"
+      ],
+      correct: 0,
+      explanation: "Tea is an important beverage plantation crop introduced initially by the British, grown extensively in Assam and Darjeeling/Jalpaiguri."
+    },
+    {
+      q: "5. When are 'Rabi' crops sown and harvested in India?",
+      options: [
+        "Sown in winter from October to December and harvested in summer from April to June",
+        "Sown in June and harvested in September",
+        "Sown in March and harvested in May",
+        "Sown every week throughout the year"
+      ],
+      correct: 0,
+      explanation: "Rabi crops are winter crops sown in October–December and harvested in April–June (e.g. wheat, mustard, gram)."
+    },
+    {
+      q: "6. Which weather phenomenon during winter months brings precipitation that is vital for the success of Rabi wheat in Punjab and Haryana?",
+      options: [
+        "South-West Summer Monsoons",
+        "Western temperate cyclonic depressions originating in the Mediterranean region",
+        "North-East Retreating Monsoons",
+        "Tropical Cyclones from the Bay of Bengal"
+      ],
+      correct: 1,
+      explanation: "Western disturbances originating over the Mediterranean bring crucial winter rain across North-West India, benefiting rabi crops."
+    },
+    {
+      q: "7. Which of the following is a 'Kharif' crop sown with the arrival of monsoon rains?",
+      options: [
+        "Paddy (Rice)",
+        "Wheat",
+        "Mustard",
+        "Gram"
+      ],
+      correct: 0,
+      explanation: "Paddy (rice), maize, cotton, and jute are major Kharif crops sown with the onset of the monsoon in June–July."
+    },
+    {
+      q: "8. In Assam, West Bengal, and Odisha, three crops of paddy are grown in a year. What are these three crops named?",
+      options: [
+        "Aus, Aman, and Boro",
+        "Rabi, Kharif, and Zaid",
+        "Samba, Kuruvai, and Thaladi",
+        "Jhum, Bewar, and Podu"
+      ],
+      correct: 0,
+      explanation: "In eastern river deltas, rice is grown thrice annually as Aus, Aman, and Boro due to abundant water availability."
+    },
+    {
+      q: "9. What is the short cropping season between the Rabi and Kharif seasons during summer months called?",
+      options: [
+        "Zaid season",
+        "Winter season",
+        "Autumn season",
+        "Monsoon season"
+      ],
+      correct: 0,
+      explanation: "The short summer cropping season between March and June is called the Zaid season (growing watermelons, cucumbers, fodder)."
+    },
+    {
+      q: "10. What are the ideal climatic conditions required for the cultivation of Rice?",
+      options: [
+        "High temperature (above 25°C), high humidity, and annual rainfall above 100 cm",
+        "Freezing temperatures below 0°C with desert winds",
+        "Low temperature (10°C) and less than 20 cm rainfall",
+        "Dry climate with zero humidity throughout the year"
+      ],
+      correct: 0,
+      explanation: "Rice requires warm tropical temperatures above 25°C, high humidity, and plenty of water (over 100 cm annual rainfall)."
+    },
+    {
+      q: "11. Why are coarse grains like Jowar, Bajra, and Ragi collectively referred to as 'Millets' highly valued?",
+      options: [
+        "They have very high nutritional value, being extremely rich in iron, calcium, other micro-nutrients, and roughage",
+        "They can be converted directly into gasoline",
+        "They grow only under sea water",
+        "They are used exclusively to make paper money"
+      ],
+      correct: 0,
+      explanation: "Millets are nutritionally superior grains rich in iron, calcium, minerals, and fiber, and thrive in dry, rain-fed conditions."
+    },
+    {
+      q: "12. Why do leguminous crops like pulses (except arhar/tur) play a critical role in sustainable agriculture?",
+      options: [
+        "They fix atmospheric nitrogen in their root nodules, thereby restoring and maintaining natural soil fertility",
+        "They require 500 cm of rainfall per month",
+        "They poison all insects in nearby fields",
+        "They prevent farmers from needing any seeds next year"
+      ],
+      correct: 0,
+      explanation: "Leguminous pulses have symbiotic Rhizobium bacteria in their root nodules that fix nitrogen from the air into the soil, restoring fertility."
+    },
+    {
+      q: "13. Which variety of Coffee was initially brought to India from Yemen and is renowned globally for its superior quality?",
+      options: [
+        "Arabica",
+        "Robusta",
+        "Liberica",
+        "Excelsa"
+      ],
+      correct: 0,
+      explanation: "The world-famous Arabica variety was brought from Yemen to India and first cultivated on the Baba Budan Hills in Karnataka."
+    },
+    {
+      q: "14. What are the specific geographical requirements for growing Cotton?",
+      options: [
+        "Black soil of Deccan plateau, high temperature, light rainfall/irrigation, and 210 frost-free days with bright sunshine",
+        "Heavy snowfall for 6 months on granite rocks",
+        "Marshy swamp land with continuous flooding",
+        "Extreme sub-zero cold with zero sunshine"
+      ],
+      correct: 0,
+      explanation: "Cotton thrives on Deccan black soil, requiring high temperatures, light rain, 210 frost-free days, and bright sunshine during ripening."
+    },
+    {
+      q: "15. Why is Jute known as the 'Golden Fiber' and where is it predominantly grown?",
+      options: [
+        "Due to its golden color and commercial value; grown on well-drained fertile soils in the floodplains of West Bengal, Bihar, and Assam",
+        "Because it is spun out of real gold wire in Gujarat",
+        "Because it grows in gold mines of Karnataka",
+        "Because it is exported exclusively to Switzerland"
+      ],
+      correct: 0,
+      explanation: "Jute is called the golden fiber for its shiny golden brown color and versatility; it is grown in the Ganga-Brahmaputra delta (West Bengal leads)."
+    },
+    {
+      q: "16. Why is Jute losing its global market to synthetic substitutes like nylon?",
+      options: [
+        "Synthetic packing materials are far cheaper to manufacture than natural jute",
+        "Jute is banned by the United Nations",
+        "Jute causes skin allergies in all humans",
+        "Jute cannot be dyed in colors"
+      ],
+      correct: 0,
+      explanation: "Because of high production costs, natural jute faces fierce market competition from synthetic fibers and packing materials like nylon and polypropylene."
+    },
+    {
+      q: "17. What institutional reform was prioritized in India's First Five Year Plan to address fragmented agricultural landholdings?",
+      options: [
+        "Consolidation of holdings (Chakbandi) and abolition of the Zamindari system",
+        "Forced privatization of all village wells",
+        "Banning the sale of agricultural crops in cities",
+        "Exporting all grain to Europe"
+      ],
+      correct: 0,
+      explanation: "Land reforms, including consolidation of fragmented holdings (Chakbandi) and abolishing exploitative Zamindari intermediaries, were primary objectives."
+    },
+    {
+      q: "18. What scheme was introduced by the Government of India to provide cheap institutional credit and insurance to farmers?",
+      options: [
+        "Kissan Credit Card (KCC) and Personal Accident Insurance Scheme (PAIS)",
+        "Universal Free Smartphone Scheme",
+        "Foreign Vacation Allowance for Landlords",
+        "Gold Coin Distribution Scheme"
+      ],
+      correct: 0,
+      explanation: "The Kissan Credit Card (KCC) and PAIS were introduced to protect farmers against financial shocks and informal moneylenders."
+    },
+    {
+      q: "19. Who initiated the 'Bhoodan - Gramdan' movement, also known as the 'Blood-less Revolution'?",
+      options: [
+        "Vinoba Bhave",
+        "Mahatma Gandhi",
+        "Jawaharlal Nehru",
+        "Jayaprakash Narayan"
+      ],
+      correct: 0,
+      explanation: "Acharya Vinoba Bhave pioneered the Bhoodan-Gramdan movement, persuading wealthy landowners to voluntarily donate land to landless poor peasants."
+    },
+    {
+      q: "20. At which historic village in Andhra Pradesh (now Telangana) did the Bhoodan movement begin when Ram Chandra Reddy donated 80 acres of land?",
+      options: [
+        "Pochampalli",
+        "Champaran",
+        "Bardoli",
+        "Sevagram"
+      ],
+      correct: 0,
+      explanation: "The Bhoodan movement started at Pochampalli in 1951, when Sri Ram Chandra Reddy donated 80 acres of land to 80 landless Dalit villagers."
+    }
+  ];
+
+  function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    questions.forEach((item, idx) => {
+      const qCard = document.createElement('div');
+      qCard.className = 'quiz-card';
+      qCard.id = `qCard_${idx}`;
+
+      const title = document.createElement('h3');
+      title.className = 'quiz-question';
+      title.textContent = item.q;
+      qCard.appendChild(title);
+
+      const optList = document.createElement('div');
+      optList.className = 'quiz-options';
+
+      item.options.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-opt-btn';
+        btn.textContent = optText;
+        btn.addEventListener('click', () => handleSelectOption(idx, optIdx));
+        optList.appendChild(btn);
+      });
+      qCard.appendChild(optList);
+
+      const feedback = document.createElement('div');
+      feedback.className = 'quiz-feedback';
+      feedback.id = `feedback_${idx}`;
+      qCard.appendChild(feedback);
+
+      container.appendChild(qCard);
+    });
+  }
+
+  let userAnswers = {};
+
+  function handleSelectOption(qIdx, optIdx) {
+    if (userAnswers[qIdx] !== undefined) return;
+    userAnswers[qIdx] = optIdx;
+
+    const q = questions[qIdx];
+    const isCorrect = (optIdx === q.correct);
+    const card = document.getElementById(`qCard_${qIdx}`);
+    const btns = card.querySelectorAll('.quiz-opt-btn');
+    const fb = document.getElementById(`feedback_${qIdx}`);
+
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.correct) {
+        btn.classList.add('opt-correct');
+      } else if (i === optIdx) {
+        btn.classList.add('opt-wrong');
+      }
+    });
+
+    if (isCorrect) {
+      fb.className = 'quiz-feedback feedback-correct';
+      fb.innerHTML = `<strong>Correct!</strong> ${q.explanation}`;
+    } else {
+      fb.className = 'quiz-feedback feedback-wrong';
+      fb.innerHTML = `<strong>Incorrect.</strong> ${q.explanation}`;
+    }
+
+    updateScoreSummary();
+  }
+
+  function updateScoreSummary() {
+    let score = 0;
+    const answeredCount = Object.keys(userAnswers).length;
+    for (let qIdx in userAnswers) {
+      if (userAnswers[qIdx] === questions[qIdx].correct) {
+        score++;
+      }
+    }
+    const badge = document.getElementById('quizScoreBadge');
+    if (badge) badge.textContent = `Score: ${score} / ${questions.length}`;
+
+    const prog = document.getElementById('quizProgressText');
+    if (prog) prog.textContent = `${answeredCount} of ${questions.length} answered`;
+  }
+
+  function resetQuiz() {
+    userAnswers = {};
+    renderQuiz();
+    updateScoreSummary();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+    const resetBtn = document.getElementById('resetQuizBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+  });
+</script>
+
+<style>
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  nav.small {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  nav.small a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .resource-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid.two {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .formula {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--brand);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-list li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ── Visual Cards ── */
+  .visual-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .visual-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand);
+    margin-bottom: 0.75rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .svg-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Quiz Styles ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-score-badge {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .quiz-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .quiz-question {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-opt-btn {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--text);
+  }
+
+  .quiz-opt-btn:hover:not(:disabled) {
+    background: var(--paper);
+    border-color: var(--brand);
+  }
+
+  .opt-correct {
+    background: #d1fae5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+    font-weight: 600;
+  }
+
+  .opt-wrong {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+    font-weight: 600;
+  }
+
+  .quiz-feedback {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .feedback-correct {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+  }
+
+  .quiz-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── CTA Banner ── */
+  .cta-banner {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--brand);
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-banner p {
+    color: rgb(255 255 255 / 85%);
+    max-width: 54ch;
+    margin-inline: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-banner .button {
+    background: #fff;
+    color: var(--brand);
+    border-color: #fff;
+  }
+
+  .cta-banner .button:hover {
+    background: #e8f0f1;
+    color: var(--brand-dark);
+  }
+</style>
