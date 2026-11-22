@@ -61,8 +61,8 @@ import { apiBase } from "../lib/site";
     <!-- Engine Bar -->
     <div class="ai-engine-bar">
       <div class="engine-info">
-        <span class="engine-badge" id="ai-engine-badge">⚡ Instant Socratic Engine</span>
-        <span class="engine-sub" id="ai-engine-sub">Zero download · 100% Free · CBSE Class 10 Syllabus</span>
+        <span class="engine-badge" id="ai-engine-badge">⚡ A2UI Generative Protocol Engine</span>
+        <span class="engine-sub" id="ai-engine-sub">Interactive Native Widgets · Zero Cloud Latency</span>
       </div>
     </div>
 
@@ -266,33 +266,199 @@ import { apiBase } from "../lib/site";
       return out;
     }
 
-    function appendMessage(sender, text, keyTerms) {
+    // ── A2UI (Agent-to-User Interface) Protocol Renderer ──
+    function renderA2UI(components, container) {
+      const surface = document.createElement('div');
+      surface.className = 'a2ui-surface';
+
+      (components || []).forEach(comp => {
+        if (!comp || !comp.type) return;
+
+        switch (comp.type) {
+          case 'HeroBanner': {
+            const hero = document.createElement('div');
+            hero.className = 'a2ui-hero-banner';
+            hero.innerHTML = `
+              <div class="a2ui-hero-icon">${escapeHtml(comp.icon || '🎯')}</div>
+              <div class="a2ui-hero-body">
+                <span class="a2ui-badge-pill">${escapeHtml(comp.tag || 'A2UI Generative Card')}</span>
+                <h3 class="a2ui-hero-title">${escapeHtml(comp.title || '')}</h3>
+                <p class="a2ui-hero-sub">${escapeHtml(comp.subtitle || '')}</p>
+              </div>
+            `;
+            surface.appendChild(hero);
+            break;
+          }
+
+          case 'FormulaCard': {
+            const card = document.createElement('div');
+            card.className = 'a2ui-card a2ui-formula-card';
+            let varsHtml = '';
+            if (comp.variables && comp.variables.length > 0) {
+              varsHtml = `
+                <div class="a2ui-var-table">
+                  ${comp.variables.map(v => `
+                    <div class="a2ui-var-row">
+                      <span class="a2ui-var-symbol">${escapeHtml(v.symbol)}</span>
+                      <span class="a2ui-var-desc">${escapeHtml(v.desc)}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              `;
+            }
+            card.innerHTML = `
+              <div class="a2ui-card-label">📐 ${escapeHtml(comp.title || 'Governing Formula / Identity')}</div>
+              <div class="a2ui-formula-box">${escapeHtml(comp.formula)}</div>
+              ${varsHtml}
+            `;
+            surface.appendChild(card);
+            break;
+          }
+
+          case 'StepList': {
+            const card = document.createElement('div');
+            card.className = 'a2ui-card a2ui-steps-card';
+            const stepsHtml = (comp.steps || []).map((s, idx) => `
+              <div class="a2ui-step-item">
+                <span class="a2ui-step-num">${s.num || idx + 1}</span>
+                <div class="a2ui-step-body">
+                  <div class="a2ui-step-text">${formatMarkdown(s.text)}</div>
+                  ${s.marks ? `<span class="a2ui-step-marks">${escapeHtml(s.marks)}</span>` : ''}
+                </div>
+              </div>
+            `).join('');
+            card.innerHTML = `
+              <div class="a2ui-card-label">📝 ${escapeHtml(comp.title || 'CBSE Official Marking Rubric')}</div>
+              <div class="a2ui-steps-list">${stepsHtml}</div>
+            `;
+            surface.appendChild(card);
+            break;
+          }
+
+          case 'Callout': {
+            const callout = document.createElement('div');
+            callout.className = `a2ui-callout ${comp.variant || 'info'}`;
+            const icon = comp.variant === 'warning' ? '⚠️' : (comp.variant === 'tip' ? '💡' : 'ℹ️');
+            callout.innerHTML = `
+              <div class="a2ui-callout-header">
+                <span class="a2ui-callout-icon">${icon}</span>
+                <strong>${escapeHtml(comp.title || '')}</strong>
+              </div>
+              <div class="a2ui-callout-text">${formatMarkdown(comp.text || '')}</div>
+            `;
+            surface.appendChild(callout);
+            break;
+          }
+
+          case 'InteractiveDrill': {
+            const drill = document.createElement('div');
+            drill.className = 'a2ui-card a2ui-drill-card';
+            drill.innerHTML = `
+              <div class="a2ui-drill-header">
+                <span class="a2ui-drill-badge">🎯 Interactive Knowledge Drill</span>
+                <span class="a2ui-drill-sub">Tap an option to check</span>
+              </div>
+              <div class="a2ui-drill-q">${escapeHtml(comp.question)}</div>
+              <div class="a2ui-drill-options"></div>
+              <div class="a2ui-drill-feedback" style="display: none;"></div>
+            `;
+            const optsContainer = drill.querySelector('.a2ui-drill-options');
+            const feedbackEl = drill.querySelector('.a2ui-drill-feedback');
+
+            (comp.options || []).forEach((opt, idx) => {
+              const btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'a2ui-drill-btn';
+              btn.textContent = opt;
+              btn.addEventListener('click', () => {
+                const allBtns = optsContainer.querySelectorAll('.a2ui-drill-btn');
+                allBtns.forEach((b, bIdx) => {
+                  b.disabled = true;
+                  if (bIdx === comp.correctIndex) {
+                    b.classList.add('correct');
+                    b.textContent = '✅ ' + b.textContent;
+                  } else if (bIdx === idx) {
+                    b.classList.add('wrong');
+                    b.textContent = '❌ ' + b.textContent;
+                  }
+                });
+                feedbackEl.style.display = 'block';
+                if (idx === comp.correctIndex) {
+                  feedbackEl.className = 'a2ui-drill-feedback correct-feedback';
+                  feedbackEl.innerHTML = `<strong>🎉 Perfect!</strong> ${escapeHtml(comp.explanation || 'Great understanding of the concept!')}`;
+                } else {
+                  feedbackEl.className = 'a2ui-drill-feedback wrong-feedback';
+                  feedbackEl.innerHTML = `<strong>💡 Key Takeaway:</strong> ${escapeHtml(comp.explanation || 'Review the rubric steps above!')}`;
+                }
+              });
+              optsContainer.appendChild(btn);
+            });
+
+            surface.appendChild(drill);
+            break;
+          }
+
+          case 'ActionRow': {
+            const row = document.createElement('div');
+            row.className = 'a2ui-actions-row';
+            (comp.actions || []).forEach(act => {
+              const a = document.createElement('a');
+              a.className = `a2ui-action-btn ${act.isPrimary ? 'primary' : 'secondary'}`;
+              a.href = act.href;
+              a.textContent = act.label;
+              row.appendChild(a);
+            });
+            surface.appendChild(row);
+            break;
+          }
+
+          case 'Text': {
+            const p = document.createElement('div');
+            p.className = 'a2ui-text-block';
+            p.innerHTML = formatMarkdown(comp.content || '');
+            surface.appendChild(p);
+            break;
+          }
+        }
+      });
+
+      container.appendChild(surface);
+    }
+
+    function appendMessage(sender, content, keyTerms) {
       const msgDiv = document.createElement('div');
       msgDiv.className = `ai-message ${sender === 'user' ? 'ai-user-message' : 'ai-bot-message'}`;
 
-      let termsHtml = '';
-      if (keyTerms && keyTerms.length > 0) {
-        termsHtml = `
-          <div class="ai-key-terms-row">
-            <span class="terms-title">⭐ CBSE Marking Scheme Terms:</span>
-            ${keyTerms.map(t => `<span class="term-badge">${escapeHtml(t)}</span>`).join('')}
-          </div>
-        `;
+      const metaDiv = document.createElement('div');
+      metaDiv.className = 'message-meta';
+      metaDiv.innerHTML = `
+        <span class="${sender === 'user' ? 'user-badge' : 'bot-badge'}">
+          ${sender === 'user' ? 'You' : 'Wallah AI Tutor'}
+        </span>
+        <span class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+      `;
+      msgDiv.appendChild(metaDiv);
+
+      const bodyDiv = document.createElement('div');
+      bodyDiv.className = 'message-body';
+
+      if (typeof content === 'object' && content !== null && content.a2ui && Array.isArray(content.components)) {
+        renderA2UI(content.components, bodyDiv);
+      } else {
+        bodyDiv.innerHTML = formatMarkdown(typeof content === 'string' ? content : JSON.stringify(content));
       }
 
-      msgDiv.innerHTML = `
-        <div class="message-meta">
-          <span class="${sender === 'user' ? 'user-badge' : 'bot-badge'}">
-            ${sender === 'user' ? 'You' : 'Wallah AI Tutor'}
-          </span>
-          <span class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-        </div>
-        <div class="message-body">
-          ${formatMarkdown(text)}
-          ${termsHtml}
-        </div>
-      `;
+      if (keyTerms && keyTerms.length > 0) {
+        const termsDiv = document.createElement('div');
+        termsDiv.className = 'ai-key-terms-row';
+        termsDiv.innerHTML = `
+          <span class="terms-title">⭐ CBSE Marking Scheme Terms:</span>
+          ${keyTerms.map(t => `<span class="term-badge">${escapeHtml(t)}</span>`).join('')}
+        `;
+        bodyDiv.appendChild(termsDiv);
+      }
 
+      msgDiv.appendChild(bodyDiv);
       messagesContainer.appendChild(msgDiv);
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
@@ -316,78 +482,310 @@ import { apiBase } from "../lib/site";
       if (typing) typing.remove();
     }
 
-    // Client-side fallback solver
+    // Client-side A2UI Protocol Solver
     function clientFallbackSolve(q, mode) {
       const lower = q.toLowerCase();
-      if (lower.includes('irrational') || lower.includes('√2') || lower.includes('√5') || lower.includes('root 5')) {
-        if (mode === 'hint') {
-          return {
-            answer: `💡 **Socratic Hint for Irrationality Proof**:
-All CBSE board proofs of irrationality use **Proof by Contradiction**!
 
-1. **Step 1**: Assume to the contrary that √5 IS rational. Can you write it in the form **a / b**, where a and b are **co-prime integers**?
-2. **Step 2**: Square both sides: 5 = a²/b² ⇒ **a² = 5b²**.
-3. **Guiding Question**: Since 5 divides a², what does the Fundamental Theorem of Arithmetic state about 5 dividing 'a'? What substitution should you make next?`,
-            keyTerms: ['Proof by Contradiction', 'Co-prime integers', 'Fundamental Theorem of Arithmetic']
-          };
-        } else {
-          return {
-            answer: `📝 **Model CBSE Board Answer (3 Marks)**:
-**To Prove**: √5 is irrational.
-
-1. Assume to the contrary that √5 is rational. Let √5 = a/b where a, b are co-prime integers (b ≠ 0).
-2. Squaring both sides: 5 = a²/b²  ⇒  **a² = 5b²**  ...(1)
-3. Since 5 divides 5b², 5 divides a². By theorem, **5 divides a**.
-4. Let a = 5c for some integer c.
-   Substituting in (1): (5c)² = 5b² ⇒ 25c² = 5b² ⇒ **b² = 5c²**.
-5. Thus 5 divides b², so **5 divides b**.
-6. Therefore, 5 is a common factor of both a and b, which **contradicts** our assumption that a and b are co-prime.
-7. Hence, **√5 is irrational**. [Hence Proved]`,
-            keyTerms: ['Co-prime', 'Proof by contradiction', 'Hence Proved']
-          };
-        }
+      // 1. Irrational Number Proofs
+      if (lower.includes('irrational') || lower.includes('√2') || lower.includes('√5') || lower.includes('root 5') || lower.includes('root 2')) {
+        return {
+          a2ui: true,
+          components: [
+            {
+              type: 'HeroBanner',
+              icon: '📐',
+              tag: 'CBSE Class 10 Real Numbers · 3 Marks',
+              title: 'Proof by Contradiction: √5 is Irrational',
+              subtitle: 'Structured step-by-step proof adhering to official board marking schemes.'
+            },
+            {
+              type: 'FormulaCard',
+              title: 'Fundamental Algebraic Identity',
+              formula: 'a² = 5b²  ⇒  5 divides a²  ⇒  5 divides a',
+              variables: [
+                { symbol: 'a, b', desc: 'Co-prime positive integers with HCF(a, b) = 1, b ≠ 0' },
+                { symbol: 'c', desc: 'Positive integer quotient such that a = 5c' }
+              ]
+            },
+            {
+              type: 'StepList',
+              title: 'CBSE Official Marking Steps',
+              steps: [
+                { num: 1, text: 'Assume to the contrary that √5 is rational. Let √5 = a/b where a, b are co-prime integers (b ≠ 0).', marks: '½ Mark' },
+                { num: 2, text: 'Square both sides: 5 = a²/b² ⇒ <strong>a² = 5b²</strong>. Since 5 divides 5b², 5 divides a², and therefore <strong>5 divides a</strong>.', marks: '1 Mark' },
+                { num: 3, text: 'Substitute a = 5c into (1): (5c)² = 5b² ⇒ 25c² = 5b² ⇒ <strong>b² = 5c²</strong>.', marks: '½ Mark' },
+                { num: 4, text: 'Since 5 divides 5c², 5 divides b², so <strong>5 divides b</strong>.', marks: '½ Mark' },
+                { num: 5, text: 'Thus 5 is a common factor of both a and b. This <strong>contradicts</strong> the fact that a and b are co-prime. Hence, <strong>√5 is irrational</strong>.', marks: '½ Mark' }
+              ]
+            },
+            {
+              type: 'Callout',
+              variant: 'warning',
+              title: 'Common Board Examiner Trap',
+              text: 'Always write the exact phrase <em>"where a and b are co-prime integers and b ≠ 0"</em> in Step 1. Missing the word "co-prime" costs a mandatory ½ mark reduction.'
+            },
+            {
+              type: 'InteractiveDrill',
+              question: 'If p is a prime number and p divides a², which theorem guarantees that p divides a?',
+              options: [
+                'Fundamental Theorem of Arithmetic (Theorem 1.2)',
+                'Euclid Division Lemma',
+                'Basic Proportionality Theorem'
+              ],
+              correctIndex: 0,
+              explanation: 'By the Fundamental Theorem of Arithmetic (Theorem 1.2 in NCERT), if a prime p divides a², it must divide a where a is a positive integer.'
+            },
+            {
+              type: 'ActionRow',
+              actions: [
+                { label: '🎯 Practice in Arena →', href: '/resources/practice-arena/', isPrimary: true },
+                { label: '📖 Real Numbers Guide', href: '/resources/real-numbers/', isPrimary: false }
+              ]
+            }
+          ],
+          keyTerms: ['Proof by Contradiction', 'Co-prime integers', 'Fundamental Theorem of Arithmetic', 'Hence Proved']
+        };
       }
 
+      // 2. Thales Theorem (BPT)
       if (lower.includes('thales') || lower.includes('bpt') || lower.includes('triangle')) {
         return {
-          answer: `💡 **Socratic Hint on Basic Proportionality Theorem (Thales' Theorem)**:
-1. **Given**: In ΔABC, line DE ∥ BC intersects AB at D and AC at E.
-2. **Key Concept**: Triangles on the **same base and between the same parallel lines** have equal areas!
-3. **Equation setup**:
-   - Area(ΔADE) / Area(ΔBDE) = AD / DB
-   - Area(ΔADE) / Area(ΔCDE) = AE / EC
-4. Since Area(ΔBDE) = Area(ΔCDE), what conclusion can you draw about the ratios AD/DB and AE/EC?`,
-          keyTerms: ['Basic Proportionality Theorem', 'Same base between parallels', 'AD / DB = AE / EC']
+          a2ui: true,
+          components: [
+            {
+              type: 'HeroBanner',
+              icon: '🔺',
+              tag: 'CBSE Class 10 Geometry · 4-5 Marks',
+              title: 'Basic Proportionality Theorem (Thales\' Theorem)',
+              subtitle: 'If a line is drawn parallel to one side of a triangle intersecting other sides in distinct points, sides are divided in the same ratio.'
+            },
+            {
+              type: 'FormulaCard',
+              title: 'Theorem Statement & Ratio',
+              formula: 'AD / DB = AE / EC',
+              variables: [
+                { symbol: 'ΔABC', desc: 'Given triangle with line DE ∥ BC' },
+                { symbol: 'D, E', desc: 'Points intersecting sides AB and AC respectively' }
+              ]
+            },
+            {
+              type: 'StepList',
+              title: 'CBSE Proof Rubric Steps',
+              steps: [
+                { num: 1, text: '<strong>Construction</strong>: Join BE and CD. Draw DM ⊥ AC and EN ⊥ AB.', marks: '1 Mark' },
+                { num: 2, text: 'Area(ΔADE) / Area(ΔBDE) = (½ · AD · EN) / (½ · DB · EN) = <strong>AD / DB</strong>.', marks: '1 Mark' },
+                { num: 3, text: 'Area(ΔADE) / Area(ΔCDE) = (½ · AE · DM) / (½ · EC · DM) = <strong>AE / EC</strong>.', marks: '1 Mark' },
+                { num: 4, text: 'Since ΔBDE and ΔCDE lie on the same base DE and between the same parallels DE ∥ BC, <strong>Area(ΔBDE) = Area(ΔCDE)</strong>.', marks: '1 Mark' },
+                { num: 5, text: 'From equations (1), (2), and (3): <strong>AD / DB = AE / EC</strong>. [Hence Proved]', marks: '1 Mark' }
+              ]
+            },
+            {
+              type: 'InteractiveDrill',
+              question: 'In ΔABC, DE ∥ BC. If AD = 3 cm, DB = 4.5 cm, and AE = 2 cm, what is the length of EC?',
+              options: [
+                '3.0 cm',
+                '3.5 cm',
+                '4.0 cm'
+              ],
+              correctIndex: 0,
+              explanation: 'Using BPT: AD/DB = AE/EC ⇒ 3/4.5 = 2/EC ⇒ EC = (2 × 4.5) / 3 = 9 / 3 = 3.0 cm.'
+            },
+            {
+              type: 'ActionRow',
+              actions: [
+                { label: '🎯 Triangles Practice Arena →', href: '/resources/practice-arena/', isPrimary: true },
+                { label: '📖 Triangles Revision Notes', href: '/resources/triangles/', isPrimary: false }
+              ]
+            }
+          ],
+          keyTerms: ['Basic Proportionality Theorem', 'Same base and between same parallels', 'AD / DB = AE / EC']
         };
       }
 
-      if (lower.includes('lens') || lower.includes('mirror') || lower.includes('sign convention')) {
+      // 3. Optics / Lens / Mirror
+      if (lower.includes('lens') || lower.includes('mirror') || lower.includes('sign convention') || lower.includes('focal')) {
         return {
-          answer: `💡 **Socratic Guidance on Optics & Sign Conventions**:
-Remember the golden CBSE rules:
-• **Object distance (u)**: ALWAYS **negative (-)** for both mirrors and lenses.
-• **Focal length (f)**:
-  - Convex mirror / Convex lens: **Positive (+)**
-  - Concave mirror / Concave lens: **Negative (-)**
-• **Formulas**:
-  - Mirror: **1/f = 1/v + 1/u**, Magnification **m = -v/u**
-  - Lens: **1/f = 1/v - 1/u**, Magnification **m = +v/u**
-• If magnification m is negative, the image is **Real & Inverted**.`,
-          keyTerms: ['Cartesian Sign Convention', 'u is always negative', 'Lens formula: 1/f = 1/v - 1/u']
+          a2ui: true,
+          components: [
+            {
+              type: 'HeroBanner',
+              icon: '🔬',
+              tag: 'CBSE Class 10 Physics · 3-5 Marks',
+              title: 'Optics: Mirror & Lens Sign Conventions',
+              subtitle: 'New Cartesian Sign Convention and board numerical formulas.'
+            },
+            {
+              type: 'FormulaCard',
+              title: 'Governing Optics Formulas',
+              formula: 'Mirror: 1/f = 1/v + 1/u (m = -v/u)  |  Lens: 1/f = 1/v - 1/u (m = +v/u)',
+              variables: [
+                { symbol: 'u', desc: 'Object distance (ALWAYS NEGATIVE for all real setups)' },
+                { symbol: 'v', desc: 'Image distance (+ for real behind lens, - for virtual front)' },
+                { symbol: 'f', desc: 'Focal length (+ for convex, - for concave)' },
+                { symbol: 'm', desc: 'Magnification (negative = real & inverted; positive = virtual & erect)' }
+              ]
+            },
+            {
+              type: 'Callout',
+              variant: 'warning',
+              title: 'The #1 Sign Convention Error',
+              text: 'Never assume the sign of the unknown quantity (e.g. v). Substitute given values with proper signs, and the formula will automatically yield the correct sign for the unknown!'
+            },
+            {
+              type: 'InteractiveDrill',
+              question: 'A convex lens of focal length f = +15 cm has an object at u = -30 cm (at 2F₁). Where is the image formed?',
+              options: [
+                'At 2F₂ (v = +30 cm), real and inverted',
+                'At F₂ (v = +15 cm), real and point-sized',
+                'Between F₂ and 2F₂ (v = +20 cm), diminished'
+              ],
+              correctIndex: 0,
+              explanation: 'When an object is at 2F (twice focal length), image forms at 2F on the other side: 1/v = 1/15 + 1/(-30) = 1/30 ⇒ v = +30 cm (Real & Inverted, same size).'
+            },
+            {
+              type: 'ActionRow',
+              actions: [
+                { label: '🎯 Practice Optics Numericals →', href: '/resources/practice-arena/', isPrimary: true },
+                { label: '📖 Light Chapter Guide', href: '/resources/light-reflection-refraction/', isPrimary: false }
+              ]
+            }
+          ],
+          keyTerms: ['Cartesian Sign Convention', 'u is always negative', 'Lens formula: 1/f = 1/v - 1/u', 'Real and Inverted']
         };
       }
 
+      // 4. Electricity / Ohm's Law
+      if (lower.includes('ohm') || lower.includes('resistor') || lower.includes('circuit') || lower.includes('electric') || lower.includes('current')) {
+        return {
+          a2ui: true,
+          components: [
+            {
+              type: 'HeroBanner',
+              icon: '⚡',
+              tag: 'CBSE Class 10 Physics · Electricity',
+              title: 'Circuit Analysis & Ohm\'s Law Mastery',
+              subtitle: 'Formulas, series/parallel combinations, and Joule\'s heating law.'
+            },
+            {
+              type: 'FormulaCard',
+              title: 'Governing Circuit Formulas',
+              formula: 'V = I · R   |   R_series = R₁ + R₂   |   1/R_parallel = 1/R₁ + 1/R₂',
+              variables: [
+                { symbol: 'V', desc: 'Potential difference in Volts (V)' },
+                { symbol: 'I', desc: 'Current in Amperes (A)' },
+                { symbol: 'R', desc: 'Resistance in Ohms (Ω)' },
+                { symbol: 'P, H', desc: 'Power P = VI = I²R = V²/R  |  Heat H = I²Rt' }
+              ]
+            },
+            {
+              type: 'InteractiveDrill',
+              question: 'Two identical 10 Ω resistors are connected in parallel, and this combo is connected in series with a 5 Ω resistor. What is the total equivalent resistance?',
+              options: [
+                '10 Ω',
+                '15 Ω',
+                '25 Ω'
+              ],
+              correctIndex: 0,
+              explanation: 'Parallel combo: 10 || 10 = (10 × 10) / (10 + 10) = 5 Ω. Adding in series with 5 Ω: R_total = 5 + 5 = 10 Ω.'
+            },
+            {
+              type: 'ActionRow',
+              actions: [
+                { label: '🎯 Generate Circuit Problems →', href: '/resources/practice-arena/', isPrimary: true },
+                { label: '📖 Electricity Guide', href: '/resources/electricity/', isPrimary: false }
+              ]
+            }
+          ],
+          keyTerms: ['Ohm\'s Law', 'V = IR', 'Equivalent Resistance', 'Joule\'s Law of Heating']
+        };
+      }
+
+      // 5. Chemistry / Chemical Reactions
+      if (lower.includes('feso4') || lower.includes('reaction') || lower.includes('chemical') || lower.includes('oxidation') || lower.includes('redox')) {
+        return {
+          a2ui: true,
+          components: [
+            {
+              type: 'HeroBanner',
+              icon: '🧪',
+              tag: 'CBSE Class 10 Chemistry · 2-3 Marks',
+              title: 'Thermal Decomposition of Ferrous Sulphate (FeSO₄)',
+              subtitle: 'Observation, colour changes, and balanced chemical equation.'
+            },
+            {
+              type: 'FormulaCard',
+              title: 'Balanced Chemical Equation',
+              formula: '2FeSO₄(s) ──Δ──> Fe₂O₃(s) + SO₂(g) + SO₃(g)',
+              variables: [
+                { symbol: 'FeSO₄ · 7H₂O', desc: 'Hydrated crystals (Green colour)' },
+                { symbol: 'Fe₂O₃', desc: 'Ferric oxide residue (Reddish-brown solid)' },
+                { symbol: 'SO₂, SO₃', desc: 'Pungent suffocating smell of burning sulphur' }
+              ]
+            },
+            {
+              type: 'Callout',
+              variant: 'tip',
+              title: 'Examiner Observation Checklist',
+              text: 'State two distinct observations: (1) Green colour turns reddish-brown solid residue; (2) Evolution of colourless gas with characteristic odour of burning sulphur.'
+            },
+            {
+              type: 'InteractiveDrill',
+              question: 'Which type of chemical reaction occurs when green ferrous sulphate crystals are heated in a dry boiling tube?',
+              options: [
+                'Thermal Decomposition Reaction',
+                'Displacement Reaction',
+                'Double Displacement Reaction'
+              ],
+              correctIndex: 0,
+              explanation: 'A single reactant (FeSO₄) breaks down into multiple simpler products (Fe₂O₃, SO₂, SO₃) under the influence of heat (thermal decomposition).'
+            },
+            {
+              type: 'ActionRow',
+              actions: [
+                { label: '🎯 Chemistry Practice Arena →', href: '/resources/practice-arena/', isPrimary: true },
+                { label: '📖 Chemical Reactions Guide', href: '/resources/chemical-reactions-equations/', isPrimary: false }
+              ]
+            }
+          ],
+          keyTerms: ['Thermal Decomposition', 'Ferric oxide', 'Sulphur dioxide', 'Endothermic']
+        };
+      }
+
+      // 6. General Socratic / Model Answer
       return {
-        answer: `💡 **Socratic Mentor Guidance**:
-You asked: "${q}"
-
-To solve this for CBSE Class 10 boards:
-1. **State Given Quantities**: List all values with proper SI units.
-2. **Identify the Governing Formula/Theorem**: Quote the exact NCERT theorem or equation.
-3. **Step-by-Step Substitution**: Show every intermediate step to secure full step marks in board exams.
-
-*Try asking about specific topics like "Prove √5 is irrational", "Thales theorem proof", "Ohm's law numericals", or "FeSO4 heating reaction"!*`,
-        keyTerms: ['CBSE Marking Rubric', 'SI Units', 'Step-by-Step Proof']
+        a2ui: true,
+        components: [
+          {
+            type: 'HeroBanner',
+            icon: '💡',
+            tag: 'Wallah Socratic Guidance',
+            title: `CBSE Board Strategy: "${q}"`,
+            subtitle: 'Structured approach to maximize step-marking in the 2026 board exam.'
+          },
+          {
+            type: 'StepList',
+            title: '3-Step Golden Rule for Board Numericals & Proofs',
+            steps: [
+              { num: 1, text: '<strong>State Given Quantities & Target</strong>: Always write "Given:", "To Prove / To Find:" with appropriate standard SI units.', marks: '½ Mark' },
+              { num: 2, text: '<strong>State Governing Formula / Theorem</strong>: Quote the exact NCERT theorem or equation before substituting numbers.', marks: '1 Mark' },
+              { num: 3, text: '<strong>Show Neat Stepwise Calculation</strong>: Highlight your final answer inside a rectangular box with final SI units.', marks: '½-1 Mark' }
+            ]
+          },
+          {
+            type: 'Callout',
+            variant: 'tip',
+            title: 'Try Our Instant Interactive Topics',
+            text: 'Ask about <em>"Prove √5 is irrational"</em>, <em>"Thales theorem proof"</em>, <em>"Lens sign conventions"</em>, <em>"Ohm\'s law circuit numericals"</em>, or <em>"FeSO4 heating reaction"</em> to see dynamic A2UI generative widgets!'
+          },
+          {
+            type: 'ActionRow',
+            actions: [
+              { label: '🎯 Enter Endless Practice Arena →', href: '/resources/practice-arena/', isPrimary: true },
+              { label: '📚 Explore 56 Chapter Guides', href: '/resources/', isPrimary: false }
+            ]
+          }
+        ],
+        keyTerms: ['CBSE Marking Rubric', 'Step-by-Step Proof', 'SI Units', 'Formula State']
       };
     }
 
@@ -420,10 +818,10 @@ To solve this for CBSE Class 10 boards:
           throw new Error('Server returned non-200');
         }
       } catch (err) {
-        // Graceful client fallback
+        // Fallback to client-side A2UI Generative Protocol Engine
         removeTyping();
         const fallback = clientFallbackSolve(q, currentMode);
-        appendMessage('bot', fallback.answer, fallback.keyTerms);
+        appendMessage('bot', fallback, fallback.keyTerms);
       } finally {
         isWaiting = false;
         sendBtn.disabled = false;
@@ -983,6 +1381,343 @@ To solve this for CBSE Class 10 boards:
 
   .ai-clear-link:hover {
     color: #b91c1c;
+  }
+
+  /* ── A2UI Generative UI Protocol Component Styles ── */
+  .a2ui-surface {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.35rem;
+  }
+
+  .a2ui-hero-banner {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border: 1.5px solid #a7f3d0;
+    border-radius: 8px;
+  }
+
+  .a2ui-hero-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .a2ui-hero-body {
+    flex: 1;
+  }
+
+  .a2ui-badge-pill {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #ccfbf1;
+    color: #0f766e;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    margin-bottom: 0.25rem;
+  }
+
+  .a2ui-hero-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 0.2rem 0;
+    line-height: 1.3;
+  }
+
+  .a2ui-hero-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .a2ui-card {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.85rem;
+  }
+
+  .a2ui-card-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #475569;
+    margin-bottom: 0.45rem;
+  }
+
+  .a2ui-formula-box {
+    background: linear-gradient(135deg, #0f766e 0%, #047857 100%);
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 0.65rem 0.85rem;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.65rem;
+    box-shadow: 0 2px 8px rgb(15 118 110 / 20%);
+    overflow-x: auto;
+  }
+
+  .a2ui-var-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.76rem;
+    border-top: 1px dashed #e2e8f0;
+    padding-top: 0.45rem;
+  }
+
+  .a2ui-var-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .a2ui-var-symbol {
+    font-weight: 700;
+    color: #0f766e;
+    font-family: monospace;
+  }
+
+  .a2ui-var-desc {
+    color: var(--muted);
+  }
+
+  .a2ui-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .a2ui-step-item {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .a2ui-step-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .a2ui-step-num {
+    background: #0f766e;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .a2ui-step-body {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .a2ui-step-text {
+    font-size: 0.78rem;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  .a2ui-step-marks {
+    font-size: 0.68rem;
+    font-weight: 700;
+    background: #fef3c7;
+    color: #b45309;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .a2ui-callout {
+    padding: 0.65rem 0.85rem;
+    border-radius: 6px;
+    border-left: 4px solid;
+  }
+
+  .a2ui-callout.warning {
+    background: #fffbeb;
+    border-color: #f59e0b;
+    color: #78350f;
+  }
+
+  .a2ui-callout.tip {
+    background: #f0fdf4;
+    border-color: #10b981;
+    color: #065f46;
+  }
+
+  .a2ui-callout.info {
+    background: #f0f9ff;
+    border-color: #0284c7;
+    color: #0c4a6e;
+  }
+
+  .a2ui-callout-header {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .a2ui-callout-text {
+    font-size: 0.76rem;
+    line-height: 1.4;
+  }
+
+  /* Interactive Drill Widget */
+  .a2ui-drill-card {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+  }
+
+  .a2ui-drill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.45rem;
+  }
+
+  .a2ui-drill-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0284c7;
+  }
+
+  .a2ui-drill-sub {
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  .a2ui-drill-q {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.55rem;
+    line-height: 1.4;
+  }
+
+  .a2ui-drill-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .a2ui-drill-btn {
+    text-align: left;
+    font-size: 0.76rem;
+    padding: 0.45rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
+    color: var(--ink);
+  }
+
+  .a2ui-drill-btn:hover:not(:disabled) {
+    border-color: #0f766e;
+    background: #f0fdf4;
+    color: #0f766e;
+  }
+
+  .a2ui-drill-btn.correct {
+    background: #dcfce7 !important;
+    border-color: #16a34a !important;
+    color: #15803d !important;
+    font-weight: 700;
+  }
+
+  .a2ui-drill-btn.wrong {
+    background: #fee2e2 !important;
+    border-color: #dc2626 !important;
+    color: #991b1b !important;
+  }
+
+  .a2ui-drill-feedback {
+    margin-top: 0.45rem;
+    font-size: 0.74rem;
+    padding: 0.45rem 0.65rem;
+    border-radius: 6px;
+    line-height: 1.4;
+  }
+
+  .a2ui-drill-feedback.correct-feedback {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+  }
+
+  .a2ui-drill-feedback.wrong-feedback {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+  }
+
+  .a2ui-actions-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.35rem;
+  }
+
+  .a2ui-action-btn {
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .a2ui-action-btn.primary {
+    background: #0f766e;
+    color: #ffffff;
+  }
+
+  .a2ui-action-btn.primary:hover {
+    background: #115e59;
+  }
+
+  .a2ui-action-btn.secondary {
+    background: #f1f5f9;
+    color: var(--ink);
+    border: 1px solid #cbd5e1;
+  }
+
+  .a2ui-action-btn.secondary:hover {
+    background: #e2e8f0;
   }
 
   @media (max-width: 640px) {
