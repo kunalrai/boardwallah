@@ -14,6 +14,7 @@ Pedagogical Rules:
      • Step-by-Step Substitution
      • Final Answer (with proper SI units in a box)
    - "find_mistake" mode: Analyze the student's attempted steps, identify the exact line where the error occurred, explain the misconception, and show how to fix it.
+   - "quiz" mode: Act as an interactive CBSE Board Examiner. Present exactly 1 high-yield CBSE Class 10 question at a time with 4 distinct options (A, B, C, D). If the student is answering a previous question, grade their answer immediately (state whether Correct or Incorrect, specify the CBSE marks awarded out of 1 or 2, give a concise Socratic explanation of why), and then present the next question. Never output all questions at once; maintain turn-by-turn interactive engagement.
 2. Typography & Formatting:
    - Use clean, standard Unicode symbols (α, β, √, θ, ², ³, ±, →, Δ, π, ·). Never output unescaped raw LaTeX backslashes that could break JSON parsing.
    - Highlight essential CBSE marking scheme keywords in **bold**.
@@ -43,6 +44,42 @@ function extractKeyTerms(text) {
     .map((m) => m.replace(/\*\*/g, "").trim())
     .filter((w) => w.length > 2 && w.length < 35)
     .slice(0, 4);
+}
+
+function buildNormalizedContents(history, currentTurnParts) {
+  const normalized = [];
+  if (Array.isArray(history)) {
+    for (const item of history) {
+      if (!item || !item.content) continue;
+      const text = typeof item.content === 'string' ? item.content.trim() : '';
+      if (!text) continue;
+      const role = (item.role === 'model' || item.role === 'assistant') ? 'model' : 'user';
+      // Gemini conversation must start with 'user'
+      if (normalized.length === 0 && role !== 'user') continue;
+      // Consecutive messages with identical role must be merged
+      if (normalized.length > 0 && normalized[normalized.length - 1].role === role) {
+        normalized[normalized.length - 1].parts[0].text += '\n\n' + text.slice(0, 2000);
+      } else {
+        normalized.push({
+          role: role,
+          parts: [{ text: text.slice(0, 2500) }]
+        });
+      }
+    }
+  }
+
+  // If the last item before current user turn is 'user', merge or pop
+  if (normalized.length > 0 && normalized[normalized.length - 1].role === 'user') {
+    const prev = normalized.pop();
+    currentTurnParts.unshift({ text: `[Prior Context: ${prev.parts[0].text}]` });
+  }
+
+  normalized.push({
+    role: 'user',
+    parts: currentTurnParts
+  });
+
+  return normalized;
 }
 
 export default async function handler(req, res) {
@@ -90,21 +127,6 @@ export default async function handler(req, res) {
 
     if (geminiApiKey) {
       try {
-        const contents = [];
-
-        // 1. Sliding Window Multi-Turn History (Session Memory)
-        if (Array.isArray(history) && history.length > 0) {
-          for (const item of history) {
-            if (!item || !item.content) continue;
-            const role = (item.role === 'model' || item.role === 'assistant') ? 'model' : 'user';
-            contents.push({
-              role: role,
-              parts: [{ text: String(item.content) }]
-            });
-          }
-        }
-
-        // 2. Current Turn
         const prompt = `Student Question / Doubt: ${question}
 Subject: ${subject || "General Class 10 CBSE"}
 Chapter Context: ${chapter || "Class 10 CBSE Board Exam"}
@@ -125,10 +147,8 @@ Please inspect any attached image, prior conversation context, or text, and resp
         }
         currentParts.push({ text: prompt });
 
-        contents.push({
-          role: "user",
-          parts: currentParts
-        });
+        // Build strictly alternating, validated multi-turn contents for Gemini API
+        const contents = buildNormalizedContents(history, currentParts);
 
         const candidateModels = [
           "gemini-3.5-flash-lite",

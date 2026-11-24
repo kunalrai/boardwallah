@@ -279,6 +279,14 @@ const chatSchema = {
 
             <!-- Starter Prompt Pills -->
             <div class="starter-cards-grid">
+              <button class="starter-pill-btn browse-library-pill-btn" id="browse-library-pill" type="button" style="border-color: #93c5fd; background: #eff6ff;">
+                <span class="pill-icon">📚</span>
+                <span class="pill-text"><strong>Explore 58 Chapter Guides &amp; 20-Q Quizzes</strong></span>
+              </button>
+              <button class="starter-pill-btn quick-quiz-pill-btn" data-query="Quiz me on CBSE Class 10 Science: Give me a high-yield 4-option practice question to start with!" type="button" style="border-color: #fed7aa; background: #fffaf5;">
+                <span class="pill-icon">🧪</span>
+                <span class="pill-text"><strong>Start Instant CBSE Practice Quiz</strong></span>
+              </button>
               <button class="starter-pill-btn" data-query="Draw a labeled diagram of Heights and Distances for a tower with 30° and 60° angles of elevation.">
                 <span class="pill-icon">📐</span>
                 <span class="pill-text">Draw Heights &amp; Distances Diagram</span>
@@ -313,6 +321,22 @@ const chatSchema = {
 
       <!-- ── Bottom Floating Input Capsule ("The Gemini Pill") ── -->
       <div class="capsule-dock-wrap">
+        <!-- In-Chat Quick Action Chips -->
+        <div class="capsule-quick-chips">
+          <button type="button" class="quick-chip-btn" id="chip-open-library" title="Browse 58 CBSE Chapters & Notes">
+            <span>📚 58 Chapters</span>
+          </button>
+          <button type="button" class="quick-chip-btn" id="chip-start-quiz" title="Start an Interactive CBSE Quiz">
+            <span>🧪 Quiz Me</span>
+          </button>
+          <button type="button" class="quick-chip-btn" id="chip-open-diagrams" title="NCERT Science Diagrams">
+            <span>🖼️ Diagrams</span>
+          </button>
+          <button type="button" class="quick-chip-btn" id="chip-open-formulas" title="CBSE Formula Cheatsheet">
+            <span>⚡ Formulas</span>
+          </button>
+        </div>
+
         <form class="gemini-capsule-form" id="gemini-chat-form">
           <!-- Image Attachment Preview Bar -->
           <div id="image-preview-bar" class="image-preview-bar" style="display:none;">
@@ -358,6 +382,10 @@ const chatSchema = {
                     <strong>Check My Steps</strong>
                     <small>Spot calculation &amp; proof errors</small>
                   </button>
+                  <button type="button" class="dropdown-item" data-mode="quiz">
+                    <strong>CBSE Quiz Mode 🧪</strong>
+                    <small>Interactive turn-by-turn board questions</small>
+                  </button>
                 </div>
               </div>
 
@@ -400,6 +428,28 @@ const chatSchema = {
       <div class="dialog-actions">
         <button type="button" class="button" id="in-modal-book-btn">Schedule Free 60-Min Trial</button>
         <button type="button" class="button secondary" id="in-modal-whatsapp-btn">💬 Chat with Kunal Rai</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Subject Notebooks Management Modal -->
+  <dialog id="notebooks-modal" class="mentor-dialog" style="max-width: 580px; width: 92vw;">
+    <div class="mentor-dialog-content card" style="max-width: 580px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; padding: 1.25rem;">
+      <div class="dialog-header" style="margin-bottom: 0.75rem;">
+        <div>
+          <h3 style="margin: 0; font-size: 1.15rem;">Subject Notebooks (Study Workspaces)</h3>
+          <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: #5f6368;">Organize your CBSE doubts, theorem proofs, and formula sheets by subject.</p>
+        </div>
+        <button id="close-notebooks-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+        <span style="font-size: 0.82rem; font-weight: 600; color: #334155;" id="notebooks-count-label">4 Active Notebooks</span>
+        <button type="button" class="button primary" id="modal-new-notebook-btn" style="font-size: 0.78rem; padding: 0.35rem 0.8rem; min-height: 2.1rem; background: #1a73e8; color: #fff;">＋ Create Notebook</button>
+      </div>
+
+      <div id="notebooks-list-container" style="overflow-y: auto; max-height: 48vh; display: flex; flex-direction: column; gap: 0.5rem; padding-right: 0.25rem;">
+        <!-- Populated dynamically via renderNotebooksList() -->
       </div>
     </div>
   </dialog>
@@ -812,7 +862,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   const profileCard = document.getElementById('sidebar-profile-card');
   const mentorModal = document.getElementById('mentor-modal');
   const closeMentorModalBtn = document.getElementById('close-mentor-modal-btn');
-  const activeNotebookTitle = document.getElementById('active-notebook-title');
+    const activeNotebookTitle = document.getElementById('active-notebook-title');
 
   const brandHomeBtn = document.getElementById('brand-home-btn');
   const sidebarLibraryBtn = document.getElementById('sidebar-library-btn');
@@ -934,6 +984,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       if (modeKey === 'hint') currentModeLabel.textContent = 'Auto';
       else if (modeKey === 'step_by_step') currentModeLabel.textContent = 'CBSE Ans';
       else if (modeKey === 'find_mistake') currentModeLabel.textContent = 'Check';
+      else if (modeKey === 'quiz') currentModeLabel.textContent = 'Quiz 🧪';
     }
   }
 
@@ -1686,12 +1737,40 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       `
       : '';
 
+    const matchedChapter = detectChapterResource(answer, keyTerms);
+    const inChatResourceHtml = matchedChapter
+      ? `
+        <div class="inchat-resource-card">
+          <div class="inchat-res-left">
+            <div class="inchat-res-badge-row">
+              <span class="inchat-res-badge">📖 CBSE Chapter Guide</span>
+              <span class="inchat-res-subject">${matchedChapter.subject}</span>
+            </div>
+            <strong class="inchat-res-title">${escapeHtml(matchedChapter.title)}</strong>
+            <span class="inchat-res-sub">Revision Notes • Formula Cheatsheet • 20-Question Quiz</span>
+          </div>
+          <div class="inchat-res-actions">
+            <a href="/resources/${matchedChapter.slug}" target="_blank" rel="noopener noreferrer" class="inchat-res-btn">
+              <span>Open Notes ↗</span>
+            </a>
+            <a href="/resources/${matchedChapter.slug}#quiz-root" target="_blank" rel="noopener noreferrer" class="inchat-res-btn quiz-accent">
+              <span>Take Quiz 🧪</span>
+            </a>
+            <button type="button" class="inchat-res-btn inchat-quiz-me-btn" data-chapter="${matchedChapter.title}">
+              <span>Quiz in Chat 💬</span>
+            </button>
+          </div>
+        </div>
+      `
+      : '';
+
     row.innerHTML = `
       <div class="gemini-bot-content">
         <div class="bot-text-body">
           ${formatted}
         </div>
         ${keyTermsHtml}
+        ${inChatResourceHtml}
         <div class="bot-actions-row">
           <button type="button" class="gemini-action-btn copy-action-btn" title="Copy answer">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
@@ -2266,72 +2345,72 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   // 56 CBSE Class 10 Chapters for In-Page Library
   const CBSE_CHAPTERS = [
     // Mathematics (14)
-    { subject: 'Maths', num: 'Ch 1', title: 'Real Numbers', highYield: 'Fundamental Theorem of Arithmetic & √5 Irrationality proof.' },
-    { subject: 'Maths', num: 'Ch 2', title: 'Polynomials', highYield: 'Relationship between zeroes & coefficients, α+β = -b/a.' },
-    { subject: 'Maths', num: 'Ch 3', title: 'Pair of Linear Equations', highYield: 'Elimination & Substitution, consistency conditions a1/a2.' },
-    { subject: 'Maths', num: 'Ch 4', title: 'Quadratic Equations', highYield: 'Discriminant D = b²-4ac & quadratic formula word problems.' },
-    { subject: 'Maths', num: 'Ch 5', title: 'Arithmetic Progressions', highYield: 'nth term an = a+(n-1)d and sum Sn = n/2[2a+(n-1)d].' },
-    { subject: 'Maths', num: 'Ch 6', title: 'Triangles', highYield: 'Basic Proportionality Theorem (Thales) 5-mark proof.' },
-    { subject: 'Maths', num: 'Ch 7', title: 'Coordinate Geometry', highYield: 'Distance formula & Section formula (m1x2+m2x1)/(m1+m2).' },
-    { subject: 'Maths', num: 'Ch 8', title: 'Intro to Trigonometry', highYield: 'Standard value angles (0°, 30°, 45°, 60°, 90°) & identities.' },
-    { subject: 'Maths', num: 'Ch 9', title: 'Heights & Distances', highYield: 'Angles of elevation & depression 4-mark case study.' },
-    { subject: 'Maths', num: 'Ch 10', title: 'Circles', highYield: 'Tangents drawn from external point Theorem 10.2 proof.' },
-    { subject: 'Maths', num: 'Ch 11', title: 'Areas Related to Circles', highYield: 'Sector & segment areas with (θ/360)×πr² formula.' },
-    { subject: 'Maths', num: 'Ch 12', title: 'Surface Areas & Volumes', highYield: 'Combination of cone, cylinder, hemisphere & conversions.' },
-    { subject: 'Maths', num: 'Ch 13', title: 'Statistics', highYield: 'Mean by Step Deviation, Median = L + [((n/2)-cf)/f]×h, Mode.' },
-    { subject: 'Maths', num: 'Ch 14', title: 'Probability', highYield: 'Deck of 52 cards, pair of dice, coins: P(E) = m/n.' },
+    { subject: 'Maths', num: 'Ch 1', title: 'Real Numbers', slug: 'real-numbers', highYield: 'Fundamental Theorem of Arithmetic & √5 Irrationality proof.' },
+    { subject: 'Maths', num: 'Ch 2', title: 'Polynomials', slug: 'polynomials', highYield: 'Relationship between zeroes & coefficients, α+β = -b/a.' },
+    { subject: 'Maths', num: 'Ch 3', title: 'Pair of Linear Equations', slug: 'linear-equations-in-two-variables', highYield: 'Elimination & Substitution, consistency conditions a1/a2.' },
+    { subject: 'Maths', num: 'Ch 4', title: 'Quadratic Equations', slug: 'quadratic-equations', highYield: 'Discriminant D = b²-4ac & quadratic formula word problems.' },
+    { subject: 'Maths', num: 'Ch 5', title: 'Arithmetic Progressions', slug: 'arithmetic-progressions', highYield: 'nth term an = a+(n-1)d and sum Sn = n/2[2a+(n-1)d].' },
+    { subject: 'Maths', num: 'Ch 6', title: 'Triangles', slug: 'triangles', highYield: 'Basic Proportionality Theorem (Thales) 5-mark proof.' },
+    { subject: 'Maths', num: 'Ch 7', title: 'Coordinate Geometry', slug: 'coordinate-geometry', highYield: 'Distance formula & Section formula (m1x2+m2x1)/(m1+m2).' },
+    { subject: 'Maths', num: 'Ch 8', title: 'Intro to Trigonometry', slug: 'introduction-to-trigonometry', highYield: 'Standard value angles (0°, 30°, 45°, 60°, 90°) & identities.' },
+    { subject: 'Maths', num: 'Ch 9', title: 'Heights & Distances', slug: 'applications-of-trigonometry', highYield: 'Angles of elevation & depression 4-mark case study.' },
+    { subject: 'Maths', num: 'Ch 10', title: 'Circles', slug: 'circles', highYield: 'Tangents drawn from external point Theorem 10.2 proof.' },
+    { subject: 'Maths', num: 'Ch 11', title: 'Areas Related to Circles', slug: 'areas-related-to-circles', highYield: 'Sector & segment areas with (θ/360)×πr² formula.' },
+    { subject: 'Maths', num: 'Ch 12', title: 'Surface Areas & Volumes', slug: 'surface-areas-and-volumes', highYield: 'Combination of cone, cylinder, hemisphere & conversions.' },
+    { subject: 'Maths', num: 'Ch 13', title: 'Statistics', slug: 'statistics', highYield: 'Mean by Step Deviation, Median = L + [((n/2)-cf)/f]×h, Mode.' },
+    { subject: 'Maths', num: 'Ch 14', title: 'Probability', slug: 'probability', highYield: 'Deck of 52 cards, pair of dice, coins: P(E) = m/n.' },
 
     // Science (13)
-    { subject: 'Science', num: 'Ch 1', title: 'Chemical Reactions & Eqns', highYield: 'Balancing, FeSO4 decomposition, displacement & redox.' },
-    { subject: 'Science', num: 'Ch 2', title: 'Acids, Bases and Salts', highYield: 'pH scale, Chlor-alkali process, Plaster of Paris, Bleaching.' },
-    { subject: 'Science', num: 'Ch 3', title: 'Metals and Non-metals', highYield: 'Reactivity series, ionic properties, roasting vs calcination.' },
-    { subject: 'Science', num: 'Ch 4', title: 'Carbon & its Compounds', highYield: 'Homologous series, esterification & saponification reactions.' },
-    { subject: 'Science', num: 'Ch 5', title: 'Life Processes', highYield: 'Nephron structure, human heart circulation, double circulation.' },
-    { subject: 'Science', num: 'Ch 6', title: 'Control & Coordination', highYield: 'Neuron diagram, reflex arc, endocrine glands (Insulin/Thyroxine).' },
-    { subject: 'Science', num: 'Ch 7', title: 'How Organisms Reproduce', highYield: 'Flower longitudinal section, female reproductive system.' },
-    { subject: 'Science', num: 'Ch 8', title: 'Heredity & Evolution', highYield: 'Mendel monohybrid 3:1 & dihybrid 9:3:3:1 cross, sex determination.' },
-    { subject: 'Science', num: 'Ch 9', title: 'Light - Reflection & Refraction', highYield: 'Ray diagrams, mirror formula 1/f = 1/v+1/u, lens formula, power.' },
-    { subject: 'Science', num: 'Ch 10', title: 'Human Eye & Colourful World', highYield: 'Myopia, hypermetropia correction, prism dispersion, scattering.' },
-    { subject: 'Science', num: 'Ch 11', title: 'Electricity', highYield: 'Ohm’s law V = IR, series/parallel combinations, Joule’s heating.' },
-    { subject: 'Science', num: 'Ch 12', title: 'Magnetic Effects of Current', highYield: 'Right-hand thumb rule, solenoid, Fleming’s Left Hand Rule.' },
-    { subject: 'Science', num: 'Ch 13', title: 'Our Environment', highYield: '10% law of energy transfer, trophic levels, biomagnification.' },
+    { subject: 'Science', num: 'Ch 1', title: 'Chemical Reactions & Eqns', slug: 'chemical-reactions-equations', highYield: 'Balancing, FeSO4 decomposition, displacement & redox.' },
+    { subject: 'Science', num: 'Ch 2', title: 'Acids, Bases and Salts', slug: 'acids-bases-salts', highYield: 'pH scale, Chlor-alkali process, Plaster of Paris, Bleaching.' },
+    { subject: 'Science', num: 'Ch 3', title: 'Metals and Non-metals', slug: 'metals-non-metals', highYield: 'Reactivity series, ionic properties, roasting vs calcination.' },
+    { subject: 'Science', num: 'Ch 4', title: 'Carbon & its Compounds', slug: 'carbon-and-its-compounds', highYield: 'Homologous series, esterification & saponification reactions.' },
+    { subject: 'Science', num: 'Ch 5', title: 'Life Processes', slug: 'life-processes', highYield: 'Nephron structure, human heart circulation, double circulation.' },
+    { subject: 'Science', num: 'Ch 6', title: 'Control & Coordination', slug: 'control-and-coordination', highYield: 'Neuron diagram, reflex arc, endocrine glands (Insulin/Thyroxine).' },
+    { subject: 'Science', num: 'Ch 7', title: 'How Organisms Reproduce', slug: 'how-do-organisms-reproduce', highYield: 'Flower longitudinal section, female reproductive system.' },
+    { subject: 'Science', num: 'Ch 8', title: 'Heredity & Evolution', slug: 'heredity', highYield: 'Mendel monohybrid 3:1 & dihybrid 9:3:3:1 cross, sex determination.' },
+    { subject: 'Science', num: 'Ch 9', title: 'Light - Reflection & Refraction', slug: 'light-reflection-refraction', highYield: 'Ray diagrams, mirror formula 1/f = 1/v+1/u, lens formula, power.' },
+    { subject: 'Science', num: 'Ch 10', title: 'Human Eye & Colourful World', slug: 'human-eye-colourful-world', highYield: 'Myopia, hypermetropia correction, prism dispersion, scattering.' },
+    { subject: 'Science', num: 'Ch 11', title: 'Electricity', slug: 'electricity', highYield: 'Ohm’s law V = IR, series/parallel combinations, Joule’s heating.' },
+    { subject: 'Science', num: 'Ch 12', title: 'Magnetic Effects of Current', slug: 'magnetic-effects-electric-current', highYield: 'Right-hand thumb rule, solenoid, Fleming’s Left Hand Rule.' },
+    { subject: 'Science', num: 'Ch 13', title: 'Our Environment', slug: 'our-environment', highYield: '10% law of energy transfer, trophic levels, biomagnification.' },
 
     // Social Science (20)
-    { subject: 'SST', num: 'His 1', title: 'Rise of Nationalism in Europe', highYield: 'Unification of Germany & Italy, Frederic Sorrieu vision.' },
-    { subject: 'SST', num: 'His 2', title: 'Nationalism in India', highYield: 'Non-cooperation, Salt March, Poona Pact, Rowlatt Act.' },
-    { subject: 'SST', num: 'His 3', title: 'Making of a Global World', highYield: 'Silk routes, Bretton Woods institutions, Great Depression.' },
-    { subject: 'SST', num: 'His 4', title: 'Age of Industrialisation', highYield: 'Proto-industrialisation, steam power vs hand labour.' },
-    { subject: 'SST', num: 'His 5', title: 'Print Culture & Modern World', highYield: 'Gutenberg press, Martin Luther reformation, print censorship.' },
-    { subject: 'SST', num: 'Geo 1', title: 'Resources and Development', highYield: 'Black vs Alluvial soil distribution, Agenda 21, land degradation.' },
-    { subject: 'SST', num: 'Geo 2', title: 'Forest and Wildlife', highYield: 'Reserved vs protected forests, Project Tiger, JFM.' },
-    { subject: 'SST', num: 'Geo 3', title: 'Water Resources', highYield: 'Multipurpose river projects, rainwater harvesting techniques.' },
-    { subject: 'SST', num: 'Geo 4', title: 'Agriculture', highYield: 'Kharif vs Rabi crops, temperature/rainfall for rice and wheat.' },
-    { subject: 'SST', num: 'Geo 5', title: 'Minerals and Energy', highYield: 'Conventional vs non-conventional sources, biogas benefits.' },
-    { subject: 'SST', num: 'Geo 6', title: 'Manufacturing Industries', highYield: 'Iron & steel plants, NTPC environmental measures.' },
-    { subject: 'SST', num: 'Geo 7', title: 'Lifelines of National Economy', highYield: 'Golden Quadrilateral, major seaports, pipeline network.' },
-    { subject: 'SST', num: 'Pol 1', title: 'Power Sharing', highYield: 'Belgium model vs Sri Lanka majoritarianism, checks & balances.' },
-    { subject: 'SST', num: 'Pol 2', title: 'Federalism', highYield: 'Union, State & Concurrent lists, 1992 decentralisation amendment.' },
-    { subject: 'SST', num: 'Pol 3', title: 'Gender, Religion and Caste', highYield: 'Feminist movements, constitutional secularism, caste politics.' },
-    { subject: 'SST', num: 'Pol 4', title: 'Political Parties', highYield: 'Functions of parties, national vs regional party criteria.' },
-    { subject: 'SST', num: 'Pol 5', title: 'Outcomes of Democracy', highYield: 'Accountable, responsive and legitimate government.' },
-    { subject: 'SST', num: 'Eco 1', title: 'Development', highYield: 'Per capita income, Human Development Index (HDI) criteria.' },
-    { subject: 'SST', num: 'Eco 2', title: 'Sectors of Indian Economy', highYield: 'Primary, secondary, tertiary & disguised unemployment.' },
-    { subject: 'SST', num: 'Eco 3', title: 'Money and Credit', highYield: 'Formal vs informal credit sources, Self Help Groups (SHGs).' },
+    { subject: 'SST', num: 'His 1', title: 'Rise of Nationalism in Europe', slug: 'the-rise-of-nationalism-in-europe', highYield: 'Unification of Germany & Italy, Frederic Sorrieu vision.' },
+    { subject: 'SST', num: 'His 2', title: 'Nationalism in India', slug: 'nationalism-in-india', highYield: 'Non-cooperation, Salt March, Poona Pact, Rowlatt Act.' },
+    { subject: 'SST', num: 'His 3', title: 'Making of a Global World', slug: 'the-making-of-a-global-world', highYield: 'Silk routes, Bretton Woods institutions, Great Depression.' },
+    { subject: 'SST', num: 'His 4', title: 'Age of Industrialisation', slug: 'the-making-of-a-global-world', highYield: 'Proto-industrialisation, steam power vs hand labour.' },
+    { subject: 'SST', num: 'His 5', title: 'Print Culture & Modern World', slug: 'print-culture-and-the-modern-world', highYield: 'Gutenberg press, Martin Luther reformation, print censorship.' },
+    { subject: 'SST', num: 'Geo 1', title: 'Resources and Development', slug: 'resources-and-development', highYield: 'Black vs Alluvial soil distribution, Agenda 21, land degradation.' },
+    { subject: 'SST', num: 'Geo 2', title: 'Forest and Wildlife', slug: 'forest-and-wildlife-resources', highYield: 'Reserved vs protected forests, Project Tiger, JFM.' },
+    { subject: 'SST', num: 'Geo 3', title: 'Water Resources', slug: 'water-resources', highYield: 'Multipurpose river projects, rainwater harvesting techniques.' },
+    { subject: 'SST', num: 'Geo 4', title: 'Agriculture', slug: 'agriculture', highYield: 'Kharif vs Rabi crops, temperature/rainfall for rice and wheat.' },
+    { subject: 'SST', num: 'Geo 5', title: 'Minerals and Energy', slug: 'minerals-and-energy-resources', highYield: 'Conventional vs non-conventional sources, biogas benefits.' },
+    { subject: 'SST', num: 'Geo 6', title: 'Manufacturing Industries', slug: 'manufacturing-industries', highYield: 'Iron & steel plants, NTPC environmental measures.' },
+    { subject: 'SST', num: 'Geo 7', title: 'Lifelines of National Economy', slug: 'lifelines-of-national-economy', highYield: 'Golden Quadrilateral, major seaports, pipeline network.' },
+    { subject: 'SST', num: 'Pol 1', title: 'Power Sharing', slug: 'power-sharing', highYield: 'Belgium model vs Sri Lanka majoritarianism, checks & balances.' },
+    { subject: 'SST', num: 'Pol 2', title: 'Federalism', slug: 'federalism', highYield: 'Union, State & Concurrent lists, 1992 decentralisation amendment.' },
+    { subject: 'SST', num: 'Pol 3', title: 'Gender, Religion and Caste', slug: 'gender-religion-and-caste', highYield: 'Feminist movements, constitutional secularism, caste politics.' },
+    { subject: 'SST', num: 'Pol 4', title: 'Political Parties', slug: 'political-parties', highYield: 'Functions of parties, national vs regional party criteria.' },
+    { subject: 'SST', num: 'Pol 5', title: 'Outcomes of Democracy', slug: 'outcomes-of-democracy', highYield: 'Accountable, responsive and legitimate government.' },
+    { subject: 'SST', num: 'Eco 1', title: 'Development', slug: 'development', highYield: 'Per capita income, Human Development Index (HDI) criteria.' },
+    { subject: 'SST', num: 'Eco 2', title: 'Sectors of Indian Economy', slug: 'sectors-of-the-indian-economy', highYield: 'Primary, secondary, tertiary & disguised unemployment.' },
+    { subject: 'SST', num: 'Eco 3', title: 'Money and Credit', slug: 'money-and-credit', highYield: 'Formal vs informal credit sources, Self Help Groups (SHGs).' },
 
     // English (6)
-    { subject: 'English', num: 'Lit 1', title: 'A Letter to God & Nelson Mandela', highYield: 'Lencho’s unshaken faith & Nelson Mandela long walk to freedom.' },
-    { subject: 'English', num: 'Lit 2', title: 'Two Stories about Flying', highYield: 'Young seagull first flight & mystery of the Black Aeroplane.' },
-    { subject: 'English', num: 'Lit 3', title: 'Diary of Anne Frank', highYield: 'Kitty diary entries & Mr Keesing chatting essays.' },
-    { subject: 'English', num: 'Lit 4', title: 'Glimpses of India & Madam Rides Bus', highYield: 'Bakers from Goa, Coorg coffee, Valli first bus trip.' },
-    { subject: 'English', num: 'Lit 5', title: 'The Sermon at Benares & The Proposal', highYield: 'Kisa Gotami grief lesson & Chekhov comic one-act play.' },
-    { subject: 'English', num: 'Lit 6', title: 'Footprints without Feet', highYield: 'Triumph of Surgery Tricki & Thief’s Story Hari Singh.' },
+    { subject: 'English', num: 'Lit 1', title: 'A Letter to God & Nelson Mandela', slug: 'english-first-flight-prose', highYield: 'Lencho’s unshaken faith & Nelson Mandela long walk to freedom.' },
+    { subject: 'English', num: 'Lit 2', title: 'Two Stories about Flying', slug: 'english-first-flight-prose', highYield: 'Young seagull first flight & mystery of the Black Aeroplane.' },
+    { subject: 'English', num: 'Lit 3', title: 'Diary of Anne Frank', slug: 'english-first-flight-prose', highYield: 'Kitty diary entries & Mr Keesing chatting essays.' },
+    { subject: 'English', num: 'Lit 4', title: 'Glimpses of India & Madam Rides Bus', slug: 'english-first-flight-prose', highYield: 'Bakers from Goa, Coorg coffee, Valli first bus trip.' },
+    { subject: 'English', num: 'Lit 5', title: 'The Sermon at Benares & The Proposal', slug: 'english-first-flight-prose', highYield: 'Kisa Gotami grief lesson & Chekhov comic one-act play.' },
+    { subject: 'English', num: 'Lit 6', title: 'Footprints without Feet', slug: 'english-footprints-without-feet', highYield: 'Triumph of Surgery Tricki & Thief’s Story Hari Singh.' },
 
     // Hindi (5)
-    { subject: 'Hindi', num: 'Hin 1', title: 'नेताजी का चश्मा & बालगोबिन भगत', highYield: 'कैप्टन चश्मेवाले का देशप्रेम और कबीरपंथी भगत की आदर्श जीवनशैली।' },
-    { subject: 'Hindi', num: 'Hin 2', title: 'लखनवी अंदाज़ & एक कहानी यह भी', highYield: 'सामंती बनावटी जीवन पर तीखा व्यंग्य और मन्नू भंडारी की आत्मकथ्य।' },
-    { subject: 'Hindi', num: 'Hin 3', title: 'सूरदास के पद & परशुराम संवाद', highYield: 'उद्धव-गोपी वक्रोक्ति संवाद और लक्ष्मण-परशुराम वीर रस तर्क।' },
-    { subject: 'Hindi', num: 'Hin 4', title: 'उत्साह, अट नहीं रही है & दंतुरित मुस्कान', highYield: 'सूर्यकांत त्रिपाठी निराला की क्रांति चेतना और नागार्जुन का वात्सल्य।' },
-    { subject: 'Hindi', num: 'Hin 5', title: 'कृतिका: माता का आँचल & साना-साना हाथ', highYield: 'देहाती बाल जीवन का स्नेह और सिक्किम हिमालय यात्रा संस्मरण।' }
+    { subject: 'Hindi', num: 'Hin 1', title: 'नेताजी का चश्मा & बालगोबिन भगत', slug: 'hindi-kshitij-gadhya-khand', highYield: 'कैप्टन चश्मेवाले का देशप्रेम और कबीरपंथी भगत की आदर्श जीवनशैली।' },
+    { subject: 'Hindi', num: 'Hin 2', title: 'लखनवी अंदाज़ & एक कहानी यह भी', slug: 'hindi-kshitij-gadhya-khand', highYield: 'सामंती बनावटी जीवन पर तीखा व्यंग्य और मन्नू भंडारी की आत्मकथ्य।' },
+    { subject: 'Hindi', num: 'Hin 3', title: 'सूरदास के पद & परशुराम संवाद', slug: 'hindi-kshitij-kavya-khand', highYield: 'उद्धव-गोपी वक्रोक्ति संवाद और लक्ष्मण-परशुराम वीर रस तर्क।' },
+    { subject: 'Hindi', num: 'Hin 4', title: 'उत्साह, अट नहीं रही है & दंतुरित मुस्कान', slug: 'hindi-kshitij-kavya-khand', highYield: 'सूर्यकांत त्रिपाठी निराला की क्रांति चेतना और नागार्जुन का वात्सल्य।' },
+    { subject: 'Hindi', num: 'Hin 5', title: 'कृतिका: माता का आँचल & साना-साना हाथ', slug: 'hindi-kritika', highYield: 'देहाती बाल जीवन का स्नेह और सिक्किम हिमालय यात्रा संस्मरण।' }
   ];
 
   const libraryGrid = document.getElementById('library-chapter-grid');
@@ -2376,7 +2455,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
   if (libraryGrid) {
     libraryGrid.innerHTML = CBSE_CHAPTERS.map(ch => `
-      <div class="chapter-card card" data-subject="${ch.subject}" style="padding: 0.75rem; border-radius: 12px; transition: transform 0.15s, border-color 0.15s; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; background: #ffffff;" onmouseover="this.style.borderColor='#1a73e8'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='none'">
+      <div class="chapter-card card" data-subject="${ch.subject}" data-slug="${ch.slug}" style="padding: 0.75rem; border-radius: 12px; transition: transform 0.15s, border-color 0.15s; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; background: #ffffff;" onmouseover="this.style.borderColor='#1a73e8'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='none'">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
             <span style="font-size: 0.72rem; font-weight: 700; color: #1a73e8; background: #e8f0fe; padding: 0.15rem 0.45rem; border-radius: 6px;">${ch.subject} • ${ch.num}</span>
@@ -2384,7 +2463,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
           <h4 style="margin: 0 0 0.35rem; font-size: 0.88rem; font-weight: 600; color: #1f1f1f;">${ch.title}</h4>
           <p style="margin: 0; font-size: 0.76rem; color: #5f6368; line-height: 1.35;">${ch.highYield}</p>
         </div>
-        <button type="button" class="button secondary ask-chapter-doubt-btn" data-chapter="${ch.title}" data-subject="${ch.subject}" style="margin-top: 0.65rem; width: 100%; font-size: 0.75rem; min-height: 2rem; padding: 0.3rem 0.6rem;">Ask Chapter Doubts</button>
+        <div style="display: flex; gap: 0.35rem; margin-top: 0.65rem;">
+          <button type="button" class="button secondary ask-chapter-doubt-btn" data-chapter="${ch.title}" data-subject="${ch.subject}" style="flex: 1; font-size: 0.72rem; min-height: 2rem; padding: 0.25rem 0.4rem; justify-content: center;">💬 Ask AI</button>
+          <a href="/resources/${ch.slug}" target="_blank" rel="noopener noreferrer" class="button primary chapter-resource-link-btn" style="flex: 1; font-size: 0.72rem; min-height: 2rem; padding: 0.25rem 0.4rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; background: #1a73e8; color: #fff; border-radius: 8px;">📖 Notes ↗</a>
+        </div>
       </div>
     `).join('');
 
@@ -2511,8 +2593,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   let firestoreSetDoc = null;
 
   // Thread & Conversation Session Memory State
-  let activeThreadId = null;
-  let activeThreadsMemory = [];
+    let activeThreadsMemory = [];
   let showingStarredOnly = false;
 
   function generateThreadTitle(question) {
@@ -3287,6 +3368,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   document.addEventListener('click', (e) => {
     const anchor = e.target.closest('a');
     if (anchor) {
+      // Allow external / chapter resource pages to open
+      if (anchor.target === '_blank' || anchor.classList.contains('chapter-resource-link-btn') || anchor.classList.contains('inchat-res-btn')) {
+        return;
+      }
       e.preventDefault();
       e.stopPropagation();
       const href = (anchor.getAttribute('href') || '').toLowerCase();
@@ -3377,6 +3462,216 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   });
 
   window.addEventListener('resize', closeThreadContextMenu);
+
+  // ── Subject Notebooks (Workspaces) Logic ──
+  const DEFAULT_NOTEBOOKS = [
+    { id: 'maths', name: 'Mathematics Standard', icon: '📐', subject: 'Maths', count: 12 },
+    { id: 'electricity', name: 'Electricity & Physics', icon: '⚡', subject: 'Science', count: 8 },
+    { id: 'chemistry', name: 'Chemical Reactions & Acids', icon: '🧪', subject: 'Science', count: 9 },
+    { id: 'sst', name: 'Social Science (SST)', icon: '🌍', subject: 'SST', count: 7 }
+  ];
+
+  function getStoredNotebooks() {
+    try {
+      const saved = localStorage.getItem('boardwallah_custom_notebooks');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return DEFAULT_NOTEBOOKS;
+  }
+
+  function saveStoredNotebooks(notebooks) {
+    try {
+      localStorage.setItem('boardwallah_custom_notebooks', JSON.stringify(notebooks));
+    } catch (e) {}
+  }
+
+  const newNotebookTrigger = document.getElementById('new-notebook-trigger');
+  const allNotebooksBtn = document.getElementById('all-notebooks-btn');
+  const notebooksModal = document.getElementById('notebooks-modal');
+  const closeNotebooksModalBtn = document.getElementById('close-notebooks-modal-btn');
+  const modalNewNotebookBtn = document.getElementById('modal-new-notebook-btn');
+  const notebooksListContainer = document.getElementById('notebooks-list-container');
+  const notebooksCountLabel = document.getElementById('notebooks-count-label');
+
+  function openCreateNotebookPrompt() {
+    const name = window.prompt("Enter new Notebook Title (e.g. 'Life Processes & Biology', 'Trigonometry Proofs'):");
+    if (!name || !name.trim()) return;
+
+    const trimmed = name.trim();
+    const notebooks = getStoredNotebooks();
+    const newId = 'nb_' + Date.now();
+    const newNb = {
+      id: newId,
+      name: trimmed,
+      icon: '📓',
+      subject: 'Custom',
+      count: 0,
+      createdAt: Date.now()
+    };
+    notebooks.push(newNb);
+    saveStoredNotebooks(notebooks);
+    renderSidebarNotebooks();
+    renderNotebooksModalList();
+    showToast(`Notebook "${trimmed}" created!`);
+    selectNotebook(newId, trimmed);
+    if (notebooksModal) notebooksModal.close();
+  }
+
+  function selectNotebook(id, name) {
+    document.querySelectorAll('.notebook-item').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-notebook-id') === id);
+    });
+    if (activeNotebookTitle) {
+      activeNotebookTitle.textContent = name;
+    }
+    // Set notebook context and start fresh doubt thread in this workspace
+    startNewChat();
+    if (activeNotebookTitle) {
+      activeNotebookTitle.textContent = name;
+    }
+    showToast(`Switched to ${name}`);
+  }
+
+  function renderSidebarNotebooks() {
+    const list = document.querySelector('.notebooks-list');
+    if (!list) return;
+
+    const notebooks = getStoredNotebooks();
+    // Keep the "+ New notebook" button and "... All notebooks" button
+    list.innerHTML = `
+      <button class="notebook-item new-notebook-btn" type="button" id="new-notebook-trigger">
+        <span class="item-icon">＋</span>
+        <span class="item-label">New notebook</span>
+      </button>
+      ${notebooks.map(nb => `
+        <button class="notebook-item topic-preset-btn" data-thread="${nb.id}" data-notebook-id="${nb.id}" type="button">
+          <span class="item-icon">${nb.icon || '📄'}</span>
+          <span class="item-label">${escapeHtml(nb.name)}</span>
+        </button>
+      `).join('')}
+      <button class="notebook-item" type="button" id="all-notebooks-btn">
+        <span class="item-icon">⋯</span>
+        <span class="item-label">All notebooks (${notebooks.length})</span>
+      </button>
+    `;
+
+    // Re-bind listeners
+    const newBtn = list.querySelector('#new-notebook-trigger');
+    if (newBtn) newBtn.addEventListener('click', openCreateNotebookPrompt);
+
+    const allBtn = list.querySelector('#all-notebooks-btn');
+    if (allBtn && notebooksModal) {
+      allBtn.addEventListener('click', () => {
+        renderNotebooksModalList();
+        notebooksModal.showModal();
+      });
+    }
+
+    list.querySelectorAll('.topic-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-notebook-id') || btn.getAttribute('data-thread');
+        const nb = notebooks.find(n => n.id === id);
+        if (nb) {
+          selectNotebook(nb.id, nb.name);
+          if (THREADS[id]) {
+            loadThread(id);
+          }
+        }
+      });
+    });
+  }
+
+  function renderNotebooksModalList() {
+    if (!notebooksListContainer) return;
+    const notebooks = getStoredNotebooks();
+    if (notebooksCountLabel) {
+      notebooksCountLabel.textContent = `${notebooks.length} Active Notebooks`;
+    }
+
+    notebooksListContainer.innerHTML = notebooks.map(nb => `
+      <div class="notebook-modal-card card" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 10px; background: #ffffff;">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <span style="font-size: 1.25rem;">${nb.icon || '📓'}</span>
+          <div>
+            <h4 style="margin: 0; font-size: 0.92rem; font-weight: 600; color: #1e293b;">${escapeHtml(nb.name)}</h4>
+            <span style="font-size: 0.76rem; color: #64748b;">${nb.subject || 'CBSE'} Workspace</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.4rem;">
+          <button type="button" class="button secondary select-nb-btn" data-id="${nb.id}" data-name="${escapeHtml(nb.name)}" style="font-size: 0.75rem; padding: 0.3rem 0.65rem; min-height: 2rem;">Open Workspace</button>
+        </div>
+      </div>
+    `).join('');
+
+    notebooksListContainer.querySelectorAll('.select-nb-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const name = btn.getAttribute('data-name');
+        if (notebooksModal) notebooksModal.close();
+        selectNotebook(id, name);
+      });
+    });
+  }
+
+  if (newNotebookTrigger) {
+    newNotebookTrigger.addEventListener('click', openCreateNotebookPrompt);
+  }
+  if (modalNewNotebookBtn) {
+    modalNewNotebookBtn.addEventListener('click', openCreateNotebookPrompt);
+  }
+  if (allNotebooksBtn && notebooksModal) {
+    allNotebooksBtn.addEventListener('click', () => {
+      renderNotebooksModalList();
+      notebooksModal.showModal();
+    });
+  }
+  if (closeNotebooksModalBtn && notebooksModal) {
+    closeNotebooksModalBtn.addEventListener('click', () => notebooksModal.close());
+  }
+
+  renderSidebarNotebooks();
+
+  // Wire quick chips above input capsule
+  const chipOpenLibrary = document.getElementById('chip-open-library');
+  const chipStartQuiz = document.getElementById('chip-start-quiz');
+  const chipOpenDiagrams = document.getElementById('chip-open-diagrams');
+  const chipOpenFormulas = document.getElementById('chip-open-formulas');
+  const browseLibraryPill = document.getElementById('browse-library-pill');
+
+  if (chipOpenLibrary && libraryModal) {
+    chipOpenLibrary.addEventListener('click', () => libraryModal.showModal());
+  }
+  if (browseLibraryPill && libraryModal) {
+    browseLibraryPill.addEventListener('click', () => libraryModal.showModal());
+  }
+  if (chipOpenDiagrams && imagesModal) {
+    chipOpenDiagrams.addEventListener('click', () => imagesModal.showModal());
+  }
+  if (chipOpenFormulas) {
+    chipOpenFormulas.addEventListener('click', () => {
+      const drawer = document.getElementById('formula-drawer');
+      if (drawer) drawer.classList.toggle('open');
+    });
+  }
+  if (chipStartQuiz) {
+    chipStartQuiz.addEventListener('click', () => {
+      setMode('quiz');
+      submitQuery('Quiz me on CBSE Class 10 Science: Ask me 1 high-yield 4-option practice question to start!');
+    });
+  }
+
+  // Delegate in-chat quiz me button clicks
+  document.addEventListener('click', (e) => {
+    const quizBtn = e.target.closest('.inchat-quiz-me-btn');
+    if (quizBtn) {
+      const chapter = quizBtn.getAttribute('data-chapter');
+      setMode('quiz');
+      submitQuery(`Quiz me on ${chapter}: Ask me question 1 with 4 options (A, B, C, D) according to the official CBSE Class 10 board exam pattern!`);
+    }
+  });
+
+  // Intercept /quiz in textarea input
+  const origSubmitQuery = submitQuery;
 
   // Initialize Firebase Client sync on startup
   initFirebaseClient();
@@ -5283,4 +5578,136 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       padding: 0.65rem 0.85rem !important;
     }
   }
+
+  /* ── In-Chat Smart Resource Recommendation Cards ── */
+  .inchat-resource-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1.1rem;
+    margin: 0.75rem 0 0.5rem;
+    background: #f8fbff;
+    border: 1px solid #c2e7ff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+  .inchat-res-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 200px;
+    flex: 1 1 auto;
+  }
+  .inchat-res-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .inchat-res-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #1a73e8;
+    background: #e8f0fe;
+    padding: 0.12rem 0.45rem;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .inchat-res-subject {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748b;
+  }
+  .inchat-res-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.25;
+  }
+  .inchat-res-sub {
+    font-size: 0.76rem;
+    color: #475569;
+  }
+  .inchat-res-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .inchat-res-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 0.35rem 0.7rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .inchat-res-btn:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+    color: #0f172a;
+  }
+  .inchat-res-btn.quiz-accent {
+    background: #ea580c;
+    border-color: #ea580c;
+    color: #ffffff;
+  }
+  .inchat-res-btn.quiz-accent:hover {
+    background: #c2410c;
+    border-color: #c2410c;
+  }
+  .inchat-res-btn.inchat-quiz-me-btn {
+    background: #1a73e8;
+    border-color: #1a73e8;
+    color: #ffffff;
+  }
+  .inchat-res-btn.inchat-quiz-me-btn:hover {
+    background: #1557b0;
+  }
+
+  /* ── In-Chat Quick Action Chips Bar Above Capsule ── */
+  .capsule-quick-chips {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-bottom: 0.5rem;
+    overflow-x: auto;
+    padding: 0 0.25rem 0.25rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .quick-chip-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: all 0.15s ease;
+    backdrop-filter: blur(8px);
+  }
+  .quick-chip-btn:hover {
+    background: #ffffff;
+    border-color: #1a73e8;
+    color: #1a73e8;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.15);
+  }
+
 </style>
