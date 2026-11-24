@@ -27,11 +27,11 @@ const {
   htmlClass = "",
 } = Astro.props;
 const path = Astro.url.pathname;
-const isApp = isAppLayout ?? path.startsWith("/chat");
+const isApp = isAppLayout ?? (path === "/" || path.startsWith("/chat") || path.startsWith("/portal"));
 const canonical = absoluteUrl(path);
 const links: { href: string; label: string; external?: boolean }[] = [
-  { href: "/", label: "Home" },
-  { href: "/chat/", label: "Ask Boardwallah 🤖" },
+  { href: "/", label: "Ask Boardwallah 🤖" },
+  { href: "/portal/", label: "Study Portal" },
   { href: "/subjects/", label: "Subjects" },
   { href: "/resources/", label: "Resources" },
   { href: "/plans/", label: "Plans" },
