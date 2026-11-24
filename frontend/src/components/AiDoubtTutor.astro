@@ -800,7 +800,7 @@ import { apiBase } from "../lib/site";
       showTyping();
 
       try {
-        const response = await fetch(`${apiBase}/api/v1/ai/doubt-tutor`, {
+        const response = await fetch('/api/v1/ai/doubt-tutor', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

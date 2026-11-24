@@ -1451,13 +1451,19 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   function resolveChatDoubt(question) {
     const lower = (question || '').toLowerCase().trim();
 
-    // 1. Exam Dates & Timetable (including cbsc, cbse, class 10, timetable, datesheet, etc.)
-    if (
-      lower.includes('date') || lower.includes('datesheet') || lower.includes('date sheet') ||
-      lower.includes('timetable') || lower.includes('time table') || lower.includes('schedule') ||
-      lower.includes('when is exam') || lower.includes('exam time') ||
-      ((lower.includes('cbse') || lower.includes('cbsc') || lower.includes('board')) && (lower.includes('10') || lower.includes('exam')))
-    ) {
+    // 1. Exam Dates & Timetable (strictly when user asks for dates or timetable)
+    const isAskingDates = (
+      lower.includes('datesheet') ||
+      lower.includes('date sheet') ||
+      lower.includes('timetable') ||
+      lower.includes('time table') ||
+      lower.includes('exam date') ||
+      lower.includes('exam timing') ||
+      lower.includes('exam schedule') ||
+      ((lower.includes('date') || lower.includes('when')) && (lower.includes('exam') || lower.includes('board exam') || lower.includes('cbse') || lower.includes('cbsc')))
+    );
+
+    if (isAskingDates) {
       return {
         answer: `**Official CBSE Class 10 Board Exam Timetable 2026 (10:30 AM – 1:30 PM IST):**\n\n| Date & Day | Subject Code | Subject Name | Timings | Max Marks |\n| :--- | :--- | :--- | :--- | :--- |\n| **17 Feb 2026 (Tue)** | 041 / 241 | **Mathematics (Standard / Basic)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **21 Feb 2026 (Sat)** | 184 | **English (Language & Literature)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **25 Feb 2026 (Wed)** | 086 | **Science (Phy / Chem / Bio)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **27 Feb 2026 (Fri)** | 402 / 417 | **Information Tech / AI** | 10:30 AM – 12:30 PM | 50 Marks |\n| **02 Mar 2026 (Mon)** | 002 / 085 | **Hindi Course 'A' / Course 'B'** | 10:30 AM – 1:30 PM | 80 Marks |\n| **07 Mar 2026 (Sat)** | 087 | **Social Science (His/Geo/Civ/Eco)**| 10:30 AM – 1:30 PM | 80 Marks |\n\n**Official CBSE Exam Day Guidelines:**\n1. **15-Minute Reading Time:** 10:15 AM to 10:30 AM is strictly reserved for reading question papers; writing on answer sheets begins only at 10:30 AM.\n2. **Passing Rule:** Minimum 33% combined marks (Theory + Internal Assessment) in each subject.\n3. **Items Allowed:** Original Admit Card, School ID card, royal blue or black ballpoint pens, transparent pouch, analog wristwatch.`,
         keyTerms: ['Date Sheet 2026', '10:30 AM Shift', '15-Min Reading Time', '33% Rule']
@@ -1567,7 +1573,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     showTypingAnimation();
 
     try {
-      const resp = await fetch(`${apiBase}/api/v1/ai/doubt-tutor`, {
+      const resp = await fetch('/api/v1/ai/doubt-tutor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1580,18 +1586,19 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         const data = await resp.json();
         removeTypingAnimation();
         appendBotResponse(data.answer, data.keyTerms);
-      } else {
-        throw new Error('Local fallback');
+        return;
       }
     } catch (err) {
-      removeTypingAnimation();
-      const resolved = resolveChatDoubt(question);
-      appendBotResponse(resolved.answer, resolved.keyTerms);
+      console.warn('API error, falling back to local resolver:', err);
     } finally {
       isWaiting = false;
       sendBtn.disabled = false;
       textarea.focus();
     }
+
+    removeTypingAnimation();
+    const resolved = resolveChatDoubt(question);
+    appendBotResponse(resolved.answer, resolved.keyTerms);
   }
 
   // ── In-Page Dialog Controls & Toast System ──

@@ -44,7 +44,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
+    let body = req.body;
+    if (typeof body === "string") {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {
+        body = {};
+      }
+    } else if (!body || typeof body !== "object") {
+      body = {};
+    }
     const { question, subject, chapter, mode = "hint" } = body;
 
     if (!question || typeof question !== "string") {

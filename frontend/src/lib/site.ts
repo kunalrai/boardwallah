@@ -1,8 +1,7 @@
 const configuredSite = import.meta.env.PUBLIC_SITE_ORIGIN ?? import.meta.env.SITE_ORIGIN ?? "https://www.boardwallah.space";
-const configuredApi = import.meta.env.PUBLIC_API_URL ?? "";
 
 export const siteOrigin = String(configuredSite).replace(/\/$/, "");
-export const apiBase = String(configuredApi).replace(/\/$/, "");
+export const apiBase = ""; // Use relative /api/ on production and client
 export const policyVersion = "1.1";
 export const calBookingUrl = "https://cal.com/kunal-rai-p0b1tq";
 
