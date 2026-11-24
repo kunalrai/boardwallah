@@ -24,7 +24,7 @@ import {
 } from "firebase/firestore";
 
 export const firebaseConfig = {
-  apiKey: import.meta.env.PUBLIC_FIREBASE_API_KEY || "AIzaSyAFMjBXhd6x1lGPY9Ofgt4ZQ3SvKPy_UR0",
+  apiKey: import.meta.env.PUBLIC_FIREBASE_API_KEY || "AIzaSyBhCdfjjTf39_dk2DDZrvZS_EBIekjeCAo",
   authDomain: import.meta.env.PUBLIC_FIREBASE_AUTH_DOMAIN || "boardwallah-cbse.firebaseapp.com",
   projectId: import.meta.env.PUBLIC_FIREBASE_PROJECT_ID || "boardwallah-cbse",
   storageBucket: import.meta.env.PUBLIC_FIREBASE_STORAGE_BUCKET || "boardwallah-cbse.firebasestorage.app",
