@@ -2172,6 +2172,9 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         threads.unshift(thread);
       } else {
         thread.updatedAt = Date.now();
+        if (!thread.messages || thread.messages.length === 0) {
+          thread.messages = getThreadMessages(thread.id);
+        }
       }
 
       // Add user turn to the active thread
@@ -2182,6 +2185,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         timestamp: Date.now()
       });
       thread.updatedAt = Date.now();
+      saveThreadMessages(thread.id, thread.messages);
       saveStoredThreads(threads);
 
       // Render or bring thread to top in sidebar
@@ -2255,6 +2259,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         timestamp: Date.now()
       });
       thread.updatedAt = Date.now();
+      saveThreadMessages(thread.id, thread.messages);
       saveStoredThreads(threads);
 
       try {
@@ -2693,7 +2698,51 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     });
   }
 
+  // ── Two-Tier Lightweight Thread Storage & Memory Cache ──
+  const threadMessagesCache = new Map();
+  let cachedThreadsMemory = null;
+
+  function getThreadMessages(threadId) {
+    if (!threadId) return [];
+    if (threadMessagesCache.has(threadId)) {
+      return threadMessagesCache.get(threadId);
+    }
+    let msgs = [];
+    try {
+      const raw = localStorage.getItem(`boardwallah_msgs_${threadId}`);
+      if (raw) {
+        msgs = JSON.parse(raw);
+      }
+    } catch (e) {}
+
+    // Fallback to starter threads if empty
+    if ((!msgs || msgs.length === 0) && typeof DEFAULT_STARTER_THREADS !== 'undefined') {
+      const starter = DEFAULT_STARTER_THREADS.find(st => st.id === threadId);
+      if (starter && Array.isArray(starter.messages)) {
+        msgs = starter.messages;
+      }
+    }
+
+    threadMessagesCache.set(threadId, msgs || []);
+    return threadMessagesCache.get(threadId);
+  }
+
+  function saveThreadMessages(threadId, messages) {
+    if (!threadId) return;
+    const safeMsgs = (messages || []).slice(-30);
+    threadMessagesCache.set(threadId, safeMsgs);
+    try {
+      localStorage.setItem(`boardwallah_msgs_${threadId}`, JSON.stringify(safeMsgs));
+    } catch (e) {
+      console.warn('LocalStorage saveThreadMessages quota warning:', e);
+    }
+  }
+
   function getStoredThreads() {
+    if (cachedThreadsMemory) {
+      return cachedThreadsMemory;
+    }
+
     let threads = [];
     try {
       const stored = localStorage.getItem('boardwallah_chat_threads');
@@ -2705,24 +2754,41 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       }
     } catch (e) {}
 
+    // Migration: extract messages from legacy monolithic threads to separate keys
+    let needsResave = false;
+    threads.forEach(t => {
+      if (t.messages && Array.isArray(t.messages) && t.messages.length > 0) {
+        saveThreadMessages(t.id, t.messages);
+        t.messagesCount = t.messages.length;
+        delete t.messages;
+        needsResave = true;
+      }
+    });
+
     // Graceful migration from legacy single-doubt history
     if (threads.length === 0) {
       try {
         const legacy = JSON.parse(localStorage.getItem('boardwallah_doubts_history') || '[]');
         if (Array.isArray(legacy) && legacy.length > 0) {
-          threads = legacy.map((d, idx) => ({
-            id: 'th_leg_' + (d.timestamp || (Date.now() - idx * 1000)),
-            title: generateThreadTitle(d.question || 'CBSE Doubt'),
-            cleanTitle: true,
-            isPinned: false,
-            createdAt: d.timestamp || Date.now(),
-            updatedAt: d.timestamp || Date.now(),
-            isStarred: false,
-            messages: [
+          threads = legacy.map((d, idx) => {
+            const threadId = 'th_leg_' + (d.timestamp || (Date.now() - idx * 1000));
+            const msgs = [
               { role: 'user', content: d.question, timestamp: d.timestamp || Date.now() },
               { role: 'model', content: d.answer, keyTerms: d.keyTerms || [], timestamp: (d.timestamp || Date.now()) + 1000 }
-            ]
-          }));
+            ];
+            saveThreadMessages(threadId, msgs);
+            return {
+              id: threadId,
+              title: generateThreadTitle(d.question || 'CBSE Doubt'),
+              cleanTitle: true,
+              isPinned: false,
+              createdAt: d.timestamp || Date.now(),
+              updatedAt: d.timestamp || Date.now(),
+              isStarred: false,
+              messagesCount: msgs.length
+            };
+          });
+          needsResave = true;
         }
       } catch (e) {}
     }
@@ -2730,26 +2796,59 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     // Ensure starter threads exist so they can always be clicked, pinned, or unpinned
     DEFAULT_STARTER_THREADS.forEach(st => {
       if (!threads.some(t => t.id === st.id)) {
-        threads.push({ ...st });
+        if (st.messages) {
+          saveThreadMessages(st.id, st.messages);
+        }
+        threads.push({
+          id: st.id,
+          title: st.title,
+          cleanTitle: true,
+          isPinned: !!st.isPinned,
+          createdAt: st.createdAt,
+          updatedAt: st.updatedAt,
+          messagesCount: st.messages ? st.messages.length : 0
+        });
+        needsResave = true;
       }
     });
 
-    // Normalize titles & ensure isPinned property for all local/synced threads
+    // Normalize titles & ensure isPinned/isUnread properties
     threads.forEach(t => {
-      t.title = generateThreadTitle(t.title || (t.messages?.[0]?.content) || 'CBSE Doubt');
+      t.title = generateThreadTitle(t.title || 'CBSE Doubt');
       t.cleanTitle = true;
-      if (typeof t.isPinned !== 'boolean') {
-        t.isPinned = false;
-      }
+      if (typeof t.isPinned !== 'boolean') t.isPinned = false;
+      if (typeof t.isUnread !== 'boolean') t.isUnread = false;
     });
+
+    cachedThreadsMemory = threads;
+    if (needsResave) {
+      saveStoredThreads(threads);
+    }
 
     return threads;
   }
 
   function saveStoredThreads(threads) {
     try {
-      activeThreadsMemory = threads;
-      localStorage.setItem('boardwallah_chat_threads', JSON.stringify(threads.slice(0, 30)));
+      cachedThreadsMemory = threads;
+      // Strip heavy messages array from the sidebar index to keep it lightweight (<2KB)
+      const sanitized = threads.slice(0, 50).map(t => {
+        if (t.messages && Array.isArray(t.messages)) {
+          saveThreadMessages(t.id, t.messages);
+        }
+        return {
+          id: t.id,
+          title: t.title,
+          cleanTitle: true,
+          isPinned: !!t.isPinned,
+          isStarred: !!t.isStarred,
+          isUnread: !!t.isUnread,
+          createdAt: t.createdAt || Date.now(),
+          updatedAt: t.updatedAt || Date.now(),
+          messagesCount: t.messagesCount || (t.messages ? t.messages.length : 0)
+        };
+      });
+      localStorage.setItem('boardwallah_chat_threads', JSON.stringify(sanitized));
     } catch (e) {}
   }
 
@@ -2985,7 +3084,13 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     if (!thread) return;
 
     threads = threads.filter(t => t.id !== threadId);
+    cachedThreadsMemory = threads;
     saveStoredThreads(threads);
+
+    threadMessagesCache.delete(threadId);
+    try {
+      localStorage.removeItem(`boardwallah_msgs_${threadId}`);
+    } catch (e) {}
 
     if (activeThreadId === threadId) {
       startNewChat();
@@ -3017,6 +3122,9 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     showToast(thread.isPinned ? 'Pinned to top 📌' : 'Unpinned from top');
   }
 
+  let recentsDisplayLimit = 12;
+  const RECENTS_PAGE_SIZE = 12;
+
   function renderAllThreadsInSidebar() {
     const recentsList = document.getElementById('recents-list');
     if (!recentsList) return;
@@ -3024,10 +3132,18 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     const threads = getStoredThreads();
     const sorted = sortThreads(threads);
 
-    recentsList.innerHTML = '';
+    const pinnedThreads = sorted.filter(t => t.isPinned);
+    const nonPinnedThreads = sorted.filter(t => !t.isPinned);
 
-    sorted.forEach(t => {
-      const cleanTitle = generateThreadTitle(t.title || (t.messages?.[0]?.content) || 'CBSE Doubt');
+    // Show all pinned threads at top + slice non-pinned up to recentsDisplayLimit
+    const visibleNonPinned = nonPinnedThreads.slice(0, recentsDisplayLimit);
+    const visibleThreads = [...pinnedThreads, ...visibleNonPinned];
+    const hasMore = nonPinnedThreads.length > recentsDisplayLimit;
+
+    const fragment = document.createDocumentFragment();
+
+    visibleThreads.forEach(t => {
+      const cleanTitle = generateThreadTitle(t.title || 'CBSE Doubt');
       const btn = document.createElement('button');
       btn.className = 'recent-item' + 
         (t.id === activeThreadId ? ' active' : '') + 
@@ -3065,8 +3181,46 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         });
       }
 
-      recentsList.appendChild(btn);
+      fragment.appendChild(btn);
     });
+
+    if (hasMore) {
+      const remainingCount = nonPinnedThreads.length - recentsDisplayLimit;
+      const moreRow = document.createElement('button');
+      moreRow.type = 'button';
+      moreRow.className = 'recent-show-more-btn';
+      moreRow.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+        <span>View older (${remainingCount})</span>
+      `;
+      moreRow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        recentsDisplayLimit += RECENTS_PAGE_SIZE;
+        renderAllThreadsInSidebar();
+      });
+      fragment.appendChild(moreRow);
+    } else if (recentsDisplayLimit > RECENTS_PAGE_SIZE && nonPinnedThreads.length > RECENTS_PAGE_SIZE) {
+      const lessRow = document.createElement('button');
+      lessRow.type = 'button';
+      lessRow.className = 'recent-show-more-btn';
+      lessRow.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"/>
+        </svg>
+        <span>Show less</span>
+      `;
+      lessRow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        recentsDisplayLimit = RECENTS_PAGE_SIZE;
+        renderAllThreadsInSidebar();
+      });
+      fragment.appendChild(lessRow);
+    }
+
+    recentsList.innerHTML = '';
+    recentsList.appendChild(fragment);
   }
 
   function renderThreadInSidebar(thread, isTop = false) {
@@ -3085,7 +3239,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     }
 
     activeThreadId = thread.id;
-    const cleanTitle = generateThreadTitle(thread.title || (thread.messages?.[0]?.content) || 'CBSE Doubt');
+    const cleanTitle = generateThreadTitle(thread.title || 'CBSE Doubt');
     if (activeNotebookTitle) {
       activeNotebookTitle.textContent = cleanTitle;
     }
@@ -3093,6 +3247,11 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     welcomeCanvas.style.display = 'none';
     activeMessagesFeed.style.display = 'flex';
     activeMessagesFeed.innerHTML = '';
+
+    // Lazy load messages only on demand when opening this thread
+    if (!thread.messages || thread.messages.length === 0) {
+      thread.messages = getThreadMessages(thread.id);
+    }
 
     // Render entire conversation thread
     if (Array.isArray(thread.messages)) {
@@ -3186,6 +3345,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   async function saveThreadToFirestore(thread) {
     if (!thread || !thread.id) return;
     const currentUser = getStoredUser();
+    const msgs = (thread.messages && thread.messages.length > 0) ? thread.messages : getThreadMessages(thread.id);
     const threadData = {
       threadId: thread.id,
       title: thread.title,
@@ -3193,9 +3353,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       updatedAt: thread.updatedAt,
       isPinned: !!thread.isPinned,
       isStarred: !!thread.isStarred,
-      messagesCount: (thread.messages || []).length,
-      lastMessage: thread.messages && thread.messages.length > 0 ? thread.messages[thread.messages.length - 1].content.slice(0, 500) : '',
-      messages: (thread.messages || []).slice(-12).map(m => ({
+      isUnread: !!thread.isUnread,
+      messagesCount: msgs.length,
+      lastMessage: msgs.length > 0 ? msgs[msgs.length - 1].content.slice(0, 500) : '',
+      messages: msgs.slice(-12).map(m => ({
         role: m.role,
         content: typeof m.content === 'string' ? m.content.slice(0, 3000) : '',
         keyTerms: m.keyTerms || [],
@@ -3281,23 +3442,29 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       if (!snapshot.empty) {
         const firestoreThreads = [];
         snapshot.forEach(docSnap => {
-          firestoreThreads.push(docSnap.data());
+          const data = docSnap.data();
+          const tId = data.threadId || docSnap.id;
+          if (Array.isArray(data.messages) && data.messages.length > 0) {
+            saveThreadMessages(tId, data.messages);
+          }
+          firestoreThreads.push({
+            id: tId,
+            title: data.title,
+            createdAt: data.createdAt || Date.now(),
+            updatedAt: data.updatedAt || Date.now(),
+            isPinned: !!data.isPinned,
+            isStarred: !!data.isStarred,
+            isUnread: !!data.isUnread,
+            messagesCount: data.messagesCount || (data.messages ? data.messages.length : 0)
+          });
         });
 
         let localThreads = getStoredThreads();
         const map = new Map();
         localThreads.forEach(t => map.set(t.id, t));
         firestoreThreads.forEach(ft => {
-          if (!map.has(ft.threadId)) {
-            map.set(ft.threadId, {
-              id: ft.threadId,
-              title: ft.title,
-              createdAt: ft.createdAt || Date.now(),
-              updatedAt: ft.updatedAt || Date.now(),
-              isPinned: !!ft.isPinned,
-              isStarred: !!ft.isStarred,
-              messages: ft.messages || []
-            });
+          if (!map.has(ft.id)) {
+            map.set(ft.id, ft);
           }
         });
 
@@ -4042,6 +4209,33 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   }
   .recent-item.unread .recent-text {
     font-weight: 600 !important;
+  }
+  .recent-show-more-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.45rem !important;
+    padding: 0.38rem 0.75rem !important;
+    margin: 0.35rem 0 !important;
+    border-radius: 999px !important;
+    border: 1px dashed #cbd5e1 !important;
+    background: transparent !important;
+    color: #64748b !important;
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    transition: all 0.15s ease !important;
+    user-select: none !important;
+  }
+  .recent-show-more-btn:hover {
+    background: #f1f5f9 !important;
+    color: #1e293b !important;
+    border-color: #94a3b8 !important;
+  }
+  .recent-show-more-btn svg {
+    flex-shrink: 0 !important;
   }
   .recent-item .pin-icon,
   .recents-list .recent-item .pin-icon {
