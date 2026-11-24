@@ -167,11 +167,15 @@ const homeSchema = {
           <kbd class="sidebar-label hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded bg-white/80 dark:bg-[#0D1117] text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-[#30363D]">⌘K</kbd>
         </button>
 
-        <!-- 5 CBSE Class 10 Subjects Switcher -->
+        <!-- CBSE Class 10 Subjects Switcher -->
         <div class="sidebar-label pt-1">
-          <div class="px-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">CBSE Class 10 Subjects</div>
+          <div class="px-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">CBSE Class 10 Prep &amp; Subjects</div>
           <div class="flex flex-col gap-1" id="subjectList">
-            <button onclick="selectSubject('Mathematics', this)" data-subject="Mathematics" class="subject-btn active flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 transition-all">
+            <button onclick="selectSubject('CBSE Board 2026', this)" data-subject="CBSE Board 2026" class="subject-btn active flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 transition-all">
+              <span class="flex items-center gap-2 truncate"><i data-lucide="calendar-days" class="w-3.5 h-3.5 shrink-0"></i><span>CBSE Board 2026</span></span>
+              <span class="text-[10px] font-mono opacity-80">Dates &amp; Plan</span>
+            </button>
+            <button onclick="selectSubject('Mathematics', this)" data-subject="Mathematics" class="subject-btn flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#21262D] border border-transparent transition-all">
               <span class="flex items-center gap-2 truncate"><i data-lucide="sigma" class="w-3.5 h-3.5 shrink-0"></i><span>Mathematics</span></span>
               <span class="text-[10px] font-mono opacity-80">14 Ch</span>
             </button>
@@ -282,9 +286,9 @@ const homeSchema = {
           <!-- Active Subject & Chapter Pill -->
           <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] truncate shadow-xs">
             <span class="w-2 h-2 rounded-full bg-orange-500 shrink-0"></span>
-            <span id="activeSubjectLabel" class="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white truncate">Mathematics</span>
+            <span id="activeSubjectLabel" class="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white truncate">CBSE Board 2026</span>
             <span class="text-slate-300 dark:text-slate-600">•</span>
-            <span id="activeChapterLabel" class="text-xs text-slate-600 dark:text-slate-300 truncate max-w-[140px] sm:max-w-[230px]">Ch 1: Real Numbers</span>
+            <span id="activeChapterLabel" class="text-xs text-slate-600 dark:text-slate-300 truncate max-w-[140px] sm:max-w-[260px]">Official Date Sheet &amp; Timetable</span>
           </div>
         </div>
 
@@ -331,6 +335,18 @@ const homeSchema = {
 
             <!-- 4 CBSE Class 10 Starter Cards (2x2 Grid) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <button onclick="triggerStarterCard('datesheet')" class="group text-left p-4 rounded-2xl bg-white dark:bg-[#161B22] hover:bg-slate-50 dark:hover:bg-[#21262D] border border-slate-200 dark:border-[#30363D] hover:border-orange-500/50 transition-all shadow-xs flex flex-col justify-between min-h-[118px]">
+                <div class="flex items-center justify-between w-full mb-2">
+                  <span class="text-xs font-semibold text-slate-800 dark:text-slate-100 group-hover:text-orange-500 transition-colors">CBSE 2026 Board Exam Dates</span>
+                  <div class="w-7 h-7 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Official timetable (10:30 AM – 1:30 PM): Maths 17 Feb, English 21 Feb, Science 25 Feb, IT 27 Feb, Hindi 02 Mar, SST 07 Mar.
+                </p>
+              </button>
+
               <button onclick="triggerStarterCard('irrational')" class="group text-left p-4 rounded-2xl bg-white dark:bg-[#161B22] hover:bg-slate-50 dark:hover:bg-[#21262D] border border-slate-200 dark:border-[#30363D] hover:border-orange-500/50 transition-all shadow-xs flex flex-col justify-between min-h-[118px]">
                 <div class="flex items-center justify-between w-full mb-2">
                   <span class="text-xs font-semibold text-slate-800 dark:text-slate-100 group-hover:text-orange-500 transition-colors">Prove √5 Is Irrational (3M Board PYQ)</span>
@@ -364,18 +380,6 @@ const homeSchema = {
                 </div>
                 <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   Paste your written working or derivation to see which step earns marks and where a sign or theorem step is missed.
-                </p>
-              </button>
-
-              <button onclick="triggerStarterCard('mockdrill')" class="group text-left p-4 rounded-2xl bg-white dark:bg-[#161B22] hover:bg-slate-50 dark:hover:bg-[#21262D] border border-slate-200 dark:border-[#30363D] hover:border-purple-400/50 transition-all shadow-xs flex flex-col justify-between min-h-[118px]">
-                <div class="flex items-center justify-between w-full mb-2">
-                  <span class="text-xs font-semibold text-slate-800 dark:text-slate-100 group-hover:text-purple-400 transition-colors">80-Mark Mock &amp; Flashcard Drill</span>
-                  <div class="w-7 h-7 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
-                    <i data-lucide="timer" class="w-4 h-4"></i>
-                  </div>
-                </div>
-                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  Open the 3-hour CBSE 80-mark paper sections, flip NCERT concept flashcards, and practice high-weightage questions.
                 </p>
               </button>
             </div>
@@ -431,6 +435,15 @@ const homeSchema = {
           <!-- Sample Question Chips Row -->
           <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-1 no-scrollbar">
             <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 shrink-0 mr-1">Sample Qs:</span>
+            <button onclick="useSampleChip('What is the exam dates of cbse class 10?')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Exam dates CBSE Class 10
+            </button>
+            <button onclick="useSampleChip('What is the passing criteria and minimum marks for CBSE Class 10?')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Passing marks &amp; 33% rule
+            </button>
+            <button onclick="useSampleChip('How to score 95%+ in CBSE Class 10 board exams?')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Score 95%+ roadmap
+            </button>
             <button onclick="useSampleChip('Prove that √5 is an irrational number (3 Marks).')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
               Prove √5 irrational (3M)
             </button>
@@ -698,6 +711,13 @@ const homeSchema = {
   ====================================================================== -->
   <script is:inline>
     const CBSE_SYLLABUS = {
+      'CBSE Board 2026': [
+        'Official Date Sheet & Timetable',
+        'Subject-Wise Blueprint & Marks Weightage',
+        'Passing Criteria & 33% Rule Explained',
+        'Last 30-Day Revision Strategy (95%+)',
+        'Exam Day Instructions & Time Management'
+      ],
       'Mathematics': [
         'Ch 1: Real Numbers',
         'Ch 2: Polynomials',
@@ -770,6 +790,66 @@ const homeSchema = {
     };
 
     const STARTER_PACKS = {
+      datesheet: {
+        subject: 'CBSE Board 2026',
+        chapter: 'Official Date Sheet & Timetable',
+        marks: 'BOARD EXAM INFO',
+        question: 'What is the exam dates of CBSE Class 10 Board Exam 2026?',
+        hintBody: `**CBSE Class 10 Board Exam Timetable 2026 (10:30 AM – 1:30 PM IST):**\n\n| Date & Day | Subject Code | Subject Name | Timings | Max Marks |\n| :--- | :--- | :--- | :--- | :--- |\n| **17 Feb 2026 (Tue)** | 041 / 241 | **Mathematics (Standard / Basic)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **21 Feb 2026 (Sat)** | 184 | **English (Language & Literature)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **25 Feb 2026 (Wed)** | 086 | **Science (Phy / Chem / Bio)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **27 Feb 2026 (Fri)** | 402 / 417 | **Information Tech / AI** | 10:30 AM – 12:30 PM | 50 Marks |\n| **02 Mar 2026 (Mon)** | 002 / 085 | **Hindi Course 'A' / Course 'B'** | 10:30 AM – 1:30 PM | 80 Marks |\n| **07 Mar 2026 (Sat)** | 087 | **Social Science (His/Geo/Civ/Eco)**| 10:30 AM – 1:30 PM | 80 Marks |\n\n**Key Guidelines:**\n- **10:15 – 10:30 AM:** 15-minute question paper reading slot before writing begins.\n- **Pass rule:** 33% combined marks (theory + internal) required per subject.\n- **Reporting Time:** Reach exam centre by 09:45 AM in full school uniform with original Admit Card.`,
+        solutionBody: `**Official CBSE Class 10 Board Exam Schedule 2026:**\n\n| Date & Day | Subject Code | Subject Name | Timings | Max Marks |\n| :--- | :--- | :--- | :--- | :--- |\n| **17 Feb 2026 (Tue)** | 041 / 241 | **Mathematics (Standard / Basic)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **21 Feb 2026 (Sat)** | 184 | **English (Language & Literature)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **25 Feb 2026 (Wed)** | 086 | **Science (Phy / Chem / Bio)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **27 Feb 2026 (Fri)** | 402 / 417 | **Information Tech / AI** | 10:30 AM – 12:30 PM | 50 Marks |\n| **02 Mar 2026 (Mon)** | 002 / 085 | **Hindi Course 'A' / Course 'B'** | 10:30 AM – 1:30 PM | 80 Marks |\n| **07 Mar 2026 (Sat)** | 087 | **Social Science (His/Geo/Civ/Eco)**| 10:30 AM – 1:30 PM | 80 Marks |\n\n**Official CBSE Instructions:**\n1. **15-Minute Reading Period (10:15 to 10:30 AM):** Students are strictly given question papers 15 minutes before 10:30 AM to read and choose optional questions. Do not write on answer sheets during this period.\n2. **Pass Criteria:** Minimum 33% aggregate (theory + practical/internals combined).\n3. **Items Allowed:** Original Admit Card, School ID card, royal blue or black ballpoint pen in transparent pouch, analog wristwatch, clear water bottle.`,
+        checkBody: `**Exam Day Checklist:**\n- **Admit Card:** Duly signed by Principal and parent.\n- **Stationery:** Royal blue or black ballpoint pens only (gel pens bleed through answer sheets).\n- **Gate Closing:** Centre doors close strictly at 10:00 AM sharp—no late entry is permitted under CBSE bylaws.`,
+        rubricSteps: [
+          { mark: '17 Feb', title: 'Mathematics (Standard / Basic 80M)', desc: '10:30 AM - 1:30 PM. 38 questions across 5 sections (A, B, C, D, E).' },
+          { mark: '25 Feb', title: 'Science (Theory 80M)', desc: '10:30 AM - 1:30 PM. 39 questions: Chem (25M), Bio (25M), Phy (25M), Env (5M).' },
+          { mark: '07 Mar', title: 'Social Science (Theory 80M)', desc: '10:30 AM - 1:30 PM. 37 questions: History, Geography, Civics, Economics (20M each).' }
+        ],
+        examTip: 'During the 15-minute reading slot (10:15–10:30 AM), finalize which internal choices you will attempt in Sections B, C, and D.'
+      },
+      passing: {
+        subject: 'CBSE Board 2026',
+        chapter: 'Passing Criteria & 33% Rule Explained',
+        marks: 'PASSING RULES',
+        question: 'What is the passing criteria and minimum marks for CBSE Class 10?',
+        hintBody: `**CBSE Class 10 Passing Standard (Combined 33% Rule):**\nTo pass a subject in CBSE Class 10, a candidate must obtain at least **33% marks** in each subject.\n\n- In Class 10, the 33% requirement is on **combined marks** (Theory exam + Internal Assessment / Practical).\n- Total marks per subject = 100 (80 Board Theory + 20 School Internal Assessment). Minimum needed = **33/100**.`,
+        solutionBody: `**CBSE Class 10 Passing Criteria (Combined 33% Rule):**\n\n1. **Combined 33% Rule:**\n   Unlike Class 12 (where students must pass theory and practical separately), Class 10 students must score at least **33% combined** out of 100 marks (80 Marks Theory + 20 Marks Internal Assessment).\n2. **Minimum Score Required:**\n   You need a total of **33 marks out of 100** per subject to pass.\n   - If your school awards **18/20** in Internal Assessment, you only need **15/80** in the Board Theory exam to pass!\n   - However, for competitive percentiles (90%+), aim for 72+/80 in theory.\n3. **Compartment Policy:**\n   A student failing in 1 or 2 subjects is placed in the **Compartment category** and gets an opportunity to appear in the Compartment Examination in July 2026.`,
+        checkBody: `**Passing Mark Calculation Check:**\n- Max Marks: 80 (Board Theory) + 20 (Internal Assessment) = 100.\n- Passing Threshold: ≥ 33 / 100.\n- Compulsory subjects: 5 subjects must be passed (Languages + Mathematics + Science + Social Science).`,
+        rubricSteps: [
+          { mark: '33%', title: 'Overall Passing Threshold', desc: 'Candidate must secure minimum 33% marks overall (Theory + Internal combined).' },
+          { mark: '20M', title: 'Internal Assessment', desc: 'Periodic tests (5M), Multiple assessment (5M), Portfolio (5M), Subject enrichment (5M).' },
+          { mark: '80M', title: 'Board Theory Paper', desc: '3-hour subjective exam held by CBSE in February-March.' }
+        ],
+        examTip: 'Do not neglect internal assessments (portfolio, lab journals, periodic tests)—securing 19-20 marks in internals provides an enormous safety cushion for your aggregate percentage.'
+      },
+      strategy: {
+        subject: 'CBSE Board 2026',
+        chapter: 'Last 30-Day Revision Strategy (95%+)',
+        marks: 'TOPPER BLUEPRINT',
+        question: 'How to score 95%+ in CBSE Class 10 board exams?',
+        hintBody: `**Topper Study Blueprint (Last 30 Days):**\nScoring 95%+ in CBSE Class 10 is 70% systematic NCERT line-by-line mastery and 30% answer presentation aligned with CBSE marking schemes.\n\n- Priority 1: NCERT textbook in-text & exercise questions\n- Priority 2: Last 5 years official CBSE PYQs\n- Priority 3: 3-hour timed sample papers strictly between 10:30 AM – 1:30 PM.`,
+        solutionBody: `**Step-by-Step 95%+ Roadmap for CBSE Class 10:**\n\n1. **Mathematics (80/80 Target):**\n   - Solve every single NCERT Example & Exercise. 75% of standard/basic paper is direct NCERT.\n   - Memorize theorems with proofs: BPT (Basic Proportionality Theorem) and Tangent to a Circle theorem.\n   - Write step-by-step: formula (0.5M) + substitution (1M) + units in final answer (cm², m³, etc.).\n2. **Science (80/80 Target):**\n   - **Chemistry:** Balance every equation with state symbols (s, g, aq). Memorize color changes (FeSO₄ crystals, Cu wire in AgNO₃).\n   - **Biology:** Practice neat labeled diagrams (Nephron, Neuron, Human Heart, Female Reproductive System).\n   - **Physics:** Master ray diagrams (concave mirror, convex lens) with arrow directions + Ohm's law & Joule's heating numericals.\n3. **Social Science (80/80 Target):**\n   - Answer 3-mark and 5-mark questions in bullet points with underlined keywords.\n   - Practice official CBSE map work (Dams, Power plants, Indian National Congress sessions).\n4. **English & Hindi:**\n   - Strict adherence to official CBSE writing formats (letters, analytical paragraphs, विज्ञापन, संदेश).\n   - Zero spelling and grammatical errors in lit sections.`,
+        checkBody: `**Daily Routine for 95%+ Aspirants:**\n- **Slot 1 (3 Hours):** 1 full 80-mark mock paper in exam conditions (10:30 AM – 1:30 PM).\n- **Slot 2 (2 Hours):** Error analysis—cross-check against CBSE official marking scheme to locate lost 1/2 marks.\n- **Slot 3 (2 Hours):** NCERT revision of weak sub-topics & flashcards.`,
+        rubricSteps: [
+          { mark: 'NCERT', title: 'Line-by-Line Mastery', desc: '100% textbook examples, back exercises, and in-text activities.' },
+          { mark: 'PYQ', title: 'Past 5 Years Papers (2020–2025)', desc: 'Identifies recurring question patterns and repeated 3M/5M topics.' },
+          { mark: 'Mock', title: 'Timed 3-Hour Practice', desc: 'Builds physical speed to complete 38 questions with 20 minutes left for re-checking.' }
+        ],
+        examTip: 'In the real exam, always start with Section B/C/D if you are confident, but keep question numbering crystal clear. Underline final numerical answers with a pencil.'
+      },
+      mentorship: {
+        subject: 'CBSE Board 2026',
+        chapter: 'Exam Day Instructions & Time Management',
+        marks: 'KUNAL RAI MENTORSHIP',
+        question: 'How can I get 1-on-1 mentorship or guidance from Kunal Rai?',
+        hintBody: `**Kunal Rai • Lead CBSE Mentor (10Boardwallah):**\nPersonalized 1-on-1 Board preparation, marking scheme breakdown, and error analysis for CBSE Class 10 students.\n\n- Available online worldwide & offline at Gaur City 2, Greater Noida West.`,
+        solutionBody: `**1-on-1 CBSE Class 10 Mentorship with Kunal Rai:**\n\n1. **What is Covered:**\n   - Personal answer sheet step audits (spotting exactly where you lose 0.5 to 1 mark).\n   - Socratic doubt-solving across Mathematics, Science, SST, English, and Hindi.\n   - Custom 30-day revision schedule tailored to your weak subjects.\n   - High-yield CBSE 80-mark mock papers with line-by-line examiner evaluation.\n2. **Free 60-Minute Diagnostic Session:**\n   - Every new student gets a complimentary 60-minute diagnostic session to assess current preparation levels and create a personalized target score roadmap.\n3. **How to Connect:**\n   - **Location:** Offline hub at Gaur City 2 (16th–20th Ave), Greater Noida West / Online via Google Meet & boardwallah.space.\n   - **Schedule:** Click the **"Chat"** button or mentor card in the bottom-left sidebar to book your free diagnostic slot.`,
+        checkBody: `**Session Preparation Checklist:**\n- Bring your recent school pre-board question paper and answer sheet.\n- List your top 5 high-priority doubt topics across Maths or Science.`,
+        rubricSteps: [
+          { mark: 'Diagnostic', title: '60-Min Evaluation', desc: 'Comprehensive audit of NCERT syllabus completion & weak areas.' },
+          { mark: 'Custom Plan', title: 'Target Score Roadmap', desc: 'Day-by-day study timetable optimized for your board exam dates.' },
+          { mark: 'Paper Audit', title: 'Marking Rubric Mastery', desc: 'Practice presenting steps exactly how CBSE evaluators award marks.' }
+        ],
+        examTip: 'Consistently reviewing your pre-board mistakes with a mentor prevents the same errors from repeating in the real CBSE exam.'
+      },
       irrational: {
         subject: 'Mathematics',
         chapter: 'Ch 1: Real Numbers',
@@ -862,8 +942,8 @@ const homeSchema = {
 
     let state = {
       sidebarCollapsed: false,
-      currentSubject: 'Mathematics',
-      currentChapter: CBSE_SYLLABUS['Mathematics'][0],
+      currentSubject: 'CBSE Board 2026',
+      currentChapter: CBSE_SYLLABUS['CBSE Board 2026'][0],
       responseMode: 'hint', // 'hint' | 'solution' | 'check'
       isStreaming: false,
       streamTimer: null,
@@ -871,7 +951,7 @@ const homeSchema = {
       flashcardFlipped: false,
       mockSecondsRemaining: 3 * 3600, // 03:00:00
       mockInterval: null,
-      activeRubric: STARTER_PACKS.irrational
+      activeRubric: STARTER_PACKS.datesheet
     };
 
     function initIcons() {
@@ -882,7 +962,7 @@ const homeSchema = {
 
     window.addEventListener('DOMContentLoaded', () => {
       populateChaptersForSubject(state.currentSubject);
-      renderRubric(STARTER_PACKS.irrational);
+      renderRubric(STARTER_PACKS.datesheet);
       renderFlashcard();
       updateMockTimerDisplay();
       initIcons();
@@ -907,8 +987,9 @@ const homeSchema = {
       document.querySelectorAll('.subject-btn').forEach((b) => {
         b.className = 'subject-btn flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#21262D] border border-transparent transition-all';
       });
-      if (btnEl) {
-        btnEl.className = 'subject-btn active flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 transition-all';
+      const targetBtn = btnEl || document.querySelector(`[data-subject="${subjectName}"]`);
+      if (targetBtn) {
+        targetBtn.className = 'subject-btn active flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 transition-all';
       }
       populateChaptersForSubject(subjectName);
       toggleMobileSidebar(false);
@@ -973,9 +1054,11 @@ const homeSchema = {
     function triggerStarterCard(packKey) {
       const pack = STARTER_PACKS[packKey];
       if (!pack) return;
-      state.currentSubject = pack.subject;
+      selectSubject(pack.subject);
       state.currentChapter = pack.chapter;
       updateActiveContextBadge();
+      const chSelect = document.getElementById('chapterSelect');
+      if (chSelect) chSelect.value = pack.chapter;
       renderRubric(pack);
 
       if (packKey === 'mockdrill') {
@@ -1064,6 +1147,294 @@ const homeSchema = {
       }
     }
 
+    function resolveBoardQuery(raw, attemptText = '') {
+      const lower = raw.toLowerCase().trim();
+
+      // 1. Exam Dates, Timetable, Schedule (handles cbsc, cbse, class 10, datesheet, time table)
+      if (
+        lower.includes('date') ||
+        lower.includes('datesheet') ||
+        lower.includes('date sheet') ||
+        lower.includes('time table') ||
+        lower.includes('timetable') ||
+        lower.includes('schedule') ||
+        lower.includes('when is exam') ||
+        lower.includes('when are exams') ||
+        lower.includes('exam time') ||
+        ((lower.includes('cbse') || lower.includes('cbsc') || lower.includes('board')) && (lower.includes('10') || lower.includes('exam')))
+      ) {
+        selectSubject('CBSE Board 2026');
+        const chapter = 'Official Date Sheet & Timetable';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.datesheet,
+          question: raw
+        };
+      }
+
+      // 2. Passing Criteria, 33% rule, Minimum marks
+      if (
+        lower.includes('pass') ||
+        lower.includes('passing') ||
+        lower.includes('33%') ||
+        lower.includes('criteria') ||
+        lower.includes('fail') ||
+        lower.includes('internal assessment') ||
+        lower.includes('grace') ||
+        lower.includes('compartment')
+      ) {
+        selectSubject('CBSE Board 2026');
+        const chapter = 'Passing Criteria & 33% Rule Explained';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.passing,
+          question: raw
+        };
+      }
+
+      // 3. Strategy, 95%+, Roadmap, Topper, Revision
+      if (
+        lower.includes('strategy') ||
+        lower.includes('roadmap') ||
+        lower.includes('how to score') ||
+        lower.includes('95%') ||
+        lower.includes('90%') ||
+        lower.includes('topper') ||
+        lower.includes('revision') ||
+        lower.includes('study plan') ||
+        lower.includes('routine') ||
+        lower.includes('blueprint')
+      ) {
+        selectSubject('CBSE Board 2026');
+        const chapter = 'Last 30-Day Revision Strategy (95%+)'
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.strategy,
+          question: raw
+        };
+      }
+
+      // 4. Kunal Rai, Mentorship, Trial, Gaur City, Contact
+      if (
+        lower.includes('kunal') ||
+        lower.includes('rai') ||
+        lower.includes('mentor') ||
+        lower.includes('trial') ||
+        lower.includes('gaur city') ||
+        lower.includes('contact') ||
+        lower.includes('demo') ||
+        lower.includes('admission') ||
+        lower.includes('fee') ||
+        lower.includes('batch')
+      ) {
+        selectSubject('CBSE Board 2026');
+        const chapter = 'Exam Day Instructions & Time Management';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.mentorship,
+          question: raw
+        };
+      }
+
+      // 5. Science queries
+      if (
+        lower.includes('hcl') || lower.includes('litmus') || lower.includes('chemical') ||
+        lower.includes('ohm') || lower.includes('reaction') || lower.includes('acid') ||
+        lower.includes('base') || lower.includes('respiration') || lower.includes('xylem') ||
+        lower.includes('phloem') || lower.includes('lens') || lower.includes('mirror') ||
+        lower.includes('electric') || lower.includes('heredity') || lower.includes('mendel') ||
+        lower.includes('photosynthesis') || lower.includes('refraction') || lower.includes('reflection') ||
+        lower.includes('magnetic') || lower.includes('science') || state.currentSubject === 'Science'
+      ) {
+        selectSubject('Science');
+        let chapter = 'Chem Ch 1: Chemical Reactions and Equations';
+        if (lower.includes('ohm') || lower.includes('electric') || lower.includes('current') || lower.includes('volt') || lower.includes('resistance')) {
+          chapter = 'Phy Ch 11: Electricity';
+        } else if (lower.includes('light') || lower.includes('lens') || lower.includes('mirror') || lower.includes('refraction') || lower.includes('reflection')) {
+          chapter = 'Phy Ch 9: Light – Reflection and Refraction';
+        } else if (lower.includes('acid') || lower.includes('base') || lower.includes('litmus') || lower.includes('ph') || lower.includes('salt')) {
+          chapter = 'Chem Ch 2: Acids, Bases and Salts';
+        } else if (lower.includes('xylem') || lower.includes('phloem') || lower.includes('heart') || lower.includes('nephron') || lower.includes('respiration') || lower.includes('life processes')) {
+          chapter = 'Bio Ch 5: Life Processes';
+        } else if (lower.includes('heredity') || lower.includes('mendel') || lower.includes('gene')) {
+          chapter = 'Bio Ch 8: Heredity';
+        }
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.chemical,
+          subject: 'Science',
+          chapter: chapter,
+          question: raw
+        };
+      }
+
+      // 6. Social Science queries
+      if (
+        lower.includes('germany') || lower.includes('bismarck') || lower.includes('nationalism') ||
+        lower.includes('satyagraha') || lower.includes('gandhi') || lower.includes('power sharing') ||
+        lower.includes('federalism') || lower.includes('democracy') || lower.includes('alluvial') ||
+        lower.includes('soil') || lower.includes('social') || lower.includes('sst') || state.currentSubject === 'Social Science'
+      ) {
+        selectSubject('Social Science');
+        let chapter = 'His Ch 1: The Rise of Nationalism in Europe';
+        if (lower.includes('satyagraha') || lower.includes('gandhi') || lower.includes('non-cooperation') || lower.includes('civil disobedience')) {
+          chapter = 'His Ch 2: Nationalism in India';
+        } else if (lower.includes('power sharing') || lower.includes('belgium') || lower.includes('sri lanka')) {
+          chapter = 'Civ Ch 1: Power-sharing';
+        } else if (lower.includes('federalism')) {
+          chapter = 'Civ Ch 2: Federalism';
+        }
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.mockdrill,
+          subject: 'Social Science',
+          chapter: chapter,
+          question: raw
+        };
+      }
+
+      // 7. English queries
+      if (
+        lower.includes('letter to god') || lower.includes('lencho') || lower.includes('nelson mandela') ||
+        lower.includes('apartheid') || lower.includes('anne frank') || lower.includes('analytical paragraph') ||
+        lower.includes('letter writing') || lower.includes('english') || state.currentSubject === 'English'
+      ) {
+        selectSubject('English');
+        const chapter = 'First Flight: A Letter to God & Nelson Mandela';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          subject: 'English',
+          chapter: chapter,
+          marks: '3 MARKS / 5 MARKS',
+          question: raw,
+          hintBody: `**Socratic Hint (English Lang & Lit - CBSE Class 10):**\nWhen answering CBSE English literature questions, structure your answer with:\n1. **Context & Theme:** Mention the character's motivation or author's intent.\n2. **Textual Evidence:** Quote or paraphrase key incidents from the NCERT text.\n3. **Tone & Vocabulary:** Use formal literary terms to fetch full marks.`,
+          solutionBody: `**CBSE Model Answer:**\n- **Content & Understanding (2M):** Directly address the central question using exact references from the chapter.\n- **Expression & Vocabulary (1M):** Maintain coherent sentence flow with accurate grammar, spelling, and tone.\n- **Conclusion:** Conclude with the underlying moral or thematic significance highlighted by the author.`,
+          checkBody: `**Step Audit — English Marking Criteria:**\n- In CBSE Class 10 English, 1/2 mark is deducted for 2 or more grammatical or spelling errors.\n- Check word count: 3-mark questions require 40–50 words; 5-mark questions require 100–120 words.`,
+          rubricSteps: [
+            { mark: '2M', title: 'Content & Key Details', desc: 'Direct answering with accurate NCERT textual reference.' },
+            { mark: '1M', title: 'Expression & Flow', desc: 'Coherence, rich vocabulary, and appropriate tone.' }
+          ],
+          examTip: 'Never exceed the word limit in English exams—concise, well-expressed answers score higher and save critical time for the reading comprehension section.'
+        };
+      }
+
+      // 8. Hindi Course A queries
+      if (
+        lower.includes('नेताजी') || lower.includes('चश्मा') || lower.includes('कैप्टन') ||
+        lower.includes('सूरदास') || lower.includes('बालगोबिन') || lower.includes('लखनवी') ||
+        lower.includes('वाच्य') || lower.includes('अलंकार') || lower.includes('hindi') || lower.includes('हिंदी') || state.currentSubject === 'Hindi Course A'
+      ) {
+        selectSubject('Hindi Course A');
+        const chapter = 'क्षितिज (गद्य): नेताजी का चश्मा, बालगोबिन भगत, लखनवी अंदाज़, मानवीय करुणा की दिव्य चमक';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          subject: 'Hindi Course A',
+          chapter: chapter,
+          marks: '3 अंक (CBSE बोर्ड प्रश्न)',
+          question: raw,
+          hintBody: `**सोक्रेटिक संकेत (क्षितिज भाग-2):**\nसीबीएसई हिंदी 'अ' में उत्तर लिखते समय भाषा की शुद्धता, वर्तनी (spelling) और पाठ के मुख्य भाव को स्पष्ट करना अत्यंत महत्वपूर्ण है।\n- उत्तर को 30-40 शब्दों में स्पष्ट और संतुलित रखें।`,
+          solutionBody: `**सीबीएसई आदर्श उत्तर (3 अंक):**\n1. **विषय-वस्तु (2 अंक):** पाठ्यपुस्तक के आधार पर प्रश्न के मूल भाव को प्रमाण सहित प्रस्तुत करना।\n2. **भाषा एवं प्रस्तुति (1 अंक):** व्याकरण सम्मत, शुद्ध हिंदी तथा वर्तनी की त्रुटि रहित प्रस्तुति।`,
+          checkBody: `**मूल्यांकन जांच (Step Audit):**\n- वर्तनी (spelling) और मात्राओं की जांच करें।\n- उत्तर में मुख्य पात्र या प्रसंग का नाम सही लिखा होना चाहिए।`,
+          rubricSteps: [
+            { mark: '2 अंक', title: 'विषय वस्तु व पाठ संदर्भ', desc: 'प्रश्नानुसार सटीक एवं तर्कसंगत उत्तर।' },
+            { mark: '1 अंक', title: 'भाषा शैली व वर्तनी शुद्धता', desc: 'व्याकरण व वर्तनी की शुद्धता।' }
+          ],
+          examTip: 'हिंदी की परीक्षा में उत्तर में काट-छाँट से बचें। उत्तर समाप्त होने पर पेंसिल से एक रेखा खींचें।'
+        };
+      }
+
+      // 9. Mathematics queries
+      if (
+        lower.includes('quadratic') || lower.includes('discriminant') || lower.includes('attempt') || attemptText ||
+        lower.includes('root') || lower.includes('b² - 4ac')
+      ) {
+        selectSubject('Mathematics');
+        const chapter = 'Ch 4: Quadratic Equations';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.checksteps,
+          subject: 'Mathematics',
+          chapter: chapter,
+          question: raw
+        };
+      }
+
+      if (
+        lower.includes('√') || lower.includes('irrational') || lower.includes('real number') ||
+        lower.includes('hcf') || lower.includes('lcm') || lower.includes('co-prime') ||
+        lower.includes('bpt') || lower.includes('thales') || lower.includes('triangle') ||
+        lower.includes('trig') || lower.includes('sin') || lower.includes('cos') || lower.includes('tan') ||
+        lower.includes('circle') || lower.includes('tangent') || lower.includes('ap') || lower.includes('arithmetic progression') ||
+        state.currentSubject === 'Mathematics'
+      ) {
+        selectSubject('Mathematics');
+        let chapter = 'Ch 1: Real Numbers';
+        if (lower.includes('bpt') || lower.includes('thales') || lower.includes('triangle')) {
+          chapter = 'Ch 6: Triangles';
+        } else if (lower.includes('ap') || lower.includes('arithmetic progression')) {
+          chapter = 'Ch 5: Arithmetic Progressions';
+        } else if (lower.includes('trig') || lower.includes('sin') || lower.includes('cos') || lower.includes('tan')) {
+          chapter = 'Ch 8: Introduction to Trigonometry';
+        } else if (lower.includes('circle') || lower.includes('tangent')) {
+          chapter = 'Ch 10: Circles';
+        }
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.irrational,
+          subject: 'Mathematics',
+          chapter: chapter,
+          question: raw
+        };
+      }
+
+      // 10. Universal fallback: Dynamic structured answer for any general Class 10 question
+      return {
+        subject: state.currentSubject || 'CBSE Board 2026',
+        chapter: state.currentChapter || 'Official Date Sheet & Timetable',
+        marks: 'CBSE CLASS 10 CONCEPT',
+        question: raw,
+        hintBody: `**Socratic Guidance for: "${escapeHtml(raw)}":**\n- Identify the core CBSE NCERT principle or formula governing this question.\n- Recall which section or chapter of the Class 10 syllabus this belongs to.\n- Break down your answer into stepwise points matching the official CBSE marking scheme.`,
+        solutionBody: `**CBSE Structured Model Response:**\n\n1. **Core Concept & Definition:**\n   For **"${escapeHtml(raw)}"**, ensure your definition or explanation directly mirrors the standard NCERT formulation.\n2. **Key Steps / Supporting Evidence:**\n   - State all given values, assumptions, and primary formulas with units.\n   - Write each derivation or reasoning step on a separate line.\n3. **Conclusion & Final Statement:**\n   - Conclude with a clear statement directly answering the question prompt.\n   - In CBSE board exams, clear stepwise presentation guarantees maximum marks even if arithmetic slips occur.`,
+        checkBody: `**Examiner Step Audit:**\n- **Formula / Concept Stated:** 0.5–1 Mark\n- **Working / Justification:** 1–2 Marks\n- **Final Answer with Units:** 0.5–1 Mark`,
+        rubricSteps: [
+          { mark: 'Step 1', title: 'Conceptual Definition / Formula', desc: 'Direct NCERT-aligned statement or principle.' },
+          { mark: 'Step 2', title: 'Logical Derivation / Working', desc: 'Clear stepwise development with intermediate results.' },
+          { mark: 'Step 3', title: 'Final Answer & Conclusion', desc: 'Accurate conclusion with proper units and notation.' }
+        ],
+        examTip: 'CBSE follows strict step-marking: never leave a question blank. Even stating the relevant formula, theorem, or law fetches partial step credit.'
+      };
+    }
+
     async function handleSendOrStop() {
       if (state.isStreaming) {
         stopStreaming();
@@ -1093,18 +1464,8 @@ const homeSchema = {
       input.style.height = 'auto';
       toggleSlashMenu(false);
 
-      // Select matching starter pack or dynamic subject pack
-      let pack = STARTER_PACKS.irrational;
-      const lower = raw.toLowerCase();
-      if (lower.includes('hcl') || lower.includes('litmus') || lower.includes('chemical') || lower.includes('science') || state.currentSubject === 'Science') {
-        pack = { ...STARTER_PACKS.chemical, subject: state.currentSubject, chapter: state.currentChapter, question: raw };
-      } else if (lower.includes('germany') || lower.includes('social') || state.currentSubject === 'Social Science') {
-        pack = { ...STARTER_PACKS.mockdrill, subject: state.currentSubject, chapter: state.currentChapter, question: raw };
-      } else if (lower.includes('quadratic') || lower.includes('attempt') || attemptText) {
-        pack = { ...STARTER_PACKS.checksteps, subject: state.currentSubject, chapter: state.currentChapter, question: raw };
-      } else {
-        pack = { ...STARTER_PACKS.irrational, subject: state.currentSubject, chapter: state.currentChapter, question: raw };
-      }
+      // Resolve query intelligently across all subjects and board information
+      const pack = resolveBoardQuery(raw, attemptText);
 
       submitDoubt(raw, pack, attemptText);
     }
@@ -1506,10 +1867,53 @@ const homeSchema = {
     }
 
     function formatBoardMarkdown(text) {
-      return escapeHtml(text)
+      let formatted = escapeHtml(text);
+
+      // Support simple markdown tables
+      if (formatted.includes('|')) {
+        const lines = formatted.split('\n');
+        let inTable = false;
+        let tableRows = [];
+        const newLines = [];
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (line.startsWith('|') && line.endsWith('|')) {
+            if (!inTable) {
+              inTable = true;
+              tableRows = [];
+            }
+            // Skip separator line like | :--- | :--- |
+            if (/^\|(\s*[:-]+[-| :]*)\|$/.test(line)) {
+              continue;
+            }
+            const cells = line.slice(1, -1).split('|').map(c => c.trim());
+            const isHeader = tableRows.length === 0;
+            const tag = isHeader ? 'th' : 'td';
+            const cellClass = isHeader 
+              ? 'py-2 px-3 text-left font-semibold text-orange-600 dark:text-orange-400 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1C2128]' 
+              : 'py-2 px-3 border-b border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300';
+            const rowHtml = `<tr class="${isHeader ? '' : 'hover:bg-slate-50/50 dark:hover:bg-[#1C2128]/50'}">${cells.map(c => `<${tag} class="${cellClass}">${c}</${tag}>`).join('')}</tr>`;
+            tableRows.push(rowHtml);
+          } else {
+            if (inTable) {
+              newLines.push(`<div class="overflow-x-auto my-3 rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs font-mono border-collapse">${tableRows.join('')}</table></div>`);
+              inTable = false;
+              tableRows = [];
+            }
+            newLines.push(lines[i]);
+          }
+        }
+        if (inTable) {
+          newLines.push(`<div class="overflow-x-auto my-3 rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs font-mono border-collapse">${tableRows.join('')}</table></div>`);
+        }
+        formatted = newLines.join('\n');
+      }
+
+      return formatted
         .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-slate-900 dark:text-white">$1</strong>')
         .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded text-xs font-mono bg-orange-500/10 text-orange-600 dark:text-orange-300">$1</code>')
-        .replace(/\n\n/g, '</p><p class="mt-2">')
+        .replace(/\n\n/g, '</p><p class="mt-2.5">')
         .replace(/\n/g, '<br/>');
     }
   </script>
