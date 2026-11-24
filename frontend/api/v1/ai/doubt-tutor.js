@@ -136,7 +136,7 @@ Please inspect any attached image, prior conversation context, or text, and resp
         for (const modelName of candidateModels) {
           try {
             const modelAbortCtrl = new AbortController();
-            const modelTimeout = setTimeout(() => modelAbortCtrl.abort(), 12000);
+            const modelTimeout = setTimeout(() => modelAbortCtrl.abort(), 25000);
             let response;
             try {
               response = await fetch(
