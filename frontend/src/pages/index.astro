@@ -932,6 +932,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     }
 
     showToast(`Signed in as ${user.name || user.email}`);
+    syncUserToFirestore(user);
   }
 
   function openSignInModal() {
@@ -1969,8 +1970,30 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   let firestoreLimit = null;
   let firestoreGetDocs = null;
   let firestoreServerTimestamp = null;
+  let firestoreDoc = null;
+  let firestoreSetDoc = null;
   let recentDoubtsMemory = [];
   let showingStarredOnly = false;
+
+  async function syncUserToFirestore(user) {
+    if (!user || !user.email) return;
+    if (!firestoreDb || !firestoreDoc || !firestoreSetDoc) return;
+    try {
+      const emailDocId = user.email.toLowerCase().trim();
+      const userRef = firestoreDoc(firestoreDb, 'users', emailDocId);
+      await firestoreSetDoc(userRef, {
+        email: user.email.toLowerCase().trim(),
+        name: user.name || 'Student',
+        picture: user.picture || '',
+        sub: user.sub || '',
+        lastActiveAt: firestoreServerTimestamp ? firestoreServerTimestamp() : new Date(),
+        updatedAt: Date.now()
+      }, { merge: true });
+      console.log('Synced student profile to Firestore users collection:', user.email);
+    } catch (err) {
+      console.warn('Failed to sync user to Firestore:', err);
+    }
+  }
 
   async function initFirebaseClient() {
     try {
@@ -1987,7 +2010,9 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         orderBy,
         limit,
         getDocs,
-        serverTimestamp
+        serverTimestamp,
+        doc,
+        setDoc
       } = await import('https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js');
 
       const app = initializeApp(firebaseConfig, 'boardwallah-client');
@@ -1999,9 +2024,16 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       firestoreLimit = limit;
       firestoreGetDocs = getDocs;
       firestoreServerTimestamp = serverTimestamp;
+      firestoreDoc = doc;
+      firestoreSetDoc = setDoc;
 
       console.log('Firebase Cloud Firestore initialized for boardwallah-cbse');
       await loadRecentDoubtsFromFirestore();
+
+      const existingUser = getStoredUser();
+      if (existingUser && existingUser.email) {
+        syncUserToFirestore(existingUser);
+      }
     } catch (e) {
       console.warn('Firebase client init fallback to local:', e);
       loadRecentDoubtsFromLocalStorage();
@@ -2040,6 +2072,11 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       } catch (err) {
         console.warn('Firestore write warning:', err);
       }
+    }
+
+    // Refresh user activity timestamp in users collection
+    if (currentUser && currentUser.email) {
+      syncUserToFirestore(currentUser);
     }
   }
 
