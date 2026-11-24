@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { loadContent, whatsappLink } from "../lib/content";
 import { calBookingUrl, apiBase } from "../lib/site";
+import { firebaseConfig } from "../lib/firebase";
 
 const { provider } = loadContent();
 const waChatLink = whatsappLink(
@@ -547,7 +548,7 @@ const chatSchema = {
   </dialog>
 </Layout>
 
-<script is:inline define:vars={{ apiBase, calBookingUrl }}>
+<script is:inline define:vars={{ apiBase, calBookingUrl, firebaseConfig }}>
 (function() {
   let currentMode = 'hint';
   let isWaiting = false;
@@ -1378,6 +1379,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
             <span>Copy</span>
           </button>
+          <button type="button" class="gemini-action-btn star-action-btn" title="Star doubt to Revision Vault">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Star</span>
+          </button>
           <button type="button" class="gemini-action-btn like-btn" title="Helpful answer">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.5L12 3a2 2 0 0 1 3 2.88Z"/></svg>
           </button>
@@ -1401,6 +1406,20 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
             `;
           }, 2000);
         });
+      });
+    }
+
+    // Wire star button
+    const starBtn = row.querySelector('.star-action-btn');
+    if (starBtn) {
+      starBtn.addEventListener('click', () => {
+        starBtn.classList.toggle('starred');
+        const isStarred = starBtn.classList.contains('starred');
+        starBtn.innerHTML = isStarred
+          ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="#ea580c" stroke="#ea580c" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Starred ★</span>`
+          : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Star</span>`;
+        showToast(isStarred ? 'Saved to CBSE Revision Vault ★' : 'Removed from Starred');
+        toggleStarDoubt(answer, keyTerms, isStarred);
       });
     }
 
@@ -1629,6 +1648,9 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     sendBtn.disabled = true;
     showTypingAnimation();
 
+    let ans = null;
+    let terms = [];
+
     try {
       const resp = await fetch('/api/v1/ai/doubt-tutor', {
         method: 'POST',
@@ -1641,21 +1663,27 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
       if (resp.ok) {
         const data = await resp.json();
-        removeTypingAnimation();
-        appendBotResponse(data.answer, data.keyTerms);
-        return;
+        ans = data.answer;
+        terms = data.keyTerms || [];
       }
     } catch (err) {
       console.warn('API error, falling back to local resolver:', err);
-    } finally {
-      isWaiting = false;
-      sendBtn.disabled = false;
-      textarea.focus();
+    }
+
+    if (!ans) {
+      const resolved = resolveChatDoubt(question);
+      ans = resolved.answer;
+      terms = resolved.keyTerms || [];
     }
 
     removeTypingAnimation();
-    const resolved = resolveChatDoubt(question);
-    appendBotResponse(resolved.answer, resolved.keyTerms);
+    isWaiting = false;
+    sendBtn.disabled = false;
+    textarea.focus();
+
+    appendBotResponse(ans, terms);
+    prependRecentDoubt(question, ans, terms, false);
+    saveDoubtToFirestore(question, ans, terms);
   }
 
   // ── In-Page Dialog Controls & Toast System ──
@@ -1932,6 +1960,287 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     });
   }
 
+  // ── Firebase Cloud Firestore Sync & Revision Vault ──
+  let firestoreDb = null;
+  let firestoreAddDoc = null;
+  let firestoreCollection = null;
+  let firestoreQuery = null;
+  let firestoreOrderBy = null;
+  let firestoreLimit = null;
+  let firestoreGetDocs = null;
+  let firestoreServerTimestamp = null;
+  let recentDoubtsMemory = [];
+  let showingStarredOnly = false;
+
+  async function initFirebaseClient() {
+    try {
+      if (!firebaseConfig || !firebaseConfig.apiKey) {
+        loadRecentDoubtsFromLocalStorage();
+        return;
+      }
+      const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js');
+      const {
+        getFirestore,
+        collection,
+        addDoc,
+        query,
+        orderBy,
+        limit,
+        getDocs,
+        serverTimestamp
+      } = await import('https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js');
+
+      const app = initializeApp(firebaseConfig, 'boardwallah-client');
+      firestoreDb = getFirestore(app);
+      firestoreAddDoc = addDoc;
+      firestoreCollection = collection;
+      firestoreQuery = query;
+      firestoreOrderBy = orderBy;
+      firestoreLimit = limit;
+      firestoreGetDocs = getDocs;
+      firestoreServerTimestamp = serverTimestamp;
+
+      console.log('Firebase Cloud Firestore initialized for boardwallah-cbse');
+      await loadRecentDoubtsFromFirestore();
+    } catch (e) {
+      console.warn('Firebase client init fallback to local:', e);
+      loadRecentDoubtsFromLocalStorage();
+    }
+  }
+
+  async function saveDoubtToFirestore(question, answer, keyTerms) {
+    if (!question || !answer) return;
+    const currentUser = getStoredUser();
+    const doubtObj = {
+      question: question.trim(),
+      answer: typeof answer === 'string' ? answer : JSON.stringify(answer),
+      keyTerms: keyTerms || [],
+      mode: currentMode || 'hint',
+      timestamp: Date.now(),
+      studentEmail: currentUser ? currentUser.email : 'anonymous',
+      studentName: currentUser ? currentUser.name : 'Student'
+    };
+
+    // Keep in local cache
+    recentDoubtsMemory.unshift(doubtObj);
+    try {
+      const stored = JSON.parse(localStorage.getItem('boardwallah_doubts_history') || '[]');
+      stored.unshift(doubtObj);
+      if (stored.length > 25) stored.pop();
+      localStorage.setItem('boardwallah_doubts_history', JSON.stringify(stored));
+    } catch (e) {}
+
+    // Persist to Cloud Firestore
+    if (firestoreDb && firestoreAddDoc && firestoreCollection) {
+      try {
+        await firestoreAddDoc(firestoreCollection(firestoreDb, 'doubts'), {
+          ...doubtObj,
+          createdAt: firestoreServerTimestamp ? firestoreServerTimestamp() : new Date()
+        });
+      } catch (err) {
+        console.warn('Firestore write warning:', err);
+      }
+    }
+  }
+
+  async function toggleStarDoubt(answer, keyTerms, isStarred) {
+    const questionText = (activeNotebookTitle && activeNotebookTitle.textContent) || 'CBSE Board Doubt';
+    const currentUser = getStoredUser();
+
+    try {
+      let starred = JSON.parse(localStorage.getItem('boardwallah_starred_doubts') || '[]');
+      if (isStarred) {
+        starred.unshift({
+          question: questionText,
+          answer: typeof answer === 'string' ? answer : '',
+          keyTerms: keyTerms || [],
+          starredAt: Date.now(),
+          studentEmail: currentUser ? currentUser.email : 'anonymous'
+        });
+        if (starred.length > 50) starred.pop();
+      } else {
+        starred = starred.filter(item => item.question !== questionText);
+      }
+      localStorage.setItem('boardwallah_starred_doubts', JSON.stringify(starred));
+    } catch (e) {}
+
+    if (isStarred && firestoreDb && firestoreAddDoc && firestoreCollection) {
+      try {
+        await firestoreAddDoc(firestoreCollection(firestoreDb, 'starred_doubts'), {
+          question: questionText,
+          answer: typeof answer === 'string' ? answer.slice(0, 2000) : '',
+          keyTerms: keyTerms || [],
+          starredAt: Date.now(),
+          studentEmail: currentUser ? currentUser.email : 'anonymous',
+          studentName: currentUser ? currentUser.name : 'Student'
+        });
+      } catch (err) {
+        console.warn('Firestore star save warning:', err);
+      }
+    }
+  }
+
+  function prependRecentDoubt(question, answer, keyTerms, isStarred) {
+    const recentsList = document.getElementById('recents-list');
+    if (!recentsList) return;
+
+    const trimmedQ = (question || '').trim();
+    if (!trimmedQ) return;
+
+    // Check if item already exists in DOM
+    const existing = Array.from(recentsList.querySelectorAll('.recent-text'));
+    for (let el of existing) {
+      if (el.textContent.trim().toLowerCase() === trimmedQ.toLowerCase()) {
+        return;
+      }
+    }
+
+    const btn = document.createElement('button');
+    btn.className = 'recent-item active';
+    btn.type = 'button';
+    btn.innerHTML = `
+      <span class="recent-text">${escapeHtml(trimmedQ)}</span>
+      <span class="pin-icon" title="${isStarred ? 'Starred' : 'Recent'}">${isStarred ? '★' : '🕒'}</span>
+    `;
+
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.recent-item').forEach(r => r.classList.remove('active'));
+      document.querySelectorAll('.topic-preset-btn').forEach(b => b.classList.remove('active'));
+      if (newChatBtn) newChatBtn.classList.remove('active');
+      btn.classList.add('active');
+
+      if (sidebar && sidebar.classList.contains('mobile-open')) sidebar.classList.remove('mobile-open');
+
+      if (activeNotebookTitle) activeNotebookTitle.textContent = trimmedQ.slice(0, 36) + (trimmedQ.length > 36 ? '...' : '');
+      welcomeCanvas.style.display = 'none';
+      activeMessagesFeed.style.display = 'flex';
+      activeMessagesFeed.innerHTML = '';
+      appendUserPill(trimmedQ);
+      appendBotResponse(answer, keyTerms);
+      scrollToBottom();
+    });
+
+    // Remove active from other items
+    document.querySelectorAll('.recent-item').forEach(r => r.classList.remove('active'));
+    recentsList.insertBefore(btn, recentsList.firstChild);
+  }
+
+  async function loadRecentDoubtsFromFirestore() {
+    if (!firestoreDb || !firestoreCollection || !firestoreGetDocs) {
+      loadRecentDoubtsFromLocalStorage();
+      return;
+    }
+    try {
+      const q = firestoreQuery(
+        firestoreCollection(firestoreDb, 'doubts'),
+        firestoreOrderBy('timestamp', 'desc'),
+        firestoreLimit(10)
+      );
+      const snapshot = await firestoreGetDocs(q);
+      if (!snapshot.empty) {
+        const doubts = [];
+        snapshot.forEach(docSnap => {
+          doubts.push(docSnap.data());
+        });
+        // Render in chronological reverse so newest appears at top
+        for (let i = doubts.length - 1; i >= 0; i--) {
+          const d = doubts[i];
+          if (d.question && d.answer) {
+            recentDoubtsMemory.push(d);
+            prependRecentDoubt(d.question, d.answer, d.keyTerms, false);
+          }
+        }
+      } else {
+        loadRecentDoubtsFromLocalStorage();
+      }
+    } catch (e) {
+      console.warn('Error reading from Firestore, using localStorage:', e);
+      loadRecentDoubtsFromLocalStorage();
+    }
+  }
+
+  function loadRecentDoubtsFromLocalStorage() {
+    try {
+      const stored = JSON.parse(localStorage.getItem('boardwallah_doubts_history') || '[]');
+      for (let i = stored.length - 1; i >= 0; i--) {
+        const d = stored[i];
+        if (d.question && d.answer) {
+          recentDoubtsMemory.push(d);
+          prependRecentDoubt(d.question, d.answer, d.keyTerms, false);
+        }
+      }
+    } catch (e) {}
+  }
+
+  // Sidebar controls: Filter recents & Search
+  const filterRecentsBtn = document.getElementById('filter-recents-btn');
+  if (filterRecentsBtn) {
+    filterRecentsBtn.addEventListener('click', () => {
+      showingStarredOnly = !showingStarredOnly;
+      filterRecentsBtn.style.color = showingStarredOnly ? '#ea580c' : '';
+      filterRecentsBtn.setAttribute('title', showingStarredOnly ? 'Showing Starred Vault (Click for all)' : 'Filter starred history');
+      showToast(showingStarredOnly ? 'Showing CBSE Starred Revision Vault ★' : 'Showing All Recent Doubts');
+
+      const recentsList = document.getElementById('recents-list');
+      if (!recentsList) return;
+
+      if (showingStarredOnly) {
+        try {
+          const starred = JSON.parse(localStorage.getItem('boardwallah_starred_doubts') || '[]');
+          recentsList.innerHTML = '';
+          if (starred.length === 0) {
+            recentsList.innerHTML = '<div style="padding:0.75rem 0.5rem;font-size:0.78rem;color:#70757a;">No starred doubts yet. Click Star on any doubt to save it!</div>';
+          } else {
+            starred.forEach(s => {
+              prependRecentDoubt(s.question, s.answer, s.keyTerms, true);
+            });
+          }
+        } catch (e) {}
+      } else {
+        recentsList.innerHTML = `
+          <button class="recent-item" data-thread="irrational" type="button">
+            <span class="recent-text">Prove √5 is irrational</span>
+            <span class="pin-icon" title="Pinned">📌</span>
+          </button>
+          <button class="recent-item" data-thread="electricity" type="button">
+            <span class="recent-text">Ohm's Law & Circuit Resistors</span>
+            <span class="pin-icon" title="Pinned">📌</span>
+          </button>
+          <button class="recent-item" data-thread="chemistry" type="button">
+            <span class="recent-text">FeSO₄ Heating Decomposition</span>
+            <span class="pin-icon" title="Pinned">📌</span>
+          </button>
+          <button class="recent-item" data-thread="conventions" type="button">
+            <span class="recent-text">Ray Diagram Cartesian Signs</span>
+            <span class="pin-icon" title="Pinned">📌</span>
+          </button>
+        `;
+        // Re-wire default static items
+        recentsList.querySelectorAll('.recent-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const threadKey = item.getAttribute('data-thread');
+            document.querySelectorAll('.recent-item').forEach(r => r.classList.remove('active'));
+            document.querySelectorAll('.topic-preset-btn').forEach(b => b.classList.remove('active'));
+            if (newChatBtn) newChatBtn.classList.remove('active');
+            item.classList.add('active');
+            if (threadKey && THREADS[threadKey]) loadThread(threadKey);
+          });
+        });
+        loadRecentDoubtsFromFirestore();
+      }
+    });
+  }
+
+  const sidebarSearchBtn = document.getElementById('sidebar-search-btn');
+  if (sidebarSearchBtn) {
+    sidebarSearchBtn.addEventListener('click', () => {
+      if (textarea) {
+        textarea.focus();
+        showToast('Type your CBSE doubt or topic in the box...');
+      }
+    });
+  }
+
   // ── Global Single-Page Link & Navigation Interceptor ──
   // Ensures clicking ANY link anywhere NEVER leaves the root single page layout
   document.addEventListener('click', (e) => {
@@ -1957,6 +2266,9 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       }
     }
   }, true);
+
+  // Initialize Firebase Client sync on startup
+  initFirebaseClient();
 })();
 </script>
 
@@ -2628,6 +2940,14 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   .gemini-action-btn:hover {
     background: #f0f4f9;
     color: #1f1f1f;
+  }
+  .gemini-action-btn.star-action-btn.starred {
+    color: #ea580c;
+    background: #fff7ed;
+    border: 1px solid #ffedd5;
+  }
+  .gemini-action-btn.star-action-btn.starred:hover {
+    background: #ffedd5;
   }
 
   /* ── Thinking / Processing Indicator ── */
