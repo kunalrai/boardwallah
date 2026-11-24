@@ -2555,7 +2555,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   const pwaSidebarBtn = document.getElementById('pwa-install-sidebar-btn');
 
   function updatePwaInstallVisibility(show) {
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     if (isStandalone) {
       if (pwaHeaderBtn) pwaHeaderBtn.style.display = 'none';
       if (pwaSidebarBtn) pwaSidebarBtn.style.display = 'none';
