@@ -48,7 +48,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0f4c5c" />
+    <meta name="theme-color" content="#f8fafd" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -385,6 +385,9 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     </script>
 
     <style is:global>
+      html, body, button, input, textarea, select {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+      }
       body.app-mode {
         height: 100vh !important;
         margin: 0 !important;
