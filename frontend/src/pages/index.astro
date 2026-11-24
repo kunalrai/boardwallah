@@ -622,6 +622,7 @@ const chatSchema = {
 
 <script is:inline define:vars={{ apiBase, calBookingUrl, firebaseConfig }}>
 (function() {
+  let activeThreadId = null;
   let currentMode = 'hint';
   let isWaiting = false;
   let recognition = null;
@@ -1661,6 +1662,28 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     scrollToBottom();
   }
 
+  // Smart detection of CBSE Chapter for In-Chat Resource & Quiz link
+  function detectChapterResource(answer, keyTerms) {
+    try {
+      if (!answer && (!keyTerms || keyTerms.length === 0)) return null;
+      const combined = ((typeof answer === 'string' ? answer : '') + ' ' + (Array.isArray(keyTerms) ? keyTerms.join(' ') : '')).toLowerCase();
+      if (typeof CBSE_CHAPTERS !== 'undefined' && Array.isArray(CBSE_CHAPTERS)) {
+        for (const ch of CBSE_CHAPTERS) {
+          const titleWords = ch.title.toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length > 3);
+          const slugWords = ch.slug.toLowerCase().split('-').filter(w => w.length > 3);
+          const keywords = [...new Set([...titleWords, ...slugWords])];
+          const matchCount = keywords.filter(kw => combined.includes(kw)).length;
+          if (matchCount >= 2 || (keywords.length <= 2 && matchCount >= 1)) {
+            return ch;
+          }
+        }
+      }
+    } catch (err) {
+      console.warn('detectChapterResource error:', err);
+    }
+    return null;
+  }
+
   function appendBotResponse(answer, keyTerms) {
     const row = document.createElement('div');
     row.className = 'gemini-row bot-row';
@@ -1682,7 +1705,12 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       `
       : '';
 
-    const matchedChapter = detectChapterResource(answer, keyTerms);
+    let matchedChapter = null;
+    try {
+      matchedChapter = detectChapterResource(answer, keyTerms);
+    } catch (e) {
+      console.warn('detectChapterResource fallback:', e);
+    }
     const inChatResourceHtml = matchedChapter
       ? `
         <div class="inchat-resource-card">
@@ -3186,7 +3214,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
   async function initFirebaseClient() {
     try {
-      if (!firebaseConfig || !firebaseConfig.apiKey) {
+      if (typeof firebaseConfig === 'undefined' || !firebaseConfig || !firebaseConfig.apiKey) {
         loadRecentThreadsFromLocalStorage();
         return;
       }
