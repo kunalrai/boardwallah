@@ -397,6 +397,15 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
         height: 100vh !important;
         overflow: hidden !important;
       }
+      body.app-mode button {
+        background-color: transparent;
+        color: inherit;
+        min-height: 0;
+        padding: 0;
+        border: 0;
+        font: inherit;
+        font-weight: inherit;
+      }
       .chapter-best-score-badge {
         display: inline-flex;
         align-items: center;

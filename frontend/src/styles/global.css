@@ -259,7 +259,7 @@ main {
 }
 
 .button,
-button {
+body:not(.app-mode) button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -276,20 +276,20 @@ button {
 }
 
 .button:hover,
-button:hover {
+body:not(.app-mode) button:hover {
   background: var(--brand-dark);
   color: #fff;
 }
 
 .button.secondary,
-button.secondary {
+body:not(.app-mode) button.secondary {
   background: transparent;
   border-color: var(--brand);
   color: var(--brand);
 }
 
 .button.secondary:hover,
-button.secondary:hover {
+body:not(.app-mode) button.secondary:hover {
   background: #e8f0f1;
   color: var(--brand-dark);
 }
