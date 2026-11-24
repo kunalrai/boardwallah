@@ -54,22 +54,39 @@ export default async function handler(req, res) {
     } else if (!body || typeof body !== "object") {
       body = {};
     }
-    const { question, subject, chapter, mode = "hint" } = body;
+    let { question, subject, chapter, mode = "hint", image, imageMime } = body;
+
+    if (!question && image) {
+      question = "Please inspect the problem in the attached image and provide the official CBSE Class 10 step-by-step solution, formula derivation, and final boxed answer with units.";
+    }
 
     if (!question || typeof question !== "string") {
-      return res.status(400).json({ error: "Question is required" });
+      return res.status(400).json({ error: "Question or doubt image is required" });
     }
 
     const geminiApiKey = process.env.GEMINI_API_KEY;
 
     if (geminiApiKey) {
       try {
-        const prompt = `Student Question: ${question}
-Subject: ${subject || "General Class 10"}
-Chapter Context: ${chapter || "Class 10 CBSE"}
+        const prompt = `Student Question / Doubt: ${question}
+Subject: ${subject || "General Class 10 CBSE"}
+Chapter Context: ${chapter || "Class 10 CBSE Board Exam"}
 Requested Mode: ${mode}
 
-Please respond adhering strictly to your Socratic CBSE Mentor instructions.`;
+Please inspect any attached image or text, and respond adhering strictly to your Socratic CBSE Mentor instructions. If an image of a problem, diagram, or formula is provided, transcribe the problem accurately, state the given values, governing formulas, and show complete CBSE step-marking substitution.`;
+
+        const parts = [];
+        if (image && typeof image === "string") {
+          const cleanBase64 = image.includes("base64,") ? image.split("base64,")[1] : image;
+          const mimeType = imageMime || (image.startsWith("data:image/png") ? "image/png" : "image/jpeg");
+          parts.push({
+            inline_data: {
+              mime_type: mimeType,
+              data: cleanBase64,
+            },
+          });
+        }
+        parts.push({ text: `${SYSTEM_PROMPT}\n\n${prompt}` });
 
         const modelName = "gemini-2.5-flash";
         const response = await fetch(
@@ -81,12 +98,12 @@ Please respond adhering strictly to your Socratic CBSE Mentor instructions.`;
               contents: [
                 {
                   role: "user",
-                  parts: [{ text: `${SYSTEM_PROMPT}\n\n${prompt}` }],
+                  parts: parts,
                 },
               ],
               generationConfig: {
                 temperature: 0.3,
-                maxOutputTokens: 1024,
+                maxOutputTokens: 1200,
               },
             }),
           }

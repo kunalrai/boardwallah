@@ -142,9 +142,14 @@ const chatSchema = {
       <div class="sidebar-section recents-section">
         <div class="section-title-row">
           <span class="section-title">Recent</span>
-          <button id="filter-recents-btn" class="filter-icon-btn" title="Filter history" aria-label="Filter recents">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-          </button>
+          <div style="display: flex; gap: 4px; align-items: center;">
+            <button id="print-vault-btn" class="filter-icon-btn" title="Print / Export Revision Vault as PDF" aria-label="Print Revision Vault">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+            </button>
+            <button id="filter-recents-btn" class="filter-icon-btn" title="Filter history" aria-label="Filter recents">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            </button>
+          </div>
         </div>
         <div class="recents-list" id="recents-list">
           <button class="recent-item" data-thread="irrational" type="button">
@@ -219,7 +224,7 @@ const chatSchema = {
               Ask any mathematical proof, science numerical, reaction mechanism, or paste your attempted homework steps for instant CBSE-aligned guidance.
             </p>
 
-            <!-- 4 Starter Prompt Pills -->
+            <!-- Starter Prompt Pills -->
             <div class="starter-cards-grid">
               <button class="starter-pill-btn" data-query="How do I prove that √5 is irrational by contradiction for CBSE Class 10?">
                 <span class="pill-icon">📐</span>
@@ -228,6 +233,14 @@ const chatSchema = {
               <button class="starter-pill-btn" data-query="State Ohm's Law and explain the V-I graph. How do you calculate equivalent resistance in series and parallel?">
                 <span class="pill-icon">⚡</span>
                 <span class="pill-text">Ohm's Law &amp; Circuit Resistors</span>
+              </button>
+              <button class="starter-pill-btn" data-query="Give me an official CBSE Class 10 Case-Based Study Question (Section E, 4 Marks) on Science with 3 sub-parts and step-marking scheme.">
+                <span class="pill-icon">📊</span>
+                <span class="pill-text">CBSE Case-Based Study Drill (Sec E 4M)</span>
+              </button>
+              <button class="starter-pill-btn" data-query="Give me 4 tricky CBSE Class 10 Assertion and Reason questions in Science with step-by-step reasoning and options (A/B/C/D).">
+                <span class="pill-icon">⚡</span>
+                <span class="pill-text">Assertion &amp; Reason Strategy Drill</span>
               </button>
               <button class="starter-pill-btn" data-query="Explain Cartesian sign conventions for concave and convex mirrors and lenses with formulas.">
                 <span class="pill-icon">🔍</span>
@@ -248,11 +261,21 @@ const chatSchema = {
       <!-- ── Bottom Floating Input Capsule ("The Gemini Pill") ── -->
       <div class="capsule-dock-wrap">
         <form class="gemini-capsule-form" id="gemini-chat-form">
+          <!-- Image Attachment Preview Bar -->
+          <div id="image-preview-bar" class="image-preview-bar" style="display:none;">
+            <div class="preview-thumb-box">
+              <img id="image-preview-img" src="" alt="Doubt photo preview" />
+              <button type="button" id="remove-image-btn" class="remove-preview-btn" title="Remove photo">✕</button>
+            </div>
+            <span class="preview-info-text">📷 Photo doubt attached — Gemini 2.5 Flash Vision will solve with CBSE step-marking</span>
+          </div>
+
           <div class="capsule-container" id="capsule-container">
-            <!-- Left Action Button (+) -->
-            <button id="capsule-attach-btn" class="capsule-btn attach-btn" type="button" title="Quick CBSE topics list" aria-label="Topics menu">
-              <span class="plus-icon">＋</span>
+            <!-- Left Action Button: Camera / Photo Doubt (+) -->
+            <button id="capsule-attach-btn" class="capsule-btn attach-btn" type="button" title="Upload or snap photo of textbook doubt (Camera / Upload)" aria-label="Attach photo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
             </button>
+            <input type="file" id="doubt-image-input" accept="image/*" capture="environment" style="display:none;" />
 
             <!-- Input Textarea with Gemini placeholder -->
             <textarea
@@ -474,8 +497,10 @@ const chatSchema = {
         </div>
 
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
-          <button type="button" class="button secondary ask-diagram-btn" data-query="Give me 5 high-yield CBSE Class 10 Section A 1-mark MCQs with answers and step breakdown." style="font-size: 0.78rem; min-height: 2rem; padding: 0.35rem 0.85rem;">Practice Section A MCQs</button>
-          <button type="button" class="button secondary ask-diagram-btn" data-query="Give me a standard CBSE Class 10 4-mark Case Study question on Mathematics Coordinate Geometry or Science Electricity with marking rubrics." style="font-size: 0.78rem; min-height: 2rem; padding: 0.35rem 0.85rem;">Practice Case Study (4M)</button>
+          <button type="button" class="button secondary ask-diagram-btn" data-query="Give me 5 high-yield CBSE Class 10 Section A 1-mark MCQs with answers and step breakdown." style="font-size: 0.78rem; min-height: 2rem; padding: 0.35rem 0.85rem;">Practice Section A MCQs (1M)</button>
+          <button type="button" class="button secondary ask-diagram-btn" data-query="Give me an official CBSE Class 10 Case-Based Study Question (Section E, 4 Marks) on Science with 3 sub-parts and step-marking scheme." style="font-size: 0.78rem; min-height: 2rem; padding: 0.35rem 0.85rem;">Practice Science Case Study (4M)</button>
+          <button type="button" class="button secondary ask-diagram-btn" data-query="Give me an official CBSE Class 10 Case-Based Study Question (Section E, 4 Marks) on Mathematics (Applications of Trigonometry or Coordinate Geometry) with step marking." style="font-size: 0.78rem; min-height: 2rem; padding: 0.35rem 0.85rem;">Practice Maths Case Study (4M)</button>
+          <button type="button" class="button secondary ask-diagram-btn" data-query="Give me 4 tricky CBSE Class 10 Assertion and Reason questions in Science with step-by-step reasoning and options (A/B/C/D)." style="font-size: 0.78rem; min-height: 2rem; padding: 0.35rem 0.85rem;">Practice Assertion &amp; Reason Drill</button>
         </div>
       </div>
     </div>
@@ -821,12 +846,71 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     });
   });
 
-  // Attach button triggers quick doubt example
-  if (attachBtn) {
+  // Camera & Image Doubt Attachment System
+  const doubtImageInput = document.getElementById('doubt-image-input');
+  const imagePreviewBar = document.getElementById('image-preview-bar');
+  const imagePreviewImg = document.getElementById('image-preview-img');
+  const removeImageBtn = document.getElementById('remove-image-btn');
+  let attachedImageBase64 = null;
+  let attachedImageMime = null;
+
+  function clearAttachedImage() {
+    attachedImageBase64 = null;
+    attachedImageMime = null;
+    if (doubtImageInput) doubtImageInput.value = '';
+    if (imagePreviewBar) imagePreviewBar.style.display = 'none';
+    if (imagePreviewImg) imagePreviewImg.src = '';
+  }
+
+  function handleImageFile(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      showToast('Please select a valid image file (JPG, PNG, WebP)');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      attachedImageBase64 = e.target.result;
+      attachedImageMime = file.type;
+      if (imagePreviewImg) imagePreviewImg.src = attachedImageBase64;
+      if (imagePreviewBar) imagePreviewBar.style.display = 'flex';
+      showToast('📷 Photo attached! Click Send to solve with Gemini Vision.');
+      if (textarea) textarea.focus();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (attachBtn && doubtImageInput) {
     attachBtn.addEventListener('click', () => {
-      textarea.value = "Prove that √5 is irrational by contradiction.";
-      adjustInputHeight();
-      textarea.focus();
+      doubtImageInput.click();
+    });
+  }
+
+  if (doubtImageInput) {
+    doubtImageInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleImageFile(e.target.files[0]);
+      }
+    });
+  }
+
+  if (removeImageBtn) {
+    removeImageBtn.addEventListener('click', clearAttachedImage);
+  }
+
+  // Paste image directly from clipboard
+  if (textarea) {
+    textarea.addEventListener('paste', (e) => {
+      const items = (e.clipboardData || (e.originalEvent && e.originalEvent.clipboardData))?.items;
+      if (items) {
+        for (let item of items) {
+          if (item.kind === 'file' && item.type.startsWith('image/')) {
+            e.preventDefault();
+            const blob = item.getAsFile();
+            handleImageFile(blob);
+            break;
+          }
+        }
+      }
     });
   }
 
@@ -1340,15 +1424,17 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     return parsed;
   }
 
-  function appendUserPill(text) {
+  function appendUserPill(text, imageSrc) {
     welcomeCanvas.style.display = 'none';
     activeMessagesFeed.style.display = 'flex';
 
     const row = document.createElement('div');
     row.className = 'gemini-row user-row';
+    const imageHtml = imageSrc ? `<div class="user-pill-image"><img src="${imageSrc}" alt="Doubt photo" style="max-width:240px;max-height:180px;border-radius:12px;margin-bottom:0.5rem;display:block;border:1px solid rgba(0,0,0,0.1);object-fit:cover;" /></div>` : '';
     row.innerHTML = `
       <div class="gemini-user-pill">
-        ${escapeHtml(text)}
+        ${imageHtml}
+        ${text ? `<div>${escapeHtml(text)}</div>` : ''}
       </div>
     `;
     activeMessagesFeed.appendChild(row);
@@ -1627,6 +1713,22 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       };
     }
 
+    // 7. Case Study Drill (Section E 4M)
+    if (lower.includes('case study') || lower.includes('case-based') || lower.includes('section e') || lower.includes('passage')) {
+      return {
+        answer: `**CBSE Class 10 Model Case-Based Study Question (Section E – 4 Marks):**\n\n**Passage Context: Household Electrical Safety & Power Ratings**\nIn an Indian household, appliances are connected across a 220 V supply line in parallel. An electric geyser rated 2200 W and an electric iron rated 1100 W are operated simultaneously on a circuit protected by a 5 A fuse.\n\n**Sub-Questions with Official CBSE Step-Marking Scheme:**\n1. **(1 Mark)** *Why are domestic appliances connected in parallel rather than series?*\n- **Model Answer:** In parallel, each appliance receives the full 220 V line voltage. If one appliance is switched off or faults, others continue working independently without breaking the entire circuit.\n\n2. **(1 Mark)** *Calculate the current drawn by the 2200 W electric geyser.*\n- **Formula:** P = V × I ⇒ I = P / V\n- **Substitution:** I = 2200 W / 220 V = **10 A** [Boxed]\n\n3. **(2 Marks)** *What happens to the 5 A fuse when both the geyser and the iron are switched on together? Explain with calculation.*\n- **Total Power:** P_total = 2200 W + 1100 W = 3300 W\n- **Total Current:** I_total = 3300 / 220 = **15 A**\n- **Conclusion:** Since 15 A heavily exceeds the 5 A fuse capacity, Joule's heating (H = I²Rt) melts the fuse wire, safely breaking the circuit and preventing an electrical fire. [Full 2M Step Mark]`,
+        keyTerms: ['Parallel Connection 220V', 'I = P / V', 'Joule Heating H = I²Rt', 'Circuit Fuse 5A']
+      };
+    }
+
+    // 8. Assertion & Reason Drill
+    if (lower.includes('assertion') || lower.includes('reason') || lower.includes('a/r')) {
+      return {
+        answer: `**CBSE Class 10 Assertion & Reason Master Strategy & Drill:**\n\n**The Official CBSE 4 Standard Options:**\n- **(a)** Both A and R are true, and R is the correct explanation of A.\n- **(b)** Both A and R are true, but R is NOT the correct explanation of A.\n- **(c)** A is true, but R is false.\n- **(d)** A is false, but R is true.\n\n---\n**Sample Board Practice Problem (Science – Chemical Reactions):**\n- **Assertion (A):** Rusting of iron is an endothermic chemical change.\n- **Reason (R):** Rusting requires the presence of both oxygen and moisture.\n\n**Step-by-Step Evaluator Breakdown:**\n1. Check Assertion (A): *False!* Rusting is a slow oxidation reaction that releases heat energy, meaning it is **exothermic**, not endothermic.\n2. Check Reason (R): *True!* Both moisture (H₂O) and atmospheric oxygen (O₂) are essential for hydrated ferric oxide (Fe₂O₃·xH₂O) formation.\n3. **Correct Option: (d) Assertion (A) is false, but Reason (R) is true.**\n\n⭐ *Tip: Always evaluate A and R as independent True/False statements first before checking if R explains A!*`,
+        keyTerms: ['Assertion & Reason Rule', 'Exothermic Oxidation', 'Rusting Hydrated Oxide', 'Option (d)']
+      };
+    }
+
     // Fallback: Dynamic structured answer
     return {
       answer: `Here is the official CBSE Class 10 model guidance for **"${escapeHtml(question)}"**:\n\n1. **Core Concept & Principle**:\nEnsure your answer begins with the exact NCERT standard definition or formula.\n\n2. **Step-by-Step Derivation / Working**:\n- List all given values, assumptions, and primary equations.\n- Write every logical step on a new line to claim partial step marks.\n\n3. **Final Result & Units**:\nAlways box your final answer and state proper units (cm, m², Ω, V, etc.) to prevent half-mark deductions.\n\n*Tip: Would you like a Socratic hint, a full model proof, or step checking for your solution?*`,
@@ -1635,14 +1737,21 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   }
 
   async function submitQuery(question) {
-    if (!question || isWaiting) return;
+    const imgData = attachedImageBase64;
+    const imgMime = attachedImageMime;
 
-    appendUserPill(question);
+    if ((!question || !question.trim()) && !imgData) return;
+    if (isWaiting) return;
+
+    const displayQuestion = (question && question.trim()) ? question.trim() : 'Solve attached doubt photo';
+
+    appendUserPill(displayQuestion, imgData);
     textarea.value = '';
     adjustInputHeight();
+    clearAttachedImage();
 
     if (activeNotebookTitle) {
-      activeNotebookTitle.textContent = question.slice(0, 36) + (question.length > 36 ? '...' : '');
+      activeNotebookTitle.textContent = displayQuestion.slice(0, 36) + (displayQuestion.length > 36 ? '...' : '');
     }
 
     isWaiting = true;
@@ -1657,8 +1766,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          question: question,
+          question: displayQuestion,
           mode: currentMode,
+          image: imgData,
+          imageMime: imgMime
         }),
       });
 
@@ -1672,7 +1783,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     }
 
     if (!ans) {
-      const resolved = resolveChatDoubt(question);
+      const resolved = resolveChatDoubt(displayQuestion);
       ans = resolved.answer;
       terms = resolved.keyTerms || [];
     }
@@ -2276,6 +2387,100 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         showToast('Type your CBSE doubt or topic in the box...');
       }
     });
+  }
+
+  // 1-Click Printable Revision Vault (PDF Export)
+  const printVaultBtn = document.getElementById('print-vault-btn');
+  if (printVaultBtn) {
+    printVaultBtn.addEventListener('click', () => {
+      printRevisionVault();
+    });
+  }
+
+  function printRevisionVault() {
+    const starred = JSON.parse(localStorage.getItem('boardwallah_starred_doubts') || '[]');
+    const user = getStoredUser();
+
+    const itemsToPrint = starred.length > 0 ? starred : [
+      {
+        question: "Theorem 1.3 & √5 Irrationality Proof (Real Numbers)",
+        answer: "Assume √5 is rational = a/b (co-prime integers, b ≠ 0). 5b² = a² ⇒ 5 divides a². By Theorem 1.3, 5 divides a. Let a = 5c ⇒ 5b² = 25c² ⇒ b² = 5c² ⇒ 5 divides b. Hence 5 divides both a and b, contradicting the co-prime assumption. Therefore √5 is irrational.",
+        keyTerms: ["Contradiction Method", "Co-prime Integers", "Theorem 1.3 Divisibility"]
+      },
+      {
+        question: "Basic Proportionality Theorem (Thales Theorem - Ch 6 Triangles)",
+        answer: "Statement: If a line is drawn parallel to one side of a triangle intersecting other two sides, it divides the two sides in the same ratio: AD/DB = AE/EC. Proof uses ratio of area of triangles with common altitude.",
+        keyTerms: ["Area of Triangles", "Parallel Construction", "AD/DB = AE/EC"]
+      },
+      {
+        question: "Ohm's Law & Circuit Formulas (Electricity - Ch 12)",
+        answer: "V = I × R. Series: Rs = R1 + R2 + R3 (Current is constant, voltages add). Parallel: 1/Rp = 1/R1 + 1/R2 (Voltage is constant, currents add). Joule's Heating: H = I²Rt. Power: P = VI = I²R = V²/R.",
+        keyTerms: ["V = IR", "Series Rs = ΣR", "Parallel 1/Rp = Σ1/R", "Joule Heating H = I²Rt"]
+      },
+      {
+        question: "Light Optics Sign Conventions & Formulas (Ch 10)",
+        answer: "Mirror Formula: 1/f = 1/v + 1/u. Magnification m = -v/u = h'/h. Lens Formula: 1/f = 1/v - 1/u. Magnification m = v/u = h'/h. Power P = 1/f (in meters, Dioptres D). Object distance u is ALWAYS negative.",
+        keyTerms: ["Mirror 1/f = 1/v + 1/u", "Lens 1/f = 1/v - 1/u", "Power P = 1/f (D)", "u is always negative"]
+      }
+    ];
+
+    const printWin = window.open('', '_blank', 'width=800,height=900');
+    if (!printWin) {
+      showToast('Please allow popups to open the Printable Revision Vault');
+      return;
+    }
+
+    let cardsHtml = '';
+    for (let i = 0; i < itemsToPrint.length; i++) {
+      const it = itemsToPrint[i];
+      let tagsHtml = '';
+      if (it.keyTerms && it.keyTerms.length) {
+        tagsHtml = '<div class="keyterms"><span style="font-size:11px;color:#666;font-weight:600;">Key Terms: </span>' +
+          it.keyTerms.map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('') +
+          '</div>';
+      }
+      cardsHtml += '<div class="card">' +
+        '<h3>#' + (i + 1) + '. ' + escapeHtml(it.question || 'CBSE Board Problem') + '</h3>' +
+        '<p>' + escapeHtml(it.answer || '') + '</p>' +
+        tagsHtml +
+        '</div>';
+    }
+
+    const studentName = user ? escapeHtml(user.name) : 'Board Aspirant';
+    const dateStr = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    const htmlContent = '<!DOCTYPE html><html><head><meta charset="utf-8">' +
+      '<title>CBSE Class 10 Board Revision Vault — Boardwallah</title>' +
+      '<style>' +
+      'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.5; color: #111; padding: 24px; max-width: 800px; margin: 0 auto; }' +
+      '.header { border-bottom: 2px solid #1a73e8; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }' +
+      '.logo { font-size: 20px; font-weight: 800; color: #1a73e8; letter-spacing: -0.02em; }' +
+      '.meta { font-size: 12px; color: #555; text-align: right; }' +
+      '.badge { display: inline-block; background: #e8f0fe; color: #1a73e8; padding: 2px 8px; border-radius: 4px; font-weight: 600; font-size: 11px; margin-top: 4px; }' +
+      '.card { border: 1px solid #dde3ea; border-radius: 8px; padding: 14px; margin-bottom: 14px; page-break-inside: avoid; background: #fafbfc; }' +
+      '.card h3 { margin: 0 0 6px; font-size: 15px; color: #0d47a1; }' +
+      '.card p { margin: 0 0 8px; font-size: 13px; white-space: pre-line; }' +
+      '.keyterms { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }' +
+      '.tag { background: #fff3e0; color: #e65100; font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 600; }' +
+      '.footer { margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 11px; color: #777; text-align: center; }' +
+      '@media print { body { padding: 0; } .no-print { display: none !important; } .card { border: 1px solid #ccc; background: #fff; } }' +
+      '</style></head><body>' +
+      '<div class="header">' +
+      '<div><div class="logo">BOARDWALLAH ★ REVISION VAULT</div><div style="font-size: 13px; color: #444; margin-top: 2px;">CBSE Class 10 High-Yield Derivations, Proofs &amp; Formulas</div></div>' +
+      '<div class="meta"><div><strong>Student:</strong> ' + studentName + '</div><div><strong>Generated:</strong> ' + dateStr + '</div><div class="badge">Target: 95%+ Board Exam</div></div>' +
+      '</div>' +
+      '<div class="no-print" style="margin-bottom: 16px; display: flex; gap: 8px;">' +
+      '<button onclick="window.print()" style="padding: 9px 18px; background: #1a73e8; color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">🖨️ Print / Save as PDF</button>' +
+      '<button onclick="window.close()" style="padding: 9px 18px; background: #f1f3f4; color: #333; border: 1px solid #ccc; border-radius: 6px; cursor: pointer;">Close</button>' +
+      '</div>' +
+      cardsHtml +
+      '<div class="footer">Official CBSE Class 10 Board Exam Timetable 2026: Maths (17 Feb), Science (25 Feb), SST (07 Mar) | www.boardwallah.space</div>' +
+      '</body></html>';
+
+    printWin.document.open();
+    printWin.document.write(htmlContent);
+    printWin.document.close();
+    showToast('Revision Vault print sheet ready! Click Print / Save as PDF.');
   }
 
   // ── Global Single-Page Link & Navigation Interceptor ──
@@ -3083,6 +3288,65 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     display: flex;
     flex-direction: column;
     gap: 0.45rem;
+  }
+
+  /* Image Attachment Preview Bar */
+  .image-preview-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.85rem;
+    background: #ffffff;
+    border: 1px solid #d3e3fd;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(26, 115, 232, 0.08);
+    animation: fadeIn 0.2s ease-out;
+  }
+  .preview-thumb-box {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid #dde3ea;
+  }
+  .preview-thumb-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .remove-preview-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: rgba(31, 31, 31, 0.75);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    line-height: 16px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+  }
+  .remove-preview-btn:hover {
+    background: #d93025;
+  }
+  .preview-info-text {
+    font-size: 0.8rem;
+    color: #1a73e8;
+    font-weight: 500;
+  }
+  .user-pill-image img {
+    max-width: 240px;
+    max-height: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   }
 
   .capsule-container {
