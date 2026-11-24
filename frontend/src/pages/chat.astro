@@ -49,7 +49,7 @@ const chatSchema = {
             </defs>
           </svg>
           <span class="brand-text">Gemini</span>
-          <span class="brand-tag">BW</span>
+          <span class="brand-tag">CBSE</span>
         </a>
         <div class="brand-controls">
           <button id="sidebar-search-btn" class="icon-control-btn" type="button" title="Search recent doubts" aria-label="Search doubts">
@@ -61,9 +61,9 @@ const chatSchema = {
         </div>
       </div>
 
-      <!-- Primary Action Items (Matches Screenshot) -->
+      <!-- Primary Action Items (New Chat active by default) -->
       <nav class="sidebar-menu-nav" aria-label="Primary Navigation">
-        <button id="gemini-new-chat-btn" class="sidebar-nav-item" type="button">
+        <button id="gemini-new-chat-btn" class="sidebar-nav-item active" type="button">
           <span class="nav-item-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
           </span>
@@ -104,7 +104,7 @@ const chatSchema = {
         </button>
       </nav>
 
-      <!-- Section: Notebooks (Chapter Collections from Screenshot) -->
+      <!-- Section: Notebooks (CBSE Class 10 Subject Collections) -->
       <div class="sidebar-section">
         <div class="section-title-row">
           <span class="section-title">Notebooks</span>
@@ -114,17 +114,21 @@ const chatSchema = {
             <span class="item-icon">＋</span>
             <span class="item-label">New notebook</span>
           </button>
+          <button class="notebook-item topic-preset-btn" data-thread="maths" type="button">
+            <span class="item-icon">📄</span>
+            <span class="item-label">Mathematics Standard</span>
+          </button>
           <button class="notebook-item topic-preset-btn" data-thread="electricity" type="button">
             <span class="item-icon">📄</span>
-            <span class="item-label">Electricity Chapter</span>
+            <span class="item-label">Electricity &amp; Physics</span>
           </button>
           <button class="notebook-item topic-preset-btn" data-thread="chemistry" type="button">
             <span class="item-icon">📄</span>
-            <span class="item-label">chemistry class 10</span>
+            <span class="item-label">Chemical Reactions &amp; Acids</span>
           </button>
-          <button class="notebook-item topic-preset-btn" data-thread="gaurcity" type="button">
+          <button class="notebook-item topic-preset-btn" data-thread="sst" type="button">
             <span class="item-icon">📄</span>
-            <span class="item-label">GaurCity Car pool</span>
+            <span class="item-label">Social Science (SST)</span>
           </button>
           <button class="notebook-item" type="button" id="all-notebooks-btn">
             <span class="item-icon">⋯</span>
@@ -133,40 +137,41 @@ const chatSchema = {
         </div>
       </div>
 
-      <!-- Section: All / Recent Doubts (Matches Screenshot) -->
+      <!-- Section: Recent Doubts (Persisted CBSE Doubts History) -->
       <div class="sidebar-section recents-section">
         <div class="section-title-row">
-          <span class="section-title">All</span>
+          <span class="section-title">Recent</span>
           <button id="filter-recents-btn" class="filter-icon-btn" title="Filter history" aria-label="Filter recents">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
           </button>
         </div>
         <div class="recents-list" id="recents-list">
-          <button class="recent-item" data-thread="databricks" type="button">
-            <span class="recent-text">Databricks Architect Training Guide</span>
+          <button class="recent-item" data-thread="irrational" type="button">
+            <span class="recent-text">Prove √5 is irrational</span>
             <span class="pin-icon" title="Pinned">📌</span>
           </button>
-          <button class="recent-item" data-thread="platforms" type="button">
-            <span class="recent-text">Platforms for AI Training and Evalua...</span>
+          <button class="recent-item" data-thread="electricity" type="button">
+            <span class="recent-text">Ohm's Law &amp; Circuit Resistors</span>
             <span class="pin-icon" title="Pinned">📌</span>
           </button>
-          <button class="recent-item" data-thread="periyaar" type="button">
-            <span class="recent-text">Periyaar</span>
+          <button class="recent-item" data-thread="chemistry" type="button">
+            <span class="recent-text">FeSO₄ Heating Decomposition</span>
             <span class="pin-icon" title="Pinned">📌</span>
           </button>
-          <button class="recent-item active" data-thread="bypassing_cli" type="button">
-            <span class="recent-text">Bypassing Antigravity CLI Permissions</span>
+          <button class="recent-item" data-thread="conventions" type="button">
+            <span class="recent-text">Ray Diagram Cartesian Signs</span>
+            <span class="pin-icon" title="Pinned">📌</span>
           </button>
         </div>
       </div>
 
-      <!-- Bottom Profile / Mentor Card (Matches Kunal Rai Pro) -->
+      <!-- Bottom Profile / Mentor Card -->
       <div class="sidebar-footer-profile" id="sidebar-profile-card" title="Click to view Mentor Profile &amp; Book Trial">
         <div class="profile-left">
           <div class="profile-avatar">KR</div>
           <div class="profile-info">
             <strong class="profile-name">Kunal Rai</strong>
-            <span class="profile-badge">Pro</span>
+            <span class="profile-badge">Pro Mentor</span>
           </div>
         </div>
         <button id="tutor-popover-trigger" class="profile-gear-btn" type="button" aria-label="Settings and 1-on-1 Mentorship">
@@ -177,13 +182,13 @@ const chatSchema = {
 
     <!-- ── Main Gemini Chat Canvas ── -->
     <main class="gemini-main" id="gemini-main">
-      <!-- Minimalist Header Bar -->
+      <!-- Minimalist Clean Header Bar -->
       <header class="gemini-header">
         <div class="header-left-col">
           <button id="mobile-toggle-btn" class="mobile-toggle-btn" type="button" aria-label="Open sidebar">
             ☰
           </button>
-          <span class="active-notebook-title" id="active-notebook-title">Bypassing Antigravity CLI Permissions</span>
+          <span class="active-notebook-title" id="active-notebook-title"></span>
         </div>
         <div class="header-right-col">
           <div class="mode-pill-select" id="mode-pill-select" role="radiogroup" aria-label="AI Mode">
@@ -191,9 +196,6 @@ const chatSchema = {
             <button class="mode-btn" data-mode="step_by_step" type="button" title="Full CBSE model answer with marking scheme">📝 CBSE Answer</button>
             <button class="mode-btn" data-mode="find_mistake" type="button" title="Paste steps to spot mistakes">🔍 Step Check</button>
           </div>
-          <a href="/" class="exit-link" title="Return to BoardWallah Website">
-            <span>← Website</span>
-          </a>
           <button id="chat-options-menu-btn" class="dots-menu-btn" type="button" aria-label="Options">
             ⋮
           </button>
@@ -204,8 +206,8 @@ const chatSchema = {
       <div class="conversation-viewport" id="conversation-viewport">
         <!-- Centered Message Stream Container -->
         <div class="conversation-stream" id="conversation-stream">
-          <!-- Initial Welcome View (shown when "New Chat" is clicked) -->
-          <div class="gemini-welcome-canvas" id="gemini-welcome-canvas" style="display:none;">
+          <!-- Default Clean Welcome Canvas (Visible on initial load / New Chat) -->
+          <div class="gemini-welcome-canvas" id="gemini-welcome-canvas">
             <h1 class="welcome-heading">
               <span class="gradient-text">Hello, Class 10 Scholar</span>
               <br/>What concept can we master today?
@@ -235,91 +237,8 @@ const chatSchema = {
             </div>
           </div>
 
-          <!-- Active Message Feed (Preloaded with the exact Screenshot Thread) -->
-          <div class="active-messages-feed" id="active-messages-feed">
-            <!-- User Message Pill (Floated Right, Exactly matches Screenshot) -->
-            <div class="gemini-row user-row">
-              <div class="gemini-user-pill">
-                agy with permission
-              </div>
-            </div>
-
-            <!-- Bot Response (Unboxed directly on canvas, with PowerShell Dark Card) -->
-            <div class="gemini-row bot-row">
-              <div class="gemini-bot-content">
-                <div class="bot-text-body">
-                  <p class="gemini-p">
-                    To run Google Antigravity CLI ( <span class="gemini-inline-pill">agy</span> ) without interactive permission prompts for file edits or terminal commands, pass the auto-approval / permission flags directly in PowerShell on Windows:
-                  </p>
-
-                  <h3 class="gemini-heading-h3">1. Skip All Permission Prompts (YOLO / Full Auto)</h3>
-                  <p class="gemini-p">
-                    If you want <span class="gemini-inline-pill">agy</span> to execute commands and edit files without stopping for confirmation:
-                  </p>
-
-                  <!-- Dark Code Card (Matches Screenshot exactly) -->
-                  <div class="gemini-dark-card">
-                    <div class="dark-card-header">
-                      <span class="dark-card-lang">PowerShell</span>
-                      <div class="dark-card-actions">
-                        <button type="button" class="dark-icon-btn dark-download-btn" title="Download snippet">
-                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" x2="12" y1="8" y2="16"/></svg>
-                        </button>
-                        <button type="button" class="dark-icon-btn dark-copy-btn" title="Copy code">
-                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                        </button>
-                      </div>
-                    </div>
-                    <pre class="dark-card-pre"><code>agy <span class="syntax-param">--dangerously-skip-permissions</span></code></pre>
-                  </div>
-
-                  <p class="gemini-p muted-p">
-                    <em>(Or pass a prompt directly in headless/one-shot mode:</em>
-                  </p>
-                  <div class="gemini-dark-card">
-                    <div class="dark-card-header">
-                      <span class="dark-card-lang">PowerShell</span>
-                      <div class="dark-card-actions">
-                        <button type="button" class="dark-icon-btn dark-copy-btn" title="Copy code">
-                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                        </button>
-                      </div>
-                    </div>
-                    <pre class="dark-card-pre"><code>agy -p "your prompt here" <span class="syntax-param">--dangerously-skip-permissions</span></code></pre>
-                  </div>
-
-                  <h3 class="gemini-heading-h3">2. Auto-Accept File Edits Only</h3>
-                  <p class="gemini-p">
-                    If you still want approval prompts for shell/PowerShell commands, but want file writes and edits to proceed automatically:
-                  </p>
-                  <div class="gemini-dark-card">
-                    <div class="dark-card-header">
-                      <span class="dark-card-lang">PowerShell</span>
-                      <div class="dark-card-actions">
-                        <button type="button" class="dark-icon-btn dark-copy-btn" title="Copy code">
-                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                        </button>
-                      </div>
-                    </div>
-                    <pre class="dark-card-pre"><code>agy <span class="syntax-param">--auto-edit</span></code></pre>
-                  </div>
-                </div>
-
-                <div class="bot-actions-row">
-                  <button type="button" class="gemini-action-btn copy-action-btn" title="Copy answer">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                    <span>Copy</span>
-                  </button>
-                  <button type="button" class="gemini-action-btn like-btn" title="Helpful answer">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.5L12 3a2 2 0 0 1 3 2.88Z"/></svg>
-                  </button>
-                  <button type="button" class="gemini-action-btn dislike-btn" title="Need more details">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5L12 21a2 2 0 0 1-3-2.88Z"/></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <!-- Active Message Feed (Hidden on default load, populates when user asks or clicks) -->
+          <div class="active-messages-feed" id="active-messages-feed" style="display:none;"></div>
         </div>
       </div>
 
@@ -336,7 +255,7 @@ const chatSchema = {
             <textarea
               id="gemini-input-textarea"
               class="capsule-textarea"
-              placeholder="Ask Gemini"
+              placeholder="Ask Gemini or paste your numerical steps..."
               rows="1"
               required
             ></textarea>
@@ -376,7 +295,7 @@ const chatSchema = {
             </div>
           </div>
 
-          <!-- Bottom Micro Disclaimer (Matches Gemini screenshot) -->
+          <!-- Bottom Micro Disclaimer -->
           <div class="capsule-disclaimer">
             <span>Gemini is AI and can make mistakes. Verify with official NCERT textbooks &amp; CBSE marking rubrics.</span>
           </div>
@@ -415,39 +334,50 @@ const chatSchema = {
   let recognition = null;
   let isRecording = false;
 
-  // Static Preset Threads for Instant Switching
+  // Static Preset Threads for Instant Switching to High-Yield CBSE Topics
   const THREADS = {
-    bypassing_cli: {
-      title: "Bypassing Antigravity CLI Permissions",
-      userQuery: "agy with permission",
-      botResponse: `To run Google Antigravity CLI ( \`agy\` ) without interactive permission prompts for file edits or terminal commands, pass the auto-approval / permission flags directly in PowerShell on Windows:
+    irrational: {
+      title: "Prove √5 is irrational",
+      userQuery: "How do I prove that √5 is irrational by contradiction for CBSE Class 10?",
+      botResponse: `Here is the official CBSE Class 10 model answer using proof by contradiction:
 
-1. **Skip All Permission Prompts (YOLO / Full Auto)**
-If you want \`agy\` to execute commands and edit files without stopping for confirmation:
-
+1. **Assumption (Contradiction)**:
+Let us assume, to the contrary, that $\\sqrt{5}$ is rational.
+Then there exist co-prime integers $a$ and $b$ ($b \\neq 0$) such that:
 \`\`\`PowerShell
-agy --dangerously-skip-permissions
+√5 = a / b    [where HCF(a, b) = 1]
 \`\`\`
 
-*(Or pass a prompt directly in headless/one-shot mode:*
+2. **Squaring Both Sides**:
 \`\`\`PowerShell
-agy -p "your prompt here" --dangerously-skip-permissions
+5 = a^2 / b^2
+5 * b^2 = a^2    --- (Equation 1)
 \`\`\`
+This implies that $5$ divides $a^2$. By Theorem 1.3, if a prime $p$ divides $a^2$, then $p$ divides $a$.
+Therefore, $5$ divides $a$.
 
-2. **Auto-Accept File Edits Only**
-If you still want approval prompts for shell/PowerShell commands, but want file writes and edits to proceed automatically:
-
+3. **Substitution**:
+Since $5$ divides $a$, we can write $a = 5k$ for some integer $k$.
+Substituting into Equation 1:
 \`\`\`PowerShell
-agy --auto-edit
-\`\`\``
+5 * b^2 = (5k)^2 = 25 * k^2
+b^2 = 5 * k^2    --- (Equation 2)
+\`\`\`
+This implies that $5$ divides $b^2$, which means $5$ divides $b$.
+
+4. **Conclusion**:
+From Equations 1 and 2, $5$ is a common factor of both $a$ and $b$.
+But this contradicts our initial assumption that $a$ and $b$ are co-prime (having no common factor other than 1).
+Hence, our assumption that $\\sqrt{5}$ is rational is false.
+**Therefore, $\\sqrt{5}$ is irrational.** [Full Marks]`
     },
     electricity: {
-      title: "Electricity Chapter",
+      title: "Ohm's Law & Circuit Resistors",
       userQuery: "State Ohm's Law and derive equivalent resistance for series and parallel resistor combinations.",
       botResponse: `Here is the official CBSE Class 10 derivation and key points for Electricity:
 
 1. **Ohm's Law**:
-At constant temperature, current ($I$) flowing through a conductor is directly proportional to the potential difference ($V$) across its ends:
+At constant temperature, current ($I$) flowing through a metallic conductor is directly proportional to the potential difference ($V$) across its ends:
 \`\`\`PowerShell
 V = I * R    [SI unit of Resistance R = Ohm (Ω)]
 \`\`\`
@@ -473,7 +403,7 @@ H = I^2 * R * t = V * I * t = (V^2 / R) * t    [Joules]
 \`\`\``
     },
     chemistry: {
-      title: "chemistry class 10",
+      title: "FeSO₄ Heating Decomposition",
       userQuery: "What are the most tested decomposition reactions in CBSE Class 10 Chemistry with colour changes?",
       botResponse: `Here are the top high-yield thermal decomposition reactions required for CBSE Class 10:
 
@@ -500,53 +430,63 @@ Observations:
 CaCO3(s) --Δ--> CaO(s) [Quicklime] + CO2(g)
 \`\`\``
     },
-    gaurcity: {
-      title: "GaurCity Car pool",
-      userQuery: "Where are Kunal Rai's offline 1-on-1 home tutoring batches available in Gaur City?",
-      botResponse: `Offline 1-on-1 personalized home tutoring by **Kunal Rai** is available across:
+    conventions: {
+      title: "Ray Diagram Cartesian Signs",
+      userQuery: "Explain Cartesian sign conventions for concave and convex mirrors and lenses with formulas.",
+      botResponse: `Here is the complete CBSE sign convention cheatsheet for Optics:
 
-- **Gaur City 2**: 14th Avenue, 16th Avenue, 10th Avenue, 11th Avenue, 12th Avenue
-- **VVIP Homes** &amp; Gaur City 1
-- **Greater Noida West / Noida Extension**
+1. **New Cartesian Sign Conventions**:
+- All distances are measured from the Pole ($P$) for mirrors, or Optical Centre ($O$) for lenses.
+- Distances measured in the direction of incident light are positive (+).
+- Distances measured opposite to the direction of incident light are negative (-).
+- Object distance ($u$) is **always negative** for real objects.
 
-Key Tutoring Features:
-- 100% individual attention (single student or max 2 students)
-- 20 years teaching experience (B.Tech, ex-Samsung, ex-HCL)
-- Full CBSE syllabus coverage with weekly 80-mark mock test evaluation
-- Free 60-minute diagnostic trial available via the profile settings.`
-    },
-    databricks: {
-      title: "Databricks Architect Training Guide",
-      userQuery: "Provide a quick architecture summary for Databricks Lakehouse.",
-      botResponse: `Databricks Lakehouse combines data lakes and data warehouses on Delta Lake:
-
-1. **Medallion Architecture**:
+2. **Mirror Formula & Magnification**:
 \`\`\`PowerShell
-Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business Metrics)
+1/f = 1/v + 1/u
+m = h' / h = - (v / u)
 \`\`\`
 
-2. **Core Capabilities**:
-- ACID transactions on Apache Parquet via Delta Lake.
-- Unified governance with Unity Catalog.
-- Serverless SQL Warehouses for high-concurrency BI.`
+3. **Lens Formula & Magnification**:
+\`\`\`PowerShell
+1/f = 1/v - 1/u
+m = h' / h = + (v / u)
+Power of Lens P = 1 / f(in metres) [Dioptres (D)]
+\`\`\``
     },
-    platforms: {
-      title: "Platforms for AI Training and Evalua...",
-      userQuery: "What are the essential layers for modern LLM evaluation pipelines?",
-      botResponse: `Modern LLM Evaluation Framework:
+    maths: {
+      title: "Mathematics Standard",
+      userQuery: "Give me the most important high-yield theorems for CBSE Class 10 Mathematics Standard.",
+      botResponse: `Essential CBSE Class 10 Theorems for Section D (5-mark questions):
 
-1. **Benchmark Datasets**: Domain-specific golden truth sets with grading rubrics.
-2. **LLM-as-a-Judge**: Secondary high-precision models evaluating reasoning accuracy.
-3. **Guardrails & Latency Profiling**: Real-time safety filters and token-level streaming telemetry.`
+1. **Basic Proportionality Theorem (Thales Theorem - Chapter 6 Triangles)**:
+If a line is drawn parallel to one side of a triangle to intersect the other two sides in distinct points, the other two sides are divided in the same ratio.
+\`\`\`PowerShell
+AD / DB = AE / EC
+\`\`\`
+
+2. **Tangents from External Point (Chapter 10 Circles - Theorem 10.2)**:
+The lengths of tangents drawn from an external point to a circle are equal.
+\`\`\`PowerShell
+AP = BP
+\`\`\`
+
+3. **Quadratic Formula**:
+\`\`\`PowerShell
+x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
+\`\`\``
     },
-    periyaar: {
-      title: "Periyaar",
-      userQuery: "Summarize the Self-Respect Movement led by Periyar E. V. Ramasamy.",
-      botResponse: `The Self-Respect Movement (founded in 1925 by E. V. Ramasamy 'Periyar') focused on:
+    sst: {
+      title: "Social Science (SST)",
+      userQuery: "Summarize the key events and dates of the Indian National Movement for Class 10 History.",
+      botResponse: `Chronology of Nationalism in India (CBSE Class 10):
 
-1. Social equality and anti-caste advocacy in Tamil Nadu.
-2. Women's empowerment, promoting education, widow remarriage, and equal property rights.
-3. Rationalism, scientific temper, and self-respect marriages without priestly rituals.`
+1. **1915**: Mahatma Gandhi returns to India from South Africa.
+2. **1916–1918**: Early Satyagrahas in Champaran (indigo), Kheda (revenue relief), and Ahmedabad (cotton mill workers).
+3. **1919**: Rowlatt Act passed; Jallianwala Bagh Massacre (April 13) ordered by General Dyer.
+4. **1920–1922**: Non-Cooperation and Khilafat Movement; suspended after the Chauri Chaura incident.
+5. **1930**: Salt March (Dandi March) begins Civil Disobedience Movement.
+6. **1931**: Gandhi-Irwin Pact signed; Second Round Table Conference attended.`
     }
   };
 
@@ -683,9 +623,10 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     textarea.value = '';
     adjustInputHeight();
     textarea.focus();
-    if (activeNotebookTitle) activeNotebookTitle.textContent = "New doubt";
+    if (activeNotebookTitle) activeNotebookTitle.textContent = "";
     recentItems.forEach(r => r.classList.remove('active'));
     topicPresetBtns.forEach(p => p.classList.remove('active'));
+    if (newChatBtn) newChatBtn.classList.add('active');
   }
 
   if (newChatBtn) newChatBtn.addEventListener('click', startNewChat);
@@ -719,6 +660,7 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
       const threadKey = btn.getAttribute('data-thread');
       topicPresetBtns.forEach(b => b.classList.remove('active'));
       recentItems.forEach(r => r.classList.remove('active'));
+      if (newChatBtn) newChatBtn.classList.remove('active');
       btn.classList.add('active');
 
       if (sidebar && sidebar.classList.contains('mobile-open')) sidebar.classList.remove('mobile-open');
@@ -734,6 +676,7 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
       const threadKey = item.getAttribute('data-thread');
       recentItems.forEach(r => r.classList.remove('active'));
       topicPresetBtns.forEach(b => b.classList.remove('active'));
+      if (newChatBtn) newChatBtn.classList.remove('active');
       item.classList.add('active');
 
       if (sidebar && sidebar.classList.contains('mobile-open')) sidebar.classList.remove('mobile-open');
@@ -768,13 +711,13 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     recognition.onerror = () => {
       isRecording = false;
       micBtn.classList.remove('recording');
-      textarea.placeholder = "Ask Gemini";
+      textarea.placeholder = "Ask Gemini or paste your numerical steps...";
     };
 
     recognition.onend = () => {
       isRecording = false;
       micBtn.classList.remove('recording');
-      textarea.placeholder = "Ask Gemini";
+      textarea.placeholder = "Ask Gemini or paste your numerical steps...";
     };
 
     micBtn.addEventListener('click', () => {
@@ -811,11 +754,8 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
 
     // Dark Code Blocks with Language Header & Download/Copy Icons (Exact Gemini Style)
     parsed = parsed.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
-      const cleanLang = lang || 'PowerShell';
+      const cleanLang = lang || 'Formula / Steps';
       let escapedCode = escapeHtml(code.trim());
-      // Syntax highlight parameter flags in magenta/pink
-      escapedCode = escapedCode.replace(/(--[a-zA-Z0-9_-]+)/g, '<span class="syntax-param">$1</span>');
-
       return `
         <div class="gemini-dark-card">
           <div class="dark-card-header">
@@ -834,7 +774,7 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
       `;
     });
 
-    // Inline pills (like `agy` in Gemini screenshot)
+    // Inline pills
     parsed = parsed.replace(/`([^`]+)`/g, '<span class="gemini-inline-pill">$1</span>');
 
     // Bold Headings
@@ -1015,39 +955,6 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
       textarea.focus();
     }
   }
-
-  // Wire initial card copy buttons
-  document.querySelectorAll('.dark-copy-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const card = e.target.closest('.gemini-dark-card');
-      const code = card.querySelector('code');
-      if (code) {
-        navigator.clipboard.writeText(code.innerText).then(() => {
-          btn.innerHTML = '✓';
-          setTimeout(() => {
-            btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
-          }, 2000);
-        });
-      }
-    });
-  });
-
-  // Wire initial response copy button
-  const initialCopyBtn = document.querySelector('.copy-action-btn');
-  if (initialCopyBtn) {
-    initialCopyBtn.addEventListener('click', () => {
-      const text = document.querySelector('.bot-text-body')?.innerText || '';
-      navigator.clipboard.writeText(text).then(() => {
-        initialCopyBtn.innerHTML = `<span>✓ Copied</span>`;
-        setTimeout(() => {
-          initialCopyBtn.innerHTML = `
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-            <span>Copy</span>
-          `;
-        }, 2000);
-      });
-    });
-  }
 })();
 </script>
 
@@ -1155,7 +1062,7 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     color: #1f1f1f;
   }
 
-  /* Primary Menu Navigation (Matches Screenshot) */
+  /* Primary Menu Navigation */
   .sidebar-menu-nav {
     display: flex;
     flex-direction: column;
@@ -1257,7 +1164,6 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     background: #e9eef6;
     color: #1f1f1f;
   }
-  /* Active row matches screenshot pill */
   .recent-item.active,
   .notebook-item.active {
     background: #e9eef6;
@@ -1281,7 +1187,7 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     opacity: 0.7;
   }
 
-  /* Bottom Mentor Profile (Matches Kunal Rai Pro) */
+  /* Bottom Mentor Profile */
   .sidebar-footer-profile {
     margin-top: auto;
     display: flex;
@@ -1414,19 +1320,6 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     box-shadow: 0 1px 4px rgb(0 0 0 / 8%);
   }
 
-  .exit-link {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #0f766e;
-    text-decoration: none;
-    padding: 0.35rem 0.65rem;
-    border-radius: 6px;
-    transition: background 0.15s ease;
-  }
-  .exit-link:hover {
-    background: #f0fdf4;
-  }
-
   .dots-menu-btn {
     background: transparent;
     border: none;
@@ -1459,11 +1352,11 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
 
   /* Welcome Hero Canvas */
   .gemini-welcome-canvas {
-    padding-block: 4rem 2rem;
+    padding-block: 4.5rem 2rem;
     text-align: left;
   }
   .welcome-heading {
-    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-size: clamp(2.2rem, 4.5vw, 3rem);
     font-weight: 500;
     letter-spacing: -0.025em;
     line-height: 1.25;
@@ -1530,7 +1423,7 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     width: 100%;
   }
 
-  /* User Message: Floated Right Pill (Matches "agy with permission" in Screenshot) */
+  /* User Message: Floated Right Pill */
   .user-row {
     justify-content: flex-end;
   }
@@ -1565,10 +1458,6 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
   .gemini-p {
     margin: 0 0 1rem;
   }
-  .muted-p {
-    color: #475569;
-    margin-top: 0.75rem;
-  }
 
   .gemini-heading-h3 {
     font-size: 1.15rem;
@@ -1587,7 +1476,7 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     font-weight: 500;
   }
 
-  /* ── Dark Code & Formula Card (Matches PowerShell Dark Box in Screenshot) ── */
+  /* ── Dark Code & Formula Card ── */
   .gemini-dark-card {
     background: #1e1f20;
     color: #f8fafc;
@@ -1639,11 +1528,6 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     line-height: 1.6;
     color: #ffffff;
     overflow-x: auto;
-  }
-
-  .syntax-param {
-    color: #ff79c6;
-    font-weight: 500;
   }
 
   /* Lists */
@@ -1726,7 +1610,7 @@ Bronze (Raw Ingestion) -> Silver (Cleaned/Filtered) -> Gold (Aggregated Business
     40% { transform: scale(1); opacity: 1; }
   }
 
-  /* ── The Gemini Floating Capsule Dock (Matches Bottom Pill in Screenshot) ── */
+  /* ── The Gemini Floating Capsule Dock ── */
   .capsule-dock-wrap {
     position: absolute;
     bottom: 0;
