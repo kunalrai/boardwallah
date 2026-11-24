@@ -293,7 +293,6 @@ const chatSchema = {
               class="capsule-textarea"
               placeholder="Ask Boardwallah or paste your numerical steps..."
               rows="1"
-              required
             ></textarea>
 
             <!-- Right Controls: Auto Dropdown + Mic + Send -->
@@ -1208,6 +1207,13 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     handleSend();
   });
 
+  if (sendBtn) {
+    sendBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleSend();
+    });
+  }
+
   // New Chat Click
   function startNewChat() {
     activeMessagesFeed.innerHTML = '';
@@ -1325,8 +1331,8 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   }
 
   function handleSend() {
-    const text = textarea.value.trim();
-    if (!text || isWaiting) return;
+    const text = textarea ? textarea.value.trim() : '';
+    if ((!text && !attachedImageBase64) || isWaiting) return;
     submitQuery(text);
   }
 
@@ -1455,7 +1461,14 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     const row = document.createElement('div');
     row.className = 'gemini-row bot-row';
 
-    const formatted = formatGeminiMarkdown(typeof answer === 'string' ? answer : JSON.stringify(answer));
+    let formatted = '';
+    try {
+      formatted = formatGeminiMarkdown(typeof answer === 'string' ? answer : JSON.stringify(answer));
+    } catch (e) {
+      console.warn('Markdown format fallback:', e);
+      formatted = `<p class="gemini-p">${escapeHtml(typeof answer === 'string' ? answer : JSON.stringify(answer))}</p>`;
+    }
+
     const keyTermsHtml = (keyTerms && keyTerms.length > 0)
       ? `
         <div class="gemini-keyterms-row">
@@ -1755,57 +1768,74 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
     const displayQuestion = (question && question.trim()) ? question.trim() : 'Solve attached doubt photo';
 
-    appendUserPill(displayQuestion, imgData);
-    textarea.value = '';
-    adjustInputHeight();
-    clearAttachedImage();
-
-    if (activeNotebookTitle) {
-      activeNotebookTitle.textContent = displayQuestion.slice(0, 36) + (displayQuestion.length > 36 ? '...' : '');
-    }
-
-    isWaiting = true;
-    sendBtn.disabled = true;
-    showTypingAnimation();
-
-    let ans = null;
-    let terms = [];
-
     try {
-      const resp = await fetch('/api/v1/ai/doubt-tutor', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question: displayQuestion,
-          mode: currentMode,
-          image: imgData,
-          imageMime: imgMime
-        }),
-      });
-
-      if (resp.ok) {
-        const data = await resp.json();
-        ans = data.answer;
-        terms = data.keyTerms || [];
+      appendUserPill(displayQuestion, imgData);
+      if (textarea) {
+        textarea.value = '';
+        adjustInputHeight();
       }
-    } catch (err) {
-      console.warn('API error, falling back to local resolver:', err);
+      clearAttachedImage();
+
+      if (activeNotebookTitle) {
+        activeNotebookTitle.textContent = displayQuestion.slice(0, 36) + (displayQuestion.length > 36 ? '...' : '');
+      }
+
+      isWaiting = true;
+      if (sendBtn) sendBtn.disabled = true;
+      showTypingAnimation();
+
+      let ans = null;
+      let terms = [];
+
+      try {
+        const resp = await fetch('/api/v1/ai/doubt-tutor', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question: displayQuestion,
+            mode: currentMode,
+            image: imgData,
+            imageMime: imgMime
+          }),
+        });
+
+        if (resp.ok) {
+          const data = await resp.json();
+          ans = data.answer;
+          terms = data.keyTerms || [];
+        }
+      } catch (err) {
+        console.warn('API error, falling back to local resolver:', err);
+      }
+
+      if (!ans) {
+        const resolved = resolveChatDoubt(displayQuestion);
+        ans = resolved.answer;
+        terms = resolved.keyTerms || [];
+      }
+
+      removeTypingAnimation();
+      appendBotResponse(ans, terms);
+
+      try {
+        prependRecentDoubt(question, ans, terms, false);
+      } catch (e) {
+        console.warn('Recent doubt prepend warning:', e);
+      }
+
+      try {
+        saveDoubtToFirestore(question, ans, terms);
+      } catch (e) {
+        console.warn('Firestore save warning:', e);
+      }
+    } catch (criticalErr) {
+      console.error('Critical submitQuery error:', criticalErr);
+    } finally {
+      removeTypingAnimation();
+      isWaiting = false;
+      if (sendBtn) sendBtn.disabled = false;
+      if (textarea) textarea.focus();
     }
-
-    if (!ans) {
-      const resolved = resolveChatDoubt(displayQuestion);
-      ans = resolved.answer;
-      terms = resolved.keyTerms || [];
-    }
-
-    removeTypingAnimation();
-    isWaiting = false;
-    sendBtn.disabled = false;
-    textarea.focus();
-
-    appendBotResponse(ans, terms);
-    prependRecentDoubt(question, ans, terms, false);
-    saveDoubtToFirestore(question, ans, terms);
   }
 
   // ── In-Page Dialog Controls & Toast System ──
