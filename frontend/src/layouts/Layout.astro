@@ -64,6 +64,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     {schema && (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     )}
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <Analytics />
     <SpeedInsights />
   </head>

@@ -165,8 +165,8 @@ const chatSchema = {
         </div>
       </div>
 
-      <!-- Bottom Sign In / Student Account Card -->
-      <a href="/login/" class="sidebar-footer-profile" id="sidebar-profile-card" title="Sign in to your student account">
+      <!-- Bottom Sign In / Student Account Button -->
+      <button type="button" class="sidebar-footer-profile" id="sidebar-profile-card" title="Sign in with Google">
         <div class="profile-left">
           <div class="profile-avatar signin-avatar" id="sidebar-avatar">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -176,10 +176,10 @@ const chatSchema = {
             <span class="profile-badge" id="sidebar-user-status">Student Account</span>
           </div>
         </div>
-        <div class="profile-gear-btn" title="Sign in to account">
+        <div class="profile-gear-btn" title="Sign in with Google">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
         </div>
-      </a>
+      </button>
     </aside>
 
     <!-- ── Main Gemini Chat Canvas ── -->
@@ -324,6 +324,53 @@ const chatSchema = {
       <div class="dialog-actions">
         <a href={calBookingUrl} target="_blank" rel="noopener noreferrer" class="button">Book Free 60-Min Trial Slot</a>
         <a href={waChatLink} target="_blank" rel="noopener noreferrer" class="button secondary">💬 Chat on WhatsApp</a>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Google Sign-In Fallback Modal -->
+  <dialog id="signin-modal" class="mentor-dialog">
+    <div class="mentor-dialog-content card text-center" style="max-width: 420px; text-align: center;">
+      <div class="dialog-header" style="justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+          <h3 style="margin: 0; font-size: 1.1rem;">Sign in with Google</h3>
+        </div>
+        <button id="close-signin-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
+      </div>
+      <p class="dialog-desc" style="font-size: 0.88rem; color: #5f6368; line-height: 1.45; margin-bottom: 1.25rem;">
+        Save your Class 10 doubt history, CBSE 2026 practice proofs, and access personalized Board exam tips.
+      </p>
+      <div style="display: flex; justify-content: center; margin: 1rem 0;">
+        <div id="modal-gsi-btn-container"></div>
+      </div>
+      <p style="font-size: 0.74rem; color: #80868b; margin-top: 0.75rem;">
+        Official Google popup sign-in. We only receive your name and email.
+      </p>
+    </div>
+  </dialog>
+
+  <!-- Student Account Popover Modal -->
+  <dialog id="account-modal" class="mentor-dialog">
+    <div class="mentor-dialog-content card" style="max-width: 400px;">
+      <div class="dialog-header">
+        <h3 style="margin: 0; font-size: 1.1rem;">Student Account</h3>
+        <button id="close-account-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.85rem; padding: 1rem 0; border-bottom: 1px solid #e2e8f0;">
+        <div id="account-modal-avatar" class="profile-avatar" style="width: 48px; height: 48px; font-size: 1.1rem; overflow: hidden; shrink-0;"></div>
+        <div style="overflow: hidden; min-width: 0;">
+          <h4 id="account-modal-name" style="margin: 0; font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Student</h4>
+          <span id="account-modal-email" style="font-size: 0.8rem; color: #5f6368; word-break: break-all;">student@example.com</span>
+        </div>
+      </div>
+      <ul class="dialog-perks" style="margin: 1rem 0;">
+        <li>✓ Class 10 CBSE doubt history active</li>
+        <li>✓ Socratic AI hints &amp; 3-hour mock timer enabled</li>
+      </ul>
+      <div class="dialog-actions" style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
+        <button id="account-signout-btn" class="button secondary" type="button" style="color: #dc2626; border-color: #fca5a5;">Sign out</button>
+        <button id="close-account-modal-action-btn" class="button" type="button">Close</button>
       </div>
     </div>
   </dialog>
@@ -607,30 +654,255 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     });
   }
 
-  // Session detection for Student Account in sidebar
+  // ── Google Popup Sign-In & Student Account System ──
+  const GOOGLE_CLIENT_ID = "445249509199-brbsbb840fk013ie1harl17thi6pgnap.apps.googleusercontent.com";
+  const USER_STORAGE_KEY = "boardwallah_user";
   const SESSION_KEY = "htp_session";
-  const sessionToken = localStorage.getItem(SESSION_KEY);
-  const sidebarUserName = document.getElementById('sidebar-user-name');
-  const sidebarUserStatus = document.getElementById('sidebar-user-status');
-  const sidebarAvatar = document.getElementById('sidebar-avatar');
 
-  if (sessionToken && sidebarUserName && sidebarUserStatus) {
-    fetch('/api/v1/auth/me', {
-      headers: { Authorization: `Bearer ${sessionToken}` }
-    })
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        if (data && (data.name || data.email)) {
-          sidebarUserName.textContent = data.name || "Student";
-          sidebarUserStatus.textContent = data.email || "Active Account";
-          if (sidebarAvatar && data.name) {
-            const initials = data.name.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase();
-            if (initials) sidebarAvatar.textContent = initials;
-          }
-        }
-      })
-      .catch(() => {});
+  let googleTokenClient = null;
+
+  const signinModal = document.getElementById('signin-modal');
+  const closeSigninModalBtn = document.getElementById('close-signin-modal-btn');
+  const accountModal = document.getElementById('account-modal');
+  const closeAccountModalBtn = document.getElementById('close-account-modal-btn');
+  const closeAccountModalActionBtn = document.getElementById('close-account-modal-action-btn');
+  const accountSignoutBtn = document.getElementById('account-signout-btn');
+
+  function decodeJwt(token) {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
+    } catch (e) {
+      return null;
+    }
   }
+
+  function getStoredUser() {
+    try {
+      const raw = localStorage.getItem(USER_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function updateSidebarProfile(user) {
+    const sidebarUserName = document.getElementById('sidebar-user-name');
+    const sidebarUserStatus = document.getElementById('sidebar-user-status');
+    const sidebarAvatar = document.getElementById('sidebar-avatar');
+
+    if (!user) {
+      if (sidebarUserName) sidebarUserName.textContent = "Sign in";
+      if (sidebarUserStatus) sidebarUserStatus.textContent = "Student Account";
+      if (sidebarAvatar) {
+        sidebarAvatar.className = "profile-avatar signin-avatar";
+        sidebarAvatar.innerHTML = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+      }
+      if (profileCard) profileCard.setAttribute('title', 'Sign in with Google');
+      return;
+    }
+
+    if (sidebarUserName) sidebarUserName.textContent = user.name || "Student";
+    if (sidebarUserStatus) sidebarUserStatus.textContent = user.email || "Active Account";
+    if (profileCard) profileCard.setAttribute('title', `Signed in as ${user.name || user.email} (Click to manage)`);
+
+    if (sidebarAvatar) {
+      sidebarAvatar.className = "profile-avatar";
+      if (user.picture) {
+        sidebarAvatar.innerHTML = `<img src="${user.picture}" alt="${user.name || 'Student'}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" referrerpolicy="no-referrer" />`;
+      } else {
+        const initials = (user.name || "S").split(' ').map((p) => p[0]).join('').substring(0, 2).toUpperCase();
+        sidebarAvatar.textContent = initials;
+      }
+    }
+  }
+
+  function handleSuccessfulSignIn(profile, token) {
+    const user = {
+      name: profile.name || "Student",
+      email: profile.email || "",
+      picture: profile.picture || "",
+      sub: profile.sub || ""
+    };
+    try {
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+      if (token) localStorage.setItem(SESSION_KEY, token);
+    } catch (e) {}
+
+    updateSidebarProfile(user);
+
+    if (signinModal && typeof signinModal.close === 'function') {
+      try { signinModal.close(); } catch(e) {}
+    }
+
+    showToast(`Signed in as ${user.name || user.email}`);
+  }
+
+  function openSignInModal() {
+    if (signinModal) signinModal.showModal();
+  }
+
+  function openAccountModal(user) {
+    if (!accountModal) return;
+    const avatarEl = document.getElementById('account-modal-avatar');
+    const nameEl = document.getElementById('account-modal-name');
+    const emailEl = document.getElementById('account-modal-email');
+    if (nameEl) nameEl.textContent = user.name || "Student";
+    if (emailEl) emailEl.textContent = user.email || "";
+    if (avatarEl) {
+      if (user.picture) {
+        avatarEl.innerHTML = `<img src="${user.picture}" alt="${user.name}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" referrerpolicy="no-referrer" />`;
+      } else {
+        avatarEl.textContent = (user.name || "S").substring(0, 2).toUpperCase();
+      }
+    }
+    accountModal.showModal();
+  }
+
+  function initGooglePopup() {
+    if (typeof window.google === 'undefined' || !window.google.accounts) {
+      setTimeout(initGooglePopup, 200);
+      return;
+    }
+
+    // 1. Initialize OAuth2 Token Client (Opens native Google sign-in popup directly on click)
+    try {
+      if (window.google.accounts.oauth2 && typeof window.google.accounts.oauth2.initTokenClient === 'function') {
+        googleTokenClient = window.google.accounts.oauth2.initTokenClient({
+          client_id: GOOGLE_CLIENT_ID,
+          scope: 'email profile openid',
+          callback: async (tokenResponse) => {
+            if (tokenResponse && tokenResponse.access_token) {
+              try {
+                const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                  headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+                });
+                if (res.ok) {
+                  const profile = await res.json();
+                  handleSuccessfulSignIn(profile, tokenResponse.access_token);
+                }
+              } catch (err) {
+                console.error('Failed to fetch Google profile:', err);
+              }
+            }
+          },
+          error_callback: (err) => {
+            console.warn('Google popup error:', err);
+            if (err && err.type === 'popup_failed_to_open') {
+              openSignInModal();
+            }
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('oauth2 init error:', e);
+    }
+
+    // 2. Also initialize Google ID services for One Tap & fallback rendered button
+    try {
+      if (window.google.accounts.id && typeof window.google.accounts.id.initialize === 'function') {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: (response) => {
+            if (response && response.credential) {
+              const decoded = decodeJwt(response.credential);
+              if (decoded) {
+                handleSuccessfulSignIn(decoded, response.credential);
+              }
+            }
+          },
+          auto_select: false,
+          cancel_on_tap_outside: true,
+        });
+
+        const modalBtnContainer = document.getElementById('modal-gsi-btn-container');
+        if (modalBtnContainer) {
+          window.google.accounts.id.renderButton(modalBtnContainer, {
+            type: 'standard',
+            theme: 'outline',
+            size: 'large',
+            text: 'signin_with',
+            shape: 'pill',
+            width: 250,
+            logo_alignment: 'left',
+          });
+        }
+      }
+    } catch (e) {
+      console.warn('gsi id init error:', e);
+    }
+  }
+
+  // Handle Profile / Sign in click
+  if (profileCard) {
+    profileCard.addEventListener('click', (e) => {
+      e.preventDefault();
+      const currentUser = getStoredUser();
+      if (currentUser) {
+        openAccountModal(currentUser);
+        return;
+      }
+
+      // Trigger Google Popup directly
+      if (googleTokenClient && typeof googleTokenClient.requestAccessToken === 'function') {
+        googleTokenClient.requestAccessToken({ prompt: 'select_account' });
+      } else if (window.google && window.google.accounts && window.google.accounts.id) {
+        window.google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            openSignInModal();
+          }
+        });
+      } else {
+        openSignInModal();
+      }
+    });
+  }
+
+  // Modal event listeners
+  if (closeSigninModalBtn && signinModal) {
+    closeSigninModalBtn.addEventListener('click', () => signinModal.close());
+  }
+  if (closeAccountModalBtn && accountModal) {
+    closeAccountModalBtn.addEventListener('click', () => accountModal.close());
+  }
+  if (closeAccountModalActionBtn && accountModal) {
+    closeAccountModalActionBtn.addEventListener('click', () => accountModal.close());
+  }
+  if (accountSignoutBtn) {
+    accountSignoutBtn.addEventListener('click', () => {
+      try {
+        localStorage.removeItem(USER_STORAGE_KEY);
+        localStorage.removeItem(SESSION_KEY);
+      } catch (e) {}
+      updateSidebarProfile(null);
+      if (accountModal) accountModal.close();
+      showToast('Signed out of student account');
+    });
+  }
+
+  // Restore existing session on initial load
+  const initialUser = getStoredUser();
+  if (initialUser) {
+    updateSidebarProfile(initialUser);
+  } else {
+    const existingToken = localStorage.getItem(SESSION_KEY);
+    if (existingToken) {
+      const decoded = decodeJwt(existingToken);
+      if (decoded && (decoded.name || decoded.email)) {
+        handleSuccessfulSignIn(decoded, existingToken);
+      }
+    }
+  }
+
+  // Initialize Google popup auth
+  initGooglePopup();
 
   // Auto-resize textarea
   function adjustInputHeight() {
@@ -1406,6 +1678,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     transition: background 0.15s ease;
     text-decoration: none;
     color: inherit;
+    border: none;
+    font-family: inherit;
+    width: 100%;
+    text-align: left;
   }
   .sidebar-footer-profile:hover {
     background: #e9eef6;

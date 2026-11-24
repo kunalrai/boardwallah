@@ -252,12 +252,12 @@ const homeSchema = {
           <span class="sidebar-label text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0D1117] text-slate-500 border border-slate-200 dark:border-[#30363D]">THEME</span>
         </button>
 
-        <!-- Sign In / Student Account Pill -->
-        <a
-          href="/login/"
+        <!-- Sign In / Student Account Button -->
+        <button
+          type="button"
           id="portal-profile-card"
-          class="flex items-center justify-between gap-2 px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]/80 border border-slate-200/80 dark:border-[#30363D] hover:border-sky-500/40 hover:bg-slate-100 dark:hover:bg-[#161B22] transition-colors no-underline text-inherit"
-          title="Sign in to your student account"
+          class="w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]/80 border border-slate-200/80 dark:border-[#30363D] hover:border-sky-500/40 hover:bg-slate-100 dark:hover:bg-[#161B22] transition-colors cursor-pointer text-left"
+          title="Sign in with Google"
         >
           <div class="flex items-center gap-2 overflow-hidden min-w-0">
             <div id="portal-user-avatar" class="w-7 h-7 rounded-full bg-sky-600 flex items-center justify-center text-white font-bold text-xs shrink-0">
@@ -271,7 +271,7 @@ const homeSchema = {
           <span class="sidebar-label px-2 py-0.5 text-[10px] font-semibold rounded-md bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30 shrink-0">
             Login →
           </span>
-        </a>
+        </button>
       </div>
     </aside>
 
@@ -711,6 +711,49 @@ const homeSchema = {
       <i data-lucide="check-circle-2" class="w-4 h-4 text-orange-500"></i>
       <span id="toastMessage">Updated</span>
     </div>
+
+    <!-- Google Sign-In Fallback Modal for Portal -->
+    <dialog id="portal-signin-modal" class="mentor-dialog p-0 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161B22] text-slate-900 dark:text-slate-100 shadow-2xl backdrop:bg-slate-900/50 backdrop:backdrop-blur-sm">
+      <div class="p-6 max-w-sm text-center">
+        <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+            <h3 class="font-bold text-sm">Sign in with Google</h3>
+          </div>
+          <button id="close-portal-signin-modal-btn" class="text-slate-400 hover:text-slate-600 dark:hover:text-white" type="button">✕</button>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
+          Access your saved CBSE Class 10 chapter rubrics, doubt history, and mock analysis.
+        </p>
+        <div class="flex justify-center my-3">
+          <div id="portal-modal-gsi-container"></div>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-2">
+          Instant Google popup. We only receive your name and email.
+        </p>
+      </div>
+    </dialog>
+
+    <!-- Student Account Popover Modal for Portal -->
+    <dialog id="portal-account-modal" class="mentor-dialog p-0 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161B22] text-slate-900 dark:text-slate-100 shadow-2xl backdrop:bg-slate-900/50 backdrop:backdrop-blur-sm">
+      <div class="p-6 max-w-sm">
+        <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-200 dark:border-slate-800">
+          <h3 class="font-bold text-sm">Student Account</h3>
+          <button id="close-portal-account-modal-btn" class="text-slate-400 hover:text-slate-600 dark:hover:text-white" type="button">✕</button>
+        </div>
+        <div class="flex items-center gap-3 py-3 border-b border-slate-100 dark:border-slate-800">
+          <div id="portal-modal-avatar" class="w-12 h-12 rounded-full bg-sky-600 flex items-center justify-center text-white font-bold text-base shrink-0 overflow-hidden"></div>
+          <div class="overflow-hidden min-w-0">
+            <h4 id="portal-modal-name" class="font-semibold text-sm truncate">Student</h4>
+            <span id="portal-modal-email" class="text-xs text-slate-500 dark:text-slate-400 break-all">student@example.com</span>
+          </div>
+        </div>
+        <div class="flex gap-2 justify-end mt-4">
+          <button id="portal-account-signout-btn" class="px-3 py-1.5 text-xs font-semibold text-rose-600 border border-rose-300 dark:border-rose-800 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/40" type="button">Sign out</button>
+          <button id="close-portal-account-action-btn" class="px-3 py-1.5 text-xs font-semibold text-white bg-slate-800 dark:bg-slate-700 rounded-lg hover:bg-slate-900" type="button">Close</button>
+        </div>
+      </div>
+    </dialog>
   </div>
 
   <!-- =====================================================================
@@ -975,30 +1018,241 @@ const homeSchema = {
       updateMockTimerDisplay();
       initIcons();
 
-      // Check student session for sidebar profile
-      try {
-        const token = localStorage.getItem('htp_session');
-        if (token) {
-          fetch('/api/v1/auth/me', {
-            headers: { Authorization: `Bearer ${token}` }
-          })
-            .then(res => res.ok ? res.json() : null)
-            .then(user => {
-              if (user && (user.name || user.email)) {
-                const nameEl = document.getElementById('portal-user-name');
-                const statusEl = document.getElementById('portal-user-status');
-                const avatarEl = document.getElementById('portal-user-avatar');
-                if (nameEl) nameEl.textContent = user.name || "Student";
-                if (statusEl) statusEl.textContent = user.email || "Active Account";
-                if (avatarEl && user.name) {
-                  const initials = user.name.split(' ').map(p => p[0]).join('').substring(0, 2).toUpperCase();
-                  if (initials) avatarEl.textContent = initials;
+      // ── Google Popup Sign-in for Portal ──
+      const GOOGLE_CLIENT_ID = "445249509199-brbsbb840fk013ie1harl17thi6pgnap.apps.googleusercontent.com";
+      const USER_STORAGE_KEY = "boardwallah_user";
+      const SESSION_KEY = "htp_session";
+      let portalTokenClient = null;
+
+      function decodeJwt(token) {
+        try {
+          const base64Url = token.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split('')
+              .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+              .join('')
+          );
+          return JSON.parse(jsonPayload);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function getPortalUser() {
+        try {
+          const raw = localStorage.getItem(USER_STORAGE_KEY);
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function updatePortalSidebarProfile(user) {
+        const nameEl = document.getElementById('portal-user-name');
+        const statusEl = document.getElementById('portal-user-status');
+        const avatarEl = document.getElementById('portal-user-avatar');
+        const cardEl = document.getElementById('portal-profile-card');
+
+        if (!user) {
+          if (nameEl) nameEl.textContent = "Sign in";
+          if (statusEl) statusEl.textContent = "Student Account";
+          if (avatarEl) {
+            avatarEl.className = "w-7 h-7 rounded-full bg-sky-600 flex items-center justify-center text-white font-bold text-xs shrink-0";
+            avatarEl.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+          }
+          if (cardEl) cardEl.setAttribute('title', 'Sign in with Google');
+          return;
+        }
+
+        if (nameEl) nameEl.textContent = user.name || "Student";
+        if (statusEl) statusEl.textContent = user.email || "Active Account";
+        if (cardEl) cardEl.setAttribute('title', `Signed in as ${user.name || user.email}`);
+
+        if (avatarEl) {
+          if (user.picture) {
+            avatarEl.innerHTML = `<img src="${user.picture}" alt="${user.name}" class="w-full h-full rounded-full object-cover" referrerpolicy="no-referrer" />`;
+          } else {
+            const initials = (user.name || "S").split(' ').map(p => p[0]).join('').substring(0, 2).toUpperCase();
+            avatarEl.textContent = initials;
+          }
+        }
+      }
+
+      function handlePortalSignInSuccess(profile, token) {
+        const user = {
+          name: profile.name || "Student",
+          email: profile.email || "",
+          picture: profile.picture || "",
+          sub: profile.sub || ""
+        };
+        try {
+          localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+          if (token) localStorage.setItem(SESSION_KEY, token);
+        } catch (e) {}
+
+        updatePortalSidebarProfile(user);
+
+        const signinModal = document.getElementById('portal-signin-modal');
+        if (signinModal && typeof signinModal.close === 'function') {
+          try { signinModal.close(); } catch (e) {}
+        }
+
+        showToast(`Signed in as ${user.name || user.email}`);
+      }
+
+      function openPortalSignInModal() {
+        const modal = document.getElementById('portal-signin-modal');
+        if (modal) modal.showModal();
+      }
+
+      function openPortalAccountModal(user) {
+        const modal = document.getElementById('portal-account-modal');
+        if (!modal) return;
+        const nameEl = document.getElementById('portal-modal-name');
+        const emailEl = document.getElementById('portal-modal-email');
+        const avatarEl = document.getElementById('portal-modal-avatar');
+        if (nameEl) nameEl.textContent = user.name || "Student";
+        if (emailEl) emailEl.textContent = user.email || "";
+        if (avatarEl) {
+          if (user.picture) {
+            avatarEl.innerHTML = `<img src="${user.picture}" alt="${user.name}" class="w-full h-full rounded-full object-cover" referrerpolicy="no-referrer" />`;
+          } else {
+            avatarEl.textContent = (user.name || "S").substring(0, 2).toUpperCase();
+          }
+        }
+        modal.showModal();
+      }
+
+      function initPortalGooglePopup() {
+        if (typeof window.google === 'undefined' || !window.google.accounts) {
+          setTimeout(initPortalGooglePopup, 200);
+          return;
+        }
+
+        try {
+          if (window.google.accounts.oauth2 && typeof window.google.accounts.oauth2.initTokenClient === 'function') {
+            portalTokenClient = window.google.accounts.oauth2.initTokenClient({
+              client_id: GOOGLE_CLIENT_ID,
+              scope: 'email profile openid',
+              callback: async (tokenResponse) => {
+                if (tokenResponse && tokenResponse.access_token) {
+                  try {
+                    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                      headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+                    });
+                    if (res.ok) {
+                      const profile = await res.json();
+                      handlePortalSignInSuccess(profile, tokenResponse.access_token);
+                    }
+                  } catch (err) {}
+                }
+              },
+              error_callback: (err) => {
+                if (err && err.type === 'popup_failed_to_open') {
+                  openPortalSignInModal();
                 }
               }
-            })
-            .catch(() => {});
+            });
+          }
+        } catch (e) {}
+
+        try {
+          if (window.google.accounts.id && typeof window.google.accounts.id.initialize === 'function') {
+            window.google.accounts.id.initialize({
+              client_id: GOOGLE_CLIENT_ID,
+              callback: (response) => {
+                if (response && response.credential) {
+                  const decoded = decodeJwt(response.credential);
+                  if (decoded) handlePortalSignInSuccess(decoded, response.credential);
+                }
+              },
+              auto_select: false,
+              cancel_on_tap_outside: true,
+            });
+
+            const btnContainer = document.getElementById('portal-modal-gsi-container');
+            if (btnContainer) {
+              window.google.accounts.id.renderButton(btnContainer, {
+                type: 'standard',
+                theme: 'outline',
+                size: 'large',
+                text: 'signin_with',
+                shape: 'pill',
+                width: 240,
+                logo_alignment: 'left',
+              });
+            }
+          }
+        } catch (e) {}
+      }
+
+      const portalProfileCard = document.getElementById('portal-profile-card');
+      if (portalProfileCard) {
+        portalProfileCard.addEventListener('click', (e) => {
+          e.preventDefault();
+          const user = getPortalUser();
+          if (user) {
+            openPortalAccountModal(user);
+            return;
+          }
+          if (portalTokenClient && typeof portalTokenClient.requestAccessToken === 'function') {
+            portalTokenClient.requestAccessToken({ prompt: 'select_account' });
+          } else if (window.google && window.google.accounts && window.google.accounts.id) {
+            window.google.accounts.id.prompt((notification) => {
+              if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                openPortalSignInModal();
+              }
+            });
+          } else {
+            openPortalSignInModal();
+          }
+        });
+      }
+
+      const closePortalSigninBtn = document.getElementById('close-portal-signin-modal-btn');
+      const closePortalAccountBtn = document.getElementById('close-portal-account-modal-btn');
+      const closePortalAccountActionBtn = document.getElementById('close-portal-account-action-btn');
+      const portalSignoutBtn = document.getElementById('portal-account-signout-btn');
+      const portalSigninModal = document.getElementById('portal-signin-modal');
+      const portalAccountModal = document.getElementById('portal-account-modal');
+
+      if (closePortalSigninBtn && portalSigninModal) {
+        closePortalSigninBtn.addEventListener('click', () => portalSigninModal.close());
+      }
+      if (closePortalAccountBtn && portalAccountModal) {
+        closePortalAccountBtn.addEventListener('click', () => portalAccountModal.close());
+      }
+      if (closePortalAccountActionBtn && portalAccountModal) {
+        closePortalAccountActionBtn.addEventListener('click', () => portalAccountModal.close());
+      }
+      if (portalSignoutBtn) {
+        portalSignoutBtn.addEventListener('click', () => {
+          try {
+            localStorage.removeItem(USER_STORAGE_KEY);
+            localStorage.removeItem(SESSION_KEY);
+          } catch (e) {}
+          updatePortalSidebarProfile(null);
+          if (portalAccountModal) portalAccountModal.close();
+          showToast('Signed out of student account');
+        });
+      }
+
+      const existingPortalUser = getPortalUser();
+      if (existingPortalUser) {
+        updatePortalSidebarProfile(existingPortalUser);
+      } else {
+        const token = localStorage.getItem(SESSION_KEY);
+        if (token) {
+          const decoded = decodeJwt(token);
+          if (decoded && (decoded.name || decoded.email)) {
+            handlePortalSignInSuccess(decoded, token);
+          }
         }
-      } catch (e) {}
+      }
+
+      initPortalGooglePopup();
 
       document.addEventListener('keydown', (e) => {
         if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
