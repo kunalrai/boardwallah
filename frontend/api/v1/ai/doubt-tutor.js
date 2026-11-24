@@ -68,7 +68,7 @@ export default async function handler(req, res) {
     } else if (!body || typeof body !== "object") {
       body = {};
     }
-    let { question, subject, chapter, mode = "hint", image, imageMime } = body;
+    let { question, subject, chapter, mode = "hint", image, imageMime, history = [] } = body;
 
     if (!question && image) {
       question = "Please inspect the problem in the attached image and provide the official CBSE Class 10 step-by-step solution, formula derivation, and final boxed answer with units.";
@@ -82,25 +82,45 @@ export default async function handler(req, res) {
 
     if (geminiApiKey) {
       try {
+        const contents = [];
+
+        // 1. Sliding Window Multi-Turn History (Session Memory)
+        if (Array.isArray(history) && history.length > 0) {
+          for (const item of history) {
+            if (!item || !item.content) continue;
+            const role = (item.role === 'model' || item.role === 'assistant') ? 'model' : 'user';
+            contents.push({
+              role: role,
+              parts: [{ text: String(item.content) }]
+            });
+          }
+        }
+
+        // 2. Current Turn
         const prompt = `Student Question / Doubt: ${question}
 Subject: ${subject || "General Class 10 CBSE"}
 Chapter Context: ${chapter || "Class 10 CBSE Board Exam"}
 Requested Mode: ${mode}
 
-Please inspect any attached image or text, and respond adhering strictly to your Socratic CBSE Mentor instructions. If an image of a problem, diagram, or formula is provided, transcribe the problem accurately, state the given values, governing formulas, and show complete CBSE step-marking substitution.`;
+Please inspect any attached image, prior conversation context, or text, and respond adhering strictly to your Socratic CBSE Mentor instructions. If an image of a problem, diagram, or formula is provided, transcribe the problem accurately, state the given values, governing formulas, and show complete CBSE step-marking substitution.`;
 
-        const parts = [];
+        const currentParts = [];
         if (image && typeof image === "string") {
           const cleanBase64 = image.includes("base64,") ? image.split("base64,")[1] : image;
           const mimeType = imageMime || (image.startsWith("data:image/png") ? "image/png" : "image/jpeg");
-          parts.push({
+          currentParts.push({
             inline_data: {
               mime_type: mimeType,
               data: cleanBase64,
             },
           });
         }
-        parts.push({ text: `${SYSTEM_PROMPT}\n\n${prompt}` });
+        currentParts.push({ text: prompt });
+
+        contents.push({
+          role: "user",
+          parts: currentParts
+        });
 
         const modelName = "gemini-2.5-flash";
         const response = await fetch(
@@ -109,12 +129,10 @@ Please inspect any attached image or text, and respond adhering strictly to your
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              contents: [
-                {
-                  role: "user",
-                  parts: parts,
-                },
-              ],
+              systemInstruction: {
+                parts: [{ text: SYSTEM_PROMPT }]
+              },
+              contents: contents,
               generationConfig: {
                 temperature: 0.3,
                 maxOutputTokens: 8192,
@@ -134,6 +152,9 @@ Please inspect any attached image or text, and respond adhering strictly to your
               engine: "gemini",
             });
           }
+        } else {
+          const errorData = await response.json().catch(() => ({}));
+          console.warn("Gemini API non-200 response:", response.status, errorData);
         }
       } catch (geminiError) {
         console.error("Gemini API call failed:", geminiError);

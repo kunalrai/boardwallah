@@ -1287,6 +1287,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
   // New Chat Click
   function startNewChat() {
+    activeThreadId = null;
     activeMessagesFeed.innerHTML = '';
     activeMessagesFeed.style.display = 'none';
     welcomeCanvas.style.display = 'block';
@@ -1294,7 +1295,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     adjustInputHeight();
     textarea.focus();
     if (activeNotebookTitle) activeNotebookTitle.textContent = "";
-    recentItems.forEach(r => r.classList.remove('active'));
+    document.querySelectorAll('.recent-item').forEach(r => r.classList.remove('active'));
     topicPresetBtns.forEach(p => p.classList.remove('active'));
     if (newChatBtn) newChatBtn.classList.add('active');
   }
@@ -1306,6 +1307,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     const thread = THREADS[key];
     if (!thread) return;
 
+    activeThreadId = 'preset_' + key;
     if (activeNotebookTitle) activeNotebookTitle.textContent = thread.title;
 
     welcomeCanvas.style.display = 'none';
@@ -1315,6 +1317,24 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     appendUserPill(thread.userQuery);
     appendBotResponse(thread.botResponse);
     scrollToBottom();
+
+    let threads = getStoredThreads();
+    let existing = threads.find(t => t.id === activeThreadId);
+    if (!existing) {
+      existing = {
+        id: activeThreadId,
+        title: thread.title,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        isStarred: false,
+        messages: [
+          { role: 'user', content: thread.userQuery, timestamp: Date.now() - 1000 },
+          { role: 'model', content: thread.botResponse, timestamp: Date.now() }
+        ]
+      };
+      threads.unshift(existing);
+      saveStoredThreads(threads);
+    }
   }
 
   // Preset queries & thread click handling
@@ -1994,6 +2014,41 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     const displayQuestion = (question && question.trim()) ? question.trim() : 'Solve attached doubt photo';
 
     try {
+      // 1. Thread & Conversation Session Management
+      let threads = getStoredThreads();
+      let thread = activeThreadId ? threads.find(t => t.id === activeThreadId) : null;
+
+      if (!thread) {
+        activeThreadId = 'th_' + Date.now();
+        thread = {
+          id: activeThreadId,
+          title: displayQuestion.slice(0, 48) + (displayQuestion.length > 48 ? '...' : ''),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          isStarred: false,
+          messages: []
+        };
+        threads.unshift(thread);
+      }
+
+      // Add user turn to the active thread
+      thread.messages.push({
+        role: 'user',
+        content: displayQuestion,
+        image: imgData,
+        timestamp: Date.now()
+      });
+      thread.updatedAt = Date.now();
+      saveStoredThreads(threads);
+
+      // Render or bring thread to top in sidebar
+      renderThreadInSidebar(thread, true);
+      document.querySelectorAll('.recent-item').forEach(r => {
+        r.classList.toggle('active', r.getAttribute('data-thread-id') === activeThreadId);
+      });
+      if (newChatBtn) newChatBtn.classList.remove('active');
+
+      // Append user pill into active message feed
       appendUserPill(displayQuestion, imgData);
       if (textarea) {
         textarea.value = '';
@@ -2002,12 +2057,18 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       clearAttachedImage();
 
       if (activeNotebookTitle) {
-        activeNotebookTitle.textContent = displayQuestion.slice(0, 36) + (displayQuestion.length > 36 ? '...' : '');
+        activeNotebookTitle.textContent = thread.title.slice(0, 36) + (thread.title.length > 36 ? '...' : '');
       }
 
       isWaiting = true;
       if (sendBtn) sendBtn.disabled = true;
       showTypingAnimation();
+
+      // Extract sliding window (last 6 messages before this current query)
+      const historyWindow = thread.messages.slice(0, -1).slice(-6).map(m => ({
+        role: m.role,
+        content: m.content
+      }));
 
       let ans = null;
       let terms = [];
@@ -2020,7 +2081,8 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
             question: displayQuestion,
             mode: currentMode,
             image: imgData,
-            imageMime: imgMime
+            imageMime: imgMime,
+            history: historyWindow
           }),
         });
 
@@ -2042,16 +2104,20 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       removeTypingAnimation();
       appendBotResponse(ans, terms);
 
-      try {
-        prependRecentDoubt(question, ans, terms, false);
-      } catch (e) {
-        console.warn('Recent doubt prepend warning:', e);
-      }
+      // Add bot turn to the active thread
+      thread.messages.push({
+        role: 'model',
+        content: ans,
+        keyTerms: terms,
+        timestamp: Date.now()
+      });
+      thread.updatedAt = Date.now();
+      saveStoredThreads(threads);
 
       try {
-        saveDoubtToFirestore(question, ans, terms);
+        saveThreadToFirestore(thread);
       } catch (e) {
-        console.warn('Firestore save warning:', e);
+        console.warn('Firestore thread save warning:', e);
       }
     } catch (criticalErr) {
       console.error('Critical submitQuery error:', criticalErr);
@@ -2401,8 +2467,122 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   let firestoreServerTimestamp = null;
   let firestoreDoc = null;
   let firestoreSetDoc = null;
-  let recentDoubtsMemory = [];
+
+  // Thread & Conversation Session Memory State
+  let activeThreadId = null;
+  let activeThreadsMemory = [];
   let showingStarredOnly = false;
+
+  function getStoredThreads() {
+    try {
+      const stored = localStorage.getItem('boardwallah_chat_threads');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+
+    // Graceful migration from legacy single-doubt history
+    try {
+      const legacy = JSON.parse(localStorage.getItem('boardwallah_doubts_history') || '[]');
+      if (Array.isArray(legacy) && legacy.length > 0) {
+        const migrated = legacy.map((d, idx) => ({
+          id: 'th_leg_' + (d.timestamp || (Date.now() - idx * 1000)),
+          title: (d.question || '').slice(0, 48) + ((d.question && d.question.length > 48) ? '...' : ''),
+          createdAt: d.timestamp || Date.now(),
+          updatedAt: d.timestamp || Date.now(),
+          isStarred: false,
+          messages: [
+            { role: 'user', content: d.question, timestamp: d.timestamp || Date.now() },
+            { role: 'model', content: d.answer, keyTerms: d.keyTerms || [], timestamp: (d.timestamp || Date.now()) + 1000 }
+          ]
+        }));
+        localStorage.setItem('boardwallah_chat_threads', JSON.stringify(migrated));
+        return migrated;
+      }
+    } catch (e) {}
+
+    return [];
+  }
+
+  function saveStoredThreads(threads) {
+    try {
+      activeThreadsMemory = threads;
+      localStorage.setItem('boardwallah_chat_threads', JSON.stringify(threads.slice(0, 30)));
+    } catch (e) {}
+  }
+
+  function renderThreadInSidebar(thread, isTop = false) {
+    const recentsList = document.getElementById('recents-list');
+    if (!recentsList || !thread || !thread.id) return;
+
+    let existingBtn = recentsList.querySelector(`[data-thread-id="${thread.id}"]`);
+    if (existingBtn) {
+      if (isTop && recentsList.firstChild !== existingBtn) {
+        recentsList.insertBefore(existingBtn, recentsList.firstChild);
+      }
+      return;
+    }
+
+    const btn = document.createElement('button');
+    btn.className = 'recent-item' + (thread.id === activeThreadId ? ' active' : '');
+    btn.type = 'button';
+    btn.setAttribute('data-thread-id', thread.id);
+    btn.title = thread.title;
+    btn.setAttribute('aria-label', thread.title);
+    btn.innerHTML = `
+      <span class="recent-text">${escapeHtml(thread.title)}</span>
+      <span class="pin-icon" title="${thread.isStarred ? 'Starred' : 'Recent'}">${thread.isStarred ? '★' : '🕒'}</span>
+    `;
+
+    btn.addEventListener('click', () => {
+      loadThreadById(thread.id);
+    });
+
+    if (isTop && recentsList.firstChild) {
+      recentsList.insertBefore(btn, recentsList.firstChild);
+    } else {
+      recentsList.appendChild(btn);
+    }
+  }
+
+  function loadThreadById(threadId) {
+    const threads = getStoredThreads();
+    const thread = threads.find(t => t.id === threadId);
+    if (!thread) return;
+
+    activeThreadId = thread.id;
+    if (activeNotebookTitle) {
+      activeNotebookTitle.textContent = thread.title.slice(0, 36) + (thread.title.length > 36 ? '...' : '');
+    }
+
+    welcomeCanvas.style.display = 'none';
+    activeMessagesFeed.style.display = 'flex';
+    activeMessagesFeed.innerHTML = '';
+
+    // Render entire conversation thread
+    if (Array.isArray(thread.messages)) {
+      thread.messages.forEach(msg => {
+        if (msg.role === 'user') {
+          appendUserPill(msg.content, msg.image);
+        } else {
+          appendBotResponse(msg.content, msg.keyTerms);
+        }
+      });
+    }
+
+    scrollToBottom();
+
+    document.querySelectorAll('.recent-item').forEach(r => {
+      r.classList.toggle('active', r.getAttribute('data-thread-id') === threadId);
+    });
+    document.querySelectorAll('.topic-preset-btn').forEach(b => b.classList.remove('active'));
+    if (newChatBtn) newChatBtn.classList.remove('active');
+
+    if (sidebar && sidebar.classList.contains('mobile-open')) {
+      sidebar.classList.remove('mobile-open');
+    }
+  }
 
   async function syncUserToFirestore(user) {
     if (!user || !user.email) return;
@@ -2427,7 +2607,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   async function initFirebaseClient() {
     try {
       if (!firebaseConfig || !firebaseConfig.apiKey) {
-        loadRecentDoubtsFromLocalStorage();
+        loadRecentThreadsFromLocalStorage();
         return;
       }
       const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js');
@@ -2457,7 +2637,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       firestoreSetDoc = setDoc;
 
       console.log('Firebase Cloud Firestore initialized for boardwallah-cbse');
-      await loadRecentDoubtsFromFirestore();
+      await loadRecentThreadsFromFirestore();
 
       const existingUser = getStoredUser();
       if (existingUser && existingUser.email) {
@@ -2465,45 +2645,40 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       }
     } catch (e) {
       console.warn('Firebase client init fallback to local:', e);
-      loadRecentDoubtsFromLocalStorage();
+      loadRecentThreadsFromLocalStorage();
     }
   }
 
-  async function saveDoubtToFirestore(question, answer, keyTerms) {
-    if (!question || !answer) return;
+  async function saveThreadToFirestore(thread) {
+    if (!thread || !thread.id) return;
     const currentUser = getStoredUser();
-    const doubtObj = {
-      question: question.trim(),
-      answer: typeof answer === 'string' ? answer : JSON.stringify(answer),
-      keyTerms: keyTerms || [],
-      mode: currentMode || 'hint',
-      timestamp: Date.now(),
+    const threadData = {
+      threadId: thread.id,
+      title: thread.title,
+      createdAt: thread.createdAt,
+      updatedAt: thread.updatedAt,
+      isStarred: !!thread.isStarred,
+      messagesCount: (thread.messages || []).length,
+      lastMessage: thread.messages && thread.messages.length > 0 ? thread.messages[thread.messages.length - 1].content.slice(0, 500) : '',
+      messages: (thread.messages || []).slice(-12).map(m => ({
+        role: m.role,
+        content: typeof m.content === 'string' ? m.content.slice(0, 3000) : '',
+        keyTerms: m.keyTerms || [],
+        timestamp: m.timestamp || Date.now()
+      })),
       studentEmail: currentUser ? currentUser.email : 'anonymous',
       studentName: currentUser ? currentUser.name : 'Student'
     };
 
-    // Keep in local cache
-    recentDoubtsMemory.unshift(doubtObj);
-    try {
-      const stored = JSON.parse(localStorage.getItem('boardwallah_doubts_history') || '[]');
-      stored.unshift(doubtObj);
-      if (stored.length > 25) stored.pop();
-      localStorage.setItem('boardwallah_doubts_history', JSON.stringify(stored));
-    } catch (e) {}
-
-    // Persist to Cloud Firestore
-    if (firestoreDb && firestoreAddDoc && firestoreCollection) {
+    if (firestoreDb && firestoreDoc && firestoreSetDoc) {
       try {
-        await firestoreAddDoc(firestoreCollection(firestoreDb, 'doubts'), {
-          ...doubtObj,
-          createdAt: firestoreServerTimestamp ? firestoreServerTimestamp() : new Date()
-        });
+        const threadDocRef = firestoreDoc(firestoreDb, 'chat_threads', thread.id);
+        await firestoreSetDoc(threadDocRef, threadData, { merge: true });
       } catch (err) {
-        console.warn('Firestore write warning:', err);
+        console.warn('Firestore thread save error:', err);
       }
     }
 
-    // Refresh user activity timestamp in users collection
     if (currentUser && currentUser.email) {
       syncUserToFirestore(currentUser);
     }
@@ -2512,6 +2687,16 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   async function toggleStarDoubt(answer, keyTerms, isStarred) {
     const questionText = (activeNotebookTitle && activeNotebookTitle.textContent) || 'CBSE Board Doubt';
     const currentUser = getStoredUser();
+
+    if (activeThreadId) {
+      let threads = getStoredThreads();
+      let thread = threads.find(t => t.id === activeThreadId);
+      if (thread) {
+        thread.isStarred = isStarred;
+        saveStoredThreads(threads);
+        saveThreadToFirestore(thread);
+      }
+    }
 
     try {
       let starred = JSON.parse(localStorage.getItem('boardwallah_starred_doubts') || '[]');
@@ -2546,97 +2731,61 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     }
   }
 
-  function prependRecentDoubt(question, answer, keyTerms, isStarred) {
-    const recentsList = document.getElementById('recents-list');
-    if (!recentsList) return;
-
-    const trimmedQ = (question || '').trim();
-    if (!trimmedQ) return;
-
-    // Check if item already exists in DOM
-    const existing = Array.from(recentsList.querySelectorAll('.recent-text'));
-    for (let el of existing) {
-      if (el.textContent.trim().toLowerCase() === trimmedQ.toLowerCase()) {
-        return;
-      }
-    }
-
-    const btn = document.createElement('button');
-    btn.className = 'recent-item active';
-    btn.type = 'button';
-    btn.title = trimmedQ;
-    btn.setAttribute('aria-label', trimmedQ);
-    btn.innerHTML = `
-      <span class="recent-text">${escapeHtml(trimmedQ)}</span>
-      <span class="pin-icon" title="${isStarred ? 'Starred' : 'Recent'}">${isStarred ? '★' : '🕒'}</span>
-    `;
-
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.recent-item').forEach(r => r.classList.remove('active'));
-      document.querySelectorAll('.topic-preset-btn').forEach(b => b.classList.remove('active'));
-      if (newChatBtn) newChatBtn.classList.remove('active');
-      btn.classList.add('active');
-
-      if (sidebar && sidebar.classList.contains('mobile-open')) sidebar.classList.remove('mobile-open');
-
-      if (activeNotebookTitle) activeNotebookTitle.textContent = trimmedQ.slice(0, 36) + (trimmedQ.length > 36 ? '...' : '');
-      welcomeCanvas.style.display = 'none';
-      activeMessagesFeed.style.display = 'flex';
-      activeMessagesFeed.innerHTML = '';
-      appendUserPill(trimmedQ);
-      appendBotResponse(answer, keyTerms);
-      scrollToBottom();
-    });
-
-    // Remove active from other items
-    document.querySelectorAll('.recent-item').forEach(r => r.classList.remove('active'));
-    recentsList.insertBefore(btn, recentsList.firstChild);
-  }
-
-  async function loadRecentDoubtsFromFirestore() {
+  async function loadRecentThreadsFromFirestore() {
     if (!firestoreDb || !firestoreCollection || !firestoreGetDocs) {
-      loadRecentDoubtsFromLocalStorage();
+      loadRecentThreadsFromLocalStorage();
       return;
     }
     try {
       const q = firestoreQuery(
-        firestoreCollection(firestoreDb, 'doubts'),
-        firestoreOrderBy('timestamp', 'desc'),
-        firestoreLimit(10)
+        firestoreCollection(firestoreDb, 'chat_threads'),
+        firestoreOrderBy('updatedAt', 'desc'),
+        firestoreLimit(15)
       );
       const snapshot = await firestoreGetDocs(q);
       if (!snapshot.empty) {
-        const doubts = [];
+        const firestoreThreads = [];
         snapshot.forEach(docSnap => {
-          doubts.push(docSnap.data());
+          firestoreThreads.push(docSnap.data());
         });
-        // Render in chronological reverse so newest appears at top
-        for (let i = doubts.length - 1; i >= 0; i--) {
-          const d = doubts[i];
-          if (d.question && d.answer) {
-            recentDoubtsMemory.push(d);
-            prependRecentDoubt(d.question, d.answer, d.keyTerms, false);
+
+        let localThreads = getStoredThreads();
+        const map = new Map();
+        localThreads.forEach(t => map.set(t.id, t));
+        firestoreThreads.forEach(ft => {
+          if (!map.has(ft.threadId)) {
+            map.set(ft.threadId, {
+              id: ft.threadId,
+              title: ft.title,
+              createdAt: ft.createdAt || Date.now(),
+              updatedAt: ft.updatedAt || Date.now(),
+              isStarred: !!ft.isStarred,
+              messages: ft.messages || []
+            });
           }
-        }
+        });
+
+        const merged = Array.from(map.values()).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+        saveStoredThreads(merged);
+
+        merged.forEach(t => {
+          renderThreadInSidebar(t, false);
+        });
       } else {
-        loadRecentDoubtsFromLocalStorage();
+        loadRecentThreadsFromLocalStorage();
       }
     } catch (e) {
-      console.warn('Error reading from Firestore, using localStorage:', e);
-      loadRecentDoubtsFromLocalStorage();
+      console.warn('Error reading chat_threads from Firestore, using localStorage:', e);
+      loadRecentThreadsFromLocalStorage();
     }
   }
 
-  function loadRecentDoubtsFromLocalStorage() {
+  function loadRecentThreadsFromLocalStorage() {
     try {
-      const stored = JSON.parse(localStorage.getItem('boardwallah_doubts_history') || '[]');
-      for (let i = stored.length - 1; i >= 0; i--) {
-        const d = stored[i];
-        if (d.question && d.answer) {
-          recentDoubtsMemory.push(d);
-          prependRecentDoubt(d.question, d.answer, d.keyTerms, false);
-        }
-      }
+      const threads = getStoredThreads();
+      threads.forEach(t => {
+        renderThreadInSidebar(t, false);
+      });
     } catch (e) {}
   }
 
@@ -2659,8 +2808,17 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
           if (starred.length === 0) {
             recentsList.innerHTML = '<div style="padding:0.75rem 0.5rem;font-size:0.78rem;color:#70757a;">No starred doubts yet. Click Star on any doubt to save it!</div>';
           } else {
-            starred.forEach(s => {
-              prependRecentDoubt(s.question, s.answer, s.keyTerms, true);
+            starred.forEach((s, idx) => {
+              const pseudoThread = {
+                id: 'star_' + idx,
+                title: s.question,
+                isStarred: true,
+                messages: [
+                  { role: 'user', content: s.question },
+                  { role: 'model', content: s.answer, keyTerms: s.keyTerms }
+                ]
+              };
+              renderThreadInSidebar(pseudoThread, false);
             });
           }
         } catch (e) {}
@@ -2683,7 +2841,6 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
             <span class="pin-icon" title="Pinned">📌</span>
           </button>
         `;
-        // Re-wire default static items
         recentsList.querySelectorAll('.recent-item').forEach(item => {
           item.addEventListener('click', () => {
             const threadKey = item.getAttribute('data-thread');
@@ -2694,7 +2851,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
             if (threadKey && THREADS[threadKey]) loadThread(threadKey);
           });
         });
-        loadRecentDoubtsFromFirestore();
+        loadRecentThreadsFromLocalStorage();
       }
     });
   }
