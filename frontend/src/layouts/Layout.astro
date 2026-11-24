@@ -13,6 +13,7 @@ interface Props {
   imageAlt?: string;
   schema?: Record<string, any> | Record<string, any>[];
   isAppLayout?: boolean;
+  htmlClass?: string;
 }
 
 const { provider } = loadContent();
@@ -23,6 +24,7 @@ const {
   imageAlt,
   schema,
   isAppLayout,
+  htmlClass = "",
 } = Astro.props;
 const path = Astro.url.pathname;
 const isApp = isAppLayout ?? path.startsWith("/chat");
@@ -42,7 +44,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
 ---
 
 <!doctype html>
-<html lang="en-IN">
+<html lang="en-IN" class={htmlClass || undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -213,8 +215,8 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
       </footer>
     )}
 
-    <!-- Wallah AI Doubt Tutor Floating Socratic Assistant (hidden on full-page /chat/) -->
-    {!path.startsWith("/chat") && <AiDoubtTutor />}
+    <!-- Wallah AI Doubt Tutor Floating Socratic Assistant (hidden in app-mode or /chat/) -->
+    {!isApp && <AiDoubtTutor />}
 
     <!-- Global Quiz Progress & Mastery Tracker Script -->
     <script is:inline>
