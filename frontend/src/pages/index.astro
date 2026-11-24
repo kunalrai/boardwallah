@@ -501,9 +501,6 @@ const homeSchema = {
               </div>
 
               <div class="flex items-center gap-1.5">
-                <button onclick="insertSampleHindiDoubt()" title="Sample Hindi Course 'A' Question" class="px-2 py-1.5 rounded-xl text-[11px] font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#21262D] transition-colors">
-                  हिंदी प्रश्न
-                </button>
                 <button id="sendBtn" onclick="handleSendOrStop()" disabled class="w-9 h-9 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-white flex items-center justify-center shadow-sm transition-all">
                   <i id="sendBtnIcon" data-lucide="arrow-up" class="w-4 h-4"></i>
                 </button>
@@ -1093,14 +1090,6 @@ const homeSchema = {
       input.value = sampleText;
       handlePromptInput(input);
       input.focus();
-    }
-
-    function insertSampleHindiDoubt() {
-      selectSubject('Hindi Course A', document.querySelector('[data-subject="Hindi Course A"]'));
-      const input = document.getElementById('promptInput');
-      if (!input) return;
-      input.value = '‘नेताजी का चश्मा’ पाठ में कैप्टन की देशभक्ति को स्पष्ट कीजिए (3 अंक)।';
-      handlePromptInput(input);
     }
 
     function handlePromptInput(textarea) {
