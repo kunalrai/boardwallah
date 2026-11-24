@@ -81,6 +81,7 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
         window.addEventListener('load', function() {
           navigator.serviceWorker.register('/sw.js', { scope: '/' })
             .then(function(reg) {
+              reg.update();
               console.log('[PWA] ServiceWorker registered with scope:', reg.scope);
             })
             .catch(function(err) {

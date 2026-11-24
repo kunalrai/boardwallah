@@ -872,6 +872,15 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     });
   }
 
+  // Ensure sidebar is never stuck in collapsed mode on mobile screens
+  function ensureMobileSidebarState() {
+    if (window.innerWidth <= 900 && sidebar) {
+      sidebar.classList.remove('collapsed');
+    }
+  }
+  window.addEventListener('resize', ensureMobileSidebarState);
+  ensureMobileSidebarState();
+
   // Model Dropdown Inside Pill
   if (modelTrigger && modelMenu) {
     modelTrigger.addEventListener('click', (e) => {
@@ -2988,47 +2997,6 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     display: none !important;
   }
 
-  .gemini-sidebar.collapsed .sidebar-brand-row {
-    justify-content: center;
-    padding: 0.25rem 0 0.45rem;
-  }
-  .gemini-sidebar.collapsed .brand-link {
-    display: none !important;
-  }
-  .gemini-sidebar.collapsed .brand-controls {
-    display: flex !important;
-    justify-content: center;
-    width: 100%;
-  }
-  .gemini-sidebar.collapsed #sidebar-search-btn {
-    display: none !important;
-  }
-  .gemini-sidebar.collapsed #sidebar-collapse-btn {
-    display: flex !important;
-    margin: 0 auto;
-  }
-  .gemini-sidebar.collapsed .brand-text,
-  .gemini-sidebar.collapsed .brand-tag,
-  .gemini-sidebar.collapsed .nav-item-label,
-  .gemini-sidebar.collapsed .section-title,
-  .gemini-sidebar.collapsed .item-label,
-  .gemini-sidebar.collapsed :global(.recent-text),
-  .gemini-sidebar.collapsed :global(.pin-icon),
-  .gemini-sidebar.collapsed .profile-info,
-  .gemini-sidebar.collapsed .profile-gear-btn {
-    display: none !important;
-  }
-  .gemini-sidebar.collapsed .sidebar-nav-item,
-  .gemini-sidebar.collapsed .notebook-item,
-  .gemini-sidebar.collapsed :global(.recent-item) {
-    justify-content: center;
-    padding: 0.6rem 0;
-  }
-  .gemini-sidebar.collapsed .sidebar-footer-profile {
-    justify-content: center;
-    padding: 0.45rem 0;
-  }
-
   /* Brand Header */
   .sidebar-brand-row {
     display: flex;
@@ -4266,6 +4234,52 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     color: #1f1f1f !important;
   }
 
+  /* ── Responsive Styling: Mobile Drawer Rules (max-width: 900px) ── */
+  @media (max-width: 900px) {
+    .gemini-sidebar,
+    .gemini-sidebar.collapsed {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      width: 285px !important;
+      max-width: 85vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      z-index: 9999 !important;
+      background: #ffffff !important;
+      box-shadow: 4px 0 28px rgba(0, 0, 0, 0.25) !important;
+      transform: translateX(-100%) !important;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      padding: 0.85rem 0.75rem !important;
+    }
+    .gemini-sidebar.mobile-open,
+    .gemini-sidebar.collapsed.mobile-open {
+      transform: translateX(0) !important;
+    }
+    .gemini-sidebar #sidebar-collapse-btn,
+    .gemini-sidebar.collapsed #sidebar-collapse-btn {
+      display: none !important;
+    }
+    .gemini-sidebar .mobile-only-close,
+    .gemini-sidebar.collapsed .mobile-only-close {
+      display: flex !important;
+    }
+    .gemini-sidebar.collapsed .brand-link {
+      display: flex !important;
+    }
+    .gemini-sidebar.collapsed .brand-text,
+    .gemini-sidebar.collapsed .brand-tag,
+    .gemini-sidebar.collapsed .nav-item-label,
+    .gemini-sidebar.collapsed .section-title,
+    .gemini-sidebar.collapsed .item-label,
+    .gemini-sidebar.collapsed :global(.recent-text),
+    .gemini-sidebar.collapsed :global(.pin-icon),
+    .gemini-sidebar.collapsed .profile-info {
+      display: inline !important;
+    }
+  }
+
   /* ── Responsive Styling: Desktop Overrides (min-width: 901px) ── */
   @media (min-width: 901px) {
     .gemini-sidebar {
@@ -4285,6 +4299,46 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     .gemini-sidebar.collapsed {
       width: 68px !important;
       padding-inline: 0.45rem !important;
+    }
+    .gemini-sidebar.collapsed .sidebar-brand-row {
+      justify-content: center;
+      padding: 0.25rem 0 0.45rem;
+    }
+    .gemini-sidebar.collapsed .brand-link {
+      display: none !important;
+    }
+    .gemini-sidebar.collapsed .brand-controls {
+      display: flex !important;
+      justify-content: center;
+      width: 100%;
+    }
+    .gemini-sidebar.collapsed #sidebar-search-btn {
+      display: none !important;
+    }
+    .gemini-sidebar.collapsed #sidebar-collapse-btn {
+      display: flex !important;
+      margin: 0 auto;
+    }
+    .gemini-sidebar.collapsed .brand-text,
+    .gemini-sidebar.collapsed .brand-tag,
+    .gemini-sidebar.collapsed .nav-item-label,
+    .gemini-sidebar.collapsed .section-title,
+    .gemini-sidebar.collapsed .item-label,
+    .gemini-sidebar.collapsed :global(.recent-text),
+    .gemini-sidebar.collapsed :global(.pin-icon),
+    .gemini-sidebar.collapsed .profile-info,
+    .gemini-sidebar.collapsed .profile-gear-btn {
+      display: none !important;
+    }
+    .gemini-sidebar.collapsed .sidebar-nav-item,
+    .gemini-sidebar.collapsed .notebook-item,
+    .gemini-sidebar.collapsed :global(.recent-item) {
+      justify-content: center;
+      padding: 0.6rem 0;
+    }
+    .gemini-sidebar.collapsed .sidebar-footer-profile {
+      justify-content: center;
+      padding: 0.45rem 0;
     }
     .gemini-sidebar.collapsed ~ .gemini-main #mobile-toggle-btn {
       display: inline-flex !important;

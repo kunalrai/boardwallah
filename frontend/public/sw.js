@@ -1,7 +1,7 @@
-// Boardwallah PWA Service Worker (v2)
+// Boardwallah PWA Service Worker (v3)
 // Caches core app shell, assets & offline CBSE revision resources
 
-const CACHE_NAME = 'boardwallah-pwa-v2';
+const CACHE_NAME = 'boardwallah-pwa-v3';
 
 const STATIC_ASSETS = [
   '/',
