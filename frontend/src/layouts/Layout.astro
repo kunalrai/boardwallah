@@ -12,6 +12,7 @@ interface Props {
   image?: string;
   imageAlt?: string;
   schema?: Record<string, any> | Record<string, any>[];
+  isAppLayout?: boolean;
 }
 
 const { provider } = loadContent();
@@ -21,8 +22,10 @@ const {
   image,
   imageAlt,
   schema,
+  isAppLayout,
 } = Astro.props;
 const path = Astro.url.pathname;
+const isApp = isAppLayout ?? path.startsWith("/chat");
 const canonical = absoluteUrl(path);
 const links: { href: string; label: string; external?: boolean }[] = [
   { href: "/", label: "Home" },
@@ -62,149 +65,153 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     <Analytics />
     <SpeedInsights />
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-      <div class="wrap header-inner">
-        <a class="brand" href="/" aria-label={`${provider.name} home`}>
-          <span class="brand-mark" aria-hidden="true">10</span>
-          <span>
-            <strong>{provider.name}</strong>
-            <small>CBSE Class 10, online or at home</small>
-          </span>
-        </a>
-        <button
-          type="button"
-          class="mobile-menu-toggle"
-          id="mobile-menu-toggle"
-          aria-expanded="false"
-          aria-controls="mobile-nav-drawer"
-          aria-label="Open navigation menu"
-        >
-          <span class="hamburger-icon" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
-        </button>
-        <nav class="desktop-nav" aria-label="Main navigation">
-          <ul class="nav-list">
-            {
-              links.map((link) => (
-                <li>
-                  <a
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                    aria-current={isActive(link.href) ? "page" : undefined}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </div>
-
-      <!-- Mobile Navigation Drawer Backdrop -->
-      <div class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-hidden="true"></div>
-
-      <!-- Mobile Slide-Out Drawer -->
-      <aside
-        class="mobile-nav-drawer"
-        id="mobile-nav-drawer"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Navigation menu"
-      >
-        <div class="drawer-header">
-          <div class="drawer-brand">
+  <body class={isApp ? "app-mode" : undefined}>
+    {!isApp && <a class="skip-link" href="#main">Skip to content</a>}
+    {!isApp && (
+      <header class="site-header">
+        <div class="wrap header-inner">
+          <a class="brand" href="/" aria-label={`${provider.name} home`}>
             <span class="brand-mark" aria-hidden="true">10</span>
-            <strong>{provider.name}</strong>
-          </div>
+            <span>
+              <strong>{provider.name}</strong>
+              <small>CBSE Class 10, online or at home</small>
+            </span>
+          </a>
           <button
             type="button"
-            class="drawer-close-btn"
-            id="drawer-close-btn"
-            aria-label="Close navigation menu"
+            class="mobile-menu-toggle"
+            id="mobile-menu-toggle"
+            aria-expanded="false"
+            aria-controls="mobile-nav-drawer"
+            aria-label="Open navigation menu"
           >
-            ✕
+            <span class="hamburger-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
           </button>
+          <nav class="desktop-nav" aria-label="Main navigation">
+            <ul class="nav-list">
+              {
+                links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                      aria-current={isActive(link.href) ? "page" : undefined}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
         </div>
-        <nav class="drawer-nav" aria-label="Mobile navigation">
-          <ul class="drawer-nav-list">
-            {
-              links.map((link) => (
-                <li>
-                  <a
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                    aria-current={isActive(link.href) ? "page" : undefined}
-                    class={isActive(link.href) ? "active" : undefined}
-                  >
-                    <span>{link.label}</span>
-                    {link.external && <span class="external-icon" aria-hidden="true">↗</span>}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
-        <div class="drawer-footer">
-          <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">
-            Book Free Trial Slot
-          </a>
-          <a
-            class="button drawer-wa-btn"
-            href={whatsappLink(provider.contact.whatsapp, `Hello ${provider.tutor_name}, I want to enquire about Class 10 tuition.`)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            💬 Chat on WhatsApp
-          </a>
-        </div>
-      </aside>
-    </header>
-    <main id="main">
+
+        <!-- Mobile Navigation Drawer Backdrop -->
+        <div class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-hidden="true"></div>
+
+        <!-- Mobile Slide-Out Drawer -->
+        <aside
+          class="mobile-nav-drawer"
+          id="mobile-nav-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+        >
+          <div class="drawer-header">
+            <div class="drawer-brand">
+              <span class="brand-mark" aria-hidden="true">10</span>
+              <strong>{provider.name}</strong>
+            </div>
+            <button
+              type="button"
+              class="drawer-close-btn"
+              id="drawer-close-btn"
+              aria-label="Close navigation menu"
+            >
+              ✕
+            </button>
+          </div>
+          <nav class="drawer-nav" aria-label="Mobile navigation">
+            <ul class="drawer-nav-list">
+              {
+                links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                      aria-current={isActive(link.href) ? "page" : undefined}
+                      class={isActive(link.href) ? "active" : undefined}
+                    >
+                      <span>{link.label}</span>
+                      {link.external && <span class="external-icon" aria-hidden="true">↗</span>}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+          <div class="drawer-footer">
+            <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">
+              Book Free Trial Slot
+            </a>
+            <a
+              class="button drawer-wa-btn"
+              href={whatsappLink(provider.contact.whatsapp, `Hello ${provider.tutor_name}, I want to enquire about Class 10 tuition.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💬 Chat on WhatsApp
+            </a>
+          </div>
+        </aside>
+      </header>
+    )}
+    <main id="main" class={isApp ? "app-main" : undefined}>
       <slot />
     </main>
-    <footer class="site-footer">
-      <div class="wrap footer-grid">
-        <div>
-          <strong>{provider.name}</strong>
-          <p>{provider.tutor_name} teaches {provider.subjects.length} CBSE Class 10 subjects online and at home in {provider.service_localities.join(" and ")}.</p>
-          <p class="muted">Provider content version {provider.version}, updated {provider.last_updated}.</p>
+    {!isApp && (
+      <footer class="site-footer">
+        <div class="wrap footer-grid">
+          <div>
+            <strong>{provider.name}</strong>
+            <p>{provider.tutor_name} teaches {provider.subjects.length} CBSE Class 10 subjects online and at home in {provider.service_localities.join(" and ")}.</p>
+            <p class="muted">Provider content version {provider.version}, updated {provider.last_updated}.</p>
+          </div>
+          <div>
+            <strong>Contact</strong>
+            <p>
+              <a href={whatsappLink(provider.contact.whatsapp, `Hello, I would like to ask about Class 10 tuition.`)}>WhatsApp</a>
+              <br />
+              <a href={`mailto:${provider.contact.email}`}>{provider.contact.email}</a>
+              <br />
+              <a href={calBookingUrl} target="_blank" rel="noopener noreferrer">Schedule a call</a>
+            </p>
+          </div>
+          <div>
+            <strong>Policies</strong>
+            <p>
+              <a href="/policies/privacy/">Privacy</a><br />
+              <a href="/policies/consent/">Consent</a><br />
+              <a href="/policies/cancellation-refund/">Cancellation and refund</a>
+            </p>
+          </div>
+          <div>
+            <strong>For agents</strong>
+            <p>
+              <a href="/llms.txt">llms.txt</a><br />
+              <a href="/openapi.yaml">OpenAPI</a><br />
+              <a href="/spec/models/provider.schema.json">Schemas</a>
+            </p>
+          </div>
         </div>
-        <div>
-          <strong>Contact</strong>
-          <p>
-            <a href={whatsappLink(provider.contact.whatsapp, `Hello, I would like to ask about Class 10 tuition.`)}>WhatsApp</a>
-            <br />
-            <a href={`mailto:${provider.contact.email}`}>{provider.contact.email}</a>
-            <br />
-            <a href={calBookingUrl} target="_blank" rel="noopener noreferrer">Schedule a call</a>
-          </p>
-        </div>
-        <div>
-          <strong>Policies</strong>
-          <p>
-            <a href="/policies/privacy/">Privacy</a><br />
-            <a href="/policies/consent/">Consent</a><br />
-            <a href="/policies/cancellation-refund/">Cancellation and refund</a>
-          </p>
-        </div>
-        <div>
-          <strong>For agents</strong>
-          <p>
-            <a href="/llms.txt">llms.txt</a><br />
-            <a href="/openapi.yaml">OpenAPI</a><br />
-            <a href="/spec/models/provider.schema.json">Schemas</a>
-          </p>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    )}
 
     <!-- Wallah AI Doubt Tutor Floating Socratic Assistant (hidden on full-page /chat/) -->
     {!path.startsWith("/chat") && <AiDoubtTutor />}
@@ -375,6 +382,19 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     </script>
 
     <style is:global>
+      body.app-mode {
+        height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+      }
+      .app-main {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+        height: 100vh !important;
+        overflow: hidden !important;
+      }
       .chapter-best-score-badge {
         display: inline-flex;
         align-items: center;
