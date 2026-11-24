@@ -108,61 +108,6 @@ const chatSchema = {
         </button>
       </nav>
 
-      <!-- Section: Notebooks (CBSE Class 10 Subject Collections) -->
-      <div class="sidebar-section">
-        <div class="section-title-row">
-          <span class="section-title">Notebooks</span>
-        </div>
-        <div class="notebooks-list">
-          <button class="notebook-item new-notebook-btn" type="button" id="new-notebook-trigger" title="Create a new notebook">
-            <span class="item-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </span>
-            <span class="item-label">New notebook</span>
-          </button>
-          <button class="notebook-item topic-preset-btn" data-thread="chemistry" data-notebook-id="nb_chem" type="button" title="chemistry class 10">
-            <span class="item-icon">
-              <svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
-                <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
-              </svg>
-            </span>
-            <span class="item-label">chemistry class 10</span>
-          </button>
-          <button class="notebook-item topic-preset-btn" data-thread="electricity" data-notebook-id="nb_elec" type="button" title="Electricity Chapter">
-            <span class="item-icon">
-              <svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
-                <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
-              </svg>
-            </span>
-            <span class="item-label">Electricity Chapter</span>
-          </button>
-          <button class="notebook-item topic-preset-btn" data-thread="gaurcity" data-notebook-id="nb_gaur" type="button" title="GaurCity Car pool">
-            <span class="item-icon">
-              <svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
-                <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
-              </svg>
-            </span>
-            <span class="item-label">GaurCity Car pool</span>
-          </button>
-          <button class="notebook-item all-notebooks-btn" type="button" id="all-notebooks-btn" title="View all notebooks">
-            <span class="item-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="5" cy="12" r="1.5" fill="currentColor"></circle>
-                <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
-                <circle cx="19" cy="12" r="1.5" fill="currentColor"></circle>
-              </svg>
-            </span>
-            <span class="item-label">All notebooks</span>
-          </button>
-        </div>
-      </div>
-
       <!-- Section: Recent Doubts (Persisted CBSE Doubts History) -->
       <div class="sidebar-section recents-section">
         <div class="section-title-row">
@@ -272,7 +217,7 @@ const chatSchema = {
             <span class="header-mobile-brand-name">Boardwallah</span>
             <span class="header-mobile-brand-tag">AI</span>
           </div>
-          <span class="active-notebook-title" id="active-notebook-title"></span>
+          <span class="active-chat-title" id="active-chat-title"></span>
         </div>
         <div class="header-right-col">
           <button id="pwa-install-header-btn" class="pwa-install-header-btn" type="button" style="display:none;" title="Install Boardwallah App on this device">
@@ -450,28 +395,6 @@ const chatSchema = {
       <div class="dialog-actions">
         <button type="button" class="button" id="in-modal-book-btn">Schedule Free 60-Min Trial</button>
         <button type="button" class="button secondary" id="in-modal-whatsapp-btn">💬 Chat with Kunal Rai</button>
-      </div>
-    </div>
-  </dialog>
-
-  <!-- Subject Notebooks Management Modal -->
-  <dialog id="notebooks-modal" class="mentor-dialog" style="max-width: 580px; width: 92vw;">
-    <div class="mentor-dialog-content card" style="max-width: 580px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; padding: 1.25rem;">
-      <div class="dialog-header" style="margin-bottom: 0.75rem;">
-        <div>
-          <h3 style="margin: 0; font-size: 1.15rem;">Subject Notebooks (Study Workspaces)</h3>
-          <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: #5f6368;">Organize your CBSE doubts, theorem proofs, and formula sheets by subject.</p>
-        </div>
-        <button id="close-notebooks-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
-      </div>
-
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-        <span style="font-size: 0.82rem; font-weight: 600; color: #334155;" id="notebooks-count-label">4 Active Notebooks</span>
-        <button type="button" class="button primary" id="modal-new-notebook-btn" style="font-size: 0.78rem; padding: 0.35rem 0.8rem; min-height: 2.1rem; background: #1a73e8; color: #fff;">＋ Create Notebook</button>
-      </div>
-
-      <div id="notebooks-list-container" style="overflow-y: auto; max-height: 48vh; display: flex; flex-direction: column; gap: 0.5rem; padding-right: 0.25rem;">
-        <!-- Populated dynamically via renderNotebooksList() -->
       </div>
     </div>
   </dialog>
@@ -884,7 +807,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   const profileCard = document.getElementById('sidebar-profile-card');
   const mentorModal = document.getElementById('mentor-modal');
   const closeMentorModalBtn = document.getElementById('close-mentor-modal-btn');
-    const activeNotebookTitle = document.getElementById('active-notebook-title');
+  const activeChatTitle = document.getElementById('active-chat-title');
 
   const brandHomeBtn = document.getElementById('brand-home-btn');
   const sidebarLibraryBtn = document.getElementById('sidebar-library-btn');
@@ -1394,7 +1317,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     textarea.value = '';
     adjustInputHeight();
     textarea.focus();
-    if (activeNotebookTitle) activeNotebookTitle.textContent = "";
+    if (activeChatTitle) activeChatTitle.textContent = "";
     document.querySelectorAll('.recent-item').forEach(r => r.classList.remove('active'));
     topicPresetBtns.forEach(p => p.classList.remove('active'));
     if (newChatBtn) newChatBtn.classList.add('active');
@@ -1408,7 +1331,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     if (!thread) return;
 
     activeThreadId = 'preset_' + key;
-    if (activeNotebookTitle) activeNotebookTitle.textContent = thread.title;
+    if (activeChatTitle) activeChatTitle.textContent = thread.title;
 
     welcomeCanvas.style.display = 'none';
     activeMessagesFeed.style.display = 'flex';
@@ -2203,8 +2126,8 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       }
       clearAttachedImage();
 
-      if (activeNotebookTitle) {
-        activeNotebookTitle.textContent = thread.title.slice(0, 36) + (thread.title.length > 36 ? '...' : '');
+      if (activeChatTitle) {
+        activeChatTitle.textContent = thread.title.slice(0, 36) + (thread.title.length > 36 ? '...' : '');
       }
 
       isWaiting = true;
@@ -2919,13 +2842,6 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         </svg>
         <span>${thread.isUnread ? 'Mark as read' : 'Mark as unread'}</span>
       </button>
-      <button type="button" class="ctx-menu-item ctx-add-notebook-btn">
-        <svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
-          <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
-        </svg>
-        <span>Add to notebook</span>
-      </button>
       <button type="button" class="ctx-menu-item ctx-delete-btn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="3 6 5 6 21 6"/>
@@ -3004,16 +2920,6 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       });
     }
 
-    // Wire Add to notebook
-    const addNbBtn = menu.querySelector('.ctx-add-notebook-btn');
-    if (addNbBtn) {
-      addNbBtn.addEventListener('click', (ev) => {
-        ev.stopPropagation();
-        closeThreadContextMenu();
-        addThreadToNotebook(threadId);
-      });
-    }
-
     // Wire Delete
     const deleteBtn = menu.querySelector('.ctx-delete-btn');
     if (deleteBtn) {
@@ -3036,25 +2942,6 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     showToast(thread.isUnread ? 'Marked as unread' : 'Marked as read');
   }
 
-  function addThreadToNotebook(threadId) {
-    const threads = getStoredThreads();
-    const thread = threads.find(t => t.id === threadId);
-    if (!thread) return;
-
-    const notebooks = getStoredNotebooks();
-    if (!notebooks.length) {
-      showToast('No notebooks available');
-      return;
-    }
-
-    let target = notebooks.find(nb => nb.id === activeNotebookId) || notebooks[0];
-    target.count = (target.count || 0) + 1;
-    saveStoredNotebooks(notebooks);
-    renderSidebarNotebooks();
-  renderAllThreadsInSidebar();
-    showToast(`Added to "${target.name}" 📓`);
-  }
-
   function promptRenameThread(threadId) {
     const threads = getStoredThreads();
     const thread = threads.find(t => t.id === threadId);
@@ -3071,8 +2958,8 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         saveThreadToFirestore(thread);
       } catch (e) {}
       renderAllThreadsInSidebar();
-      if (activeThreadId === threadId && activeNotebookTitle) {
-        activeNotebookTitle.textContent = generateThreadTitle(thread.title);
+      if (activeThreadId === threadId && activeChatTitle) {
+        activeChatTitle.textContent = generateThreadTitle(thread.title);
       }
       showToast('Thread renamed');
     }
@@ -3240,8 +3127,8 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
     activeThreadId = thread.id;
     const cleanTitle = generateThreadTitle(thread.title || 'CBSE Doubt');
-    if (activeNotebookTitle) {
-      activeNotebookTitle.textContent = cleanTitle;
+    if (activeChatTitle) {
+      activeChatTitle.textContent = cleanTitle;
     }
 
     welcomeCanvas.style.display = 'none';
@@ -3381,7 +3268,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   }
 
   async function toggleStarDoubt(answer, keyTerms, isStarred) {
-    const questionText = (activeNotebookTitle && activeNotebookTitle.textContent) || 'CBSE Board Doubt';
+    const questionText = (activeChatTitle && activeChatTitle.textContent) || 'CBSE Board Doubt';
     const currentUser = getStoredUser();
 
     if (activeThreadId) {
@@ -3730,192 +3617,6 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
   window.addEventListener('resize', closeThreadContextMenu);
 
-  // ── Subject Notebooks (Workspaces) Logic (Exact Google NotebookLM Style) ──
-  const NOTEBOOK_ICON_SVG = `<svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
-    <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
-  </svg>`;
-
-  const PLUS_ICON_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="12" y1="5" x2="12" y2="19"></line>
-    <line x1="5" y1="12" x2="19" y2="12"></line>
-  </svg>`;
-
-  const DOTS_ICON_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="5" cy="12" r="1.5" fill="currentColor"></circle>
-    <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
-    <circle cx="19" cy="12" r="1.5" fill="currentColor"></circle>
-  </svg>`;
-
-  const DEFAULT_NOTEBOOKS = [
-    { id: 'chemistry', name: 'chemistry class 10', subject: 'Science' },
-    { id: 'electricity', name: 'Electricity Chapter', subject: 'Science' },
-    { id: 'gaurcity', name: 'GaurCity Car pool', subject: 'General' },
-    { id: 'maths', name: 'Mathematics Standard', subject: 'Maths' }
-  ];
-
-  let activeNotebookId = null;
-
-  function getStoredNotebooks() {
-    try {
-      const saved = localStorage.getItem('boardwallah_custom_notebooks_v2');
-      if (saved) return JSON.parse(saved);
-    } catch (e) {}
-    return DEFAULT_NOTEBOOKS;
-  }
-
-  function saveStoredNotebooks(notebooks) {
-    try {
-      localStorage.setItem('boardwallah_custom_notebooks_v2', JSON.stringify(notebooks));
-    } catch (e) {}
-  }
-
-  const newNotebookTrigger = document.getElementById('new-notebook-trigger');
-  const allNotebooksBtn = document.getElementById('all-notebooks-btn');
-  const notebooksModal = document.getElementById('notebooks-modal');
-  const closeNotebooksModalBtn = document.getElementById('close-notebooks-modal-btn');
-  const modalNewNotebookBtn = document.getElementById('modal-new-notebook-btn');
-  const notebooksListContainer = document.getElementById('notebooks-list-container');
-  const notebooksCountLabel = document.getElementById('notebooks-count-label');
-
-  function openCreateNotebookPrompt() {
-    const name = window.prompt("Enter notebook title:");
-    if (!name || !name.trim()) return;
-
-    const trimmed = name.trim();
-    const notebooks = getStoredNotebooks();
-    const newId = 'nb_' + Date.now();
-    const newNb = {
-      id: newId,
-      name: trimmed,
-      subject: 'Custom',
-      count: 0,
-      createdAt: Date.now()
-    };
-    notebooks.push(newNb);
-    saveStoredNotebooks(notebooks);
-    renderSidebarNotebooks();
-  renderAllThreadsInSidebar();
-    renderNotebooksModalList();
-    showToast(`Notebook "${trimmed}" created!`);
-    selectNotebook(newId, trimmed);
-    if (notebooksModal) notebooksModal.close();
-  }
-
-  function selectNotebook(id, name) {
-    activeNotebookId = id;
-    document.querySelectorAll('.notebook-item').forEach(b => {
-      const match = b.getAttribute('data-notebook-id') === id || b.getAttribute('data-thread') === id;
-      b.classList.toggle('active', match);
-    });
-    if (activeNotebookTitle) {
-      activeNotebookTitle.textContent = name;
-    }
-    // Set notebook context and start fresh doubt thread in this workspace
-    startNewChat();
-    if (activeNotebookTitle) {
-      activeNotebookTitle.textContent = name;
-    }
-    showToast(`Switched to ${name}`);
-  }
-
-  function renderSidebarNotebooks() {
-    const list = document.querySelector('.notebooks-list');
-    if (!list) return;
-
-    const notebooks = getStoredNotebooks();
-    list.innerHTML = `
-      <button class="notebook-item new-notebook-btn" type="button" id="new-notebook-trigger" title="Create a new notebook">
-        <span class="item-icon">${PLUS_ICON_SVG}</span>
-        <span class="item-label">New notebook</span>
-      </button>
-      ${notebooks.map(nb => `
-        <button class="notebook-item topic-preset-btn ${(nb.id === activeNotebookId) ? 'active' : ''}" data-thread="${nb.id}" data-notebook-id="${nb.id}" type="button" title="${escapeHtml(nb.name)}">
-          <span class="item-icon">${NOTEBOOK_ICON_SVG}</span>
-          <span class="item-label">${escapeHtml(nb.name)}</span>
-        </button>
-      `).join('')}
-      <button class="notebook-item all-notebooks-btn" type="button" id="all-notebooks-btn" title="View all notebooks">
-        <span class="item-icon">${DOTS_ICON_SVG}</span>
-        <span class="item-label">All notebooks</span>
-      </button>
-    `;
-
-    // Re-bind listeners
-    const newBtn = list.querySelector('#new-notebook-trigger');
-    if (newBtn) newBtn.addEventListener('click', openCreateNotebookPrompt);
-
-    const allBtn = list.querySelector('#all-notebooks-btn');
-    if (allBtn && notebooksModal) {
-      allBtn.addEventListener('click', () => {
-        renderNotebooksModalList();
-        notebooksModal.showModal();
-      });
-    }
-
-    list.querySelectorAll('.topic-preset-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-notebook-id') || btn.getAttribute('data-thread');
-        const nb = notebooks.find(n => n.id === id);
-        if (nb) {
-          selectNotebook(nb.id, nb.name);
-          if (THREADS[id]) {
-            loadThread(id);
-          }
-        }
-      });
-    });
-  }
-
-  function renderNotebooksModalList() {
-    if (!notebooksListContainer) return;
-    const notebooks = getStoredNotebooks();
-    if (notebooksCountLabel) {
-      notebooksCountLabel.textContent = `${notebooks.length} Active Notebooks`;
-    }
-
-    notebooksListContainer.innerHTML = notebooks.map(nb => `
-      <div class="notebook-modal-card card" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 10px; background: #ffffff;">
-        <div style="display: flex; align-items: center; gap: 0.65rem;">
-          <span style="font-size: 1.25rem;">${nb.icon || '📓'}</span>
-          <div>
-            <h4 style="margin: 0; font-size: 0.92rem; font-weight: 600; color: #1e293b;">${escapeHtml(nb.name)}</h4>
-            <span style="font-size: 0.76rem; color: #64748b;">${nb.subject || 'CBSE'} Workspace</span>
-          </div>
-        </div>
-        <div style="display: flex; gap: 0.4rem;">
-          <button type="button" class="button secondary select-nb-btn" data-id="${nb.id}" data-name="${escapeHtml(nb.name)}" style="font-size: 0.75rem; padding: 0.3rem 0.65rem; min-height: 2rem;">Open Workspace</button>
-        </div>
-      </div>
-    `).join('');
-
-    notebooksListContainer.querySelectorAll('.select-nb-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-id');
-        const name = btn.getAttribute('data-name');
-        if (notebooksModal) notebooksModal.close();
-        selectNotebook(id, name);
-      });
-    });
-  }
-
-  if (newNotebookTrigger) {
-    newNotebookTrigger.addEventListener('click', openCreateNotebookPrompt);
-  }
-  if (modalNewNotebookBtn) {
-    modalNewNotebookBtn.addEventListener('click', openCreateNotebookPrompt);
-  }
-  if (allNotebooksBtn && notebooksModal) {
-    allNotebooksBtn.addEventListener('click', () => {
-      renderNotebooksModalList();
-      notebooksModal.showModal();
-    });
-  }
-  if (closeNotebooksModalBtn && notebooksModal) {
-    closeNotebooksModalBtn.addEventListener('click', () => notebooksModal.close());
-  }
-
-  renderSidebarNotebooks();
   renderAllThreadsInSidebar();
 
   // Wire quick chips above input capsule
@@ -4606,8 +4307,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     color: #0f172a;
   }
 
-  /* Notebooks & Presets */
-  .notebooks-list,
+  /* Recents List */
   .recents-list {
     display: flex;
     flex-direction: column;
@@ -4615,83 +4315,6 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     width: 100%;
     min-width: 0;
     overflow-x: hidden;
-  }
-
-  /* ── Notebooks List (Exact Google Gemini / Image 2 style) ── */
-  .notebooks-list {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0.15rem !important;
-    width: 100% !important;
-    margin-top: 0.15rem !important;
-  }
-  .notebook-item {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 0.75rem !important;
-    padding: 0.45rem 0.65rem 0.45rem 0.75rem !important;
-    border-radius: 999px !important;
-    border: none !important;
-    background: transparent !important;
-    color: #1f1f1f !important;
-    font-size: 0.86rem !important;
-    font-weight: 400 !important;
-    cursor: pointer !important;
-    text-align: left !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-    transition: background 0.15s ease, color 0.15s ease !important;
-    text-decoration: none !important;
-    user-select: none !important;
-    line-height: 1.4 !important;
-  }
-  .notebook-item:hover {
-    background: #f0f4f9 !important;
-    color: #1f1f1f !important;
-  }
-  .notebook-item.active {
-    background: #e9eef6 !important;
-    color: #1f1f1f !important;
-    font-weight: 500 !important;
-  }
-  .notebook-item .item-icon {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 18px !important;
-    height: 18px !important;
-    flex-shrink: 0 !important;
-    color: #1f1f1f !important;
-  }
-  .notebook-item .item-icon svg {
-    display: block !important;
-    color: #1f1f1f !important;
-  }
-  .notebook-item .item-label {
-    flex: 1 1 0% !important;
-    min-width: 0 !important;
-    display: block !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    line-height: 1.35 !important;
-    font-size: 0.86rem !important;
-    color: #1f1f1f !important;
-  }
-  .notebook-item:hover,
-  :global(.recent-item:hover) {
-    background: #e9eef6 !important;
-    color: #1f1f1f !important;
-  }
-  .recent-item.active,
-  :global(.recent-item.active),
-  .notebook-item.active {
-    background: #e9eef6 !important;
-    color: #1f1f1f !important;
-    font-weight: 600 !important;
   }
   .item-icon {
     font-size: 0.95rem;
@@ -4856,7 +4479,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     border-radius: 4px;
     text-transform: uppercase;
   }
-  .active-notebook-title {
+  .active-chat-title {
     display: none;
     font-size: 0.95rem;
     font-weight: 500;
@@ -5853,7 +5476,6 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       display: none !important;
     }
     .gemini-sidebar.collapsed .sidebar-nav-item,
-    .gemini-sidebar.collapsed .notebook-item,
     .gemini-sidebar.collapsed :global(.recent-item) {
       justify-content: center;
       padding: 0.6rem 0;
@@ -5880,7 +5502,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     .header-mobile-brand {
       display: none !important;
     }
-    .active-notebook-title {
+    .active-chat-title {
       display: inline !important;
     }
     .mode-pill-select {
