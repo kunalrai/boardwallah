@@ -1,5 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 60
+    }
+  },
   "redirects": [
     { "source": "/portal", "destination": "/", "permanent": true },
     { "source": "/portal/(.*)", "destination": "/", "permanent": true },
