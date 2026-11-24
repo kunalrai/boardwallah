@@ -60,14 +60,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    let body = req.body;
-    if (typeof body === "string") {
-      try {
+    let body = {};
+    try {
+      body = req.body || {};
+      if (typeof body === "string") {
         body = JSON.parse(body);
-      } catch (e) {
-        body = {};
       }
-    } else if (!body || typeof body !== "object") {
+    } catch (bodyErr) {
+      body = {};
+    }
+    if (!body || typeof body !== "object") {
       body = {};
     }
     let { question, subject, chapter, mode = "hint", image, imageMime, history = [] } = body;
@@ -124,7 +126,7 @@ Please inspect any attached image, prior conversation context, or text, and resp
           parts: currentParts
         });
 
-        const candidateModels = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-2.5-flash"];
+        const candidateModels = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8-flash"];
         let text = null;
 
         for (const modelName of candidateModels) {
