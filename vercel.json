@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/portal", "destination": "/", "permanent": true },
+    { "source": "/portal/(.*)", "destination": "/", "permanent": true },
+    { "source": "/login", "destination": "/", "permanent": true },
+    { "source": "/login/(.*)", "destination": "/", "permanent": true },
+    { "source": "/chat", "destination": "/", "permanent": true },
+    { "source": "/chat/(.*)", "destination": "/", "permanent": true },
+    { "source": "/booking", "destination": "/", "permanent": true },
+    { "source": "/booking/(.*)", "destination": "/", "permanent": true },
+    { "source": "/book", "destination": "/", "permanent": true },
+    { "source": "/book/(.*)", "destination": "/", "permanent": true },
+    { "source": "/plans", "destination": "/", "permanent": true },
+    { "source": "/plans/(.*)", "destination": "/", "permanent": true },
+    { "source": "/enquiry", "destination": "/", "permanent": true },
+    { "source": "/enquiry/(.*)", "destination": "/", "permanent": true },
+    { "source": "/subjects", "destination": "/", "permanent": true },
+    { "source": "/subjects/(.*)", "destination": "/", "permanent": true },
+    { "source": "/resources", "destination": "/", "permanent": true },
+    { "source": "/resources/(.*)", "destination": "/", "permanent": true },
+    { "source": "/policies", "destination": "/", "permanent": true },
+    { "source": "/policies/(.*)", "destination": "/", "permanent": true }
+  ]
+}

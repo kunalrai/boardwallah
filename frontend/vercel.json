@@ -1,7 +1,29 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "astro",
-  "installCommand": "npm install",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "installCommand": "bun install",
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/portal", "destination": "/", "permanent": true },
+    { "source": "/portal/(.*)", "destination": "/", "permanent": true },
+    { "source": "/login", "destination": "/", "permanent": true },
+    { "source": "/login/(.*)", "destination": "/", "permanent": true },
+    { "source": "/chat", "destination": "/", "permanent": true },
+    { "source": "/chat/(.*)", "destination": "/", "permanent": true },
+    { "source": "/booking", "destination": "/", "permanent": true },
+    { "source": "/booking/(.*)", "destination": "/", "permanent": true },
+    { "source": "/book", "destination": "/", "permanent": true },
+    { "source": "/book/(.*)", "destination": "/", "permanent": true },
+    { "source": "/plans", "destination": "/", "permanent": true },
+    { "source": "/plans/(.*)", "destination": "/", "permanent": true },
+    { "source": "/enquiry", "destination": "/", "permanent": true },
+    { "source": "/enquiry/(.*)", "destination": "/", "permanent": true },
+    { "source": "/subjects", "destination": "/", "permanent": true },
+    { "source": "/subjects/(.*)", "destination": "/", "permanent": true },
+    { "source": "/resources", "destination": "/", "permanent": true },
+    { "source": "/resources/(.*)", "destination": "/", "permanent": true },
+    { "source": "/policies", "destination": "/", "permanent": true },
+    { "source": "/policies/(.*)", "destination": "/", "permanent": true }
+  ]
 }

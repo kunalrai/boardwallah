@@ -35,7 +35,7 @@ const chatSchema = {
     <aside class="gemini-sidebar" id="gemini-sidebar" aria-label="Gemini Sidebar Navigation">
       <!-- Top Brand Row -->
       <div class="sidebar-brand-row">
-        <a href="/" class="brand-link" title="Return to BoardWallah Home">
+        <button type="button" class="brand-link" id="brand-home-btn" title="BoardWallah Home (New Chat)">
           <!-- Official Multi-Color 4-Pointed Gemini Sparkle Star -->
           <svg class="gemini-star-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 0C12 6.627 6.627 12 0 12C6.627 12 12 17.373 12 24C12 17.373 17.373 12 24 12C17.373 12 12 6.627 12 0Z" fill="url(#gemini-sparkle-grad)"/>
@@ -50,7 +50,7 @@ const chatSchema = {
           </svg>
           <span class="brand-text">Ask Boardwallah</span>
           <span class="brand-tag">AI</span>
-        </a>
+        </button>
         <div class="brand-controls">
           <button id="sidebar-search-btn" class="icon-control-btn" type="button" title="Search recent doubts" aria-label="Search doubts">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -61,44 +61,44 @@ const chatSchema = {
         </div>
       </div>
 
-      <!-- Primary Action Items (New Chat active by default) -->
+      <!-- Primary Action Items (Single Page In-App Controls) -->
       <nav class="sidebar-menu-nav" aria-label="Primary Navigation">
-        <button id="gemini-new-chat-btn" class="sidebar-nav-item active" type="button">
+        <button id="gemini-new-chat-btn" class="sidebar-nav-item active" type="button" title="Start a fresh CBSE doubt session">
           <span class="nav-item-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
           </span>
           <span class="nav-item-label">New chat</span>
         </button>
 
-        <a href="/resources/" class="sidebar-nav-item" title="Class 10 56 Chapters Library">
+        <button id="sidebar-library-btn" class="sidebar-nav-item" type="button" title="Class 10 56 Chapters Library">
           <span class="nav-item-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
           </span>
           <span class="nav-item-label">Library</span>
-        </a>
+        </button>
 
-        <a href="/resources/flashcards/" class="sidebar-nav-item" title="NCERT Science Diagrams &amp; Flashcards">
+        <button id="sidebar-images-btn" class="sidebar-nav-item" type="button" title="NCERT Science Diagrams &amp; Concept Flashcards">
           <span class="nav-item-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
           </span>
           <span class="nav-item-label">Images</span>
-        </a>
+        </button>
 
-        <a href={calBookingUrl} target="_blank" rel="noopener noreferrer" class="sidebar-nav-item" title="Schedule 1-on-1 Trial Slot with Kunal Rai">
+        <button id="sidebar-scheduled-btn" class="sidebar-nav-item" type="button" title="1-on-1 Personalized Mentorship">
           <span class="nav-item-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </span>
           <span class="nav-item-label">Scheduled</span>
-        </a>
+        </button>
 
-        <a href="/resources/practice-arena/" class="sidebar-nav-item" title="Student Practice Arena &amp; Mocks">
+        <button id="sidebar-students-btn" class="sidebar-nav-item" type="button" title="CBSE 80-Mark Mock Paper &amp; Formula Drill">
           <span class="nav-item-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
           </span>
           <span class="nav-item-label">Students</span>
-        </a>
+        </button>
 
-        <button id="sidebar-more-btn" class="sidebar-nav-item" type="button" title="More toolkits">
+        <button id="sidebar-more-btn" class="sidebar-nav-item" type="button" title="CBSE Board 2026 Toolkit &amp; Passing Rubrics">
           <span class="nav-item-icon">⋯</span>
           <span class="nav-item-label">More</span>
         </button>
@@ -322,8 +322,179 @@ const chatSchema = {
         <li>✓ 100% individual attention — zero hesitation to ask doubts</li>
       </ul>
       <div class="dialog-actions">
-        <a href={calBookingUrl} target="_blank" rel="noopener noreferrer" class="button">Book Free 60-Min Trial Slot</a>
-        <a href={waChatLink} target="_blank" rel="noopener noreferrer" class="button secondary">💬 Chat on WhatsApp</a>
+        <button type="button" class="button" id="in-modal-book-btn">Schedule Free 60-Min Trial</button>
+        <button type="button" class="button secondary" id="in-modal-whatsapp-btn">💬 Chat with Kunal Rai</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 1. CBSE Class 10 Chapter Library Modal (56 Chapters) -->
+  <dialog id="library-modal" class="mentor-dialog" style="max-width: 680px; width: 95vw;">
+    <div class="mentor-dialog-content card" style="max-width: 680px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; padding: 1.25rem;">
+      <div class="dialog-header" style="margin-bottom: 0.75rem;">
+        <div>
+          <h3 style="margin: 0; font-size: 1.15rem;">Class 10 CBSE Chapter Library</h3>
+          <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: #5f6368;">Select any chapter to generate instant Socratic hints, PYQ proofs, or marking schemes.</p>
+        </div>
+        <button id="close-library-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <!-- Subject Filter Tabs -->
+      <div class="library-filter-tabs" style="display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 0.75rem; border-bottom: 1px solid #e2e8f0;">
+        <button type="button" class="lib-tab active" data-subject="all" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #c2e7ff; color: #001d35; font-size: 0.78rem; font-weight: 600; cursor: pointer;">All (56)</button>
+        <button type="button" class="lib-tab" data-subject="Maths" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">Mathematics (14)</button>
+        <button type="button" class="lib-tab" data-subject="Science" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">Science (13)</button>
+        <button type="button" class="lib-tab" data-subject="SST" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">Social Science (20)</button>
+        <button type="button" class="lib-tab" data-subject="English" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">English</button>
+        <button type="button" class="lib-tab" data-subject="Hindi" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">Hindi</button>
+      </div>
+
+      <!-- Search Input -->
+      <div style="margin-bottom: 0.75rem;">
+        <input type="text" id="lib-search-input" placeholder="Search chapter name, theorem, or topic..." style="width: 100%; padding: 0.5rem 0.85rem; border-radius: 999px; border: 1px solid #dde3ea; font-size: 0.85rem; outline: none; background: #f8fafd;" />
+      </div>
+
+      <!-- Chapter Grid -->
+      <div id="library-chapter-grid" style="overflow-y: auto; max-height: 50vh; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.5rem; padding-right: 0.25rem;">
+        <!-- Chapters populated dynamically in script -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 2. NCERT Science Diagrams & Concept Flashcards Modal -->
+  <dialog id="images-modal" class="mentor-dialog" style="max-width: 650px; width: 95vw;">
+    <div class="mentor-dialog-content card" style="max-width: 650px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; padding: 1.25rem;">
+      <div class="dialog-header" style="margin-bottom: 0.75rem;">
+        <div>
+          <h3 style="margin: 0; font-size: 1.15rem;">NCERT Diagrams &amp; Concept Flashcards</h3>
+          <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: #5f6368;">Click any diagram to audit marking points and ask Socratic questions.</p>
+        </div>
+        <button id="close-images-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div style="overflow-y: auto; max-height: 60vh; display: flex; flex-direction: column; gap: 0.75rem;">
+        <!-- Ray Diagram Card -->
+        <div class="diagram-mini-card" style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.85rem; background: #ffffff;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem;">
+            <div>
+              <span style="font-size: 0.7rem; font-weight: 700; color: #ea580c; text-transform: uppercase;">Class 10 Physics • Light</span>
+              <h4 style="margin: 0.15rem 0; font-size: 0.92rem; font-weight: 600;">Concave Mirror: Object between C and F</h4>
+            </div>
+            <button type="button" class="button secondary ask-diagram-btn" data-query="Explain the ray diagram for a concave mirror with object placed between C and F, including sign conventions and CBSE 3-mark rubric." style="font-size: 0.76rem; min-height: 2rem; padding: 0.3rem 0.75rem;">Ask AI 💬</button>
+          </div>
+          <p style="margin: 0; font-size: 0.78rem; color: #5f6368; line-height: 1.4;">Image formed beyond C, real, inverted, magnified. Mirror formula: 1/f = 1/v + 1/u.</p>
+        </div>
+
+        <!-- Fleming's Left Hand Rule Card -->
+        <div class="diagram-mini-card" style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.85rem; background: #ffffff;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem;">
+            <div>
+              <span style="font-size: 0.7rem; font-weight: 700; color: #0284c7; text-transform: uppercase;">Class 10 Physics • Magnetic Effects</span>
+              <h4 style="margin: 0.15rem 0; font-size: 0.92rem; font-weight: 600;">Fleming's Left-Hand Rule (Electric Motor)</h4>
+            </div>
+            <button type="button" class="button secondary ask-diagram-btn" data-query="State Fleming's Left-Hand Rule with direction of Thumb, Forefinger, and Central Finger, and explain its application in an electric motor." style="font-size: 0.76rem; min-height: 2rem; padding: 0.3rem 0.75rem;">Ask AI 💬</button>
+          </div>
+          <p style="margin: 0; font-size: 0.78rem; color: #5f6368; line-height: 1.4;">Thumb = Motion / Force (F), Forefinger = Magnetic Field (B), Middle finger = Current (I).</p>
+        </div>
+
+        <!-- Chemical Reaction Card -->
+        <div class="diagram-mini-card" style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.85rem; background: #ffffff;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem;">
+            <div>
+              <span style="font-size: 0.7rem; font-weight: 700; color: #16a34a; text-transform: uppercase;">Class 10 Chemistry • Reactions</span>
+              <h4 style="margin: 0.15rem 0; font-size: 0.92rem; font-weight: 600;">Thermal Decomposition of FeSO₄ (Ferrous Sulphate)</h4>
+            </div>
+            <button type="button" class="button secondary ask-diagram-btn" data-query="Explain the thermal decomposition of Ferrous Sulphate crystals (FeSO₄.7H₂O): color change from green to white then brown, balanced equation, and toxic gases released." style="font-size: 0.76rem; min-height: 2rem; padding: 0.3rem 0.75rem;">Ask AI 💬</button>
+          </div>
+          <p style="margin: 0; font-size: 0.78rem; color: #5f6368; line-height: 1.4;">2FeSO₄(s) → Fe₂O₃(s) + SO₂(g) + SO₃(g). Characteristic smell of burning sulphur.</p>
+        </div>
+
+        <!-- Biology Nephron Card -->
+        <div class="diagram-mini-card" style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.85rem; background: #ffffff;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem;">
+            <div>
+              <span style="font-size: 0.7rem; font-weight: 700; color: #9333ea; text-transform: uppercase;">Class 10 Biology • Life Processes</span>
+              <h4 style="margin: 0.15rem 0; font-size: 0.92rem; font-weight: 600;">Structure and Functioning of Nephron</h4>
+            </div>
+            <button type="button" class="button secondary ask-diagram-btn" data-query="Describe the structure and functioning of a Nephron: Bowman's capsule, Glomerulus ultrafiltration, selective reabsorption, and urine collection." style="font-size: 0.76rem; min-height: 2rem; padding: 0.3rem 0.75rem;">Ask AI 💬</button>
+          </div>
+          <p style="margin: 0; font-size: 0.78rem; color: #5f6368; line-height: 1.4;">Glomerular filtration + selective tubular reabsorption of glucose, amino acids, salts, and water.</p>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 3. CBSE Class 10 Mock Arena & Timer Modal -->
+  <dialog id="practice-modal" class="mentor-dialog" style="max-width: 620px; width: 95vw;">
+    <div class="mentor-dialog-content card" style="max-width: 620px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; padding: 1.25rem;">
+      <div class="dialog-header" style="margin-bottom: 0.75rem;">
+        <div>
+          <h3 style="margin: 0; font-size: 1.15rem;">CBSE 80-Mark Mock Arena</h3>
+          <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: #5f6368;">3-Hour Board Mock Timer, Marking Blueprint &amp; Step Checker.</p>
+        </div>
+        <button id="close-practice-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <!-- Live Mock Timer Clock -->
+      <div style="background: #f0f4f9; border-radius: 16px; padding: 1.25rem; text-align: center; margin-bottom: 1rem; border: 1px solid #dde3ea;">
+        <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: #5f6368; letter-spacing: 0.05em;">CBSE 3-Hour Exam Countdown</span>
+        <div id="mock-timer-display" style="font-family: ui-monospace, SFMono-Regular, monospace; font-size: 2.25rem; font-weight: 700; color: #1f1f1f; margin: 0.35rem 0;">03:00:00</div>
+        <div style="display: flex; justify-content: center; gap: 0.5rem;">
+          <button type="button" id="mock-timer-start-btn" class="button" style="min-height: 2.1rem; padding: 0.35rem 1rem; font-size: 0.8rem;">Start Timer</button>
+          <button type="button" id="mock-timer-pause-btn" class="button secondary" style="min-height: 2.1rem; padding: 0.35rem 1rem; font-size: 0.8rem;">Pause</button>
+          <button type="button" id="mock-timer-reset-btn" class="button secondary" style="min-height: 2.1rem; padding: 0.35rem 1rem; font-size: 0.8rem;">Reset</button>
+        </div>
+      </div>
+
+      <!-- 80-Mark Blueprint Summary -->
+      <div style="overflow-y: auto; max-height: 40vh;">
+        <h4 style="margin: 0 0 0.5rem; font-size: 0.88rem; font-weight: 600;">Official CBSE 80-Mark Paper Pattern:</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.4rem; margin-bottom: 0.75rem;">
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.5rem; text-align: center;">
+            <strong style="display: block; font-size: 0.82rem; color: #1a73e8;">Sec A: 20 Marks</strong>
+            <small style="color: #5f6368; font-size: 0.7rem;">20 MCQs (1M each)</small>
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.5rem; text-align: center;">
+            <strong style="display: block; font-size: 0.82rem; color: #1a73e8;">Sec B: 10 Marks</strong>
+            <small style="color: #5f6368; font-size: 0.7rem;">5 VSA (2M each)</small>
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.5rem; text-align: center;">
+            <strong style="display: block; font-size: 0.82rem; color: #1a73e8;">Sec C: 18 Marks</strong>
+            <small style="color: #5f6368; font-size: 0.7rem;">6 Short (3M each)</small>
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.5rem; text-align: center;">
+            <strong style="display: block; font-size: 0.82rem; color: #1a73e8;">Sec D: 20 Marks</strong>
+            <small style="color: #5f6368; font-size: 0.7rem;">4 Long (5M each)</small>
+          </div>
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.5rem; text-align: center;">
+            <strong style="display: block; font-size: 0.82rem; color: #1a73e8;">Sec E: 12 Marks</strong>
+            <small style="color: #5f6368; font-size: 0.7rem;">3 Case Studies (4M)</small>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+          <button type="button" class="button secondary ask-diagram-btn" data-query="Give me 5 high-yield CBSE Class 10 Section A 1-mark MCQs with answers and step breakdown." style="font-size: 0.78rem; min-height: 2rem; padding: 0.35rem 0.85rem;">Practice Section A MCQs</button>
+          <button type="button" class="button secondary ask-diagram-btn" data-query="Give me a standard CBSE Class 10 4-mark Case Study question on Mathematics Coordinate Geometry or Science Electricity with marking rubrics." style="font-size: 0.78rem; min-height: 2rem; padding: 0.35rem 0.85rem;">Practice Case Study (4M)</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 4. CBSE Board 2026 Toolkit Modal -->
+  <dialog id="more-modal" class="mentor-dialog" style="max-width: 540px; width: 95vw;">
+    <div class="mentor-dialog-content card" style="max-width: 540px; padding: 1.25rem;">
+      <div class="dialog-header" style="margin-bottom: 0.75rem;">
+        <h3 style="margin: 0; font-size: 1.15rem;">CBSE Board 2026 Official Toolkit</h3>
+        <button id="close-more-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
+      </div>
+      <ul class="dialog-perks" style="margin-bottom: 1.25rem;">
+        <li>📅 <strong>Exam Window:</strong> Commencing Feb 17, 2026 (Class 10 Theory examinations).</li>
+        <li>🎯 <strong>Passing Criteria:</strong> 33% combined aggregate across Internal Assessment (20 marks) and Theory Board Exam (80 marks).</li>
+        <li>✍️ <strong>Step-wise Marking:</strong> Examiners award marks for formula writing, substituted values, and units (cm, cm², J, Ω) even if final calculation is missed.</li>
+      </ul>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <button type="button" class="button ask-diagram-btn" data-query="What is the official CBSE Class 10 2026 timetable, subject dates, and last 30-day preparation strategy?" style="width: 100%;">Ask AI for 2026 Date Sheet &amp; Timetable</button>
+        <button type="button" class="button secondary ask-diagram-btn" data-query="Explain the CBSE Class 10 passing criteria, compartment exam rules, and marks moderation policy in detail." style="width: 100%;">Explain 33% Passing Rule in Detail</button>
       </div>
     </div>
   </dialog>
@@ -564,6 +735,23 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   const mentorModal = document.getElementById('mentor-modal');
   const closeMentorModalBtn = document.getElementById('close-mentor-modal-btn');
   const activeNotebookTitle = document.getElementById('active-notebook-title');
+
+  const brandHomeBtn = document.getElementById('brand-home-btn');
+  const sidebarLibraryBtn = document.getElementById('sidebar-library-btn');
+  const sidebarImagesBtn = document.getElementById('sidebar-images-btn');
+  const sidebarScheduledBtn = document.getElementById('sidebar-scheduled-btn');
+  const sidebarStudentsBtn = document.getElementById('sidebar-students-btn');
+  const sidebarMoreBtn = document.getElementById('sidebar-more-btn');
+
+  const libraryModal = document.getElementById('library-modal');
+  const imagesModal = document.getElementById('images-modal');
+  const practiceModal = document.getElementById('practice-modal');
+  const moreModal = document.getElementById('more-modal');
+
+  const closeLibraryModalBtn = document.getElementById('close-library-modal-btn');
+  const closeImagesModalBtn = document.getElementById('close-images-modal-btn');
+  const closePracticeModalBtn = document.getElementById('close-practice-modal-btn');
+  const closeMoreModalBtn = document.getElementById('close-more-modal-btn');
 
   // Sidebar collapse toggle
   if (collapseBtn && sidebar) {
@@ -1405,6 +1593,306 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       textarea.focus();
     }
   }
+
+  // ── In-Page Dialog Controls & Toast System ──
+  function showToast(msg) {
+    let toast = document.getElementById('board-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'board-toast';
+      toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1f1f1f;color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:9999;transition:opacity 0.25s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+      toast.style.opacity = '0';
+    }, 2800);
+  }
+
+  // Sidebar Button Click Handlers
+  if (brandHomeBtn) {
+    brandHomeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      startNewChat();
+    });
+  }
+
+  if (sidebarLibraryBtn && libraryModal) {
+    sidebarLibraryBtn.addEventListener('click', () => {
+      libraryModal.showModal();
+    });
+  }
+  if (closeLibraryModalBtn && libraryModal) {
+    closeLibraryModalBtn.addEventListener('click', () => {
+      libraryModal.close();
+    });
+  }
+
+  if (sidebarImagesBtn && imagesModal) {
+    sidebarImagesBtn.addEventListener('click', () => {
+      imagesModal.showModal();
+    });
+  }
+  if (closeImagesModalBtn && imagesModal) {
+    closeImagesModalBtn.addEventListener('click', () => {
+      imagesModal.close();
+    });
+  }
+
+  if (sidebarScheduledBtn && mentorModal) {
+    sidebarScheduledBtn.addEventListener('click', () => {
+      mentorModal.showModal();
+    });
+  }
+
+  if (sidebarStudentsBtn && practiceModal) {
+    sidebarStudentsBtn.addEventListener('click', () => {
+      practiceModal.showModal();
+    });
+  }
+  if (closePracticeModalBtn && practiceModal) {
+    closePracticeModalBtn.addEventListener('click', () => {
+      practiceModal.close();
+    });
+  }
+
+  if (sidebarMoreBtn && moreModal) {
+    sidebarMoreBtn.addEventListener('click', () => {
+      moreModal.showModal();
+    });
+  }
+  if (closeMoreModalBtn && moreModal) {
+    closeMoreModalBtn.addEventListener('click', () => {
+      moreModal.close();
+    });
+  }
+
+  // Backdrop click to dismiss dialogs
+  const allInAppModals = [libraryModal, imagesModal, practiceModal, moreModal, mentorModal, signinModal, accountModal];
+  allInAppModals.forEach(modal => {
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        const rect = modal.getBoundingClientRect();
+        const isInDialog = (
+          rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+          rect.left <= e.clientX && e.clientX <= rect.left + rect.width
+        );
+        if (!isInDialog) {
+          modal.close();
+        }
+      });
+    }
+  });
+
+  // 56 CBSE Class 10 Chapters for In-Page Library
+  const CBSE_CHAPTERS = [
+    // Mathematics (14)
+    { subject: 'Maths', num: 'Ch 1', title: 'Real Numbers', highYield: 'Fundamental Theorem of Arithmetic & √5 Irrationality proof.' },
+    { subject: 'Maths', num: 'Ch 2', title: 'Polynomials', highYield: 'Relationship between zeroes & coefficients, α+β = -b/a.' },
+    { subject: 'Maths', num: 'Ch 3', title: 'Pair of Linear Equations', highYield: 'Elimination & Substitution, consistency conditions a1/a2.' },
+    { subject: 'Maths', num: 'Ch 4', title: 'Quadratic Equations', highYield: 'Discriminant D = b²-4ac & quadratic formula word problems.' },
+    { subject: 'Maths', num: 'Ch 5', title: 'Arithmetic Progressions', highYield: 'nth term an = a+(n-1)d and sum Sn = n/2[2a+(n-1)d].' },
+    { subject: 'Maths', num: 'Ch 6', title: 'Triangles', highYield: 'Basic Proportionality Theorem (Thales) 5-mark proof.' },
+    { subject: 'Maths', num: 'Ch 7', title: 'Coordinate Geometry', highYield: 'Distance formula & Section formula (m1x2+m2x1)/(m1+m2).' },
+    { subject: 'Maths', num: 'Ch 8', title: 'Intro to Trigonometry', highYield: 'Standard value angles (0°, 30°, 45°, 60°, 90°) & identities.' },
+    { subject: 'Maths', num: 'Ch 9', title: 'Heights & Distances', highYield: 'Angles of elevation & depression 4-mark case study.' },
+    { subject: 'Maths', num: 'Ch 10', title: 'Circles', highYield: 'Tangents drawn from external point Theorem 10.2 proof.' },
+    { subject: 'Maths', num: 'Ch 11', title: 'Areas Related to Circles', highYield: 'Sector & segment areas with (θ/360)×πr² formula.' },
+    { subject: 'Maths', num: 'Ch 12', title: 'Surface Areas & Volumes', highYield: 'Combination of cone, cylinder, hemisphere & conversions.' },
+    { subject: 'Maths', num: 'Ch 13', title: 'Statistics', highYield: 'Mean by Step Deviation, Median = L + [((n/2)-cf)/f]×h, Mode.' },
+    { subject: 'Maths', num: 'Ch 14', title: 'Probability', highYield: 'Deck of 52 cards, pair of dice, coins: P(E) = m/n.' },
+
+    // Science (13)
+    { subject: 'Science', num: 'Ch 1', title: 'Chemical Reactions & Eqns', highYield: 'Balancing, FeSO4 decomposition, displacement & redox.' },
+    { subject: 'Science', num: 'Ch 2', title: 'Acids, Bases and Salts', highYield: 'pH scale, Chlor-alkali process, Plaster of Paris, Bleaching.' },
+    { subject: 'Science', num: 'Ch 3', title: 'Metals and Non-metals', highYield: 'Reactivity series, ionic properties, roasting vs calcination.' },
+    { subject: 'Science', num: 'Ch 4', title: 'Carbon & its Compounds', highYield: 'Homologous series, esterification & saponification reactions.' },
+    { subject: 'Science', num: 'Ch 5', title: 'Life Processes', highYield: 'Nephron structure, human heart circulation, double circulation.' },
+    { subject: 'Science', num: 'Ch 6', title: 'Control & Coordination', highYield: 'Neuron diagram, reflex arc, endocrine glands (Insulin/Thyroxine).' },
+    { subject: 'Science', num: 'Ch 7', title: 'How Organisms Reproduce', highYield: 'Flower longitudinal section, female reproductive system.' },
+    { subject: 'Science', num: 'Ch 8', title: 'Heredity & Evolution', highYield: 'Mendel monohybrid 3:1 & dihybrid 9:3:3:1 cross, sex determination.' },
+    { subject: 'Science', num: 'Ch 9', title: 'Light - Reflection & Refraction', highYield: 'Ray diagrams, mirror formula 1/f = 1/v+1/u, lens formula, power.' },
+    { subject: 'Science', num: 'Ch 10', title: 'Human Eye & Colourful World', highYield: 'Myopia, hypermetropia correction, prism dispersion, scattering.' },
+    { subject: 'Science', num: 'Ch 11', title: 'Electricity', highYield: 'Ohm’s law V = IR, series/parallel combinations, Joule’s heating.' },
+    { subject: 'Science', num: 'Ch 12', title: 'Magnetic Effects of Current', highYield: 'Right-hand thumb rule, solenoid, Fleming’s Left Hand Rule.' },
+    { subject: 'Science', num: 'Ch 13', title: 'Our Environment', highYield: '10% law of energy transfer, trophic levels, biomagnification.' },
+
+    // Social Science (20)
+    { subject: 'SST', num: 'His 1', title: 'Rise of Nationalism in Europe', highYield: 'Unification of Germany & Italy, Frederic Sorrieu vision.' },
+    { subject: 'SST', num: 'His 2', title: 'Nationalism in India', highYield: 'Non-cooperation, Salt March, Poona Pact, Rowlatt Act.' },
+    { subject: 'SST', num: 'His 3', title: 'Making of a Global World', highYield: 'Silk routes, Bretton Woods institutions, Great Depression.' },
+    { subject: 'SST', num: 'His 4', title: 'Age of Industrialisation', highYield: 'Proto-industrialisation, steam power vs hand labour.' },
+    { subject: 'SST', num: 'His 5', title: 'Print Culture & Modern World', highYield: 'Gutenberg press, Martin Luther reformation, print censorship.' },
+    { subject: 'SST', num: 'Geo 1', title: 'Resources and Development', highYield: 'Black vs Alluvial soil distribution, Agenda 21, land degradation.' },
+    { subject: 'SST', num: 'Geo 2', title: 'Forest and Wildlife', highYield: 'Reserved vs protected forests, Project Tiger, JFM.' },
+    { subject: 'SST', num: 'Geo 3', title: 'Water Resources', highYield: 'Multipurpose river projects, rainwater harvesting techniques.' },
+    { subject: 'SST', num: 'Geo 4', title: 'Agriculture', highYield: 'Kharif vs Rabi crops, temperature/rainfall for rice and wheat.' },
+    { subject: 'SST', num: 'Geo 5', title: 'Minerals and Energy', highYield: 'Conventional vs non-conventional sources, biogas benefits.' },
+    { subject: 'SST', num: 'Geo 6', title: 'Manufacturing Industries', highYield: 'Iron & steel plants, NTPC environmental measures.' },
+    { subject: 'SST', num: 'Geo 7', title: 'Lifelines of National Economy', highYield: 'Golden Quadrilateral, major seaports, pipeline network.' },
+    { subject: 'SST', num: 'Pol 1', title: 'Power Sharing', highYield: 'Belgium model vs Sri Lanka majoritarianism, checks & balances.' },
+    { subject: 'SST', num: 'Pol 2', title: 'Federalism', highYield: 'Union, State & Concurrent lists, 1992 decentralisation amendment.' },
+    { subject: 'SST', num: 'Pol 3', title: 'Gender, Religion and Caste', highYield: 'Feminist movements, constitutional secularism, caste politics.' },
+    { subject: 'SST', num: 'Pol 4', title: 'Political Parties', highYield: 'Functions of parties, national vs regional party criteria.' },
+    { subject: 'SST', num: 'Pol 5', title: 'Outcomes of Democracy', highYield: 'Accountable, responsive and legitimate government.' },
+    { subject: 'SST', num: 'Eco 1', title: 'Development', highYield: 'Per capita income, Human Development Index (HDI) criteria.' },
+    { subject: 'SST', num: 'Eco 2', title: 'Sectors of Indian Economy', highYield: 'Primary, secondary, tertiary & disguised unemployment.' },
+    { subject: 'SST', num: 'Eco 3', title: 'Money and Credit', highYield: 'Formal vs informal credit sources, Self Help Groups (SHGs).' },
+
+    // English (6)
+    { subject: 'English', num: 'Lit 1', title: 'A Letter to God & Nelson Mandela', highYield: 'Lencho’s unshaken faith & Nelson Mandela long walk to freedom.' },
+    { subject: 'English', num: 'Lit 2', title: 'Two Stories about Flying', highYield: 'Young seagull first flight & mystery of the Black Aeroplane.' },
+    { subject: 'English', num: 'Lit 3', title: 'Diary of Anne Frank', highYield: 'Kitty diary entries & Mr Keesing chatting essays.' },
+    { subject: 'English', num: 'Lit 4', title: 'Glimpses of India & Madam Rides Bus', highYield: 'Bakers from Goa, Coorg coffee, Valli first bus trip.' },
+    { subject: 'English', num: 'Lit 5', title: 'The Sermon at Benares & The Proposal', highYield: 'Kisa Gotami grief lesson & Chekhov comic one-act play.' },
+    { subject: 'English', num: 'Lit 6', title: 'Footprints without Feet', highYield: 'Triumph of Surgery Tricki & Thief’s Story Hari Singh.' },
+
+    // Hindi (5)
+    { subject: 'Hindi', num: 'Hin 1', title: 'नेताजी का चश्मा & बालगोबिन भगत', highYield: 'कैप्टन चश्मेवाले का देशप्रेम और कबीरपंथी भगत की आदर्श जीवनशैली।' },
+    { subject: 'Hindi', num: 'Hin 2', title: 'लखनवी अंदाज़ & एक कहानी यह भी', highYield: 'सामंती बनावटी जीवन पर तीखा व्यंग्य और मन्नू भंडारी की आत्मकथ्य।' },
+    { subject: 'Hindi', num: 'Hin 3', title: 'सूरदास के पद & परशुराम संवाद', highYield: 'उद्धव-गोपी वक्रोक्ति संवाद और लक्ष्मण-परशुराम वीर रस तर्क।' },
+    { subject: 'Hindi', num: 'Hin 4', title: 'उत्साह, अट नहीं रही है & दंतुरित मुस्कान', highYield: 'सूर्यकांत त्रिपाठी निराला की क्रांति चेतना और नागार्जुन का वात्सल्य।' },
+    { subject: 'Hindi', num: 'Hin 5', title: 'कृतिका: माता का आँचल & साना-साना हाथ', highYield: 'देहाती बाल जीवन का स्नेह और सिक्किम हिमालय यात्रा संस्मरण।' }
+  ];
+
+  const libraryGrid = document.getElementById('library-chapter-grid');
+  if (libraryGrid) {
+    libraryGrid.innerHTML = CBSE_CHAPTERS.map(ch => `
+      <div class="chapter-card card" style="padding: 0.75rem; border-radius: 12px; transition: transform 0.15s, border-color 0.15s; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; background: #ffffff;" onmouseover="this.style.borderColor='#1a73e8'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='none'">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+            <span style="font-size: 0.72rem; font-weight: 700; color: #1a73e8; background: #e8f0fe; padding: 0.15rem 0.45rem; border-radius: 6px;">${ch.subject} • ${ch.num}</span>
+          </div>
+          <h4 style="margin: 0 0 0.35rem; font-size: 0.88rem; font-weight: 600; color: #1f1f1f;">${ch.title}</h4>
+          <p style="margin: 0; font-size: 0.76rem; color: #5f6368; line-height: 1.35;">${ch.highYield}</p>
+        </div>
+        <button type="button" class="button secondary ask-chapter-doubt-btn" data-chapter="${ch.title}" data-subject="${ch.subject}" style="margin-top: 0.65rem; width: 100%; font-size: 0.75rem; min-height: 2rem; padding: 0.3rem 0.6rem;">Ask Chapter Doubts</button>
+      </div>
+    `).join('');
+
+    // Wire chapter doubt buttons
+    libraryGrid.querySelectorAll('.ask-chapter-doubt-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const chName = btn.getAttribute('data-chapter');
+        const subj = btn.getAttribute('data-subject');
+        if (libraryModal) libraryModal.close();
+        submitQuery(`Explain the most important CBSE Class 10 high-weightage topics, formula derivations, and 3-mark PYQ questions for ${subj} - ${chName} with official marking scheme rubrics.`);
+      });
+    });
+  }
+
+  // Live filter for library search
+  const libSearchInput = document.getElementById('lib-search-input');
+  if (libSearchInput && libraryGrid) {
+    libSearchInput.addEventListener('input', (e) => {
+      const q = (e.target.value || '').toLowerCase().trim();
+      const cards = libraryGrid.querySelectorAll('.chapter-card');
+      cards.forEach(c => {
+        const text = c.textContent.toLowerCase();
+        c.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    });
+  }
+
+  // Wire all .ask-diagram-btn buttons in image modal, practice modal, and more modal
+  document.querySelectorAll('.ask-diagram-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const q = btn.getAttribute('data-query');
+      if (imagesModal && typeof imagesModal.close === 'function') try { imagesModal.close(); } catch(e) {}
+      if (practiceModal && typeof practiceModal.close === 'function') try { practiceModal.close(); } catch(e) {}
+      if (moreModal && typeof moreModal.close === 'function') try { moreModal.close(); } catch(e) {}
+      if (mentorModal && typeof mentorModal.close === 'function') try { mentorModal.close(); } catch(e) {}
+      if (q) submitQuery(q);
+    });
+  });
+
+  // 3-Hour Mock Exam Countdown Timer in Practice Modal
+  const timerDisplay = document.getElementById('mock-timer-display');
+  const timerStartBtn = document.getElementById('mock-timer-start-btn');
+  const timerPauseBtn = document.getElementById('mock-timer-pause-btn');
+  const timerResetBtn = document.getElementById('mock-timer-reset-btn');
+
+  let mockTimerInterval = null;
+  let mockTimerSeconds = 3 * 3600; // 3 hours = 10800 seconds
+
+  function formatTime(totalSec) {
+    const h = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+    const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+    const s = String(totalSec % 60).padStart(2, '0');
+    return `${h}:${m}:${s}`;
+  }
+
+  if (timerDisplay) {
+    timerDisplay.textContent = formatTime(mockTimerSeconds);
+  }
+
+  if (timerStartBtn) {
+    timerStartBtn.addEventListener('click', () => {
+      if (mockTimerInterval) return;
+      mockTimerInterval = setInterval(() => {
+        if (mockTimerSeconds > 0) {
+          mockTimerSeconds--;
+          if (timerDisplay) timerDisplay.textContent = formatTime(mockTimerSeconds);
+        } else {
+          clearInterval(mockTimerInterval);
+          mockTimerInterval = null;
+          showToast('Time is up for CBSE 3-Hour Mock Paper!');
+        }
+      }, 1000);
+      timerStartBtn.textContent = 'Running...';
+    });
+  }
+
+  if (timerPauseBtn) {
+    timerPauseBtn.addEventListener('click', () => {
+      if (mockTimerInterval) {
+        clearInterval(mockTimerInterval);
+        mockTimerInterval = null;
+      }
+      if (timerStartBtn) timerStartBtn.textContent = 'Resume';
+    });
+  }
+
+  if (timerResetBtn) {
+    timerResetBtn.addEventListener('click', () => {
+      if (mockTimerInterval) {
+        clearInterval(mockTimerInterval);
+        mockTimerInterval = null;
+      }
+      mockTimerSeconds = 3 * 3600;
+      if (timerDisplay) timerDisplay.textContent = formatTime(mockTimerSeconds);
+      if (timerStartBtn) timerStartBtn.textContent = 'Start Timer';
+    });
+  }
+
+  // ── Global Single-Page Link & Navigation Interceptor ──
+  // Ensures clicking ANY link anywhere NEVER leaves the root single page layout
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (anchor) {
+      e.preventDefault();
+      e.stopPropagation();
+      const href = (anchor.getAttribute('href') || '').toLowerCase();
+      if (href.includes('cal.com') || href.includes('booking') || href.includes('mentor')) {
+        if (mentorModal) mentorModal.showModal();
+      } else if (href.includes('flashcard') || href.includes('diagram') || href.includes('image')) {
+        if (imagesModal) imagesModal.showModal();
+      } else if (href.includes('mock') || href.includes('practice') || href.includes('arena')) {
+        if (practiceModal) practiceModal.showModal();
+      } else if (href.includes('resource') || href.includes('chapter') || href.includes('library')) {
+        if (libraryModal) libraryModal.showModal();
+      } else if (href.includes('login') || href.includes('account') || href.includes('auth')) {
+        const currentUser = getStoredUser();
+        if (currentUser) openAccountModal(currentUser);
+        else openSignInModal();
+      } else {
+        startNewChat();
+      }
+    }
+  }, true);
 })();
 </script>
 
@@ -2273,7 +2761,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     padding-top: 0.15rem;
   }
 
-  /* ── 1-on-1 Mentor Dialog Modal ── */
+  /* ── 1-on-1 Mentor Dialog & In-Page Modals ── */
   .mentor-dialog {
     border: none;
     border-radius: 18px;
@@ -2281,6 +2769,8 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     max-width: 480px;
     width: 90%;
     box-shadow: 0 20px 40px rgb(0 0 0 / 25%);
+    background: #ffffff;
+    color: #1f1f1f;
   }
   .mentor-dialog::backdrop {
     background: rgba(15, 23, 42, 0.45);
@@ -2289,6 +2779,13 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   .mentor-dialog-content {
     padding: 1.75rem;
     margin: 0;
+    background: #ffffff;
+    color: #1f1f1f;
+  }
+  .mentor-dialog-content.card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #1f1f1f;
   }
   .dialog-header {
     display: flex;
@@ -2298,15 +2795,25 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   }
   .dialog-header h3 {
     margin: 0;
-    color: #0f4c5c;
+    color: #1f1f1f;
     font-size: 1.25rem;
+    font-weight: 600;
   }
   .close-dialog-btn {
     background: transparent;
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
-    color: #64748b;
+    color: #5f6368;
+    padding: 0.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .close-dialog-btn:hover {
+    background: #f1f5f9;
+    color: #1f1f1f;
   }
   .dialog-desc {
     font-size: 0.94rem;
@@ -2322,13 +2829,46 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     flex-direction: column;
     gap: 0.4rem;
     font-size: 0.88rem;
-    color: #0f172a;
+    color: #1f1f1f;
     font-weight: 500;
   }
   .dialog-actions {
     display: flex;
     flex-direction: column;
     gap: 0.65rem;
+  }
+  .dialog-actions .button,
+  .mentor-dialog-content .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: 999px;
+    background: #1a73e8;
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .dialog-actions .button:hover,
+  .mentor-dialog-content .button:hover {
+    background: #0b57d0;
+    color: #ffffff !important;
+  }
+  .dialog-actions .button.secondary,
+  .mentor-dialog-content .button.secondary {
+    background: #f0f4f9;
+    color: #1f1f1f !important;
+    border: 1px solid #dde3ea;
+  }
+  .dialog-actions .button.secondary:hover,
+  .mentor-dialog-content .button.secondary:hover {
+    background: #e2e8f0;
+    color: #1f1f1f !important;
   }
 
   /* ── Responsive Styling ── */
