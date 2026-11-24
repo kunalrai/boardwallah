@@ -155,21 +155,29 @@ const chatSchema = {
           </div>
         </div>
         <div class="recents-list" id="recents-list">
-          <button class="recent-item" data-thread="irrational" type="button">
+          <button class="recent-item pinned" data-thread-id="th_irrational" type="button">
             <span class="recent-text">Prove √5 is irrational</span>
-            <span class="pin-icon" title="Pinned">📌</span>
+            <span class="pin-toggle-btn is-pinned" title="Unpin from top" data-pin-id="th_irrational">
+              <span class="pin-icon-symbol">📌</span>
+            </span>
           </button>
-          <button class="recent-item" data-thread="electricity" type="button">
+          <button class="recent-item" data-thread-id="th_electricity" type="button">
             <span class="recent-text">Ohm's Law &amp; Circuit Resistors</span>
-            <span class="pin-icon" title="Pinned">📌</span>
+            <span class="pin-toggle-btn" title="Pin to top" data-pin-id="th_electricity">
+              <span class="pin-icon-symbol">🕒</span>
+            </span>
           </button>
-          <button class="recent-item" data-thread="chemistry" type="button">
+          <button class="recent-item" data-thread-id="th_chemistry" type="button">
             <span class="recent-text">FeSO₄ Heating Decomposition</span>
-            <span class="pin-icon" title="Pinned">📌</span>
+            <span class="pin-toggle-btn" title="Pin to top" data-pin-id="th_chemistry">
+              <span class="pin-icon-symbol">🕒</span>
+            </span>
           </button>
-          <button class="recent-item" data-thread="conventions" type="button">
+          <button class="recent-item" data-thread-id="th_conventions" type="button">
             <span class="recent-text">Ray Diagram Cartesian Signs</span>
-            <span class="pin-icon" title="Pinned">📌</span>
+            <span class="pin-toggle-btn" title="Pin to top" data-pin-id="th_conventions">
+              <span class="pin-icon-symbol">🕒</span>
+            </span>
           </button>
         </div>
       </div>
@@ -2035,12 +2043,15 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
           id: activeThreadId,
           title: generateThreadTitle(displayQuestion),
           cleanTitle: true,
+          isPinned: false,
           createdAt: Date.now(),
           updatedAt: Date.now(),
           isStarred: false,
           messages: []
         };
         threads.unshift(thread);
+      } else {
+        thread.updatedAt = Date.now();
       }
 
       // Add user turn to the active thread
@@ -2054,7 +2065,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       saveStoredThreads(threads);
 
       // Render or bring thread to top in sidebar
-      renderThreadInSidebar(thread, true);
+      renderAllThreadsInSidebar();
       document.querySelectorAll('.recent-item').forEach(r => {
         r.classList.toggle('active', r.getAttribute('data-thread-id') === activeThreadId);
       });
@@ -2501,46 +2512,116 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     return clean;
   }
 
+  const DEFAULT_STARTER_THREADS = [
+    {
+      id: 'th_irrational',
+      title: 'Prove √5 is irrational',
+      isPinned: true,
+      cleanTitle: true,
+      createdAt: 1700000000000,
+      updatedAt: 1700000000000,
+      messages: [
+        { role: 'user', content: 'How do I prove that √5 is irrational by contradiction for CBSE Class 10?' },
+        { role: 'model', content: (typeof THREADS !== 'undefined' && THREADS.irrational) ? THREADS.irrational.botResponse : 'CBSE Model proof for irrationality of √5...', keyTerms: ['Theorem 1.3', 'Co-prime Integers', 'Contradiction Proof'] }
+      ]
+    },
+    {
+      id: 'th_electricity',
+      title: "Ohm's Law & Circuit Resistors",
+      isPinned: false,
+      cleanTitle: true,
+      createdAt: 1699999000000,
+      updatedAt: 1699999000000,
+      messages: [
+        { role: 'user', content: "Explain Ohm's Law and equivalent resistance for parallel and series combination" },
+        { role: 'model', content: (typeof THREADS !== 'undefined' && THREADS.electricity) ? THREADS.electricity.botResponse : "CBSE Model Ohm's Law V = IR...", keyTerms: ['V = IR', 'Series Equivalent', 'Parallel Equivalent'] }
+      ]
+    },
+    {
+      id: 'th_chemistry',
+      title: 'FeSO₄ Heating Decomposition',
+      isPinned: false,
+      cleanTitle: true,
+      createdAt: 1699998000000,
+      updatedAt: 1699998000000,
+      messages: [
+        { role: 'user', content: 'What happens when ferrous sulphate crystals are heated in a dry test tube?' },
+        { role: 'model', content: (typeof THREADS !== 'undefined' && THREADS.chemistry) ? THREADS.chemistry.botResponse : 'CBSE FeSO₄ thermal decomposition...', keyTerms: ['FeSO₄ Decomposition', 'Color Change', 'SO₂ and SO₃ Gases'] }
+      ]
+    },
+    {
+      id: 'th_conventions',
+      title: 'Ray Diagram Cartesian Signs',
+      isPinned: false,
+      cleanTitle: true,
+      createdAt: 1699997000000,
+      updatedAt: 1699997000000,
+      messages: [
+        { role: 'user', content: 'State the New Cartesian Sign Convention for reflection of light by spherical mirrors' },
+        { role: 'model', content: (typeof THREADS !== 'undefined' && THREADS.conventions) ? THREADS.conventions.botResponse : 'CBSE Cartesian Sign Convention...', keyTerms: ['Cartesian Sign Convention', 'Mirror Formula', 'Focal Length Rules'] }
+      ]
+    }
+  ];
+
+  function sortThreads(threads) {
+    return [...threads].sort((a, b) => {
+      if (a.isPinned && !b.isPinned) return -1;
+      if (!a.isPinned && b.isPinned) return 1;
+      return (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0);
+    });
+  }
+
   function getStoredThreads() {
+    let threads = [];
     try {
       const stored = localStorage.getItem('boardwallah_chat_threads');
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Normalize titles so any previously stored long strings are clean and concise
-          parsed.forEach(t => {
-            if (!t.cleanTitle || (t.title && t.title.length > 30)) {
-              t.title = generateThreadTitle(t.title || (t.messages?.[0]?.content) || 'CBSE Doubt');
-              t.cleanTitle = true;
-            }
-          });
-          return parsed;
+          threads = parsed;
         }
       }
     } catch (e) {}
 
     // Graceful migration from legacy single-doubt history
-    try {
-      const legacy = JSON.parse(localStorage.getItem('boardwallah_doubts_history') || '[]');
-      if (Array.isArray(legacy) && legacy.length > 0) {
-        const migrated = legacy.map((d, idx) => ({
-          id: 'th_leg_' + (d.timestamp || (Date.now() - idx * 1000)),
-          title: generateThreadTitle(d.question || 'CBSE Doubt'),
-          cleanTitle: true,
-          createdAt: d.timestamp || Date.now(),
-          updatedAt: d.timestamp || Date.now(),
-          isStarred: false,
-          messages: [
-            { role: 'user', content: d.question, timestamp: d.timestamp || Date.now() },
-            { role: 'model', content: d.answer, keyTerms: d.keyTerms || [], timestamp: (d.timestamp || Date.now()) + 1000 }
-          ]
-        }));
-        localStorage.setItem('boardwallah_chat_threads', JSON.stringify(migrated));
-        return migrated;
-      }
-    } catch (e) {}
+    if (threads.length === 0) {
+      try {
+        const legacy = JSON.parse(localStorage.getItem('boardwallah_doubts_history') || '[]');
+        if (Array.isArray(legacy) && legacy.length > 0) {
+          threads = legacy.map((d, idx) => ({
+            id: 'th_leg_' + (d.timestamp || (Date.now() - idx * 1000)),
+            title: generateThreadTitle(d.question || 'CBSE Doubt'),
+            cleanTitle: true,
+            isPinned: false,
+            createdAt: d.timestamp || Date.now(),
+            updatedAt: d.timestamp || Date.now(),
+            isStarred: false,
+            messages: [
+              { role: 'user', content: d.question, timestamp: d.timestamp || Date.now() },
+              { role: 'model', content: d.answer, keyTerms: d.keyTerms || [], timestamp: (d.timestamp || Date.now()) + 1000 }
+            ]
+          }));
+        }
+      } catch (e) {}
+    }
 
-    return [];
+    // Ensure starter threads exist so they can always be clicked, pinned, or unpinned
+    DEFAULT_STARTER_THREADS.forEach(st => {
+      if (!threads.some(t => t.id === st.id)) {
+        threads.push({ ...st });
+      }
+    });
+
+    // Normalize titles & ensure isPinned property for all local/synced threads
+    threads.forEach(t => {
+      t.title = generateThreadTitle(t.title || (t.messages?.[0]?.content) || 'CBSE Doubt');
+      t.cleanTitle = true;
+      if (typeof t.isPinned !== 'boolean') {
+        t.isPinned = false;
+      }
+    });
+
+    return threads;
   }
 
   function saveStoredThreads(threads) {
@@ -2550,42 +2631,73 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     } catch (e) {}
   }
 
-  function renderThreadInSidebar(thread, isTop = false) {
+  function toggleThreadPin(threadId, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const threads = getStoredThreads();
+    const thread = threads.find(t => t.id === threadId);
+    if (!thread) return;
+
+    thread.isPinned = !thread.isPinned;
+    saveStoredThreads(threads);
+
+    try {
+      saveThreadToFirestore(thread);
+    } catch (err) {
+      console.warn('Firestore pin save warning:', err);
+    }
+
+    renderAllThreadsInSidebar();
+    showToast(thread.isPinned ? 'Pinned to top 📌' : 'Unpinned from top');
+  }
+
+  function renderAllThreadsInSidebar() {
     const recentsList = document.getElementById('recents-list');
-    if (!recentsList || !thread || !thread.id) return;
+    if (!recentsList) return;
 
-    const cleanTitle = generateThreadTitle(thread.title || (thread.messages?.[0]?.content) || 'CBSE Doubt');
+    const threads = getStoredThreads();
+    const sorted = sortThreads(threads);
 
-    let existingBtn = recentsList.querySelector(`[data-thread-id="${thread.id}"]`);
-    if (existingBtn) {
-      const textSpan = existingBtn.querySelector('.recent-text');
-      if (textSpan) textSpan.textContent = cleanTitle;
-      if (isTop && recentsList.firstChild !== existingBtn) {
-        recentsList.insertBefore(existingBtn, recentsList.firstChild);
+    recentsList.innerHTML = '';
+
+    sorted.forEach(t => {
+      const cleanTitle = generateThreadTitle(t.title || (t.messages?.[0]?.content) || 'CBSE Doubt');
+      const btn = document.createElement('button');
+      btn.className = 'recent-item' + (t.id === activeThreadId ? ' active' : '') + (t.isPinned ? ' pinned' : '');
+      btn.type = 'button';
+      btn.setAttribute('data-thread-id', t.id);
+      btn.title = t.title || cleanTitle;
+      btn.setAttribute('aria-label', cleanTitle);
+
+      btn.innerHTML = `
+        <span class="recent-text">${escapeHtml(cleanTitle)}</span>
+        <span class="pin-toggle-btn ${t.isPinned ? 'is-pinned' : ''}" 
+              title="${t.isPinned ? 'Unpin from top' : 'Pin to top'}" 
+              aria-label="${t.isPinned ? 'Unpin thread' : 'Pin thread'}"
+              data-pin-id="${t.id}">
+          <span class="pin-icon-symbol">${t.isPinned ? '📌' : '🕒'}</span>
+        </span>
+      `;
+
+      btn.addEventListener('click', () => {
+        loadThreadById(t.id);
+      });
+
+      const pinBtn = btn.querySelector('.pin-toggle-btn');
+      if (pinBtn) {
+        pinBtn.addEventListener('click', (ev) => {
+          toggleThreadPin(t.id, ev);
+        });
       }
-      return;
-    }
 
-    const btn = document.createElement('button');
-    btn.className = 'recent-item' + (thread.id === activeThreadId ? ' active' : '');
-    btn.type = 'button';
-    btn.setAttribute('data-thread-id', thread.id);
-    btn.title = thread.title || cleanTitle;
-    btn.setAttribute('aria-label', cleanTitle);
-    btn.innerHTML = `
-      <span class="recent-text">${escapeHtml(cleanTitle)}</span>
-      <span class="pin-icon" title="${thread.isStarred ? 'Starred' : 'Recent'}">${thread.isStarred ? '★' : '🕒'}</span>
-    `;
-
-    btn.addEventListener('click', () => {
-      loadThreadById(thread.id);
-    });
-
-    if (isTop && recentsList.firstChild) {
-      recentsList.insertBefore(btn, recentsList.firstChild);
-    } else {
       recentsList.appendChild(btn);
-    }
+    });
+  }
+
+  function renderThreadInSidebar(thread, isTop = false) {
+    renderAllThreadsInSidebar();
   }
 
   function loadThreadById(threadId) {
@@ -2700,6 +2812,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       title: thread.title,
       createdAt: thread.createdAt,
       updatedAt: thread.updatedAt,
+      isPinned: !!thread.isPinned,
       isStarred: !!thread.isStarred,
       messagesCount: (thread.messages || []).length,
       lastMessage: thread.messages && thread.messages.length > 0 ? thread.messages[thread.messages.length - 1].content.slice(0, 500) : '',
@@ -2802,18 +2915,16 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
               title: ft.title,
               createdAt: ft.createdAt || Date.now(),
               updatedAt: ft.updatedAt || Date.now(),
+              isPinned: !!ft.isPinned,
               isStarred: !!ft.isStarred,
               messages: ft.messages || []
             });
           }
         });
 
-        const merged = Array.from(map.values()).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+        const merged = sortThreads(Array.from(map.values()));
         saveStoredThreads(merged);
-
-        merged.forEach(t => {
-          renderThreadInSidebar(t, false);
-        });
+        renderAllThreadsInSidebar();
       } else {
         loadRecentThreadsFromLocalStorage();
       }
@@ -2825,10 +2936,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
   function loadRecentThreadsFromLocalStorage() {
     try {
-      const threads = getStoredThreads();
-      threads.forEach(t => {
-        renderThreadInSidebar(t, false);
-      });
+      renderAllThreadsInSidebar();
     } catch (e) {}
   }
 
@@ -2856,6 +2964,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
                 id: 'star_' + idx,
                 title: s.question,
                 isStarred: true,
+                isPinned: false,
                 messages: [
                   { role: 'user', content: s.question },
                   { role: 'model', content: s.answer, keyTerms: s.keyTerms }
@@ -2866,35 +2975,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
           }
         } catch (e) {}
       } else {
-        recentsList.innerHTML = `
-          <button class="recent-item" data-thread="irrational" type="button">
-            <span class="recent-text">Prove √5 is irrational</span>
-            <span class="pin-icon" title="Pinned">📌</span>
-          </button>
-          <button class="recent-item" data-thread="electricity" type="button">
-            <span class="recent-text">Ohm's Law & Circuit Resistors</span>
-            <span class="pin-icon" title="Pinned">📌</span>
-          </button>
-          <button class="recent-item" data-thread="chemistry" type="button">
-            <span class="recent-text">FeSO₄ Heating Decomposition</span>
-            <span class="pin-icon" title="Pinned">📌</span>
-          </button>
-          <button class="recent-item" data-thread="conventions" type="button">
-            <span class="recent-text">Ray Diagram Cartesian Signs</span>
-            <span class="pin-icon" title="Pinned">📌</span>
-          </button>
-        `;
-        recentsList.querySelectorAll('.recent-item').forEach(item => {
-          item.addEventListener('click', () => {
-            const threadKey = item.getAttribute('data-thread');
-            document.querySelectorAll('.recent-item').forEach(r => r.classList.remove('active'));
-            document.querySelectorAll('.topic-preset-btn').forEach(b => b.classList.remove('active'));
-            if (newChatBtn) newChatBtn.classList.remove('active');
-            item.classList.add('active');
-            if (threadKey && THREADS[threadKey]) loadThread(threadKey);
-          });
-        });
-        loadRecentThreadsFromLocalStorage();
+        renderAllThreadsInSidebar();
       }
     });
   }
@@ -3145,12 +3226,71 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     max-width: 100% !important;
     line-height: 1.35 !important;
   }
+  .recent-item .pin-toggle-btn,
+  .recents-list .recent-item .pin-toggle-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 0.8rem !important;
+    opacity: 0.65 !important;
+    flex-shrink: 0 !important;
+    margin-left: 4px !important;
+    padding: 0 !important;
+    transition: all 0.15s ease !important;
+    user-select: none !important;
+  }
+  .recent-item .pin-toggle-btn:hover,
+  .recents-list .recent-item .pin-toggle-btn:hover {
+    opacity: 1 !important;
+    background: rgba(0, 0, 0, 0.08) !important;
+    transform: scale(1.18) !important;
+  }
+  .recent-item .pin-toggle-btn.is-pinned,
+  .recents-list .recent-item .pin-toggle-btn.is-pinned {
+    opacity: 1 !important;
+    color: #ea580c !important;
+    filter: drop-shadow(0 1px 2px rgba(234, 88, 12, 0.35)) !important;
+  }
+  .recent-item.pinned,
+  .recents-list .recent-item.pinned {
+    background: rgba(234, 88, 12, 0.04) !important;
+  }
+  .recent-item .pin-toggle-btn:not(.is-pinned):hover .pin-icon-symbol {
+    font-size: 0 !important;
+  }
+  .recent-item .pin-toggle-btn:not(.is-pinned):hover .pin-icon-symbol::after {
+    content: "📌" !important;
+    font-size: 0.82rem !important;
+  }
   .recent-item .pin-icon,
   .recents-list .recent-item .pin-icon {
     font-size: 0.75rem !important;
     opacity: 0.7 !important;
     flex-shrink: 0 !important;
     margin-left: 4px !important;
+  }
+
+  @keyframes cbsePathDraw {
+    from {
+      stroke-dashoffset: 1200;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes cbseElementFade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   /* ── Math & Scientific Diagram Card: Global styles for dynamic HTML ── */

@@ -16,7 +16,8 @@ Pedagogical Rules:
 3. Mathematical Drawings & Scientific Diagrams:
    - When the student asks to "draw", "plot", "sketch", "show diagram", "diagram", or when solving a geometric problem (triangles, circles & tangents, heights & distances / angle of elevation & depression, coordinate geometry graphs, ray diagrams, prism, electrical circuits):
    - You MUST generate a clean, self-contained, responsive SVG drawing enclosed within a single \`\`\`svg ... \`\`\` code block.
-   - SVG Specifications:
+   - Always tag the code fence as \`\`\`svg (never \`\`\`xml or empty).
+    - SVG Specifications:
      • Keep the SVG concise and focused (under 25 vector elements) so it completes swiftly and cleanly.
      • Always use viewBox="0 0 420 250" and style="width:100%; max-width:440px; height:auto; display:block; margin:auto;"
      • Include a subtle rounded card background: <rect width="100%" height="100%" fill="#ffffff" rx="10" stroke="#e2e8f0" stroke-width="1.5"/>
@@ -148,7 +149,8 @@ Please inspect any attached image, prior conversation context, or text, and resp
 
             if (response.ok) {
               const data = await response.json();
-              text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+              const parts = data?.candidates?.[0]?.content?.parts || [];
+              text = parts.map((p) => p.text || "").filter(Boolean).join("");
               if (text) break;
             } else {
               const errorData = await response.json().catch(() => ({}));
