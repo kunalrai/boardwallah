@@ -390,12 +390,12 @@ const chatSchema = {
 
       <!-- Subject Filter Tabs -->
       <div class="library-filter-tabs" style="display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 0.75rem; border-bottom: 1px solid #e2e8f0;">
-        <button type="button" class="lib-tab active" data-subject="all" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #c2e7ff; color: #001d35; font-size: 0.78rem; font-weight: 600; cursor: pointer;">All (56)</button>
+        <button type="button" class="lib-tab active" data-subject="all" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #c2e7ff; color: #001d35; font-size: 0.78rem; font-weight: 600; cursor: pointer;">All (58)</button>
         <button type="button" class="lib-tab" data-subject="Maths" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">Mathematics (14)</button>
         <button type="button" class="lib-tab" data-subject="Science" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">Science (13)</button>
         <button type="button" class="lib-tab" data-subject="SST" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">Social Science (20)</button>
-        <button type="button" class="lib-tab" data-subject="English" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">English</button>
-        <button type="button" class="lib-tab" data-subject="Hindi" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">Hindi</button>
+        <button type="button" class="lib-tab" data-subject="English" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">English (6)</button>
+        <button type="button" class="lib-tab" data-subject="Hindi" style="padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid #dde3ea; background: #f0f4f9; color: #444746; font-size: 0.78rem; font-weight: 500; cursor: pointer;">Hindi (5)</button>
       </div>
 
       <!-- Search Input -->
@@ -2064,9 +2064,48 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   ];
 
   const libraryGrid = document.getElementById('library-chapter-grid');
+  const libTabs = document.querySelectorAll('.lib-tab');
+  const libSearchInput = document.getElementById('lib-search-input');
+  let activeLibrarySubject = 'all';
+
+  function filterLibraryChapters() {
+    if (!libraryGrid) return;
+    const q = (libSearchInput ? libSearchInput.value : '').toLowerCase().trim();
+    const cards = libraryGrid.querySelectorAll('.chapter-card');
+    let visibleCount = 0;
+
+    cards.forEach(c => {
+      const subj = (c.getAttribute('data-subject') || '').toLowerCase();
+      const matchesSubject = (activeLibrarySubject === 'all' || subj === activeLibrarySubject.toLowerCase());
+      const text = c.textContent.toLowerCase();
+      const matchesSearch = !q || text.includes(q);
+
+      if (matchesSubject && matchesSearch) {
+        c.style.display = 'flex';
+        visibleCount++;
+      } else {
+        c.style.display = 'none';
+      }
+    });
+
+    let emptyNotice = libraryGrid.querySelector('.lib-empty-notice');
+    if (visibleCount === 0) {
+      if (!emptyNotice) {
+        emptyNotice = document.createElement('div');
+        emptyNotice.className = 'lib-empty-notice';
+        emptyNotice.style.cssText = 'grid-column: 1 / -1; text-align: center; padding: 2rem 1rem; color: #64748b; font-size: 0.88rem;';
+        emptyNotice.innerHTML = '<p>No chapters match this subject filter or search keyword.</p>';
+        libraryGrid.appendChild(emptyNotice);
+      }
+      emptyNotice.style.display = 'block';
+    } else if (emptyNotice) {
+      emptyNotice.style.display = 'none';
+    }
+  }
+
   if (libraryGrid) {
     libraryGrid.innerHTML = CBSE_CHAPTERS.map(ch => `
-      <div class="chapter-card card" style="padding: 0.75rem; border-radius: 12px; transition: transform 0.15s, border-color 0.15s; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; background: #ffffff;" onmouseover="this.style.borderColor='#1a73e8'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='none'">
+      <div class="chapter-card card" data-subject="${ch.subject}" style="padding: 0.75rem; border-radius: 12px; transition: transform 0.15s, border-color 0.15s; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; background: #ffffff;" onmouseover="this.style.borderColor='#1a73e8'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='none'">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
             <span style="font-size: 0.72rem; font-weight: 700; color: #1a73e8; background: #e8f0fe; padding: 0.15rem 0.45rem; border-radius: 6px;">${ch.subject} • ${ch.num}</span>
@@ -2090,16 +2129,30 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     });
   }
 
-  // Live filter for library search
-  const libSearchInput = document.getElementById('lib-search-input');
-  if (libSearchInput && libraryGrid) {
-    libSearchInput.addEventListener('input', (e) => {
-      const q = (e.target.value || '').toLowerCase().trim();
-      const cards = libraryGrid.querySelectorAll('.chapter-card');
-      cards.forEach(c => {
-        const text = c.textContent.toLowerCase();
-        c.style.display = text.includes(q) ? 'flex' : 'none';
+  // Wire library subject filter tabs
+  libTabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.stopPropagation();
+      libTabs.forEach(t => {
+        t.classList.remove('active');
+        t.style.background = '#f0f4f9';
+        t.style.color = '#444746';
+        t.style.fontWeight = '500';
       });
+      tab.classList.add('active');
+      tab.style.background = '#c2e7ff';
+      tab.style.color = '#001d35';
+      tab.style.fontWeight = '600';
+
+      activeLibrarySubject = tab.getAttribute('data-subject') || 'all';
+      filterLibraryChapters();
+    });
+  });
+
+  // Live filter for library search
+  if (libSearchInput) {
+    libSearchInput.addEventListener('input', () => {
+      filterLibraryChapters();
     });
   }
 
