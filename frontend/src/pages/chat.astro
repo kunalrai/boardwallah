@@ -25,8 +25,8 @@ const chatSchema = {
 ---
 
 <Layout
-  title="Gemini | BoardWallah AI Doubt Solver & Socratic Tutor"
-  description="Google Gemini flagship interface for BoardWallah CBSE Class 10 doubt solver. Powered by Gemini 2.5 Flash for instant Socratic hints and model answers."
+  title="Ask Boardwallah | CBSE Class 10 AI Doubt Solver & Socratic Tutor"
+  description="Ask Boardwallah - Free 24/7 CBSE Class 10 doubt solver powered by Gemini 2.5 Flash for instant Socratic hints and model answers."
   schema={chatSchema}
   isAppLayout={true}
 >
@@ -48,8 +48,8 @@ const chatSchema = {
               </linearGradient>
             </defs>
           </svg>
-          <span class="brand-text">Gemini</span>
-          <span class="brand-tag">CBSE</span>
+          <span class="brand-text">Ask Boardwallah</span>
+          <span class="brand-tag">AI</span>
         </a>
         <div class="brand-controls">
           <button id="sidebar-search-btn" class="icon-control-btn" type="button" title="Search recent doubts" aria-label="Search doubts">
@@ -255,7 +255,7 @@ const chatSchema = {
             <textarea
               id="gemini-input-textarea"
               class="capsule-textarea"
-              placeholder="Ask Gemini or paste your numerical steps..."
+              placeholder="Ask Boardwallah or paste your numerical steps..."
               rows="1"
               required
             ></textarea>
@@ -297,7 +297,7 @@ const chatSchema = {
 
           <!-- Bottom Micro Disclaimer -->
           <div class="capsule-disclaimer">
-            <span>Gemini is AI and can make mistakes. Verify with official NCERT textbooks &amp; CBSE marking rubrics.</span>
+            <span>Ask Boardwallah is powered by Gemini 2.5 Flash. Verify with official NCERT textbooks &amp; CBSE marking rubrics.</span>
           </div>
         </form>
       </div>
@@ -711,13 +711,13 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     recognition.onerror = () => {
       isRecording = false;
       micBtn.classList.remove('recording');
-      textarea.placeholder = "Ask Gemini or paste your numerical steps...";
+      textarea.placeholder = "Ask Boardwallah or paste your numerical steps...";
     };
 
     recognition.onend = () => {
       isRecording = false;
       micBtn.classList.remove('recording');
-      textarea.placeholder = "Ask Gemini or paste your numerical steps...";
+      textarea.placeholder = "Ask Boardwallah or paste your numerical steps...";
     };
 
     micBtn.addEventListener('click', () => {
