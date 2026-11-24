@@ -156,30 +156,49 @@ const chatSchema = {
         </div>
         <div class="recents-list" id="recents-list">
           <button class="recent-item pinned" data-thread-id="th_irrational" type="button">
-            <span class="recent-text">Prove √5 is irrational</span>
-            <span class="pin-toggle-btn is-pinned" title="Unpin from top" data-pin-id="th_irrational">
-              <span class="pin-icon-symbol">📌</span>
+            <span class="recent-title-group">
+              <span class="pinned-indicator-icon" title="Pinned to top">📌</span>
+              <span class="recent-text">Prove √5 is irrational</span>
+            </span>
+            <span class="recent-more-btn" title="Thread options" aria-label="Thread options" data-thread-id="th_irrational">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+              </svg>
             </span>
           </button>
           <button class="recent-item" data-thread-id="th_electricity" type="button">
-            <span class="recent-text">Ohm's Law &amp; Circuit Resistors</span>
-            <span class="pin-toggle-btn" title="Pin to top" data-pin-id="th_electricity">
-              <span class="pin-icon-symbol">🕒</span>
+            <span class="recent-title-group">
+              <span class="recent-text">Ohm's Law &amp; Circuit Resistors</span>
+            </span>
+            <span class="recent-more-btn" title="Thread options" aria-label="Thread options" data-thread-id="th_electricity">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+              </svg>
             </span>
           </button>
           <button class="recent-item" data-thread-id="th_chemistry" type="button">
-            <span class="recent-text">FeSO₄ Heating Decomposition</span>
-            <span class="pin-toggle-btn" title="Pin to top" data-pin-id="th_chemistry">
-              <span class="pin-icon-symbol">🕒</span>
+            <span class="recent-title-group">
+              <span class="recent-text">FeSO₄ Heating Decomposition</span>
+            </span>
+            <span class="recent-more-btn" title="Thread options" aria-label="Thread options" data-thread-id="th_chemistry">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+              </svg>
             </span>
           </button>
           <button class="recent-item" data-thread-id="th_conventions" type="button">
-            <span class="recent-text">Ray Diagram Cartesian Signs</span>
-            <span class="pin-toggle-btn" title="Pin to top" data-pin-id="th_conventions">
-              <span class="pin-icon-symbol">🕒</span>
+            <span class="recent-title-group">
+              <span class="recent-text">Ray Diagram Cartesian Signs</span>
+            </span>
+            <span class="recent-more-btn" title="Thread options" aria-label="Thread options" data-thread-id="th_conventions">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+              </svg>
             </span>
           </button>
         </div>
+        <!-- Floating 3-Dots Thread Context Menu (Google Gemini Style) -->
+        <div id="thread-context-menu" class="thread-context-menu" style="display:none;" role="menu" aria-label="Conversation actions"></div>
       </div>
 
       <!-- PWA Install Sidebar Button -->
@@ -2631,6 +2650,181 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     } catch (e) {}
   }
 
+  let activeMenuThreadId = null;
+
+  function closeThreadContextMenu() {
+    const menu = document.getElementById('thread-context-menu');
+    if (menu) {
+      menu.style.display = 'none';
+    }
+    document.querySelectorAll('.recent-item.menu-open').forEach(el => el.classList.remove('menu-open'));
+    activeMenuThreadId = null;
+  }
+
+  function openThreadContextMenu(threadId, triggerEl) {
+    const menu = document.getElementById('thread-context-menu');
+    if (!menu) return;
+
+    if (activeMenuThreadId === threadId && menu.style.display === 'flex') {
+      closeThreadContextMenu();
+      return;
+    }
+
+    closeThreadContextMenu();
+
+    const threads = getStoredThreads();
+    const thread = threads.find(t => t.id === threadId);
+    if (!thread) return;
+
+    activeMenuThreadId = threadId;
+    const parentItem = triggerEl.closest('.recent-item');
+    if (parentItem) parentItem.classList.add('menu-open');
+
+    menu.innerHTML = `
+      <button type="button" class="ctx-menu-item ctx-share-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        <span>Share conversation</span>
+      </button>
+      <button type="button" class="ctx-menu-item ctx-pin-btn">
+        ${thread.isPinned ? `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="2" y1="2" x2="22" y2="22"/>
+            <path d="M9 3h6a2 2 0 0 1 2 2v8l1.4 1.4M7 7l-2 2v2h10"/>
+            <line x1="12" y1="17" x2="12" y2="22"/>
+          </svg>
+          <span>Unpin</span>
+        ` : `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="17" x2="12" y2="22"/>
+            <path d="M5 17h14v-2l-2-2V5a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v8l-2 2v2z"/>
+          </svg>
+          <span>Pin</span>
+        `}
+      </button>
+      <button type="button" class="ctx-menu-item ctx-rename-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+        </svg>
+        <span>Rename</span>
+      </button>
+      <div class="ctx-menu-divider"></div>
+      <button type="button" class="ctx-menu-item ctx-delete-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+        </svg>
+        <span>Delete</span>
+      </button>
+    `;
+
+    menu.style.display = 'flex';
+
+    // Position menu relative to 3-dots button
+    const rect = triggerEl.getBoundingClientRect();
+    const menuWidth = 195;
+    let left = rect.right + 6;
+    if (left + menuWidth > window.innerWidth - 10) {
+      left = rect.left - menuWidth - 6;
+    }
+    if (left < 10) left = 10;
+
+    let top = rect.top;
+    if (top + 185 > window.innerHeight - 10) {
+      top = window.innerHeight - 195;
+    }
+    if (top < 10) top = 10;
+
+    menu.style.left = `${left}px`;
+    menu.style.top = `${top}px`;
+
+    // Wire Share
+    const shareBtn = menu.querySelector('.ctx-share-btn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        closeThreadContextMenu();
+        const cleanTitle = generateThreadTitle(thread.title);
+        const textToShare = `CBSE Class 10 Doubt: ${cleanTitle}\nStudy with AI Doubt Tutor on Boardwallah: https://www.boardwallah.space`;
+        navigator.clipboard.writeText(textToShare).then(() => {
+          showToast('Conversation details copied! 🔗');
+        }).catch(() => {
+          showToast('Copied to clipboard!');
+        });
+      });
+    }
+
+    // Wire Pin / Unpin
+    const pinBtn = menu.querySelector('.ctx-pin-btn');
+    if (pinBtn) {
+      pinBtn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        closeThreadContextMenu();
+        toggleThreadPin(threadId);
+      });
+    }
+
+    // Wire Rename
+    const renameBtn = menu.querySelector('.ctx-rename-btn');
+    if (renameBtn) {
+      renameBtn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        closeThreadContextMenu();
+        promptRenameThread(threadId);
+      });
+    }
+
+    // Wire Delete
+    const deleteBtn = menu.querySelector('.ctx-delete-btn');
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        closeThreadContextMenu();
+        deleteThread(threadId);
+      });
+    }
+  }
+
+  function promptRenameThread(threadId) {
+    const threads = getStoredThreads();
+    const thread = threads.find(t => t.id === threadId);
+    if (!thread) return;
+
+    const currentTitle = thread.title || 'CBSE Doubt';
+    const newTitle = window.prompt('Rename conversation:', currentTitle);
+    if (newTitle && newTitle.trim() && newTitle.trim() !== currentTitle) {
+      thread.title = newTitle.trim();
+      thread.cleanTitle = true;
+      thread.updatedAt = Date.now();
+      saveStoredThreads(threads);
+      try {
+        saveThreadToFirestore(thread);
+      } catch (e) {}
+      renderAllThreadsInSidebar();
+      if (activeThreadId === threadId && activeNotebookTitle) {
+        activeNotebookTitle.textContent = generateThreadTitle(thread.title);
+      }
+      showToast('Thread renamed');
+    }
+  }
+
+  function deleteThread(threadId) {
+    let threads = getStoredThreads();
+    const thread = threads.find(t => t.id === threadId);
+    if (!thread) return;
+
+    threads = threads.filter(t => t.id !== threadId);
+    saveStoredThreads(threads);
+
+    if (activeThreadId === threadId) {
+      startNewChat();
+    }
+
+    renderAllThreadsInSidebar();
+    showToast('Thread deleted');
+  }
+
   function toggleThreadPin(threadId, e) {
     if (e) {
       e.preventDefault();
@@ -2665,30 +2859,34 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     sorted.forEach(t => {
       const cleanTitle = generateThreadTitle(t.title || (t.messages?.[0]?.content) || 'CBSE Doubt');
       const btn = document.createElement('button');
-      btn.className = 'recent-item' + (t.id === activeThreadId ? ' active' : '') + (t.isPinned ? ' pinned' : '');
+      btn.className = 'recent-item' + (t.id === activeThreadId ? ' active' : '') + (t.isPinned ? ' pinned' : '') + (t.id === activeMenuThreadId ? ' menu-open' : '');
       btn.type = 'button';
       btn.setAttribute('data-thread-id', t.id);
       btn.title = t.title || cleanTitle;
       btn.setAttribute('aria-label', cleanTitle);
 
       btn.innerHTML = `
-        <span class="recent-text">${escapeHtml(cleanTitle)}</span>
-        <span class="pin-toggle-btn ${t.isPinned ? 'is-pinned' : ''}" 
-              title="${t.isPinned ? 'Unpin from top' : 'Pin to top'}" 
-              aria-label="${t.isPinned ? 'Unpin thread' : 'Pin thread'}"
-              data-pin-id="${t.id}">
-          <span class="pin-icon-symbol">${t.isPinned ? '📌' : '🕒'}</span>
+        <span class="recent-title-group">
+          ${t.isPinned ? '<span class="pinned-indicator-icon" title="Pinned to top">📌</span>' : ''}
+          <span class="recent-text">${escapeHtml(cleanTitle)}</span>
+        </span>
+        <span class="recent-more-btn" title="Thread options" aria-label="Thread options" data-thread-id="${t.id}">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+          </svg>
         </span>
       `;
 
       btn.addEventListener('click', () => {
+        closeThreadContextMenu();
         loadThreadById(t.id);
       });
 
-      const pinBtn = btn.querySelector('.pin-toggle-btn');
-      if (pinBtn) {
-        pinBtn.addEventListener('click', (ev) => {
-          toggleThreadPin(t.id, ev);
+      const moreBtn = btn.querySelector('.recent-more-btn');
+      if (moreBtn) {
+        moreBtn.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          openThreadContextMenu(t.id, moreBtn);
         });
       }
 
@@ -3165,6 +3363,21 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     updatePwaInstallVisibility(false);
   });
 
+  // Close 3-dots thread context menu on click outside, escape, or resize
+  window.addEventListener('click', (e) => {
+    if (!e.target.closest('#thread-context-menu') && !e.target.closest('.recent-more-btn')) {
+      closeThreadContextMenu();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeThreadContextMenu();
+    }
+  });
+
+  window.addEventListener('resize', closeThreadContextMenu);
+
   // Initialize Firebase Client sync on startup
   initFirebaseClient();
 })();
@@ -3226,47 +3439,179 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     max-width: 100% !important;
     line-height: 1.35 !important;
   }
-  .recent-item .pin-toggle-btn,
-  .recents-list .recent-item .pin-toggle-btn {
+  .recent-item,
+  .recents-list .recent-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0.35rem !important;
+    padding: 0.45rem 0.5rem 0.45rem 0.75rem !important;
+    border-radius: 999px !important;
+    border: none !important;
+    background: transparent;
+    color: #334155 !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    transition: background 0.15s ease !important;
+    position: relative !important;
+  }
+  .recent-item:hover,
+  .recents-list .recent-item:hover,
+  .recent-item.menu-open,
+  .recents-list .recent-item.menu-open {
+    background: #e9eef6 !important;
+    color: #1f1f1f !important;
+  }
+  .recent-item.active,
+  .recents-list .recent-item.active {
+    background: #e9eef6 !important;
+    color: #1f1f1f !important;
+    font-weight: 600 !important;
+  }
+  .recent-item.pinned,
+  .recents-list .recent-item.pinned {
+    background: rgba(234, 88, 12, 0.05) !important;
+  }
+  .recent-item.pinned:hover,
+  .recents-list .recent-item.pinned:hover,
+  .recent-item.pinned.active,
+  .recents-list .recent-item.pinned.active,
+  .recent-item.pinned.menu-open,
+  .recents-list .recent-item.pinned.menu-open {
+    background: #faede6 !important;
+  }
+
+  .recent-title-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  .recent-item .recent-text,
+  .recents-list .recent-item .recent-text {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    line-height: 1.35 !important;
+  }
+  .pinned-indicator-icon {
+    font-size: 0.72rem !important;
+    flex-shrink: 0 !important;
+    opacity: 0.9 !important;
+    filter: drop-shadow(0 1px 1px rgba(234, 88, 12, 0.35)) !important;
+  }
+
+  .recent-more-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     width: 24px !important;
     height: 24px !important;
-    border-radius: 6px !important;
+    border-radius: 50% !important;
     background: transparent !important;
     border: none !important;
     cursor: pointer !important;
-    font-size: 0.8rem !important;
-    opacity: 0.65 !important;
+    color: #64748b !important;
+    opacity: 0 !important;
     flex-shrink: 0 !important;
-    margin-left: 4px !important;
+    margin-left: 2px !important;
     padding: 0 !important;
-    transition: all 0.15s ease !important;
+    transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease !important;
     user-select: none !important;
   }
-  .recent-item .pin-toggle-btn:hover,
-  .recents-list .recent-item .pin-toggle-btn:hover {
+  .recent-item:hover .recent-more-btn,
+  .recent-item.active .recent-more-btn,
+  .recent-item.menu-open .recent-more-btn {
     opacity: 1 !important;
+  }
+  @media (hover: none) {
+    .recent-more-btn {
+      opacity: 0.8 !important;
+    }
+  }
+  .recent-more-btn:hover {
     background: rgba(0, 0, 0, 0.08) !important;
-    transform: scale(1.18) !important;
+    color: #0f172a !important;
   }
-  .recent-item .pin-toggle-btn.is-pinned,
-  .recents-list .recent-item .pin-toggle-btn.is-pinned {
-    opacity: 1 !important;
-    color: #ea580c !important;
-    filter: drop-shadow(0 1px 2px rgba(234, 88, 12, 0.35)) !important;
+
+  /* ── Floating 3-Dots Thread Context Menu (Google Gemini Style) ── */
+  .thread-context-menu {
+    position: fixed !important;
+    z-index: 99999 !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    padding: 0.4rem !important;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.14), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    min-width: 195px !important;
+    display: none;
+    flex-direction: column !important;
+    gap: 0.15rem !important;
+    animation: ctxFadeIn 0.12s cubic-bezier(0, 0, 0.2, 1) forwards !important;
+    transform-origin: top left !important;
   }
-  .recent-item.pinned,
-  .recents-list .recent-item.pinned {
-    background: rgba(234, 88, 12, 0.04) !important;
+  @keyframes ctxFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
-  .recent-item .pin-toggle-btn:not(.is-pinned):hover .pin-icon-symbol {
-    font-size: 0 !important;
+  .ctx-menu-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    padding: 0.55rem 0.8rem !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    border: none !important;
+    color: #1e293b !important;
+    font-size: 0.84rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    text-align: left !important;
+    transition: background 0.12s ease, color 0.12s ease !important;
+    box-sizing: border-box !important;
   }
-  .recent-item .pin-toggle-btn:not(.is-pinned):hover .pin-icon-symbol::after {
-    content: "📌" !important;
-    font-size: 0.82rem !important;
+  .ctx-menu-item:hover {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+  .ctx-menu-item svg {
+    flex-shrink: 0 !important;
+    color: #475569 !important;
+  }
+  .ctx-menu-item:hover svg {
+    color: #0f172a !important;
+  }
+  .ctx-menu-item.ctx-delete-btn:hover {
+    background: #fef2f2 !important;
+    color: #dc2626 !important;
+  }
+  .ctx-menu-item.ctx-delete-btn:hover svg {
+    color: #dc2626 !important;
+  }
+  .ctx-menu-divider {
+    height: 1px !important;
+    background: #e2e8f0 !important;
+    margin: 0.25rem 0 !important;
   }
   .recent-item .pin-icon,
   .recents-list .recent-item .pin-icon {
