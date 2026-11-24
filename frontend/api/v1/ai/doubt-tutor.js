@@ -122,39 +122,49 @@ Please inspect any attached image, prior conversation context, or text, and resp
           parts: currentParts
         });
 
-        const modelName = "gemini-2.5-flash";
-        const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiApiKey}`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              systemInstruction: {
-                parts: [{ text: SYSTEM_PROMPT }]
-              },
-              contents: contents,
-              generationConfig: {
-                temperature: 0.3,
-                maxOutputTokens: 8192,
-              },
-            }),
-          }
-        );
+        const candidateModels = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-2.5-flash"];
+        let text = null;
 
-        if (response.ok) {
-          const data = await response.json();
-          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (text) {
-            return res.status(200).json({
-              answer: text,
-              mode,
-              keyTerms: extractKeyTerms(text),
-              engine: "gemini",
-            });
+        for (const modelName of candidateModels) {
+          try {
+            const response = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiApiKey}`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  systemInstruction: {
+                    parts: [{ text: SYSTEM_PROMPT }]
+                  },
+                  contents: contents,
+                  generationConfig: {
+                    temperature: 0.3,
+                    maxOutputTokens: 8192,
+                  },
+                }),
+              }
+            );
+
+            if (response.ok) {
+              const data = await response.json();
+              text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+              if (text) break;
+            } else {
+              const errorData = await response.json().catch(() => ({}));
+              console.warn(`Gemini API non-200 for ${modelName}:`, response.status, errorData?.error?.message || errorData);
+            }
+          } catch (modelErr) {
+            console.warn(`Attempt with ${modelName} failed:`, modelErr);
           }
-        } else {
-          const errorData = await response.json().catch(() => ({}));
-          console.warn("Gemini API non-200 response:", response.status, errorData);
+        }
+
+        if (text) {
+          return res.status(200).json({
+            answer: text,
+            mode,
+            keyTerms: extractKeyTerms(text),
+            engine: "gemini",
+          });
         }
       } catch (geminiError) {
         console.error("Gemini API call failed:", geminiError);
