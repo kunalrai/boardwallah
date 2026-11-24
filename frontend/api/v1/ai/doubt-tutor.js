@@ -130,7 +130,12 @@ Please inspect any attached image, prior conversation context, or text, and resp
           parts: currentParts
         });
 
-        const candidateModels = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8-flash"];
+        const candidateModels = [
+          "gemini-3.5-flash-lite",
+          "gemini-flash-lite-latest",
+          "gemini-3.5-flash",
+          "gemini-3.8-flash"
+        ];
         let text = null;
 
         for (const modelName of candidateModels) {
