@@ -1613,6 +1613,77 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       return '\n\n' + placeholder + '\n\n';
     });
 
+    // Render LaTeX Math ($...$ and $$...$$)
+    function cleanLatexMathFallback(math) {
+      let m = math.trim();
+      m = m.replace(/\\text\{([^}]+)\}/g, '$1');
+      m = m.replace(/\\mathrm\{([^}]+)\}/g, '$1');
+      m = m.replace(/\\mathbf\{([^}]+)\}/g, '$1');
+      m = m.replace(/\\boldsymbol\{([^}]+)\}/g, '$1');
+      m = m.replace(/\\Omega/g, 'Ω');
+      m = m.replace(/\\omega/g, 'ω');
+      m = m.replace(/\\Delta/g, 'Δ');
+      m = m.replace(/\\delta/g, 'δ');
+      m = m.replace(/\\theta/g, 'θ');
+      m = m.replace(/\\alpha/g, 'α');
+      m = m.replace(/\\beta/g, 'β');
+      m = m.replace(/\\gamma/g, 'γ');
+      m = m.replace(/\\pi/g, 'π');
+      m = m.replace(/\\mu/g, 'μ');
+      m = m.replace(/\\lambda/g, 'λ');
+      m = m.replace(/\\sigma/g, 'σ');
+      m = m.replace(/\\times/g, '×');
+      m = m.replace(/\\cdot/g, '·');
+      m = m.replace(/\\div/g, '÷');
+      m = m.replace(/\\pm/g, '±');
+      m = m.replace(/\\mp/g, '∓');
+      m = m.replace(/\\neq/g, '≠');
+      m = m.replace(/\\approx/g, '≈');
+      m = m.replace(/\\leq/g, '≤');
+      m = m.replace(/\\geq/g, '≥');
+      m = m.replace(/\\degree/g, '°');
+      m = m.replace(/\\circ/g, '°');
+      m = m.replace(/\\infty/g, '∞');
+      m = m.replace(/\\rightarrow/g, '→');
+      m = m.replace(/\\leftarrow/g, '←');
+      m = m.replace(/\\sqrt\{([^}]+)\}/g, '√($1)');
+      m = m.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)');
+      m = m.replace(/_([a-zA-Z0-9]+)/g, '<sub>$1</sub>');
+      m = m.replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>');
+      return `<span class="math-inline">${m}</span>`;
+    }
+
+    function renderMath(str) {
+      if (typeof window !== 'undefined' && window.katex && typeof window.katex.renderToString === 'function') {
+        try {
+          str = str.replace(/\$\$([\s\S]*?)\$\$/g, (m, expr) => {
+            return window.katex.renderToString(expr.trim(), { displayMode: true, throwOnError: false });
+          });
+          str = str.replace(/(^|[^\\])\$([^\$\n]+?)\$/g, (m, prefix, expr) => {
+            return prefix + window.katex.renderToString(expr.trim(), { displayMode: false, throwOnError: false });
+          });
+          return str;
+        } catch (e) {
+          console.warn('KaTeX render fallback:', e);
+        }
+      }
+      str = str.replace(/\$\$([\s\S]*?)\$\$/g, (m, expr) => {
+        return `<div class="math-display">${cleanLatexMathFallback(expr)}</div>`;
+      });
+      str = str.replace(/(^|[^\\])\$([^\$\n]+?)\$/g, (m, prefix, expr) => {
+        return prefix + cleanLatexMathFallback(expr);
+      });
+      return str;
+    }
+
+    parsed = renderMath(parsed);
+
+    // Markdown Headings (####, ###, ##, #)
+    parsed = parsed.replace(/^####\s+(.+)$/gm, '<h4 class="gemini-heading-h4">$1</h4>');
+    parsed = parsed.replace(/^###\s+(.+)$/gm, '<h3 class="gemini-heading-h3">$1</h3>');
+    parsed = parsed.replace(/^##\s+(.+)$/gm, '<h2 class="gemini-heading-h2">$1</h2>');
+    parsed = parsed.replace(/^#\s+(.+)$/gm, '<h2 class="gemini-heading-h2">$1</h2>');
+
     // Inline pills
     parsed = parsed.replace(/`([^`]+)`/g, '<span class="gemini-inline-pill">$1</span>');
 
@@ -1623,11 +1694,12 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     parsed = parsed.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
     // Bullet items
-    parsed = parsed.replace(/^\s*[-•]\s+(.+)$/gm, '<li class="gemini-li">$1</li>');
-    parsed = parsed.replace(/(<li class="gemini-li">.*<\/li>)/gs, '<ul class="gemini-ul">$1</ul>');
+    parsed = parsed.replace(/^\s*[-*•]\s+(.+)$/gm, '<li class="gemini-li">$1</li>');
+    parsed = parsed.replace(/(<li class="gemini-li">[\s\S]*?<\/li>(?:\s*<li class="gemini-li">[\s\S]*?<\/li>)*)/g, '<ul class="gemini-ul">$1</ul>');
 
     // Numbered items
-    parsed = parsed.replace(/^\s*(\d+)\.\s+(.+)$/gm, '<h3 class="gemini-heading-h3">$1. $2</h3>');
+    parsed = parsed.replace(/^\s*(\d+)\.\s+(.+)$/gm, '<li class="gemini-ol-li" value="$1"><span class="ol-num">$1.</span> $2</li>');
+    parsed = parsed.replace(/(<li class="gemini-ol-li"[\s\S]*?<\/li>(?:\s*<li class="gemini-ol-li"[\s\S]*?<\/li>)*)/g, '<ol class="gemini-ol">$1</ol>');
 
     // Paragraphs
     parsed = parsed.split(/\n\n+/).map(p => {
@@ -1660,6 +1732,21 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     `;
     activeMessagesFeed.appendChild(row);
     scrollToBottom();
+
+    // Trigger KaTeX auto-render on newly rendered formula elements
+    if (typeof window !== 'undefined' && typeof window.renderMathInElement === 'function') {
+      try {
+        window.renderMathInElement(row, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      } catch (err) {
+        console.warn('KaTeX auto-render error:', err);
+      }
+    }
   }
 
   // Smart detection of CBSE Chapter for In-Chat Resource & Quiz link
@@ -1866,6 +1953,21 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
     activeMessagesFeed.appendChild(row);
     scrollToBottom();
+
+    // Trigger KaTeX auto-render on newly rendered formula elements
+    if (typeof window !== 'undefined' && typeof window.renderMathInElement === 'function') {
+      try {
+        window.renderMathInElement(row, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      } catch (err) {
+        console.warn('KaTeX auto-render error:', err);
+      }
+    }
   }
 
   let thinkingInterval = null;
@@ -4688,11 +4790,58 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     margin: 0 0 1rem;
   }
 
+  .gemini-heading-h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 1.45rem 0 0.55rem;
+    line-height: 1.35;
+  }
+
   .gemini-heading-h3 {
-    font-size: 1.15rem;
+    font-size: 1.12rem;
     font-weight: 600;
     color: #1f1f1f;
-    margin: 1.5rem 0 0.5rem;
+    margin: 1.3rem 0 0.45rem;
+    line-height: 1.35;
+  }
+
+  .gemini-heading-h4 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: #334155;
+    margin: 1.15rem 0 0.4rem;
+    line-height: 1.35;
+  }
+
+  .math-inline {
+    font-family: 'KaTeX_Math', 'Cambria Math', 'Times New Roman', serif;
+    font-style: italic;
+    padding: 0 0.15rem;
+    color: #0f172a;
+    font-size: 1.05em;
+  }
+
+  .math-display {
+    text-align: center;
+    margin: 0.85rem 0;
+    padding: 0.65rem;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    font-family: 'KaTeX_Math', 'Cambria Math', 'Times New Roman', serif;
+    font-size: 1.1em;
+    overflow-x: auto;
+  }
+
+  .gemini-ol {
+    margin: 0 0 1rem 1.4rem;
+    padding: 0;
+  }
+
+  .gemini-ol-li {
+    margin-bottom: 0.45rem;
+    line-height: 1.6;
   }
 
   .gemini-inline-pill {

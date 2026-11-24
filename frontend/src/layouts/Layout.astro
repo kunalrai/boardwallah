@@ -73,6 +73,10 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     {schema && (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     )}
+    <!-- KaTeX for crisp mathematical & scientific formula rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <Analytics />
     <SpeedInsights />
