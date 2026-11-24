@@ -348,7 +348,7 @@ const chatSchema = {
 
           <!-- Bottom Micro Disclaimer -->
           <div class="capsule-disclaimer">
-            <span>Ask Boardwallah is powered by Gemini 2.5 Flash. Verify with official NCERT textbooks &amp; CBSE marking rubrics.</span>
+            <span>Ask Boardwallah is powered by Gemini 3.5 Flash. Verify with official NCERT textbooks &amp; CBSE marking rubrics.</span>
           </div>
         </form>
       </div>
@@ -1482,6 +1482,9 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       parsed = newLines.join('\n');
     }
 
+    // 2. Protected Block Placeholders (prevents recursion & regex collisions)
+    const blockPlaceholders = [];
+
     // Auto-heal unclosed code fences or SVG tags from network cuts or token bounds
     const fenceMatches = parsed.match(/```/g) || [];
     if (fenceMatches.length % 2 === 1) {
@@ -1502,28 +1505,28 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       return clean;
     }
 
-    // Dark Code Blocks & Math / Geometric Diagram Cards
+    // Step A: Match fenced code blocks (```lang ... ```)
     parsed = parsed.replace(/```([a-zA-Z0-9_-]*)\s*?\n?([\s\S]*?)```/g, (match, lang, code) => {
       const trimmed = code.trim();
       const svgMatch = trimmed.match(/<svg[\s\S]*?<\/svg>/i);
-      if (svgMatch || ((lang === 'svg' || lang === 'xml' || !lang) && trimmed.includes('<svg'))) {
+      const isSvg = Boolean(svgMatch || ((lang === 'svg' || lang === 'xml' || !lang) && trimmed.includes('<svg')));
+
+      if (isSvg) {
         let svgCode = svgMatch ? svgMatch[0] : trimmed;
         const cleanSvg = sanitizeSvg(svgCode);
-        return `
+        const cardHtml = `
           <div class="math-diagram-card">
             <div class="math-diagram-header">
               <div class="math-diagram-badge">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+                <span class="math-badge-icon">📐</span>
                 <span>CBSE Mathematical Diagram (Animated)</span>
               </div>
               <div class="math-diagram-actions">
                 <button type="button" class="diagram-action-btn diagram-replay-btn" title="Replay Construction Animation">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                  <span>Replay</span>
+                  <span>🔄 Replay</span>
                 </button>
                 <button type="button" class="diagram-action-btn diagram-download-btn" title="Download SVG Drawing">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                  <span>Download SVG</span>
+                  <span>📥 Download SVG</span>
                 </button>
               </div>
             </div>
@@ -1531,48 +1534,48 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
               ${cleanSvg}
             </div>
           </div>
-        `;
+        `.trim();
+        const placeholder = `%%BLOCK_PLACEHOLDER_${blockPlaceholders.length}%%`;
+        blockPlaceholders.push(cardHtml);
+        return '\n\n' + placeholder + '\n\n';
       }
 
       const cleanLang = lang || 'Formula / Steps';
       let escapedCode = escapeHtml(code.trim());
-      return `
+      const darkCardHtml = `
         <div class="gemini-dark-card">
           <div class="dark-card-header">
             <span class="dark-card-lang">${cleanLang}</span>
             <div class="dark-card-actions">
-              <button type="button" class="dark-icon-btn dark-download-btn" title="Download snippet">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" x2="12" y1="8" y2="16"/></svg>
-              </button>
               <button type="button" class="dark-icon-btn dark-copy-btn" title="Copy code">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                <span>📋 Copy</span>
               </button>
             </div>
           </div>
           <pre class="dark-card-pre"><code>${escapedCode}</code></pre>
         </div>
-      `;
+      `.trim();
+      const placeholder = `%%BLOCK_PLACEHOLDER_${blockPlaceholders.length}%%`;
+      blockPlaceholders.push(darkCardHtml);
+      return '\n\n' + placeholder + '\n\n';
     });
 
-    // Also detect raw <svg ... </svg> outside code blocks
+    // Step B: Also detect raw <svg ... </svg> outside code blocks
     parsed = parsed.replace(/<svg\b[\s\S]*?<\/svg>/gi, (raw) => {
-      if (raw.includes('math-diagram-badge') || raw.includes('diagram-download-btn') || raw.includes('gemini-star-icon')) return raw;
       const cleanSvg = sanitizeSvg(raw);
-      return `
+      const cardHtml = `
         <div class="math-diagram-card">
           <div class="math-diagram-header">
             <div class="math-diagram-badge">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+              <span class="math-badge-icon">📐</span>
               <span>CBSE Mathematical Diagram (Animated)</span>
             </div>
             <div class="math-diagram-actions">
               <button type="button" class="diagram-action-btn diagram-replay-btn" title="Replay Construction Animation">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                <span>Replay</span>
+                <span>🔄 Replay</span>
               </button>
               <button type="button" class="diagram-action-btn diagram-download-btn" title="Download SVG Drawing">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span>Download SVG</span>
+                <span>📥 Download SVG</span>
               </button>
             </div>
           </div>
@@ -1580,7 +1583,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
             ${cleanSvg}
           </div>
         </div>
-      `;
+      `.trim();
+      const placeholder = `%%BLOCK_PLACEHOLDER_${blockPlaceholders.length}%%`;
+      blockPlaceholders.push(cardHtml);
+      return '\n\n' + placeholder + '\n\n';
     });
 
     // Inline pills
@@ -1603,9 +1609,14 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     parsed = parsed.split(/\n\n+/).map(p => {
       p = p.trim();
       if (!p) return '';
-      if (p.startsWith('<ul') || p.startsWith('<ol') || p.startsWith('<div') || p.startsWith('<h')) return p;
+      if (p.startsWith('%%BLOCK_PLACEHOLDER_') || p.startsWith('<ul') || p.startsWith('<ol') || p.startsWith('<div') || p.startsWith('<h')) return p;
       return `<p class="gemini-p">${p.replace(/\n/g, '<br/>')}</p>`;
     }).join('');
+
+    // Step E: Restore protected block placeholders
+    for (let i = 0; i < blockPlaceholders.length; i++) {
+      parsed = parsed.replace(`%%BLOCK_PLACEHOLDER_${i}%%`, blockPlaceholders[i]);
+    }
 
     return parsed;
   }
@@ -2022,7 +2033,8 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         activeThreadId = 'th_' + Date.now();
         thread = {
           id: activeThreadId,
-          title: displayQuestion.slice(0, 48) + (displayQuestion.length > 48 ? '...' : ''),
+          title: generateThreadTitle(displayQuestion),
+          cleanTitle: true,
           createdAt: Date.now(),
           updatedAt: Date.now(),
           isStarred: false,
@@ -2473,12 +2485,37 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   let activeThreadsMemory = [];
   let showingStarredOnly = false;
 
+  function generateThreadTitle(question) {
+    if (!question || typeof question !== 'string') return 'CBSE Doubt';
+    let clean = question.trim();
+    // Strip common prompt filler prefixes
+    clean = clean.replace(/^(please\s+)?(can you\s+)?(tell me\s+)?(give me\s+)?(explain\s+)?(state\s+)?(draw\s+a\s+labeled\s+diagram\s+of\s+)?(draw\s+)?/i, '');
+    clean = clean.replace(/^(\d+\s+)?(tricky\s+)?(official\s+)?(cbse\s+)?(class\s+10\s+)?/i, '');
+    clean = clean.replace(/^(assertion\s+and\s+reason\s+questions)/i, 'Assertion & Reason');
+    clean = clean.replace(/[?.!:]+$/, '').trim();
+    if (!clean) clean = question.trim();
+    clean = clean.charAt(0).toUpperCase() + clean.slice(1);
+    if (clean.length > 28) {
+      return clean.slice(0, 26).trim() + '...';
+    }
+    return clean;
+  }
+
   function getStoredThreads() {
     try {
       const stored = localStorage.getItem('boardwallah_chat_threads');
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Normalize titles so any previously stored long strings are clean and concise
+          parsed.forEach(t => {
+            if (!t.cleanTitle || (t.title && t.title.length > 30)) {
+              t.title = generateThreadTitle(t.title || (t.messages?.[0]?.content) || 'CBSE Doubt');
+              t.cleanTitle = true;
+            }
+          });
+          return parsed;
+        }
       }
     } catch (e) {}
 
@@ -2488,7 +2525,8 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       if (Array.isArray(legacy) && legacy.length > 0) {
         const migrated = legacy.map((d, idx) => ({
           id: 'th_leg_' + (d.timestamp || (Date.now() - idx * 1000)),
-          title: (d.question || '').slice(0, 48) + ((d.question && d.question.length > 48) ? '...' : ''),
+          title: generateThreadTitle(d.question || 'CBSE Doubt'),
+          cleanTitle: true,
           createdAt: d.timestamp || Date.now(),
           updatedAt: d.timestamp || Date.now(),
           isStarred: false,
@@ -2516,8 +2554,12 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     const recentsList = document.getElementById('recents-list');
     if (!recentsList || !thread || !thread.id) return;
 
+    const cleanTitle = generateThreadTitle(thread.title || (thread.messages?.[0]?.content) || 'CBSE Doubt');
+
     let existingBtn = recentsList.querySelector(`[data-thread-id="${thread.id}"]`);
     if (existingBtn) {
+      const textSpan = existingBtn.querySelector('.recent-text');
+      if (textSpan) textSpan.textContent = cleanTitle;
       if (isTop && recentsList.firstChild !== existingBtn) {
         recentsList.insertBefore(existingBtn, recentsList.firstChild);
       }
@@ -2528,10 +2570,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     btn.className = 'recent-item' + (thread.id === activeThreadId ? ' active' : '');
     btn.type = 'button';
     btn.setAttribute('data-thread-id', thread.id);
-    btn.title = thread.title;
-    btn.setAttribute('aria-label', thread.title);
+    btn.title = thread.title || cleanTitle;
+    btn.setAttribute('aria-label', cleanTitle);
     btn.innerHTML = `
-      <span class="recent-text">${escapeHtml(thread.title)}</span>
+      <span class="recent-text">${escapeHtml(cleanTitle)}</span>
       <span class="pin-icon" title="${thread.isStarred ? 'Starred' : 'Recent'}">${thread.isStarred ? '★' : '🕒'}</span>
     `;
 
@@ -2552,8 +2594,9 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     if (!thread) return;
 
     activeThreadId = thread.id;
+    const cleanTitle = generateThreadTitle(thread.title || (thread.messages?.[0]?.content) || 'CBSE Doubt');
     if (activeNotebookTitle) {
-      activeNotebookTitle.textContent = thread.title.slice(0, 36) + (thread.title.length > 36 ? '...' : '');
+      activeNotebookTitle.textContent = cleanTitle;
     }
 
     welcomeCanvas.style.display = 'none';
@@ -3045,6 +3088,176 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   initFirebaseClient();
 })();
 </script>
+
+<style is:global>
+  /* ── Sidebar Recent Items: Guaranteed Single-Line Ellipsis ── */
+  .recents-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.25rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+  }
+  .recent-item,
+  .recents-list .recent-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0.5rem !important;
+    padding: 0.45rem 0.75rem !important;
+    border-radius: 999px !important;
+    border: none !important;
+    background: transparent;
+    color: #334155 !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    transition: background 0.15s ease !important;
+  }
+  .recent-item:hover,
+  .recents-list .recent-item:hover {
+    background: #e9eef6 !important;
+    color: #1f1f1f !important;
+  }
+  .recent-item.active,
+  .recents-list .recent-item.active {
+    background: #e9eef6 !important;
+    color: #1f1f1f !important;
+    font-weight: 600 !important;
+  }
+  .recent-item .recent-text,
+  .recents-list .recent-item .recent-text {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    line-height: 1.35 !important;
+  }
+  .recent-item .pin-icon,
+  .recents-list .recent-item .pin-icon {
+    font-size: 0.75rem !important;
+    opacity: 0.7 !important;
+    flex-shrink: 0 !important;
+    margin-left: 4px !important;
+  }
+
+  /* ── Math & Scientific Diagram Card: Global styles for dynamic HTML ── */
+  .math-diagram-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    margin: 1.25rem 0 !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+    width: 100% !important;
+    max-width: 520px !important;
+  }
+  .math-diagram-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0.65rem 1rem !important;
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+  }
+  .math-diagram-badge {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+  }
+  .math-diagram-actions {
+    display: flex !important;
+    gap: 0.4rem !important;
+  }
+  .diagram-action-btn,
+  .diagram-download-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #475569 !important;
+    font-size: 0.76rem !important;
+    font-weight: 500 !important;
+    padding: 0.25rem 0.65rem !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+  }
+  .diagram-action-btn:hover,
+  .diagram-download-btn:hover {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    border-color: #94a3b8 !important;
+  }
+  .diagram-replay-btn {
+    color: #1d4ed8 !important;
+    background: #eff6ff !important;
+    border-color: #bfdbfe !important;
+  }
+  .diagram-replay-btn:hover {
+    background: #dbeafe !important;
+    color: #1e40af !important;
+    border-color: #93c5fd !important;
+  }
+  .math-diagram-canvas {
+    padding: 1.25rem 1rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: #ffffff !important;
+    overflow-x: auto !important;
+    min-height: 200px !important;
+  }
+  .math-diagram-canvas svg {
+    display: block !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+  .math-diagram-canvas svg line,
+  .math-diagram-canvas svg path,
+  .math-diagram-canvas svg circle,
+  .math-diagram-canvas svg rect,
+  .math-diagram-canvas svg text,
+  .math-diagram-canvas svg polygon {
+    opacity: 1 !important;
+  }
+
+  /* Animated construction drawing */
+  .math-diagram-canvas.animated-diagram svg line,
+  .math-diagram-canvas.animated-diagram svg path[stroke] {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: cbsePathDraw 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+  .math-diagram-canvas.animated-diagram svg line:nth-of-type(1) { animation-delay: 0.1s; }
+  .math-diagram-canvas.animated-diagram svg line:nth-of-type(2),
+  .math-diagram-canvas.animated-diagram svg line:nth-of-type(3) { animation-delay: 0.4s; }
+  .math-diagram-canvas.animated-diagram svg line:nth-of-type(n+4),
+  .math-diagram-canvas.animated-diagram svg path[stroke] { animation-delay: 0.75s; }
+  .math-diagram-canvas.animated-diagram svg text {
+    opacity: 0 !important;
+    animation: cbseElementFade 0.5s ease forwards;
+    animation-delay: 1.2s;
+  }
+</style>
 
 <style>
   /* ── PWA Install Action Styles ── */
