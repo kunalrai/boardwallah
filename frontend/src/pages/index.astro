@@ -165,19 +165,21 @@ const chatSchema = {
         </div>
       </div>
 
-      <!-- Bottom Profile / Mentor Card -->
-      <div class="sidebar-footer-profile" id="sidebar-profile-card" title="Click to view Mentor Profile &amp; Book Trial">
+      <!-- Bottom Sign In / Student Account Card -->
+      <a href="/login/" class="sidebar-footer-profile" id="sidebar-profile-card" title="Sign in to your student account">
         <div class="profile-left">
-          <div class="profile-avatar">KR</div>
+          <div class="profile-avatar signin-avatar" id="sidebar-avatar">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
           <div class="profile-info">
-            <strong class="profile-name">Kunal Rai</strong>
-            <span class="profile-badge">Pro Mentor</span>
+            <strong class="profile-name" id="sidebar-user-name">Sign in</strong>
+            <span class="profile-badge" id="sidebar-user-status">Student Account</span>
           </div>
         </div>
-        <button id="tutor-popover-trigger" class="profile-gear-btn" type="button" aria-label="Settings and 1-on-1 Mentorship">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        </button>
-      </div>
+        <div class="profile-gear-btn" title="Sign in to account">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+        </div>
+      </a>
     </aside>
 
     <!-- ── Main Gemini Chat Canvas ── -->
@@ -592,9 +594,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     });
   }
 
-  // Mentor Dialog
-  if (profileCard && mentorModal) {
-    profileCard.addEventListener('click', () => {
+  // Mentor Dialog (Triggered via header options menu)
+  const chatOptionsMenuBtn = document.getElementById('chat-options-menu-btn');
+  if (chatOptionsMenuBtn && mentorModal) {
+    chatOptionsMenuBtn.addEventListener('click', () => {
       mentorModal.showModal();
     });
   }
@@ -602,6 +605,31 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     closeMentorModalBtn.addEventListener('click', () => {
       mentorModal.close();
     });
+  }
+
+  // Session detection for Student Account in sidebar
+  const SESSION_KEY = "htp_session";
+  const sessionToken = localStorage.getItem(SESSION_KEY);
+  const sidebarUserName = document.getElementById('sidebar-user-name');
+  const sidebarUserStatus = document.getElementById('sidebar-user-status');
+  const sidebarAvatar = document.getElementById('sidebar-avatar');
+
+  if (sessionToken && sidebarUserName && sidebarUserStatus) {
+    fetch('/api/v1/auth/me', {
+      headers: { Authorization: `Bearer ${sessionToken}` }
+    })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data && (data.name || data.email)) {
+          sidebarUserName.textContent = data.name || "Student";
+          sidebarUserStatus.textContent = data.email || "Active Account";
+          if (sidebarAvatar && data.name) {
+            const initials = data.name.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase();
+            if (initials) sidebarAvatar.textContent = initials;
+          }
+        }
+      })
+      .catch(() => {});
   }
 
   // Auto-resize textarea
@@ -1365,7 +1393,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     opacity: 0.7;
   }
 
-  /* Bottom Mentor Profile */
+  /* Bottom Profile / Sign-in Card */
   .sidebar-footer-profile {
     margin-top: auto;
     display: flex;
@@ -1376,9 +1404,15 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     background: transparent;
     cursor: pointer;
     transition: background 0.15s ease;
+    text-decoration: none;
+    color: inherit;
   }
   .sidebar-footer-profile:hover {
     background: #e9eef6;
+  }
+  .signin-avatar {
+    background: #0284c7 !important;
+    color: #ffffff !important;
   }
 
   .profile-left {

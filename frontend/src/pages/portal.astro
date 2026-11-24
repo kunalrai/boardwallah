@@ -252,25 +252,26 @@ const homeSchema = {
           <span class="sidebar-label text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0D1117] text-slate-500 border border-slate-200 dark:border-[#30363D]">THEME</span>
         </button>
 
-        <!-- Kunal Rai & Batch Info Pill -->
-        <div class="flex flex-col gap-1.5 px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]/80 border border-slate-200/80 dark:border-[#30363D] hover:border-orange-500/40 transition-colors">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2 overflow-hidden">
-              <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-orange-500 to-sky-400 flex items-center justify-center text-white font-bold text-xs shrink-0">
-                KR
-              </div>
-              <div class="sidebar-label flex flex-col leading-tight truncate">
-                <span class="text-xs font-semibold text-slate-800 dark:text-slate-100 truncate">Kunal Rai • Mentor</span>
-                <span class="text-[10px] text-slate-500 dark:text-slate-400 truncate">boardwallah.space</span>
-              </div>
+        <!-- Sign In / Student Account Pill -->
+        <a
+          href="/login/"
+          id="portal-profile-card"
+          class="flex items-center justify-between gap-2 px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]/80 border border-slate-200/80 dark:border-[#30363D] hover:border-sky-500/40 hover:bg-slate-100 dark:hover:bg-[#161B22] transition-colors no-underline text-inherit"
+          title="Sign in to your student account"
+        >
+          <div class="flex items-center gap-2 overflow-hidden min-w-0">
+            <div id="portal-user-avatar" class="w-7 h-7 rounded-full bg-sky-600 flex items-center justify-center text-white font-bold text-xs shrink-0">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
-            <span class="sidebar-label px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/30">CBSE 10</span>
+            <div class="sidebar-label flex flex-col leading-tight truncate">
+              <span id="portal-user-name" class="text-xs font-semibold text-slate-800 dark:text-slate-100 truncate">Sign in</span>
+              <span id="portal-user-status" class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Student Account</span>
+            </div>
           </div>
-          <div class="sidebar-label text-[10px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200/60 dark:border-slate-800 leading-snug flex items-center justify-between">
-            <span>Online or Gaur City 2 • <span class="font-mono text-orange-500">16–20h</span></span>
-            <a href={waHeroLink} target="_blank" rel="noopener noreferrer" class="text-emerald-500 hover:underline font-medium text-[10px]">Chat 💬</a>
-          </div>
-        </div>
+          <span class="sidebar-label px-2 py-0.5 text-[10px] font-semibold rounded-md bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30 shrink-0">
+            Login →
+          </span>
+        </a>
       </div>
     </aside>
 
@@ -973,6 +974,31 @@ const homeSchema = {
       renderFlashcard();
       updateMockTimerDisplay();
       initIcons();
+
+      // Check student session for sidebar profile
+      try {
+        const token = localStorage.getItem('htp_session');
+        if (token) {
+          fetch('/api/v1/auth/me', {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+            .then(res => res.ok ? res.json() : null)
+            .then(user => {
+              if (user && (user.name || user.email)) {
+                const nameEl = document.getElementById('portal-user-name');
+                const statusEl = document.getElementById('portal-user-status');
+                const avatarEl = document.getElementById('portal-user-avatar');
+                if (nameEl) nameEl.textContent = user.name || "Student";
+                if (statusEl) statusEl.textContent = user.email || "Active Account";
+                if (avatarEl && user.name) {
+                  const initials = user.name.split(' ').map(p => p[0]).join('').substring(0, 2).toUpperCase();
+                  if (initials) avatarEl.textContent = initials;
+                }
+              }
+            })
+            .catch(() => {});
+        }
+      } catch (e) {}
 
       document.addEventListener('keydown', (e) => {
         if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
