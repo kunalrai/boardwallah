@@ -84,7 +84,7 @@ const homeSchema = {
   imageAlt={posterAlt}
   schema={homeSchema}
   isAppLayout={true}
-  htmlClass="dark"
+  htmlClass=""
 >
   <!-- Tailwind CSS & Lucide Icons -->
   <script is:inline src="https://cdn.tailwindcss.com"></script>
@@ -97,8 +97,17 @@ const homeSchema = {
   <script is:inline src="https://unpkg.com/lucide@latest"></script>
 
   <script is:inline>
-    // Ensure dark class is present by default
-    document.documentElement.classList.add('dark');
+    // Default to Light Mode (honor explicit saved theme if present)
+    try {
+      const savedTheme = localStorage.getItem('bw_theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch (e) {
+      document.documentElement.classList.remove('dark');
+    }
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -237,8 +246,8 @@ const homeSchema = {
       <div class="p-3 border-t border-[#E2E8F0] dark:border-[#30363D] flex flex-col gap-2 shrink-0">
         <button onclick="toggleTheme()" class="flex items-center justify-between w-full px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#21262D] transition-colors">
           <span class="flex items-center gap-2.5">
-            <i id="themeIcon" data-lucide="sun" class="w-4 h-4 text-orange-500 shrink-0"></i>
-            <span id="themeLabel" class="sidebar-label whitespace-nowrap">Chalk Light Mode</span>
+            <i id="themeIcon" data-lucide="moon" class="w-4 h-4 text-orange-500 shrink-0"></i>
+            <span id="themeLabel" class="sidebar-label whitespace-nowrap">Slate Dark Mode</span>
           </span>
           <span class="sidebar-label text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0D1117] text-slate-500 border border-slate-200 dark:border-[#30363D]">THEME</span>
         </button>
@@ -961,6 +970,7 @@ const homeSchema = {
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      initTheme();
       populateChaptersForSubject(state.currentSubject);
       renderRubric(STARTER_PACKS.datesheet);
       renderFlashcard();
@@ -1805,13 +1815,21 @@ const homeSchema = {
     // =====================================================================
     // THEME, SIDEBAR & TOAST UTILITIES
     // =====================================================================
-    function toggleTheme() {
-      const html = document.documentElement;
-      const isDark = html.classList.toggle('dark');
+    function initTheme() {
+      const isDark = document.documentElement.classList.contains('dark');
       const icon = document.getElementById('themeIcon');
       const label = document.getElementById('themeLabel');
       if (icon) icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
       if (label) label.textContent = isDark ? 'Chalk Light Mode' : 'Slate Dark Mode';
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      try {
+        localStorage.setItem('bw_theme', isDark ? 'dark' : 'light');
+      } catch (e) {}
+      initTheme();
       initIcons();
     }
 
