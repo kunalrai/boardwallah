@@ -518,14 +518,23 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
   // Sidebar collapse toggle
   if (collapseBtn && sidebar) {
-    collapseBtn.addEventListener('click', () => {
+    collapseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       sidebar.classList.toggle('collapsed');
+      const isCollapsed = sidebar.classList.contains('collapsed');
+      collapseBtn.setAttribute('title', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      collapseBtn.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
     });
   }
 
   if (mobileToggleBtn && sidebar) {
-    mobileToggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('mobile-open');
+    mobileToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (window.innerWidth <= 880) {
+        sidebar.classList.toggle('mobile-open');
+      } else {
+        sidebar.classList.toggle('collapsed');
+      }
     });
   }
 
@@ -986,6 +995,26 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
   .gemini-sidebar.collapsed {
     width: 68px;
+    padding-inline: 0.45rem;
+  }
+  .gemini-sidebar.collapsed .sidebar-brand-row {
+    justify-content: center;
+    padding: 0.25rem 0 0.45rem;
+  }
+  .gemini-sidebar.collapsed .brand-link {
+    display: none !important;
+  }
+  .gemini-sidebar.collapsed .brand-controls {
+    display: flex !important;
+    justify-content: center;
+    width: 100%;
+  }
+  .gemini-sidebar.collapsed #sidebar-search-btn {
+    display: none !important;
+  }
+  .gemini-sidebar.collapsed #sidebar-collapse-btn {
+    display: flex !important;
+    margin: 0 auto;
   }
   .gemini-sidebar.collapsed .brand-text,
   .gemini-sidebar.collapsed .brand-tag,
@@ -995,7 +1024,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   .gemini-sidebar.collapsed .recent-text,
   .gemini-sidebar.collapsed .pin-icon,
   .gemini-sidebar.collapsed .profile-info,
-  .gemini-sidebar.collapsed .brand-controls {
+  .gemini-sidebar.collapsed .profile-gear-btn {
     display: none !important;
   }
   .gemini-sidebar.collapsed .sidebar-nav-item,
@@ -1003,6 +1032,14 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   .gemini-sidebar.collapsed .recent-item {
     justify-content: center;
     padding: 0.6rem 0;
+  }
+  .gemini-sidebar.collapsed .sidebar-footer-profile {
+    justify-content: center;
+    padding: 0.45rem 0;
+  }
+  /* Show expand button in header when sidebar is collapsed */
+  .gemini-sidebar.collapsed ~ .gemini-main #mobile-toggle-btn {
+    display: inline-flex !important;
   }
 
   /* Brand Header */
