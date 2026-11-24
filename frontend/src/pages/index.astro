@@ -1473,16 +1473,20 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
             <div class="math-diagram-header">
               <div class="math-diagram-badge">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
-                <span>CBSE Mathematical Diagram</span>
+                <span>CBSE Mathematical Diagram (Animated)</span>
               </div>
               <div class="math-diagram-actions">
-                <button type="button" class="diagram-download-btn" title="Download SVG Drawing">
+                <button type="button" class="diagram-action-btn diagram-replay-btn" title="Replay Construction Animation">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                  <span>Replay</span>
+                </button>
+                <button type="button" class="diagram-action-btn diagram-download-btn" title="Download SVG Drawing">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   <span>Download SVG</span>
                 </button>
               </div>
             </div>
-            <div class="math-diagram-canvas">
+            <div class="math-diagram-canvas animated-diagram">
               ${cleanSvg}
             </div>
           </div>
@@ -1518,16 +1522,20 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
           <div class="math-diagram-header">
             <div class="math-diagram-badge">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
-              <span>CBSE Mathematical Diagram</span>
+              <span>CBSE Mathematical Diagram (Animated)</span>
             </div>
             <div class="math-diagram-actions">
-              <button type="button" class="diagram-download-btn" title="Download SVG Drawing">
+              <button type="button" class="diagram-action-btn diagram-replay-btn" title="Replay Construction Animation">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                <span>Replay</span>
+              </button>
+              <button type="button" class="diagram-action-btn diagram-download-btn" title="Download SVG Drawing">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span>Download SVG</span>
               </button>
             </div>
           </div>
-          <div class="math-diagram-canvas">
+          <div class="math-diagram-canvas animated-diagram">
             ${cleanSvg}
           </div>
         </div>
@@ -1686,6 +1694,20 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
           showToast('Formula snippet downloaded!');
+        }
+      });
+    });
+
+    // Wire mathematical diagram replay animation buttons
+    row.querySelectorAll('.diagram-replay-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const card = e.target.closest('.math-diagram-card');
+        const canvas = card ? card.querySelector('.math-diagram-canvas') : null;
+        if (canvas) {
+          canvas.classList.remove('animated-diagram');
+          void canvas.offsetWidth; // force browser reflow to re-trigger keyframe animations
+          canvas.classList.add('animated-diagram');
+          showToast('Replaying math construction animation 📐');
         }
       });
     });
@@ -3598,6 +3620,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     display: flex;
     gap: 0.4rem;
   }
+  .diagram-action-btn,
   .diagram-download-btn {
     display: inline-flex;
     align-items: center;
@@ -3612,11 +3635,23 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     cursor: pointer;
     transition: all 0.15s ease;
   }
+  .diagram-action-btn:hover,
   .diagram-download-btn:hover {
     background: #f1f5f9;
     color: #0f172a;
     border-color: #94a3b8;
   }
+  .diagram-replay-btn {
+    color: #1d4ed8;
+    background: #eff6ff;
+    border-color: #bfdbfe;
+  }
+  .diagram-replay-btn:hover {
+    background: #dbeafe;
+    color: #1e40af;
+    border-color: #93c5fd;
+  }
+
   .math-diagram-canvas {
     padding: 1rem;
     display: flex;
@@ -3629,6 +3664,87 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     display: block;
     max-width: 100%;
     height: auto;
+  }
+
+  /* ── 3Blue1Brown-Style Mathematical Construction Keyframe Animations ── */
+  @keyframes cbsePathDraw {
+    from {
+      stroke-dashoffset: 1200;
+      opacity: 0.15;
+    }
+    to {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes cbseElementFade {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes cbsePointPulse {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* When canvas has .animated-diagram (active on load and replay) */
+  .math-diagram-canvas.animated-diagram svg line,
+  .math-diagram-canvas.animated-diagram svg path[stroke] {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: cbsePathDraw 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  /* Staggered construction delays */
+  .math-diagram-canvas.animated-diagram svg line:nth-of-type(1) {
+    animation-delay: 0.1s;
+  }
+  .math-diagram-canvas.animated-diagram svg line:nth-of-type(2),
+  .math-diagram-canvas.animated-diagram svg line:nth-of-type(3) {
+    animation-delay: 0.45s;
+  }
+  .math-diagram-canvas.animated-diagram svg line:nth-of-type(n+4),
+  .math-diagram-canvas.animated-diagram svg path[stroke] {
+    animation-delay: 0.9s;
+  }
+
+  /* Circles & point markers */
+  .math-diagram-canvas.animated-diagram svg circle:not([r="70"]):not([r="60"]):not([r="80"]):not([r="50"]) {
+    animation: cbsePointPulse 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 1.25s;
+    opacity: 0;
+  }
+
+  /* Geometry circle perimeter */
+  .math-diagram-canvas.animated-diagram svg circle[r="70"],
+  .math-diagram-canvas.animated-diagram svg circle[r="60"],
+  .math-diagram-canvas.animated-diagram svg circle[r="80"],
+  .math-diagram-canvas.animated-diagram svg circle[r="50"] {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: cbsePathDraw 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    animation-delay: 0.2s;
+  }
+
+  /* Labels fade in smoothly after geometric lines complete */
+  .math-diagram-canvas.animated-diagram svg text {
+    opacity: 0;
+    animation: cbseElementFade 0.6s ease forwards;
+    animation-delay: 1.5s;
   }
 
   /* Lists */
