@@ -114,28 +114,50 @@ const chatSchema = {
           <span class="section-title">Notebooks</span>
         </div>
         <div class="notebooks-list">
-          <button class="notebook-item new-notebook-btn" type="button" id="new-notebook-trigger">
-            <span class="item-icon">＋</span>
+          <button class="notebook-item new-notebook-btn" type="button" id="new-notebook-trigger" title="Create a new notebook">
+            <span class="item-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </span>
             <span class="item-label">New notebook</span>
           </button>
-          <button class="notebook-item topic-preset-btn" data-thread="maths" type="button">
-            <span class="item-icon">📄</span>
-            <span class="item-label">Mathematics Standard</span>
+          <button class="notebook-item topic-preset-btn" data-thread="chemistry" data-notebook-id="nb_chem" type="button" title="chemistry class 10">
+            <span class="item-icon">
+              <svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
+                <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
+              </svg>
+            </span>
+            <span class="item-label">chemistry class 10</span>
           </button>
-          <button class="notebook-item topic-preset-btn" data-thread="electricity" type="button">
-            <span class="item-icon">📄</span>
-            <span class="item-label">Electricity &amp; Physics</span>
+          <button class="notebook-item topic-preset-btn" data-thread="electricity" data-notebook-id="nb_elec" type="button" title="Electricity Chapter">
+            <span class="item-icon">
+              <svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
+                <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
+              </svg>
+            </span>
+            <span class="item-label">Electricity Chapter</span>
           </button>
-          <button class="notebook-item topic-preset-btn" data-thread="chemistry" type="button">
-            <span class="item-icon">📄</span>
-            <span class="item-label">Chemical Reactions &amp; Acids</span>
+          <button class="notebook-item topic-preset-btn" data-thread="gaurcity" data-notebook-id="nb_gaur" type="button" title="GaurCity Car pool">
+            <span class="item-icon">
+              <svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
+                <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
+              </svg>
+            </span>
+            <span class="item-label">GaurCity Car pool</span>
           </button>
-          <button class="notebook-item topic-preset-btn" data-thread="sst" type="button">
-            <span class="item-icon">📄</span>
-            <span class="item-label">Social Science (SST)</span>
-          </button>
-          <button class="notebook-item" type="button" id="all-notebooks-btn">
-            <span class="item-icon">⋯</span>
+          <button class="notebook-item all-notebooks-btn" type="button" id="all-notebooks-btn" title="View all notebooks">
+            <span class="item-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="5" cy="12" r="1.5" fill="currentColor"></circle>
+                <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+                <circle cx="19" cy="12" r="1.5" fill="currentColor"></circle>
+              </svg>
+            </span>
             <span class="item-label">All notebooks</span>
           </button>
         </div>
@@ -2763,7 +2785,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
     menu.innerHTML = `
       <button type="button" class="ctx-menu-item ctx-share-btn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
           <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
         </svg>
@@ -2771,14 +2793,14 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       </button>
       <button type="button" class="ctx-menu-item ctx-pin-btn">
         ${thread.isPinned ? `
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <line x1="2" y1="2" x2="22" y2="22"/>
-            <path d="M9 3h6a2 2 0 0 1 2 2v8l1.4 1.4M7 7l-2 2v2h10"/>
+            <path d="M9 3h6a2 2 0 0 1 2 2v7l1.5 1.5M7 7l-2 2v2h10"/>
             <line x1="12" y1="17" x2="12" y2="22"/>
           </svg>
           <span>Unpin</span>
         ` : `
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="17" x2="12" y2="22"/>
             <path d="M5 17h14v-2l-2-2V5a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v8l-2 2v2z"/>
           </svg>
@@ -2786,15 +2808,32 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         `}
       </button>
       <button type="button" class="ctx-menu-item ctx-rename-btn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
         </svg>
         <span>Rename</span>
       </button>
-      <div class="ctx-menu-divider"></div>
+      <button type="button" class="ctx-menu-item ctx-unread-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          <circle cx="16" cy="8" r="1.5" fill="currentColor"/>
+        </svg>
+        <span>${thread.isUnread ? 'Mark as read' : 'Mark as unread'}</span>
+      </button>
+      <button type="button" class="ctx-menu-item ctx-add-notebook-btn">
+        <svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
+          <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
+        </svg>
+        <span>Add to notebook</span>
+      </button>
       <button type="button" class="ctx-menu-item ctx-delete-btn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          <path d="M10 11v6"/>
+          <path d="M14 11v6"/>
+          <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
         </svg>
         <span>Delete</span>
       </button>
@@ -2802,18 +2841,18 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
     menu.style.display = 'flex';
 
-    // Position menu relative to 3-dots button
+    // Position menu relative to 3-dots button (matching Google Gemini popover)
     const rect = triggerEl.getBoundingClientRect();
-    const menuWidth = 195;
-    let left = rect.right + 6;
+    const menuWidth = 225;
+    let left = rect.right + 8;
     if (left + menuWidth > window.innerWidth - 10) {
-      left = rect.left - menuWidth - 6;
+      left = rect.left - menuWidth - 8;
     }
     if (left < 10) left = 10;
 
     let top = rect.top;
-    if (top + 185 > window.innerHeight - 10) {
-      top = window.innerHeight - 195;
+    if (top + 280 > window.innerHeight - 10) {
+      top = window.innerHeight - 290;
     }
     if (top < 10) top = 10;
 
@@ -2856,6 +2895,26 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       });
     }
 
+    // Wire Mark as unread / read
+    const unreadBtn = menu.querySelector('.ctx-unread-btn');
+    if (unreadBtn) {
+      unreadBtn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        closeThreadContextMenu();
+        toggleThreadUnread(threadId);
+      });
+    }
+
+    // Wire Add to notebook
+    const addNbBtn = menu.querySelector('.ctx-add-notebook-btn');
+    if (addNbBtn) {
+      addNbBtn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        closeThreadContextMenu();
+        addThreadToNotebook(threadId);
+      });
+    }
+
     // Wire Delete
     const deleteBtn = menu.querySelector('.ctx-delete-btn');
     if (deleteBtn) {
@@ -2865,6 +2924,36 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         deleteThread(threadId);
       });
     }
+  }
+
+  function toggleThreadUnread(threadId) {
+    const threads = getStoredThreads();
+    const thread = threads.find(t => t.id === threadId);
+    if (!thread) return;
+
+    thread.isUnread = !thread.isUnread;
+    saveStoredThreads(threads);
+    renderAllThreadsInSidebar();
+    showToast(thread.isUnread ? 'Marked as unread' : 'Marked as read');
+  }
+
+  function addThreadToNotebook(threadId) {
+    const threads = getStoredThreads();
+    const thread = threads.find(t => t.id === threadId);
+    if (!thread) return;
+
+    const notebooks = getStoredNotebooks();
+    if (!notebooks.length) {
+      showToast('No notebooks available');
+      return;
+    }
+
+    let target = notebooks.find(nb => nb.id === activeNotebookId) || notebooks[0];
+    target.count = (target.count || 0) + 1;
+    saveStoredNotebooks(notebooks);
+    renderSidebarNotebooks();
+  renderAllThreadsInSidebar();
+    showToast(`Added to "${target.name}" 📓`);
   }
 
   function promptRenameThread(threadId) {
@@ -2940,7 +3029,11 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     sorted.forEach(t => {
       const cleanTitle = generateThreadTitle(t.title || (t.messages?.[0]?.content) || 'CBSE Doubt');
       const btn = document.createElement('button');
-      btn.className = 'recent-item' + (t.id === activeThreadId ? ' active' : '') + (t.isPinned ? ' pinned' : '') + (t.id === activeMenuThreadId ? ' menu-open' : '');
+      btn.className = 'recent-item' + 
+        (t.id === activeThreadId ? ' active' : '') + 
+        (t.isPinned ? ' pinned' : '') + 
+        (t.isUnread ? ' unread' : '') + 
+        (t.id === activeMenuThreadId ? ' menu-open' : '');
       btn.type = 'button';
       btn.setAttribute('data-thread-id', t.id);
       btn.title = t.title || cleanTitle;
@@ -2950,6 +3043,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
         <span class="recent-title-group">
           ${t.isPinned ? '<span class="pinned-indicator-icon" title="Pinned to top">📌</span>' : ''}
           <span class="recent-text">${escapeHtml(cleanTitle)}</span>
+          ${t.isUnread ? '<span class="unread-dot" title="Unread conversation"></span>' : ''}
         </span>
         <span class="recent-more-btn" title="Thread options" aria-label="Thread options" data-thread-id="${t.id}">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2983,6 +3077,12 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     const threads = getStoredThreads();
     const thread = threads.find(t => t.id === threadId);
     if (!thread) return;
+
+    if (thread.isUnread) {
+      thread.isUnread = false;
+      saveStoredThreads(threads);
+      renderAllThreadsInSidebar();
+    }
 
     activeThreadId = thread.id;
     const cleanTitle = generateThreadTitle(thread.title || (thread.messages?.[0]?.content) || 'CBSE Doubt');
@@ -3463,17 +3563,35 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
   window.addEventListener('resize', closeThreadContextMenu);
 
-  // ── Subject Notebooks (Workspaces) Logic ──
+  // ── Subject Notebooks (Workspaces) Logic (Exact Google NotebookLM Style) ──
+  const NOTEBOOK_ICON_SVG = `<svg class="notebook-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="7" y="3" width="13" height="18" rx="2.5"></rect>
+    <path d="M7 6H4.5A2.5 2.5 0 0 0 2 8.5v9A2.5 2.5 0 0 0 4.5 20H7"></path>
+  </svg>`;
+
+  const PLUS_ICON_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+  </svg>`;
+
+  const DOTS_ICON_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="5" cy="12" r="1.5" fill="currentColor"></circle>
+    <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+    <circle cx="19" cy="12" r="1.5" fill="currentColor"></circle>
+  </svg>`;
+
   const DEFAULT_NOTEBOOKS = [
-    { id: 'maths', name: 'Mathematics Standard', icon: '📐', subject: 'Maths', count: 12 },
-    { id: 'electricity', name: 'Electricity & Physics', icon: '⚡', subject: 'Science', count: 8 },
-    { id: 'chemistry', name: 'Chemical Reactions & Acids', icon: '🧪', subject: 'Science', count: 9 },
-    { id: 'sst', name: 'Social Science (SST)', icon: '🌍', subject: 'SST', count: 7 }
+    { id: 'chemistry', name: 'chemistry class 10', subject: 'Science' },
+    { id: 'electricity', name: 'Electricity Chapter', subject: 'Science' },
+    { id: 'gaurcity', name: 'GaurCity Car pool', subject: 'General' },
+    { id: 'maths', name: 'Mathematics Standard', subject: 'Maths' }
   ];
+
+  let activeNotebookId = null;
 
   function getStoredNotebooks() {
     try {
-      const saved = localStorage.getItem('boardwallah_custom_notebooks');
+      const saved = localStorage.getItem('boardwallah_custom_notebooks_v2');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
     return DEFAULT_NOTEBOOKS;
@@ -3481,7 +3599,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
 
   function saveStoredNotebooks(notebooks) {
     try {
-      localStorage.setItem('boardwallah_custom_notebooks', JSON.stringify(notebooks));
+      localStorage.setItem('boardwallah_custom_notebooks_v2', JSON.stringify(notebooks));
     } catch (e) {}
   }
 
@@ -3494,7 +3612,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   const notebooksCountLabel = document.getElementById('notebooks-count-label');
 
   function openCreateNotebookPrompt() {
-    const name = window.prompt("Enter new Notebook Title (e.g. 'Life Processes & Biology', 'Trigonometry Proofs'):");
+    const name = window.prompt("Enter notebook title:");
     if (!name || !name.trim()) return;
 
     const trimmed = name.trim();
@@ -3503,7 +3621,6 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     const newNb = {
       id: newId,
       name: trimmed,
-      icon: '📓',
       subject: 'Custom',
       count: 0,
       createdAt: Date.now()
@@ -3511,6 +3628,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     notebooks.push(newNb);
     saveStoredNotebooks(notebooks);
     renderSidebarNotebooks();
+  renderAllThreadsInSidebar();
     renderNotebooksModalList();
     showToast(`Notebook "${trimmed}" created!`);
     selectNotebook(newId, trimmed);
@@ -3518,8 +3636,10 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   }
 
   function selectNotebook(id, name) {
+    activeNotebookId = id;
     document.querySelectorAll('.notebook-item').forEach(b => {
-      b.classList.toggle('active', b.getAttribute('data-notebook-id') === id);
+      const match = b.getAttribute('data-notebook-id') === id || b.getAttribute('data-thread') === id;
+      b.classList.toggle('active', match);
     });
     if (activeNotebookTitle) {
       activeNotebookTitle.textContent = name;
@@ -3537,21 +3657,20 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     if (!list) return;
 
     const notebooks = getStoredNotebooks();
-    // Keep the "+ New notebook" button and "... All notebooks" button
     list.innerHTML = `
-      <button class="notebook-item new-notebook-btn" type="button" id="new-notebook-trigger">
-        <span class="item-icon">＋</span>
+      <button class="notebook-item new-notebook-btn" type="button" id="new-notebook-trigger" title="Create a new notebook">
+        <span class="item-icon">${PLUS_ICON_SVG}</span>
         <span class="item-label">New notebook</span>
       </button>
       ${notebooks.map(nb => `
-        <button class="notebook-item topic-preset-btn" data-thread="${nb.id}" data-notebook-id="${nb.id}" type="button">
-          <span class="item-icon">${nb.icon || '📄'}</span>
+        <button class="notebook-item topic-preset-btn ${(nb.id === activeNotebookId) ? 'active' : ''}" data-thread="${nb.id}" data-notebook-id="${nb.id}" type="button" title="${escapeHtml(nb.name)}">
+          <span class="item-icon">${NOTEBOOK_ICON_SVG}</span>
           <span class="item-label">${escapeHtml(nb.name)}</span>
         </button>
       `).join('')}
-      <button class="notebook-item" type="button" id="all-notebooks-btn">
-        <span class="item-icon">⋯</span>
-        <span class="item-label">All notebooks (${notebooks.length})</span>
+      <button class="notebook-item all-notebooks-btn" type="button" id="all-notebooks-btn" title="View all notebooks">
+        <span class="item-icon">${DOTS_ICON_SVG}</span>
+        <span class="item-label">All notebooks</span>
       </button>
     `;
 
@@ -3630,6 +3749,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   }
 
   renderSidebarNotebooks();
+  renderAllThreadsInSidebar();
 
   // Wire quick chips above input capsule
   const chipOpenLibrary = document.getElementById('chip-open-library');
@@ -3842,26 +3962,26 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     color: #0f172a !important;
   }
 
-  /* ── Floating 3-Dots Thread Context Menu (Google Gemini Style) ── */
+  /* ── Floating 3-Dots Thread Context Menu (Exact Google Gemini Style) ── */
   .thread-context-menu {
     position: fixed !important;
     z-index: 99999 !important;
     background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 14px !important;
+    border: none !important;
+    border-radius: 18px !important;
     padding: 0.4rem !important;
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.14), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
-    min-width: 195px !important;
+    box-shadow: 0 4px 28px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+    min-width: 220px !important;
     display: none;
     flex-direction: column !important;
-    gap: 0.15rem !important;
+    gap: 0.1rem !important;
     animation: ctxFadeIn 0.12s cubic-bezier(0, 0, 0.2, 1) forwards !important;
     transform-origin: top left !important;
   }
   @keyframes ctxFadeIn {
     from {
       opacity: 0;
-      transform: scale(0.95);
+      transform: scale(0.96);
     }
     to {
       opacity: 1;
@@ -3871,30 +3991,34 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   .ctx-menu-item {
     display: flex !important;
     align-items: center !important;
-    gap: 0.75rem !important;
-    padding: 0.55rem 0.8rem !important;
-    border-radius: 8px !important;
+    gap: 0.95rem !important;
+    padding: 0.62rem 0.95rem !important;
+    border-radius: 12px !important;
     background: transparent !important;
     border: none !important;
-    color: #1e293b !important;
-    font-size: 0.84rem !important;
-    font-weight: 500 !important;
+    color: #1f1f1f !important;
+    font-size: 0.88rem !important;
+    font-weight: 400 !important;
     cursor: pointer !important;
     width: 100% !important;
     text-align: left !important;
     transition: background 0.12s ease, color 0.12s ease !important;
     box-sizing: border-box !important;
+    user-select: none !important;
+    font-family: inherit !important;
   }
   .ctx-menu-item:hover {
-    background: #f1f5f9 !important;
-    color: #0f172a !important;
+    background: #f0f4f9 !important;
+    color: #1f1f1f !important;
   }
   .ctx-menu-item svg {
     flex-shrink: 0 !important;
-    color: #475569 !important;
+    color: #444746 !important;
+    width: 18px !important;
+    height: 18px !important;
   }
   .ctx-menu-item:hover svg {
-    color: #0f172a !important;
+    color: #1f1f1f !important;
   }
   .ctx-menu-item.ctx-delete-btn:hover {
     background: #fef2f2 !important;
@@ -3907,6 +4031,17 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     height: 1px !important;
     background: #e2e8f0 !important;
     margin: 0.25rem 0 !important;
+  }
+  .unread-dot {
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: #1a73e8 !important;
+    flex-shrink: 0 !important;
+    margin-left: 4px !important;
+  }
+  .recent-item.unread .recent-text {
+    font-weight: 600 !important;
   }
   .recent-item .pin-icon,
   .recents-list .recent-item .pin-icon {
@@ -4288,26 +4423,69 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     overflow-x: hidden;
   }
 
-  .notebook-item,
-  :global(.recent-item) {
+  /* ── Notebooks List (Exact Google Gemini / Image 2 style) ── */
+  .notebooks-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.15rem !important;
+    width: 100% !important;
+    margin-top: 0.15rem !important;
+  }
+  .notebook-item {
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    gap: 0.5rem !important;
-    padding: 0.45rem 0.75rem !important;
+    justify-content: flex-start !important;
+    gap: 0.75rem !important;
+    padding: 0.45rem 0.65rem 0.45rem 0.75rem !important;
     border-radius: 999px !important;
     border: none !important;
-    background: transparent;
-    color: #334155;
-    font-size: 0.82rem !important;
-    font-weight: 500 !important;
+    background: transparent !important;
+    color: #1f1f1f !important;
+    font-size: 0.86rem !important;
+    font-weight: 400 !important;
     cursor: pointer !important;
     text-align: left !important;
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
-    transition: background 0.15s ease;
+    transition: background 0.15s ease, color 0.15s ease !important;
+    text-decoration: none !important;
+    user-select: none !important;
+    line-height: 1.4 !important;
+  }
+  .notebook-item:hover {
+    background: #f0f4f9 !important;
+    color: #1f1f1f !important;
+  }
+  .notebook-item.active {
+    background: #e9eef6 !important;
+    color: #1f1f1f !important;
+    font-weight: 500 !important;
+  }
+  .notebook-item .item-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 18px !important;
+    height: 18px !important;
+    flex-shrink: 0 !important;
+    color: #1f1f1f !important;
+  }
+  .notebook-item .item-icon svg {
+    display: block !important;
+    color: #1f1f1f !important;
+  }
+  .notebook-item .item-label {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.35 !important;
+    font-size: 0.86rem !important;
+    color: #1f1f1f !important;
   }
   .notebook-item:hover,
   :global(.recent-item:hover) {
