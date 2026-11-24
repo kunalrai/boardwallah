@@ -1,3 +1,7 @@
+export const config = {
+  maxDuration: 60,
+};
+
 const SYSTEM_PROMPT = `You are "Wallah AI Doubt Tutor", an expert Socratic tutor for CBSE Class 10 board examinations.
 Your goal is to guide students to complete conceptual mastery and full marks in CBSE board exams.
 
@@ -131,23 +135,31 @@ Please inspect any attached image, prior conversation context, or text, and resp
 
         for (const modelName of candidateModels) {
           try {
-            const response = await fetch(
-              `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiApiKey}`,
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  systemInstruction: {
-                    parts: [{ text: SYSTEM_PROMPT }]
-                  },
-                  contents: contents,
-                  generationConfig: {
-                    temperature: 0.3,
-                    maxOutputTokens: 8192,
-                  },
-                }),
-              }
-            );
+            const modelAbortCtrl = new AbortController();
+            const modelTimeout = setTimeout(() => modelAbortCtrl.abort(), 12000);
+            let response;
+            try {
+              response = await fetch(
+                `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiApiKey}`,
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  signal: modelAbortCtrl.signal,
+                  body: JSON.stringify({
+                    systemInstruction: {
+                      parts: [{ text: SYSTEM_PROMPT }]
+                    },
+                    contents: contents,
+                    generationConfig: {
+                      temperature: 0.3,
+                      maxOutputTokens: 8192,
+                    },
+                  }),
+                }
+              );
+            } finally {
+              clearTimeout(modelTimeout);
+            }
 
             if (response.ok) {
               const data = await response.json();
