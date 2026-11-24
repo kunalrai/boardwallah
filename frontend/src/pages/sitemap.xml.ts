@@ -15,6 +15,7 @@ export const GET: APIRoute = () => {
   const { provider } = loadContent();
   const paths = [
     "",
+    "chat/",
     "subjects/",
     "plans/",
     "enquiry/",

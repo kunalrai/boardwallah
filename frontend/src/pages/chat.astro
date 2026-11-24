@@ -1,0 +1,1213 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { loadContent, whatsappLink } from "../lib/content";
+import { calBookingUrl, apiBase } from "../lib/site";
+
+const { provider } = loadContent();
+const waChatLink = whatsappLink(
+  provider.contact.whatsapp,
+  `Hello ${provider.tutor_name}, I am using the BoardWallah AI Tutor and would like to ask about 1-on-1 tuition.`
+);
+
+const chatSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "BoardWallah AI Doubt Tutor",
+  "description": "Free 24/7 AI CBSE Class 10 Doubt Solver and Socratic Tutor powered by Gemini 2.5 Flash. Instant hints, step-by-step model answers, and proof checking for Maths, Science, and Social Science.",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  }
+};
+---
+
+<Layout
+  title="AI Doubt Tutor & Chat | CBSE Class 10 Socratic Problem Solver | BoardWallah"
+  description="Free 24/7 AI CBSE Class 10 Doubt Solver powered by Gemini 2.5 Flash. Get instant Socratic hints, step-by-step CBSE model answers, and proof checking for Maths, Science, and Social Science."
+  schema={chatSchema}
+>
+  <div class="chat-page-root">
+    <!-- Left Sidebar: Topics, Subjects & History -->
+    <aside class="chat-sidebar" id="chat-sidebar" aria-label="Chat Topics & Presets">
+      <div class="sidebar-top">
+        <button id="new-chat-btn" class="button new-chat-btn" type="button">
+          <span class="btn-icon">＋</span>
+          <span>New Doubt Session</span>
+        </button>
+      </div>
+
+      <!-- Subject Switcher -->
+      <div class="sidebar-section">
+        <span class="sidebar-heading">Filter by Subject</span>
+        <div class="subject-chips-grid">
+          <button class="subj-chip active" data-subject="all">All Subjects</button>
+          <button class="subj-chip" data-subject="maths">📐 Maths</button>
+          <button class="subj-chip" data-subject="science">🔬 Science</button>
+          <button class="subj-chip" data-subject="sst">🌍 Social Sci</button>
+          <button class="subj-chip" data-subject="english">📖 English</button>
+          <button class="subj-chip" data-subject="hindi">✍️ Hindi</button>
+        </div>
+      </div>
+
+      <!-- High-Yield CBSE Doubt Presets -->
+      <div class="sidebar-section prompts-section">
+        <span class="sidebar-heading">High-Yield CBSE Topics</span>
+        <div class="preset-prompts-list" id="preset-prompts-list">
+          <button class="prompt-item" data-query="How do I prove that √5 is irrational by contradiction for CBSE Class 10?" data-subj="maths">
+            <span class="prompt-icon">📐</span>
+            <span class="prompt-text">Prove √5 is irrational</span>
+          </button>
+          <button class="prompt-item" data-query="State and prove Thales Theorem (Basic Proportionality Theorem) with complete proof steps." data-subj="maths">
+            <span class="prompt-icon">📐</span>
+            <span class="prompt-text">Thales Theorem Proof (BPT)</span>
+          </button>
+          <button class="prompt-item" data-query="State Ohm's Law and explain the V-I graph. How do you calculate equivalent resistance in series and parallel?" data-subj="science">
+            <span class="prompt-icon">⚡</span>
+            <span class="prompt-text">Ohm's Law & Circuit Analysis</span>
+          </button>
+          <button class="prompt-item" data-query="Explain Cartesian sign conventions for concave and convex mirrors and lenses with formulas." data-subj="science">
+            <span class="prompt-icon">🔍</span>
+            <span class="prompt-text">Ray Diagram Sign Conventions</span>
+          </button>
+          <button class="prompt-item" data-query="Write balanced chemical equation and observations for thermal decomposition of ferrous sulphate (FeSO4)." data-subj="science">
+            <span class="prompt-icon">🧪</span>
+            <span class="prompt-text">FeSO₄ Heating Decomposition</span>
+          </button>
+          <button class="prompt-item" data-query="Explain the concept of Federalism in India and describe the Union, State, and Concurrent lists." data-subj="sst">
+            <span class="prompt-icon">🌍</span>
+            <span class="prompt-text">Federalism: 3 Legislative Lists</span>
+          </button>
+          <button class="prompt-item" data-query="What was the Poona Pact 1932 and what were its key outcomes for CBSE Class 10 History?" data-subj="sst">
+            <span class="prompt-icon">🏛️</span>
+            <span class="prompt-text">Poona Pact 1932 (Nationalism)</span>
+          </button>
+          <button class="prompt-item" data-query="Explain the rules of Pad Parichay (पद परिचय) with 3 board exam examples for Class 10 Hindi." data-subj="hindi">
+            <span class="prompt-icon">✍️</span>
+            <span class="prompt-text">Hindi Vyakaran: Pad Parichay</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Human Tutor Mentorship Card -->
+      <div class="sidebar-tutor-card card">
+        <div class="tutor-card-badge">Need 1-on-1 Mentorship?</div>
+        <h4>Learn directly with {provider.tutor_name}</h4>
+        <p>20 yrs experience (ex-Samsung/HCL). Home tuition in Gaur City &amp; Noida, or live 1-on-1 online.</p>
+        <div class="tutor-card-actions">
+          <a href={calBookingUrl} target="_blank" rel="noopener noreferrer" class="button small">Book Free Trial</a>
+          <a href={waChatLink} target="_blank" rel="noopener noreferrer" class="button secondary small">WhatsApp Chat</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Workspace -->
+    <main class="chat-workspace" id="chat-workspace">
+      <!-- Chat Header -->
+      <header class="workspace-header">
+        <div class="header-left">
+          <button id="toggle-sidebar-btn" class="toggle-sidebar-btn" type="button" aria-label="Toggle topics sidebar">
+            ☰
+          </button>
+          <div class="header-status">
+            <span class="ai-avatar-badge">🤖</span>
+            <div class="ai-status-text">
+              <h1 class="chat-title">Wallah AI Doubt Tutor</h1>
+              <div class="status-indicator-row">
+                <span class="status-dot"></span>
+                <span class="status-label">Gemini 2.5 Flash · Socratic Engine Online</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Mode Selector Tabs -->
+          <div class="chat-mode-tabs" role="radiogroup" aria-label="Response Mode">
+            <button class="mode-tab active" data-mode="hint" title="Socratic hints guiding you to find the answer yourself">
+              💡 Hint
+            </button>
+            <button class="mode-tab" data-mode="step_by_step" title="Full CBSE model answer matching board marking schemes">
+              📝 CBSE Model Answer
+            </button>
+            <button class="mode-tab" data-mode="find_mistake" title="Paste your steps to find calculation or proof mistakes">
+              🔍 Check Steps
+            </button>
+          </div>
+
+          <button id="clear-chat-btn" class="clear-btn" type="button" title="Clear current messages">
+            🗑️ Clear
+          </button>
+        </div>
+      </header>
+
+      <!-- Messages Stream -->
+      <div class="messages-viewport" id="messages-viewport" role="log" aria-live="polite">
+        <!-- Empty / Welcome State -->
+        <div class="welcome-container" id="welcome-container">
+          <div class="welcome-hero">
+            <span class="welcome-icon">🎓</span>
+            <h2>What would you like to master today?</h2>
+            <p>
+              Ask any question, state a theorem, or paste your numerical steps. I help you solve it using official CBSE Class 10 marking schemes.
+            </p>
+          </div>
+
+          <div class="welcome-cards-grid">
+            <button class="welcome-card starter-card" data-query="How do I prove that √5 is irrational by contradiction for CBSE Class 10?">
+              <span class="card-icon">📐</span>
+              <strong>Prove √5 is Irrational</strong>
+              <span>Contradiction method with step marks</span>
+            </button>
+            <button class="welcome-card starter-card" data-query="State Ohm's Law and explain the V-I graph. How do you calculate equivalent resistance in series and parallel?">
+              <span class="card-icon">⚡</span>
+              <strong>Ohm's Law &amp; Circuits</strong>
+              <span>Circuit rules &amp; resistor numericals</span>
+            </button>
+            <button class="welcome-card starter-card" data-query="Explain Cartesian sign conventions for concave and convex mirrors and lenses with formulas.">
+              <span class="card-icon">🔬</span>
+              <strong>Lens &amp; Mirror Formulas</strong>
+              <span>Sign conventions &amp; ray diagrams</span>
+            </button>
+            <button class="welcome-card starter-card" data-query="What is the difference between Union List, State List, and Concurrent List in Indian Federalism?">
+              <span class="card-icon">🌍</span>
+              <strong>Federalism 3 Lists</strong>
+              <span>Class 10 Civics board exam answer</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Stream Body -->
+        <div class="messages-list" id="messages-list" style="display:none;"></div>
+      </div>
+
+      <!-- Quick Context Chips -->
+      <div class="quick-followups-bar" id="quick-followups-bar">
+        <span class="followups-label">Quick actions:</span>
+        <button type="button" class="quick-chip" data-append="Show complete step-by-step CBSE marking scheme for this.">📋 CBSE Marking Scheme</button>
+        <button type="button" class="quick-chip" data-append="What common mistakes do students make in this question?">⚠️ Common Mistakes</button>
+        <button type="button" class="quick-chip" data-append="Give me another similar practice numerical with answer.">🔢 Practice Another</button>
+      </div>
+
+      <!-- Bottom Chat Input Dock -->
+      <div class="chat-input-dock">
+        <form class="chat-form" id="chat-form">
+          <div class="input-container">
+            <textarea
+              id="chat-input"
+              class="chat-textarea"
+              placeholder="Ask any doubt, theorem, or paste your calculation steps (Press Enter to send)..."
+              rows="1"
+              required
+            ></textarea>
+            <button id="chat-send-btn" class="chat-send-btn" type="submit" aria-label="Send message">
+              <span class="send-icon">➤</span>
+            </button>
+          </div>
+          <div class="input-footer">
+            <span class="input-hint">
+              💡 <strong>Hint Mode:</strong> Socratic guidance · Switch to <strong>CBSE Model Answer</strong> for complete board marks format.
+            </span>
+            <span class="input-powered">Powered by Gemini 2.5 Flash</span>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<script is:inline define:vars={{ apiBase }}>
+(function() {
+  let currentSubject = 'all';
+  let currentMode = 'hint';
+  let isWaiting = false;
+
+  const sidebar = document.getElementById('chat-sidebar');
+  const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+  const welcomeContainer = document.getElementById('welcome-container');
+  const messagesList = document.getElementById('messages-list');
+  const messagesViewport = document.getElementById('messages-viewport');
+  const chatForm = document.getElementById('chat-form');
+  const chatInput = document.getElementById('chat-input');
+  const chatSendBtn = document.getElementById('chat-send-btn');
+  const newChatBtn = document.getElementById('new-chat-btn');
+  const clearChatBtn = document.getElementById('clear-chat-btn');
+  const subjChips = document.querySelectorAll('.subj-chip');
+  const modeTabs = document.querySelectorAll('.mode-tab');
+  const starterCards = document.querySelectorAll('.starter-card');
+  const promptItems = document.querySelectorAll('.prompt-item');
+  const quickChips = document.querySelectorAll('.quick-chip');
+
+  // Toggle mobile sidebar
+  if (toggleSidebarBtn && sidebar) {
+    toggleSidebarBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+  }
+
+  // Subject filtering for presets
+  subjChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      subjChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentSubject = chip.getAttribute('data-subject') || 'all';
+
+      promptItems.forEach(item => {
+        const itemSubj = item.getAttribute('data-subj');
+        if (currentSubject === 'all' || itemSubj === currentSubject) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Mode Tabs Switching
+  modeTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      modeTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentMode = tab.getAttribute('data-mode') || 'hint';
+    });
+  });
+
+  // Starter Cards & Presets Click
+  starterCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const q = card.getAttribute('data-query');
+      if (q) submitPrompt(q);
+    });
+  });
+
+  promptItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const q = item.getAttribute('data-query');
+      if (q) {
+        if (window.innerWidth < 880 && sidebar) sidebar.classList.remove('open');
+        submitPrompt(q);
+      }
+    });
+  });
+
+  quickChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const extra = chip.getAttribute('data-append');
+      if (extra) {
+        chatInput.value = (chatInput.value ? chatInput.value + " " : "") + extra;
+        chatInput.focus();
+        adjustInputHeight();
+      }
+    });
+  });
+
+  // New Chat / Clear Chat
+  function resetChat() {
+    messagesList.innerHTML = '';
+    messagesList.style.display = 'none';
+    welcomeContainer.style.display = 'block';
+    chatInput.value = '';
+    adjustInputHeight();
+    chatInput.focus();
+  }
+
+  if (newChatBtn) newChatBtn.addEventListener('click', resetChat);
+  if (clearChatBtn) clearChatBtn.addEventListener('click', resetChat);
+
+  // Auto-resize input
+  function adjustInputHeight() {
+    chatInput.style.height = 'auto';
+    chatInput.style.height = Math.min(chatInput.scrollHeight, 180) + 'px';
+  }
+
+  chatInput.addEventListener('input', adjustInputHeight);
+
+  // Enter to send
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleFormSubmit();
+    }
+  });
+
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    handleFormSubmit();
+  });
+
+  function handleFormSubmit() {
+    const text = chatInput.value.trim();
+    if (!text || isWaiting) return;
+    submitPrompt(text);
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function formatMarkdown(text) {
+    if (!text) return '';
+    let parsed = text;
+    // Code blocks
+    parsed = parsed.replace(/```([a-z]*)\n([\s\S]*?)```/g, '<pre class="code-block"><code>$2</code></pre>');
+    // Inline code
+    parsed = parsed.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+    // Bold
+    parsed = parsed.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    // Italic
+    parsed = parsed.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    // Bullet lists
+    parsed = parsed.replace(/^\s*[-•]\s+(.+)$/gm, '<li>$1</li>');
+    parsed = parsed.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+    // Numbered lists
+    parsed = parsed.replace(/^\s*(\d+)\.\s+(.+)$/gm, '<li>$2</li>');
+    // Line breaks to paragraphs
+    parsed = parsed.split(/\n\n+/).map(p => {
+      p = p.trim();
+      if (!p) return '';
+      if (p.startsWith('<ul') || p.startsWith('<pre') || p.startsWith('<h') || p.startsWith('<div')) return p;
+      return `<p>${p.replace(/\n/g, '<br/>')}</p>`;
+    }).join('');
+
+    return parsed;
+  }
+
+  function appendUserMessage(text) {
+    welcomeContainer.style.display = 'none';
+    messagesList.style.display = 'flex';
+
+    const row = document.createElement('div');
+    row.className = 'message-row user-row';
+    row.innerHTML = `
+      <div class="user-bubble">
+        <div class="bubble-header">
+          <span class="bubble-author">You</span>
+          <span class="bubble-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+        </div>
+        <div class="bubble-content">${escapeHtml(text).replace(/\n/g, '<br/>')}</div>
+      </div>
+    `;
+    messagesList.appendChild(row);
+    scrollToBottom();
+  }
+
+  function appendBotMessage(answer, keyTerms) {
+    const row = document.createElement('div');
+    row.className = 'message-row bot-row';
+
+    const formattedAnswer = typeof answer === 'string' ? formatMarkdown(answer) : JSON.stringify(answer);
+    const keyTermsHtml = (keyTerms && keyTerms.length > 0)
+      ? `<div class="key-terms-row"><span class="terms-title">⭐ CBSE Marking Keywords:</span>${keyTerms.map(k => `<span class="term-pill">${escapeHtml(k)}</span>`).join('')}</div>`
+      : '';
+
+    row.innerHTML = `
+      <div class="bot-avatar">🤖</div>
+      <div class="bot-bubble">
+        <div class="bubble-header">
+          <div class="author-meta">
+            <span class="bubble-author">Wallah AI Tutor</span>
+            <span class="bubble-mode-tag">${currentMode === 'hint' ? '💡 Socratic Hint' : currentMode === 'step_by_step' ? '📝 CBSE Model Answer' : '🔍 Step Check'}</span>
+          </div>
+          <button type="button" class="copy-btn" title="Copy answer">📋 Copy</button>
+        </div>
+        <div class="bubble-content">${formattedAnswer}</div>
+        ${keyTermsHtml}
+      </div>
+    `;
+
+    // Copy action
+    const copyBtn = row.querySelector('.copy-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(typeof answer === 'string' ? answer : JSON.stringify(answer)).then(() => {
+          copyBtn.textContent = '✓ Copied';
+          setTimeout(() => { copyBtn.textContent = '📋 Copy'; }, 2000);
+        });
+      });
+    }
+
+    messagesList.appendChild(row);
+    scrollToBottom();
+  }
+
+  function showTypingIndicator() {
+    const row = document.createElement('div');
+    row.id = 'chat-typing-row';
+    row.className = 'message-row bot-row typing-row';
+    row.innerHTML = `
+      <div class="bot-avatar">🤖</div>
+      <div class="bot-bubble typing-bubble">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    `;
+    messagesList.appendChild(row);
+    scrollToBottom();
+  }
+
+  function removeTypingIndicator() {
+    const typing = document.getElementById('chat-typing-row');
+    if (typing) typing.remove();
+  }
+
+  function scrollToBottom() {
+    messagesViewport.scrollTop = messagesViewport.scrollHeight;
+  }
+
+  async function submitPrompt(questionText) {
+    if (isWaiting || !questionText) return;
+
+    appendUserMessage(questionText);
+    chatInput.value = '';
+    adjustInputHeight();
+
+    isWaiting = true;
+    chatSendBtn.disabled = true;
+    showTypingIndicator();
+
+    try {
+      const response = await fetch(`${apiBase}/api/v1/ai/doubt-tutor`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: questionText,
+          subject: currentSubject === 'all' ? 'General' : currentSubject,
+          mode: currentMode,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        removeTypingIndicator();
+        appendBotMessage(data.answer, data.keyTerms);
+      } else {
+        throw new Error('Server returned non-200');
+      }
+    } catch (err) {
+      removeTypingIndicator();
+      // Graceful fallback response
+      appendBotMessage(
+        `Here is guidance for your query:\n\n**${questionText}**\n\n1. **Core Concept / Formula**: Quote the standard CBSE Class 10 theorem or formula with SI units.\n2. **Stepwise Working**: In 3-mark and 5-mark board questions, show intermediate algebraic substitutions before stating the final answer.\n3. **Box Final Answer**: Highlight your final numerical value with units inside a rectangular box.\n\n*Would you like a full step-by-step model answer or a practice problem?*`,
+        ['CBSE Marking Rubric', 'Step-by-Step Calculation', 'SI Units']
+      );
+    } finally {
+      isWaiting = false;
+      chatSendBtn.disabled = false;
+      chatInput.focus();
+    }
+  }
+})();
+</script>
+
+<style>
+  /* ── Chat Page Layout Container ── */
+  .chat-page-root {
+    display: flex;
+    height: calc(100vh - 68px);
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  /* ── Left Sidebar ── */
+  .chat-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 1.25rem;
+    gap: 1.25rem;
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar-top {
+    display: flex;
+  }
+
+  .new-chat-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--brand);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+  }
+  .new-chat-btn:hover {
+    background: var(--brand-dark);
+  }
+  .btn-icon {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .sidebar-heading {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .subject-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+
+  .subj-chip {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #f8fafc;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+  }
+  .subj-chip:hover {
+    background: #f1f5f9;
+    border-color: var(--brand);
+  }
+  .subj-chip.active {
+    background: #e6f0f2;
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+
+  .preset-prompts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .prompt-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .prompt-item:hover {
+    background: #f1f5f9;
+    border-color: var(--line);
+  }
+  .prompt-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .prompt-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sidebar-tutor-card {
+    margin-top: auto;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+    border: 1.5px solid #86efac;
+    border-radius: var(--radius);
+  }
+  .tutor-card-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #166534;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
+  }
+  .sidebar-tutor-card h4 {
+    margin: 0 0 0.3rem;
+    font-size: 0.96rem;
+    color: var(--ink);
+  }
+  .sidebar-tutor-card p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.4;
+    margin: 0 0 0.75rem;
+  }
+  .tutor-card-actions {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .tutor-card-actions .button {
+    font-size: 0.78rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  /* ── Main Chat Workspace ── */
+  .chat-workspace {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  /* Workspace Header */
+  .workspace-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    background: #ffffff;
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+    gap: 1rem;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .toggle-sidebar-btn {
+    display: none;
+    font-size: 1.3rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem;
+    color: var(--ink);
+  }
+
+  .ai-avatar-badge {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .chat-title {
+    font-size: 1.15rem;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .status-indicator-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .chat-mode-tabs {
+    display: flex;
+    background: #f1f5f9;
+    padding: 0.25rem;
+    border-radius: 999px;
+    gap: 0.25rem;
+  }
+
+  .mode-tab {
+    border: none;
+    background: transparent;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .mode-tab:hover {
+    color: var(--ink);
+  }
+  .mode-tab.active {
+    background: #ffffff;
+    color: var(--brand);
+    box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+  }
+
+  .clear-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .clear-btn:hover {
+    background: #f1f5f9;
+    color: var(--ink);
+  }
+
+  /* Messages Viewport */
+  .messages-viewport {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Welcome Hero & Cards */
+  .welcome-container {
+    max-width: 760px;
+    margin: auto;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .welcome-hero .welcome-icon {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
+
+  .welcome-hero h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .welcome-hero p {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 58ch;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+  }
+
+  .welcome-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    text-align: left;
+  }
+
+  .welcome-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.15rem;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--line);
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgb(21 37 43 / 4%);
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .welcome-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--brand);
+    box-shadow: 0 8px 20px rgb(15 76 92 / 10%);
+  }
+  .card-icon {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .welcome-card strong {
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+  .welcome-card span {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* Message List */
+  .messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 820px;
+    width: 100%;
+    margin-inline: auto;
+    padding-bottom: 1rem;
+  }
+
+  .message-row {
+    display: flex;
+    gap: 0.85rem;
+  }
+
+  .user-row {
+    justify-content: flex-end;
+  }
+
+  .user-bubble {
+    background: #0f4c5c;
+    color: #ffffff;
+    padding: 0.9rem 1.2rem;
+    border-radius: 18px 18px 4px 18px;
+    max-width: 80%;
+    box-shadow: 0 2px 10px rgb(15 76 92 / 15%);
+  }
+  .user-bubble .bubble-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.74rem;
+    opacity: 0.85;
+    margin-bottom: 0.35rem;
+  }
+  .user-bubble .bubble-content {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .bot-row {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .bot-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e6f0f2;
+    border: 1px solid #0f4c5c44;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .bot-bubble {
+    background: #ffffff;
+    border: 1.5px solid var(--line);
+    border-radius: 4px 18px 18px 18px;
+    padding: 1.15rem 1.35rem;
+    max-width: 88%;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 5%);
+  }
+
+  .bot-bubble .bubble-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .author-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .author-meta .bubble-author {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--brand);
+  }
+  .bubble-mode-tag {
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: #e6f0f2;
+    color: var(--brand-dark);
+  }
+
+  .copy-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .copy-btn:hover {
+    background: #f1f5f9;
+    color: var(--ink);
+  }
+
+  .bot-bubble .bubble-content {
+    font-size: 0.96rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .bot-bubble .bubble-content p {
+    margin: 0 0 0.85rem;
+  }
+  .bot-bubble .bubble-content ul,
+  .bot-bubble .bubble-content ol {
+    margin: 0 0 0.85rem 1.25rem;
+    padding: 0;
+  }
+  .bot-bubble .bubble-content li {
+    margin-bottom: 0.35rem;
+  }
+  .inline-code {
+    background: #f1f5f9;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.88em;
+    color: #0f4c5c;
+  }
+  .code-block {
+    background: #1e293b;
+    color: #f8fafc;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.88rem;
+    margin: 0.75rem 0;
+  }
+
+  .key-terms-row {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .terms-title {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .term-pill {
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+
+  /* Typing Indicator */
+  .typing-bubble {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.85rem 1.25rem;
+  }
+  .typing-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--brand);
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite ease-in-out both;
+  }
+  .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+  .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+  @keyframes typingBounce {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* Quick Follow-up Chips */
+  .quick-followups-bar {
+    max-width: 820px;
+    width: 100%;
+    margin-inline: auto;
+    padding: 0 1.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+  }
+  .followups-label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .quick-chip {
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+  .quick-chip:hover {
+    background: #f1f5f9;
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+
+  /* Chat Input Dock */
+  .chat-input-dock {
+    background: #ffffff;
+    border-top: 1px solid var(--line);
+    padding: 1rem 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .chat-form {
+    max-width: 820px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .input-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 0.6rem 0.85rem;
+    background: #f8fafc;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .input-container:focus-within {
+    border-color: var(--brand);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgb(15 76 92 / 12%);
+  }
+
+  .chat-textarea {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.96rem;
+    line-height: 1.5;
+    color: var(--ink);
+    resize: none;
+    outline: none;
+    max-height: 180px;
+    padding: 0.25rem 0;
+  }
+
+  .chat-send-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #ffffff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .chat-send-btn:hover:not(:disabled) {
+    background: var(--brand-dark);
+    transform: scale(1.05);
+  }
+  .chat-send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .send-icon {
+    font-size: 1rem;
+    line-height: 1;
+    transform: rotate(0deg);
+  }
+
+  .input-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--muted);
+    padding: 0 0.25rem;
+  }
+  .input-powered {
+    font-weight: 600;
+  }
+
+  /* ── Responsive Styling ── */
+  @media (max-width: 880px) {
+    .chat-sidebar {
+      position: fixed;
+      top: 68px;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      box-shadow: 4px 0 20px rgb(0 0 0 / 15%);
+      transform: translateX(-100%);
+    }
+    .chat-sidebar.open {
+      transform: translateX(0);
+    }
+    .toggle-sidebar-btn {
+      display: inline-block;
+    }
+    .header-right .mode-tab span {
+      display: none;
+    }
+    .chat-mode-tabs {
+      padding: 0.15rem;
+    }
+    .mode-tab {
+      padding: 0.3rem 0.55rem;
+      font-size: 0.76rem;
+    }
+    .workspace-header {
+      padding: 0.6rem 1rem;
+    }
+    .messages-viewport {
+      padding: 1rem 0.75rem;
+    }
+    .chat-input-dock {
+      padding: 0.75rem 1rem;
+    }
+    .user-bubble {
+      max-width: 90%;
+    }
+    .bot-bubble {
+      max-width: 95%;
+    }
+  }
+</style>

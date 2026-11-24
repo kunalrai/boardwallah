@@ -26,9 +26,10 @@ const path = Astro.url.pathname;
 const canonical = absoluteUrl(path);
 const links: { href: string; label: string; external?: boolean }[] = [
   { href: "/", label: "Home" },
+  { href: "/chat/", label: "AI Tutor 🤖" },
   { href: "/subjects/", label: "Subjects" },
-  { href: "/plans/", label: "Plans" },
   { href: "/resources/", label: "Resources" },
+  { href: "/plans/", label: "Plans" },
   { href: calBookingUrl, label: "Book a trial", external: true },
   { href: "/enquiry/", label: "Enquiry" },
   { href: "/booking/", label: "Manage booking" },
@@ -205,8 +206,8 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
       </div>
     </footer>
 
-    <!-- Wallah AI Doubt Tutor Floating Socratic Assistant -->
-    <AiDoubtTutor />
+    <!-- Wallah AI Doubt Tutor Floating Socratic Assistant (hidden on full-page /chat/) -->
+    {!path.startsWith("/chat") && <AiDoubtTutor />}
 
     <!-- Global Quiz Progress & Mastery Tracker Script -->
     <script is:inline>

@@ -107,6 +107,7 @@ const homeSchema = {
           <a class="button whatsapp-btn" href={waHeroLink} target="_blank" rel="noopener noreferrer">
             <span class="wa-icon" aria-hidden="true">💬</span> Chat on WhatsApp
           </a>
+          <a href="/chat/" class="button ai-tutor-hero-btn">🤖 Ask AI Tutor</a>
           <a href="/resources/" class="button resource-cta-btn">📚 Free Study Resources</a>
         </div>
         <div class="hero-trust-chips">
@@ -782,6 +783,21 @@ const homeSchema = {
   .resource-cta-btn:hover {
     background: #d6ecf0;
     color: var(--brand-dark);
+  }
+
+  /* AI Tutor CTA Button in Hero */
+  .ai-tutor-hero-btn {
+    background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+    color: #ffffff;
+    border: 1px solid #14b8a6;
+    box-shadow: 0 4px 14px rgb(13 148 136 / 25%);
+    font-weight: 600;
+  }
+  .ai-tutor-hero-btn:hover {
+    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgb(13 148 136 / 35%);
   }
 
   /* ── CBSE 2026 Board Exam Dates Section ── */
