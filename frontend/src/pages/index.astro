@@ -171,6 +171,12 @@ const chatSchema = {
         </div>
       </div>
 
+      <!-- PWA Install Sidebar Button -->
+      <button type="button" class="sidebar-pwa-install-item" id="pwa-install-sidebar-btn" style="display:none;" title="Install Boardwallah App for offline CBSE access">
+        <span class="item-icon">📲</span>
+        <span class="item-label">Install App</span>
+      </button>
+
       <!-- Bottom Sign In / Student Account Button -->
       <button type="button" class="sidebar-footer-profile" id="sidebar-profile-card" title="Sign in with Google">
         <div class="profile-left">
@@ -199,6 +205,10 @@ const chatSchema = {
           <span class="active-notebook-title" id="active-notebook-title"></span>
         </div>
         <div class="header-right-col">
+          <button id="pwa-install-header-btn" class="pwa-install-header-btn" type="button" style="display:none;" title="Install Boardwallah App on this device">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Install App</span>
+          </button>
           <div class="mode-pill-select" id="mode-pill-select" role="radiogroup" aria-label="AI Mode">
             <button class="mode-btn active" data-mode="hint" type="button" title="Socratic hints guiding you to find the answer yourself">💡 Hint</button>
             <button class="mode-btn" data-mode="step_by_step" type="button" title="Full CBSE model answer with marking scheme">📝 CBSE Answer</button>
@@ -2509,12 +2519,114 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     }
   }, true);
 
+  // ── PWA Installation Logic ──
+  let deferredPwaPrompt = null;
+  const pwaHeaderBtn = document.getElementById('pwa-install-header-btn');
+  const pwaSidebarBtn = document.getElementById('pwa-install-sidebar-btn');
+
+  function updatePwaInstallVisibility(show) {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+    if (isStandalone) {
+      if (pwaHeaderBtn) pwaHeaderBtn.style.display = 'none';
+      if (pwaSidebarBtn) pwaSidebarBtn.style.display = 'none';
+      return;
+    }
+    if (pwaHeaderBtn) pwaHeaderBtn.style.display = show ? 'inline-flex' : 'none';
+    if (pwaSidebarBtn) pwaSidebarBtn.style.display = show ? 'flex' : 'none';
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPwaPrompt = e;
+    updatePwaInstallVisibility(true);
+  });
+
+  async function triggerPwaInstall() {
+    if (!deferredPwaPrompt) {
+      alert('To install Boardwallah on your device:\n\n• On Chrome / Android: tap ⋮ > "Install app" or "Add to Home screen"\n• On Safari / iOS: tap Share ⎋ > "Add to Home Screen"');
+      return;
+    }
+    try {
+      deferredPwaPrompt.prompt();
+      const choiceResult = await deferredPwaPrompt.userChoice;
+      if (choiceResult && choiceResult.outcome === 'accepted') {
+        console.log('[PWA] User accepted the install prompt');
+      } else {
+        console.log('[PWA] User dismissed the install prompt');
+      }
+      deferredPwaPrompt = null;
+      updatePwaInstallVisibility(false);
+    } catch (err) {
+      console.warn('[PWA] Prompt error:', err);
+    }
+  }
+
+  if (pwaHeaderBtn) {
+    pwaHeaderBtn.addEventListener('click', triggerPwaInstall);
+  }
+  if (pwaSidebarBtn) {
+    pwaSidebarBtn.addEventListener('click', triggerPwaInstall);
+  }
+
+  window.addEventListener('appinstalled', () => {
+    console.log('[PWA] App successfully installed');
+    deferredPwaPrompt = null;
+    updatePwaInstallVisibility(false);
+  });
+
   // Initialize Firebase Client sync on startup
   initFirebaseClient();
 })();
 </script>
 
 <style>
+  /* ── PWA Install Action Styles ── */
+  .pwa-install-header-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.8rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff !important;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .pwa-install-header-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+  }
+  .sidebar-pwa-install-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.4rem;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+    font-size: 0.83rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease;
+    width: 100%;
+  }
+  .sidebar-pwa-install-item:hover {
+    background: #d1fae5;
+  }
+  .gemini-sidebar.collapsed .sidebar-pwa-install-item {
+    justify-content: center;
+    padding: 0.45rem 0;
+  }
+  .gemini-sidebar.collapsed .sidebar-pwa-install-item .item-label {
+    display: none;
+  }
   /* ── 100vh Full Screen Gemini App Layout ── */
   .gemini-app-layout {
     display: flex;

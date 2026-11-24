@@ -47,11 +47,20 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
 <html lang="en-IN" class={htmlClass || undefined}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f8fafd" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1a73e8" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Boardwallah" />
+    <meta name="application-name" content="Boardwallah" />
+    <meta name="msapplication-TileColor" content="#1a73e8" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" type="image/png" href="/icons/favicon-32x32.png" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -67,6 +76,19 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <Analytics />
     <SpeedInsights />
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then(function(reg) {
+              console.log('[PWA] ServiceWorker registered with scope:', reg.scope);
+            })
+            .catch(function(err) {
+              console.warn('[PWA] ServiceWorker registration failed:', err);
+            });
+        });
+      }
+    </script>
   </head>
   <body class={isApp ? "app-mode" : undefined}>
     {!isApp && <a class="skip-link" href="#main">Skip to content</a>}
