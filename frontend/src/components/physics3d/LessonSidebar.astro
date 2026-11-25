@@ -10,34 +10,15 @@ const { lesson } = Astro.props;
 const allLessons = getLessonsBySubject(lesson.subject);
 ---
 
-<aside class="p3d-left-sidebar" aria-label="Lesson guide and component navigation">
-  <section class="p3d-panel-card">
-    <h3>Guided Learning Steps</h3>
-    <ol class="p3d-steps-list">
-      {lesson.learningSteps.map((step, idx) => (
-        <li>
-          <button
-            type="button"
-            class={`p3d-step-btn ${idx === 0 ? "active" : ""}`}
-            data-step-index={idx}
-          >
-            <span class="p3d-step-num">{step.stepNumber}</span>
-            <span class="p3d-step-body">
-              <strong>{step.title}</strong>
-              <small>{step.description}</small>
-            </span>
-          </button>
-        </li>
-      ))}
-    </ol>
-  </section>
+<aside class="p3d-left-sidebar" aria-label="Component anatomy and lab navigation">
+  {lesson.objects.length > 0 && (
+    <section class="p3d-panel-card">
+      <ObjectSelector objects={lesson.objects} />
+    </section>
+  )}
 
   <section class="p3d-panel-card">
-    <ObjectSelector objects={lesson.objects} />
-  </section>
-
-  <section class="p3d-panel-card">
-    <h3>Other 3D Physics Labs</h3>
+    <h3>Other 3D Labs</h3>
     <nav class="p3d-concept-nav" aria-label="Switch 3D Physics lesson">
       {allLessons.map((item) => (
         <a
@@ -69,70 +50,12 @@ const allLessons = getLessonsBySubject(lesson.subject);
     font-size: 0.92rem;
     color: #0f172a;
   }
-  .p3d-steps-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-  }
-  .p3d-step-btn {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.55rem;
-    text-align: left;
-    padding: 0.5rem 0.6rem;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-  }
-  .p3d-step-btn:hover {
-    border-color: #93c5fd;
-  }
-  .p3d-step-btn.active {
-    background: #eff6ff;
-    border-color: #1a73e8;
-  }
-  .p3d-step-num {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #dbeafe;
-    color: #1d4ed8;
-    font-size: 0.75rem;
-    font-weight: 700;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .p3d-step-btn.active .p3d-step-num {
-    background: #1a73e8;
-    color: #ffffff;
-  }
-  .p3d-step-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-  .p3d-step-body strong {
-    font-size: 0.8rem;
-    color: #0f172a;
-  }
-  .p3d-step-body small {
-    font-size: 0.74rem;
-    color: #475569;
-    line-height: 1.38;
-  }
   .p3d-concept-nav {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
+    max-height: 380px;
+    overflow-y: auto;
   }
   .p3d-concept-link {
     display: block;
@@ -144,10 +67,12 @@ const allLessons = getLessonsBySubject(lesson.subject);
     text-decoration: none;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
+    transition: all 0.15s ease;
   }
   .p3d-concept-link:hover {
     border-color: #1a73e8;
     color: #1a73e8;
+    background: #eff6ff;
   }
   .p3d-concept-link.current {
     background: #eff6ff;

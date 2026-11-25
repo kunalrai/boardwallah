@@ -26,7 +26,7 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
   <!-- Mobile collapsible drawer toggles -->
   <div class="p3d-mobile-tabs" role="tablist" aria-label="Lesson panels">
     <button type="button" class="p3d-mob-tab active" data-mob-toggle="right">Controls &amp; Results</button>
-    <button type="button" class="p3d-mob-tab active" data-mob-toggle="left">Steps &amp; Parts</button>
+    <button type="button" class="p3d-mob-tab active" data-mob-toggle="left">Anatomy &amp; Labs</button>
   </div>
 
   <div class="p3d-workspace-grid">
@@ -50,6 +50,50 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
         </div>
 
         <div class="p3d-bottom-controls">
+          {lesson.learningSteps.length > 0 && (
+            <div class="p3d-now-playing-banner" data-now-playing-banner>
+              <div class="p3d-np-top">
+                <div class="p3d-np-meta">
+                  <span class="p3d-np-badge">
+                    Step <span data-step-counter>1 / {lesson.learningSteps.length}</span>
+                  </span>
+                  <span class="p3d-np-status auto" data-step-status>
+                    <span class="p3d-status-dot"></span>
+                    <span data-step-status-text>Auto-Playing</span>
+                  </span>
+                </div>
+                <div class="p3d-np-dots" role="tablist" aria-label="Learning steps">
+                  {lesson.learningSteps.map((step, idx) => (
+                    <button
+                      type="button"
+                      class={`p3d-np-dot ${idx === 0 ? "active" : ""}`}
+                      data-step-index={idx}
+                      title={`Step ${step.stepNumber}: ${step.title}`}
+                      aria-label={`Jump to Step ${step.stepNumber}: ${step.title}`}
+                    >
+                      <span>{step.stepNumber}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Animated step progress line -->
+              <div class="p3d-np-progress-bar-wrap" title="Auto-advance step timer">
+                <div class="p3d-np-progress-bar" data-step-progress style="width: 0%;"></div>
+              </div>
+
+              <!-- Active Step Content (Now Playing only!) -->
+              <div class="p3d-np-body">
+                <strong class="p3d-np-title" data-now-playing-title>
+                  {lesson.learningSteps[0]?.title ?? ""}
+                </strong>
+                <p class="p3d-np-desc" data-now-playing-desc>
+                  {lesson.learningSteps[0]?.description ?? ""}
+                </p>
+              </div>
+            </div>
+          )}
+
           <PlaybackControls hasSteps={lesson.learningSteps.length > 0} />
           {lesson.features.animation && (
             <AnimationTimeline clips={lesson.animationClips} />
@@ -110,6 +154,34 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
 
       let engine: PhysicsEngine | null = null;
       let currentStepIndex = 0;
+      let isAutoPlaying = true;
+      let playbackSpeed = 1.0;
+      let stepElapsedMs = 0;
+      const BASE_STEP_DURATION_MS = 6000;
+      let lastTime = performance.now();
+      let rafId: number | null = null;
+
+      const statusPill = root.querySelector<HTMLElement>("[data-step-status]");
+      const statusText = root.querySelector<HTMLElement>("[data-step-status-text]");
+      const stepCounter = root.querySelector<HTMLElement>("[data-step-counter]");
+      const progressBar = root.querySelector<HTMLElement>("[data-step-progress]");
+      const npTitle = root.querySelector<HTMLElement>("[data-now-playing-title]");
+      const npDesc = root.querySelector<HTMLElement>("[data-now-playing-desc]");
+      const playBtn = root.querySelector<HTMLButtonElement>('[data-action="toggle-play"]');
+
+      const setAutoPlayState = (playing: boolean) => {
+        isAutoPlaying = playing;
+        if (statusPill) {
+          statusPill.classList.toggle("auto", playing);
+          statusPill.classList.toggle("paused", !playing);
+        }
+        if (statusText) {
+          statusText.textContent = playing ? "Auto-Playing" : "Paused";
+        }
+        if (playBtn) {
+          playBtn.textContent = playing ? "⏸ Pause" : "▶ Play";
+        }
+      };
 
       const showLoading = (pct = 0) => {
         if (loadingEl) loadingEl.hidden = false;
@@ -177,6 +249,53 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
         }
       };
 
+      // Guided learning steps
+      const applyStep = (index: number) => {
+        const step = lesson.learningSteps[index];
+        if (!step) return;
+        currentStepIndex = index;
+        stepElapsedMs = 0;
+        if (progressBar) progressBar.style.width = "0%";
+
+        if (stepCounter) {
+          stepCounter.textContent = `${index + 1} / ${lesson.learningSteps.length}`;
+        }
+
+        root.querySelectorAll<HTMLButtonElement>("[data-step-index]").forEach((btn) => {
+          const idx = parseInt(btn.dataset.stepIndex || "0", 10);
+          btn.classList.toggle("active", idx === index);
+        });
+
+        if (npTitle) npTitle.textContent = step.title;
+        if (npDesc) npDesc.textContent = step.description;
+
+        if (step.cameraPresetId) {
+          engine?.applyCameraPreset(step.cameraPresetId);
+          const presetSelect = root.querySelector<HTMLSelectElement>("[data-camera-preset]");
+          if (presetSelect) presetSelect.value = step.cameraPresetId;
+        }
+        if (step.focusObject) {
+          engine?.selectObject(step.focusObject);
+        }
+        if (step.simulationParams) {
+          engine?.updateParameters(step.simulationParams);
+          // Sync UI parameter inputs
+          Object.entries(step.simulationParams).forEach(([key, val]) => {
+            const input = root.querySelector<HTMLInputElement | HTMLSelectElement>(`[data-param-key="${key}"]`);
+            if (!input) return;
+            if (input instanceof HTMLInputElement && input.type === "checkbox") {
+              input.checked = Boolean(val);
+            } else {
+              input.value = String(val);
+              const readout = root.querySelector<HTMLElement>(`[data-param-value="${key}"]`);
+              if (readout && input instanceof HTMLInputElement) {
+                readout.textContent = `${val}${input.dataset.paramUnit ?? ""}`;
+              }
+            }
+          });
+        }
+      };
+
       const startEngine = async () => {
         try {
           showLoading(15);
@@ -185,7 +304,12 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
           engine = new EngineClass(container, lesson, {
             onLoadStart: () => showLoading(20),
             onLoadProgress: (pct) => showLoading(pct),
-            onLoadComplete: () => hideLoading(),
+            onLoadComplete: () => {
+              hideLoading();
+              if (lesson.learningSteps.length > 0) {
+                applyStep(0);
+              }
+            },
             onLoadError: (err) => showError(err.message),
             onWebGLError: (msg) => showError(msg),
             onObjectSelected: (meshName) => updateSelectedObjectUI(meshName),
@@ -208,6 +332,27 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
       };
 
       startEngine();
+
+      // Auto-advance step timer ticker
+      const stepTicker = (now: number) => {
+        const dt = now - lastTime;
+        lastTime = now;
+
+        if (isAutoPlaying && lesson.learningSteps.length > 1) {
+          stepElapsedMs += dt * playbackSpeed;
+          const progress = Math.min(100, (stepElapsedMs / BASE_STEP_DURATION_MS) * 100);
+          if (progressBar) progressBar.style.width = `${progress}%`;
+
+          if (stepElapsedMs >= BASE_STEP_DURATION_MS) {
+            stepElapsedMs = 0;
+            const nextIndex = (currentStepIndex + 1) % lesson.learningSteps.length;
+            applyStep(nextIndex);
+          }
+        }
+
+        rafId = requestAnimationFrame(stepTicker);
+      };
+      rafId = requestAnimationFrame(stepTicker);
 
       // Retry button
       root.querySelector("[data-retry-viewer]")?.addEventListener("click", startEngine);
@@ -241,20 +386,24 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
       });
 
       // Playback controls
-      const playBtn = root.querySelector<HTMLButtonElement>('[data-action="toggle-play"]');
       playBtn?.addEventListener("click", () => {
         if (!engine) return;
         const playing = engine.togglePlay();
-        playBtn.textContent = playing ? "⏸ Pause" : "▶ Play";
+        setAutoPlayState(playing);
+        lastTime = performance.now();
       });
 
       root.querySelector('[data-action="restart-anim"]')?.addEventListener("click", () => {
         engine?.restartAnimation();
+        stepElapsedMs = 0;
+        if (progressBar) progressBar.style.width = "0%";
+        applyStep(0);
       });
 
       root.querySelector<HTMLSelectElement>('[data-action="speed-select"]')?.addEventListener("change", (e) => {
         const speed = parseFloat((e.target as HTMLSelectElement).value);
-        engine?.setPlaybackSpeed(speed);
+        playbackSpeed = isNaN(speed) ? 1.0 : speed;
+        engine?.setPlaybackSpeed(playbackSpeed);
       });
 
       root.querySelector<HTMLInputElement>("[data-timeline-slider]")?.addEventListener("input", (e) => {
@@ -279,41 +428,6 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
           engine?.selectObject(meshName);
         });
       });
-
-      // Guided learning steps
-      const applyStep = (index: number) => {
-        const step = lesson.learningSteps[index];
-        if (!step) return;
-        currentStepIndex = index;
-
-        root.querySelectorAll<HTMLButtonElement>("[data-step-index]").forEach((btn, idx) => {
-          btn.classList.toggle("active", idx === index);
-        });
-
-        if (step.cameraPresetId) {
-          engine?.applyCameraPreset(step.cameraPresetId);
-        }
-        if (step.focusObject) {
-          engine?.selectObject(step.focusObject);
-        }
-        if (step.simulationParams) {
-          engine?.updateParameters(step.simulationParams);
-          // Sync UI parameter inputs
-          Object.entries(step.simulationParams).forEach(([key, val]) => {
-            const input = root.querySelector<HTMLInputElement | HTMLSelectElement>(`[data-param-key="${key}"]`);
-            if (!input) return;
-            if (input instanceof HTMLInputElement && input.type === "checkbox") {
-              input.checked = Boolean(val);
-            } else {
-              input.value = String(val);
-              const readout = root.querySelector<HTMLElement>(`[data-param-value="${key}"]`);
-              if (readout && input instanceof HTMLInputElement) {
-                readout.textContent = `${val}${input.dataset.paramUnit ?? ""}`;
-              }
-            }
-          });
-        }
-      };
 
       root.querySelectorAll<HTMLButtonElement>("[data-step-index]").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -424,6 +538,10 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
 
       // Clean up WebGL & RAF loop when leaving page
       const cleanup = () => {
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
         engine?.dispose();
         engine = null;
       };
@@ -495,6 +613,140 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
     background: #f8fafd;
     border-top: 1px solid #e2e8f0;
   }
+
+  /* Now Playing Step Banner (Replaces static list with compact active card) */
+  .p3d-now-playing-banner {
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+    padding: 0.7rem 0.85rem;
+    margin-bottom: 0.65rem;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .p3d-np-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .p3d-np-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .p3d-np-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    white-space: nowrap;
+  }
+  .p3d-np-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+  }
+  .p3d-np-status.auto {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+  .p3d-np-status.paused {
+    background: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+  .p3d-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    display: inline-block;
+  }
+  .p3d-np-status.auto .p3d-status-dot {
+    animation: p3d-pulse 1.8s infinite;
+  }
+  @keyframes p3d-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.85); }
+  }
+  .p3d-np-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .p3d-np-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 0;
+  }
+  .p3d-np-dot:hover {
+    border-color: #1a73e8;
+    color: #1a73e8;
+    background: #eff6ff;
+  }
+  .p3d-np-dot.active {
+    background: #1a73e8;
+    color: #ffffff;
+    border-color: #1a73e8;
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
+  }
+  .p3d-np-progress-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .p3d-np-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+    border-radius: 999px;
+    transition: width 0.08s linear;
+  }
+  .p3d-np-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .p3d-np-title {
+    font-size: 0.85rem;
+    color: #0f172a;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .p3d-np-desc {
+    margin: 0;
+    font-size: 0.76rem;
+    color: #475569;
+    line-height: 1.42;
+  }
+
   @media (max-width: 1180px) {
     .p3d-workspace-grid {
       grid-template-columns: 1fr;
