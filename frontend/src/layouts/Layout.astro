@@ -192,6 +192,8 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
+          aria-hidden="true"
+          inert
         >
           <div class="drawer-header">
             <div class="drawer-brand">
@@ -444,6 +446,8 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
         function openMenu() {
           drawer?.classList.add('is-open');
           backdrop?.classList.add('is-open');
+          drawer?.removeAttribute('inert');
+          drawer?.setAttribute('aria-hidden', 'false');
           toggleBtn?.setAttribute('aria-expanded', 'true');
           document.body.style.overflow = 'hidden';
         }
@@ -451,6 +455,8 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
         function closeMenu() {
           drawer?.classList.remove('is-open');
           backdrop?.classList.remove('is-open');
+          drawer?.setAttribute('inert', '');
+          drawer?.setAttribute('aria-hidden', 'true');
           toggleBtn?.setAttribute('aria-expanded', 'false');
           document.body.style.overflow = '';
         }
