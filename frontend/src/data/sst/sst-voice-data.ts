@@ -6,24 +6,36 @@ export interface StepNarration {
 export const SST_VOICE_NARRATIONS: Record<string, StepNarration[]> = {
   "sst-nationalism-europe": [
     {
-      english: "In 1789, the French Revolution sparked the modern concept of nationalism, transferring sovereignty from the absolute monarchy to a body of French citizens.",
-      hindi: "1789 में फ्रांसीसी क्रांति ने राष्ट्रवाद के आधुनिक विचार को जन्म दिया, जिसने संप्रभुता को राजतंत्र से छीनकर फ्रांसीसी नागरिकों के हाथ में सौंप दिया।",
+      english: "Phase 1: France Before 1789. Under King Louis the Sixteenth, France was in severe financial bankruptcy. Droughts ruined harvests and the price of bread skyrocketed to over 80 percent of an artisan's daily wage, sparking bread riots across Paris.",
+      hindi: "चरण 1: 1789 से पहले का फ्रांस। राजा लुई सोलहवें के राज में फ्रांस भारी आर्थिक संकट में था। सूखे और ओलावृष्टि से फसलें बर्बाद हुईं, रोटी की कीमतें एक कारीगर की 80 प्रतिशत दिहाड़ी तक बढ़ गईं और पेरिस में रोटी के दंगे भड़क उठे।",
     },
     {
-      english: "Romantic philosophers and poets like Johann Gottfried Herder emphasized that true national culture was discovered among the common folk through folklore, songs, and vernacular language.",
-      hindi: "रोमांटिक विचारकों और कवियों ने इस बात पर जोर दिया कि सच्चा राष्ट्रवाद लोकगीतों, लोकनृत्यों और मातृभाषा के माध्यम से आम जनता के बीच खोजा जाता है।",
+      english: "Phase 2: The Three Estates. Society was divided into three unequal orders. The Clergy and Nobility made up only 2 percent of the population, owned 70 percent of land, and paid zero direct taxes, while the Third Estate bore the entire tax burden.",
+      hindi: "चरण 2: तीन संपदाएं या एस्टेट्स। समाज तीन वर्गों में बंटा था। पादरी और कुलीन वर्ग केवल 2 प्रतिशत थे, 70 प्रतिशत जमीन के मालिक थे और कोई कर नहीं देते थे, जबकि 97 प्रतिशत आम जनता पर सभी करों का बोझ था।",
     },
     {
-      english: "The 1848 revolutions, known as the Spring of Nations, witnessed the educated middle classes demanding constitutional government and national unification across Europe.",
-      hindi: "1848 की क्रांतियों, जिन्हें 'राष्ट्रों का वसंत' कहा जाता है, में मध्यम वर्ग ने पूरे यूरोप में संविधान और राष्ट्रीय एकीकरण की मांग उठाई।",
+      english: "Phase 3: The Tennis Court Oath. On 20 June 1789, locked out of the royal assembly hall, Third Estate deputies assembled at an indoor tennis court in Versailles, declaring themselves the National Assembly and swearing to draft a constitution for France.",
+      hindi: "चरण 3: टेनिस कोर्ट की शपथ। 20 जून 1789 को सभागार बंद मिलने पर तीसरे एस्टेट के प्रतिनिधियों ने वर्साय के इंडोर टेनिस कोर्ट में एकत्रित होकर खुद को नेशनल असेंबली घोषित किया और फ्रांस के लिए संविधान बनाने की शपथ ली।",
     },
     {
-      english: "Italian unification was orchestrated by the diplomatic genius of Cavour, the revolutionary passion of Mazzini, and the military bravery of Garibaldi and his Red Shirts.",
-      hindi: "इटली का एकीकरण कैवूर की कूटनीति, मात्सिनी की वैचारिक क्रांति और गैरीबाल्डी के लाल-कुर्ती सैनिकों की वीरता से संभव हुआ।",
+      english: "Phase 4: Storming of the Bastille. On 14 July 1789, seven thousand armed citizens stormed the Bastille royal fortress-prison to seize ammunition. Its demolition marked the permanent overthrow of despotic monarchy and is celebrated as French National Day.",
+      hindi: "चरण 4: बास्तील का पतन। 14 जुलाई 1789 को सात हजार हथियारबंद नागरिकों ने गोला-बारूद के लिए बास्तील के शाही किले-जेल पर धावा बोला। इसका ध्वंस निरंकुश राजशाही के अंत का प्रतीक बना और आज इसे फ्रांस का राष्ट्रीय दिवस माना जाता है।",
     },
     {
-      english: "In 1871, Otto von Bismarck completed German unification using his policy of blood and iron, crowning Kaiser Wilhelm the First at the Palace of Versailles.",
-      hindi: "1871 में ऑटो वॉन बिस्मार्क ने अपनी 'रक्त और लौह' की नीति के दम पर जर्मनी का एकीकरण पूरा किया और वर्साय के महल में कैसर विल्हेम प्रथम का राज्याभिषेक हुआ।",
+      english: "Phase 5: Declaration of the Rights of Man. Adopted in August 1789, this historic charter proclaimed that men are born free and equal, establishing natural rights to liberty, property, equality before the law, and freedom of expression.",
+      hindi: "चरण 5: मनुष्य और नागरिक अधिकारों का घोषणापत्र। अगस्त 1789 में पारित इस ऐतिहासिक घोषणापत्र ने कहा कि मनुष्य जन्म से स्वतंत्र और समान अधिकार वाले हैं। इसने समानता, स्वतंत्रता और अभिव्यक्ति की आजादी को जन्मसिद्ध अधिकार घोषित किया।",
+    },
+    {
+      english: "Phase 6: The French Republic. In September 1792, the National Convention abolished the monarchy and established France as a Republic. King Louis the Sixteenth was convicted of treason and executed in January 1793.",
+      hindi: "चरण 6: फ्रांसीसी गणतंत्र की स्थापना। सितंबर 1792 में नेशनल कन्वेंशन ने राजतंत्र को समाप्त कर फ्रांस को गणतंत्र घोषित किया। देशद्रोह के आरोप में राजा लुई सोलहवें को जनवरी 1793 में मृत्युदंड दिया गया।",
+    },
+    {
+      english: "Phase 7: The Reign of Terror. Under Maximilien Robespierre from 1793 to 1794, the Jacobin government enforced maximum ceilings on wages and prices, rationed food, mandated equality bread, and executed perceived counter-revolutionaries.",
+      hindi: "चरण 7: आतंक का राज। 1793 से 1794 तक रोबेस्पिएर के नेतृत्व में सरकार ने मजदूरी और कीमतों पर अधिकतम सीमा तय की, राशनिंग लागू की, 'समता रोटी' अनिवार्य की और विरोधियों पर क्रांतिकारी मुकदमों से सख्त नियंत्रण रखा।",
+    },
+    {
+      english: "Phase 8: Rise of Napoleon. Napoleon seized power in 1799 and was crowned Emperor in 1804. He introduced the Civil Code of 1804, abolishing birth privileges, ensuring equality before the law, securing property rights, and modernizing European administration.",
+      hindi: "चरण 8: नेपोलियन का उदय। नेपोलियन ने 1799 में सत्ता संभाली और 1804 में सम्राट बना। उसने 1804 की नागरिक संहिता यानी नेपोलियन कोड लागू किया, जिसने जन्मजात विशेषाधिकार समाप्त किए, कानून के समक्ष समानता दी और आधुनिक शासन तंत्र स्थापित किया।",
     },
   ],
   "sst-nationalism-india": [

@@ -66,11 +66,21 @@ export class HistorySimulation implements Simulation {
 
     if (this.context.modelRoot && this.context.modelRoot.children.length > 0) {
       if (this.params.highlight === 1) {
-        this.context.highlightMesh("ThirdEstate_PeasantVendor");
+        this.context.highlightMesh("MarketTable_1");
       } else if (this.params.highlight === 2) {
-        this.context.highlightMesh("SecondEstate_Nobility");
+        this.context.highlightMesh("ThreeEstates_Pyramid");
       } else if (this.params.highlight === 3) {
-        this.context.highlightMesh("ParisTriumphalArch");
+        this.context.highlightMesh("TennisCourt_OathMonument");
+      } else if (this.params.highlight === 4) {
+        this.context.highlightMesh("Bastille_Fortress");
+      } else if (this.params.highlight === 5) {
+        this.context.highlightMesh("RightsOfMan_ParchmentTablet");
+      } else if (this.params.highlight === 6) {
+        this.context.highlightMesh("Republic_NationalAltar");
+      } else if (this.params.highlight === 7) {
+        this.context.highlightMesh("ReignOfTerror_Tribunal");
+      } else if (this.params.highlight === 8) {
+        this.context.highlightMesh("Napoleonic_EagleStandard");
       } else {
         this.context.highlightMesh(null);
       }
@@ -431,22 +441,160 @@ export class HistorySimulation implements Simulation {
   getResults(): SimulationResult {
     const cid = this.params.chapterId;
     const dataMap: Record<HistoryChapterId, { title: string; metrics: Record<string, string>; obs: string[] }> = {
-      "nationalism-europe": {
-        title: "Rise of Nationalism in Europe (1789–1871)",
-        metrics: {
-          "Primary Era": `${this.params.era}`,
-          "Core Concept": "Nation-State Sovereignty",
-          "French Revolution": "1789 (Liberty, Equality, Fraternity)",
-          "1848 Revolutions": "Spring of Nations across Europe",
-          "German Unification": "1871 (Bismarck, Versailles)",
-          "Italian Unification": "1861-1871 (Cavour, Garibaldi, Mazzini)",
-        },
-        obs: [
-          "Romantic nationalism cultivated cultural identity (language, folklore, folk dance) before political unification.",
-          "Zollverein (1834) customs union unified German states economically before political unification.",
-          "Bismarck used 3 wars (Denmark, Austria, France) to unite Germany under Prussian leadership.",
-        ],
-      },
+      "nationalism-europe": (() => {
+        const p = this.params.highlight;
+        if (p === 1) {
+          return {
+            title: "Phase 1: France Before 1789 — Paris Street & Bread Scarcity",
+            metrics: {
+              "Historical Year": "1788–1789",
+              "Monarch": "Louis XVI (Bourbon Dynasty)",
+              "Economic State": "Bankruptcy & Empty Royal Treasury",
+              "Bread Price": "Over 80% of an artisan's daily wage",
+              "Social Spark": "Subsistence Crisis & Urban Bread Riots",
+            },
+            obs: [
+              "Catastrophic winter hailstorms in 1788 ruined wheat harvests across France.",
+              "French assistance in the American War added over 1 billion livres to state debt.",
+              "Commoner women marched on bakeries, igniting the political protests of 1789.",
+            ],
+          };
+        }
+        if (p === 2) {
+          return {
+            title: "Phase 2: The Three Estates — Social Inequality Pyramid",
+            metrics: {
+              "1st Estate (Clergy)": "1% population • 10% land • Collects Tithe",
+              "2nd Estate (Nobility)": "2% population • 60% land • Feudal privileges",
+              "3rd Estate (Commoners)": "97% population • Paid 100% of state Taille",
+              "Political Status": "Zero representation in royal government",
+              "Famous Pamphlet": "Abbé Sieyès: 'What is the Third Estate? Everything.'",
+            },
+            obs: [
+              "The 1st & 2nd Estates were completely exempt from direct state taxes (taille).",
+              "Peasants were forced to perform unpaid corvée labor on lordly estates and roads.",
+              "Educated bourgeoisie (lawyers, doctors, merchants) demanded equality before the law.",
+            ],
+          };
+        }
+        if (p === 3) {
+          return {
+            title: "Phase 3: The Tennis Court Oath (20 June 1789)",
+            metrics: {
+              "Date": "20 June 1789",
+              "Location": "Jeu de Paume (Versailles Tennis Court)",
+              "Key Leaders": "Mirabeau & Abbé Sieyès",
+              "Voting Dispute": "1 Estate 1 Vote vs 1 Member 1 Vote",
+              "Historic Outcome": "Formation of the National Assembly",
+            },
+            obs: [
+              "Louis XVI locked Third Estate deputies out of the royal assembly hall.",
+              "Delegates took a solemn oath never to disperse until drafting a constitution.",
+              "Count Mirabeau famously defended national sovereignty against the royal master of ceremonies.",
+            ],
+          };
+        }
+        if (p === 4) {
+          return {
+            title: "Phase 4: Storming of the Bastille (14 July 1789)",
+            metrics: {
+              "Date": "14 July 1789 (French National Day)",
+              "Target": "Bastille Royal Fortress-Prison",
+              "Citizen Militia": "7,000 Parisian men & women",
+              "Ammunition Seized": "Gunpowder & 28,000 muskets",
+              "Symbolism": "Permanent destruction of absolute royal despotism",
+            },
+            obs: [
+              "The fortress held only 7 prisoners, but was the supreme architectural symbol of tyranny.",
+              "The fortress was demolished stone by stone; fragments were sold as liberty souvenirs.",
+              "Louis XVI wrote 'Rien' (Nothing) in his diary, completely oblivious to the revolution.",
+            ],
+          };
+        }
+        if (p === 5) {
+          return {
+            title: "Phase 5: Declaration of the Rights of Man & Citizen (Aug 1789)",
+            metrics: {
+              "Adoption Date": "26 August 1789",
+              "Article 1": "Men are born and remain free and equal in rights",
+              "Article 6": "Law is the expression of the general will",
+              "Foundational Motto": "Liberté, Égalité, Fraternité",
+              "Feudal Abolition": "Privileges and tithes abolished 4 August 1789",
+            },
+            obs: [
+              "Enshrined natural and inalienable rights: liberty, property, security, resistance to oppression.",
+              "Reflected Enlightenment philosophy of Jean-Jacques Rousseau and John Locke.",
+              "Established the legal foundation of modern constitutional human rights across the world.",
+            ],
+          };
+        }
+        if (p === 6) {
+          return {
+            title: "Phase 6: The French Republic & Fall of the Monarchy (1792–93)",
+            metrics: {
+              "Republic Proclaimed": "21 September 1792",
+              "Governing Body": "The National Convention",
+              "Trial of Louis XVI": "Convicted of treason against the French nation",
+              "Execution Date": "21 January 1793 (Place de la Révolution)",
+              "New Symbols": "French Tricolor flag & Marianne figure",
+            },
+            obs: [
+              "Foreign monarchies (Austria, Prussia) invaded France to restore Bourbon absolutism.",
+              "Universal male suffrage was granted for the first time in French history.",
+              "Abolition of royalty transferred total sovereignty to the elected representatives.",
+            ],
+          };
+        }
+        if (p === 7) {
+          return {
+            title: "Phase 7: The Reign of Terror (1793–1794 Robespierre)",
+            metrics: {
+              "Period": "September 1793 – July 1794",
+              "Executive Body": "Committee of Public Safety (Robespierre)",
+              "Economic Policy": "Law of the Maximum (wage & price caps)",
+              "Food Equality Law": "'Pain d'égalité' (mandatory wholemeal bread)",
+              "Thermidor Fall": "Robespierre arrested & executed (28 July 1794)",
+            },
+            obs: [
+              "White luxury flour was banned; all French citizens were forced to eat equality bread.",
+              "Meat and essential grains were rationed; price gouging was treated as counter-revolution.",
+              "Robespierre's severe purges alienated allies, leading to the Thermidorian reaction.",
+            ],
+          };
+        }
+        if (p === 8) {
+          return {
+            title: "Phase 8: Rise of Napoleon & The Civil Code of 1804",
+            metrics: {
+              "Coup of 18 Brumaire": "November 1799 (Directory overthrown)",
+              "Coronation": "2 December 1804 at Notre-Dame Cathedral",
+              "Legal Milestone": "Civil Code of 1804 (Napoleonic Code)",
+              "Modern Administration": "Uniform metric weights, measures & currency",
+              "European Spread": "Abolished feudal dues in Germany, Italy, Switzerland",
+            },
+            obs: [
+              "The Napoleonic Code guaranteed legal equality and protected private property rights.",
+              "Standardized metric weights and measures dismantled complex feudal trade barriers.",
+              "Napoleon exported revolutionary administrative modernization throughout conquered Europe.",
+            ],
+          };
+        }
+        return {
+          title: "The French Revolution & Modern Nationalism (1789–1804)",
+          metrics: {
+            "Chronological Span": "1789 (Estates-General) to 1804 (Napoleonic Code)",
+            "Core Concept": "Popular Sovereignty & Nation-State",
+            "Key Phases": "8 Guided Milestones (Old Regime to Napoleon)",
+            "CBSE Syllabus": "Class 10 NCERT Chapter 1 (History)",
+            "Global Impact": "Replaced royal absolutism with democratic nationalism",
+          },
+          obs: [
+            "Select any of the 8 chronological steps to inspect 3D models, historical metrics, and exam rubrics.",
+            "Use the 3D controls to zoom into the bread market, social pyramid, Bastille, and Napoleonic standard.",
+            "Switch to Virtual Experiment to simulate the Estates-General voting disparity and explore the Rights of Man.",
+          ],
+        };
+      })(),
       "nationalism-india": {
         title: "Nationalism in India (1920–1942)",
         metrics: {

@@ -234,6 +234,77 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
               <div class="sim-stat"><span>Rural Credit Flow:</span> <strong data-stat-credit>High</strong></div>
             </div>
           </div>
+        ) : lesson.subject.toLowerCase().includes("hist") ? (
+          <div class="experiment-card fr-experiment-card">
+            <div class="exp-header">
+              <h3>⚖️ French Revolution Interactive Simulators (CBSE Class 10)</h3>
+              <span class="majority-tag">NCERT Chapter 1</span>
+            </div>
+
+            <!-- 1. Estates-General Voting Dilemma (1789) -->
+            <div class="fr-sim-section">
+              <h4>1. Estates-General Voting Dilemma Simulator (May 1789)</h4>
+              <p class="sim-help-text">Compare King Louis XVI's feudal voting system vs the Third Estate's democratic demand:</p>
+              <div class="fr-vote-toggle-row">
+                <button type="button" class="fr-toggle-btn active" data-vote-mode="estate">Feudal System: 1 Estate = 1 Vote</button>
+                <button type="button" class="fr-toggle-btn" data-vote-mode="member">Democracy: 1 Member = 1 Vote</button>
+              </div>
+              <div class="fr-vote-display">
+                <div class="fr-vote-bars">
+                  <div class="v-bar v-priv" data-vbar-priv style="width: 66%;">1st &amp; 2nd Estate: 2 Votes (66%)</div>
+                  <div class="v-bar v-common" data-vbar-common style="width: 34%;">3rd Estate: 1 Vote (34%)</div>
+                </div>
+                <p class="vote-verdict" data-vote-verdict>
+                  <strong>Result:</strong> Privileged orders (3% population) outvote 97% of the nation 2-to-1! All tax burdens forced onto the Third Estate.
+                </p>
+              </div>
+            </div>
+
+            <!-- 2. Three Estates Social & Tax Disparity Breakdown -->
+            <div class="fr-sim-section">
+              <h4>2. Three Estates Tax &amp; Population Disparity</h4>
+              <div class="fr-disparity-grid">
+                <div class="disparity-box d-1st">
+                  <strong>1st Estate (Clergy)</strong>
+                  <span>Population: 1% (100k)</span>
+                  <span>Land Owned: 10%</span>
+                  <span class="tax-tag free">Direct Tax (Taille): 0%</span>
+                  <small>Collected 1/10th produce Church Tithes</small>
+                </div>
+                <div class="disparity-box d-2nd">
+                  <strong>2nd Estate (Nobility)</strong>
+                  <span>Population: 2% (400k)</span>
+                  <span>Land Owned: 60%</span>
+                  <span class="tax-tag free">Direct Tax (Taille): 0%</span>
+                  <small>Extracted Hereditary Feudal Dues</small>
+                </div>
+                <div class="disparity-box d-3rd">
+                  <strong>3rd Estate (Commoners)</strong>
+                  <span>Population: 97% (27 Million)</span>
+                  <span>Land Owned: 30%</span>
+                  <span class="tax-tag taxed">Direct Tax: 100% Burden</span>
+                  <small>Paid Taille, Tithes, Salt &amp; Tobacco dues</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Declaration of the Rights of Man & Citizen (Interactive Articles) -->
+            <div class="fr-sim-section">
+              <h4>3. Declaration of the Rights of Man (26 August 1789) — Article Explorer</h4>
+              <div class="fr-articles-picker">
+                <button type="button" class="fr-art-btn active" data-art="1">Article 1: Equality at Birth</button>
+                <button type="button" class="fr-art-btn" data-art="4">Article 4: Liberty</button>
+                <button type="button" class="fr-art-btn" data-art="6">Article 6: General Will</button>
+                <button type="button" class="fr-art-btn" data-art="11">Article 11: Free Speech</button>
+                <button type="button" class="fr-art-btn" data-art="17">Article 17: Property</button>
+              </div>
+              <div class="fr-parchment-box" data-art-display>
+                <span class="parchment-badge" data-parchment-badge>NCERT Article 1</span>
+                <blockquote data-parchment-quote>"Men are born and remain free and equal in rights. Social distinctions may be founded only upon the general good."</blockquote>
+                <p class="parchment-meaning" data-parchment-meaning><strong>CBSE Exam Meaning:</strong> Abolished hereditary aristocratic privilege. A peasant's child and a noble's child have identical constitutional rights before the law.</p>
+              </div>
+            </div>
+          </div>
         ) : (
           <div class="experiment-card">
             <div class="exp-header">
@@ -591,6 +662,94 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
 
       seatA?.addEventListener("input", updateParliament);
       seatB?.addEventListener("input", updateParliament);
+
+      // French Revolution Voting Toggle Simulator
+      const voteButtons = root.querySelectorAll<HTMLButtonElement>("[data-vote-mode]");
+      const vbarPriv = root.querySelector<HTMLElement>("[data-vbar-priv]");
+      const vbarCommon = root.querySelector<HTMLElement>("[data-vbar-common]");
+      const voteVerdict = root.querySelector<HTMLElement>("[data-vote-verdict]");
+
+      voteButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          voteButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const mode = btn.dataset.voteMode;
+
+          if (mode === "estate") {
+            if (vbarPriv) {
+              vbarPriv.style.width = "66%";
+              vbarPriv.textContent = "1st & 2nd Estate: 2 Votes (66%)";
+            }
+            if (vbarCommon) {
+              vbarCommon.style.width = "34%";
+              vbarCommon.textContent = "3rd Estate: 1 Vote (34%)";
+            }
+            if (voteVerdict) {
+              voteVerdict.innerHTML = "<strong>Result:</strong> Privileged orders (3% population) outvote 97% of the nation 2-to-1! All tax burdens forced onto the Third Estate.";
+            }
+          } else {
+            if (vbarPriv) {
+              vbarPriv.style.width = "48%";
+              vbarPriv.textContent = "Nobility & Clergy: 600 Votes (48%)";
+            }
+            if (vbarCommon) {
+              vbarCommon.style.width = "52%";
+              vbarCommon.textContent = "3rd Estate + Liberal Allies: 650 Votes (52%)";
+            }
+            if (voteVerdict) {
+              voteVerdict.innerHTML = "<strong>Result:</strong> Democratic majority for the Third Estate! Popular national sovereignty achieved over royal absolutism.";
+            }
+          }
+        });
+      });
+
+      // Rights of Man Articles Picker
+      const artButtons = root.querySelectorAll<HTMLButtonElement>("[data-art]");
+      const pBadge = root.querySelector<HTMLElement>("[data-parchment-badge]");
+      const pQuote = root.querySelector<HTMLElement>("[data-parchment-quote]");
+      const pMeaning = root.querySelector<HTMLElement>("[data-parchment-meaning]");
+
+      const articlesData: Record<string, { badge: string; quote: string; meaning: string }> = {
+        "1": {
+          badge: "NCERT Article 1",
+          quote: '"Men are born and remain free and equal in rights. Social distinctions may be founded only upon the general good."',
+          meaning: "Abolished hereditary aristocratic privilege. A peasant's child and a noble's child have identical constitutional rights before the law.",
+        },
+        "4": {
+          badge: "NCERT Article 4",
+          quote: '"Liberty consists in the freedom to do everything which injures no one else; hence the exercise of natural rights has no limits except those which assure to other members the enjoyment of the same rights."',
+          meaning: "Established modern individual freedom. Liberty is limited only by harm to fellow citizens, not by royal decree or religious dogma.",
+        },
+        "6": {
+          badge: "NCERT Article 6",
+          quote: '"Law is the expression of the general will. All citizens have the right to take part personally, or through their representatives, in its foundation. It must be the same for all, whether it protects or punishes."',
+          meaning: "Sovereignty shifted from the monarch to the people. Laws are no longer the king's arbitrary commands, but democratic collective legislation.",
+        },
+        "11": {
+          badge: "NCERT Article 11",
+          quote: '"The free communication of thoughts and opinions is one of the most precious rights of man: every citizen may therefore speak, write, and print freely."',
+          meaning: "Abolished royal book and newspaper censorship. Fostered revolutionary public debate, political clubs, and civic newspapers.",
+        },
+        "17": {
+          badge: "NCERT Article 17",
+          quote: '"Property being a sacred and inviolable right, no one may be deprived thereof, except when public necessity, legally certified, evidently requires it."',
+          meaning: "Secured bourgeois property rights. Nobles could no longer seize commoner land through feudal claims or arbitrary royal confiscation.",
+        },
+      };
+
+      artButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          artButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const artKey = btn.dataset.art;
+          if (artKey && articlesData[artKey]) {
+            const data = articlesData[artKey];
+            if (pBadge) pBadge.textContent = data.badge;
+            if (pQuote) pQuote.textContent = data.quote;
+            if (pMeaning) pMeaning.innerHTML = `<strong>CBSE Exam Meaning:</strong> ${data.meaning}`;
+          }
+        });
+      });
 
       // Quiz Handling
       let quizScore = 0;
@@ -1023,6 +1182,168 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
     background: #16a34a;
     padding: 0.2rem 0.6rem;
     border-radius: 999px;
+  }
+
+  /* French Revolution Simulators */
+  .fr-experiment-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .fr-sim-section {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.1rem;
+  }
+  .fr-sim-section h4 {
+    margin: 0 0 0.45rem;
+    font-size: 0.98rem;
+    color: #0f172a;
+  }
+  .sim-help-text {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0 0 0.75rem;
+  }
+  .fr-vote-toggle-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .fr-toggle-btn {
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .fr-toggle-btn.active {
+    background: #1e3a8a;
+    color: #ffffff;
+    border-color: #1e3a8a;
+    box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
+  }
+  .fr-vote-bars {
+    display: flex;
+    height: 34px;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 34px;
+    text-align: center;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  .v-bar.v-priv {
+    background: #dc2626;
+    transition: width 0.3s ease;
+  }
+  .v-bar.v-common {
+    background: #2563eb;
+    transition: width 0.3s ease;
+  }
+  .vote-verdict {
+    margin: 0.65rem 0 0;
+    font-size: 0.84rem;
+    color: #334155;
+    background: #ffffff;
+    padding: 0.55rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .fr-disparity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+  }
+  .disparity-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+  }
+  .disparity-box strong { font-size: 0.9rem; color: #0f172a; }
+  .disparity-box.d-1st { border-top: 3px solid #eab308; }
+  .disparity-box.d-2nd { border-top: 3px solid #dc2626; }
+  .disparity-box.d-3rd { border-top: 3px solid #2563eb; }
+  .tax-tag {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.74rem;
+    width: fit-content;
+  }
+  .tax-tag.free { background: #dcfce7; color: #15803d; }
+  .tax-tag.taxed { background: #fee2e2; color: #b91c1c; }
+
+  .fr-articles-picker {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.85rem;
+  }
+  .fr-art-btn {
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .fr-art-btn.active {
+    background: #7c2d12;
+    color: #ffffff;
+    border-color: #7c2d12;
+  }
+  .fr-parchment-box {
+    background: #fefce8;
+    border: 1px solid #fef08a;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 8px rgba(161, 98, 7, 0.05);
+  }
+  .parchment-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #fde047;
+    color: #713f12;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+  }
+  .fr-parchment-box blockquote {
+    margin: 0 0 0.65rem;
+    font-style: italic;
+    color: #1c1917;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    border-left: 3px solid #ca8a04;
+    padding-left: 0.85rem;
+  }
+  .parchment-meaning {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #44403c;
+    line-height: 1.4;
   }
 
   .sim-parliament-arc {
