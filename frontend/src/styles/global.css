@@ -198,6 +198,7 @@ code,
   font-weight: 600;
 }
 
+body:not(.app-mode) .mobile-menu-toggle,
 .mobile-menu-toggle {
   display: none;
 }
@@ -806,6 +807,7 @@ fieldset {
     display: none;
   }
 
+  body:not(.app-mode) .mobile-menu-toggle,
   .mobile-menu-toggle {
     display: inline-flex;
     align-items: center;
