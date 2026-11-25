@@ -1,0 +1,81 @@
+import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+
+export const electricityLesson: PhysicsLessonConfig = {
+  id: "electricity",
+  class: 10,
+  subject: "Science",
+  chapter: "Electricity",
+  title: "Ohm's Law, Series & Parallel Circuits & Electric Power",
+  subtitle: "Build interactive DC circuits: vary voltage V and resistances R₁, R₂, toggle Series vs Parallel, flip the switch, and observe bulb brightness & live current.",
+  slug: "/class-10/science/physics/electricity/",
+  simulation: "electricity",
+  model: "/assets/physics/electricity/circuit-board.glb",
+  usesProceduralFallback: true,
+  proceduralFallbackNote: "Interactive procedural 3D DC circuit board & Ohm's Law solver active.",
+  sceneConfig: {
+    backgroundColor: 0xf4f7fb,
+    showGrid: false,
+    cameraPosition: { x: 0, y: 6.4, z: 7.4 },
+    cameraTarget: { x: 0, y: 0, z: 0 },
+    minDistance: 4,
+    maxDistance: 18,
+  },
+  cameraPresets: [
+    { id: "perspective", label: "3D Bench View", position: { x: 0, y: 6.4, z: 7.4 }, target: { x: 0, y: 0, z: 0 } },
+    { id: "top-down", label: "Top Circuit Diagram", position: { x: 0, y: 9.8, z: 0.2 }, target: { x: 0, y: 0, z: 0 } },
+  ],
+  features: { rotation: true, zoom: true, pan: true, labels: true, animation: true, fullscreen: true },
+  parameters: {
+    voltageV: 12,
+    resistor1Ohm: 4,
+    resistor2Ohm: 6,
+    resistorCount: 2,
+    topology: "series",
+    switchClosed: true,
+  },
+  parameterControls: [
+    { key: "switchClosed", label: "Circuit Switch (ON / OFF)", type: "toggle", defaultValue: true },
+    {
+      key: "topology",
+      label: "Resistor Combination",
+      type: "select",
+      options: [
+        { value: "series", label: "Series (R_s = R₁ + R₂ + ...)" },
+        { value: "parallel", label: "Parallel (1/R_p = 1/R₁ + 1/R₂ + ...)" },
+      ],
+      defaultValue: "series",
+    },
+    { key: "voltageV", label: "Battery Voltage (V)", type: "range", min: 2, max: 24, step: 1, unit: " V", defaultValue: 12 },
+    { key: "resistor1Ohm", label: "Resistor R₁", type: "range", min: 2, max: 20, step: 1, unit: " Ω", defaultValue: 4 },
+    { key: "resistor2Ohm", label: "Resistor R₂", type: "range", min: 2, max: 20, step: 1, unit: " Ω", defaultValue: 6 },
+    { key: "resistorCount", label: "Number of Resistors", type: "range", min: 1, max: 3, step: 1, unit: "", defaultValue: 2 },
+  ],
+  animationClips: [{ id: "current-flow", label: "Charge Carrier Flow", duration: 4.0 }],
+  learningSteps: [
+    { stepNumber: 1, title: "Ohm's Law (I = V / R)", description: "With 1 resistor, doubling Voltage V doubles Current I (at constant temperature).", focusObject: "Battery", simulationParams: { resistorCount: 1, voltageV: 12, resistor1Ohm: 6, switchClosed: true } },
+    { stepNumber: 2, title: "Resistors in Series (R_s = R₁ + R₂)", description: "Equivalent resistance increases; total current drops and bulb dims, while same I flows everywhere.", focusObject: "Resistor_1", simulationParams: { resistorCount: 2, topology: "series", voltageV: 12, resistor1Ohm: 4, resistor2Ohm: 6, switchClosed: true } },
+    { stepNumber: 3, title: "Resistors in Parallel (1/R_p = 1/R₁ + 1/R₂)", description: "Equivalent resistance drops below the smallest resistor; total current and power increase sharply.", focusObject: "Bulb", simulationParams: { resistorCount: 2, topology: "parallel", voltageV: 12, resistor1Ohm: 4, resistor2Ohm: 6, switchClosed: true } },
+  ],
+  objects: [
+    { id: "battery", meshName: "Battery", name: "DC Battery", description: "Source of potential difference V (Volts).", function: "Maintains electric potential difference across the circuit.", labelOffset: { x: -0.6, y: 1.0, z: 0 } },
+    { id: "switch", meshName: "Switch", name: "Plug Key / Switch", description: "Controls circuit continuity.", function: "Closes or opens the conducting path.", labelOffset: { x: 0, y: 0.7, z: 0.4 } },
+    { id: "ammeter", meshName: "Ammeter", name: "Ammeter (A)", description: "Low-resistance meter connected in SERIES.", function: "Measures total electric current I in Amperes.", cbseNote: "Board PYQ: Why is an ammeter always connected in series? Because it has very low resistance.", labelOffset: { x: 0, y: 0.8, z: -0.4 } },
+    { id: "voltmeter", meshName: "Voltmeter", name: "Voltmeter (V)", description: "High-resistance meter connected in PARALLEL.", function: "Measures potential difference V across resistors.", labelOffset: { x: 0, y: 0.8, z: 0.4 } },
+    { id: "resistor1", meshName: "Resistor_1", name: "Resistor R₁", description: "Ohmic conductor offering resistance R₁ (Ω).", function: "Opposes charge flow and dissipates heat H = I²Rt.", labelOffset: { x: 0, y: 0.8, z: -0.4 } },
+    { id: "bulb", meshName: "Bulb", name: "Electric Bulb", description: "Incandescent load whose brightness reflects Electric Power P = VI.", function: "Converts electrical energy into light and heat.", labelOffset: { x: 0.5, y: 1.1, z: 0 } },
+  ],
+  formulas: [
+    { id: "ohms", name: "Ohm's Law", expression: "V = I · R", variables: "V (Volts), I (Amperes), R (Ohms)" },
+    { id: "series-r", name: "Series Resistance", expression: "R_s = R₁ + R₂ + R₃", variables: "Same current I through each resistor" },
+    { id: "parallel-r", name: "Parallel Resistance", expression: "1/R_p = 1/R₁ + 1/R₂ + 1/R₃", variables: "Same voltage V across each branch" },
+    { id: "power-heat", name: "Power & Joule's Heating", expression: "P = V·I = I²R  |  H = I²Rt", variables: "P in Watts (W), H in Joules (J)" },
+  ],
+  cbseExamNotes: [
+    "Household appliances are always connected in PARALLEL so each gets full 220 V and works independently.",
+    "Commercial unit of electrical energy: 1 kWh = 3.6 × 10⁶ Joules.",
+  ],
+  quiz: [
+    { id: "el-q1", question: "Two resistors of 4 Ω and 6 Ω are connected in series to a 20 V battery. What is the current?", options: ["2 A", "8.3 A", "10 A", "0.5 A"], correctIndex: 0, explanation: "R_s = 4 + 6 = 10 Ω. By Ohm's law, I = V / R_s = 20 / 10 = 2 A.", marks: 1 },
+    { id: "el-q2", question: "How should an ammeter and a voltmeter be connected in a circuit?", options: ["Both in series", "Both in parallel", "Ammeter in series, Voltmeter in parallel", "Ammeter in parallel, Voltmeter in series"], correctIndex: 2, explanation: "An ammeter (low resistance) is always connected in series, while a voltmeter (high resistance) is connected in parallel.", marks: 1 },
+  ],
+};

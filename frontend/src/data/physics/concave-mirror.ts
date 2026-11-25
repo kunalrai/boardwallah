@@ -1,0 +1,77 @@
+import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+
+export const concaveMirrorLesson: PhysicsLessonConfig = {
+  id: "concave-mirror",
+  class: 10,
+  subject: "Science",
+  chapter: "Light – Reflection and Refraction",
+  title: "Image Formation by Concave Mirror",
+  subtitle: "Explore all 6 CBSE Class 10 object positions (at ∞, beyond C, at C, between F & C, at F, and within F) with live ray tracing.",
+  slug: "/class-10/science/physics/concave-mirror/",
+  simulation: "mirror",
+  model: "/assets/physics/mirrors/concave-mirror.glb",
+  usesProceduralFallback: true,
+  proceduralFallbackNote: "Interactive procedural 3D concave mirror & Cartesian ray-tracing active.",
+  sceneConfig: {
+    backgroundColor: 0xf4f7fb,
+    showGrid: true,
+    cameraPosition: { x: -1.0, y: 1.2, z: 11.5 },
+    cameraTarget: { x: -1.5, y: 0.2, z: 0 },
+    minDistance: 4,
+    maxDistance: 24,
+  },
+  cameraPresets: [
+    { id: "front-2d", label: "Standard Ray Plane", position: { x: -1.5, y: 0.4, z: 11.8 }, target: { x: -1.5, y: 0.2, z: 0 } },
+    { id: "angle-3d", label: "3D Perspective", position: { x: -4.8, y: 2.8, z: 10.2 }, target: { x: -1.2, y: 0.2, z: 0 } },
+  ],
+  features: {
+    rotation: true,
+    zoom: true,
+    pan: true,
+    labels: true,
+    animation: true,
+    fullscreen: true,
+    objectDistanceSlider: true,
+    focalLengthSlider: true,
+    objectHeightSlider: true,
+  },
+  parameters: {
+    mirrorType: "concave",
+    focalLength: 10,
+    objectDistance: -28,
+    objectHeight: 4,
+  },
+  parameterControls: [
+    { key: "objectDistance", label: "Object Distance (u)", type: "range", min: -55, max: -4, step: 1, unit: " cm", defaultValue: -28 },
+    { key: "focalLength", label: "Focal Length Magnitude |f|", type: "range", min: 6, max: 18, step: 1, unit: " cm", defaultValue: 10 },
+    { key: "objectHeight", label: "Object Height (h₀)", type: "range", min: 2, max: 7, step: 0.5, unit: " cm", defaultValue: 4 },
+  ],
+  animationClips: [{ id: "ray-trace", label: "Ray Propagation", duration: 4.0 }],
+  learningSteps: [
+    { stepNumber: 1, title: "Object Beyond C (u < -2f)", description: "Real, inverted, and diminished image forms between F and C.", focusObject: "Image_AB", simulationParams: { mirrorType: "concave", objectDistance: -30, focalLength: 10, objectHeight: 4 } },
+    { stepNumber: 2, title: "Object at C (u = -2f)", description: "Real, inverted, same-size image (m = -1) forms at C.", focusObject: "Centre_C", simulationParams: { mirrorType: "concave", objectDistance: -20, focalLength: 10, objectHeight: 4 } },
+    { stepNumber: 3, title: "Object Between F and C", description: "Real, inverted, enlarged image forms beyond C.", focusObject: "Image_AB", simulationParams: { mirrorType: "concave", objectDistance: -15, focalLength: 10, objectHeight: 4 } },
+    { stepNumber: 4, title: "Object at F (u = -f)", description: "Reflected rays emerge parallel; image forms at infinity (torch/headlight principle).", focusObject: "Focus_F", simulationParams: { mirrorType: "concave", objectDistance: -10, focalLength: 10, objectHeight: 4 } },
+    { stepNumber: 5, title: "Object Within F (Shaving/Dentist Mirror)", description: "Virtual, erect, and enlarged image forms behind the mirror.", focusObject: "Image_AB", simulationParams: { mirrorType: "concave", objectDistance: -6, focalLength: 10, objectHeight: 3.5 } },
+  ],
+  objects: [
+    { id: "object-ab", meshName: "Object_AB", name: "Object (AB)", description: "Real object placed in front of the concave mirror.", function: "Source of incident rays (u < 0).", labelOffset: { x: 0, y: 0.6, z: 0 } },
+    { id: "mirror-surface", meshName: "MirrorSurface", name: "Concave Mirror", description: "Spherical mirror curved inward (converging).", function: "Converges parallel rays to Focus F.", labelOffset: { x: 0, y: 2.3, z: 0 } },
+    { id: "pole-p", meshName: "Pole_P", name: "Pole (P)", description: "Centre of the reflecting surface.", function: "Origin for Cartesian sign convention.", labelOffset: { x: 0, y: -0.45, z: 0 } },
+    { id: "focus-f", meshName: "Focus_F", name: "Focus (F)", description: "Principal focus in front of mirror (f < 0).", function: "Parallel rays converge through F.", labelOffset: { x: 0, y: -0.45, z: 0 } },
+    { id: "centre-c", meshName: "Centre_C", name: "Centre (C)", description: "Centre of curvature at R = 2f.", function: "Normal rays through C reflect back along themselves.", labelOffset: { x: 0, y: -0.45, z: 0 } },
+    { id: "image-ab", meshName: "Image_AB", name: "Image (A'B')", description: "Calculated image formed by reflected rays.", function: "Real & inverted for |u| > |f|; virtual & erect for |u| < |f|.", labelOffset: { x: 0, y: 0.55, z: 0 } },
+  ],
+  formulas: [
+    { id: "mirror-eq", name: "Mirror Formula", expression: "1/f = 1/v + 1/u", variables: "f < 0 and u < 0 for concave mirror with real object" },
+    { id: "mirror-mag", name: "Magnification", expression: "m = -v/u = hᵢ/h₀", variables: "m < 0 (Real & Inverted), m > 0 (Virtual & Erect)" },
+  ],
+  cbseExamNotes: [
+    "Concave mirrors are used in torches, search-lights, vehicle headlights, shaving mirrors, dentist mirrors, and solar furnaces.",
+    "Only when the object is between P and F does a concave mirror produce a virtual, erect, and magnified image.",
+  ],
+  quiz: [
+    { id: "concm-q1", question: "Where should an object be placed in front of a concave mirror to obtain a virtual, erect, and magnified image?", options: ["At C", "Beyond C", "Between P and F", "At F"], correctIndex: 2, explanation: "When the object lies between Pole P and Focus F, reflected rays diverge and appear to meet behind the mirror.", marks: 1 },
+    { id: "concm-q2", question: "If a concave mirror has focal length 12 cm, where does a same-size real inverted image form?", options: ["At -12 cm", "At -24 cm", "At +24 cm", "At infinity"], correctIndex: 1, explanation: "Same-size real inverted image forms at C = 2f = -24 cm when u = -24 cm.", marks: 1 },
+  ],
+};

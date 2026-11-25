@@ -9,7 +9,7 @@ out
 dist
 *.tgz
 .astro
-data
+/data
 
 # code coverage
 coverage
