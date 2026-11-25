@@ -86,6 +86,25 @@ export class CameraManager {
     );
   }
 
+  updateConfig(config?: EngineSceneConfig): void {
+    if (!config) return;
+    if (config.cameraPosition) {
+      this.defaultPosition.set(config.cameraPosition.x, config.cameraPosition.y, config.cameraPosition.z);
+      this.camera.position.copy(this.defaultPosition);
+    }
+    if (config.cameraTarget) {
+      this.defaultTarget.set(config.cameraTarget.x, config.cameraTarget.y, config.cameraTarget.z);
+      this.controls.target.copy(this.defaultTarget);
+    }
+    if (config.minDistance !== undefined) {
+      this.controls.minDistance = config.minDistance;
+    }
+    if (config.maxDistance !== undefined) {
+      this.controls.maxDistance = config.maxDistance;
+    }
+    this.controls.update();
+  }
+
   zoomBy(factor: number): void {
     const offset = this.camera.position.clone().sub(this.controls.target);
     const nextDist = Math.max(

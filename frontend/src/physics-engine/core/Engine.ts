@@ -120,6 +120,10 @@ export class PhysicsEngine {
     this.callbacks.onLoadStart?.();
     this.clearCurrentLesson();
     this.cameraPresets = lesson.cameraPresets ?? [];
+    this.cameraManager.updateConfig(lesson.sceneConfig);
+    if (lesson.sceneConfig?.backgroundColor !== undefined) {
+      this.sceneManager.setBackground(lesson.sceneConfig.backgroundColor);
+    }
 
     // Respect prefers-reduced-motion
     if (

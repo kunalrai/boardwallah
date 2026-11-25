@@ -63,12 +63,31 @@ export class HistorySimulation implements Simulation {
   setParameters(params: SimulationParameters): SimulationResult {
     this.applyParams(params);
     this.rebuildVisuals();
+
+    if (this.context.modelRoot && this.context.modelRoot.children.length > 0) {
+      if (this.params.highlight === 1) {
+        this.context.highlightMesh("ThirdEstate_PeasantVendor");
+      } else if (this.params.highlight === 2) {
+        this.context.highlightMesh("SecondEstate_Nobility");
+      } else if (this.params.highlight === 3) {
+        this.context.highlightMesh("ParisTriumphalArch");
+      } else {
+        this.context.highlightMesh(null);
+      }
+    }
+
     return this.getResults();
   }
 
   private rebuildVisuals(): void {
     clearGroupWithDispose(this.dynamicGroup);
     this.animMeshes = [];
+
+    // When an external 3D model (GLB) is loaded (e.g. Paris French Revolution street scene),
+    // skip building procedural timeline blocks that clash with the 3D model geometry.
+    if (this.context.modelRoot && this.context.modelRoot.children.length > 0) {
+      return;
+    }
 
     const id = this.params.chapterId;
     if (id === "nationalism-europe") this.buildNationalismEurope();
