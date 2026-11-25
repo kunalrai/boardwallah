@@ -1,0 +1,12 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import PhysicsViewer from "../../../../components/physics3d/PhysicsViewer.astro";
+import { metalsNonMetalsLesson } from "../../../../data/chemistry/metals-non-metals";
+---
+
+<Layout
+  title={`${metalsNonMetalsLesson.title} | Class 10 3D Chemistry | BoardWallah`}
+  description={metalsNonMetalsLesson.subtitle}
+>
+  <PhysicsViewer lesson={metalsNonMetalsLesson} />
+</Layout>

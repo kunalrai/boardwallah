@@ -6,6 +6,10 @@ import { PrismSimulation } from "../simulations/optics/PrismSimulation";
 import { CircuitSimulation } from "../simulations/electricity/CircuitSimulation";
 import { MagneticFieldSimulation } from "../simulations/magnetism/MagneticFieldSimulation";
 import { AnatomySimulation } from "../simulations/anatomy/AnatomySimulation";
+import { ChemicalReactionSimulation } from "../simulations/chemistry/ChemicalReactionSimulation";
+import { PhLabSimulation } from "../simulations/chemistry/PhLabSimulation";
+import { IonicBondSimulation } from "../simulations/chemistry/IonicBondSimulation";
+import { CarbonMoleculeSimulation } from "../simulations/chemistry/CarbonMoleculeSimulation";
 
 let registered = false;
 
@@ -22,5 +26,9 @@ export function registerDefaultSimulations(): void {
   simulationRegistry.register("electricity", CircuitSimulation);
   simulationRegistry.register("magnetism", MagneticFieldSimulation);
   simulationRegistry.register("anatomy", AnatomySimulation);
+  simulationRegistry.register("chemistry-reaction", ChemicalReactionSimulation);
+  simulationRegistry.register("chemistry-ph", PhLabSimulation);
+  simulationRegistry.register("chemistry-ionic", IonicBondSimulation);
+  simulationRegistry.register("chemistry-molecule", CarbonMoleculeSimulation);
   registered = true;
 }

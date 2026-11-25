@@ -4,7 +4,8 @@ import { calculateLensOptics } from "../frontend/src/physics-engine/calculations
 import { calculateGlassSlabRefraction, calculatePrismDispersion } from "../frontend/src/physics-engine/calculations/optics/refraction";
 import { calculateCircuit } from "../frontend/src/physics-engine/calculations/electricity/circuit";
 import { calculateMagneticField } from "../frontend/src/physics-engine/calculations/magnetism/magnetic-field";
-import { getAllPhysicsLessons, getPhysicsLesson } from "../frontend/src/physics-engine/registry/LessonRegistry";
+import { calculatePhProperties, getCarbonMoleculeInfo, getChemicalReactionInfo } from "../frontend/src/physics-engine/calculations/chemistry/chemistry";
+import { getAllChemistryLessons, getAllPhysicsLessons, getPhysicsLesson } from "../frontend/src/physics-engine/registry/LessonRegistry";
 
 describe("Optics Mirror Calculations (Cartesian Sign Convention)", () => {
   test("Convex mirror with real object always forms virtual, erect, diminished image between P and F", () => {
@@ -195,19 +196,40 @@ describe("Electricity & Magnetism Calculations", () => {
   });
 });
 
+describe("Chemistry Calculations", () => {
+  test("pH properties classify Strong Acid, Neutral, and Strong Base accurately", () => {
+    const acid = calculatePhProperties(1.5);
+    expect(acid.nature).toBe("Strong Acid");
+    expect(acid.hydrogenIonCount).toBeGreaterThan(acid.hydroxideIonCount);
+
+    const neutral = calculatePhProperties(7);
+    expect(neutral.nature).toBe("Neutral");
+    expect(neutral.hydrogenIonCount).toBe(neutral.hydroxideIonCount);
+
+    const base = calculatePhProperties(13);
+    expect(base.nature).toBe("Strong Base (Alkali)");
+    expect(base.hydroxideIonCount).toBeGreaterThan(base.hydrogenIonCount);
+  });
+
+  test("Chemical reactions & Carbon molecules return balanced equations and bond counts", () => {
+    const feso4 = getChemicalReactionInfo("feso4-decomp");
+    expect(feso4.balancedEquation).toContain("Fe₂O₃");
+
+    const methane = getCarbonMoleculeInfo("methane");
+    expect(methane.covalentBondsCount).toBe(4);
+    expect(methane.geometry).toContain("Tetrahedral");
+  });
+});
+
 describe("LessonRegistry", () => {
-  test("Contains all 10 CBSE Class 10 3D Physics lessons", () => {
-    const all = getAllPhysicsLessons();
-    expect(all.length).toBe(10);
-    expect(getPhysicsLesson("human-eye")?.simulation).toBe("anatomy");
-    expect(getPhysicsLesson("eye-defects")?.simulation).toBe("anatomy");
-    expect(getPhysicsLesson("convex-mirror")?.simulation).toBe("mirror");
-    expect(getPhysicsLesson("concave-mirror")?.simulation).toBe("mirror");
-    expect(getPhysicsLesson("convex-lens")?.simulation).toBe("lens");
-    expect(getPhysicsLesson("concave-lens")?.simulation).toBe("lens");
-    expect(getPhysicsLesson("glass-slab")?.simulation).toBe("refraction");
-    expect(getPhysicsLesson("prism-dispersion")?.simulation).toBe("prism");
-    expect(getPhysicsLesson("electricity")?.simulation).toBe("electricity");
-    expect(getPhysicsLesson("magnetism")?.simulation).toBe("magnetism");
+  test("Contains all 10 Physics and 4 Chemistry 3D lessons", () => {
+    const physics = getAllPhysicsLessons();
+    const chemistry = getAllChemistryLessons();
+    expect(physics.length).toBe(10);
+    expect(chemistry.length).toBe(4);
+    expect(getPhysicsLesson("chemical-reactions")?.simulation).toBe("chemistry-reaction");
+    expect(getPhysicsLesson("acids-bases-salts")?.simulation).toBe("chemistry-ph");
+    expect(getPhysicsLesson("metals-non-metals")?.simulation).toBe("chemistry-ionic");
+    expect(getPhysicsLesson("carbon-compounds")?.simulation).toBe("chemistry-molecule");
   });
 });

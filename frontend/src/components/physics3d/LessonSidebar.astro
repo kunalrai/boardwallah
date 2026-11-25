@@ -1,13 +1,13 @@
 ---
 import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
-import { getAllPhysicsLessons } from "../../physics-engine/registry/LessonRegistry";
+import { getLessonsBySubject } from "../../physics-engine/registry/LessonRegistry";
 import ObjectSelector from "./ObjectSelector.astro";
 
 interface Props {
   lesson: PhysicsLessonConfig;
 }
 const { lesson } = Astro.props;
-const allLessons = getAllPhysicsLessons();
+const allLessons = getLessonsBySubject(lesson.subject);
 ---
 
 <aside class="p3d-left-sidebar" aria-label="Lesson guide and component navigation">

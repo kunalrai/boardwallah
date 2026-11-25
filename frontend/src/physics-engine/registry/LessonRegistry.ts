@@ -9,24 +9,48 @@ import { glassSlabLesson } from "../../data/physics/glass-slab";
 import { prismDispersionLesson } from "../../data/physics/prism-dispersion";
 import { electricityLesson } from "../../data/physics/electricity";
 import { magnetismLesson } from "../../data/physics/magnetism";
+import { chemicalReactionsLesson } from "../../data/chemistry/chemical-reactions";
+import { acidsBasesLesson } from "../../data/chemistry/acids-bases-salts";
+import { metalsNonMetalsLesson } from "../../data/chemistry/metals-non-metals";
+import { carbonCompoundsLesson } from "../../data/chemistry/carbon-compounds";
 
-const lessons = new Map<string, PhysicsLessonConfig>([
-  [humanEyeLesson.id, humanEyeLesson],
-  [eyeDefectsLesson.id, eyeDefectsLesson],
-  [convexMirrorLesson.id, convexMirrorLesson],
-  [concaveMirrorLesson.id, concaveMirrorLesson],
-  [convexLensLesson.id, convexLensLesson],
-  [concaveLensLesson.id, concaveLensLesson],
-  [glassSlabLesson.id, glassSlabLesson],
-  [prismDispersionLesson.id, prismDispersionLesson],
-  [electricityLesson.id, electricityLesson],
-  [magnetismLesson.id, magnetismLesson],
-]);
+const physicsLessons: PhysicsLessonConfig[] = [
+  humanEyeLesson,
+  eyeDefectsLesson,
+  convexMirrorLesson,
+  concaveMirrorLesson,
+  convexLensLesson,
+  concaveLensLesson,
+  glassSlabLesson,
+  prismDispersionLesson,
+  electricityLesson,
+  magnetismLesson,
+];
+
+const chemistryLessons: PhysicsLessonConfig[] = [
+  chemicalReactionsLesson,
+  acidsBasesLesson,
+  metalsNonMetalsLesson,
+  carbonCompoundsLesson,
+];
+
+const lessons = new Map<string, PhysicsLessonConfig>(
+  [...physicsLessons, ...chemistryLessons].map((l) => [l.id, l])
+);
 
 export function getPhysicsLesson(id: string): PhysicsLessonConfig | undefined {
   return lessons.get(id);
 }
 
 export function getAllPhysicsLessons(): PhysicsLessonConfig[] {
-  return Array.from(lessons.values());
+  return physicsLessons;
+}
+
+export function getAllChemistryLessons(): PhysicsLessonConfig[] {
+  return chemistryLessons;
+}
+
+export function getLessonsBySubject(subject: string): PhysicsLessonConfig[] {
+  if (subject.toLowerCase() === "chemistry") return chemistryLessons;
+  return physicsLessons;
 }
