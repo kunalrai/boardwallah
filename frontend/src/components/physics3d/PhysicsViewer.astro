@@ -26,12 +26,12 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
   <!-- Mobile collapsible drawer toggles -->
   <div class="p3d-mobile-tabs" role="tablist" aria-label="Lesson panels">
     <button type="button" class="p3d-mob-tab active" data-mob-toggle="right">Controls &amp; Results</button>
-    <button type="button" class="p3d-mob-tab active" data-mob-toggle="left">Anatomy &amp; Labs</button>
+    <button type="button" class="p3d-mob-tab" data-mob-toggle="left">Other 3D Labs</button>
   </div>
 
   <div class="p3d-workspace-grid">
     <!-- Left Sidebar -->
-    <div class="p3d-col-left" data-panel="left">
+    <div class="p3d-col-left mob-collapsed" data-panel="left">
       <LessonSidebar lesson={lesson} />
     </div>
 
@@ -421,14 +421,6 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
         });
       });
 
-      // Object selector buttons
-      root.querySelectorAll<HTMLButtonElement>("[data-select-mesh]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const meshName = btn.dataset.selectMesh || null;
-          engine?.selectObject(meshName);
-        });
-      });
-
       root.querySelectorAll<HTMLButtonElement>("[data-step-index]").forEach((btn) => {
         btn.addEventListener("click", () => {
           const idx = parseInt(btn.dataset.stepIndex || "0", 10);
@@ -574,7 +566,7 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
   }
   .p3d-workspace-grid {
     display: grid;
-    grid-template-columns: 285px minmax(0, 1fr) 330px;
+    grid-template-columns: 240px minmax(0, 1fr) 330px;
     gap: 1rem;
     align-items: start;
   }

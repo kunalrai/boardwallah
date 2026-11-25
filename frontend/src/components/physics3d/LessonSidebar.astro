@@ -1,7 +1,6 @@
 ---
 import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
 import { getLessonsBySubject } from "../../physics-engine/registry/LessonRegistry";
-import ObjectSelector from "./ObjectSelector.astro";
 
 interface Props {
   lesson: PhysicsLessonConfig;
@@ -10,16 +9,10 @@ const { lesson } = Astro.props;
 const allLessons = getLessonsBySubject(lesson.subject);
 ---
 
-<aside class="p3d-left-sidebar" aria-label="Component anatomy and lab navigation">
-  {lesson.objects.length > 0 && (
-    <section class="p3d-panel-card">
-      <ObjectSelector objects={lesson.objects} />
-    </section>
-  )}
-
+<aside class="p3d-left-sidebar" aria-label="3D Labs navigation">
   <section class="p3d-panel-card">
     <h3>Other 3D Labs</h3>
-    <nav class="p3d-concept-nav" aria-label="Switch 3D Physics lesson">
+    <nav class="p3d-concept-nav" aria-label="Switch 3D lesson">
       {allLessons.map((item) => (
         <a
           href={item.slug}
@@ -54,7 +47,7 @@ const allLessons = getLessonsBySubject(lesson.subject);
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    max-height: 380px;
+    max-height: 400px;
     overflow-y: auto;
   }
   .p3d-concept-link {
