@@ -1,7 +1,7 @@
 ---
 import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+import { getLessonsBySubject } from "../../physics-engine/registry/LessonRegistry";
 import LessonHeader from "./LessonHeader.astro";
-import LessonSidebar from "./LessonSidebar.astro";
 import PhysicsToolbar from "./PhysicsToolbar.astro";
 import LoadingIndicator from "./LoadingIndicator.astro";
 import ErrorFallback from "./ErrorFallback.astro";
@@ -18,25 +18,33 @@ interface Props {
 const { lesson } = Astro.props;
 const viewerId = `bw-p3d-viewer-${lesson.id}`;
 const configScriptId = `bw-p3d-config-${lesson.id}`;
+const allLessons = getLessonsBySubject(lesson.subject);
 ---
 
 <div class="p3d-shell" id={viewerId} data-physics-viewer data-config-id={configScriptId}>
   <LessonHeader lesson={lesson} />
 
-  <!-- Mobile collapsible drawer toggles -->
-  <div class="p3d-mobile-tabs" role="tablist" aria-label="Lesson panels">
-    <button type="button" class="p3d-mob-tab active" data-mob-toggle="right">Controls &amp; Results</button>
-    <button type="button" class="p3d-mob-tab" data-mob-toggle="left">Other 3D Labs</button>
-  </div>
+  <!-- Quick Horizontal Subject Labs Switcher -->
+  {allLessons.length > 1 && (
+    <nav class="p3d-quick-labs-bar" aria-label="Other 3D Labs in this subject">
+      <span class="p3d-quick-label">⚡ Other {lesson.subject.toUpperCase()} Labs:</span>
+      <div class="p3d-quick-pills">
+        {allLessons.map((item) => (
+          <a
+            href={item.slug}
+            class={`p3d-quick-pill ${item.id === lesson.id ? "current" : ""}`}
+            aria-current={item.id === lesson.id ? "page" : undefined}
+          >
+            {item.title}
+          </a>
+        ))}
+      </div>
+    </nav>
+  )}
 
   <div class="p3d-workspace-grid">
-    <!-- Left Sidebar -->
-    <div class="p3d-col-left mob-collapsed" data-panel="left">
-      <LessonSidebar lesson={lesson} />
-    </div>
-
-    <!-- Center 3D Viewport & Playback -->
-    <section class="p3d-col-center" aria-label="Interactive 3D Physics Stage">
+    <!-- Center 3D Viewport & Playback Stage (Takes full primary workspace) -->
+    <section class="p3d-col-main" aria-label="Interactive 3D Physics Stage">
       <div class="p3d-stage-card" data-stage-card>
         <PhysicsToolbar features={lesson.features} cameraPresets={lesson.cameraPresets} />
 
@@ -102,8 +110,8 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
       </div>
     </section>
 
-    <!-- Right Sidebar -->
-    <aside class="p3d-col-right" data-panel="right" aria-label="Parameters, Observations and Formulas">
+    <!-- Side Panel: Controls, Observations, CBSE Notes, Formulas -->
+    <aside class="p3d-col-side" data-panel="right" aria-label="Parameters, Observations and Formulas">
       <ParameterControls controls={lesson.parameterControls} />
       <InformationPanel lesson={lesson} />
       <FormulaPanel formulas={lesson.formulas} />
@@ -539,38 +547,88 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
 
 <style>
   .p3d-shell {
-    max-width: 1400px;
+    max-width: 1720px;
+    width: 100%;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
   }
-  .p3d-mobile-tabs {
-    display: none;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
+  @media (min-width: 1536px) {
+    .p3d-shell {
+      max-width: 1820px;
+      padding: 1.25rem 2rem;
+    }
   }
-  .p3d-mob-tab {
-    flex: 1;
-    padding: 0.45rem 0.75rem;
-    border-radius: 999px;
-    border: 1px solid #cbd5e1;
+
+  /* Horizontal Quick Labs Bar */
+  .p3d-quick-labs-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     background: #ffffff;
-    color: #334155;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-  .p3d-mob-tab.active {
+  .p3d-quick-labs-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .p3d-quick-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #475569;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .p3d-quick-pills {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: nowrap;
+  }
+  .p3d-quick-pill {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  .p3d-quick-pill:hover {
     background: #eff6ff;
-    border-color: #1a73e8;
+    border-color: #93c5fd;
     color: #1d4ed8;
   }
+  .p3d-quick-pill.current {
+    background: #1a73e8;
+    border-color: #1a73e8;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.25);
+  }
+
   .p3d-workspace-grid {
     display: grid;
-    grid-template-columns: 240px minmax(0, 1fr) 330px;
-    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 1.25rem;
     align-items: start;
   }
-  .p3d-col-right {
+  @media (min-width: 1536px) {
+    .p3d-workspace-grid {
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 1.5rem;
+    }
+  }
+
+  .p3d-col-side {
     display: flex;
     flex-direction: column;
     gap: 0.9rem;
@@ -585,8 +643,13 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
   .p3d-canvas-wrap {
     position: relative;
     width: 100%;
-    height: 490px;
+    height: 560px;
     background: #f4f7fb;
+  }
+  @media (min-width: 1536px) {
+    .p3d-canvas-wrap {
+      height: 620px;
+    }
   }
   .p3d-bottom-controls {
     padding: 0.75rem 0.9rem;
@@ -727,27 +790,18 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
     line-height: 1.42;
   }
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1100px) {
     .p3d-workspace-grid {
       grid-template-columns: 1fr;
     }
-    .p3d-mobile-tabs {
-      display: flex;
-    }
-    .p3d-col-center {
+    .p3d-col-main {
       order: 1;
     }
-    .p3d-col-right {
+    .p3d-col-side {
       order: 2;
     }
-    .p3d-col-left {
-      order: 3;
-    }
     .p3d-canvas-wrap {
-      height: 380px;
-    }
-    .mob-collapsed {
-      display: none !important;
+      height: 420px;
     }
   }
   @media (max-width: 600px) {
@@ -755,7 +809,7 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
       padding: 0.65rem;
     }
     .p3d-canvas-wrap {
-      height: 320px;
+      height: 330px;
     }
   }
 </style>

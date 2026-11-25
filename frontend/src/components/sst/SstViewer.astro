@@ -1270,10 +1270,17 @@ const isFrenchRev = lesson.id === "sst-nationalism-europe";
 
 <style>
   .sst-shell {
-    max-width: 1440px;
+    max-width: 1720px;
+    width: 100%;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     font-family: inherit;
+  }
+  @media (min-width: 1536px) {
+    .sst-shell {
+      max-width: 1820px;
+      padding: 1.25rem 2rem;
+    }
   }
 
   /* Mode Switcher Bar */
@@ -1314,9 +1321,15 @@ const isFrenchRev = lesson.id === "sst-nationalism-europe";
   /* Grid Layout */
   .sst-workspace-grid {
     display: grid;
-    grid-template-columns: 290px minmax(0, 1fr) 320px;
-    gap: 1rem;
+    grid-template-columns: 310px minmax(0, 1fr) 360px;
+    gap: 1.25rem;
     align-items: start;
+  }
+  @media (min-width: 1536px) {
+    .sst-workspace-grid {
+      grid-template-columns: 340px minmax(0, 1fr) 400px;
+      gap: 1.5rem;
+    }
   }
 
   /* Panel Cards */
@@ -1353,7 +1366,7 @@ const isFrenchRev = lesson.id === "sst-nationalism-europe";
     display: flex;
     flex-direction: column;
     gap: 0.55rem;
-    max-height: 540px;
+    max-height: 620px;
     overflow-y: auto;
     padding-right: 0.35rem;
   }
@@ -1564,8 +1577,13 @@ const isFrenchRev = lesson.id === "sst-nationalism-europe";
   .sst-canvas-wrap {
     position: relative;
     width: 100%;
-    height: 480px;
+    height: 560px;
     background: #f8fafd;
+  }
+  @media (min-width: 1536px) {
+    .sst-canvas-wrap {
+      height: 620px;
+    }
   }
 
   /* Video Viewport */
@@ -1578,9 +1596,14 @@ const isFrenchRev = lesson.id === "sst-nationalism-europe";
   .sst-primary-video {
     width: 100%;
     aspect-ratio: 16 / 9;
-    max-height: 520px;
+    max-height: 560px;
     display: block;
     object-fit: cover;
+  }
+  @media (min-width: 1536px) {
+    .sst-primary-video {
+      max-height: 620px;
+    }
   }
 
   /* Timeline Scrubber */

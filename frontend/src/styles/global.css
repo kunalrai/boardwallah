@@ -107,8 +107,14 @@ code,
 }
 
 .wrap {
-  width: min(1120px, calc(100% - 2rem));
+  width: min(1380px, calc(100% - 2.5rem));
   margin-inline: auto;
+}
+
+@media (min-width: 1536px) {
+  .wrap {
+    width: min(1560px, calc(100% - 3.5rem));
+  }
 }
 
 .skip-link {
@@ -133,6 +139,10 @@ code,
   top: 0;
   z-index: 10;
   backdrop-filter: blur(10px);
+}
+
+.site-header .wrap {
+  width: min(1720px, calc(100% - 3rem));
 }
 
 .header-inner {
@@ -1078,7 +1088,7 @@ fieldset {
 
 @media (max-width: 640px) {
   .wrap {
-    width: min(1120px, calc(100% - 1.5rem));
+    width: min(100%, calc(100% - 1.5rem));
   }
 
   main {
