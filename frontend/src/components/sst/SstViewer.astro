@@ -88,8 +88,8 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
             >
               <span class="step-num">{step.stepNumber}</span>
               <div class="step-text">
-                <strong>{step.title}</strong>
-                <p>{step.description.slice(0, 95)}...</p>
+                <strong>{step.title.replace(/^\d+\.\s*/, "")}</strong>
+                <p>{step.description}</p>
                 {step.videoUrl && (
                   <span
                     class="step-video-badge"
@@ -719,6 +719,11 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
         if (counterEl) counterEl.textContent = `${idx + 1} / ${lesson.learningSteps.length}`;
         if (timelineSlider) timelineSlider.value = String(idx);
 
+        const activeItem = stepItems[idx];
+        if (activeItem) {
+          activeItem.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+
         const currentStep = lesson.learningSteps[idx];
         renderMetricsForStep(idx);
 
@@ -1283,56 +1288,93 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
   .sst-steps-list {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
-    max-height: 480px;
+    gap: 0.55rem;
+    max-height: 540px;
     overflow-y: auto;
+    padding-right: 0.35rem;
+  }
+  .sst-steps-list::-webkit-scrollbar {
+    width: 6px;
+  }
+  .sst-steps-list::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 8px;
+  }
+  .sst-steps-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+  }
+  .sst-steps-list::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
   }
   .sst-step-item {
     display: flex;
     align-items: flex-start;
-    gap: 0.65rem;
-    padding: 0.65rem;
-    border-radius: 10px;
-    border: 1px solid #f1f5f9;
-    background: #f8fafc;
+    gap: 0.75rem;
+    padding: 0.75rem 0.85rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
     text-align: left;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.18s ease;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0; /* CRITICAL: prevents vertical shrinking and text overlap */
+    font-family: inherit;
+    position: relative;
   }
   .sst-step-item:hover {
-    background: #f1f5f9;
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   }
   .sst-step-item.active {
     background: #eff6ff;
-    border-color: #93c5fd;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 1.5px #3b82f6;
   }
   .step-num {
     display: grid;
     place-items: center;
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     background: #e2e8f0;
-    color: #0f172a;
-    font-size: 0.75rem;
+    color: #1e293b;
+    font-size: 0.78rem;
     font-weight: 700;
     flex-shrink: 0;
+    margin-top: 0.1rem;
   }
   .sst-step-item.active .step-num {
     background: #2563eb;
     color: #ffffff;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+  }
+  .step-text {
+    flex: 1;
+    min-width: 0;
   }
   .step-text strong {
     display: block;
     font-size: 0.84rem;
     color: #0f172a;
-    line-height: 1.25;
+    line-height: 1.35;
+    font-weight: 700;
+    word-break: break-word;
   }
   .step-text p {
-    margin: 0.25rem 0 0;
+    margin: 0.3rem 0 0;
     font-size: 0.76rem;
     color: #64748b;
-    line-height: 1.35;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* Map Pins List */
