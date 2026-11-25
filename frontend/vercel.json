@@ -76,16 +76,6 @@
       "permanent": true
     },
     {
-      "source": "/subjects",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/subjects/(.*)",
-      "destination": "/",
-      "permanent": true
-    },
-    {
       "source": "/resources",
       "destination": "/",
       "permanent": true
