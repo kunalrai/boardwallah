@@ -75,6 +75,13 @@ const chatSchema = {
           <span class="nav-item-label">New chat</span>
         </button>
 
+        <a href="/subjects/" class="sidebar-nav-item" title="CBSE Class 10 Subjects & Interactive 3D Labs">
+          <span class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </span>
+          <span class="nav-item-label">Subjects &amp; Labs</span>
+        </a>
+
         <button id="sidebar-library-btn" class="sidebar-nav-item" type="button" title="Class 10 56 Chapters Library">
           <span class="nav-item-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
@@ -220,7 +227,11 @@ const chatSchema = {
           </div>
           <span class="active-chat-title" id="active-chat-title"></span>
         </div>
-        <div class="header-right-col">
+        <div class="header-right-col" style="display: flex; align-items: center; gap: 0.5rem;">
+          <a href="/subjects/" class="header-subjects-link" title="Open CBSE Class 10 Subjects & Interactive Labs" style="font-size: 0.82rem; font-weight: 600; color: #1a73e8; text-decoration: none; padding: 0.35rem 0.8rem; border-radius: 999px; background: #e8f0fe; display: inline-flex; align-items: center; gap: 0.35rem; transition: background 0.15s ease;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <span>Subjects &amp; Labs &rarr;</span>
+          </a>
           <button id="pwa-install-header-btn" class="pwa-install-header-btn" type="button" style="display:none;" title="Install Boardwallah App on this device">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <span>Install App</span>
@@ -247,6 +258,10 @@ const chatSchema = {
 
             <!-- Starter Prompt Pills -->
             <div class="starter-cards-grid">
+              <a href="/subjects/" class="starter-pill-btn" style="border-color: #38bdf8; background: #f0f9ff; text-decoration: none;">
+                <span class="pill-icon" style="color: #0284c7;"><CbseIcon name="solid" size={20} /></span>
+                <span class="pill-text"><strong>Interactive 3D Geometry &amp; Ray Optics Labs &rarr;</strong></span>
+              </a>
               <button class="starter-pill-btn browse-library-pill-btn" id="browse-library-pill" type="button" style="border-color: #93c5fd; background: #eff6ff;">
                 <span class="pill-icon" style="color: #2563eb;"><CbseIcon name="book" size={20} /></span>
                 <span class="pill-text"><strong>Explore 58 Chapter Guides &amp; 20-Q Quizzes</strong></span>
@@ -408,7 +423,10 @@ const chatSchema = {
           <h3 style="margin: 0; font-size: 1.15rem;">Class 10 CBSE Chapter Library</h3>
           <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: #5f6368;">Select any chapter to generate instant Socratic hints, PYQ proofs, or marking schemes.</p>
         </div>
-        <button id="close-library-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <a href="/subjects/" class="button secondary small" style="font-size: 0.76rem; text-decoration: none; padding: 0.3rem 0.65rem; white-space: nowrap; border-radius: 8px;">🔬 Interactive Labs &rarr;</a>
+          <button id="close-library-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
+        </div>
       </div>
 
       <!-- Subject Filter Tabs -->
