@@ -1,0 +1,1117 @@
+---
+import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+import LessonHeader from "../physics3d/LessonHeader.astro";
+import LoadingIndicator from "../physics3d/LoadingIndicator.astro";
+import ErrorFallback from "../physics3d/ErrorFallback.astro";
+import { CBSE_SST_MAP_PINS } from "../../data/sst/sst-map-data";
+import { SST_VOICE_NARRATIONS } from "../../data/sst/sst-voice-data";
+
+interface Props {
+  lesson: PhysicsLessonConfig;
+}
+
+const { lesson } = Astro.props;
+const viewerId = `bw-sst-viewer-${lesson.id}`;
+const configScriptId = `bw-sst-config-${lesson.id}`;
+const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id || lesson.id.includes(p.chapterId));
+const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
+---
+
+<div class="sst-shell" id={viewerId} data-sst-viewer data-config-id={configScriptId}>
+  <LessonHeader lesson={lesson} />
+
+  <!-- SST Workstation Mode Switcher -->
+  <nav class="sst-mode-bar" role="tablist" aria-label="SST Learning Modes">
+    <button type="button" class="sst-mode-tab active" data-mode-btn="explore" aria-selected="true">
+      <span class="mode-icon">🔍</span> 3D Explore
+    </button>
+    <button type="button" class="sst-mode-tab" data-mode-btn="map" aria-selected="false">
+      <span class="mode-icon">🗺️</span> Interactive Map
+    </button>
+    <button type="button" class="sst-mode-tab" data-mode-btn="lesson" aria-selected="false">
+      <span class="mode-icon">🎬</span> Animated Lesson
+    </button>
+    <button type="button" class="sst-mode-tab" data-mode-btn="experiment" aria-selected="false">
+      <span class="mode-icon">⚡</span> Virtual Experiment
+    </button>
+    <button type="button" class="sst-mode-tab" data-mode-btn="quiz" aria-selected="false">
+      <span class="mode-icon">📝</span> Quiz Mode ({lesson.quiz.length} Qs)
+    </button>
+    <button type="button" class="sst-mode-tab" data-mode-btn="exam" aria-selected="false">
+      <span class="mode-icon">🎯</span> CBSE Exam Mode
+    </button>
+  </nav>
+
+  <!-- Voice Narration Toolbar (Hindi & English) -->
+  <div class="sst-voice-bar" aria-label="Voice Narration">
+    <div class="voice-controls">
+      <button type="button" class="voice-btn" data-voice-play title="Play voice explanation">
+        <span class="voice-play-icon">🔊</span>
+        <span class="voice-label">Listen (बोलकर समझाएं)</span>
+      </button>
+      <button type="button" class="voice-btn secondary" data-voice-stop title="Stop voice narration">
+        ⏹ Stop
+      </button>
+      <div class="voice-lang-picker">
+        <label for={`lang-${lesson.id}`}>Language:</label>
+        <select id={`lang-${lesson.id}`} data-voice-lang>
+          <option value="en-IN">🇬🇧 English</option>
+          <option value="hi-IN" selected>🇮🇳 हिंदी (Hindi)</option>
+        </select>
+      </div>
+      <div class="voice-wave" data-voice-wave hidden>
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="voice-transcript" data-voice-transcript>
+      Click "Listen" to hear a step-by-step audio explanation of this chapter in English or Hindi.
+    </div>
+  </div>
+
+  <div class="sst-workspace-grid">
+    <!-- Left Navigation: Historical Timeline & Steps -->
+    <aside class="sst-col-left">
+      <!-- Historical Timeline & Steps -->
+      <div class="sst-panel-card">
+        <div class="card-header">
+          <h3>⏳ Chronological Steps</h3>
+          <span class="step-badge" data-step-counter>1 / {lesson.learningSteps.length}</span>
+        </div>
+        <div class="sst-steps-list">
+          {lesson.learningSteps.map((step, idx) => (
+            <button
+              type="button"
+              class={`sst-step-item ${idx === 0 ? "active" : ""}`}
+              data-step-nav={idx}
+            >
+              <span class="step-num">{step.stepNumber}</span>
+              <div class="step-text">
+                <strong>{step.title}</strong>
+                <p>{step.description.slice(0, 95)}...</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- CBSE Map Work Quick Access -->
+      {relevantPins.length > 0 && (
+        <div class="sst-panel-card sst-map-panel">
+          <div class="card-header">
+            <h3>📍 CBSE Map Work (5 Marks)</h3>
+          </div>
+          <ul class="sst-pin-list">
+            {relevantPins.map((pin) => (
+              <li>
+                <button type="button" class="pin-link" data-focus-pin={pin.id}>
+                  <span class="pin-dot"></span>
+                  <strong>{pin.name}</strong> ({pin.state})
+                </button>
+                <small>{pin.mapTip}</small>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </aside>
+
+    <!-- Center 3D Stage & Interactive Viewport -->
+    <main class="sst-col-center">
+      <div class="sst-stage-card">
+        <!-- 3D Toolbar -->
+        <div class="sst-toolbar">
+          <div class="tool-left">
+            <span class="live-dot"></span>
+            <strong>3D Interactive Stage</strong>
+          </div>
+          <div class="tool-actions">
+            <button type="button" class="tool-btn" data-action="reset-cam" title="Reset Camera">🔄 Reset</button>
+            <button type="button" class="tool-btn" data-action="toggle-labels" title="Toggle Labels">🏷️ Labels</button>
+            <button type="button" class="tool-btn" data-action="fullscreen" title="Fullscreen">⛶ Fullscreen</button>
+          </div>
+        </div>
+
+        <!-- WebGL Canvas Container -->
+        <div class="sst-canvas-wrap" data-canvas-container>
+          <LoadingIndicator />
+          <ErrorFallback
+            title={lesson.title}
+            staticImageFallback={lesson.staticImageFallback}
+            videoFallback={lesson.videoFallback}
+          />
+        </div>
+
+        <!-- Timeline Scrubber Bar -->
+        <div class="sst-timeline-bar">
+          <button type="button" class="timeline-step-btn" data-step-prev title="Previous step">◀ Prev</button>
+          <input
+            type="range"
+            class="timeline-slider"
+            min="0"
+            max={lesson.learningSteps.length - 1}
+            value="0"
+            step="1"
+            data-timeline-slider
+            aria-label="Timeline scrubber"
+          />
+          <button type="button" class="timeline-step-btn" data-step-next title="Next step">Next ▶</button>
+        </div>
+      </div>
+
+      <!-- Mode 4: Virtual Experiment Panels -->
+      <section class="sst-experiment-view" data-experiment-view hidden>
+        <!-- Civics: Election & Parliament Coalition Simulator -->
+        {lesson.subject.toLowerCase().includes("pol") || lesson.subject.toLowerCase().includes("civic") ? (
+          <div class="experiment-card">
+            <div class="exp-header">
+              <h3>🗳️ Lok Sabha Election &amp; Coalition Simulator (543 Seats)</h3>
+              <span class="majority-tag">Majority Mark: 272 Seats</span>
+            </div>
+            <div class="sim-parliament-arc">
+              <div class="arc-visual" data-arc-visual>
+                <div class="arc-marker" style="left: 50%;"></div>
+                <div class="party-bar party-a" style="width: 48%;" data-seat-a>A: 260</div>
+                <div class="party-bar party-b" style="width: 32%;" data-seat-b>B: 174</div>
+                <div class="party-bar party-c" style="width: 20%;" data-seat-c>Reg: 109</div>
+              </div>
+              <p class="gov-status" data-gov-status>Current Status: <strong>Coalition Required (Hung Parliament)</strong></p>
+            </div>
+            <div class="sim-controls-grid">
+              <label>
+                Alliance A Seats:
+                <input type="range" min="100" max="400" value="260" data-sim-seat="a" />
+              </label>
+              <label>
+                Alliance B Seats:
+                <input type="range" min="50" max="300" value="174" data-sim-seat="b" />
+              </label>
+            </div>
+          </div>
+        ) : lesson.subject.toLowerCase().includes("econ") ? (
+          <div class="experiment-card">
+            <div class="exp-header">
+              <h3>📊 National Income, Tariffs &amp; GDP Trade Balance Simulator</h3>
+            </div>
+            <div class="sim-controls-grid">
+              <label>
+                Import Tariff Rate (%):
+                <input type="range" min="0" max="50" value="15" data-sim-tariff />
+                <span data-readout-tariff>15%</span>
+              </label>
+              <label>
+                Priority Sector Lending (%):
+                <input type="range" min="10" max="60" value="40" data-sim-psl />
+                <span data-readout-psl>40%</span>
+              </label>
+            </div>
+            <div class="sim-metrics-row">
+              <div class="sim-stat"><span>GDP Growth:</span> <strong data-stat-gdp>7.2%</strong></div>
+              <div class="sim-stat"><span>Trade Deficit:</span> <strong data-stat-deficit>-$84B</strong></div>
+              <div class="sim-stat"><span>Rural Credit Flow:</span> <strong data-stat-credit>High</strong></div>
+            </div>
+          </div>
+        ) : (
+          <div class="experiment-card">
+            <div class="exp-header">
+              <h3>⚡ Resource Allocation &amp; Conservation Simulator</h3>
+            </div>
+            <div class="sim-controls-grid">
+              <label>
+                Conservation / Forest Target (%):
+                <input type="range" min="15" max="50" value="33" data-sim-forest />
+                <span data-readout-forest>33%</span>
+              </label>
+              <label>
+                Irrigation Reservoir Level (%):
+                <input type="range" min="10" max="100" value="75" data-sim-dam />
+                <span data-readout-dam>75%</span>
+              </label>
+            </div>
+          </div>
+        )}
+      </section>
+
+      <!-- Mode 6: CBSE Exam Mode (Past Papers & Marking Scheme) -->
+      <section class="sst-exam-view" data-exam-view hidden>
+        <div class="exam-card">
+          <div class="exam-header">
+            <h3>🎯 CBSE Board Exam Preparation — Marking Scheme &amp; Sample Questions</h3>
+            <span class="exam-badge">CBSE Class 10 Pattern</span>
+          </div>
+
+          <div class="exam-q-box">
+            <span class="q-type">1-Mark MCQ</span>
+            <p><strong>Q1:</strong> {lesson.quiz[0]?.question ?? "Explain the primary cause of the movement."}</p>
+            <div class="answer-reveal">
+              <strong>Answer:</strong> {lesson.quiz[0]?.options[lesson.quiz[0]?.correctIndex] ?? "Correct option"}
+              <p class="marking-tip"><em>CBSE Rubric: 1 full mark for correct identification.</em></p>
+            </div>
+          </div>
+
+          <div class="exam-q-box">
+            <span class="q-type">3-Mark Analytical Question</span>
+            <p><strong>Q2:</strong> Explain any three major consequences or factors that defined this chapter.</p>
+            <div class="model-answer">
+              <strong>CBSE Topper Model Answer:</strong>
+              <ul>
+                {lesson.cbseExamNotes.slice(0, 3).map((note) => (
+                  <li>{note}</li>
+                ))}
+              </ul>
+              <p class="marking-tip"><em>Marking Scheme: 1 mark for each valid, distinct point with historical/geographical context.</em></p>
+            </div>
+          </div>
+
+          <div class="exam-q-box">
+            <span class="q-type">5-Mark Case-Based / Map Question</span>
+            <p><strong>Q3:</strong> Analyze the historical / geographical significance of the events discussed, citing specific dates, locations, and constitutional articles.</p>
+            <div class="model-answer">
+              <strong>Key Topper Points:</strong>
+              <p>{lesson.subtitle}</p>
+              <p class="marking-tip"><em>Marking Scheme: 2 marks for conceptual definition + 2 marks for factual examples + 1 mark for map or constitutional cross-reference.</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right Sidebar: Live Metrics, CBSE Notes & Information -->
+    <aside class="sst-col-right">
+      <!-- Live Observation Panel -->
+      <div class="sst-panel-card">
+        <h3>📊 Live Metrics &amp; Context</h3>
+        <p class="sim-summary" data-sim-summary>Select any part or step to inspect details.</p>
+        <dl class="sst-metrics-grid" data-sim-metrics></dl>
+        <ul class="sst-obs-list" data-sim-observations></ul>
+      </div>
+
+      <!-- CBSE Board Exam High-Yield Notes -->
+      <div class="sst-panel-card sst-notes-card">
+        <div class="card-header">
+          <h3>⭐ CBSE Exam Tips &amp; Rubrics</h3>
+        </div>
+        <ul class="sst-exam-list">
+          {lesson.cbseExamNotes.map((note) => (
+            <li>{note}</li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Quiz Panel -->
+  <div class="sst-quiz-view" data-quiz-view hidden>
+    <div class="quiz-card">
+      <h2>📝 Interactive Concept Quiz</h2>
+      <p class="quiz-score" data-quiz-score>Score: 0 / {lesson.quiz.length}</p>
+      <div class="quiz-questions-grid">
+        {lesson.quiz.map((q, qIdx) => (
+          <div class="quiz-q-item" data-q-card data-correct-idx={q.correctIndex}>
+            <p class="q-title"><strong>Q{qIdx + 1}:</strong> {q.question}</p>
+            <div class="options-list">
+              {q.options.map((opt, oIdx) => (
+                <button type="button" class="opt-btn" data-opt-idx={oIdx}>
+                  {opt}
+                </button>
+              ))}
+            </div>
+            <p class="q-exp" hidden>{q.explanation}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <script
+    type="application/json"
+    id={configScriptId}
+    set:html={JSON.stringify(lesson)}
+  ></script>
+</div>
+
+<script>
+  import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+  import type { SimulationResult } from "../../physics-engine/types/simulation";
+  import type { PhysicsEngine } from "../../physics-engine/core/Engine";
+
+  async function initAllSstViewers() {
+    const roots = document.querySelectorAll<HTMLElement>("[data-sst-viewer]");
+    if (roots.length === 0) return;
+
+    const [{ PhysicsEngine: EngineClass }, { registerDefaultSimulations }] = await Promise.all([
+      import("../../physics-engine/core/Engine"),
+      import("../../physics-engine/registry/registerSimulations"),
+    ]);
+    registerDefaultSimulations();
+
+    roots.forEach((root) => {
+      if (root.dataset.initialized === "true") return;
+      root.dataset.initialized = "true";
+
+      const configId = root.dataset.configId;
+      const configEl = configId ? document.getElementById(configId) : null;
+      if (!configEl?.textContent) return;
+
+      const lesson: PhysicsLessonConfig = JSON.parse(configEl.textContent);
+      const container = root.querySelector<HTMLElement>("[data-canvas-container]");
+      const loadingEl = root.querySelector<HTMLElement>("#p3d-loading");
+      const transcriptEl = root.querySelector<HTMLElement>("[data-voice-transcript]");
+      const waveEl = root.querySelector<HTMLElement>("[data-voice-wave]");
+      const langSelect = root.querySelector<HTMLSelectElement>("[data-voice-lang]");
+
+      if (!container) return;
+
+      let engine: PhysicsEngine | null = null;
+      let currentStepIndex = 0;
+      let isPlayingVoice = false;
+
+      const renderSimulationResult = (raw: Record<string, unknown>) => {
+        const res = raw as unknown as SimulationResult;
+        const summaryEl = root.querySelector<HTMLElement>("[data-sim-summary]");
+        const metricsEl = root.querySelector<HTMLElement>("[data-sim-metrics]");
+        const obsEl = root.querySelector<HTMLElement>("[data-sim-observations]");
+
+        if (summaryEl && res.summary) summaryEl.textContent = res.summary;
+        if (metricsEl && res.metrics) {
+          metricsEl.innerHTML = Object.entries(res.metrics)
+            .map(([k, v]) => `<div class="metric-item"><dt>${k}</dt><dd>${String(v)}</dd></div>`)
+            .join("");
+        }
+        if (obsEl && Array.isArray(res.observations)) {
+          obsEl.innerHTML = res.observations.map((o) => `<li>${o}</li>`).join("");
+        }
+      };
+
+      const startEngine = async () => {
+        try {
+          if (loadingEl) loadingEl.hidden = false;
+          engine?.dispose();
+
+          engine = new EngineClass(container, lesson, {
+            onLoadComplete: () => {
+              if (loadingEl) loadingEl.hidden = true;
+            },
+            onSimulationUpdate: (results) => renderSimulationResult(results),
+          });
+
+          await engine.loadLesson(lesson);
+        } catch {
+          if (loadingEl) loadingEl.hidden = true;
+        }
+      };
+
+      startEngine();
+
+      // Mode Switcher Tab Functionality
+      const modeButtons = root.querySelectorAll<HTMLButtonElement>("[data-mode-btn]");
+      const expView = root.querySelector<HTMLElement>("[data-experiment-view]");
+      const examView = root.querySelector<HTMLElement>("[data-exam-view]");
+      const quizView = root.querySelector<HTMLElement>("[data-quiz-view]");
+
+      modeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          modeButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const mode = btn.dataset.modeBtn;
+
+          if (expView) expView.hidden = mode !== "experiment";
+          if (examView) examView.hidden = mode !== "exam";
+          if (quizView) quizView.hidden = mode !== "quiz";
+
+          if (mode === "map") {
+            engine?.applyCameraPreset("top");
+          } else if (mode === "explore") {
+            engine?.resetCamera();
+          }
+        });
+      });
+
+      // Voice Narration (Web Speech Synthesis in English & Hindi)
+      const playVoice = () => {
+        if (!("speechSynthesis" in window)) {
+          if (transcriptEl) transcriptEl.textContent = "Speech synthesis not supported in this browser.";
+          return;
+        }
+
+        window.speechSynthesis.cancel();
+        const currentStep = lesson.learningSteps[currentStepIndex];
+        const isHindi = langSelect?.value === "hi-IN";
+
+        const textToSpeak = isHindi
+          ? `${currentStep?.title || lesson.title}। ${currentStep?.description || lesson.subtitle}`
+          : `${currentStep?.title || lesson.title}. ${currentStep?.description || lesson.subtitle}`;
+
+        if (transcriptEl) transcriptEl.textContent = `🗣️ Speaking: "${textToSpeak}"`;
+        if (waveEl) waveEl.hidden = false;
+
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.lang = isHindi ? "hi-IN" : "en-IN";
+        utterance.rate = 0.95;
+
+        // Try to pick a native Hindi/Indian English voice if available
+        const voices = window.speechSynthesis.getVoices();
+        const targetVoice = voices.find((v) => isHindi ? v.lang.startsWith("hi") : v.lang.startsWith("en-IN") || v.lang.startsWith("en"));
+        if (targetVoice) utterance.voice = targetVoice;
+
+        utterance.onend = () => {
+          if (waveEl) waveEl.hidden = true;
+          isPlayingVoice = false;
+        };
+
+        window.speechSynthesis.speak(utterance);
+        isPlayingVoice = true;
+      };
+
+      root.querySelector("[data-voice-play]")?.addEventListener("click", playVoice);
+      root.querySelector("[data-voice-stop]")?.addEventListener("click", () => {
+        window.speechSynthesis.cancel();
+        if (waveEl) waveEl.hidden = true;
+        if (transcriptEl) transcriptEl.textContent = "Voice narration stopped.";
+        isPlayingVoice = false;
+      });
+
+      // Step & Timeline Navigation
+      const applyStep = (idx: number) => {
+        if (idx < 0 || idx >= lesson.learningSteps.length) return;
+        currentStepIndex = idx;
+        const step = lesson.learningSteps[idx];
+
+        root.querySelectorAll<HTMLButtonElement>("[data-step-nav]").forEach((b, i) => {
+          b.classList.toggle("active", i === idx);
+        });
+
+        const slider = root.querySelector<HTMLInputElement>("[data-timeline-slider]");
+        if (slider) slider.value = String(idx);
+
+        const counter = root.querySelector<HTMLElement>("[data-step-counter]");
+        if (counter) counter.textContent = `${idx + 1} / ${lesson.learningSteps.length}`;
+
+        if (step.simulationParams) {
+          engine?.updateParameters(step.simulationParams);
+        }
+        if (step.focusObject) {
+          engine?.selectObject(step.focusObject);
+        }
+
+        if (isPlayingVoice) {
+          playVoice();
+        }
+      };
+
+      root.querySelectorAll<HTMLButtonElement>("[data-step-nav]").forEach((b, i) => {
+        b.addEventListener("click", () => applyStep(i));
+      });
+
+      root.querySelector("[data-step-prev]")?.addEventListener("click", () => {
+        applyStep((currentStepIndex - 1 + lesson.learningSteps.length) % lesson.learningSteps.length);
+      });
+
+      root.querySelector("[data-step-next]")?.addEventListener("click", () => {
+        applyStep((currentStepIndex + 1) % lesson.learningSteps.length);
+      });
+
+      root.querySelector<HTMLInputElement>("[data-timeline-slider]")?.addEventListener("input", (e) => {
+        const idx = parseInt((e.target as HTMLInputElement).value, 10);
+        applyStep(idx);
+      });
+
+      // Toolbar Controls
+      root.querySelector('[data-action="reset-cam"]')?.addEventListener("click", () => engine?.resetCamera());
+      root.querySelector('[data-action="toggle-labels"]')?.addEventListener("click", () => engine?.toggleLabels());
+      root.querySelector('[data-action="fullscreen"]')?.addEventListener("click", () => {
+        container.requestFullscreen?.().catch(() => {});
+      });
+
+      // Map Pin Focus
+      root.querySelectorAll<HTMLButtonElement>("[data-focus-pin]").forEach((pinBtn) => {
+        pinBtn.addEventListener("click", () => {
+          const pinId = pinBtn.dataset.focusPin;
+          if (pinId) {
+            engine?.selectObject(pinId);
+          }
+        });
+      });
+
+      // Virtual Experiment Controls (Civics Election Sim)
+      const seatA = root.querySelector<HTMLInputElement>('[data-sim-seat="a"]');
+      const seatB = root.querySelector<HTMLInputElement>('[data-sim-seat="b"]');
+      const barA = root.querySelector<HTMLElement>("[data-seat-a]");
+      const barB = root.querySelector<HTMLElement>("[data-seat-b]");
+      const barC = root.querySelector<HTMLElement>("[data-seat-c]");
+      const govStatus = root.querySelector<HTMLElement>("[data-gov-status]");
+
+      const updateParliament = () => {
+        if (!seatA || !seatB || !barA || !barB || !barC || !govStatus) return;
+        const valA = parseInt(seatA.value, 10);
+        const valB = parseInt(seatB.value, 10);
+        const rem = Math.max(0, 543 - (valA + valB));
+
+        barA.style.width = `${(valA / 543) * 100}%`;
+        barA.textContent = `A: ${valA}`;
+        barB.style.width = `${(valB / 543) * 100}%`;
+        barB.textContent = `B: ${valB}`;
+        barC.style.width = `${(rem / 543) * 100}%`;
+        barC.textContent = `Others: ${rem}`;
+
+        if (valA >= 272) {
+          govStatus.innerHTML = `<span style="color: #16a34a; font-weight: bold;">Alliance A forms Clear Majority Government (${valA}/543 seats)</span>`;
+        } else if (valB >= 272) {
+          govStatus.innerHTML = `<span style="color: #2563eb; font-weight: bold;">Alliance B forms Clear Majority Government (${valB}/543 seats)</span>`;
+        } else {
+          govStatus.innerHTML = `<span style="color: #ea580c; font-weight: bold;">Hung Parliament! Coalition of Alliance + Regionals required for 272 majority mark</span>`;
+        }
+      };
+
+      seatA?.addEventListener("input", updateParliament);
+      seatB?.addEventListener("input", updateParliament);
+
+      // Quiz Handling
+      let quizScore = 0;
+      root.querySelectorAll<HTMLElement>("[data-q-card]").forEach((card) => {
+        const correctIdx = parseInt(card.dataset.correctIdx || "0", 10);
+        const expEl = card.querySelector<HTMLElement>(".q-exp");
+        const optButtons = card.querySelectorAll<HTMLButtonElement>("[data-opt-idx]");
+
+        optButtons.forEach((btn, bIdx) => {
+          btn.addEventListener("click", () => {
+            optButtons.forEach((b) => (b.disabled = true));
+            if (bIdx === correctIdx) {
+              btn.classList.add("correct");
+              quizScore += 1;
+            } else {
+              btn.classList.add("incorrect");
+              optButtons[correctIdx]?.classList.add("correct");
+            }
+            if (expEl) expEl.hidden = false;
+            const scoreReadout = root.querySelector<HTMLElement>("[data-quiz-score]");
+            if (scoreReadout) scoreReadout.textContent = `Score: ${quizScore} / ${lesson.quiz.length}`;
+          });
+        });
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAllSstViewers);
+  } else {
+    initAllSstViewers();
+  }
+</script>
+
+<style>
+  .sst-shell {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 1rem;
+    font-family: inherit;
+  }
+
+  /* Mode Switcher Bar */
+  .sst-mode-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+  }
+  .sst-mode-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1rem;
+    border-radius: 12px;
+    border: 1.5px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+  .sst-mode-tab:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+  }
+  .sst-mode-tab.active {
+    background: #1e3a8a;
+    color: #ffffff;
+    border-color: #1e3a8a;
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.2);
+  }
+
+  /* Voice Narration Bar */
+  .sst-voice-bar {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 0.65rem 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .voice-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+  }
+  .voice-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: none;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .voice-btn.secondary {
+    background: #e2e8f0;
+    color: #334155;
+  }
+  .voice-lang-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+  }
+  .voice-lang-picker select {
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.8rem;
+  }
+  .voice-transcript {
+    font-size: 0.82rem;
+    color: #475569;
+    font-style: italic;
+  }
+  .voice-wave {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .voice-wave span {
+    width: 3px;
+    height: 12px;
+    background: #2563eb;
+    animation: waveAnim 0.6s infinite ease-in-out alternate;
+  }
+  @keyframes waveAnim {
+    from { height: 4px; }
+    to { height: 16px; }
+  }
+
+  /* Grid Layout */
+  .sst-workspace-grid {
+    display: grid;
+    grid-template-columns: 290px minmax(0, 1fr) 320px;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  /* Panel Cards */
+  .sst-panel-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  .card-header h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #0f172a;
+  }
+  .step-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+  }
+
+  /* Step Items */
+  .sst-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    max-height: 480px;
+    overflow-y: auto;
+  }
+  .sst-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.65rem;
+    border-radius: 10px;
+    border: 1px solid #f1f5f9;
+    background: #f8fafc;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .sst-step-item:hover {
+    background: #f1f5f9;
+  }
+  .sst-step-item.active {
+    background: #eff6ff;
+    border-color: #93c5fd;
+  }
+  .step-num {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #0f172a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .sst-step-item.active .step-num {
+    background: #2563eb;
+    color: #ffffff;
+  }
+  .step-text strong {
+    display: block;
+    font-size: 0.84rem;
+    color: #0f172a;
+    line-height: 1.25;
+  }
+  .step-text p {
+    margin: 0.25rem 0 0;
+    font-size: 0.76rem;
+    color: #64748b;
+    line-height: 1.35;
+  }
+
+  /* Map Pins List */
+  .sst-pin-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .pin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #2563eb;
+    font-size: 0.84rem;
+    cursor: pointer;
+    text-align: left;
+  }
+  .pin-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+  }
+  .sst-pin-list small {
+    display: block;
+    font-size: 0.74rem;
+    color: #64748b;
+    margin-top: 0.15rem;
+  }
+
+  /* 3D Stage Card */
+  .sst-stage-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+  }
+  .sst-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0.9rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .tool-left {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+  }
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+  }
+  .tool-actions {
+    display: flex;
+    gap: 0.35rem;
+  }
+  .tool-btn {
+    padding: 0.25rem 0.55rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .sst-canvas-wrap {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    background: #f8fafd;
+  }
+
+  /* Timeline Scrubber */
+  .sst-timeline-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.9rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+  }
+  .timeline-slider {
+    flex: 1;
+    accent-color: #2563eb;
+    cursor: pointer;
+  }
+  .timeline-step-btn {
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* Virtual Experiment Views */
+  .experiment-card, .exam-card, .quiz-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-top: 1rem;
+  }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .exp-header h3 { margin: 0; font-size: 1.1rem; }
+  .majority-tag {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: #16a34a;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+
+  .sim-parliament-arc {
+    margin-bottom: 1rem;
+  }
+  .arc-visual {
+    position: relative;
+    height: 36px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+    display: flex;
+  }
+  .arc-marker {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #000000;
+    z-index: 5;
+  }
+  .party-bar {
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    font-size: 0.76rem;
+    font-weight: 700;
+  }
+  .party-a { background: #ea580c; }
+  .party-b { background: #2563eb; }
+  .party-c { background: #16a34a; }
+
+  .sim-controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .sim-controls-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  .sim-metrics-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    background: #f8fafc;
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+  }
+
+  /* CBSE Exam Card */
+  .exam-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .exam-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: #fef3c7;
+    color: #b45309;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+  .exam-q-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .q-type {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #2563eb;
+    background: #eff6ff;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    margin-bottom: 0.35rem;
+  }
+  .model-answer, .answer-reveal {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    font-size: 0.84rem;
+  }
+  .model-answer ul {
+    margin: 0.35rem 0 0.5rem;
+    padding-left: 1.25rem;
+  }
+  .marking-tip {
+    font-size: 0.76rem;
+    color: #64748b;
+    margin: 0.35rem 0 0;
+  }
+
+  /* Live Metrics Grid */
+  .sst-metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    margin: 0.65rem 0;
+  }
+  .sst-metrics-grid :global(.metric-item) {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.4rem 0.55rem;
+  }
+  .sst-metrics-grid :global(dt) {
+    font-size: 0.68rem;
+    color: #64748b;
+    font-weight: 600;
+  }
+  .sst-metrics-grid :global(dd) {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .sst-obs-list, .sst-exam-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.78rem;
+    color: #475569;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  /* Quiz View */
+  .quiz-questions-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .quiz-q-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+  }
+  .options-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .opt-btn {
+    padding: 0.55rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+  }
+  .opt-btn.correct { background: #dcfce7; border-color: #22c55e; color: #15803d; }
+  .opt-btn.incorrect { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+  .q-exp {
+    font-size: 0.78rem;
+    color: #15803d;
+    background: #f0fdf4;
+    padding: 0.5rem;
+    border-radius: 6px;
+    margin: 0.5rem 0 0;
+  }
+
+  @media (max-width: 1100px) {
+    .sst-workspace-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

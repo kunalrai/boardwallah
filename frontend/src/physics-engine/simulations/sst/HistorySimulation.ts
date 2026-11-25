@@ -178,6 +178,57 @@ export class HistorySimulation implements Simulation {
     charkhaRing.name = "CharkhaWheel";
     this.dynamicGroup.add(charkhaRing);
     this.animMeshes.push(charkhaRing);
+
+    // Interactive CBSE History Map Plate with Glowing Landmark Pins
+    const mapPlate = new THREE.Mesh(
+      new THREE.BoxGeometry(9.0, 0.15, 3.8),
+      new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.6 })
+    );
+    mapPlate.position.set(0, -2.1, 0);
+    this.dynamicGroup.add(mapPlate);
+
+    // 4 Key CBSE History Exam Map Landmarks
+    const mapSites = [
+      { id: "amritsar", label: "Amritsar (Jallianwala Bagh 1919)", x: -3.2, z: -1.0, col: 0xef4444 },
+      { id: "champaran", label: "Champaran (Indigo 1917)", x: 2.2, z: -0.8, col: 0x3b82f6 },
+      { id: "chauri-chaura", label: "Chauri Chaura (1922)", x: 1.4, z: -0.3, col: 0xf59e0b },
+      { id: "dandi", label: "Dandi (Salt March 1930)", x: -2.8, z: 0.9, col: 0x10b981 },
+      { id: "nagpur", label: "Nagpur Session (Dec 1920)", x: -0.2, z: 0.7, col: 0x8b5cf6 },
+    ];
+
+    mapSites.forEach((site) => {
+      // Pin stem
+      const stem = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.04, 0.04, 0.65, 8),
+        new THREE.MeshStandardMaterial({ color: 0xffffff })
+      );
+      stem.position.set(site.x, -1.8, site.z);
+      this.dynamicGroup.add(stem);
+
+      // Pin head / sphere
+      const head = new THREE.Mesh(
+        new THREE.SphereGeometry(0.18, 16, 16),
+        new THREE.MeshStandardMaterial({
+          color: site.col,
+          emissive: site.col,
+          emissiveIntensity: 0.5,
+          roughness: 0.2,
+        })
+      );
+      head.position.set(site.x, -1.45, site.z);
+      head.name = site.id;
+      this.dynamicGroup.add(head);
+
+      // Glowing pulse ring
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(0.32, 0.03, 8, 20),
+        new THREE.MeshBasicMaterial({ color: site.col, transparent: true, opacity: 0.7 })
+      );
+      ring.position.set(site.x, -2.0, site.z);
+      ring.rotation.x = Math.PI / 2;
+      this.dynamicGroup.add(ring);
+      this.animMeshes.push(ring);
+    });
   }
 
   // 3. Making of a Global World

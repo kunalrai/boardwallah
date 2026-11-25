@@ -181,6 +181,22 @@ export class GeographySimulation implements Simulation {
     tanka.position.set(3.2, 0.2, 1.2);
     tanka.name = "RainwaterHarvest";
     this.dynamicGroup.add(tanka);
+
+    // Interactive CBSE Dam Map Pins
+    const damPins = [
+      { id: "bhakra-nangal", x: -2.8, z: -1.2, col: 0x3b82f6 },
+      { id: "hirakud", x: 1.8, z: 0.8, col: 0x10b981 },
+      { id: "sardar-sarovar", x: -1.2, z: 1.2, col: 0xf59e0b },
+    ];
+    damPins.forEach((d) => {
+      const pin = new THREE.Mesh(
+        new THREE.SphereGeometry(0.18, 16, 16),
+        new THREE.MeshStandardMaterial({ color: d.col, emissive: d.col, emissiveIntensity: 0.4 })
+      );
+      pin.position.set(d.x, 1.2, d.z);
+      pin.name = d.id;
+      this.dynamicGroup.add(pin);
+    });
   }
 
   // 4. Agriculture: Kharif vs Rabi Crops

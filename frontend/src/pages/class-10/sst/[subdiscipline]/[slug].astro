@@ -1,6 +1,6 @@
 ---
 import Layout from "../../../../layouts/Layout.astro";
-import PhysicsViewer from "../../../../components/physics3d/PhysicsViewer.astro";
+import SstViewer from "../../../../components/sst/SstViewer.astro";
 import { getAllSstLessons } from "../../../../physics-engine/registry/LessonRegistry";
 import type { PhysicsLessonConfig } from "../../../../physics-engine/types/lesson";
 
@@ -26,5 +26,5 @@ const { lesson } = Astro.props;
   title={`${lesson.title} | Class 10 3D SST | BoardWallah`}
   description={lesson.subtitle}
 >
-  <PhysicsViewer lesson={lesson} />
+  <SstViewer lesson={lesson} />
 </Layout>
