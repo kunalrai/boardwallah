@@ -1,6 +1,8 @@
 ---
 import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
 import LessonHeader from "../physics3d/LessonHeader.astro";
+import LoadingIndicator from "../physics3d/LoadingIndicator.astro";
+import ErrorFallback from "../physics3d/ErrorFallback.astro";
 import { CBSE_SST_MAP_PINS } from "../../data/sst/sst-map-data";
 
 interface Props {
@@ -11,6 +13,8 @@ const { lesson } = Astro.props;
 const viewerId = `bw-sst-viewer-${lesson.id}`;
 const configScriptId = `bw-sst-config-${lesson.id}`;
 const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id || lesson.id.includes(p.chapterId));
+const hasVideo = Boolean(lesson.videoFallback);
+const isFrenchRev = lesson.id === "sst-nationalism-europe";
 ---
 
 <div class="sst-shell" id={viewerId} data-sst-viewer data-config-id={configScriptId}>
@@ -18,9 +22,15 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
 
   <!-- SST Workstation Mode Switcher -->
   <nav class="sst-mode-bar" role="tablist" aria-label="SST Learning Modes">
-    <button type="button" class="sst-mode-tab active" data-mode-btn="video" aria-selected="true">
-      <span class="mode-icon">🎬</span> Video Lesson
-    </button>
+    {hasVideo ? (
+      <button type="button" class="sst-mode-tab active" data-mode-btn="video" aria-selected="true">
+        <span class="mode-icon">🎬</span> Video Lesson
+      </button>
+    ) : (
+      <button type="button" class="sst-mode-tab active" data-mode-btn="explore" aria-selected="true">
+        <span class="mode-icon">🌐</span> 3D Interactive Stage
+      </button>
+    )}
     <button type="button" class="sst-mode-tab" data-mode-btn="map" aria-selected="false">
       <span class="mode-icon">🗺️</span> Interactive Map
     </button>
@@ -92,126 +102,182 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
       )}
     </aside>
 
-    <!-- Center Interactive Video Stage -->
+    <!-- Center Interactive Stage -->
     <main class="sst-col-center">
-      <div class="sst-stage-card sst-video-stage" data-video-stage>
-        <!-- Video Stage Toolbar -->
-        <div class="sst-toolbar">
-          <div class="tool-left">
-            <span class="live-dot"></span>
-            <strong>🎬 Interactive Video Stage</strong>
+      {hasVideo ? (
+        <div class="sst-stage-card sst-video-stage" data-video-stage>
+          <!-- Video Stage Toolbar -->
+          <div class="sst-toolbar">
+            <div class="tool-left">
+              <span class="live-dot"></span>
+              <strong>🎬 Interactive Video Stage</strong>
+            </div>
+            <div class="tool-actions">
+              <button type="button" class="tool-btn" data-action="restart-video" title="Restart from 00:00">
+                <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                  <path d="M3 3v5h5"/>
+                </svg>
+                <span>Restart</span>
+              </button>
+              <button type="button" class="tool-btn" data-action="toggle-play" title="Play / Pause Video">
+                <svg viewBox="0 0 24 24" class="tool-icon" fill="currentColor" data-play-icon>
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                <span data-play-label>Play</span>
+              </button>
+              <button type="button" class="tool-btn" data-action="toggle-mute" title="Mute / Unmute Audio">
+                <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                </svg>
+                <span data-mute-label>Mute</span>
+              </button>
+              <button type="button" class="tool-btn" data-action="fullscreen" title="Fullscreen Video">
+                <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                </svg>
+                <span>Fullscreen</span>
+              </button>
+            </div>
           </div>
-          <div class="tool-actions">
-            <button type="button" class="tool-btn" data-action="restart-video" title="Restart from 00:00">
-              <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                <path d="M3 3v5h5"/>
-              </svg>
-              <span>Restart</span>
-            </button>
-            <button type="button" class="tool-btn" data-action="toggle-play" title="Play / Pause Video">
-              <svg viewBox="0 0 24 24" class="tool-icon" fill="currentColor" data-play-icon>
-                <polygon points="5 3 19 12 5 21 5 3"/>
-              </svg>
-              <span data-play-label>Play</span>
-            </button>
-            <button type="button" class="tool-btn" data-action="toggle-mute" title="Mute / Unmute Audio">
-              <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-              </svg>
-              <span data-mute-label>Mute</span>
-            </button>
-            <button type="button" class="tool-btn" data-action="fullscreen" title="Fullscreen Video">
-              <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
-              </svg>
-              <span>Fullscreen</span>
-            </button>
-          </div>
-        </div>
 
-        <!-- Interactive Scene Chapter Selector -->
-        <div class="video-chapters-row">
-          <span class="chap-label">Milestones:</span>
-          <button type="button" class="chap-pill active" data-seek="0">00:00 🥖 1. Bread Crisis</button>
-          <button type="button" class="chap-pill" data-seek="4">00:04 👑 2. Three Estates</button>
-          <button type="button" class="chap-pill" data-seek="14">00:14 📜 3. Tennis Court Oath</button>
-          <button type="button" class="chap-pill" data-seek="24">00:24 🏰 4. Bastille Storming</button>
-          <button type="button" class="chap-pill" data-seek="34">00:34 ⚖️ 5. Rights of Man</button>
-          <button type="button" class="chap-pill" data-seek="54">00:54 🇫🇷 6. Republic Declared</button>
-          <button type="button" class="chap-pill" data-seek="64">01:04 ⚡ 7. Reign of Terror</button>
-          <button type="button" class="chap-pill" data-seek="74">01:14 ⚔️ 8. Napoleonic Code</button>
-        </div>
+          {isFrenchRev && (
+            <div class="video-chapters-row">
+              <span class="chap-label">Milestones:</span>
+              <button type="button" class="chap-pill active" data-seek="0">00:00 🥖 1. Bread Crisis</button>
+              <button type="button" class="chap-pill" data-seek="4">00:04 👑 2. Three Estates</button>
+              <button type="button" class="chap-pill" data-seek="14">00:14 📜 3. Tennis Court Oath</button>
+              <button type="button" class="chap-pill" data-seek="24">00:24 🏰 4. Bastille Storming</button>
+              <button type="button" class="chap-pill" data-seek="34">00:34 ⚖️ 5. Rights of Man</button>
+              <button type="button" class="chap-pill" data-seek="54">00:54 🇫🇷 6. Republic Declared</button>
+              <button type="button" class="chap-pill" data-seek="64">01:04 ⚡ 7. Reign of Terror</button>
+              <button type="button" class="chap-pill" data-seek="74">01:14 ⚔️ 8. Napoleonic Code</button>
+            </div>
+          )}
 
-        <!-- Primary Video Viewport -->
-        <div class="sst-video-viewport" data-video-container>
-          <video
-            src={lesson.videoFallback ?? "/assets/sst/history/french-revolution-master.mp4"}
-            poster={lesson.staticImageFallback ?? "/assets/sst/history/french-revolution-master-poster.jpg"}
-            controls
-            playsinline
-            preload="auto"
-            data-main-video
-            class="sst-primary-video"
-          ></video>
-          <div class="video-quote-banner" data-video-quote-banner>
-            <div class="quote-pill" data-quote-tag>Bread Crisis</div>
-            <div class="quote-text-wrap">
-              <span class="quote-french" data-quote-primary>"Du pain ! Du pain pour nos enfants !"</span>
-              <span class="quote-trans" data-quote-secondary>("Bread! Bread for our children! / रोटी! हमारे बच्चों के लिए रोटी! — Paris bread scarcity 1789")</span>
-            </div>
+          <!-- Primary Video Viewport -->
+          <div class="sst-video-viewport" data-video-container>
+            <video
+              src={lesson.videoFallback}
+              poster={lesson.staticImageFallback ?? "/assets/sst/history/french-revolution-master-poster.jpg"}
+              controls
+              playsinline
+              preload="auto"
+              data-main-video
+              class="sst-primary-video"
+            ></video>
+            {isFrenchRev && (
+              <div class="video-quote-banner" data-video-quote-banner>
+                <div class="quote-pill" data-quote-tag>Bread Crisis</div>
+                <div class="quote-text-wrap">
+                  <span class="quote-french" data-quote-primary>"Du pain ! Du pain pour nos enfants !"</span>
+                  <span class="quote-trans" data-quote-secondary>("Bread! Bread for our children! / रोटी! हमारे बच्चों के लिए रोटी! — Paris bread scarcity 1789")</span>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
 
-        <!-- Timeline Scrubber Bar -->
-        <div class="sst-timeline-bar">
-          <button type="button" class="timeline-step-btn" data-step-prev title="Previous step">◀ Prev</button>
-          <input
-            type="range"
-            class="timeline-slider"
-            min="0"
-            max={lesson.learningSteps.length - 1}
-            value="0"
-            step="1"
-            data-timeline-slider
-            aria-label="Timeline scrubber"
-          />
-          <button type="button" class="timeline-step-btn" data-step-next title="Next step">Next ▶</button>
-        </div>
+          <!-- Timeline Scrubber Bar -->
+          <div class="sst-timeline-bar">
+            <button type="button" class="timeline-step-btn" data-step-prev title="Previous step">◀ Prev</button>
+            <input
+              type="range"
+              class="timeline-slider"
+              min="0"
+              max={lesson.learningSteps.length - 1}
+              value="0"
+              step="1"
+              data-timeline-slider
+              aria-label="Timeline scrubber"
+            />
+            <button type="button" class="timeline-step-btn" data-step-next title="Next step">Next ▶</button>
+          </div>
 
-        <!-- High-Yield NCERT Insights Grid -->
-        <div class="video-insights-grid">
-          <div class="insight-box">
-            <div class="insight-icon">👑</div>
-            <div class="insight-text">
-              <strong>1. Three Estates Inequality (00:04)</strong>
-              <p>Clergy (1st) &amp; Nobility (2nd) enjoyed feudal privileges and paid zero direct taxes (taille), while the Third Estate peasant bore 100% of state taxes and church tithes.</p>
+          {isFrenchRev && (
+            <div class="video-insights-grid">
+              <div class="insight-box">
+                <div class="insight-icon">👑</div>
+                <div class="insight-text">
+                  <strong>1. Three Estates Inequality (00:04)</strong>
+                  <p>Clergy (1st) &amp; Nobility (2nd) enjoyed feudal privileges and paid zero direct taxes (taille), while the Third Estate peasant bore 100% of state taxes and church tithes.</p>
+                </div>
+              </div>
+              <div class="insight-box">
+                <div class="insight-icon">📜</div>
+                <div class="insight-text">
+                  <strong>2. Tennis Court Oath (00:14)</strong>
+                  <p>Locked out by King Louis XVI, Third Estate deputies led by Mirabeau &amp; Abbé Sieyès gathered at Versailles indoor tennis court swearing to draft a democratic constitution.</p>
+                </div>
+              </div>
+              <div class="insight-box">
+                <div class="insight-icon">🏰</div>
+                <div class="insight-text">
+                  <strong>3. Storming of the Bastille (00:24)</strong>
+                  <p>On 14 July 1789, 7,000 armed citizens stormed the royal fortress prison to seize gunpowder, killing the governor and shattering the ultimate symbol of royal despotism.</p>
+                </div>
+              </div>
+              <div class="insight-box">
+                <div class="insight-icon">⚔️</div>
+                <div class="insight-text">
+                  <strong>4. Napoleonic Code (01:14)</strong>
+                  <p>The Civil Code of 1804 abolished birth-based privileges, secured property rights, standardized weights and measures, and established equality before the law across Europe.</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div class="sst-stage-card sst-3d-stage" data-3d-stage>
+          <!-- 3D Toolbar -->
+          <div class="sst-toolbar">
+            <div class="tool-left">
+              <span class="live-dot"></span>
+              <strong>🌐 3D Interactive Stage</strong>
+            </div>
+            <div class="tool-actions">
+              <button type="button" class="tool-btn" data-action="reset-cam" title="Reset Camera View">
+                <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                  <path d="M3 3v5h5"/>
+                </svg>
+                <span>Reset</span>
+              </button>
+              <button type="button" class="tool-btn" data-action="fullscreen" title="Fullscreen Stage">
+                <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                </svg>
+                <span>Fullscreen</span>
+              </button>
             </div>
           </div>
-          <div class="insight-box">
-            <div class="insight-icon">📜</div>
-            <div class="insight-text">
-              <strong>2. Tennis Court Oath (00:14)</strong>
-              <p>Locked out by King Louis XVI, Third Estate deputies led by Mirabeau &amp; Abbé Sieyès gathered at Versailles indoor tennis court swearing to draft a democratic constitution.</p>
-            </div>
+
+          <!-- WebGL Canvas Container -->
+          <div class="sst-canvas-wrap" data-canvas-container>
+            <LoadingIndicator />
+            <ErrorFallback
+              title={lesson.title}
+              staticImageFallback={lesson.staticImageFallback}
+            />
           </div>
-          <div class="insight-box">
-            <div class="insight-icon">🏰</div>
-            <div class="insight-text">
-              <strong>3. Storming of the Bastille (00:24)</strong>
-              <p>On 14 July 1789, 7,000 armed citizens stormed the royal fortress prison to seize gunpowder, killing the governor and shattering the ultimate symbol of royal despotism.</p>
-            </div>
-          </div>
-          <div class="insight-box">
-            <div class="insight-icon">⚔️</div>
-            <div class="insight-text">
-              <strong>4. Napoleonic Code (01:14)</strong>
-              <p>The Civil Code of 1804 abolished birth-based privileges, secured property rights, standardized weights and measures, and established equality before the law across Europe.</p>
-            </div>
+
+          <!-- Timeline Scrubber Bar -->
+          <div class="sst-timeline-bar">
+            <button type="button" class="timeline-step-btn" data-step-prev title="Previous step">◀ Prev</button>
+            <input
+              type="range"
+              class="timeline-slider"
+              min="0"
+              max={lesson.learningSteps.length - 1}
+              value="0"
+              step="1"
+              data-timeline-slider
+              aria-label="Timeline scrubber"
+            />
+            <button type="button" class="timeline-step-btn" data-step-next title="Next step">Next ▶</button>
           </div>
         </div>
-      </div>
+      )}
 
       <!-- Mode 4: Virtual Experiment Panels -->
       <section class="sst-experiment-view" data-experiment-view hidden>
@@ -265,7 +331,7 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
               <div class="sim-stat"><span>Rural Credit Flow:</span> <strong data-stat-credit>High</strong></div>
             </div>
           </div>
-        ) : lesson.subject.toLowerCase().includes("hist") ? (
+        ) : isFrenchRev ? (
           <div class="experiment-card fr-experiment-card">
             <div class="exp-header">
               <h3>⚖️ French Revolution Interactive Simulators (CBSE Class 10)</h3>
@@ -333,6 +399,63 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
                 <span class="parchment-badge" data-parchment-badge>NCERT Article 1</span>
                 <blockquote data-parchment-quote>"Men are born and remain free and equal in rights. Social distinctions may be founded only upon the general good."</blockquote>
                 <p class="parchment-meaning" data-parchment-meaning><strong>CBSE Exam Meaning:</strong> Abolished hereditary aristocratic privilege. A peasant's child and a noble's child have identical constitutional rights before the law.</p>
+              </div>
+            </div>
+          </div>
+        ) : lesson.id === "sst-nationalism-india" ? (
+          <div class="experiment-card in-experiment-card">
+            <div class="exp-header">
+              <h3>🇮🇳 Nationalism in India: Mass Movements &amp; Boycott Simulator (1920–1942)</h3>
+              <span class="majority-tag">CBSE NCERT Chapter 2</span>
+            </div>
+
+            <!-- Movement Comparison Selector -->
+            <div class="in-sim-section">
+              <h4>1. Movement Strategy &amp; Mass Mobilisation Selector</h4>
+              <p class="sim-help-text">Explore the shift in strategy across the three defining Gandhian nationwide movements:</p>
+              <div class="in-movement-toggle-row">
+                <button type="button" class="in-toggle-btn active" data-in-move="1920">1920: Non-Cooperation Movement</button>
+                <button type="button" class="in-toggle-btn" data-in-move="1930">1930: Civil Disobedience &amp; Dandi March</button>
+                <button type="button" class="in-toggle-btn" data-in-move="1942">1942: Quit India Movement (Do or Die)</button>
+              </div>
+              <div class="in-move-display" data-in-display>
+                <div class="in-summary-box">
+                  <strong data-in-title>Non-Cooperation Movement (1920–1922)</strong>
+                  <p data-in-desc>Triggered by the Jallianwala Bagh massacre (1919), Rowlatt Act, and the Khilafat grievance. Non-violent refusal to participate in British administrative machinery, foreign cloth boycott, and surrendering titles.</p>
+                </div>
+                <div class="in-metrics-pills">
+                  <span class="in-pill" data-in-trigger><strong>Trigger:</strong> Jallianwala Bagh &amp; Khilafat</span>
+                  <span class="in-pill" data-in-tactic><strong>Core Tactic:</strong> Boycott of foreign cloth &amp; government colleges</span>
+                  <span class="in-pill" data-in-turning><strong>Turning Point:</strong> Chauri Chaura violence (Feb 1922)</span>
+                  <span class="in-pill" data-in-result><strong>Outcome:</strong> Suspended by Gandhi due to violence</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Classes & Participation Disparity -->
+            <div class="in-sim-section">
+              <h4>2. Social Classes &amp; Participation Dynamics (CBSE Analysis)</h4>
+              <div class="in-classes-grid">
+                <div class="in-class-box">
+                  <strong>Middle Class (Towns)</strong>
+                  <span>Headmasters, teachers resigned; lawyers gave up practice. Foreign cloth imports fell from ₹102 Cr to ₹57 Cr (1921–22).</span>
+                  <small>Limitation: Khadi was expensive; alternative Indian institutions slow to open.</small>
+                </div>
+                <div class="in-class-box">
+                  <strong>Peasants (Awadh)</strong>
+                  <span>Led by Baba Ramchandra against talukdars. Demanded rent reduction and abolition of begar (unpaid forced labour).</span>
+                  <small>Formed Oudh Kisan Sabha with Nehru (Oct 1920).</small>
+                </div>
+                <div class="in-class-box">
+                  <strong>Tribal Peasants (Gudem Hills, AP)</strong>
+                  <span>Alluri Sitaram Raju led guerrilla warfare against British forest laws preventing grazing and firewood collection.</span>
+                  <small>Raju praised Gandhi but advocated armed force; captured and executed in 1924.</small>
+                </div>
+                <div class="in-class-box">
+                  <strong>Plantation Workers (Assam)</strong>
+                  <span>Defied Inland Emigration Act of 1859 which barred leaving tea gardens without permission; sought right to return home.</span>
+                  <small>Believed 'Gandhi Raj' meant everyone would be given land in their villages.</small>
+                </div>
               </div>
             </div>
           </div>
@@ -457,12 +580,13 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
 
 <script>
   import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+  import type { SimulationResult } from "../../physics-engine/types/simulation";
 
   async function initAllSstViewers() {
     const roots = document.querySelectorAll<HTMLElement>("[data-sst-viewer]");
     if (roots.length === 0) return;
 
-    roots.forEach((root) => {
+    roots.forEach(async (root) => {
       if (root.dataset.initialized === "true") return;
       root.dataset.initialized = "true";
 
@@ -471,7 +595,10 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
       if (!configEl?.textContent) return;
 
       const lesson: PhysicsLessonConfig = JSON.parse(configEl.textContent);
+      const isFrenchRev = lesson.id === "sst-nationalism-europe";
+
       const videoEl = root.querySelector<HTMLVideoElement>("[data-main-video]");
+      const container = root.querySelector<HTMLElement>("[data-canvas-container]");
       const summaryEl = root.querySelector<HTMLElement>("[data-sim-summary]");
       const metricsEl = root.querySelector<HTMLElement>("[data-sim-metrics]");
       const obsEl = root.querySelector<HTMLElement>("[data-sim-observations]");
@@ -479,12 +606,52 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
       const timelineSlider = root.querySelector<HTMLInputElement>("[data-timeline-slider]");
       const stepItems = root.querySelectorAll<HTMLButtonElement>("[data-step-nav]");
 
-      const videoStage = root.querySelector<HTMLElement>("[data-video-stage]");
+      const stageEl = root.querySelector<HTMLElement>("[data-video-stage], [data-3d-stage]");
       const expView = root.querySelector<HTMLElement>("[data-experiment-view]");
       const examView = root.querySelector<HTMLElement>("[data-exam-view]");
       const quizView = root.querySelector<HTMLElement>("[data-quiz-view]");
 
       let currentStepIndex = 0;
+      let engine: any = null;
+
+      // Dynamic 3D Engine Loading (for 3D interactive stages)
+      if (container) {
+        try {
+          const [{ PhysicsEngine: EngineClass }, { registerDefaultSimulations }] = await Promise.all([
+            import("../../physics-engine/core/Engine"),
+            import("../../physics-engine/registry/registerSimulations"),
+          ]);
+          registerDefaultSimulations();
+
+          const loadingEl = root.querySelector<HTMLElement>("#p3d-loading");
+          const renderSimulationResult = (raw: Record<string, unknown>) => {
+            const res = raw as unknown as SimulationResult;
+            if (summaryEl && res?.summary) summaryEl.textContent = res.summary;
+            if (metricsEl && res?.metrics) {
+              metricsEl.innerHTML = Object.entries(res.metrics)
+                .map(([k, v]) => `<div class="metric-item"><dt>${k}</dt><dd>${String(v)}</dd></div>`)
+                .join("");
+            }
+            if (obsEl && Array.isArray(res?.observations)) {
+              obsEl.innerHTML = res.observations.map((o) => `<li>${o}</li>`).join("");
+            }
+          };
+
+          if (loadingEl) loadingEl.hidden = false;
+          engine = new EngineClass(container, lesson, {
+            onLoadComplete: () => {
+              if (loadingEl) loadingEl.hidden = true;
+            },
+            onSimulationUpdate: (results: any) => renderSimulationResult(results),
+          });
+
+          await engine.loadLesson(lesson);
+        } catch (e) {
+          console.error("Failed to load 3D engine:", e);
+          const loadingEl = root.querySelector<HTMLElement>("#p3d-loading");
+          if (loadingEl) loadingEl.hidden = true;
+        }
+      }
 
       // Video Chapters Configuration for French Revolution (All 8 CBSE Milestones)
       const videoChapters = [
@@ -647,26 +814,32 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
         const step = lesson.learningSteps[idx];
         if (!step) return;
 
-        const chap = videoChapters.find((c) => c.stepIdx === idx) || videoChapters[0];
-        if (summaryEl) summaryEl.textContent = chap?.summary || step.title;
+        if (isFrenchRev) {
+          const chap = videoChapters.find((c) => c.stepIdx === idx) || videoChapters[0];
+          if (summaryEl) summaryEl.textContent = chap?.summary || step.title;
 
-        if (metricsEl) {
-          if (chap?.metrics) {
-            metricsEl.innerHTML = Object.entries(chap.metrics)
-              .map(([k, v]) => `<div class="metric-item"><dt>${k}</dt><dd>${String(v)}</dd></div>`)
-              .join("");
-          } else {
+          if (metricsEl) {
+            if (chap?.metrics) {
+              metricsEl.innerHTML = Object.entries(chap.metrics)
+                .map(([k, v]) => `<div class="metric-item"><dt>${k}</dt><dd>${String(v)}</dd></div>`)
+                .join("");
+            }
+          }
+
+          if (obsEl) {
+            if (chap?.obs && chap.obs.length > 0) {
+              obsEl.innerHTML = chap.obs.map((o) => `<li>${o}</li>`).join("");
+            }
+          }
+        } else {
+          if (summaryEl) summaryEl.textContent = step.title;
+          if (metricsEl) {
             metricsEl.innerHTML = `
               <div class="metric-item"><dt>Historical Era</dt><dd>Step ${step.stepNumber} of ${lesson.learningSteps.length}</dd></div>
-              <div class="metric-item"><dt>Focus Topic</dt><dd>${step.title}</dd></div>
+              <div class="metric-item"><dt>Focus Topic</dt><dd>${step.title.replace(/^\d+\.\s*/, "")}</dd></div>
             `;
           }
-        }
-
-        if (obsEl) {
-          if (chap?.obs && chap.obs.length > 0) {
-            obsEl.innerHTML = chap.obs.map((o) => `<li>${o}</li>`).join("");
-          } else {
+          if (obsEl) {
             obsEl.innerHTML = `<li>${step.description}</li>`;
           }
         }
@@ -688,11 +861,24 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
         const currentStep = lesson.learningSteps[idx];
         renderMetricsForStep(idx);
 
+        // If 3D engine is active, update focus & simulation parameters
+        if (engine && currentStep) {
+          if (currentStep.simulationParams) {
+            engine.updateParameters(currentStep.simulationParams);
+          }
+          if (currentStep.focusObject) {
+            engine.focusObject(currentStep.focusObject);
+          }
+          if (currentStep.cameraPresetId) {
+            engine.applyCameraPreset(currentStep.cameraPresetId);
+          }
+        }
+
+        // If video element is active, seek
         if (seekVideo && videoEl && typeof currentStep.videoTime === "number") {
           videoEl.currentTime = currentStep.videoTime;
           videoEl.play().catch(() => {});
         }
-
       };
 
       // Initial render for step 0
@@ -706,7 +892,7 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
           btn.classList.add("active");
           const mode = btn.dataset.modeBtn;
 
-          if (videoStage) videoStage.hidden = mode === "experiment" || mode === "quiz" || mode === "exam";
+          if (stageEl) stageEl.hidden = mode === "experiment" || mode === "quiz" || mode === "exam";
           if (expView) expView.hidden = mode !== "experiment";
           if (examView) examView.hidden = mode !== "exam";
           if (quizView) quizView.hidden = mode !== "quiz";
@@ -718,8 +904,8 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
           if (mode === "map") {
             const mapPanel = root.querySelector(".sst-map-panel");
             mapPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
-          } else if (mode === "video") {
-            videoStage?.scrollIntoView({ behavior: "smooth", block: "center" });
+          } else if (mode === "video" || mode === "explore") {
+            stageEl?.scrollIntoView({ behavior: "smooth", block: "center" });
           }
         });
       });
@@ -742,7 +928,18 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
         applyStep(idx, true);
       });
 
-      // Toolbar Controls
+      // 3D Toolbar Controls
+      root.querySelector('[data-3d-stage] [data-action="reset-cam"]')?.addEventListener("click", () => {
+        engine?.resetCamera?.();
+      });
+
+      root.querySelector('[data-3d-stage] [data-action="fullscreen"]')?.addEventListener("click", () => {
+        if (container?.requestFullscreen) {
+          container.requestFullscreen().catch(() => {});
+        }
+      });
+
+      // Video Toolbar Controls
       const playBtn = root.querySelector<HTMLButtonElement>('[data-action="toggle-play"]');
       const playIcon = root.querySelector<HTMLElement>('[data-play-icon]');
       const playLabel = root.querySelector<HTMLElement>('[data-play-label]');
@@ -785,30 +982,28 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
         muteLabel.textContent = videoEl.muted ? "Unmute" : "Mute";
       });
 
-      root.querySelector('[data-action="fullscreen"]')?.addEventListener("click", () => {
+      root.querySelector('[data-video-stage] [data-action="fullscreen"]')?.addEventListener("click", () => {
         if (!videoEl) return;
         if (videoEl.requestFullscreen) {
           videoEl.requestFullscreen().catch(() => {});
         }
       });
 
-      // Video Chapter Seeking & Synchronization
-      const chapPills = root.querySelectorAll<HTMLButtonElement>("[data-seek]");
-      const quoteTag = root.querySelector<HTMLElement>("[data-quote-tag]");
-      const quotePrimary = root.querySelector<HTMLElement>("[data-quote-primary]");
-      const quoteSecondary = root.querySelector<HTMLElement>("[data-quote-secondary]");
+      // Video Chapter Seeking & Synchronization (French Revolution only)
+      if (isFrenchRev && videoEl) {
+        const chapPills = root.querySelectorAll<HTMLButtonElement>("[data-seek]");
+        const quoteTag = root.querySelector<HTMLElement>("[data-quote-tag]");
+        const quotePrimary = root.querySelector<HTMLElement>("[data-quote-primary]");
+        const quoteSecondary = root.querySelector<HTMLElement>("[data-quote-secondary]");
 
-      chapPills.forEach((pill) => {
-        pill.addEventListener("click", () => {
-          const seekTime = parseFloat(pill.dataset.seek || "0");
-          if (videoEl) {
+        chapPills.forEach((pill) => {
+          pill.addEventListener("click", () => {
+            const seekTime = parseFloat(pill.dataset.seek || "0");
             videoEl.currentTime = seekTime;
             videoEl.play().catch(() => {});
-          }
+          });
         });
-      });
 
-      if (videoEl) {
         videoEl.addEventListener("timeupdate", () => {
           const t = videoEl.currentTime;
           let activeIdx = 0;
@@ -856,6 +1051,9 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
             if (summaryEl) summaryEl.textContent = `📍 Map Location: ${pinObj.name}`;
             if (obsEl) obsEl.innerHTML = `<li>${pinObj.description}</li><li>${pinObj.cbseNote ?? ""}</li>`;
           }
+          if (engine && pinId) {
+            engine.focusObject?.(pinId);
+          }
         });
       });
 
@@ -892,93 +1090,150 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
       seatA?.addEventListener("input", updateParliament);
       seatB?.addEventListener("input", updateParliament);
 
+      // Nationalism in India Movement Simulator
+      if (lesson.id === "sst-nationalism-india") {
+        const inMoveButtons = root.querySelectorAll<HTMLButtonElement>("[data-in-move]");
+        const inTitle = root.querySelector<HTMLElement>("[data-in-title]");
+        const inDesc = root.querySelector<HTMLElement>("[data-in-desc]");
+        const inTrigger = root.querySelector<HTMLElement>("[data-in-trigger]");
+        const inTactic = root.querySelector<HTMLElement>("[data-in-tactic]");
+        const inTurning = root.querySelector<HTMLElement>("[data-in-turning]");
+        const inResult = root.querySelector<HTMLElement>("[data-in-result]");
+
+        const inMoveData: Record<string, { title: string; desc: string; trigger: string; tactic: string; turning: string; result: string }> = {
+          "1920": {
+            title: "Non-Cooperation Movement (1920–1922)",
+            desc: "Triggered by Jallianwala Bagh massacre (1919), Rowlatt Act, and Khilafat grievances. Boycott of foreign cloth, courts, government schools, and surrendering honours.",
+            trigger: "Trigger: Jallianwala Bagh & Khilafat",
+            tactic: "Core Tactic: Surrender of titles & foreign goods boycott",
+            turning: "Turning Point: Chauri Chaura violence (Feb 1922)",
+            result: "Outcome: Suspended due to breach of non-violence",
+          },
+          "1930": {
+            title: "Civil Disobedience Movement (1930–1934)",
+            desc: "Began with the iconic 240-mile Dandi Salt March (12 March – 6 April 1930). Unlike NCM, people broke colonial laws directly (Salt Law, Forest Laws, refusing chaukidari tax).",
+            trigger: "Trigger: 11 Demands rejected & Simon Commission",
+            tactic: "Core Tactic: Direct defiance of colonial laws & Salt production",
+            turning: "Turning Point: Gandhi-Irwin Pact & Round Table Conference",
+            result: "Outcome: Mass awareness; formally ended 1934",
+          },
+          "1942": {
+            title: "Quit India Movement — 'Do or Die' (1942)",
+            desc: "Launched on 8 August 1942 at Bombay session during WW2. Demanded immediate British withdrawal with the slogan 'Karenge ya marenge' (Do or Die).",
+            trigger: "Trigger: Cripps Mission failure & WW2 pressures",
+            tactic: "Core Tactic: Complete general strike & underground resistance",
+            turning: "Turning Point: Immediate arrest of all national leaders",
+            result: "Outcome: Shook the foundations of the British Raj",
+          },
+        };
+
+        inMoveButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            inMoveButtons.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            const moveKey = btn.dataset.inMove;
+            if (moveKey && inMoveData[moveKey]) {
+              const d = inMoveData[moveKey];
+              if (inTitle) inTitle.textContent = d.title;
+              if (inDesc) inDesc.textContent = d.desc;
+              if (inTrigger) inTrigger.innerHTML = `<strong>Trigger:</strong> ${d.trigger.replace("Trigger: ", "")}`;
+              if (inTactic) inTactic.innerHTML = `<strong>Core Tactic:</strong> ${d.tactic.replace("Core Tactic: ", "")}`;
+              if (inTurning) inTurning.innerHTML = `<strong>Turning Point:</strong> ${d.turning.replace("Turning Point: ", "")}`;
+              if (inResult) inResult.innerHTML = `<strong>Outcome:</strong> ${d.result.replace("Outcome: ", "")}`;
+            }
+          });
+        });
+      }
+
       // French Revolution Voting Toggle Simulator
-      const voteButtons = root.querySelectorAll<HTMLButtonElement>("[data-vote-mode]");
-      const vbarPriv = root.querySelector<HTMLElement>("[data-vbar-priv]");
-      const vbarCommon = root.querySelector<HTMLElement>("[data-vbar-common]");
-      const voteVerdict = root.querySelector<HTMLElement>("[data-vote-verdict]");
+      if (isFrenchRev) {
+        const voteButtons = root.querySelectorAll<HTMLButtonElement>("[data-vote-mode]");
+        const vbarPriv = root.querySelector<HTMLElement>("[data-vbar-priv]");
+        const vbarCommon = root.querySelector<HTMLElement>("[data-vbar-common]");
+        const voteVerdict = root.querySelector<HTMLElement>("[data-vote-verdict]");
 
-      voteButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          voteButtons.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-          const mode = btn.dataset.voteMode;
+        voteButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            voteButtons.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            const mode = btn.dataset.voteMode;
 
-          if (mode === "estate") {
-            if (vbarPriv) {
-              vbarPriv.style.width = "66%";
-              vbarPriv.textContent = "1st & 2nd Estate: 2 Votes (66%)";
+            if (mode === "estate") {
+              if (vbarPriv) {
+                vbarPriv.style.width = "66%";
+                vbarPriv.textContent = "1st & 2nd Estate: 2 Votes (66%)";
+              }
+              if (vbarCommon) {
+                vbarCommon.style.width = "34%";
+                vbarCommon.textContent = "3rd Estate: 1 Vote (34%)";
+              }
+              if (voteVerdict) {
+                voteVerdict.innerHTML = "<strong>Result:</strong> Privileged orders (3% population) outvote 97% of the nation 2-to-1! All tax burdens forced onto the Third Estate.";
+              }
+            } else {
+              if (vbarPriv) {
+                vbarPriv.style.width = "48%";
+                vbarPriv.textContent = "Nobility & Clergy: 600 Votes (48%)";
+              }
+              if (vbarCommon) {
+                vbarCommon.style.width = "52%";
+                vbarCommon.textContent = "3rd Estate + Liberal Allies: 650 Votes (52%)";
+              }
+              if (voteVerdict) {
+                voteVerdict.innerHTML = "<strong>Result:</strong> Democratic majority for the Third Estate! Popular national sovereignty achieved over royal absolutism.";
+              }
             }
-            if (vbarCommon) {
-              vbarCommon.style.width = "34%";
-              vbarCommon.textContent = "3rd Estate: 1 Vote (34%)";
-            }
-            if (voteVerdict) {
-              voteVerdict.innerHTML = "<strong>Result:</strong> Privileged orders (3% population) outvote 97% of the nation 2-to-1! All tax burdens forced onto the Third Estate.";
-            }
-          } else {
-            if (vbarPriv) {
-              vbarPriv.style.width = "48%";
-              vbarPriv.textContent = "Nobility & Clergy: 600 Votes (48%)";
-            }
-            if (vbarCommon) {
-              vbarCommon.style.width = "52%";
-              vbarCommon.textContent = "3rd Estate + Liberal Allies: 650 Votes (52%)";
-            }
-            if (voteVerdict) {
-              voteVerdict.innerHTML = "<strong>Result:</strong> Democratic majority for the Third Estate! Popular national sovereignty achieved over royal absolutism.";
-            }
-          }
+          });
         });
-      });
 
-      // Rights of Man Articles Picker
-      const artButtons = root.querySelectorAll<HTMLButtonElement>("[data-art]");
-      const pBadge = root.querySelector<HTMLElement>("[data-parchment-badge]");
-      const pQuote = root.querySelector<HTMLElement>("[data-parchment-quote]");
-      const pMeaning = root.querySelector<HTMLElement>("[data-parchment-meaning]");
+        // Rights of Man Articles Picker
+        const artButtons = root.querySelectorAll<HTMLButtonElement>("[data-art]");
+        const pBadge = root.querySelector<HTMLElement>("[data-parchment-badge]");
+        const pQuote = root.querySelector<HTMLElement>("[data-parchment-quote]");
+        const pMeaning = root.querySelector<HTMLElement>("[data-parchment-meaning]");
 
-      const articlesData: Record<string, { badge: string; quote: string; meaning: string }> = {
-        "1": {
-          badge: "NCERT Article 1",
-          quote: '"Men are born and remain free and equal in rights. Social distinctions may be founded only upon the general good."',
-          meaning: "Abolished hereditary aristocratic privilege. A peasant's child and a noble's child have identical constitutional rights before the law.",
-        },
-        "4": {
-          badge: "NCERT Article 4",
-          quote: '"Liberty consists in the freedom to do everything which injures no one else; hence the exercise of natural rights has no limits except those which assure to other members the enjoyment of the same rights."',
-          meaning: "Established modern individual freedom. Liberty is limited only by harm to fellow citizens, not by royal decree or religious dogma.",
-        },
-        "6": {
-          badge: "NCERT Article 6",
-          quote: '"Law is the expression of the general will. All citizens have the right to take part personally, or through their representatives, in its foundation. It must be the same for all, whether it protects or punishes."',
-          meaning: "Sovereignty shifted from the monarch to the people. Laws are no longer the king's arbitrary commands, but democratic collective legislation.",
-        },
-        "11": {
-          badge: "NCERT Article 11",
-          quote: '"The free communication of thoughts and opinions is one of the most precious rights of man: every citizen may therefore speak, write, and print freely."',
-          meaning: "Abolished royal book and newspaper censorship. Fostered revolutionary public debate, political clubs, and civic newspapers.",
-        },
-        "17": {
-          badge: "NCERT Article 17",
-          quote: '"Property being a sacred and inviolable right, no one may be deprived thereof, except when public necessity, legally certified, evidently requires it."',
-          meaning: "Secured bourgeois property rights. Nobles could no longer seize commoner land through feudal claims or arbitrary royal confiscation.",
-        },
-      };
+        const articlesData: Record<string, { badge: string; quote: string; meaning: string }> = {
+          "1": {
+            badge: "NCERT Article 1",
+            quote: '"Men are born and remain free and equal in rights. Social distinctions may be founded only upon the general good."',
+            meaning: "Abolished hereditary aristocratic privilege. A peasant's child and a noble's child have identical constitutional rights before the law.",
+          },
+          "4": {
+            badge: "NCERT Article 4",
+            quote: '"Liberty consists in the freedom to do everything which injures no one else; hence the exercise of natural rights has no limits except those which assure to other members the enjoyment of the same rights."',
+            meaning: "Established modern individual freedom. Liberty is limited only by harm to fellow citizens, not by royal decree or religious dogma.",
+          },
+          "6": {
+            badge: "NCERT Article 6",
+            quote: '"Law is the expression of the general will. All citizens have the right to take part personally, or through their representatives, in its foundation. It must be the same for all, whether it protects or punishes."',
+            meaning: "Sovereignty shifted from the monarch to the people. Laws are no longer the king's arbitrary commands, but democratic collective legislation.",
+          },
+          "11": {
+            badge: "NCERT Article 11",
+            quote: '"The free communication of thoughts and opinions is one of the most precious rights of man: every citizen may therefore speak, write, and print freely."',
+            meaning: "Abolished royal book and newspaper censorship. Fostered revolutionary public debate, political clubs, and civic newspapers.",
+          },
+          "17": {
+            badge: "NCERT Article 17",
+            quote: '"Property being a sacred and inviolable right, no one may be deprived thereof, except when public necessity, legally certified, evidently requires it."',
+            meaning: "Secured bourgeois property rights. Nobles could no longer seize commoner land through feudal claims or arbitrary royal confiscation.",
+          },
+        };
 
-      artButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          artButtons.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-          const artKey = btn.dataset.art;
-          if (artKey && articlesData[artKey]) {
-            const data = articlesData[artKey];
-            if (pBadge) pBadge.textContent = data.badge;
-            if (pQuote) pQuote.textContent = data.quote;
-            if (pMeaning) pMeaning.innerHTML = `<strong>CBSE Exam Meaning:</strong> ${data.meaning}`;
-          }
+        artButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            artButtons.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            const artKey = btn.dataset.art;
+            if (artKey && articlesData[artKey]) {
+              const data = articlesData[artKey];
+              if (pBadge) pBadge.textContent = data.badge;
+              if (pQuote) pQuote.textContent = data.quote;
+              if (pMeaning) pMeaning.innerHTML = `<strong>CBSE Exam Meaning:</strong> ${data.meaning}`;
+            }
+          });
         });
-      });
+      }
 
       // Quiz Handling
       let quizScore = 0;
@@ -1220,7 +1475,7 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
     margin-top: 0.15rem;
   }
 
-  /* 3D Stage Card */
+  /* 3D and Video Stage Cards */
   .sst-stage-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
@@ -1275,16 +1530,6 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
     color: #0f172a;
     box-shadow: 0 2px 4px rgba(15, 23, 42, 0.08);
   }
-  .tool-btn.video-tool-btn {
-    background: #eff6ff;
-    border-color: #93c5fd;
-    color: #1d4ed8;
-  }
-  .tool-btn.video-tool-btn:hover {
-    background: #dbeafe;
-    border-color: #60a5fa;
-    color: #1e40af;
-  }
   .tool-btn:active {
     transform: translateY(1px);
   }
@@ -1314,6 +1559,16 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
     stroke: currentColor;
     flex-shrink: 0;
   }
+
+  /* 3D WebGL Canvas Wrap */
+  .sst-canvas-wrap {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    background: #f8fafd;
+  }
+
+  /* Video Viewport */
   .sst-video-viewport {
     position: relative;
     width: 100%;
@@ -1360,63 +1615,6 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
     color: #0f172a;
   }
 
-  /* Animated Lesson Mode & Video Theater */
-  .lesson-video-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 1.25rem;
-    margin-top: 1rem;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
-  }
-  .video-theater-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-  }
-  .video-badge {
-    display: inline-block;
-    font-size: 0.74rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.2rem 0.65rem;
-    border-radius: 999px;
-    background: #fef2f2;
-    color: #dc2626;
-    margin-bottom: 0.35rem;
-  }
-  .theater-title-wrap h3 {
-    margin: 0 0 0.25rem;
-    font-size: 1.2rem;
-    color: #0f172a;
-  }
-  .video-subtitle {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #64748b;
-  }
-  .back-to-explore-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.45rem 0.85rem;
-    border-radius: 8px;
-    border: 1px solid #cbd5e1;
-    background: #ffffff;
-    color: #1e293b;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .back-to-explore-btn:hover {
-    background: #f8fafc;
-    border-color: #94a3b8;
-  }
   .video-chapters-row {
     display: flex;
     align-items: center;
@@ -1458,20 +1656,6 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
     border-color: #1e3a8a;
     color: #ffffff;
     box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
-  }
-  .video-frame-container {
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    background: #000000;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-  }
-  .cinematic-bastille-video {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    max-height: 480px;
-    display: block;
-    object-fit: cover;
   }
   .video-quote-banner {
     display: flex;
@@ -1728,6 +1912,111 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
     line-height: 1.4;
   }
 
+  /* India Freedom Movement Simulators */
+  .in-experiment-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .in-sim-section {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.1rem;
+  }
+  .in-sim-section h4 {
+    margin: 0 0 0.45rem;
+    font-size: 0.98rem;
+    color: #0f172a;
+  }
+  .in-movement-toggle-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .in-toggle-btn {
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .in-toggle-btn.active {
+    background: #ea580c;
+    color: #ffffff;
+    border-color: #ea580c;
+    box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
+  }
+  .in-summary-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+  .in-summary-box strong {
+    display: block;
+    color: #0f172a;
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+  }
+  .in-summary-box p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.45;
+  }
+  .in-metrics-pills {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .in-pill {
+    font-size: 0.76rem;
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+  }
+  .in-classes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+  }
+  .in-class-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+  }
+  .in-class-box strong {
+    font-size: 0.88rem;
+    color: #0f172a;
+    border-bottom: 2px solid #ea580c;
+    padding-bottom: 0.2rem;
+    display: inline-block;
+    width: fit-content;
+  }
+  .in-class-box span {
+    color: #334155;
+    line-height: 1.4;
+  }
+  .in-class-box small {
+    color: #64748b;
+    font-style: italic;
+    margin-top: auto;
+  }
+
   .sim-parliament-arc {
     margin-bottom: 1rem;
   }
@@ -1874,25 +2163,48 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
     border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 1rem;
+    background: #ffffff;
   }
   .options-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+    gap: 0.65rem;
+    margin-top: 0.75rem;
   }
   .opt-btn {
-    padding: 0.55rem 0.85rem;
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 0.95rem;
     border-radius: 8px;
-    border: 1px solid #cbd5e1;
+    border: 1.5px solid #cbd5e1;
     background: #ffffff;
-    font-size: 0.82rem;
+    color: #1e293b !important; /* CRITICAL: High-contrast dark text to override global.css white button style */
+    font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
     text-align: left;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    line-height: 1.4;
   }
-  .opt-btn.correct { background: #dcfce7; border-color: #22c55e; color: #15803d; }
-  .opt-btn.incorrect { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+  .opt-btn:hover:not(:disabled) {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+    color: #0f172a !important;
+  }
+  .opt-btn:disabled {
+    cursor: default;
+  }
+  .opt-btn.correct {
+    background: #dcfce7 !important;
+    border-color: #22c55e !important;
+    color: #15803d !important;
+  }
+  .opt-btn.incorrect {
+    background: #fee2e2 !important;
+    border-color: #ef4444 !important;
+    color: #b91c1c !important;
+  }
   .q-exp {
     font-size: 0.78rem;
     color: #15803d;
@@ -1904,6 +2216,9 @@ const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id |
 
   @media (max-width: 1100px) {
     .sst-workspace-grid {
+      grid-template-columns: 1fr;
+    }
+    .options-list {
       grid-template-columns: 1fr;
     }
   }
