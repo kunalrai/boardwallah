@@ -1,0 +1,12 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import PhysicsViewer from "../../../../components/physics3d/PhysicsViewer.astro";
+import { periodicClassificationLesson } from "../../../../data/chemistry/periodic-classification";
+---
+
+<Layout
+  title={`${periodicClassificationLesson.title} | Class 10 3D Chemistry | BoardWallah`}
+  description={periodicClassificationLesson.subtitle}
+>
+  <PhysicsViewer lesson={periodicClassificationLesson} />
+</Layout>

@@ -266,13 +266,13 @@ describe("Mathematics Calculations", () => {
 });
 
 describe("LessonRegistry", () => {
-  test("Contains all 10 Physics, 4 Chemistry, 5 Biology, and 14 Maths 3D lessons", () => {
+  test("Contains all 10 Physics, 5 Chemistry, 5 Biology, and 14 Maths 3D lessons", () => {
     const physics = getAllPhysicsLessons();
     const chemistry = getAllChemistryLessons();
     const biology = getAllBiologyLessons();
     const maths = getAllMathsLessons();
     expect(physics.length).toBe(10);
-    expect(chemistry.length).toBe(4);
+    expect(chemistry.length).toBe(5);
     expect(biology.length).toBe(5);
     expect(maths.length).toBe(14);
     expect(getPhysicsLesson("maths-real-numbers")?.simulation).toBe("maths-number-ap");
