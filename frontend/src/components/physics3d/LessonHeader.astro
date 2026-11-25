@@ -7,20 +7,71 @@ interface Props {
 const { lesson } = Astro.props;
 
 const subjectKey = lesson.subject.toLowerCase();
-const labHref =
-  subjectKey === "chemistry"
+
+// Check for Social Science (SST) disciplines: History, Geography, Civics / Political Science, Economics
+const isSst = [
+  "history",
+  "geography",
+  "political science",
+  "civics",
+  "economics",
+  "social science",
+  "sst",
+].includes(subjectKey);
+
+const isMaths = subjectKey === "mathematics" || subjectKey === "maths";
+const isChemistry = subjectKey === "chemistry";
+const isBiology = subjectKey === "biology";
+
+// Sub-discipline anchor in the 3D SST Lab page
+const sstAnchor =
+  subjectKey === "history"
+    ? "history"
+    : subjectKey === "geography"
+      ? "geography"
+      : subjectKey.includes("pol") || subjectKey.includes("civic")
+        ? "civics"
+        : subjectKey === "economics"
+          ? "economics"
+          : "";
+
+// Subject breadcrumb link:
+// For SST: links to `/class-10/sst/#${sstAnchor}` so clicking e.g. "Class 10 History" scrolls directly to the History section of the 3D SST Lab!
+// For Maths: `/class-10/maths/`
+// For Chemistry: `/class-10/science/chemistry/`
+// For Biology: `/class-10/science/biology/`
+// For Physics: `/class-10/science/physics/`
+const subjectHref = isSst
+  ? (sstAnchor ? `/class-10/sst/#${sstAnchor}` : "/class-10/sst/")
+  : isMaths
+    ? "/class-10/maths/"
+    : isChemistry
+      ? "/class-10/science/chemistry/"
+      : isBiology
+        ? "/class-10/science/biology/"
+        : "/class-10/science/physics/";
+
+const subjectLabel = `Class ${lesson.class} ${lesson.subject}`;
+
+// Lab link:
+const labHref = isSst
+  ? "/class-10/sst/"
+  : isChemistry
     ? "/class-10/science/chemistry/"
-    : subjectKey === "biology"
+    : isBiology
       ? "/class-10/science/biology/"
-      : subjectKey === "mathematics" || subjectKey === "maths"
+      : isMaths
         ? "/class-10/maths/"
         : "/class-10/science/physics/";
-const labLabel =
-  subjectKey === "chemistry"
+
+// Lab label:
+const labLabel = isSst
+  ? "3D SST Lab"
+  : isChemistry
     ? "3D Chemistry Lab"
-    : subjectKey === "biology"
+    : isBiology
       ? "3D Biology Lab"
-      : subjectKey === "mathematics" || subjectKey === "maths"
+      : isMaths
         ? "3D Maths Lab"
         : "3D Physics Lab";
 ---
@@ -30,7 +81,7 @@ const labLabel =
     <nav class="p3d-breadcrumb" aria-label="Breadcrumb">
       <a href="/">BoardWallah</a>
       <span aria-hidden="true">/</span>
-      <a href="/subjects/">Class {lesson.class} {lesson.subject}</a>
+      <a href={subjectHref}>{subjectLabel}</a>
       <span aria-hidden="true">/</span>
       <a href={labHref}>{labLabel}</a>
       <span aria-hidden="true">/</span>

@@ -13,10 +13,10 @@ const civics = getAllCivicsLessons();
 const economics = getAllEconomicsLessons();
 
 const sections = [
-  { name: "History", subtitle: "India & the Contemporary World II", color: "#dc2626", bg: "#fef2f2", lessons: history },
-  { name: "Geography", subtitle: "Contemporary India II", color: "#059669", bg: "#ecfdf5", lessons: geography },
-  { name: "Political Science (Civics)", subtitle: "Democratic Politics II", color: "#2563eb", bg: "#eff6ff", lessons: civics },
-  { name: "Economics", subtitle: "Understanding Economic Development", color: "#d97706", bg: "#fffbeb", lessons: economics },
+  { id: "history", name: "History", subtitle: "India & the Contemporary World II", color: "#dc2626", bg: "#fef2f2", lessons: history },
+  { id: "geography", name: "Geography", subtitle: "Contemporary India II", color: "#059669", bg: "#ecfdf5", lessons: geography },
+  { id: "civics", name: "Political Science (Civics)", subtitle: "Democratic Politics II", color: "#2563eb", bg: "#eff6ff", lessons: civics },
+  { id: "economics", name: "Economics", subtitle: "Understanding Economic Development", color: "#d97706", bg: "#fffbeb", lessons: economics },
 ];
 ---
 
@@ -38,7 +38,7 @@ const sections = [
     </header>
 
     {sections.map((sec) => (
-      <section class="p3d-discipline-section">
+      <section class="p3d-discipline-section" id={sec.id}>
         <div class="p3d-discipline-header">
           <span class="p3d-discipline-badge" style={`color: ${sec.color}; background: ${sec.bg};`}>
             {sec.name}
