@@ -97,7 +97,7 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
                     data-video-time={step.videoTime ?? 0}
                     title={step.videoCaption ?? "Watch Scene"}
                   >
-                    🎬 Watch Scene ({step.videoTime ? `00:${step.videoTime.toString().padStart(2, '0')}` : 'HD'})
+                    🎬 Watch Scene ({step.videoTime !== undefined ? `${Math.floor(step.videoTime / 60).toString().padStart(2, '0')}:${(step.videoTime % 60).toString().padStart(2, '0')}` : 'HD'})
                   </span>
                 )}
               </div>
@@ -168,19 +168,22 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
 
         <!-- Interactive Scene Chapter Selector -->
         <div class="video-chapters-row">
-          <span class="chap-label">Scenes:</span>
-          <button type="button" class="chap-pill active" data-seek="0">00:00 ⚔️ À la Bastille</button>
-          <button type="button" class="chap-pill" data-seek="4">00:04 👑 Three Estates Inequality</button>
-          <button type="button" class="chap-pill" data-seek="14">00:14 🏰 14 July 1789 Storming</button>
-          <button type="button" class="chap-pill" data-seek="24">00:24 📜 Rights of Man Decree</button>
-          <button type="button" class="chap-pill" data-seek="34">00:34 💥 Break the Chains!</button>
+          <span class="chap-label">Milestones:</span>
+          <button type="button" class="chap-pill active" data-seek="0">00:00 🥖 1. Bread Crisis</button>
+          <button type="button" class="chap-pill" data-seek="4">00:04 👑 2. Three Estates</button>
+          <button type="button" class="chap-pill" data-seek="14">00:14 📜 3. Tennis Court Oath</button>
+          <button type="button" class="chap-pill" data-seek="24">00:24 🏰 4. Bastille Storming</button>
+          <button type="button" class="chap-pill" data-seek="34">00:34 ⚖️ 5. Rights of Man</button>
+          <button type="button" class="chap-pill" data-seek="54">00:54 🇫🇷 6. Republic Declared</button>
+          <button type="button" class="chap-pill" data-seek="64">01:04 ⚡ 7. Reign of Terror</button>
+          <button type="button" class="chap-pill" data-seek="74">01:14 ⚔️ 8. Napoleonic Code</button>
         </div>
 
         <!-- Primary Video Viewport -->
         <div class="sst-video-viewport" data-video-container>
           <video
-            src={lesson.videoFallback ?? "/assets/sst/history/french-revolution-epic.mp4"}
-            poster={lesson.staticImageFallback ?? "/assets/sst/history/french-revolution-epic-poster.jpg"}
+            src={lesson.videoFallback ?? "/assets/sst/history/french-revolution-master.mp4"}
+            poster={lesson.staticImageFallback ?? "/assets/sst/history/french-revolution-master-poster.jpg"}
             controls
             playsinline
             preload="auto"
@@ -188,10 +191,10 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
             class="sst-primary-video"
           ></video>
           <div class="video-quote-banner" data-video-quote-banner>
-            <div class="quote-pill" data-quote-tag>Battle Cry</div>
+            <div class="quote-pill" data-quote-tag>Bread Crisis</div>
             <div class="quote-text-wrap">
-              <span class="quote-french" data-quote-primary>"À la Bastille ! Pour la liberté !"</span>
-              <span class="quote-trans" data-quote-secondary>("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")</span>
+              <span class="quote-french" data-quote-primary>"Du pain ! Du pain pour nos enfants !"</span>
+              <span class="quote-trans" data-quote-secondary>("Bread! Bread for our children! / रोटी! हमारे बच्चों के लिए रोटी! — Paris bread scarcity 1789")</span>
             </div>
           </div>
         </div>
@@ -222,17 +225,24 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
             </div>
           </div>
           <div class="insight-box">
+            <div class="insight-icon">📜</div>
+            <div class="insight-text">
+              <strong>2. Tennis Court Oath (00:14)</strong>
+              <p>Locked out by King Louis XVI, Third Estate deputies led by Mirabeau &amp; Abbé Sieyès gathered at Versailles indoor tennis court swearing to draft a democratic constitution.</p>
+            </div>
+          </div>
+          <div class="insight-box">
             <div class="insight-icon">🏰</div>
             <div class="insight-text">
-              <strong>2. Storming of the Bastille (00:14)</strong>
+              <strong>3. Storming of the Bastille (00:24)</strong>
               <p>On 14 July 1789, 7,000 armed citizens stormed the royal fortress prison to seize gunpowder, killing the governor and shattering the ultimate symbol of royal despotism.</p>
             </div>
           </div>
           <div class="insight-box">
-            <div class="insight-icon">📜</div>
+            <div class="insight-icon">⚔️</div>
             <div class="insight-text">
-              <strong>3. Declaration of Rights (00:24)</strong>
-              <p>The National Assembly proclaimed: 'Men are born and remain free and equal in rights.' Liberty, equality, and fraternity became the foundational tenets of modern democracy.</p>
+              <strong>4. Napoleonic Code (01:14)</strong>
+              <p>The Civil Code of 1804 abolished birth-based privileges, secured property rights, standardized weights and measures, and established equality before the law across Europe.</p>
             </div>
           </div>
         </div>
@@ -476,7 +486,7 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
   <script
     type="application/json"
     id={configScriptId}
-    set:html={JSON.stringify(lesson)}
+    set:html={JSON.stringify({ ...lesson, narrations })}
   ></script>
 </div>
 
@@ -515,32 +525,32 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
       let currentStepIndex = 0;
       let isPlayingVoice = false;
 
-      // Video Chapters Configuration for French Revolution
+      // Video Chapters Configuration for French Revolution (All 8 CBSE Milestones)
       const videoChapters = [
         {
           time: 0,
-          tag: "Battle Cry",
-          primary: '"À la Bastille ! Pour la liberté !"',
-          secondary: '("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")',
+          tag: "1. Bread Crisis",
+          primary: '"Du pain ! Du pain pour nos enfants !"',
+          secondary: '("Bread! Bread for our children! / रोटी! हमारे बच्चों के लिए रोटी! — Paris 1789")',
           stepIdx: 0,
-          summary: "France Before 1789 — Severe famine, debt & bread price crisis",
+          summary: "France Before 1789 — Severe famine, bankruptcy & subsistence crisis",
           metrics: {
             "Year": "1788–1789",
             "Monarch": "King Louis XVI (Bourbon Dynasty)",
-            "Crisis": "Subsistence crisis & 80% daily wage spent on bread",
+            "Bread Price": "Skyrocketed to 80% of artisan daily wage",
             "CBSE Concept": "Subsistence Crisis — basic means of livelihood endangered"
           },
           obs: [
-            "Severe winter hailstorms in 1788 destroyed French agricultural crops.",
+            "Severe drought and 1788 winter hailstorms ruined grain harvests across France.",
             "Starving crowds of peasant women stormed Parisian bakeries in bread riots.",
-            "Royal debt soared from funding the American War of Independence."
+            "Royal treasury was exhausted from funding the American War of Independence."
           ]
         },
         {
           time: 4,
-          tag: "Three Estates",
-          primary: '"French society was divided into three estates..."',
-          secondary: '("Clergy & nobility enjoyed feudal privileges while peasants carried all tax burdens.")',
+          tag: "2. Three Estates",
+          primary: '"Le tiers état paie tout, les privilégiés ne paient rien !"',
+          secondary: '("The Third Estate pays all taxes while Clergy & Nobility pay nothing! / 97% जनता करों के बोझ तले दबी")',
           stepIdx: 1,
           summary: "The Three Estates — Feudal privilege & extreme tax disparity",
           metrics: {
@@ -550,67 +560,124 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
             "3rd Estate": "97% Population carrying 100% tax burden"
           },
           obs: [
-            "The Catholic Church owned 10% of land and extracted 'tithes' (1/10th produce).",
-            "The nobility extracted hereditary feudal manorial dues from peasant tenants.",
+            "The Catholic Church owned 10% of land and extracted 'tithes' (1/10th agricultural produce).",
+            "Nobility held hereditary feudal rights and extracted manorial services from peasants.",
             "Abbé Sieyès published 'What is the Third Estate? Everything.'"
           ]
         },
         {
           time: 14,
-          tag: "14 July 1789",
-          primary: '"Furious citizens stormed the Bastille, challenging royal authority."',
-          secondary: '("Its fall became the supreme symbol of freedom and revolution.")',
-          stepIdx: 3,
-          summary: "Storming of the Bastille — Fall of royal despotism",
+          tag: "3. Tennis Court Oath",
+          primary: '"Nous jurons de ne jamais nous séparer avant d\'avoir donné une constitution à la France !"',
+          secondary: '("We swear never to separate until France has a written constitution! / 20 जून 1789: टेनिस कोर्ट की ऐतिहासिक शपथ")',
+          stepIdx: 2,
+          summary: "The Tennis Court Oath (20 June 1789) — Birth of National Assembly",
           metrics: {
-            "Date": "14 July 1789 (French National Day)",
-            "Target": "Bastille Royal Fortress-Prison",
-            "Citizen Militia": "7,000 Parisian men & women",
-            "Ammunition": "Seized gunpowder & 28,000 muskets",
-            "CBSE Key Fact": "Bastille was hated because it stood for the despotic power of the king"
+            "Date": "20 June 1789 at Versailles",
+            "Leaders": "Mirabeau (nobility) & Abbé Sieyès (clergy)",
+            "Third Estate": "Declared themselves the National Assembly of France",
+            "Democratic Demand": "1 Member = 1 Vote (Rejected feudal 1 Estate = 1 Vote)"
           },
           obs: [
-            "The fortress was demolished stone by stone and sold as souvenirs of liberty.",
-            "Louis XVI wrote 'Rien' (Nothing) in his diary, oblivious to the revolution.",
-            "The storming marked the emergence of people's active participation in history."
+            "King Louis XVI locked deputies out of the Salle des Menus-Plaisirs.",
+            "Third Estate deputies assembled in an indoor tennis court at Versailles under Jean-Sylvain Bailly.",
+            "Deputies swore a solemn oath never to dissolve until framing a constitution limiting royal power."
           ]
         },
         {
           time: 24,
-          tag: "Rights of Man",
-          primary: '"All men are born free and equal! Liberty, equality, and fraternity!"',
-          secondary: '("Declaration of the Rights of Man & Citizen abolishing aristocratic privileges.")',
-          stepIdx: 4,
-          summary: "Declaration of the Rights of Man & Citizen — Universal liberty & equality",
+          tag: "4. Bastille Stormed",
+          primary: '"À la Bastille ! Brisez les chaînes du despotisme !"',
+          secondary: '("To the Bastille! Shatter the chains of despotism! / 14 जुलाई 1789: बास्तील के किले पर जनता का धावा")',
+          stepIdx: 3,
+          summary: "Storming of the Bastille (14 July 1789) — Fall of Despotism",
           metrics: {
-            "Adoption Date": "26 August 1789",
-            "Article 1": "Men are born and remain free and equal in rights",
-            "Article 6": "Law is the expression of the general will",
-            "Foundational Motto": "Liberté, Égalité, Fraternité"
+            "Date": "14 July 1789 (French National Day)",
+            "Target": "Bastille Royal Fortress-Prison",
+            "Citizen Militia": "7,000 Parisian men & women (National Guard)",
+            "Ammunition": "Seized gunpowder & 28,000 muskets from Les Invalides",
+            "CBSE Key Fact": "Bastille was hated because it stood for the despotic power of the king"
           },
           obs: [
-            "Enshrined natural and inalienable rights: liberty, property, security.",
-            "Abolished all hereditary aristocratic privileges and church tithes forever.",
-            "Established the legal foundation of modern constitutional human rights."
+            "Citizens stormed the fortress, freed its 7 prisoners, and killed the royal governor De Launay.",
+            "The fortress was demolished stone by stone and sold as souvenirs of liberation.",
+            "Marks the decisive entry of the popular masses into the French revolutionary struggle."
           ]
         },
         {
           time: 34,
-          tag: "Fortress Breach",
-          primary: '"To the Bastille! Charge! Break the chains!"',
-          secondary: '("Citizens shatter the drawbridge chains with axes, bringing down royal despotism.")',
-          stepIdx: 5,
-          summary: "Abolition of Feudalism & Royal Despotism Overthrown",
+          tag: "5. Rights of Man",
+          primary: '"Tous les hommes naissent et demeurent libres et égaux en droits !"',
+          secondary: '("Men are born and remain free and equal in rights! / सभी नागरिक जन्म से स्वतंत्र और अधिकारों में समान हैं")',
+          stepIdx: 4,
+          summary: "Declaration of the Rights of Man & Citizen (26 August 1789)",
           metrics: {
-            "Event": "Surrender of Royal Bastille Garrison",
-            "Despotism Fallen": "Absolute monarchy permanently dismantled",
-            "National Guard": "Led by Marquis de Lafayette with Tricolor cockade",
-            "Sovereignty": "Transferred from Crown to French Citizens"
+            "Adoption Date": "26 August 1789 by National Assembly",
+            "Article 1": "Men are born and remain free and equal in rights",
+            "Article 6": "Law is the expression of the general will",
+            "Core Ideals": "Liberté, Égalité, Fraternité (Liberty, Equality, Fraternity)"
           },
           obs: [
-            "On 4 August 1789, the National Assembly formally abolished feudal dues.",
-            "Lands of the Catholic Church were confiscated, raising 2 billion livres.",
-            "France transitioned into a Constitutional Monarchy under the 1791 Constitution."
+            "Enshrined natural and inalienable rights: liberty, private property, security, and resistance to oppression.",
+            "Abolished all hereditary feudal privileges and the feudal dues extracted by nobles.",
+            "Formed the bedrock of modern democratic constitutionalism and universal human rights."
+          ]
+        },
+        {
+          time: 54,
+          tag: "6. Republic Proclaimed",
+          primary: '"La royauté est abolie en France ! Vive la République Française !"',
+          secondary: '("Royalty is abolished in France! Long live the French Republic! / 1792: फ्रांस में राजशाही समाप्त और गणतंत्र की स्थापना")',
+          stepIdx: 5,
+          summary: "The French Republic Established & Monarchy Abolished (1792–1793)",
+          metrics: {
+            "Key Date": "21 September 1792",
+            "Government": "National Convention (Abolished French Monarchy)",
+            "King Louis XVI": "Tried for high treason and executed on 21 January 1793",
+            "Symbolism": "Adoption of Tricolor flag & revolutionary Phrygian cap"
+          },
+          obs: [
+            "Sans-culottes and Jacobins stormed the Tuileries Palace on 10 August 1792.",
+            "Universal male suffrage granted to all men aged 21 and above, regardless of wealth.",
+            "Revolutionary armies defended France against Austro-Prussian monarchical coalitions."
+          ]
+        },
+        {
+          time: 64,
+          tag: "7. Reign of Terror",
+          primary: '"Pain d\'égalité pour tous et maximum des prix et salaires !"',
+          secondary: '("Equality bread for all and wage/price ceilings! / 1793–94: रोबेस्पिएर का आतंक राज और समानता की रोटी")',
+          stepIdx: 6,
+          summary: "The Reign of Terror (1793–1794) — Robespierre & Committee of Public Safety",
+          metrics: {
+            "Period": "September 1793 – July 1794",
+            "Leader": "Maximilien Robespierre (Jacobin Club)",
+            "Economic Laws": "Strict maximum ceilings on wages and prices",
+            "Equality Bread": "White flour banned; mandatory 'pain d'égalité' (whole wheat)"
+          },
+          obs: [
+            "The Revolutionary Tribunal tried and executed perceived enemies of the Republic.",
+            "Churches were shut down and converted into military barracks or Temples of Reason.",
+            "Robespierre was condemned by the Convention and executed in Thermidor (July 1794)."
+          ]
+        },
+        {
+          time: 74,
+          tag: "8. Napoleonic Code",
+          primary: '"Tous les citoyens sont égaux devant la loi. Le Code Civil est proclamé !"',
+          secondary: '("All citizens are equal before the law. The Civil Code of 1804! / कानून के समक्ष समानता — नेपोलियन संहिता")',
+          stepIdx: 7,
+          summary: "Rise of Napoleon Bonaparte & The Civil Code of 1804",
+          metrics: {
+            "Coup d'état": "18 Brumaire (1799) overthrowing the Directory",
+            "Coronation": "1804 as Emperor of the French",
+            "Civil Code 1804": "Abolished birth privileges & established legal equality",
+            "Administration": "Uniform weights, metric system, and protected property rights"
+          },
+          obs: [
+            "Napoleon exported revolutionary administrative reforms across conquered European territories.",
+            "Feudalism was abolished in Switzerland, the Netherlands, Germany, and Italy.",
+            "Guild restrictions were removed in towns; transport and communication networks improved."
           ]
         }
       ];
@@ -708,10 +775,11 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
         window.speechSynthesis.cancel();
         const currentStep = lesson.learningSteps[currentStepIndex];
         const isHindi = langSelect?.value === "hi-IN";
+        const narrationObj = (lesson as any).narrations?.[currentStepIndex];
 
         const textToSpeak = isHindi
-          ? `${currentStep?.title || lesson.title}। ${currentStep?.description || lesson.subtitle}`
-          : `${currentStep?.title || lesson.title}. ${currentStep?.description || lesson.subtitle}`;
+          ? (narrationObj?.hindi || `${currentStep?.title || lesson.title}। ${currentStep?.description || lesson.subtitle}`)
+          : (narrationObj?.english || `${currentStep?.title || lesson.title}. ${currentStep?.description || lesson.subtitle}`);
 
         if (transcriptEl) transcriptEl.textContent = `🗣️ Speaking: "${textToSpeak}"`;
         if (waveEl) waveEl.hidden = false;
