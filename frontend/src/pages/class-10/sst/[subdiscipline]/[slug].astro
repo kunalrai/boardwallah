@@ -1,0 +1,30 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import PhysicsViewer from "../../../../components/physics3d/PhysicsViewer.astro";
+import { getAllSstLessons } from "../../../../physics-engine/registry/LessonRegistry";
+import type { PhysicsLessonConfig } from "../../../../physics-engine/types/lesson";
+
+export function getStaticPaths() {
+  return getAllSstLessons().map((lesson) => {
+    const match = lesson.slug.match(/^\/class-10\/sst\/([^/]+)\/([^/]+)\/?$/);
+    const subdiscipline = match ? match[1] : "history";
+    const slug = match ? match[2] : lesson.id;
+    return {
+      params: { subdiscipline, slug },
+      props: { lesson },
+    };
+  });
+}
+
+interface Props {
+  lesson: PhysicsLessonConfig;
+}
+const { lesson } = Astro.props;
+---
+
+<Layout
+  title={`${lesson.title} | Class 10 3D SST | BoardWallah`}
+  description={lesson.subtitle}
+>
+  <PhysicsViewer lesson={lesson} />
+</Layout>

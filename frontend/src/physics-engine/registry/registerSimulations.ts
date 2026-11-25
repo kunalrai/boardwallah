@@ -23,6 +23,10 @@ import { GeometrySimulation } from "../simulations/maths/GeometrySimulation";
 import { CoordinateSimulation } from "../simulations/maths/CoordinateSimulation";
 import { TrigonometrySimulation } from "../simulations/maths/TrigonometrySimulation";
 import { MensurationAndDataSimulation } from "../simulations/maths/MensurationAndDataSimulation";
+import { HistorySimulation } from "../simulations/sst/HistorySimulation";
+import { GeographySimulation } from "../simulations/sst/GeographySimulation";
+import { CivicsSimulation } from "../simulations/sst/CivicsSimulation";
+import { EconomicsSimulation } from "../simulations/sst/EconomicsSimulation";
 
 let registered = false;
 
@@ -56,5 +60,9 @@ export function registerDefaultSimulations(): void {
   simulationRegistry.register("maths-coordinate", CoordinateSimulation);
   simulationRegistry.register("maths-trigonometry", TrigonometrySimulation);
   simulationRegistry.register("maths-mensuration-data", MensurationAndDataSimulation);
+  simulationRegistry.register("sst-history", HistorySimulation);
+  simulationRegistry.register("sst-geography", GeographySimulation);
+  simulationRegistry.register("sst-civics", CivicsSimulation);
+  simulationRegistry.register("sst-economics", EconomicsSimulation);
   registered = true;
 }

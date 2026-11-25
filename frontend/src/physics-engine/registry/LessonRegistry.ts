@@ -21,6 +21,10 @@ import { reproductionLesson } from "../../data/biology/reproduction";
 import { heredityLesson } from "../../data/biology/heredity";
 import { ourEnvironmentLesson } from "../../data/biology/our-environment";
 import { mathsLessons } from "../../data/maths/all-maths-lessons";
+import { historyLessons } from "../../data/sst/history-lessons";
+import { geographyLessons } from "../../data/sst/geography-lessons";
+import { civicsLessons } from "../../data/sst/civics-lessons";
+import { economicsLessons } from "../../data/sst/economics-lessons";
 
 const physicsLessons: PhysicsLessonConfig[] = [
   humanEyeLesson,
@@ -52,8 +56,15 @@ const biologyLessons: PhysicsLessonConfig[] = [
   ourEnvironmentLesson,
 ];
 
+const sstLessons: PhysicsLessonConfig[] = [
+  ...historyLessons,
+  ...geographyLessons,
+  ...civicsLessons,
+  ...economicsLessons,
+];
+
 const lessons = new Map<string, PhysicsLessonConfig>(
-  [...physicsLessons, ...chemistryLessons, ...biologyLessons, ...mathsLessons].map((l) => [l.id, l])
+  [...physicsLessons, ...chemistryLessons, ...biologyLessons, ...mathsLessons, ...sstLessons].map((l) => [l.id, l])
 );
 
 export function getPhysicsLesson(id: string): PhysicsLessonConfig | undefined {
@@ -76,10 +87,35 @@ export function getAllMathsLessons(): PhysicsLessonConfig[] {
   return mathsLessons;
 }
 
+export function getAllSstLessons(): PhysicsLessonConfig[] {
+  return sstLessons;
+}
+
+export function getAllHistoryLessons(): PhysicsLessonConfig[] {
+  return historyLessons;
+}
+
+export function getAllGeographyLessons(): PhysicsLessonConfig[] {
+  return geographyLessons;
+}
+
+export function getAllCivicsLessons(): PhysicsLessonConfig[] {
+  return civicsLessons;
+}
+
+export function getAllEconomicsLessons(): PhysicsLessonConfig[] {
+  return economicsLessons;
+}
+
 export function getLessonsBySubject(subject: string): PhysicsLessonConfig[] {
   const s = subject.toLowerCase();
   if (s === "chemistry") return chemistryLessons;
   if (s === "biology") return biologyLessons;
   if (s === "mathematics" || s === "maths") return mathsLessons;
+  if (s === "sst" || s === "social science" || s === "social studies") return sstLessons;
+  if (s === "history") return historyLessons;
+  if (s === "geography") return geographyLessons;
+  if (s === "civics" || s === "political science") return civicsLessons;
+  if (s === "economics") return economicsLessons;
   return physicsLessons;
 }

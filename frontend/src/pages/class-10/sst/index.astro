@@ -1,0 +1,95 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import {
+  getAllHistoryLessons,
+  getAllGeographyLessons,
+  getAllCivicsLessons,
+  getAllEconomicsLessons,
+} from "../../../physics-engine/registry/LessonRegistry";
+
+const history = getAllHistoryLessons();
+const geography = getAllGeographyLessons();
+const civics = getAllCivicsLessons();
+const economics = getAllEconomicsLessons();
+
+const sections = [
+  { name: "History", subtitle: "India & the Contemporary World II", color: "#dc2626", bg: "#fef2f2", lessons: history },
+  { name: "Geography", subtitle: "Contemporary India II", color: "#059669", bg: "#ecfdf5", lessons: geography },
+  { name: "Political Science (Civics)", subtitle: "Democratic Politics II", color: "#2563eb", bg: "#eff6ff", lessons: civics },
+  { name: "Economics", subtitle: "Understanding Economic Development", color: "#d97706", bg: "#fffbeb", lessons: economics },
+];
+---
+
+<Layout
+  title="CBSE Class 10 Interactive 3D SST Lab (All 25 Chapters) | BoardWallah"
+  description="Explore all 25 CBSE Class 10 Social Science (SST) chapters in interactive 3D: History timelines, Geography maps & dams, Civics federal pyramids, and Economics HDI & sector data."
+>
+  <div class="wrap p3d-hub-wrap">
+    <nav class="small breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <span aria-current="page">3D SST Lab</span>
+    </nav>
+
+    <header class="p3d-hub-hero">
+      <span class="p3d-hub-kicker">BoardWallah 3D Social Science Lab (All 25 Chapters)</span>
+      <h1>CBSE Class 10 Interactive 3D SST Lab</h1>
+      <p>
+        Explore History timelines, Geography dam structures and land-use bars, Civics power-sharing and federal pyramids, and Economics HDI and sector models across all 25 NCERT chapters.
+      </p>
+    </header>
+
+    {sections.map((sec) => (
+      <section class="p3d-discipline-section">
+        <div class="p3d-discipline-header">
+          <span class="p3d-discipline-badge" style={`color: ${sec.color}; background: ${sec.bg};`}>
+            {sec.name}
+          </span>
+          <h2>{sec.subtitle} ({sec.lessons.length} Chapters)</h2>
+        </div>
+
+        <div class="p3d-lesson-grid">
+          {sec.lessons.map((lesson) => (
+            <article class="p3d-lesson-card">
+              <div class="p3d-card-meta">
+                <span class="p3d-card-chapter" style={`color: ${sec.color}; background: ${sec.bg};`}>
+                  {lesson.chapter}
+                </span>
+              </div>
+              <h3>{lesson.title}</h3>
+              <p>{lesson.subtitle}</p>
+              <div class="p3d-card-tags">
+                <span>{lesson.learningSteps.length} Guided Steps</span>
+                <span>{lesson.formulas.length} Concepts / Formulas</span>
+                <span>{lesson.quiz.length}-Q Quiz</span>
+              </div>
+              <a href={lesson.slug} class="button primary p3d-launch-btn">
+                Launch 3D Lab &rarr;
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .p3d-hub-wrap { padding-top: 1.5rem; padding-bottom: 3.5rem; }
+  .p3d-hub-hero { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 1.5rem; margin: 1rem 0 2rem; }
+  .p3d-hub-kicker { display: inline-block; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #dc2626; background: #fef2f2; padding: 0.25rem 0.65rem; border-radius: 999px; margin-bottom: 0.6rem; }
+  .p3d-hub-hero h1 { margin: 0 0 0.45rem; font-size: clamp(1.6rem, 3.2vw, 2.25rem); }
+  .p3d-hub-hero p { margin: 0; color: #475569; max-width: 70ch; }
+  
+  .p3d-discipline-section { margin-bottom: 2.5rem; }
+  .p3d-discipline-header { margin-bottom: 1rem; }
+  .p3d-discipline-badge { display: inline-block; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.25rem 0.65rem; border-radius: 999px; margin-bottom: 0.35rem; }
+  .p3d-discipline-header h2 { margin: 0; font-size: 1.35rem; color: #0f172a; }
+
+  .p3d-lesson-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.1rem; }
+  .p3d-lesson-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.65rem; box-shadow: 0 3px 14px rgba(15, 23, 42, 0.04); }
+  .p3d-card-chapter { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 999px; }
+  .p3d-lesson-card h3 { margin: 0; font-size: 1.05rem; color: #0f172a; }
+  .p3d-lesson-card p { margin: 0; font-size: 0.86rem; color: #475569; flex: 1; }
+  .p3d-card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; font-size: 0.74rem; font-weight: 600; color: #1e293b; }
+  .p3d-card-tags span { background: #f1f5f9; padding: 0.2rem 0.55rem; border-radius: 6px; }
+  .p3d-launch-btn { text-align: center; text-decoration: none; margin-top: 0.25rem; }
+</style>

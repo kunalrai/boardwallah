@@ -1,0 +1,232 @@
+import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+
+const SST_HISTORY_SCENE: Partial<PhysicsLessonConfig> = {
+  class: 10,
+  subject: "History",
+  simulation: "sst-history",
+  model: "/assets/sst/history/scene.glb",
+  usesProceduralFallback: true,
+  sceneConfig: { backgroundColor: 0xfef9f0, showGrid: false, cameraPosition: { x: 0, y: 3, z: 11 }, cameraTarget: { x: 0, y: 0, z: 0 }, minDistance: 4, maxDistance: 20 },
+  cameraPresets: [
+    { id: "front", label: "Front View", position: { x: 0, y: 3, z: 11 }, target: { x: 0, y: 0, z: 0 } },
+    { id: "top", label: "Bird's-Eye View", position: { x: 0, y: 12, z: 4 }, target: { x: 0, y: 0, z: 0 } },
+    { id: "angle", label: "Perspective", position: { x: 6, y: 5, z: 9 }, target: { x: 0, y: 0, z: 0 } },
+  ],
+  features: { rotation: true, zoom: true, pan: true, labels: true, animation: true, fullscreen: true },
+  animationClips: [{ id: "timeline", label: "Era Progression", duration: 5.0 }],
+};
+
+export const historyLessons: PhysicsLessonConfig[] = [
+  {
+    ...SST_HISTORY_SCENE as PhysicsLessonConfig,
+    id: "sst-nationalism-europe",
+    chapter: "The Rise of Nationalism in Europe",
+    title: "3D Timeline — Rise of Nationalism in Europe (1789–1871)",
+    subtitle: "Visualise the French Revolution, Romantic nationalism, 1848 Revolutions, and the unification of Italy and Germany as an interactive 3D timeline with country-coloured event bars.",
+    slug: "/class-10/sst/history/nationalism-europe/",
+    proceduralFallbackNote: "Interactive 3D Europe Nationalism Timeline active.",
+    parameters: { chapterId: "nationalism-europe", era: 1848, highlight: 0 },
+    parameterControls: [
+      { key: "era", label: "Focus Era (Year)", type: "range", min: 1789, max: 1871, step: 10, unit: "", defaultValue: 1848 },
+      {
+        key: "highlight", label: "Highlight Country/Event", type: "select",
+        options: [
+          { value: "0", label: "All Events" },
+          { value: "1", label: "France — French Revolution & Napoleon" },
+          { value: "2", label: "Germany — Zollverein & Bismarck Unification" },
+          { value: "3", label: "Italy — Mazzini, Garibaldi, Cavour" },
+          { value: "4", label: "1848 Revolutions — Spring of Nations" },
+        ],
+        defaultValue: "0",
+      },
+    ],
+    learningSteps: [
+      { stepNumber: 1, title: "French Revolution (1789) — Nationalism Begins", description: "The French Revolution introduced the idea that sovereignty belongs to the people, not the king. Liberty, Equality, Fraternity became the rallying cry. Napoleon's conquests spread these ideas across Europe — planting seeds of nationalism everywhere.", focusObject: "Era_1789", simulationParams: { era: 1789, highlight: 1 } },
+      { stepNumber: 2, title: "Romantic Nationalism — Culture as Identity (1800s)", description: "Artists, poets, and musicians like Grimm Brothers (Germany), Verdi (Italy) promoted 'folk culture' as national identity. Vernacular languages replaced Latin. Romantic nationalism was cultural — it prepared the emotional ground before political unification.", focusObject: "Era_1830", simulationParams: { era: 1830, highlight: 0 } },
+      { stepNumber: 3, title: "1848 — The Year of Revolutions", description: "Revolutions erupted across Europe — France, Germany, Italy, Austria, Hungary. Middle-class liberals demanded constitutions and national unification. Though most failed, they permanently changed the political landscape. This is called the 'Spring of Nations'.", focusObject: "Era_1848", simulationParams: { era: 1848, highlight: 4 } },
+      { stepNumber: 4, title: "Italian Unification (1859–1871) — Mazzini, Garibaldi, Cavour", description: "Italy was unified through 3 leaders: Mazzini (ideology — Young Italy), Garibaldi (military — 1000 Red Shirts), Cavour (diplomacy — Kingdom of Sardinia). By 1871, all of Italy was united under King Victor Emmanuel II.", focusObject: "Era_1860", simulationParams: { era: 1860, highlight: 3 } },
+      { stepNumber: 5, title: "German Unification (1866–1871) — Bismarck's 'Blood and Iron'", description: "Otto von Bismarck, Chancellor of Prussia, unified Germany through 3 wars (Denmark 1864, Austria 1866, France 1870-71). Kaiser Wilhelm I was crowned German Emperor in the Hall of Mirrors at Versailles in 1871. Bismarck used Realpolitik — not idealism.", focusObject: "Era_1871", simulationParams: { era: 1871, highlight: 2 } },
+    ],
+    objects: [
+      { id: "e1789", meshName: "Era_1789", name: "French Revolution (1789)", description: "Beginning of modern nationalism — people's sovereignty over monarchy.", function: "Marks the ideological birth of European nationalism.", cbseNote: "CBSE: French Revolution introduced concepts of liberty, equality, fraternity — foundation of nationalism.", labelOffset: { x: -1.5, y: 1.0, z: 0 } },
+      { id: "e1848", meshName: "Era_1848", name: "1848 Revolutions — Spring of Nations", description: "Pan-European revolutions by liberals demanding constitutions and national unity.", function: "Showed nationalism had become a mass movement, not just elite idealism.", cbseNote: "1848 revolutions failed politically but succeeded ideologically — changed European consciousness permanently.", labelOffset: { x: 0, y: 1.0, z: 0 } },
+      { id: "e1871", meshName: "Era_1871", name: "German Unification (1871)", description: "Prussia unified Germany through Bismarck's 'Blood and Iron' policy.", function: "Created the German Empire — changed European balance of power.", cbseNote: "Bismarck used Realpolitik (practical politics) not idealism. 3 wars: Denmark, Austria, France.", labelOffset: { x: 1.5, y: 1.0, z: 0 } },
+    ],
+    formulas: [
+      { id: "nat-def", name: "Nationalism Definition", expression: "Nation = Common Language + Culture + History + Territory + Shared Aspirations", variables: "No single factor alone creates a nation — combination required" },
+      { id: "unif-italy", name: "Italian Unification Formula", expression: "Mazzini (Ideology) + Garibaldi (Military) + Cavour (Diplomacy) = Unified Italy (1871)", variables: "Three leaders with complementary roles — classic CBSE 3-mark question" },
+      { id: "bismarck", name: "German Unification (Bismarck)", expression: "Blood (Military) + Iron (Industry) → 3 Wars (1864, 1866, 1870-71) → German Empire (1871)", variables: "Kaiser Wilhelm I crowned Emperor at Versailles, 1871" },
+    ],
+    cbseExamNotes: [
+      "Frederic Sorrieu's 1848 painting 'The Dream of Worldwide Democratic and Social Republics' is the classic NCERT image for this chapter.",
+      "Zollverein (1834) = German Customs Union — unified economies before political unification.",
+      "Ernst Moritz Arndt, Grimm Brothers (Germany); Giuseppe Mazzini, Giuseppe Garibaldi, Count Cavour (Italy) — know all names.",
+      "Metternich: 'Nationalism is a disease.' He represented conservative opposition to nationalism.",
+      "Treaty of Vienna (1815) — tried to restore old order after Napoleon. Failed to stop nationalism.",
+    ],
+    quiz: [
+      { id: "h1-q1", question: "Who was the artist that created the 1848 painting 'The Dream of Worldwide Democratic and Social Republics'?", options: ["Eugène Delacroix", "Frederic Sorrieu", "Caspar Friedrich", "Francisco Goya"], correctIndex: 1, explanation: "Frederic Sorrieu (French artist) created the 1848 painting featured on NCERT Chapter 1 cover showing nationalities marching toward the Statue of Liberty." },
+      { id: "h1-q2", question: "Who said 'When France sneezes, the rest of Europe catches cold'?", options: ["Bismarck", "Mazzini", "Metternich", "Napoleon"], correctIndex: 2, explanation: "Metternich (Austrian Chancellor) said this, fearing French revolutionary ideas would spread nationalism across Europe." },
+      { id: "h1-q3", question: "Zollverein (1834) was a:", options: ["Military alliance of German states", "German Customs Union eliminating internal tariffs", "Secret society of nationalists", "Treaty ending Napoleon's wars"], correctIndex: 1, explanation: "Zollverein was a German Customs Union (1834) that unified the German economy — economic integration preceded political unification." },
+      { id: "h1-q4", question: "Italian unification was completed by 1871 under King:", options: ["Napoleon III", "Victor Emmanuel II", "Garibaldi", "Cavour"], correctIndex: 1, explanation: "King Victor Emmanuel II of Sardinia became the first King of unified Italy in 1861, with full unification by 1871." },
+    ],
+  },
+  {
+    ...SST_HISTORY_SCENE as PhysicsLessonConfig,
+    id: "sst-nationalism-india",
+    chapter: "Nationalism in India",
+    title: "3D Timeline — Nationalism in India: Non-Cooperation to Quit India (1920–1942)",
+    subtitle: "Visualise India's freedom struggle — Non-Cooperation Movement (1920), Civil Disobedience & Dandi March (1930), and Quit India Movement (1942) with participation scale bars and key symbol models.",
+    slug: "/class-10/sst/history/nationalism-india/",
+    proceduralFallbackNote: "Interactive 3D India Nationalism Timeline active.",
+    parameters: { chapterId: "nationalism-india", era: 1930, highlight: 0 },
+    parameterControls: [
+      { key: "era", label: "Movement Era", type: "select", options: [{ value: "1920", label: "1920 — Non-Cooperation Movement" }, { value: "1930", label: "1930 — Civil Disobedience & Dandi March" }, { value: "1942", label: "1942 — Quit India Movement" }], defaultValue: "1930" },
+    ],
+    learningSteps: [
+      { stepNumber: 1, title: "Non-Cooperation Movement (1920)", description: "Gandhi launched NCM after Jallianwala Bagh massacre (1919) and Khilafat issue. Indians surrendered titles, boycotted courts, legislature, schools, and foreign goods. It ended after Chauri Chaura violence (1922) where a mob burnt a police station killing 22 policemen.", focusObject: "Movement_NCM", simulationParams: { era: 1920 } },
+      { stepNumber: 2, title: "Dandi March — Civil Disobedience (1930)", description: "Gandhi walked 240 miles from Sabarmati Ashram to Dandi (March 12 – April 6, 1930) to make salt in defiance of the Salt Law. This began the Civil Disobedience Movement. Salt was chosen because it affected every Indian — symbol of British injustice.", focusObject: "DandiSalt", simulationParams: { era: 1930 } },
+      { stepNumber: 3, title: "Gandhi-Irwin Pact & Round Table Conferences (1931)", description: "Gandhi signed the Gandhi-Irwin Pact (March 1931), suspended CDM, and agreed to attend 2nd Round Table Conference in London. The conference failed — Congress was just one of many voices. CDM was relaunched but eventually withdrawn in 1934.", focusObject: "Movement_CDM", simulationParams: { era: 1931 } },
+      { stepNumber: 4, title: "Quit India Movement (1942)", description: "During WW2, Gandhi launched 'Do or Die' — Quit India Movement (August 8, 1942). 'Karenge ya marenge' was the slogan. British immediately arrested all Congress leaders. Spontaneous violence erupted. Underground networks were formed. India's most massive revolt.", focusObject: "Movement_QIM", simulationParams: { era: 1942 } },
+    ],
+    objects: [
+      { id: "ncm", meshName: "Movement_NCM", name: "Non-Cooperation Movement (1920)", description: "First mass movement under Gandhi — boycott of British institutions and goods.", function: "Showed Congress could mobilise millions across caste/religion lines.", cbseNote: "Ended after Chauri Chaura (Feb 1922) — Gandhi insisted on non-violence as absolute principle.", labelOffset: { x: -2.5, y: 1.0, z: 0 } },
+      { id: "salt", meshName: "DandiSalt", name: "Dandi Salt March (1930)", description: "240-mile walk to defy Salt Law — made salt from seawater on April 6, 1930.", function: "Salt was universal — affected every Indian regardless of caste/religion.", cbseNote: "Date: March 12 to April 6, 1930. Distance: 240 miles. Location: Sabarmati → Dandi (Gujarat).", labelOffset: { x: 0, y: 1.5, z: 0 } },
+      { id: "qim", meshName: "Movement_QIM", name: "Quit India Movement (1942)", description: "'Do or Die' — India's most radical demand for immediate independence.", function: "Largest mass uprising in colonial India — showed Britain it could not hold India forever.", cbseNote: "August 8-9, 1942. Slogan: 'Karenge ya marenge'. All leaders jailed immediately.", labelOffset: { x: 2.5, y: 1.0, z: 0 } },
+    ],
+    formulas: [
+      { id: "ncm-formula", name: "Non-Cooperation Movement Key Events", expression: "Jallianwala Bagh (1919) + Khilafat Issue → NCM (1920) → Chauri Chaura (1922) → Suspension", variables: "Gandhi called off NCM after Chauri Chaura violence — absolute commitment to non-violence" },
+      { id: "cdm", name: "Civil Disobedience Triggers", expression: "Salt March (1930) + Boycott of foreign goods + Gandhi-Irwin Pact (1931) → 2nd RTC → CDM Withdrawal (1934)", variables: "Simon Commission (1927) → All-parties conference → Lahore Session (1929) → Poorna Swaraj declared" },
+      { id: "qim", name: "Quit India — Do or Die", expression: "AICC Bombay (Aug 8, 1942) → 'Karenge ya marenge' → Mass arrests → Underground resistance → Independence (1947)", variables: "WW2 context: Britain needed India's cooperation — Gandhi demanded freedom in return" },
+    ],
+    cbseExamNotes: [
+      "Khilafat Movement (1919): Muslims rallied to support the Ottoman Khalifa. Gandhi saw this as an opportunity to unite Hindus and Muslims in the NCM.",
+      "Simon Commission (1927): All-British commission to review India's constitutional progress. Indian anger: 'No Indians on it!' → 'Go back Simon!' protests.",
+      "Poorna Swaraj declared at Lahore Session (December 1929, President: Jawaharlal Nehru). January 26 declared Independence Day — still celebrated as Republic Day.",
+      "Alluri Sitaram Raju led tribal movement in Andhra using non-cooperation ideas but also armed revolt — example of regional variation.",
+      "Dalit participation: Ambedkar vs Gandhi on temple entry and representation — Poona Pact (1932).",
+    ],
+    quiz: [
+      { id: "h2-q1", question: "Gandhi called off the Non-Cooperation Movement in 1922 because of:", options: ["Government crackdown", "Chauri Chaura violence", "Failure to mobilise masses", "Round Table Conference"], correctIndex: 1, explanation: "Chauri Chaura (Feb 5, 1922): a mob attacked and burnt a police station, killing 22 policemen. Gandhi suspended NCM as it violated non-violence." },
+      { id: "h2-q2", question: "The Dandi March covered approximately how many miles?", options: ["120 miles", "180 miles", "240 miles", "300 miles"], correctIndex: 2, explanation: "Gandhi walked 240 miles from Sabarmati Ashram (Ahmedabad) to Dandi (Navsari, Gujarat) from March 12 to April 6, 1930." },
+      { id: "h2-q3", question: "Poorna Swaraj (Complete Independence) was declared at which session of the Congress?", options: ["Calcutta 1920", "Lahore 1929", "Karachi 1931", "Bombay 1942"], correctIndex: 1, explanation: "Lahore Session (December 1929, President: Jawaharlal Nehru) declared Poorna Swaraj and designated January 26 as Independence Day." },
+    ],
+  },
+  {
+    ...SST_HISTORY_SCENE as PhysicsLessonConfig,
+    id: "sst-global-world",
+    chapter: "The Making of a Global World",
+    title: "3D Trade Routes — Making of a Global World (Silk Road to Bretton Woods)",
+    subtitle: "Explore 3D animated trade route arcs from the ancient Silk Road through the Colonial era, WW1 & WW2 disruptions, the Great Depression, and the Bretton Woods system that shaped today's globalised economy.",
+    slug: "/class-10/sst/history/global-world/",
+    proceduralFallbackNote: "Interactive 3D Global Trade Route visualization active.",
+    parameters: { chapterId: "global-world", era: 1900, highlight: 0 },
+    parameterControls: [
+      { key: "era", label: "Historical Era", type: "select", options: [{ value: "1300", label: "Pre-modern — Silk Road & Spice Trade" }, { value: "1600", label: "Colonial Era — European Expansion" }, { value: "1900", label: "Early 20th Century — WW1 Disruption" }, { value: "1929", label: "Great Depression (1929)" }, { value: "1944", label: "Post-WW2 — Bretton Woods System" }], defaultValue: "1900" },
+    ],
+    learningSteps: [
+      { stepNumber: 1, title: "Pre-Modern World — Silk Road & Spice Trade", description: "Long before 1500 CE, the Silk Road connected China to Rome via Central Asia. Indian Ocean trade routes linked Arabia, India, and Southeast Asia. Goods traded: Silk, spices, cotton, precious stones. The search for spice routes led Columbus and Vasco da Gama to new discoveries.", focusObject: "SilkRoad_Arc", simulationParams: { era: 1300 } },
+      { stepNumber: 2, title: "Colonial Era — Conquest, Trade & Slavery (1500–1900)", description: "European colonisation of Americas brought forced labour (slavery/indentured labour), plantation agriculture, and silver/gold back to Europe. Indian textiles, Bengal cotton, and Chinese silk were traded globally. By 1800, cotton from America (picked by enslaved Africans) fed Lancashire mills.", focusObject: "Colonial_Arc", simulationParams: { era: 1600 } },
+      { stepNumber: 3, title: "19th Century Globalisation — Corn Laws & Free Trade", description: "Britain repealed Corn Laws (1846) allowing cheap grain imports from Americas/Australia. Food prices fell, feeding Britain's industrial workers cheaply. Refrigerated ships (1870s) brought meat from Argentina/New Zealand. Capital and labour moved globally — over 50 million emigrated from Europe to Americas/Australia.", focusObject: "Era_1900", simulationParams: { era: 1900 } },
+      { stepNumber: 4, title: "Great Depression (1929–1932)", description: "Wall Street crash (October 1929) triggered global economic collapse. US banks called back loans. World trade fell by 66%. Unemployment: 25% in USA. Britain and USA raised tariffs, hurting global trade. India was deeply affected — exports fell, peasants were ruined.", focusObject: "Depression_Visual", simulationParams: { era: 1929 } },
+      { stepNumber: 5, title: "Bretton Woods System (1944) — World Bank & IMF", description: "Allies met at Bretton Woods, New Hampshire (1944) to plan post-war economic order. Created: IMF (International Monetary Fund) for balance-of-payments support, World Bank for reconstruction. Dollar pegged to gold ($35/oz). This 'Bretton Woods System' governed global finance until 1971.", focusObject: "BrettonWoods", simulationParams: { era: 1944 } },
+    ],
+    objects: [
+      { id: "silk", meshName: "SilkRoad_Arc", name: "Silk Road Trade Arc", description: "Ancient overland/sea trade routes connecting China–India–Arabia–Europe.", function: "Demonstrates pre-modern globalisation through goods, ideas, and disease spread.", cbseNote: "Silk Road spread not just goods but also ideas, religions (Buddhism, Islam), and diseases (Black Death via rats on trading ships).", labelOffset: { x: -2, y: 1.5, z: 0 } },
+      { id: "dep", meshName: "Depression_Visual", name: "Great Depression (1929)", description: "Wall Street crash → global economic collapse → trade collapse → mass unemployment.", function: "Shows how interconnected economies are — crisis in USA devastated India.", cbseNote: "Great Depression is THE most important event: US banks → Europe → colonies. India's exports fell sharply. Peasants ruined by falling agricultural prices.", labelOffset: { x: 0, y: 1.5, z: 0 } },
+      { id: "bw", meshName: "BrettonWoods", name: "Bretton Woods System (1944)", description: "IMF + World Bank created. Dollar = world reserve currency. Fixed exchange rates.", function: "Built the financial architecture of today's globalised world.", cbseNote: "Bretton Woods = fixed exchange rates + IMF (balance of payments) + World Bank (reconstruction). Ended 1971 when Nixon took USD off gold standard.", labelOffset: { x: 2, y: 1.5, z: 0 } },
+    ],
+    formulas: [
+      { id: "trade-flow", name: "Colonial Trade Triangle", expression: "Europe → Manufactures → Colonies → Raw Materials/Food → Europe", variables: "+ Slave trade: Africa → Americas → Sugar/Cotton → Europe (Triangular Trade)" },
+      { id: "depression", name: "Great Depression Chain Reaction", expression: "Wall St Crash (Oct 1929) → US Banks call loans → European banks fail → Trade collapses (-66%) → Mass unemployment", variables: "US unemployment: 25%. World trade fell by 2/3. Tariff wars made it worse." },
+      { id: "bretton", name: "Bretton Woods Architecture", expression: "IMF (Balance of Payments support) + World Bank (Reconstruction loans) + GATT (Free trade) = Post-WW2 economic order", variables: "Dollar pegged to gold at $35/ounce (1944–1971)" },
+    ],
+    cbseExamNotes: [
+      "Corn Laws (UK, 1846): Landlords pressured Parliament to restrict cheap grain imports. Repeal allowed cheap food imports → lower wages for workers → cheaper British industry.",
+      "Indentured labour: Cheap, often exploitative labour contract system replacing slavery. Indians went to Fiji, Mauritius, Trinidad, Guyana.",
+      "G-77 (Group of 77): Developing nations formed this group to demand a 'New International Economic Order' — fairer trade terms. Bretton Woods institutions were seen as dominated by rich nations.",
+    ],
+    quiz: [
+      { id: "h3-q1", question: "The Bretton Woods Conference (1944) established:", options: ["United Nations and NATO", "IMF and World Bank", "GATT and WTO", "Marshall Plan and NATO"], correctIndex: 1, explanation: "Bretton Woods (1944) created the IMF (for balance-of-payments support) and World Bank (for reconstruction). They still function today." },
+      { id: "h3-q2", question: "The Great Depression began with the Wall Street crash in:", options: ["1927", "1929", "1931", "1933"], correctIndex: 1, explanation: "The Wall Street Crash happened on October 24, 1929 ('Black Thursday'). World trade fell by 66% over the next 3 years." },
+      { id: "h3-q3", question: "Corn Laws in Britain were repealed in 1846 to:", options: ["Protect British farmers from cheap imports", "Allow cheap grain imports to feed factory workers", "Tax colonial grain exports", "Create a free trade zone in Europe"], correctIndex: 1, explanation: "Corn Laws repeal (1846) allowed cheap grain from Americas/Australia. This lowered food prices → lower wages needed for workers → cheaper British manufactured goods." },
+    ],
+  },
+  {
+    ...SST_HISTORY_SCENE as PhysicsLessonConfig,
+    id: "sst-industrialisation",
+    chapter: "The Age of Industrialisation",
+    title: "3D Factory — Age of Industrialisation (Proto to Factory Era)",
+    subtitle: "Walk through a 3D Industrial Revolution factory: spinning jenny, power loom, Bessemer steel, and India's cotton mills. Compare proto-industrialisation with factory production. See how colonialism shaped India's de-industrialisation.",
+    slug: "/class-10/sst/history/industrialisation/",
+    proceduralFallbackNote: "Interactive 3D Industrial Revolution Factory active.",
+    parameters: { chapterId: "industrialisation", era: 1850, highlight: 0 },
+    parameterControls: [
+      { key: "era", label: "Era of Industrialisation", type: "select", options: [{ value: "1760", label: "Proto-Industrialisation (pre-factories, 1600-1760)" }, { value: "1800", label: "Early Factory System (Steam, 1760-1830)" }, { value: "1850", label: "Mid-Victorian Industrial Boom (1830-1880)" }, { value: "1880", label: "India's Cotton & Jute Mills (1880-1900)" }], defaultValue: "1850" },
+    ],
+    learningSteps: [
+      { stepNumber: 1, title: "Proto-Industrialisation — Before Factories", description: "Before factories, production happened in rural cottages (putting-out system). Merchants gave raw materials to peasants who worked at home and returned finished goods. This was flexible, low-cost production. It existed in Britain and India — Indian weavers, metalworkers produced for export.", focusObject: "CottageIndustry", simulationParams: { era: 1760 } },
+      { stepNumber: 2, title: "Steam Power & the Factory System (1760s–1830s)", description: "James Watt's improved steam engine (1781) powered factories. Spinning jenny (Hargreaves, 1764), Water frame (Arkwright, 1769), Power loom (Cartwright, 1786) mechanised textile production. Workers moved from cottages to factories. 'Dark Satanic Mills' — Blake's poem about grim factory conditions.", focusObject: "SteamEngine", simulationParams: { era: 1800 } },
+      { stepNumber: 3, title: "India's Textile Industry vs British Competition", description: "Before 1750, India was the world's largest exporter of fine cotton textiles (Muslin of Dhaka, Calicoes of Calicut). British imposed heavy tariffs on Indian textiles while flooding India with cheap machine-made cloth. Result: India's handloom weavers were ruined — de-industrialisation.", focusObject: "IndiaWeaver", simulationParams: { era: 1850 } },
+      { stepNumber: 4, title: "India's Mills — Bombay & Calcutta (1850s–1900)", description: "India's first cotton mill: Bombay (1854, Cowasji Nanabhai Davar). Jute mills: Calcutta (Rishra, 1855). By 1900: 84 cotton mills in Bombay alone. Indian mills competed with Britain by focusing on coarse yarn (not fine counts). Marwari and Gujarati businessmen funded mills.", focusObject: "IndiaMill", simulationParams: { era: 1880 } },
+    ],
+    objects: [
+      { id: "factory", meshName: "SteamEngine", name: "Steam Engine & Factory", description: "James Watt's improved steam engine (1781) powered the Industrial Revolution.", function: "Mechanised production, replacing water/wind/human power with steam.", cbseNote: "Watt improved Newcomen's steam engine. First used for pumping water from mines, then for factories.", labelOffset: { x: 1.5, y: 1.5, z: 0 } },
+      { id: "weaver", meshName: "IndiaWeaver", name: "Indian Handloom Weaver", description: "Indian weavers produced fine textiles (Muslin, Calico) for global markets before industrialisation.", function: "Represents India's pre-industrial manufacturing dominance and subsequent decline.", cbseNote: "Dhaka Muslin was so fine it was called 'woven air'. After British competition, Dhaka's population fell from 150,000 to 30,000 by 1830s.", labelOffset: { x: -1.5, y: 1.0, z: 0 } },
+      { id: "mill", meshName: "IndiaMill", name: "Bombay Cotton Mill (1854)", description: "India's first cotton mill — Cowasji Nanabhai Davar, Bombay, 1854.", function: "Beginning of India's industrial capitalism. Coarse yarn competed with Lancashire.", cbseNote: "First jute mill: Rishra, near Calcutta, 1855. Indian mills used Indian raw cotton/jute; employed Indian labour.", labelOffset: { x: 0, y: 1.5, z: 0 } },
+    ],
+    formulas: [
+      { id: "proto", name: "Proto-Industrialisation Chain", expression: "Rural artisans + Merchant capital + Putting-out system = Pre-factory production (1600–1760)", variables: "Flexible, no fixed costs, exploited cheap rural labour; existed globally including India" },
+      { id: "deindustrialise", name: "India's De-industrialisation", expression: "British machine cloth (cheap) + Heavy tariffs on Indian textiles → Ruin of Indian weavers (1800–1850)", variables: "Before: India = 25% world exports. After: India = raw material exporter only" },
+    ],
+    cbseExamNotes: [
+      "E.J. Hobsbawm: 'Industry of England is the Workshop of the World' — but only by mid-19th century, not from start.",
+      "Gomasthas: agents employed by merchants to supervise weavers in India's proto-industrial system.",
+      "EIC monopoly on trade → Indian weavers had no freedom to sell to others → prices suppressed.",
+      "Flywheel metaphor: factories needed constant machinery running (fixed costs) → couldn't match flexibility of cottage workers.",
+    ],
+    quiz: [
+      { id: "h4-q1", question: "India's first cotton mill was set up in:", options: ["Calcutta 1850", "Bombay 1854", "Surat 1860", "Ahmedabad 1870"], correctIndex: 1, explanation: "India's first cotton mill was established in Bombay (Mumbai) in 1854 by Cowasji Nanabhai Davar." },
+      { id: "h4-q2", question: "The 'putting-out system' in proto-industrialisation means:", options: ["Factory workers putting out fires", "Merchants distributing raw materials to rural artisans for home production", "Unions putting pressure on factory owners", "Export of manufactured goods"], correctIndex: 1, explanation: "Putting-out system: Merchants supplied raw materials to rural households; collected finished goods. This was proto-industrialisation — before the factory system." },
+    ],
+  },
+  {
+    ...SST_HISTORY_SCENE as PhysicsLessonConfig,
+    id: "sst-print-culture",
+    chapter: "Print Culture and the Modern World",
+    title: "3D Printing Press — Print Culture & the Modern World",
+    subtitle: "See how Gutenberg's printing press (1448) revolutionised Europe, trace print culture from Chinese woodblock printing to Indian newspapers, and explore how print created new reading publics, religious reform, and nationalism.",
+    slug: "/class-10/sst/history/print-culture/",
+    proceduralFallbackNote: "Interactive 3D Printing Press active.",
+    parameters: { chapterId: "print-culture", era: 1450, highlight: 0 },
+    parameterControls: [
+      { key: "era", label: "Era of Print", type: "select", options: [{ value: "868", label: "868 CE — Diamond Sutra, China (woodblock)" }, { value: "1448", label: "1448 — Gutenberg's Movable Type Press" }, { value: "1517", label: "1517 — Martin Luther & Protestant Reformation" }, { value: "1780", label: "1780 — Bengal Gazette, India's first newspaper" }, { value: "1860", label: "19th C — Print & Nationalism in India" }], defaultValue: "1448" },
+    ],
+    learningSteps: [
+      { stepNumber: 1, title: "China — Birthplace of Print (868 CE)", description: "China invented printing 1,000 years before Gutenberg! Diamond Sutra (868 CE) is world's oldest printed book. China used woodblock printing. By 1200 CE, millions of books circulated in China. Marco Polo brought print knowledge to Europe. China also invented paper (105 CE, Cai Lun).", focusObject: "WoodblockPress", simulationParams: { era: 868 } },
+      { stepNumber: 2, title: "Gutenberg's Printing Press (1448)", description: "Johann Gutenberg of Mainz invented movable type printing press ~1448. First book: The Bible (180 copies, 1455). Within 50 years: 20 million books printed in Europe. Print 'democratised' knowledge — no longer only for monks/elite. Gutenberg used wine press technology + metal alloy type.", focusObject: "GutenbergPress", simulationParams: { era: 1448 } },
+      { stepNumber: 3, title: "Print & Protestant Reformation (1517)", description: "Martin Luther's 95 Theses (1517) against Church corruption spread via print across Germany within 2 weeks. Luther said print is 'God's gift'. Catholic Church tried but failed to suppress Protestant ideas via print. Print enabled vernacular languages — German, French — to replace Latin.", focusObject: "LutherText", simulationParams: { era: 1517 } },
+      { stepNumber: 4, title: "India's Print Culture — Bengal Gazette (1780)", description: "James Augustus Hicky published India's first newspaper 'Bengal Gazette' (1780) — witty, scandalous, anti-British. Indian-language newspapers: 1816 Samachar Darpan (Bengali), Bal Gangadhar Tilak's Kesari (Marathi, 1881). Print enabled social reform debates — sati abolition, widow remarriage, caste reform.", focusObject: "IndianPress", simulationParams: { era: 1780 } },
+    ],
+    objects: [
+      { id: "gutenberg", meshName: "GutenbergPress", name: "Gutenberg's Printing Press (1448)", description: "Movable metal type press invented in Mainz, Germany. First printed 180 Bibles.", function: "Democratised knowledge — made books affordable and widely available.", cbseNote: "Gutenberg used: 1) Olive/wine press technology 2) Soft metal alloy type 3) Oil-based ink. Each letter carved separately and rearranged.", labelOffset: { x: -1.5, y: 1.5, z: 0 } },
+      { id: "luther", meshName: "LutherText", name: "Luther's 95 Theses (1517)", description: "Martin Luther's challenge to Catholic Church — spread via print across Europe.", function: "Print enabled Protestant Reformation — broke Church's monopoly on knowledge.", cbseNote: "Luther said: 'Print is the best of God's gifts.' Menocchio (Italian miller) read banned books — shows how print enabled independent thought.", labelOffset: { x: 0, y: 1.5, z: 0 } },
+      { id: "india-press", meshName: "IndianPress", name: "Bengal Gazette (1780) & Indian Press", description: "James Hicky's Bengal Gazette — first English newspaper in India (Calcutta, 1780).", function: "Indian-language newspapers spread reform, nationalism, and mass literacy.", cbseNote: "Bal Gangadhar Tilak's Kesari (1881) used print to mobilise anti-colonial sentiment. 'Swaraj is my birthright' became rallying cry.", labelOffset: { x: 1.5, y: 1.5, z: 0 } },
+    ],
+    formulas: [
+      { id: "print-chain", name: "Print → Social Change Chain", expression: "Cheap Print → Mass Literacy → Public Opinion → Social Reform / Nationalism / Revolution", variables: "French: 'libelles' (pamphlets) attacked Queen Marie Antoinette → Revolution; India: Kesari → NCM" },
+      { id: "gutenberg-math", name: "Print Scale-up", expression: "Handwritten books: ~50/year per scribe → Gutenberg press: 180 Bibles in months → By 1500: 20 million books in Europe", variables: "50x speed, 1000x scale — cost of books fell 80% within 50 years" },
+    ],
+    cbseExamNotes: [
+      "Diamond Sutra (868 CE, China) — world's oldest printed book. Woodblock printing, not movable type.",
+      "Gutenberg Bible (1455): 180 copies of 2-volume Latin Bible. Took 3 years to print — still much faster than hand-copying.",
+      "Penny magazines, Cheap Repository Tracts: Britain's mass-market print for working class (19th C). Created 'reading fever'.",
+      "Menocchio (Italian miller): Read printed books, developed his own cosmology. Tried twice by Inquisition — example of print enabling independent thought.",
+      "Indian social reformers used vernacular print: Raja Ram Mohan Roy (sati reform), Jyotiba Phule (caste oppression).",
+    ],
+    quiz: [
+      { id: "h5-q1", question: "The world's oldest printed book is:", options: ["Gutenberg Bible (1455)", "Diamond Sutra (868 CE)", "Martin Luther's 95 Theses (1517)", "Bengal Gazette (1780)"], correctIndex: 1, explanation: "Diamond Sutra (868 CE, China) is the world's oldest printed book — using woodblock printing, not movable type." },
+      { id: "h5-q2", question: "James Augustus Hicky published India's first newspaper in:", options: ["1757", "1765", "1780", "1800"], correctIndex: 2, explanation: "Bengal Gazette was published by James Augustus Hicky in Calcutta in 1780 — India's first newspaper, described as 'a weekly political and commercial paper open to all parties but influenced by none'." },
+    ],
+  },
+];

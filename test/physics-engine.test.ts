@@ -7,7 +7,7 @@ import { calculateMagneticField } from "../frontend/src/physics-engine/calculati
 import { calculatePhProperties, getCarbonMoleculeInfo, getChemicalReactionInfo } from "../frontend/src/physics-engine/calculations/chemistry/chemistry";
 import { calculateCardiacMetrics, calculateMendelianCross, calculateTrophicEnergy } from "../frontend/src/physics-engine/calculations/biology/biology";
 import { calculateArithmeticProgression, calculateCoordinateGeometry, calculateHcfLcm, calculateQuadratic, calculateTrigonometry } from "../frontend/src/physics-engine/calculations/maths/maths";
-import { getAllBiologyLessons, getAllChemistryLessons, getAllMathsLessons, getAllPhysicsLessons, getPhysicsLesson } from "../frontend/src/physics-engine/registry/LessonRegistry";
+import { getAllBiologyLessons, getAllChemistryLessons, getAllMathsLessons, getAllPhysicsLessons, getAllSstLessons, getAllHistoryLessons, getAllGeographyLessons, getAllCivicsLessons, getAllEconomicsLessons, getPhysicsLesson } from "../frontend/src/physics-engine/registry/LessonRegistry";
 
 describe("Optics Mirror Calculations (Cartesian Sign Convention)", () => {
   test("Convex mirror with real object always forms virtual, erect, diminished image between P and F", () => {
@@ -266,16 +266,32 @@ describe("Mathematics Calculations", () => {
 });
 
 describe("LessonRegistry", () => {
-  test("Contains all 10 Physics, 6 Chemistry, 5 Biology, and 14 Maths 3D lessons", () => {
+  test("Contains all 10 Physics, 6 Chemistry, 5 Biology, 14 Maths, and 25 SST 3D lessons", () => {
     const physics = getAllPhysicsLessons();
     const chemistry = getAllChemistryLessons();
     const biology = getAllBiologyLessons();
     const maths = getAllMathsLessons();
+    const sst = getAllSstLessons();
+    const history = getAllHistoryLessons();
+    const geography = getAllGeographyLessons();
+    const civics = getAllCivicsLessons();
+    const economics = getAllEconomicsLessons();
+
     expect(physics.length).toBe(10);
     expect(chemistry.length).toBe(6);
     expect(biology.length).toBe(5);
     expect(maths.length).toBe(14);
+    expect(sst.length).toBe(25);
+    expect(history.length).toBe(5);
+    expect(geography.length).toBe(7);
+    expect(civics.length).toBe(8);
+    expect(economics.length).toBe(5);
+
     expect(getPhysicsLesson("maths-real-numbers")?.simulation).toBe("maths-number-ap");
     expect(getPhysicsLesson("maths-probability")?.simulation).toBe("maths-mensuration-data");
+    expect(getPhysicsLesson("sst-nationalism-europe")?.simulation).toBe("sst-history");
+    expect(getPhysicsLesson("sst-resources-development")?.simulation).toBe("sst-geography");
+    expect(getPhysicsLesson("sst-power-sharing")?.simulation).toBe("sst-civics");
+    expect(getPhysicsLesson("sst-development")?.simulation).toBe("sst-economics");
   });
 });
