@@ -1,0 +1,12 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import PhysicsViewer from "../../../../components/physics3d/PhysicsViewer.astro";
+import { concaveLensLesson } from "../../../../data/physics/concave-lens";
+---
+
+<Layout
+  title={`${concaveLensLesson.title} | Class 10 3D Physics | BoardWallah`}
+  description={concaveLensLesson.subtitle}
+>
+  <PhysicsViewer lesson={concaveLensLesson} />
+</Layout>

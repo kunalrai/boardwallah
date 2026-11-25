@@ -30,11 +30,20 @@ export class AnatomySimulation implements Simulation {
   private impulsePulses: { points: THREE.Vector3[]; mesh: THREE.Mesh }[] = [];
   private rayPhotons: { points: THREE.Vector3[]; mesh: THREE.Mesh }[] = [];
 
-  private params = {
+  private params: {
+    crossSection: boolean;
+    showLightPath: boolean;
+    accommodationFocus: number;
+    activeClip: string;
+    eyeDefect: "normal" | "myopia" | "hypermetropia";
+    correctiveLens: boolean;
+  } = {
     crossSection: true,
     showLightPath: true,
     accommodationFocus: 1.0,
     activeClip: "overview",
+    eyeDefect: "normal",
+    correctiveLens: false,
   };
   private initialParams = { ...this.params };
   private animProgress = 0;
@@ -66,6 +75,16 @@ export class AnatomySimulation implements Simulation {
     }
     if (typeof params.accommodationFocus === "number") {
       this.params.accommodationFocus = Math.max(0.5, Math.min(1.5, params.accommodationFocus));
+    }
+    if (
+      params.eyeDefect === "normal" ||
+      params.eyeDefect === "myopia" ||
+      params.eyeDefect === "hypermetropia"
+    ) {
+      this.params.eyeDefect = params.eyeDefect;
+    }
+    if (typeof params.correctiveLens === "boolean") {
+      this.params.correctiveLens = params.correctiveLens;
     }
     if (typeof params.__activeClip === "string") {
       this.params.activeClip = params.__activeClip;
@@ -309,18 +328,44 @@ export class AnatomySimulation implements Simulation {
 
     if (!this.params.showLightPath) return;
 
-    // Incoming parallel light rays from distant object -> Cornea -> EyeLens -> converge on Retina (x ≈ +1.82)
+    // Determine convergence x-coordinate based on eyeDefect & correctiveLens
+    let focusX = 1.82; // On retina
+    if (!this.params.correctiveLens) {
+      if (this.params.eyeDefect === "myopia") focusX = 0.85; // In front of retina
+      else if (this.params.eyeDefect === "hypermetropia") focusX = 2.45; // Behind retina
+    }
+
+    // Optional spectacle corrective lens in front of cornea (x = -3.1)
+    if (this.params.correctiveLens && this.params.eyeDefect !== "normal") {
+      const specGeo = new THREE.CylinderGeometry(0.85, 0.85, 0.14, 24);
+      specGeo.rotateZ(Math.PI / 2);
+      const specMat = new THREE.MeshPhysicalMaterial({
+        color: this.params.eyeDefect === "myopia" ? 0x38bdf8 : 0x34d399,
+        transparent: true,
+        opacity: 0.55,
+        roughness: 0.1,
+      });
+      const specMesh = new THREE.Mesh(specGeo, specMat);
+      specMesh.name = "CorrectiveLens";
+      specMesh.position.set(-3.1, 0, 0);
+      this.lightRaysGroup.add(specMesh);
+    }
+
+    // Incoming light rays -> optional spectacle -> Cornea -> EyeLens -> convergence at focusX
+    const startY = this.params.eyeDefect === "hypermetropia" && !this.params.correctiveLens ? 0.18 : 0.55;
     const upperRay = [
-      new THREE.Vector3(-4.4, 0.55, 0),
+      new THREE.Vector3(-4.4, startY, 0),
+      new THREE.Vector3(-3.1, this.params.correctiveLens && this.params.eyeDefect === "myopia" ? 0.52 : 0.55, 0),
       new THREE.Vector3(-2.1, 0.52, 0),
       new THREE.Vector3(-1.05, 0.36, 0),
-      new THREE.Vector3(1.82, -0.25, 0), // inverted image point on retina
+      new THREE.Vector3(focusX, 0, 0),
     ];
     const lowerRay = [
-      new THREE.Vector3(-4.4, -0.55, 0),
+      new THREE.Vector3(-4.4, -startY, 0),
+      new THREE.Vector3(-3.1, this.params.correctiveLens && this.params.eyeDefect === "myopia" ? -0.52 : -0.55, 0),
       new THREE.Vector3(-2.1, -0.52, 0),
       new THREE.Vector3(-1.05, -0.36, 0),
-      new THREE.Vector3(1.82, 0.25, 0),
+      new THREE.Vector3(focusX, 0, 0),
     ];
     const centralRay = [
       new THREE.Vector3(-4.4, 0, 0),
@@ -371,18 +416,41 @@ export class AnatomySimulation implements Simulation {
   }
 
   getResults(): SimulationResult {
+    const defectLabel =
+      this.params.eyeDefect === "myopia"
+        ? "Myopia (Near-sightedness)"
+        : this.params.eyeDefect === "hypermetropia"
+          ? "Hypermetropia (Far-sightedness)"
+          : "Normal Emmetropic Eye";
+    const focusLocation =
+      this.params.eyeDefect === "normal" || this.params.correctiveLens
+        ? "On Retina (Sharp Vision)"
+        : this.params.eyeDefect === "myopia"
+          ? "In Front of Retina (Blurred Distant Vision)"
+          : "Behind Retina (Blurred Near Vision)";
+
     return {
       metrics: {
+        "Vision State": defectLabel,
+        "Focal Point": focusLocation,
+        "Corrective Spectacle":
+          this.params.eyeDefect === "normal"
+            ? "None Required"
+            : this.params.correctiveLens
+              ? this.params.eyeDefect === "myopia"
+                ? "Concave Lens (Diverging, -D)"
+                : "Convex Lens (Converging, +D)"
+              : "Uncorrected",
         "Image on Retina": "Real & Inverted",
-        "Refracting Media": "Cornea + Aqueous + Eye Lens",
         "View Mode": this.params.crossSection ? "Cross-Section Cutaway" : "Complete Eyeball",
-        "Lens Power State": this.params.accommodationFocus > 1.1 ? "High (Near Focus)" : "Relaxed (Distant Focus)",
-        "Signal Pathway": "Retina → Optic Nerve → Brain",
       },
-      summary: "Light refracts at the cornea and crystalline lens to form a real, inverted image on the retina.",
+      summary: `${defectLabel} • Focus: ${focusLocation}`,
       observations: [
-        "Most refraction occurs at the outer surface of the cornea.",
-        "Ciliary muscles adjust lens curvature (power of accommodation) so light focuses cleanly on the retina.",
+        this.params.eyeDefect === "myopia"
+          ? "Myopia occurs due to excessive curvature of the eye lens or elongation of the eyeball; corrected with a concave lens."
+          : this.params.eyeDefect === "hypermetropia"
+            ? "Hypermetropia occurs when focal length is too long or eyeball is too small; corrected with a convex lens."
+            : "Most refraction occurs at the outer surface of the cornea; ciliary muscles fine-tune focus on the retina.",
         "Photoreceptor rods & cones convert light into electrical signals carried by the optic nerve.",
       ],
     };

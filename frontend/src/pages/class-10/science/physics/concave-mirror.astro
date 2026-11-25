@@ -1,0 +1,12 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import PhysicsViewer from "../../../../components/physics3d/PhysicsViewer.astro";
+import { concaveMirrorLesson } from "../../../../data/physics/concave-mirror";
+---
+
+<Layout
+  title={`${concaveMirrorLesson.title} | Class 10 3D Physics | BoardWallah`}
+  description={concaveMirrorLesson.subtitle}
+>
+  <PhysicsViewer lesson={concaveMirrorLesson} />
+</Layout>

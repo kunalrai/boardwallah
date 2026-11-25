@@ -1,6 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import { calculateMirrorOptics } from "../frontend/src/physics-engine/calculations/optics/mirror";
 import { calculateLensOptics } from "../frontend/src/physics-engine/calculations/optics/lens";
+import { calculateGlassSlabRefraction, calculatePrismDispersion } from "../frontend/src/physics-engine/calculations/optics/refraction";
+import { calculateCircuit } from "../frontend/src/physics-engine/calculations/electricity/circuit";
+import { calculateMagneticField } from "../frontend/src/physics-engine/calculations/magnetism/magnetic-field";
 import { getAllPhysicsLessons, getPhysicsLesson } from "../frontend/src/physics-engine/registry/LessonRegistry";
 
 describe("Optics Mirror Calculations (Cartesian Sign Convention)", () => {
@@ -115,12 +118,96 @@ describe("Optics Lens Calculations (Cartesian Sign Convention)", () => {
   });
 });
 
+describe("Refraction & Prism Calculations", () => {
+  test("Glass slab obeys Snell's law and angle of emergence equals incidence", () => {
+    const res = calculateGlassSlabRefraction({
+      angleOfIncidenceDeg: 45,
+      refractiveIndex: 1.5,
+      thicknessCm: 4,
+    });
+    expect(res.angleEmergenceDeg).toBe(45);
+    expect(res.angleRefractionDeg).toBeCloseTo(28.13, 1);
+    expect(res.lateralDisplacementCm).toBeGreaterThan(1.0);
+  });
+
+  test("Prism dispersion deviates Violet more than Red", () => {
+    const bands = calculatePrismDispersion({
+      angleOfIncidenceDeg: 42,
+      prismAngleDeg: 60,
+      baseRefractiveIndex: 1.52,
+      dispersionStrength: 1.8,
+    });
+    expect(bands.length).toBe(7);
+    const red = bands[0];
+    const violet = bands[bands.length - 1];
+    expect(red.colorName).toBe("Red");
+    expect(violet.colorName).toBe("Violet");
+    expect(violet.deviationDeg).toBeGreaterThan(red.deviationDeg);
+  });
+});
+
+describe("Electricity & Magnetism Calculations", () => {
+  test("Series and Parallel circuit calculations are physically consistent", () => {
+    const series = calculateCircuit({
+      voltageV: 12,
+      resistor1Ohm: 4,
+      resistor2Ohm: 6,
+      resistorCount: 2,
+      topology: "series",
+      switchClosed: true,
+    });
+    expect(series.equivalentResistanceOhm).toBe(10);
+    expect(series.totalCurrentA).toBe(1.2);
+    expect(series.powerWatts).toBe(14.4);
+
+    const parallel = calculateCircuit({
+      voltageV: 12,
+      resistor1Ohm: 4,
+      resistor2Ohm: 6,
+      resistorCount: 2,
+      topology: "parallel",
+      switchClosed: true,
+    });
+    expect(parallel.equivalentResistanceOhm).toBe(2.4);
+    expect(parallel.totalCurrentA).toBe(5);
+    expect(parallel.branchCurrentsA).toEqual([3, 2]);
+  });
+
+  test("Open switch yields 0 current and 0 power", () => {
+    const open = calculateCircuit({
+      voltageV: 12,
+      resistor1Ohm: 4,
+      resistor2Ohm: 6,
+      resistorCount: 2,
+      topology: "series",
+      switchClosed: false,
+    });
+    expect(open.totalCurrentA).toBe(0);
+    expect(open.powerWatts).toBe(0);
+  });
+
+  test("Magnetic field reverses direction on negative current", () => {
+    const pos = calculateMagneticField({ mode: "straight-wire", currentA: 5 });
+    const neg = calculateMagneticField({ mode: "straight-wire", currentA: -5 });
+    expect(pos.relativeFieldStrength).toBe(neg.relativeFieldStrength);
+    expect(pos.fieldDirectionDescription).toContain("Counter-clockwise");
+    expect(neg.fieldDirectionDescription).toContain("Clockwise");
+  });
+});
+
 describe("LessonRegistry", () => {
-  test("Contains all three initial demonstration lessons", () => {
+  test("Contains all 10 CBSE Class 10 3D Physics lessons", () => {
     const all = getAllPhysicsLessons();
-    expect(all.length).toBe(3);
+    expect(all.length).toBe(10);
     expect(getPhysicsLesson("human-eye")?.simulation).toBe("anatomy");
+    expect(getPhysicsLesson("eye-defects")?.simulation).toBe("anatomy");
     expect(getPhysicsLesson("convex-mirror")?.simulation).toBe("mirror");
+    expect(getPhysicsLesson("concave-mirror")?.simulation).toBe("mirror");
     expect(getPhysicsLesson("convex-lens")?.simulation).toBe("lens");
+    expect(getPhysicsLesson("concave-lens")?.simulation).toBe("lens");
+    expect(getPhysicsLesson("glass-slab")?.simulation).toBe("refraction");
+    expect(getPhysicsLesson("prism-dispersion")?.simulation).toBe("prism");
+    expect(getPhysicsLesson("electricity")?.simulation).toBe("electricity");
+    expect(getPhysicsLesson("magnetism")?.simulation).toBe("magnetism");
   });
 });

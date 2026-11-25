@@ -1,0 +1,12 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import PhysicsViewer from "../../../../components/physics3d/PhysicsViewer.astro";
+import { electricityLesson } from "../../../../data/physics/electricity";
+---
+
+<Layout
+  title={`${electricityLesson.title} | Class 10 3D Physics | BoardWallah`}
+  description={electricityLesson.subtitle}
+>
+  <PhysicsViewer lesson={electricityLesson} />
+</Layout>
