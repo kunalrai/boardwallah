@@ -1,0 +1,61 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import { getAllBiologyLessons } from "../../../../physics-engine/registry/LessonRegistry";
+
+const lessons = getAllBiologyLessons();
+---
+
+<Layout
+  title="CBSE Class 10 Interactive 3D Biology Lab | BoardWallah"
+  description="Explore interactive 3D CBSE Class 10 Biology simulations: Human Heart & Double Circulation, Motor Neuron, Flower Pollination, DNA & Heredity, and Trophic Energy Pyramid."
+>
+  <div class="wrap p3d-hub-wrap">
+    <nav class="small breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/subjects/">Subjects</a> / <span aria-current="page">3D Biology Lab</span>
+    </nav>
+
+    <header class="p3d-hub-hero">
+      <span class="p3d-hub-kicker">BoardWallah 3D Biology Lab</span>
+      <h1>CBSE Class 10 Interactive 3D Biology Lab</h1>
+      <p>
+        Explore the beating 4-chamber Human Heart, Neuron action potentials, Flower double fertilization, DNA &amp; Mendelian crosses, and the 10% Energy Pyramid.
+      </p>
+    </header>
+
+    <div class="p3d-lesson-grid">
+      {lessons.map((lesson) => (
+        <article class="p3d-lesson-card">
+          <div class="p3d-card-meta">
+            <span class="p3d-card-chapter">{lesson.chapter}</span>
+          </div>
+          <h2>{lesson.title}</h2>
+          <p>{lesson.subtitle}</p>
+          <div class="p3d-card-tags">
+            <span>{lesson.objects.length} Interactive Parts</span>
+            <span>{lesson.learningSteps.length} Guided Steps</span>
+            <span>{lesson.quiz.length}-Q Quiz</span>
+          </div>
+          <a href={lesson.slug} class="button primary p3d-launch-btn">
+            Launch 3D Lab &rarr;
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .p3d-hub-wrap { padding-top: 1.5rem; padding-bottom: 3rem; }
+  .p3d-hub-hero { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 1.5rem; margin: 1rem 0 1.5rem; }
+  .p3d-hub-kicker { display: inline-block; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #7c3aed; background: #f5f3ff; padding: 0.25rem 0.65rem; border-radius: 999px; margin-bottom: 0.6rem; }
+  .p3d-hub-hero h1 { margin: 0 0 0.45rem; font-size: clamp(1.6rem, 3.2vw, 2.25rem); }
+  .p3d-hub-hero p { margin: 0; color: #475569; max-width: 68ch; }
+  .p3d-lesson-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.1rem; }
+  .p3d-lesson-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.65rem; box-shadow: 0 3px 14px rgba(15, 23, 42, 0.04); }
+  .p3d-card-chapter { font-size: 0.75rem; font-weight: 600; color: #7c3aed; background: #f5f3ff; padding: 0.2rem 0.6rem; border-radius: 999px; }
+  .p3d-lesson-card h2 { margin: 0; font-size: 1.15rem; color: #0f172a; }
+  .p3d-lesson-card p { margin: 0; font-size: 0.88rem; color: #475569; flex: 1; }
+  .p3d-card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; font-size: 0.74rem; font-weight: 600; color: #1e293b; }
+  .p3d-card-tags span { background: #f1f5f9; padding: 0.2rem 0.55rem; border-radius: 6px; }
+  .p3d-launch-btn { text-align: center; text-decoration: none; margin-top: 0.25rem; }
+</style>

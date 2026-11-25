@@ -5,7 +5,8 @@ import { calculateGlassSlabRefraction, calculatePrismDispersion } from "../front
 import { calculateCircuit } from "../frontend/src/physics-engine/calculations/electricity/circuit";
 import { calculateMagneticField } from "../frontend/src/physics-engine/calculations/magnetism/magnetic-field";
 import { calculatePhProperties, getCarbonMoleculeInfo, getChemicalReactionInfo } from "../frontend/src/physics-engine/calculations/chemistry/chemistry";
-import { getAllChemistryLessons, getAllPhysicsLessons, getPhysicsLesson } from "../frontend/src/physics-engine/registry/LessonRegistry";
+import { calculateCardiacMetrics, calculateMendelianCross, calculateTrophicEnergy } from "../frontend/src/physics-engine/calculations/biology/biology";
+import { getAllBiologyLessons, getAllChemistryLessons, getAllPhysicsLessons, getPhysicsLesson } from "../frontend/src/physics-engine/registry/LessonRegistry";
 
 describe("Optics Mirror Calculations (Cartesian Sign Convention)", () => {
   test("Convex mirror with real object always forms virtual, erect, diminished image between P and F", () => {
@@ -221,15 +222,36 @@ describe("Chemistry Calculations", () => {
   });
 });
 
+describe("Biology Calculations", () => {
+  test("Cardiac output, Mendelian F2 3:1 ratio, and 10% energy law are accurate", () => {
+    const heart = calculateCardiacMetrics(72);
+    expect(heart.cardiacOutputLMin).toBeCloseTo(5.04, 2);
+
+    const f2 = calculateMendelianCross("Tt-Tt");
+    expect(f2.tallCount).toBe(3);
+    expect(f2.dwarfCount).toBe(1);
+    expect(f2.genotypicRatio).toBe("1 TT : 2 Tt : 1 tt");
+
+    const eco = calculateTrophicEnergy(100000);
+    expect(eco.producersJ).toBe(1000);
+    expect(eco.primaryConsumersJ).toBe(100);
+    expect(eco.secondaryConsumersJ).toBe(10);
+    expect(eco.tertiaryConsumersJ).toBe(1);
+  });
+});
+
 describe("LessonRegistry", () => {
-  test("Contains all 10 Physics and 4 Chemistry 3D lessons", () => {
+  test("Contains all 10 Physics, 4 Chemistry, and 5 Biology 3D lessons", () => {
     const physics = getAllPhysicsLessons();
     const chemistry = getAllChemistryLessons();
+    const biology = getAllBiologyLessons();
     expect(physics.length).toBe(10);
     expect(chemistry.length).toBe(4);
-    expect(getPhysicsLesson("chemical-reactions")?.simulation).toBe("chemistry-reaction");
-    expect(getPhysicsLesson("acids-bases-salts")?.simulation).toBe("chemistry-ph");
-    expect(getPhysicsLesson("metals-non-metals")?.simulation).toBe("chemistry-ionic");
-    expect(getPhysicsLesson("carbon-compounds")?.simulation).toBe("chemistry-molecule");
+    expect(biology.length).toBe(5);
+    expect(getPhysicsLesson("life-processes")?.simulation).toBe("biology-heart");
+    expect(getPhysicsLesson("control-and-coordination")?.simulation).toBe("biology-neuron");
+    expect(getPhysicsLesson("reproduction")?.simulation).toBe("biology-flower");
+    expect(getPhysicsLesson("heredity")?.simulation).toBe("biology-heredity");
+    expect(getPhysicsLesson("our-environment")?.simulation).toBe("biology-ecosystem");
   });
 });

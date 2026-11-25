@@ -10,6 +10,11 @@ import { ChemicalReactionSimulation } from "../simulations/chemistry/ChemicalRea
 import { PhLabSimulation } from "../simulations/chemistry/PhLabSimulation";
 import { IonicBondSimulation } from "../simulations/chemistry/IonicBondSimulation";
 import { CarbonMoleculeSimulation } from "../simulations/chemistry/CarbonMoleculeSimulation";
+import { HeartCirculationSimulation } from "../simulations/biology/HeartCirculationSimulation";
+import { NeuronSimulation } from "../simulations/biology/NeuronSimulation";
+import { FlowerReproductionSimulation } from "../simulations/biology/FlowerReproductionSimulation";
+import { HeredityGeneticsSimulation } from "../simulations/biology/HeredityGeneticsSimulation";
+import { EcosystemPyramidSimulation } from "../simulations/biology/EcosystemPyramidSimulation";
 
 let registered = false;
 
@@ -30,5 +35,10 @@ export function registerDefaultSimulations(): void {
   simulationRegistry.register("chemistry-ph", PhLabSimulation);
   simulationRegistry.register("chemistry-ionic", IonicBondSimulation);
   simulationRegistry.register("chemistry-molecule", CarbonMoleculeSimulation);
+  simulationRegistry.register("biology-heart", HeartCirculationSimulation);
+  simulationRegistry.register("biology-neuron", NeuronSimulation);
+  simulationRegistry.register("biology-flower", FlowerReproductionSimulation);
+  simulationRegistry.register("biology-heredity", HeredityGeneticsSimulation);
+  simulationRegistry.register("biology-ecosystem", EcosystemPyramidSimulation);
   registered = true;
 }
