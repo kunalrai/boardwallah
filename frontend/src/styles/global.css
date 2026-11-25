@@ -307,6 +307,50 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* 3D Physics, Science & SST Viewport Label Badges */
+body:not(.app-mode) button.bw-p3d-label-badge,
+button.bw-p3d-label-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+  height: 22px !important;
+  max-height: 22px !important;
+  padding: 1px 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 18px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(148, 163, 184, 0.75) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12) !important;
+  white-space: nowrap !important;
+  max-width: 130px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.15s !important;
+}
+
+body:not(.app-mode) button.bw-p3d-label-badge:hover,
+button.bw-p3d-label-badge:hover {
+  background: #ffffff !important;
+  border-color: #3b82f6 !important;
+  color: #1d4ed8 !important;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25) !important;
+  transform: translate(-50%, -50%) scale(1.04) !important;
+}
+
+body:not(.app-mode) button.bw-p3d-label-badge.active,
+button.bw-p3d-label-badge.active {
+  background: #2563eb !important;
+  border-color: #1d4ed8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35) !important;
+}
+
 .card {
   background: var(--surface);
   border: 1px solid var(--line);
