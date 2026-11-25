@@ -25,6 +25,8 @@ export interface LessonLearningStep {
   cameraPresetId?: string;
   animationClipId?: string;
   simulationParams?: SimulationParameters;
+  videoUrl?: string;
+  videoCaption?: string;
 }
 
 export interface LessonObjectInfo {

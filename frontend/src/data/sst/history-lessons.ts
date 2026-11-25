@@ -26,6 +26,8 @@ export const historyLessons: PhysicsLessonConfig[] = [
     slug: "/class-10/sst/history/nationalism-europe/",
     model: "/assets/sst/history/french-revolution-paris.glb",
     usesProceduralFallback: false,
+    videoFallback: "/assets/sst/history/french-revolution-bastille.mp4",
+    staticImageFallback: "/assets/sst/history/french-revolution-bastille-poster.jpg",
     sceneConfig: {
       backgroundColor: 0xf5f3ea,
       showGrid: false,
@@ -95,6 +97,8 @@ export const historyLessons: PhysicsLessonConfig[] = [
         focusObject: "Bastille_Fortress",
         cameraPresetId: "bastille",
         simulationParams: { era: 1789, highlight: 4 },
+        videoUrl: "/assets/sst/history/french-revolution-bastille.mp4",
+        videoCaption: "Cinematic Recreation: Citizens' militia storming the Bastille fortress shouting 'À la Bastille ! Pour la liberté !' on 14 July 1789.",
       },
       {
         stepNumber: 5,

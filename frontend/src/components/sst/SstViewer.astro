@@ -95,6 +95,11 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
               <div class="step-text">
                 <strong>{step.title}</strong>
                 <p>{step.description.slice(0, 95)}...</p>
+                {step.videoUrl && (
+                  <span class="step-video-badge" data-trigger-video data-video-step={idx} title="Watch Bastille Storming Video">
+                    🎬 Watch Video
+                  </span>
+                )}
               </div>
             </button>
           ))}
@@ -132,6 +137,14 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
             <strong>3D Interactive Stage</strong>
           </div>
           <div class="tool-actions">
+            {lesson.videoFallback && (
+              <button type="button" class="tool-btn video-tool-btn" data-action="watch-video" title="Watch Storming of the Bastille Video (HD)">
+                <svg viewBox="0 0 24 24" class="tool-icon" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                <span>Video</span>
+              </button>
+            )}
             <button type="button" class="tool-btn" data-action="reset-cam" title="Reset Camera View">
               <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
@@ -181,6 +194,67 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
           <button type="button" class="timeline-step-btn" data-step-next title="Next step">Next ▶</button>
         </div>
       </div>
+
+      <!-- Mode 3: Animated Lesson View (Cinematic Video & Historical Analysis) -->
+      <section class="sst-lesson-view" data-lesson-view hidden>
+        <div class="lesson-video-card">
+          <div class="video-theater-header">
+            <div class="theater-title-wrap">
+              <span class="video-badge">🎬 14 July 1789 — Storming of the Bastille</span>
+              <h3>Storming of the Bastille Fortress</h3>
+              <p class="video-subtitle">Watch Parisian citizens assemble a people's militia and storm the fortress prison.</p>
+            </div>
+            <button type="button" class="back-to-explore-btn" data-action="back-explore">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
+              <span>Back to 3D Scene</span>
+            </button>
+          </div>
+
+          <div class="video-frame-container">
+            <video
+              src={lesson.videoFallback ?? "/assets/sst/history/french-revolution-bastille.mp4"}
+              poster={lesson.staticImageFallback ?? "/assets/sst/history/french-revolution-bastille-poster.jpg"}
+              controls
+              playsinline
+              preload="metadata"
+              data-bastille-video
+              class="cinematic-bastille-video"
+            ></video>
+            <div class="video-quote-banner">
+              <div class="quote-pill">French Battle Cry</div>
+              <div class="quote-text-wrap">
+                <span class="quote-french">"À la Bastille ! Pour la liberté !"</span>
+                <span class="quote-trans">("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Timeline & NCERT Breakdown -->
+          <div class="video-insights-grid">
+            <div class="insight-box">
+              <div class="insight-icon">⚔️</div>
+              <div class="insight-text">
+                <strong>7,000 Citizen Militia (National Guard)</strong>
+                <p>Alarmed by rumors that King Louis XVI ordered troops to march on Paris, 7,000 men and women assembled at Hôtel de Ville, broke into government buildings, and armed themselves to defend the revolution.</p>
+              </div>
+            </div>
+            <div class="insight-box">
+              <div class="insight-icon">🏰</div>
+              <div class="insight-text">
+                <strong>Why was the Bastille Hated by All? (CBSE 1-Mark)</strong>
+                <p>The fortress prison stood as the tangible monument of royal despotism. Stormed to seize gunpowder and ammunition, the prison commander was killed and its seven prisoners released.</p>
+              </div>
+            </div>
+            <div class="insight-box">
+              <div class="insight-icon">🧱</div>
+              <div class="insight-text">
+                <strong>Demolition & Souvenirs of Liberty</strong>
+                <p>The fortress was completely demolished stone by stone. Fragments were sold in Parisian markets so citizens could keep a souvenir of the destruction of absolute monarchy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Mode 4: Virtual Experiment Panels -->
       <section class="sst-experiment-view" data-experiment-view hidden>
@@ -499,9 +573,11 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
 
       // Mode Switcher Tab Functionality
       const modeButtons = root.querySelectorAll<HTMLButtonElement>("[data-mode-btn]");
+      const lessonView = root.querySelector<HTMLElement>("[data-lesson-view]");
       const expView = root.querySelector<HTMLElement>("[data-experiment-view]");
       const examView = root.querySelector<HTMLElement>("[data-exam-view]");
       const quizView = root.querySelector<HTMLElement>("[data-quiz-view]");
+      const bastilleVideo = root.querySelector<HTMLVideoElement>("[data-bastille-video]");
 
       modeButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -509,14 +585,22 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
           btn.classList.add("active");
           const mode = btn.dataset.modeBtn;
 
+          if (lessonView) lessonView.hidden = mode !== "lesson";
           if (expView) expView.hidden = mode !== "experiment";
           if (examView) examView.hidden = mode !== "exam";
           if (quizView) quizView.hidden = mode !== "quiz";
+
+          if (mode !== "lesson" && bastilleVideo) {
+            bastilleVideo.pause();
+          }
 
           if (mode === "map") {
             engine?.applyCameraPreset("top");
           } else if (mode === "explore") {
             engine?.resetCamera();
+          } else if (mode === "lesson") {
+            engine?.applyCameraPreset("bastille");
+            bastilleVideo?.play().catch(() => {});
           }
         });
       });
@@ -618,6 +702,24 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
       root.querySelector('[data-action="toggle-labels"]')?.addEventListener("click", () => engine?.toggleLabels());
       root.querySelector('[data-action="fullscreen"]')?.addEventListener("click", () => {
         container.requestFullscreen?.().catch(() => {});
+      });
+
+      // Video Trigger Handlers
+      root.querySelectorAll("[data-trigger-video], [data-action='watch-video']").forEach((vBtn) => {
+        vBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const lessonTab = root.querySelector<HTMLButtonElement>('[data-mode-btn="lesson"]');
+          lessonTab?.click();
+          if (bastilleVideo) {
+            bastilleVideo.scrollIntoView({ behavior: "smooth", block: "center" });
+            bastilleVideo.play().catch(() => {});
+          }
+        });
+      });
+
+      root.querySelector('[data-action="back-explore"]')?.addEventListener("click", () => {
+        const exploreTab = root.querySelector<HTMLButtonElement>('[data-mode-btn="explore"]');
+        exploreTab?.click();
       });
 
       // Map Pin Focus
@@ -1110,8 +1212,38 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
     color: #0f172a;
     box-shadow: 0 2px 4px rgba(15, 23, 42, 0.08);
   }
+  .tool-btn.video-tool-btn {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+  }
+  .tool-btn.video-tool-btn:hover {
+    background: #dbeafe;
+    border-color: #60a5fa;
+    color: #1e40af;
+  }
   .tool-btn:active {
     transform: translateY(1px);
+  }
+  .step-video-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.35rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .step-video-badge:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+    color: #1e40af;
   }
   .tool-icon {
     width: 14px;
@@ -1156,6 +1288,144 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
     background: #f8fafc;
     border-color: #94a3b8;
     color: #0f172a;
+  }
+
+  /* Animated Lesson Mode & Video Theater */
+  .lesson-video-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  }
+  .video-theater-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .video-badge {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    background: #fef2f2;
+    color: #dc2626;
+    margin-bottom: 0.35rem;
+  }
+  .theater-title-wrap h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.2rem;
+    color: #0f172a;
+  }
+  .video-subtitle {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+  .back-to-explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .back-to-explore-btn:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+  }
+  .video-frame-container {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000000;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  }
+  .cinematic-bastille-video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 480px;
+    display: block;
+    object-fit: cover;
+  }
+  .video-quote-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #0f172a;
+    color: #f8fafc;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+  }
+  .quote-pill {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    background: #dc2626;
+    color: #ffffff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+  }
+  .quote-text-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .quote-french {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fef08a;
+  }
+  .quote-trans {
+    font-size: 0.84rem;
+    color: #cbd5e1;
+  }
+  .video-insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.9rem;
+    margin-top: 1.15rem;
+  }
+  .insight-box {
+    display: flex;
+    gap: 0.75rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.9rem;
+  }
+  .insight-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .insight-text strong {
+    display: block;
+    font-size: 0.88rem;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+  .insight-text p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #475569;
+    line-height: 1.45;
   }
 
   /* Virtual Experiment Views */
