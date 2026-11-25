@@ -1,3 +1,51 @@
 ---
-return Astro.redirect('/', 308);
+import Layout from "../layouts/Layout.astro";
+import { formatPlanPrice, loadContent, subjectNames } from "../lib/content";
+import { calBookingUrl } from "../lib/site";
+
+const { provider, plans } = loadContent();
+const names = subjectNames(loadContent());
 ---
+
+<Layout
+  title={`Tuition plans and prices | ${provider.name}`}
+  description={`Monthly and crash-course plans for CBSE Class 10 with ${provider.tutor_name}. Prices in INR.`}
+>
+  <div class="wrap">
+    <nav class="small" aria-label="Breadcrumb"><a href="/">Home</a> / Plans</nav>
+    <h1>Tuition plans</h1>
+    <p class="lead">
+      Every plan is for CBSE Class 10, online or at your home. The trial is separate and {provider.trial.fee_paise === 0 ? "free" : "paid"}.
+    </p>
+
+    <div class="grid two">
+      {
+        plans.map((plan) => (
+          <article class="card plan-card">
+            <span class="tag">{plan.type === "monthly" ? "Monthly" : "Crash course"}</span>
+            <h2>{plan.name}</h2>
+            <p class="price">{formatPlanPrice(plan.price_paise, plan.currency)}</p>
+            <dl class="summary">
+              <dt>Sessions</dt>
+              <dd>{plan.sessions_per_week ? `${plan.sessions_per_week} per week` : `${plan.duration_days} day course`}</dd>
+              <dt>Session length</dt>
+              <dd>{plan.session_minutes} minutes</dd>
+              {plan.duration_days && <dt>Duration</dt>}
+              {plan.duration_days && <dd>{plan.duration_days} days</dd>}
+              <dt>Subjects</dt>
+              <dd>{plan.subjects.map((id) => names[id]).join(", ")}</dd>
+              <dt>Cancellation</dt>
+              <dd>{plan.cancellation}</dd>
+            </dl>
+            <a class="button" href={calBookingUrl} target="_blank" rel="noopener noreferrer">Book a free trial first</a>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="notice section" role="note">
+      Plans are confirmed on WhatsApp before the first paid session. The free trial comes first, and
+      payment is by UPI or bank transfer.
+    </div>
+  </div>
+</Layout>

@@ -1,3 +1,2298 @@
 ---
-return Astro.redirect('/', 308);
+import Layout from "../layouts/Layout.astro";
+import { loadContent, whatsappLink } from "../lib/content";
+import { calBookingUrl, siteOrigin } from "../lib/site";
+
+const { provider } = loadContent();
+const posterAlt =
+  "10Boardwallah: CBSE Class 10 Board Exam Mentor with Kunal Rai. Socratic AI Doubt Solver, Marking Rubrics, 80 Concept Flashcards & 80-Mark Mock Exam Timer.";
+
+const waHeroLink = whatsappLink(
+  provider.contact.whatsapp,
+  `Hello ${provider.tutor_name}, I am preparing for CBSE Class 10 Board Exams on boardwallah.space and would like to ask about 1-on-1 tuition.`
+);
+
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": `${siteOrigin}/#organization`,
+      "name": provider.name,
+      "url": siteOrigin,
+      "logo": `${siteOrigin}/favicon.svg`,
+      "description": `Comprehensive 1-on-1 CBSE Class 10 tutoring and board exam preparation by ${provider.tutor_name} (20 yrs exp, B.Tech, ex-Samsung/HCL).`,
+      "founder": {
+        "@type": "Person",
+        "name": provider.tutor_name,
+        "jobTitle": "Lead Educator & Founder",
+        "knowsAbout": ["CBSE Class 10 Mathematics", "Science", "Social Science", "English", "Hindi"]
+      },
+      "areaServed": provider.service_localities.map((locality) => ({
+        "@type": "Place",
+        "name": locality
+      })),
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Student Support",
+        "email": provider.contact.email,
+        "telephone": provider.contact.whatsapp,
+        "availableLanguage": provider.languages
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteOrigin}/#tutor`,
+      "name": provider.tutor_name,
+      "jobTitle": "CBSE Class 10 Educator & Tutor",
+      "description": `${provider.experience_years} years of teaching experience specializing in CBSE Class 10 board exam preparation, concept clarification, and scoring 95%+ in boards.`,
+      "hasCredential": provider.qualifications.map((q) => ({
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "degree",
+        "name": q
+      })),
+      "knowsAbout": ["CBSE Class 10 Mathematics", "Science", "Social Science", "English", "Hindi"]
+    },
+    {
+      "@type": "Course",
+      "@id": `${siteOrigin}/#course-cbse-10`,
+      "name": "CBSE Class 10 Complete Board Exam Preparation",
+      "description": "Comprehensive CBSE Class 10 board preparation covering Mathematics, Science, Social Science, English, and Hindi with Socratic AI doubt mentor, CBSE step marking rubrics, 80-mark mock papers, and active-recall flashcards.",
+      "provider": {
+        "@id": `${siteOrigin}/#organization`
+      },
+      "educationalLevel": "Secondary Education (CBSE Class 10)",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": `Free ${provider.trial.duration_minutes}-Minute Trial Session`,
+          "price": "0",
+          "priceCurrency": "INR",
+          "category": "TrialSession",
+          "url": calBookingUrl,
+          "availability": "https://schema.org/InStock"
+        }
+      ]
+    }
+  ]
+};
 ---
+
+<Layout
+  title="10Boardwallah — CBSE Class 10 Board Exam Mentor | boardwallah.space"
+  description="Master CBSE Class 10 with Kunal Rai. Socratic AI Doubt Tutor, CBSE step-wise marking rubrics, 80 concept flashcards, and 3-hour 80-mark mock papers."
+  imageAlt={posterAlt}
+  schema={homeSchema}
+  isAppLayout={true}
+  htmlClass=""
+>
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script is:inline src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <script is:inline src="https://unpkg.com/lucide@latest"></script>
+
+  <script is:inline>
+    // Default to Light Mode (honor explicit saved theme if present)
+    try {
+      const savedTheme = localStorage.getItem('bw_theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch (e) {
+      document.documentElement.classList.remove('dark');
+    }
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            bw: {
+              darkBg: '#0D1117',
+              darkSurface: '#161B22',
+              darkHover: '#21262D',
+              darkBorder: '#30363D',
+              lightBg: '#F8FAFC',
+              lightSurface: '#FFFFFF',
+              lightHover: '#F1F5F9',
+              lightBorder: '#E2E8F0',
+              saffron: '#F97316',
+              saffronDeep: '#EA580C',
+              cyan: '#38BDF8',
+              cyanDeep: '#0284C7',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <div class="h-screen w-screen overflow-hidden flex selection:bg-orange-500/30 selection:text-orange-200 bg-[#F8FAFC] dark:bg-[#0D1117] text-slate-900 dark:text-[#F0F6FC] font-sans antialiased">
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="mobileBackdrop" onclick="toggleMobileSidebar(false)" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-30 hidden md:hidden"></div>
+
+    <!-- =====================================================================
+         ZONE 1: COLLAPSIBLE LEFT SYLLABUS & SESSION RAIL (260px / 64px)
+    ====================================================================== -->
+    <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 flex flex-col justify-between bg-[#FFFFFF] dark:bg-[#161B22] border-r border-[#E2E8F0] dark:border-[#30363D] transition-all duration-200 ease-out w-[260px] -translate-x-full md:translate-x-0 shrink-0">
+      
+      <!-- Top Section: Brand + New Doubt Session + Subject & Chapter Syllabus -->
+      <div class="p-3 flex flex-col gap-3 overflow-y-auto">
+        <div class="flex items-center justify-between h-10 px-1.5">
+          <a href="#" onclick="if(state.sidebarCollapsed){toggleSidebarCollapse();}else{resetToNewSession(event);}" class="flex items-center gap-2.5 overflow-hidden group">
+            <!-- Custom Geometric "10BW" Boardwallah Chalkboard Emblem -->
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-orange-500 to-sky-400 p-[1.5px] shrink-0 shadow-sm">
+              <div class="w-full h-full rounded-[10.5px] bg-[#FFFFFF] dark:bg-[#0D1117] flex items-center justify-center font-mono font-bold text-[11px] tracking-tighter text-slate-900 dark:text-white">
+                <span class="text-orange-500">10</span><span>B</span><span class="text-sky-400">W</span>
+              </div>
+            </div>
+            <div class="sidebar-label flex flex-col leading-none transition-opacity duration-150">
+              <span class="font-mono font-bold text-[16px] tracking-tight text-slate-900 dark:text-white">10Boardwallah</span>
+              <span class="text-[10px] font-medium text-slate-500 dark:text-slate-400 tracking-wide mt-0.5">CBSE CLASS 10 BOARDS</span>
+            </div>
+          </a>
+
+          <button id="sidebarCollapseBtn" onclick="toggleSidebarCollapse()" title="Toggle Syllabus Rail" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#21262D] transition-colors">
+            <i data-lucide="panel-left" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- + New Doubt Session Pill -->
+        <button onclick="resetToNewSession()" class="flex items-center justify-between gap-2 w-full px-3 py-2.5 rounded-full bg-orange-500/10 hover:bg-orange-500/20 dark:bg-[#21262D] dark:hover:bg-[#2b323b] border border-orange-500/30 dark:border-[#30363D] text-orange-600 dark:text-orange-400 font-medium text-xs transition-all group">
+          <span class="flex items-center gap-2.5">
+            <i data-lucide="plus" class="w-4 h-4 shrink-0 text-orange-500"></i>
+            <span class="sidebar-label whitespace-nowrap font-semibold text-slate-800 dark:text-slate-100">New Board Doubt</span>
+          </span>
+          <kbd class="sidebar-label hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded bg-white/80 dark:bg-[#0D1117] text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-[#30363D]">⌘K</kbd>
+        </button>
+
+        <!-- CBSE Class 10 Subjects Switcher -->
+        <div class="sidebar-label pt-1">
+          <div class="px-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">CBSE Class 10 Prep &amp; Subjects</div>
+          <div class="flex flex-col gap-1" id="subjectList">
+            <button onclick="selectSubject('CBSE Board 2026', this)" data-subject="CBSE Board 2026" class="subject-btn active flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 transition-all">
+              <span class="flex items-center gap-2 truncate"><i data-lucide="calendar-days" class="w-3.5 h-3.5 shrink-0"></i><span>CBSE Board 2026</span></span>
+              <span class="text-[10px] font-mono opacity-80">Dates &amp; Plan</span>
+            </button>
+            <button onclick="selectSubject('Mathematics', this)" data-subject="Mathematics" class="subject-btn flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#21262D] border border-transparent transition-all">
+              <span class="flex items-center gap-2 truncate"><i data-lucide="sigma" class="w-3.5 h-3.5 shrink-0"></i><span>Mathematics</span></span>
+              <span class="text-[10px] font-mono opacity-80">14 Ch</span>
+            </button>
+            <button onclick="selectSubject('Science', this)" data-subject="Science" class="subject-btn flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#21262D] border border-transparent transition-all">
+              <span class="flex items-center gap-2 truncate"><i data-lucide="flask-conical" class="w-3.5 h-3.5 shrink-0"></i><span>Science</span></span>
+              <span class="text-[10px] font-mono opacity-80">P/C/B</span>
+            </button>
+            <button onclick="selectSubject('Social Science', this)" data-subject="Social Science" class="subject-btn flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#21262D] border border-transparent transition-all">
+              <span class="flex items-center gap-2 truncate"><i data-lucide="globe-2" class="w-3.5 h-3.5 shrink-0"></i><span>Social Science</span></span>
+              <span class="text-[10px] font-mono opacity-80">20 Ch</span>
+            </button>
+            <button onclick="selectSubject('English', this)" data-subject="English" class="subject-btn flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#21262D] border border-transparent transition-all">
+              <span class="flex items-center gap-2 truncate"><i data-lucide="book-open-text" class="w-3.5 h-3.5 shrink-0"></i><span>English (Lang &amp; Lit)</span></span>
+              <span class="text-[10px] font-mono opacity-80">NCERT</span>
+            </button>
+            <button onclick="selectSubject('Hindi Course A', this)" data-subject="Hindi Course A" class="subject-btn flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#21262D] border border-transparent transition-all">
+              <span class="flex items-center gap-2 truncate"><i data-lucide="languages" class="w-3.5 h-3.5 shrink-0"></i><span>Hindi Course 'A'</span></span>
+              <span class="text-[10px] font-mono opacity-80">क्षितिज</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chapter Selector for Active Subject -->
+        <div class="sidebar-label pt-1">
+          <div class="flex items-center justify-between px-2 pb-1">
+            <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Chapter</span>
+            <span id="chapterCountBadge" class="text-[10px] font-mono text-orange-500">14 Chapters</span>
+          </div>
+          <select id="chapterSelect" onchange="handleChapterChange(this.value)" class="w-full px-2.5 py-2 rounded-xl text-xs font-medium bg-slate-50 dark:bg-[#0D1117] text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-[#30363D] focus:outline-none focus:border-orange-500">
+            <!-- Populated dynamically per subject -->
+          </select>
+        </div>
+
+        <!-- Quick Study Tools (80-Mark Mock, 80 Flashcards, Trial Info) -->
+        <div class="sidebar-label pt-1 border-t border-slate-100 dark:border-[#30363D]/60">
+          <div class="px-2 pt-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Board Toolkit</div>
+          <div class="flex flex-col gap-1">
+            <button onclick="openStudyDrawerTab('mock')" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-[#21262D] flex items-center justify-between text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors">
+              <span class="flex items-center gap-2"><i data-lucide="timer" class="w-3.5 h-3.5 text-orange-500"></i><span>80-Mark Mock (3h)</span></span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-500">80M</span>
+            </button>
+            <button onclick="openStudyDrawerTab('flashcards')" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-[#21262D] flex items-center justify-between text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors">
+              <span class="flex items-center gap-2"><i data-lucide="layers" class="w-3.5 h-3.5 text-sky-400"></i><span>80 Concept Flashcards</span></span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400">DECK</span>
+            </button>
+            <a href={calBookingUrl} target="_blank" rel="noopener noreferrer" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-[#21262D] flex items-center justify-between text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors">
+              <span class="flex items-center gap-2"><i data-lucide="calendar" class="w-3.5 h-3.5 text-emerald-400"></i><span>Free 60-Min Trial</span></span>
+              <span class="text-[10px] font-mono text-emerald-400">16–20h ↗</span>
+            </a>
+            <a href="/resources/" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-[#21262D] flex items-center justify-between text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors">
+              <span class="flex items-center gap-2"><i data-lucide="library" class="w-3.5 h-3.5 text-indigo-400"></i><span>Study Resources</span></span>
+              <span class="text-[10px] font-mono text-slate-400">56 Ch &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Section: Theme Toggle + Tutor & Trial Info Badge -->
+      <div class="p-3 border-t border-[#E2E8F0] dark:border-[#30363D] flex flex-col gap-2 shrink-0">
+        <button onclick="toggleTheme()" class="flex items-center justify-between w-full px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#21262D] transition-colors">
+          <span class="flex items-center gap-2.5">
+            <i id="themeIcon" data-lucide="moon" class="w-4 h-4 text-orange-500 shrink-0"></i>
+            <span id="themeLabel" class="sidebar-label whitespace-nowrap">Slate Dark Mode</span>
+          </span>
+          <span class="sidebar-label text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0D1117] text-slate-500 border border-slate-200 dark:border-[#30363D]">THEME</span>
+        </button>
+
+        <!-- Sign In / Student Account Button -->
+        <button
+          type="button"
+          id="portal-profile-card"
+          class="w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]/80 border border-slate-200/80 dark:border-[#30363D] hover:border-sky-500/40 hover:bg-slate-100 dark:hover:bg-[#161B22] transition-colors cursor-pointer text-left"
+          title="Sign in with Google"
+        >
+          <div class="flex items-center gap-2 overflow-hidden min-w-0">
+            <div id="portal-user-avatar" class="w-7 h-7 rounded-full bg-sky-600 flex items-center justify-center text-white font-bold text-xs shrink-0">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="sidebar-label flex flex-col leading-tight truncate">
+              <span id="portal-user-name" class="text-xs font-semibold text-slate-800 dark:text-slate-100 truncate">Sign in</span>
+              <span id="portal-user-status" class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Student Account</span>
+            </div>
+          </div>
+          <span class="sidebar-label px-2 py-0.5 text-[10px] font-semibold rounded-md bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30 shrink-0">
+            Login →
+          </span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- =====================================================================
+         ZONE 2: CENTER SOCRATIC DOUBT & STUDY STREAM
+    ====================================================================== -->
+    <div class="flex-1 flex flex-col h-full min-w-0 relative bg-[#F8FAFC] dark:bg-[#0D1117]" role="region" aria-label="CBSE Socratic Study Stream">
+      
+      <!-- Top Utility Bar: Active Subject/Chapter Badge + 3 Response Mode Pills + Study Drawer Toggle -->
+      <header class="min-h-14 px-3 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2 border-b border-[#E2E8F0]/70 dark:border-[#30363D]/70 bg-[#F8FAFC]/85 dark:bg-[#0D1117]/85 backdrop-blur-md z-20 shrink-0">
+        <div class="flex items-center gap-2 min-w-0">
+          <!-- Mobile Menu Button -->
+          <button onclick="toggleMobileSidebar(true)" class="md:hidden p-2 -ml-1 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-[#21262D]">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+
+          <!-- Desktop Sidebar Expand Toggle (visible when sidebar is collapsed) -->
+          <button id="desktopSidebarExpandBtn" onclick="toggleSidebarCollapse()" title="Expand Syllabus Rail" class="hidden md:inline-flex hidden p-2 -ml-1 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-[#21262D]">
+            <i data-lucide="panel-left-open" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Active Subject & Chapter Pill -->
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] truncate shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-orange-500 shrink-0"></span>
+            <span id="activeSubjectLabel" class="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white truncate">CBSE Board 2026</span>
+            <span class="text-slate-300 dark:text-slate-600">•</span>
+            <span id="activeChapterLabel" class="text-xs text-slate-600 dark:text-slate-300 truncate max-w-[140px] sm:max-w-[260px]">Official Date Sheet &amp; Timetable</span>
+          </div>
+        </div>
+
+        <!-- 3 Response Mode Pills + Study Drawer Toggle -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <div class="flex items-center p-0.5 rounded-xl bg-slate-200/70 dark:bg-[#161B22] border border-slate-300/60 dark:border-[#30363D]" role="group" aria-label="Response Mode">
+            <button onclick="setResponseMode('hint', this)" id="mode-hint" class="resp-mode-btn active px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-orange-500 text-white shadow-xs transition-all">
+              💡 Socratic Hint
+            </button>
+            <button onclick="setResponseMode('solution', this)" id="mode-solution" class="resp-mode-btn px-2.5 py-1 rounded-lg text-[11px] font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">
+              📝 CBSE Model Solution
+            </button>
+            <button onclick="setResponseMode('check', this)" id="mode-check" class="resp-mode-btn px-2.5 py-1 rounded-lg text-[11px] font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">
+              🔍 Check My Steps
+            </button>
+          </div>
+
+          <button onclick="toggleStudyDrawer()" id="studyDrawerToggleBtn" title="Toggle Board Study Drawer" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-[#161B22] hover:bg-slate-100 dark:hover:bg-[#21262D] text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-[#30363D] transition-all shadow-xs">
+            <i data-lucide="clipboard-check" class="w-3.5 h-3.5 text-orange-500"></i>
+            <span class="hidden sm:inline">Study Drawer</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Doubt & Lesson Viewport -->
+      <div id="chatScrollArea" class="flex-1 overflow-y-auto px-4 sm:px-6 py-6 scroll-smooth">
+        <div class="max-w-[820px] mx-auto w-full flex flex-col">
+          
+          <!-- ZERO-STATE GREETING (Gemini-style clean hero + 4 CBSE Class 10 starter cards) -->
+          <div id="zeroState" class="py-5 sm:py-10 flex flex-col justify-center">
+            <div class="mb-7">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bw-spark-ring text-xs font-medium text-orange-600 dark:text-orange-300 mb-3.5">
+                <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-orange-500"></i>
+                <span>10Boardwallah • NCERT &amp; CBSE Marking Scheme Aligned</span>
+              </div>
+              <h1 class="text-2xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+                Namaste, Board Aspirant.<br />
+                <span class="bw-gradient-text">Master Class 10 concepts step by step.</span>
+              </h1>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mt-2.5 max-w-2xl leading-relaxed">
+                Ask a NCERT or PYQ doubt with Kunal Rai's CBSE marking-scheme rubrics, get Socratic hints before peeking at the solution, or paste your steps to spot marks leaks.
+              </p>
+            </div>
+
+            <!-- 4 CBSE Class 10 Starter Cards (2x2 Grid) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <button onclick="triggerStarterCard('datesheet')" class="group text-left p-4 rounded-2xl bg-white dark:bg-[#161B22] hover:bg-slate-50 dark:hover:bg-[#21262D] border border-slate-200 dark:border-[#30363D] hover:border-orange-500/50 transition-all shadow-xs flex flex-col justify-between min-h-[118px]">
+                <div class="flex items-center justify-between w-full mb-2">
+                  <span class="text-xs font-semibold text-slate-800 dark:text-slate-100 group-hover:text-orange-500 transition-colors">CBSE 2026 Board Exam Dates</span>
+                  <div class="w-7 h-7 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Official timetable (10:30 AM – 1:30 PM): Maths 17 Feb, English 21 Feb, Science 25 Feb, IT 27 Feb, Hindi 02 Mar, SST 07 Mar.
+                </p>
+              </button>
+
+              <button onclick="triggerStarterCard('irrational')" class="group text-left p-4 rounded-2xl bg-white dark:bg-[#161B22] hover:bg-slate-50 dark:hover:bg-[#21262D] border border-slate-200 dark:border-[#30363D] hover:border-orange-500/50 transition-all shadow-xs flex flex-col justify-between min-h-[118px]">
+                <div class="flex items-center justify-between w-full mb-2">
+                  <span class="text-xs font-semibold text-slate-800 dark:text-slate-100 group-hover:text-orange-500 transition-colors">Prove √5 Is Irrational (3M Board PYQ)</span>
+                  <div class="w-7 h-7 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center">
+                    <i data-lucide="sigma" class="w-4 h-4"></i>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Contradiction proof &amp; Thales (BPT) theorem structure with exact CBSE 3-mark step distribution.
+                </p>
+              </button>
+
+              <button onclick="triggerStarterCard('chemical')" class="group text-left p-4 rounded-2xl bg-white dark:bg-[#161B22] hover:bg-slate-50 dark:hover:bg-[#21262D] border border-slate-200 dark:border-[#30363D] hover:border-sky-400/50 transition-all shadow-xs flex flex-col justify-between min-h-[118px]">
+                <div class="flex items-center justify-between w-full mb-2">
+                  <span class="text-xs font-semibold text-slate-800 dark:text-slate-100 group-hover:text-sky-400 transition-colors">Chemical Reactions &amp; Balancing</span>
+                  <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
+                    <i data-lucide="flask-conical" class="w-4 h-4"></i>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Balance redox &amp; displacement equations with state symbols <code class="text-[11px] px-1 py-0.5 rounded bg-slate-100 dark:bg-[#0D1117]">(s) (aq) (g)</code> to avoid losing half-marks.
+                </p>
+              </button>
+
+              <button onclick="triggerStarterCard('checksteps')" class="group text-left p-4 rounded-2xl bg-white dark:bg-[#161B22] hover:bg-slate-50 dark:hover:bg-[#21262D] border border-slate-200 dark:border-[#30363D] hover:border-emerald-500/50 transition-all shadow-xs flex flex-col justify-between min-h-[118px]">
+                <div class="flex items-center justify-between w-full mb-2">
+                  <span class="text-xs font-semibold text-slate-800 dark:text-slate-100 group-hover:text-emerald-400 transition-colors">Check My Attempted Steps</span>
+                  <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                    <i data-lucide="search-check" class="w-4 h-4"></i>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Paste your written working or derivation to see which step earns marks and where a sign or theorem step is missed.
+                </p>
+              </button>
+            </div>
+          </div>
+
+          <!-- ACTIVE DOUBT & LESSON THREAD -->
+          <div id="messageThread" class="hidden flex-col gap-6 pb-6" aria-live="polite">
+            <!-- Messages rendered dynamically here -->
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===================================================================
+           BOTTOM STICKY DOUBT COMPOSER + SAMPLE QUESTION CHIPS
+      ==================================================================== -->
+      <div class="px-4 sm:px-6 pb-3 pt-1 bg-gradient-to-t from-[#F8FAFC] via-[#F8FAFC] to-transparent dark:from-[#0D1117] dark:via-[#0D1117] shrink-0">
+        <div class="max-w-[820px] mx-auto relative">
+          
+          <!-- Slash Command Popover Menu (Triggered on `/`) -->
+          <div id="slashMenu" class="hidden absolute bottom-full left-0 mb-2 w-76 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] shadow-2xl p-1.5 z-40">
+            <div class="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400">CBSE Class 10 Slash Commands</div>
+            <button onclick="insertSlashCommand('/hint ')" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-[#21262D] flex items-center justify-between">
+              <div>
+                <div class="text-xs font-mono font-semibold text-orange-500">/hint</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">Give a Socratic hint &amp; formula clue</div>
+              </div>
+              <span class="text-[10px] font-mono text-slate-400">HINT</span>
+            </button>
+            <button onclick="insertSlashCommand('/solution ')" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-[#21262D] flex items-center justify-between">
+              <div>
+                <div class="text-xs font-mono font-semibold text-sky-400">/solution</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">Full step-wise CBSE marking-scheme answer</div>
+              </div>
+              <span class="text-[10px] font-mono text-slate-400">MS</span>
+            </button>
+            <button onclick="insertSlashCommand('/check ')" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-[#21262D] flex items-center justify-between">
+              <div>
+                <div class="text-xs font-mono font-semibold text-emerald-400">/check</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">Audit my attempted steps for marks &amp; errors</div>
+              </div>
+              <span class="text-[10px] font-mono text-slate-400">STEP</span>
+            </button>
+            <button onclick="insertSlashCommand('/pyq ')" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-[#21262D] flex items-center justify-between">
+              <div>
+                <div class="text-xs font-mono font-semibold text-purple-400">/pyq</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">Generate CBSE Previous Year Question practice</div>
+              </div>
+              <span class="text-[10px] font-mono text-slate-400">PYQ</span>
+            </button>
+          </div>
+
+          <!-- Sample Question Chips Row -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-1 no-scrollbar">
+            <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 shrink-0 mr-1">Sample Qs:</span>
+            <button onclick="useSampleChip('What is the exam dates of cbse class 10?')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Exam dates CBSE Class 10
+            </button>
+            <button onclick="useSampleChip('What is the passing criteria and minimum marks for CBSE Class 10?')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Passing marks &amp; 33% rule
+            </button>
+            <button onclick="useSampleChip('How to score 95%+ in CBSE Class 10 board exams?')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Score 95%+ roadmap
+            </button>
+            <button onclick="useSampleChip('Prove that √5 is an irrational number (3 Marks).')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Prove √5 irrational (3M)
+            </button>
+            <button onclick="useSampleChip('Why does a dry HCl gas not change the colour of dry blue litmus paper?')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Dry HCl &amp; litmus (2M)
+            </button>
+            <button onclick="useSampleChip('Explain the role of the Unification of Germany in 1871 (5 Marks).')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Unification of Germany (5M)
+            </button>
+            <button onclick="useSampleChip('My attempt: For x² - 5x + 6 = 0, D = (-5)² - 4(1)(6) = 25 - 24 = 1, so roots are 3 and 2.')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] bg-white dark:bg-[#161B22] hover:bg-orange-500/10 hover:text-orange-500 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363D] transition-colors">
+              Check my quadratic steps
+            </button>
+          </div>
+
+          <!-- Optional Student Attempt / Step Box (Shown when /check or Check My Steps is active) -->
+          <div id="studentAttemptBox" class="hidden mb-2 rounded-xl bg-sky-500/5 dark:bg-sky-500/10 border border-sky-500/30 p-2.5">
+            <div class="flex items-center justify-between text-[11px] font-semibold text-sky-600 dark:text-sky-400 mb-1">
+              <span>🔍 Paste Your Attempted Steps / Working Here:</span>
+              <button onclick="toggleStudentAttemptBox(false)" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs">&times;</button>
+            </div>
+            <textarea id="studentAttemptInput" rows="2" placeholder="Example: Step 1: Let √5 = p/q... Step 2: 5q² = p²..." class="w-full bg-transparent text-xs font-mono text-slate-800 dark:text-slate-200 focus:outline-none resize-none"></textarea>
+          </div>
+
+          <!-- Floating Rounded Composer Box -->
+          <div id="composerBox" class="rounded-2xl bg-white dark:bg-[#161B22] border border-slate-300 dark:border-[#30363D] focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-500/20 shadow-sm transition-all p-2.5">
+            <textarea
+              id="promptInput"
+              rows="1"
+              placeholder="Ask a CBSE Class 10 question, paste your steps, or type / for commands..."
+              oninput="handlePromptInput(this)"
+              onkeydown="handlePromptKeydown(event)"
+              class="w-full bg-transparent text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 resize-none focus:outline-none px-1.5 max-h-44 leading-relaxed"
+            ></textarea>
+
+            <!-- Composer Bottom Toolbar -->
+            <div class="flex items-center justify-between pt-2 mt-1 border-t border-slate-100 dark:border-[#30363D]/50">
+              <div class="flex items-center gap-1">
+                <button onclick="toggleStudentAttemptBox()" title="Attach / Paste Your Attempted Steps" class="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#21262D] transition-colors flex items-center gap-1.5 text-xs">
+                  <i data-lucide="file-check-2" class="w-4 h-4 text-orange-500"></i>
+                  <span class="hidden sm:inline font-medium">My Steps</span>
+                </button>
+                <button onclick="toggleSlashMenu()" title="Slash commands" class="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#21262D] transition-colors flex items-center gap-1 text-xs font-mono">
+                  <span>/</span>
+                  <span class="hidden sm:inline font-sans font-medium">Commands</span>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-1.5">
+                <button id="sendBtn" onclick="handleSendOrStop()" disabled class="w-9 h-9 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-white flex items-center justify-center shadow-sm transition-all">
+                  <i id="sendBtnIcon" data-lucide="arrow-up" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-2 text-[11px] text-slate-400 dark:text-slate-500">
+            10Boardwallah • CBSE Class 10 Board Prep with Kunal Rai (boardwallah.space). Verify marking points against official CBSE sample papers.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         ZONE 3: TOGGLEABLE RIGHT BOARD STUDY DRAWER (3 Interactive Tabs)
+    ====================================================================== -->
+    <aside id="studyDrawer" class="hidden fixed lg:static inset-0 lg:inset-auto z-40 lg:z-10 w-full lg:w-[46%] xl:w-[45%] max-w-[680px] h-full bg-white dark:bg-[#161B22] border-l border-[#E2E8F0] dark:border-[#30363D] flex-col shrink-0 shadow-2xl lg:shadow-none">
+      
+      <!-- Drawer Header -->
+      <div class="h-14 px-4 flex items-center justify-between border-b border-[#E2E8F0] dark:border-[#30363D] bg-slate-50/80 dark:bg-[#0D1117]/60 shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-7 h-7 rounded-lg bg-orange-500/15 text-orange-500 flex items-center justify-center shrink-0">
+            <i data-lucide="award" class="w-4 h-4"></i>
+          </div>
+          <div class="truncate">
+            <div id="drawerTitle" class="text-xs font-semibold text-slate-900 dark:text-white truncate">CBSE Board Study Drawer</div>
+            <div id="drawerSubtitle" class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Marking Rubric • 80 Flashcards • 80M Mock</div>
+          </div>
+        </div>
+
+        <button onclick="toggleStudyDrawer(false)" title="Close Study Drawer" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-[#21262D]">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Tabs: Marking Rubric | Flashcards | 80-Mark Mock Timer -->
+      <div class="px-3 pt-2 flex items-center gap-1 border-b border-[#E2E8F0] dark:border-[#30363D] bg-slate-50/40 dark:bg-[#161B22] shrink-0 overflow-x-auto">
+        <button onclick="switchStudyTab('rubric')" id="tab-rubric" class="study-tab px-3 py-2 text-xs font-semibold border-b-2 border-orange-500 text-orange-600 dark:text-orange-400 whitespace-nowrap transition-colors">
+          Marking Rubric
+        </button>
+        <button onclick="switchStudyTab('flashcards')" id="tab-flashcards" class="study-tab px-3 py-2 text-xs font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 whitespace-nowrap transition-colors">
+          Flashcards (80)
+        </button>
+        <button onclick="switchStudyTab('mock')" id="tab-mock" class="study-tab px-3 py-2 text-xs font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 whitespace-nowrap transition-colors">
+          80-Mark Mock Timer
+        </button>
+      </div>
+
+      <!-- Drawer Body Content -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-5 bg-[#F8FAFC] dark:bg-[#0D1117]">
+        
+        <!-- TAB 1: MARKING RUBRIC -->
+        <div id="panel-rubric" class="space-y-4">
+          <div class="p-4 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D]">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span id="rubricSubjectPill" class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-orange-500/15 text-orange-500">MATHEMATICS • 3 MARKS</span>
+              <span id="rubricChapterPill" class="text-[11px] text-slate-500 dark:text-slate-400 truncate">Ch 1: Real Numbers</span>
+            </div>
+            <h3 id="rubricQuestionTitle" class="text-sm font-bold text-slate-900 dark:text-white leading-snug">
+              Prove that √5 is an irrational number.
+            </h3>
+          </div>
+
+          <div id="rubricStepsList" class="space-y-2.5">
+            <!-- Populated dynamically -->
+          </div>
+
+          <div class="p-4 rounded-2xl border border-sky-500/30 bg-sky-500/5">
+            <div class="text-xs font-bold text-sky-600 dark:text-sky-400 mb-1 flex items-center gap-1.5">
+              <i data-lucide="lightbulb" class="w-3.5 h-3.5"></i>
+              <span>Kunal Rai's Board Examiner Tip</span>
+            </div>
+            <p id="rubricExamTip" class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              Never skip writing "where a and b are co-prime integers (HCF = 1)"—CBSE marking schemes reserve explicit step credit for stating co-primality and contradiction.
+            </p>
+          </div>
+        </div>
+
+        <!-- TAB 2: 80 CONCEPT FLASHCARDS -->
+        <div id="panel-flashcards" class="hidden space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-xs font-bold text-slate-900 dark:text-white">CBSE Class 10 Active Recall Deck</div>
+              <div id="flashcardCounter" class="text-[11px] font-mono text-slate-500 dark:text-slate-400">Card 1 of 80 (Sample Set)</div>
+            </div>
+            <span class="px-2 py-0.5 text-[10px] font-mono rounded bg-sky-500/15 text-sky-400">CLICK CARD TO FLIP</span>
+          </div>
+
+          <!-- Flip Card Container -->
+          <div onclick="flipCurrentFlashcard()" id="flashcardBox" class="cursor-pointer perspective-1000 min-h-[230px]">
+            <div class="preserve-3d relative w-full min-h-[230px]">
+              <!-- Front -->
+              <div class="backface-hidden absolute inset-0 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] p-5 flex flex-col justify-between shadow-xs">
+                <div class="flex items-center justify-between">
+                  <span id="fcSubjectBadge" class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-orange-500/15 text-orange-500">SCIENCE • CHEMISTRY</span>
+                  <span class="text-[10px] font-mono text-slate-400">FRONT • CONCEPT</span>
+                </div>
+                <div id="fcFrontText" class="text-base font-bold text-slate-900 dark:text-white text-center my-4 leading-snug">
+                  What is a balanced chemical equation and why must it be balanced?
+                </div>
+                <div class="text-center text-[11px] text-slate-400">Tap to reveal CBSE key points &amp; formula</div>
+              </div>
+
+              <!-- Back -->
+              <div class="backface-hidden rotate-y-180 absolute inset-0 rounded-2xl bg-slate-900 dark:bg-[#0D1117] border border-orange-500/40 p-5 flex flex-col justify-between text-white">
+                <div class="flex items-center justify-between">
+                  <span class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-emerald-500/20 text-emerald-400">CBSE MARKING ANSWER</span>
+                  <span class="text-[10px] font-mono text-slate-400">BACK • KEYWORD</span>
+                </div>
+                <div id="fcBackText" class="text-xs sm:text-sm text-slate-200 leading-relaxed my-3">
+                  A chemical equation where the number of atoms of each element is equal on both reactant and product sides. Required by the <strong class="text-orange-400">Law of Conservation of Mass</strong> (mass can neither be created nor destroyed in a chemical reaction).
+                </div>
+                <div class="text-center text-[11px] text-sky-400 font-mono">Tap to flip back</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prev / Flip / Next Controls -->
+          <div class="flex items-center justify-between gap-2 pt-1">
+            <button onclick="prevFlashcard()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-[#161B22] hover:bg-slate-100 dark:hover:bg-[#21262D] border border-slate-200 dark:border-[#30363D] transition-colors">
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              <span>Previous</span>
+            </button>
+            <button onclick="flipCurrentFlashcard()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-orange-500/15 text-orange-600 dark:text-orange-400 hover:bg-orange-500/25 transition-colors">
+              Flip Card
+            </button>
+            <button onclick="nextFlashcard()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-[#161B22] hover:bg-slate-100 dark:hover:bg-[#21262D] border border-slate-200 dark:border-[#30363D] transition-colors">
+              <span>Next</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 3: 80-MARK MOCK TIMER (3 HOURS / 180 MINUTES) -->
+        <div id="panel-mock" class="hidden space-y-4">
+          <div class="p-4 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] text-center space-y-3">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400">CBSE Class 10 Standard Board Paper • 80 Marks</div>
+            <div id="mockTimerDisplay" class="text-4xl font-mono font-bold tracking-wider text-orange-500">03:00:00</div>
+            <div class="flex items-center justify-center gap-2 pt-1">
+              <button onclick="startMockTimer()" id="mockStartBtn" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-orange-500 hover:bg-orange-600 text-white shadow-xs transition-colors">
+                <i data-lucide="play" class="w-3.5 h-3.5"></i>
+                <span>Start Timer</span>
+              </button>
+              <button onclick="pauseMockTimer()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-[#21262D] hover:bg-slate-200 dark:hover:bg-[#2b323b] text-slate-700 dark:text-slate-200 transition-colors">
+                <i data-lucide="pause" class="w-3.5 h-3.5"></i>
+                <span>Pause</span>
+              </button>
+              <button onclick="resetMockTimer()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-[#21262D] hover:bg-slate-200 dark:hover:bg-[#2b323b] text-slate-700 dark:text-slate-200 transition-colors">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                <span>Reset 3h</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section Breakdown (MCQ, VSA, SA, LA, Case-Based = 80 Marks) -->
+          <div class="rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] p-4 space-y-2.5">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white pb-1 border-b border-slate-100 dark:border-slate-800">
+              <span>CBSE 80-Mark Paper Blueprint</span>
+              <span class="font-mono text-orange-500">Total: 80M</span>
+            </div>
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]">
+                <div>
+                  <div class="font-semibold">Section A: MCQ</div>
+                  <div class="text-[11px] text-slate-500">20 Questions × 1 Mark • Target ~25 min</div>
+                </div>
+                <span class="font-mono font-bold text-sky-400">20M</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]">
+                <div>
+                  <div class="font-semibold">Section B: VSA (Very Short Answer)</div>
+                  <div class="text-[11px] text-slate-500">5 Questions × 2 Marks • Target ~20 min</div>
+                </div>
+                <span class="font-mono font-bold text-sky-400">10M</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]">
+                <div>
+                  <div class="font-semibold">Section C: SA (Short Answer)</div>
+                  <div class="text-[11px] text-slate-500">6 Questions × 3 Marks • Target ~45 min</div>
+                </div>
+                <span class="font-mono font-bold text-orange-500">18M</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]">
+                <div>
+                  <div class="font-semibold">Section D: LA (Long Answer)</div>
+                  <div class="text-[11px] text-slate-500">4 Questions × 5 Marks • Target ~45 min</div>
+                </div>
+                <span class="font-mono font-bold text-orange-500">20M</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-[#0D1117]">
+                <div>
+                  <div class="font-semibold">Section E: Case-Based / Source</div>
+                  <div class="text-[11px] text-slate-500">3 Questions × 4 Marks • Target ~25 min + 15m revision</div>
+                </div>
+                <span class="font-mono font-bold text-emerald-400">12M</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Toast Notification Pill -->
+    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-2 px-4 py-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-medium shadow-xl">
+      <i data-lucide="check-circle-2" class="w-4 h-4 text-orange-500"></i>
+      <span id="toastMessage">Updated</span>
+    </div>
+
+    <!-- Google Sign-In Fallback Modal for Portal -->
+    <dialog id="portal-signin-modal" class="mentor-dialog p-0 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161B22] text-slate-900 dark:text-slate-100 shadow-2xl backdrop:bg-slate-900/50 backdrop:backdrop-blur-sm">
+      <div class="p-6 max-w-sm text-center">
+        <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+            <h3 class="font-bold text-sm">Sign in with Google</h3>
+          </div>
+          <button id="close-portal-signin-modal-btn" class="text-slate-400 hover:text-slate-600 dark:hover:text-white" type="button">✕</button>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
+          Access your saved CBSE Class 10 chapter rubrics, doubt history, and mock analysis.
+        </p>
+        <div class="flex justify-center my-3">
+          <div id="portal-modal-gsi-container"></div>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-2">
+          Instant Google popup. We only receive your name and email.
+        </p>
+      </div>
+    </dialog>
+
+    <!-- Student Account Popover Modal for Portal -->
+    <dialog id="portal-account-modal" class="mentor-dialog p-0 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161B22] text-slate-900 dark:text-slate-100 shadow-2xl backdrop:bg-slate-900/50 backdrop:backdrop-blur-sm">
+      <div class="p-6 max-w-sm">
+        <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-200 dark:border-slate-800">
+          <h3 class="font-bold text-sm">Student Account</h3>
+          <button id="close-portal-account-modal-btn" class="text-slate-400 hover:text-slate-600 dark:hover:text-white" type="button">✕</button>
+        </div>
+        <div class="flex items-center gap-3 py-3 border-b border-slate-100 dark:border-slate-800">
+          <div id="portal-modal-avatar" class="w-12 h-12 rounded-full bg-sky-600 flex items-center justify-center text-white font-bold text-base shrink-0 overflow-hidden"></div>
+          <div class="overflow-hidden min-w-0">
+            <h4 id="portal-modal-name" class="font-semibold text-sm truncate">Student</h4>
+            <span id="portal-modal-email" class="text-xs text-slate-500 dark:text-slate-400 break-all">student@example.com</span>
+          </div>
+        </div>
+        <div class="flex gap-2 justify-end mt-4">
+          <button id="portal-account-signout-btn" class="px-3 py-1.5 text-xs font-semibold text-rose-600 border border-rose-300 dark:border-rose-800 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/40" type="button">Sign out</button>
+          <button id="close-portal-account-action-btn" class="px-3 py-1.5 text-xs font-semibold text-white bg-slate-800 dark:bg-slate-700 rounded-lg hover:bg-slate-900" type="button">Close</button>
+        </div>
+      </div>
+    </dialog>
+  </div>
+
+  <!-- =====================================================================
+       CBSE CLASS 10 SYLLABUS, RUBRICS, FLASHCARDS & INTERACTIVE LOGIC
+  ====================================================================== -->
+  <script is:inline>
+    const CBSE_SYLLABUS = {
+      'CBSE Board 2026': [
+        'Official Date Sheet & Timetable',
+        'Subject-Wise Blueprint & Marks Weightage',
+        'Passing Criteria & 33% Rule Explained',
+        'Last 30-Day Revision Strategy (95%+)',
+        'Exam Day Instructions & Time Management'
+      ],
+      'Mathematics': [
+        'Ch 1: Real Numbers',
+        'Ch 2: Polynomials',
+        'Ch 3: Pair of Linear Equations in Two Variables',
+        'Ch 4: Quadratic Equations',
+        'Ch 5: Arithmetic Progressions',
+        'Ch 6: Triangles',
+        'Ch 7: Coordinate Geometry',
+        'Ch 8: Introduction to Trigonometry',
+        'Ch 9: Some Applications of Trigonometry',
+        'Ch 10: Circles',
+        'Ch 11: Areas Related to Circles',
+        'Ch 12: Surface Areas and Volumes',
+        'Ch 13: Statistics',
+        'Ch 14: Probability'
+      ],
+      'Science': [
+        'Chem Ch 1: Chemical Reactions and Equations',
+        'Chem Ch 2: Acids, Bases and Salts',
+        'Chem Ch 3: Metals and Non-metals',
+        'Chem Ch 4: Carbon and its Compounds',
+        'Bio Ch 5: Life Processes',
+        'Bio Ch 6: Control and Coordination',
+        'Bio Ch 7: How do Organisms Reproduce?',
+        'Bio Ch 8: Heredity',
+        'Phy Ch 9: Light – Reflection and Refraction',
+        'Phy Ch 10: The Human Eye and the Colourful World',
+        'Phy Ch 11: Electricity',
+        'Phy Ch 12: Magnetic Effects of Electric Current',
+        'Env Ch 13: Our Environment'
+      ],
+      'Social Science': [
+        'His Ch 1: The Rise of Nationalism in Europe',
+        'His Ch 2: Nationalism in India',
+        'His Ch 3: The Making of a Global World',
+        'His Ch 4: The Age of Industrialisation',
+        'His Ch 5: Print Culture and the Modern World',
+        'Geo Ch 1: Resources and Development',
+        'Geo Ch 2: Forest and Wildlife Resources',
+        'Geo Ch 3: Water Resources',
+        'Geo Ch 4: Agriculture',
+        'Geo Ch 5: Minerals and Energy Resources',
+        'Geo Ch 6: Manufacturing Industries',
+        'Geo Ch 7: Lifelines of National Economy',
+        'Civ Ch 1: Power-sharing',
+        'Civ Ch 2: Federalism',
+        'Civ Ch 3: Gender, Religion and Caste',
+        'Civ Ch 4: Political Parties',
+        'Civ Ch 5: Outcomes of Democracy',
+        'Eco Ch 1: Development',
+        'Eco Ch 2: Sectors of the Indian Economy',
+        'Eco Ch 3: Money and Credit'
+      ],
+      'English': [
+        'First Flight: A Letter to God & Nelson Mandela',
+        'First Flight: Two Stories about Flying & From the Diary of Anne Frank',
+        'First Flight: Glimpses of India & Madam Rides the Bus',
+        'First Flight: The Sermon at Benares & The Proposal',
+        'First Flight Poems: Dust of Snow, Fire and Ice, Tiger in the Zoo, Amanda!',
+        'Footprints Without Feet: Triumph of Surgery, Thief\'s Story, Footprints, Necklace',
+        'Grammar & Writing: Tenses, Modals, Reported Speech, Analytical Paragraph & Letter'
+      ],
+      'Hindi Course A': [
+        'क्षितिज (गद्य): नेताजी का चश्मा, बालगोबिन भगत, लखनवी अंदाज़, मानवीय करुणा की दिव्य चमक',
+        'क्षितिज (काव्य): सूरदास के पद, राम-लक्ष्मण-परशुराम संवाद, आत्मकथ्य, उत्साह व अट नहीं रही है',
+        'कृतिका भाग-2: माता का अँचल, साना-साना हाथ जोड़ि, मैं क्यों लिखता हूँ?',
+        'व्यावहारिक व्याकरण: वाक्य भेद, वाच्य, पद परिचय, अलंकार',
+        'रचनात्मक लेखन: अनुच्छेद लेखन, पत्र लेखन, विज्ञापन, संदेश व ई-मेल लेखन'
+      ]
+    };
+
+    const STARTER_PACKS = {
+      datesheet: {
+        subject: 'CBSE Board 2026',
+        chapter: 'Official Date Sheet & Timetable',
+        marks: 'BOARD EXAM INFO',
+        question: 'What is the exam dates of CBSE Class 10 Board Exam 2026?',
+        hintBody: `**CBSE Class 10 Board Exam Timetable 2026 (10:30 AM – 1:30 PM IST):**\n\n| Date & Day | Subject Code | Subject Name | Timings | Max Marks |\n| :--- | :--- | :--- | :--- | :--- |\n| **17 Feb 2026 (Tue)** | 041 / 241 | **Mathematics (Standard / Basic)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **21 Feb 2026 (Sat)** | 184 | **English (Language & Literature)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **25 Feb 2026 (Wed)** | 086 | **Science (Phy / Chem / Bio)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **27 Feb 2026 (Fri)** | 402 / 417 | **Information Tech / AI** | 10:30 AM – 12:30 PM | 50 Marks |\n| **02 Mar 2026 (Mon)** | 002 / 085 | **Hindi Course 'A' / Course 'B'** | 10:30 AM – 1:30 PM | 80 Marks |\n| **07 Mar 2026 (Sat)** | 087 | **Social Science (His/Geo/Civ/Eco)**| 10:30 AM – 1:30 PM | 80 Marks |\n\n**Key Guidelines:**\n- **10:15 – 10:30 AM:** 15-minute question paper reading slot before writing begins.\n- **Pass rule:** 33% combined marks (theory + internal) required per subject.\n- **Reporting Time:** Reach exam centre by 09:45 AM in full school uniform with original Admit Card.`,
+        solutionBody: `**Official CBSE Class 10 Board Exam Schedule 2026:**\n\n| Date & Day | Subject Code | Subject Name | Timings | Max Marks |\n| :--- | :--- | :--- | :--- | :--- |\n| **17 Feb 2026 (Tue)** | 041 / 241 | **Mathematics (Standard / Basic)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **21 Feb 2026 (Sat)** | 184 | **English (Language & Literature)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **25 Feb 2026 (Wed)** | 086 | **Science (Phy / Chem / Bio)** | 10:30 AM – 1:30 PM | 80 Marks |\n| **27 Feb 2026 (Fri)** | 402 / 417 | **Information Tech / AI** | 10:30 AM – 12:30 PM | 50 Marks |\n| **02 Mar 2026 (Mon)** | 002 / 085 | **Hindi Course 'A' / Course 'B'** | 10:30 AM – 1:30 PM | 80 Marks |\n| **07 Mar 2026 (Sat)** | 087 | **Social Science (His/Geo/Civ/Eco)**| 10:30 AM – 1:30 PM | 80 Marks |\n\n**Official CBSE Instructions:**\n1. **15-Minute Reading Period (10:15 to 10:30 AM):** Students are strictly given question papers 15 minutes before 10:30 AM to read and choose optional questions. Do not write on answer sheets during this period.\n2. **Pass Criteria:** Minimum 33% aggregate (theory + practical/internals combined).\n3. **Items Allowed:** Original Admit Card, School ID card, royal blue or black ballpoint pen in transparent pouch, analog wristwatch, clear water bottle.`,
+        checkBody: `**Exam Day Checklist:**\n- **Admit Card:** Duly signed by Principal and parent.\n- **Stationery:** Royal blue or black ballpoint pens only (gel pens bleed through answer sheets).\n- **Gate Closing:** Centre doors close strictly at 10:00 AM sharp—no late entry is permitted under CBSE bylaws.`,
+        rubricSteps: [
+          { mark: '17 Feb', title: 'Mathematics (Standard / Basic 80M)', desc: '10:30 AM - 1:30 PM. 38 questions across 5 sections (A, B, C, D, E).' },
+          { mark: '25 Feb', title: 'Science (Theory 80M)', desc: '10:30 AM - 1:30 PM. 39 questions: Chem (25M), Bio (25M), Phy (25M), Env (5M).' },
+          { mark: '07 Mar', title: 'Social Science (Theory 80M)', desc: '10:30 AM - 1:30 PM. 37 questions: History, Geography, Civics, Economics (20M each).' }
+        ],
+        examTip: 'During the 15-minute reading slot (10:15–10:30 AM), finalize which internal choices you will attempt in Sections B, C, and D.'
+      },
+      passing: {
+        subject: 'CBSE Board 2026',
+        chapter: 'Passing Criteria & 33% Rule Explained',
+        marks: 'PASSING RULES',
+        question: 'What is the passing criteria and minimum marks for CBSE Class 10?',
+        hintBody: `**CBSE Class 10 Passing Standard (Combined 33% Rule):**\nTo pass a subject in CBSE Class 10, a candidate must obtain at least **33% marks** in each subject.\n\n- In Class 10, the 33% requirement is on **combined marks** (Theory exam + Internal Assessment / Practical).\n- Total marks per subject = 100 (80 Board Theory + 20 School Internal Assessment). Minimum needed = **33/100**.`,
+        solutionBody: `**CBSE Class 10 Passing Criteria (Combined 33% Rule):**\n\n1. **Combined 33% Rule:**\n   Unlike Class 12 (where students must pass theory and practical separately), Class 10 students must score at least **33% combined** out of 100 marks (80 Marks Theory + 20 Marks Internal Assessment).\n2. **Minimum Score Required:**\n   You need a total of **33 marks out of 100** per subject to pass.\n   - If your school awards **18/20** in Internal Assessment, you only need **15/80** in the Board Theory exam to pass!\n   - However, for competitive percentiles (90%+), aim for 72+/80 in theory.\n3. **Compartment Policy:**\n   A student failing in 1 or 2 subjects is placed in the **Compartment category** and gets an opportunity to appear in the Compartment Examination in July 2026.`,
+        checkBody: `**Passing Mark Calculation Check:**\n- Max Marks: 80 (Board Theory) + 20 (Internal Assessment) = 100.\n- Passing Threshold: ≥ 33 / 100.\n- Compulsory subjects: 5 subjects must be passed (Languages + Mathematics + Science + Social Science).`,
+        rubricSteps: [
+          { mark: '33%', title: 'Overall Passing Threshold', desc: 'Candidate must secure minimum 33% marks overall (Theory + Internal combined).' },
+          { mark: '20M', title: 'Internal Assessment', desc: 'Periodic tests (5M), Multiple assessment (5M), Portfolio (5M), Subject enrichment (5M).' },
+          { mark: '80M', title: 'Board Theory Paper', desc: '3-hour subjective exam held by CBSE in February-March.' }
+        ],
+        examTip: 'Do not neglect internal assessments (portfolio, lab journals, periodic tests)—securing 19-20 marks in internals provides an enormous safety cushion for your aggregate percentage.'
+      },
+      strategy: {
+        subject: 'CBSE Board 2026',
+        chapter: 'Last 30-Day Revision Strategy (95%+)',
+        marks: 'TOPPER BLUEPRINT',
+        question: 'How to score 95%+ in CBSE Class 10 board exams?',
+        hintBody: `**Topper Study Blueprint (Last 30 Days):**\nScoring 95%+ in CBSE Class 10 is 70% systematic NCERT line-by-line mastery and 30% answer presentation aligned with CBSE marking schemes.\n\n- Priority 1: NCERT textbook in-text & exercise questions\n- Priority 2: Last 5 years official CBSE PYQs\n- Priority 3: 3-hour timed sample papers strictly between 10:30 AM – 1:30 PM.`,
+        solutionBody: `**Step-by-Step 95%+ Roadmap for CBSE Class 10:**\n\n1. **Mathematics (80/80 Target):**\n   - Solve every single NCERT Example & Exercise. 75% of standard/basic paper is direct NCERT.\n   - Memorize theorems with proofs: BPT (Basic Proportionality Theorem) and Tangent to a Circle theorem.\n   - Write step-by-step: formula (0.5M) + substitution (1M) + units in final answer (cm², m³, etc.).\n2. **Science (80/80 Target):**\n   - **Chemistry:** Balance every equation with state symbols (s, g, aq). Memorize color changes (FeSO₄ crystals, Cu wire in AgNO₃).\n   - **Biology:** Practice neat labeled diagrams (Nephron, Neuron, Human Heart, Female Reproductive System).\n   - **Physics:** Master ray diagrams (concave mirror, convex lens) with arrow directions + Ohm's law & Joule's heating numericals.\n3. **Social Science (80/80 Target):**\n   - Answer 3-mark and 5-mark questions in bullet points with underlined keywords.\n   - Practice official CBSE map work (Dams, Power plants, Indian National Congress sessions).\n4. **English & Hindi:**\n   - Strict adherence to official CBSE writing formats (letters, analytical paragraphs, विज्ञापन, संदेश).\n   - Zero spelling and grammatical errors in lit sections.`,
+        checkBody: `**Daily Routine for 95%+ Aspirants:**\n- **Slot 1 (3 Hours):** 1 full 80-mark mock paper in exam conditions (10:30 AM – 1:30 PM).\n- **Slot 2 (2 Hours):** Error analysis—cross-check against CBSE official marking scheme to locate lost 1/2 marks.\n- **Slot 3 (2 Hours):** NCERT revision of weak sub-topics & flashcards.`,
+        rubricSteps: [
+          { mark: 'NCERT', title: 'Line-by-Line Mastery', desc: '100% textbook examples, back exercises, and in-text activities.' },
+          { mark: 'PYQ', title: 'Past 5 Years Papers (2020–2025)', desc: 'Identifies recurring question patterns and repeated 3M/5M topics.' },
+          { mark: 'Mock', title: 'Timed 3-Hour Practice', desc: 'Builds physical speed to complete 38 questions with 20 minutes left for re-checking.' }
+        ],
+        examTip: 'In the real exam, always start with Section B/C/D if you are confident, but keep question numbering crystal clear. Underline final numerical answers with a pencil.'
+      },
+      mentorship: {
+        subject: 'CBSE Board 2026',
+        chapter: 'Exam Day Instructions & Time Management',
+        marks: 'KUNAL RAI MENTORSHIP',
+        question: 'How can I get 1-on-1 mentorship or guidance from Kunal Rai?',
+        hintBody: `**Kunal Rai • Lead CBSE Mentor (10Boardwallah):**\nPersonalized 1-on-1 Board preparation, marking scheme breakdown, and error analysis for CBSE Class 10 students.\n\n- Available online worldwide & offline at Gaur City 2, Greater Noida West.`,
+        solutionBody: `**1-on-1 CBSE Class 10 Mentorship with Kunal Rai:**\n\n1. **What is Covered:**\n   - Personal answer sheet step audits (spotting exactly where you lose 0.5 to 1 mark).\n   - Socratic doubt-solving across Mathematics, Science, SST, English, and Hindi.\n   - Custom 30-day revision schedule tailored to your weak subjects.\n   - High-yield CBSE 80-mark mock papers with line-by-line examiner evaluation.\n2. **Free 60-Minute Diagnostic Session:**\n   - Every new student gets a complimentary 60-minute diagnostic session to assess current preparation levels and create a personalized target score roadmap.\n3. **How to Connect:**\n   - **Location:** Offline hub at Gaur City 2 (16th–20th Ave), Greater Noida West / Online via Google Meet & boardwallah.space.\n   - **Schedule:** Click the **"Chat"** button or mentor card in the bottom-left sidebar to book your free diagnostic slot.`,
+        checkBody: `**Session Preparation Checklist:**\n- Bring your recent school pre-board question paper and answer sheet.\n- List your top 5 high-priority doubt topics across Maths or Science.`,
+        rubricSteps: [
+          { mark: 'Diagnostic', title: '60-Min Evaluation', desc: 'Comprehensive audit of NCERT syllabus completion & weak areas.' },
+          { mark: 'Custom Plan', title: 'Target Score Roadmap', desc: 'Day-by-day study timetable optimized for your board exam dates.' },
+          { mark: 'Paper Audit', title: 'Marking Rubric Mastery', desc: 'Practice presenting steps exactly how CBSE evaluators award marks.' }
+        ],
+        examTip: 'Consistently reviewing your pre-board mistakes with a mentor prevents the same errors from repeating in the real CBSE exam.'
+      },
+      irrational: {
+        subject: 'Mathematics',
+        chapter: 'Ch 1: Real Numbers',
+        marks: '3 MARKS',
+        question: 'Prove that √5 is an irrational number.',
+        hintBody: `**Socratic Hint (Ch 1: Real Numbers):**\nSuppose on the contrary that **\`√5\`** is rational. Then it can be written as \`√5 = a/b\` where \`a\` and \`b\` are integers with **\`b ≠ 0\`** and **\`HCF(a, b) = 1\`** (co-prime).\n\n- Square both sides and isolate \`a²\`.\n- Which fundamental theorem in NCERT tells you that if a prime \`p\` divides \`a²\`, then \`p\` divides \`a\`?`,
+        solutionBody: `**CBSE Model Solution (3 Marks):**\n1. Assume \`√5\` is rational: \`√5 = a/b\`, where \`a, b\` are integers, \`b ≠ 0\`, and \`HCF(a, b) = 1\`.\n2. Squaring both sides gives \`5b² = a²\` → \`5\` divides \`a²\`, so by NCERT Theorem 1.2, **\`5\` divides \`a\`**.\n3. Let \`a = 5k\` for some integer \`k\`. Substituting gives \`5b² = 25k²\` → \`b² = 5k²\`, so **\`5\` divides \`b\`**.\n4. Thus \`5\` is a common factor of both \`a\` and \`b\`, contradicting \`HCF(a, b) = 1\`. Hence, **\`√5\` is irrational**.`,
+        checkBody: `**Step Audit — Prove √5 Is Irrational:**\n- **Assumption & Co-primality:** Check that you explicitly state \`HCF(a, b) = 1\` and \`b ≠ 0\`.\n- **First Divisibility (\`5 | a² ⇒ 5 | a\`):** Earned if you link \`a² = 5b²\` to prime divisibility.\n- **Second Divisibility (\`a = 5k ⇒ 5 | b\`):** Often missed—must substitute back to show \`5\` divides \`b\` too before concluding contradiction.`,
+        rubricSteps: [
+          { mark: '1M', title: 'Assumption of Rationality & Co-primes', desc: 'Write √5 = a/b where a, b are co-prime integers (HCF = 1) and b ≠ 0.' },
+          { mark: '1M', title: 'Squaring & Divisibility of a', desc: 'Obtain 5b² = a², deduce 5 divides a² and hence 5 divides a.' },
+          { mark: '1M', title: 'Substitution & Contradiction Conclusion', desc: 'Substitute a = 5k to show 5 divides b, state contradiction to co-primality, and conclude √5 is irrational.' }
+        ],
+        examTip: 'Never skip writing "where a and b are co-prime integers (HCF = 1)"—CBSE marking schemes reserve explicit step credit for stating co-primality and contradiction.'
+      },
+      chemical: {
+        subject: 'Science',
+        chapter: 'Chem Ch 1: Chemical Reactions and Equations',
+        marks: '3 MARKS',
+        question: 'Balance the chemical equation: Fe(s) + H₂O(g) → Fe₃O₄(s) + H₂(g), and identify the type of reaction.',
+        hintBody: `**Socratic Hint (Chem Ch 1):**\nStart by counting atoms of the element with the highest count on the product side (**Fe** and **O** in \`Fe₃O₄\`).\n\n- How many \`Fe\` atoms are on the RHS vs LHS?\n- How many \`O\` atoms are on the RHS vs LHS (in \`H₂O\`)?`,
+        solutionBody: `**CBSE Model Solution (3 Marks):**\n1. **Balanced Equation:**\n   \`3Fe(s) + 4H₂O(g) → Fe₃O₄(s) + 4H₂(g)\`\n2. **Verification:** \`Fe\` = 3 on both sides; \`O\` = 4 on both sides; \`H\` = 8 on both sides.\n3. **Reaction Type:** **Displacement / Redox reaction** (iron displaces hydrogen from steam while getting oxidized to \`Fe₃O₄\`).`,
+        checkBody: `**Step Audit — Balancing & State Symbols:**\n- Did you include physical state symbols **\`(s)\`**, **\`(g)\`**, **\`(aq)\`**?\n- Did you balance **\`H\`** after fixing **\`O\`** with coefficient \`4\` on \`H₂O\` (giving \`8 H\` atoms → \`4H₂\`)?`,
+        rubricSteps: [
+          { mark: '1.5M', title: 'Correct Stoichiometric Coefficients', desc: 'Balanced equation 3Fe + 4H₂O → Fe₃O₄ + 4H₂ with equal atom counts.' },
+          { mark: '0.5M', title: 'Physical State Symbols', desc: 'Includes (s) and (g) steam state as specified in NCERT.' },
+          { mark: '1M', title: 'Reaction Classification & Reasoning', desc: 'Correctly identifies displacement / redox behavior with clear justification.' }
+        ],
+        examTip: 'In CBSE Chemistry, forgetting state symbols or leaving fractional coefficients un-cleared can cost half-marks even when atom counts match.'
+      },
+      checksteps: {
+        subject: 'Mathematics',
+        chapter: 'Ch 4: Quadratic Equations',
+        marks: '2 MARKS',
+        question: 'Check my steps for finding the nature of roots of x² - 5x + 6 = 0.',
+        hintBody: `**Socratic Hint (Discriminant D):**\nFor a quadratic equation \`ax² + bx + c = 0\`, recall the discriminant formula:\n\`D = b² - 4ac\`\n\n- Identify \`a\`, \`b\`, and \`c\` carefully (watch the negative sign of \`b\`).`,
+        solutionBody: `**CBSE Model Solution (2 Marks):**\n1. Comparing \`x² - 5x + 6 = 0\` with \`ax² + bx + c = 0\`: \`a = 1, b = -5, c = 6\`.\n2. \`D = b² - 4ac = (-5)² - 4(1)(6) = 25 - 24 = 1 > 0\`.\n3. Since \`D > 0\`, the equation has **two distinct real roots** (\`x = 3\` and \`x = 2\`).`,
+        checkBody: `**Step-by-Step Audit of Your Attempt:**\n- **Step 1 (\`a = 1, b = -5, c = 6\`):** ✔ Correct coefficients.\n- **Step 2 (\`D = (-5)² - 4(1)(6) = 1\`):** ✔ Correct discriminant calculation.\n- **Board Examiner Note:** In CBSE exams, always explicitly state **"D > 0 ⇒ Two distinct real roots"** even when asked to find the roots, as nature of roots carries distinct step credit.`,
+        rubricSteps: [
+          { mark: '0.5M', title: 'Standard Form & Coefficients', desc: 'Identifies a = 1, b = -5, c = 6 accurately.' },
+          { mark: '1M', title: 'Discriminant Formula & Evaluation', desc: 'Writes D = b² - 4ac and computes D = 1.' },
+          { mark: '0.5M', title: 'Nature of Roots Statement', desc: 'States D > 0 so two distinct real roots exist.' }
+        ],
+        examTip: 'Always write the formula D = b² - 4ac first before substituting numbers—formula writing alone can fetch step marks.'
+      },
+      mockdrill: {
+        subject: 'Social Science',
+        chapter: 'His Ch 1: The Rise of Nationalism in Europe',
+        marks: '5 MARKS',
+        question: 'Describe the process of unification of Germany (1866–1871).',
+        hintBody: `**Socratic Hint (5-Mark History Answer):**\nStructure a 5-mark Social Science answer into **5 clear bulleted points** with key names, dates, and places:\n- Who led the architect role in Prussia?\n- Which **three wars over seven years** were fought, and what was the final **1871** ceremony?`,
+        solutionBody: `**CBSE Model Solution (5 Marks):**\n1. **Leadership:** Otto von Bismarck (Chief Minister of Prussia) led unification using the Prussian army and bureaucracy.\n2. **Three Wars (7 Years):** Wars fought against **Denmark**, **France**, and **Austria**, ending in Prussian victory.\n3. **Proclamation (Jan 1871):** Prussian King **Kaiser William I** was proclaimed German Emperor at the **Hall of Mirrors, Palace of Versailles**.\n4. **State Modernization:** Emphasis on currency, banking, legal, and judicial systems in united Germany.`,
+        checkBody: `**Step Audit — 5-Mark SST Rubric:**\n- A 5-mark SST question expects **5 distinct, well-explained points** (roughly 1 mark per valid point/keyword).\n- Key terms to include: **Otto von Bismarck**, **three wars in seven years**, **Kaiser William I (1871)**, **Palace of Versailles**.`,
+        rubricSteps: [
+          { mark: '1M', title: 'Bismarck & Prussian Leadership', desc: 'Mentions Otto von Bismarck and Prussian state/military leadership.' },
+          { mark: '2M', title: 'Three Wars Over Seven Years', desc: 'Notes conflicts with Denmark, France, and Austria leading to victory.' },
+          { mark: '2M', title: '1871 Proclamation & Reforms', desc: 'Mentions Kaiser William I at Versailles (Jan 1871) and modernization.' }
+        ],
+        examTip: 'For 3M and 5M Social Science answers, use crisp sub-points with underlined proper nouns, dates, and acts/treaties so examiners can award marks quickly.'
+      }
+    };
+
+    const FLASHCARDS = [
+      {
+        subject: 'SCIENCE • PHYSICS',
+        front: 'State Ohm’s Law and write its mathematical relation.',
+        back: 'At constant temperature, electric current (I) flowing through a metallic conductor is directly proportional to the potential difference (V) across its ends. Relation: <strong>V = IR</strong> (where R is constant resistance in Ohms, Ω).'
+      },
+      {
+        subject: 'MATHEMATICS • TRIGONOMETRY',
+        front: 'What is the value of sin²θ + cos²θ for any acute angle θ?',
+        back: '<strong>sin²θ + cos²θ = 1</strong> for all 0° ≤ θ ≤ 90°. Derived directly from Pythagoras theorem in a right-angled triangle (P² + B² = H²).'
+      },
+      {
+        subject: 'SOCIAL SCIENCE • CIVICS',
+        front: 'What is "Power Sharing" and why is it desirable in a democracy?',
+        back: 'Distribution of power among organs/levels/social groups. <strong>Prudential reason:</strong> reduces social conflict & instability. <strong>Moral reason:</strong> essence of democracy—citizens have a stake in governance.'
+      },
+      {
+        subject: 'HINDI COURSE A • क्षितिज',
+        front: '‘नेताजी का चश्मा’ पाठ में कैप्टन कौन था और वह चश्मा क्यों बदलता था?',
+        back: 'कैप्टन एक देशभक्त चश्मेवाला था। नेताजी की मूर्ति बिना चश्मे के देखकर उसे कष्ट होता था, इसलिए वह अपनी ओर से मूर्ति पर फ्रेम लगाता और किसी ग्राहक के माँगने पर उसे बदल देता था।'
+      },
+      {
+        subject: 'SCIENCE • BIOLOGY',
+        front: 'Name the two main vascular tissues in plants and their functions.',
+        back: '<strong>Xylem:</strong> transports water and dissolved minerals from roots upward. <strong>Phloem:</strong> translocates prepared food (sucrose) from leaves to other parts (bidirectional).'
+      }
+    ];
+
+    let state = {
+      sidebarCollapsed: false,
+      currentSubject: 'CBSE Board 2026',
+      currentChapter: CBSE_SYLLABUS['CBSE Board 2026'][0],
+      responseMode: 'hint', // 'hint' | 'solution' | 'check'
+      isStreaming: false,
+      streamTimer: null,
+      flashcardIndex: 0,
+      flashcardFlipped: false,
+      mockSecondsRemaining: 3 * 3600, // 03:00:00
+      mockInterval: null,
+      activeRubric: STARTER_PACKS.datesheet
+    };
+
+    function initIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      populateChaptersForSubject(state.currentSubject);
+      renderRubric(STARTER_PACKS.datesheet);
+      renderFlashcard();
+      updateMockTimerDisplay();
+      initIcons();
+
+      // ── Google Popup Sign-in for Portal ──
+      const GOOGLE_CLIENT_ID = "445249509199-brbsbb840fk013ie1harl17thi6pgnap.apps.googleusercontent.com";
+      const USER_STORAGE_KEY = "boardwallah_user";
+      const SESSION_KEY = "htp_session";
+      let portalTokenClient = null;
+
+      function decodeJwt(token) {
+        try {
+          const base64Url = token.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split('')
+              .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+              .join('')
+          );
+          return JSON.parse(jsonPayload);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function getPortalUser() {
+        try {
+          const raw = localStorage.getItem(USER_STORAGE_KEY);
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function updatePortalSidebarProfile(user) {
+        const nameEl = document.getElementById('portal-user-name');
+        const statusEl = document.getElementById('portal-user-status');
+        const avatarEl = document.getElementById('portal-user-avatar');
+        const cardEl = document.getElementById('portal-profile-card');
+
+        if (!user) {
+          if (nameEl) nameEl.textContent = "Sign in";
+          if (statusEl) statusEl.textContent = "Student Account";
+          if (avatarEl) {
+            avatarEl.className = "w-7 h-7 rounded-full bg-sky-600 flex items-center justify-center text-white font-bold text-xs shrink-0";
+            avatarEl.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+          }
+          if (cardEl) cardEl.setAttribute('title', 'Sign in with Google');
+          return;
+        }
+
+        if (nameEl) nameEl.textContent = user.name || "Student";
+        if (statusEl) statusEl.textContent = user.email || "Active Account";
+        if (cardEl) cardEl.setAttribute('title', `Signed in as ${user.name || user.email}`);
+
+        if (avatarEl) {
+          if (user.picture) {
+            avatarEl.innerHTML = `<img src="${user.picture}" alt="${user.name}" class="w-full h-full rounded-full object-cover" referrerpolicy="no-referrer" />`;
+          } else {
+            const initials = (user.name || "S").split(' ').map(p => p[0]).join('').substring(0, 2).toUpperCase();
+            avatarEl.textContent = initials;
+          }
+        }
+      }
+
+      function handlePortalSignInSuccess(profile, token) {
+        const user = {
+          name: profile.name || "Student",
+          email: profile.email || "",
+          picture: profile.picture || "",
+          sub: profile.sub || ""
+        };
+        try {
+          localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+          if (token) localStorage.setItem(SESSION_KEY, token);
+        } catch (e) {}
+
+        updatePortalSidebarProfile(user);
+
+        const signinModal = document.getElementById('portal-signin-modal');
+        if (signinModal && typeof signinModal.close === 'function') {
+          try { signinModal.close(); } catch (e) {}
+        }
+
+        showToast(`Signed in as ${user.name || user.email}`);
+      }
+
+      function openPortalSignInModal() {
+        const modal = document.getElementById('portal-signin-modal');
+        if (modal) modal.showModal();
+      }
+
+      function openPortalAccountModal(user) {
+        const modal = document.getElementById('portal-account-modal');
+        if (!modal) return;
+        const nameEl = document.getElementById('portal-modal-name');
+        const emailEl = document.getElementById('portal-modal-email');
+        const avatarEl = document.getElementById('portal-modal-avatar');
+        if (nameEl) nameEl.textContent = user.name || "Student";
+        if (emailEl) emailEl.textContent = user.email || "";
+        if (avatarEl) {
+          if (user.picture) {
+            avatarEl.innerHTML = `<img src="${user.picture}" alt="${user.name}" class="w-full h-full rounded-full object-cover" referrerpolicy="no-referrer" />`;
+          } else {
+            avatarEl.textContent = (user.name || "S").substring(0, 2).toUpperCase();
+          }
+        }
+        modal.showModal();
+      }
+
+      function initPortalGooglePopup() {
+        if (typeof window.google === 'undefined' || !window.google.accounts) {
+          setTimeout(initPortalGooglePopup, 200);
+          return;
+        }
+
+        try {
+          if (window.google.accounts.oauth2 && typeof window.google.accounts.oauth2.initTokenClient === 'function') {
+            portalTokenClient = window.google.accounts.oauth2.initTokenClient({
+              client_id: GOOGLE_CLIENT_ID,
+              scope: 'email profile openid',
+              callback: async (tokenResponse) => {
+                if (tokenResponse && tokenResponse.access_token) {
+                  try {
+                    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                      headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+                    });
+                    if (res.ok) {
+                      const profile = await res.json();
+                      handlePortalSignInSuccess(profile, tokenResponse.access_token);
+                    }
+                  } catch (err) {}
+                }
+              },
+              error_callback: (err) => {
+                if (err && err.type === 'popup_failed_to_open') {
+                  openPortalSignInModal();
+                }
+              }
+            });
+          }
+        } catch (e) {}
+
+        try {
+          if (window.google.accounts.id && typeof window.google.accounts.id.initialize === 'function') {
+            window.google.accounts.id.initialize({
+              client_id: GOOGLE_CLIENT_ID,
+              callback: (response) => {
+                if (response && response.credential) {
+                  const decoded = decodeJwt(response.credential);
+                  if (decoded) handlePortalSignInSuccess(decoded, response.credential);
+                }
+              },
+              auto_select: false,
+              cancel_on_tap_outside: true,
+            });
+
+            const btnContainer = document.getElementById('portal-modal-gsi-container');
+            if (btnContainer) {
+              window.google.accounts.id.renderButton(btnContainer, {
+                type: 'standard',
+                theme: 'outline',
+                size: 'large',
+                text: 'signin_with',
+                shape: 'pill',
+                width: 240,
+                logo_alignment: 'left',
+              });
+            }
+          }
+        } catch (e) {}
+      }
+
+      const portalProfileCard = document.getElementById('portal-profile-card');
+      if (portalProfileCard) {
+        portalProfileCard.addEventListener('click', (e) => {
+          e.preventDefault();
+          const user = getPortalUser();
+          if (user) {
+            openPortalAccountModal(user);
+            return;
+          }
+          if (portalTokenClient && typeof portalTokenClient.requestAccessToken === 'function') {
+            portalTokenClient.requestAccessToken({ prompt: 'select_account' });
+          } else if (window.google && window.google.accounts && window.google.accounts.id) {
+            window.google.accounts.id.prompt((notification) => {
+              if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                openPortalSignInModal();
+              }
+            });
+          } else {
+            openPortalSignInModal();
+          }
+        });
+      }
+
+      const closePortalSigninBtn = document.getElementById('close-portal-signin-modal-btn');
+      const closePortalAccountBtn = document.getElementById('close-portal-account-modal-btn');
+      const closePortalAccountActionBtn = document.getElementById('close-portal-account-action-btn');
+      const portalSignoutBtn = document.getElementById('portal-account-signout-btn');
+      const portalSigninModal = document.getElementById('portal-signin-modal');
+      const portalAccountModal = document.getElementById('portal-account-modal');
+
+      if (closePortalSigninBtn && portalSigninModal) {
+        closePortalSigninBtn.addEventListener('click', () => portalSigninModal.close());
+      }
+      if (closePortalAccountBtn && portalAccountModal) {
+        closePortalAccountBtn.addEventListener('click', () => portalAccountModal.close());
+      }
+      if (closePortalAccountActionBtn && portalAccountModal) {
+        closePortalAccountActionBtn.addEventListener('click', () => portalAccountModal.close());
+      }
+      if (portalSignoutBtn) {
+        portalSignoutBtn.addEventListener('click', () => {
+          try {
+            localStorage.removeItem(USER_STORAGE_KEY);
+            localStorage.removeItem(SESSION_KEY);
+          } catch (e) {}
+          updatePortalSidebarProfile(null);
+          if (portalAccountModal) portalAccountModal.close();
+          showToast('Signed out of student account');
+        });
+      }
+
+      const existingPortalUser = getPortalUser();
+      if (existingPortalUser) {
+        updatePortalSidebarProfile(existingPortalUser);
+      } else {
+        const token = localStorage.getItem(SESSION_KEY);
+        if (token) {
+          const decoded = decodeJwt(token);
+          if (decoded && (decoded.name || decoded.email)) {
+            handlePortalSignInSuccess(decoded, token);
+          }
+        }
+      }
+
+      initPortalGooglePopup();
+
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          resetToNewSession();
+        }
+        if (e.key === 'Escape') {
+          const slashMenu = document.getElementById('slashMenu');
+          if (slashMenu) slashMenu.classList.add('hidden');
+        }
+      });
+    });
+
+    // =====================================================================
+    // SUBJECT, CHAPTER & RESPONSE MODE CONTROLS
+    // =====================================================================
+    function selectSubject(subjectName, btnEl) {
+      state.currentSubject = subjectName;
+      document.querySelectorAll('.subject-btn').forEach((b) => {
+        b.className = 'subject-btn flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#21262D] border border-transparent transition-all';
+      });
+      const targetBtn = btnEl || document.querySelector(`[data-subject="${subjectName}"]`);
+      if (targetBtn) {
+        targetBtn.className = 'subject-btn active flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 transition-all';
+      }
+      populateChaptersForSubject(subjectName);
+      toggleMobileSidebar(false);
+    }
+
+    function populateChaptersForSubject(subjectName) {
+      const chapters = CBSE_SYLLABUS[subjectName] || [];
+      const select = document.getElementById('chapterSelect');
+      const countBadge = document.getElementById('chapterCountBadge');
+      if (countBadge) countBadge.textContent = `${chapters.length} Chapters`;
+
+      if (select) {
+        select.innerHTML = chapters
+          .map((ch) => `<option value="${escapeHtml(ch)}">${escapeHtml(ch)}</option>`)
+          .join('');
+      }
+
+      state.currentChapter = chapters[0] || '';
+      updateActiveContextBadge();
+    }
+
+    function handleChapterChange(chapterVal) {
+      state.currentChapter = chapterVal;
+      updateActiveContextBadge();
+      showToast(`Selected: ${chapterVal}`);
+    }
+
+    function updateActiveContextBadge() {
+      const subjEl = document.getElementById('activeSubjectLabel');
+      const chapEl = document.getElementById('activeChapterLabel');
+      if (subjEl) subjEl.textContent = state.currentSubject;
+      if (chapEl) chapEl.textContent = state.currentChapter;
+    }
+
+    function setResponseMode(mode, btnEl) {
+      state.responseMode = mode;
+      document.querySelectorAll('.resp-mode-btn').forEach((b) => {
+        b.className = 'resp-mode-btn px-2.5 py-1 rounded-lg text-[11px] font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all';
+      });
+      if (btnEl) {
+        btnEl.className = 'resp-mode-btn active px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-orange-500 text-white shadow-xs transition-all';
+      }
+      if (mode === 'check') {
+        toggleStudentAttemptBox(true);
+      }
+    }
+
+    function toggleStudentAttemptBox(forceOpen) {
+      const box = document.getElementById('studentAttemptBox');
+      if (!box) return;
+      const open = typeof forceOpen === 'boolean' ? forceOpen : box.classList.contains('hidden');
+      box.classList.toggle('hidden', !open);
+      if (open) {
+        const inp = document.getElementById('studentAttemptInput');
+        if (inp) inp.focus();
+      }
+    }
+
+    // =====================================================================
+    // STARTER CARDS, SAMPLE CHIPS & CONVERSATION STREAM
+    // =====================================================================
+    function triggerStarterCard(packKey) {
+      const pack = STARTER_PACKS[packKey];
+      if (!pack) return;
+      selectSubject(pack.subject);
+      state.currentChapter = pack.chapter;
+      updateActiveContextBadge();
+      const chSelect = document.getElementById('chapterSelect');
+      if (chSelect) chSelect.value = pack.chapter;
+      renderRubric(pack);
+
+      if (packKey === 'mockdrill') {
+        openStudyDrawerTab('mock');
+      }
+
+      if (packKey === 'checksteps') {
+        setResponseMode('check', document.getElementById('mode-check'));
+        toggleStudentAttemptBox(true);
+        const attemptInput = document.getElementById('studentAttemptInput');
+        if (attemptInput) {
+          attemptInput.value = 'Let √5 = p/q (co-prime). 5q² = p² ⇒ 5 divides p. Put p = 5m ⇒ 25m² = 5q² ⇒ 5 divides q.';
+        }
+      }
+
+      submitDoubt(pack.question, pack);
+    }
+
+    function useSampleChip(sampleText) {
+      const input = document.getElementById('promptInput');
+      if (!input) return;
+      input.value = sampleText;
+      handlePromptInput(input);
+      input.focus();
+    }
+
+    function handlePromptInput(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(textarea.scrollHeight, 176) + 'px';
+      updateSendButtonState();
+
+      const val = textarea.value;
+      if (val === '/' || (val.endsWith(' /') && val.length < 30)) {
+        toggleSlashMenu(true);
+      } else if (!val.startsWith('/')) {
+        toggleSlashMenu(false);
+      }
+    }
+
+    function handlePromptKeydown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        const sendBtn = document.getElementById('sendBtn');
+        if (sendBtn && !sendBtn.disabled) {
+          handleSendOrStop();
+        }
+      }
+    }
+
+    function updateSendButtonState() {
+      const input = document.getElementById('promptInput');
+      const btn = document.getElementById('sendBtn');
+      if (btn && input) {
+        btn.disabled = !state.isStreaming && input.value.trim().length === 0;
+      }
+    }
+
+    function toggleSlashMenu(forceOpen) {
+      const menu = document.getElementById('slashMenu');
+      if (!menu) return;
+      const open = typeof forceOpen === 'boolean' ? forceOpen : menu.classList.contains('hidden');
+      menu.classList.toggle('hidden', !open);
+    }
+
+    function insertSlashCommand(cmd) {
+      const input = document.getElementById('promptInput');
+      if (!input) return;
+      input.value = cmd + input.value.replace(/^\/\w+\s*/, '');
+      input.focus();
+      toggleSlashMenu(false);
+      updateSendButtonState();
+
+      if (cmd.startsWith('/hint')) setResponseMode('hint', document.getElementById('mode-hint'));
+      else if (cmd.startsWith('/solution')) setResponseMode('solution', document.getElementById('mode-solution'));
+      else if (cmd.startsWith('/check')) {
+        setResponseMode('check', document.getElementById('mode-check'));
+        toggleStudentAttemptBox(true);
+      }
+    }
+
+    function resolveBoardQuery(raw, attemptText = '') {
+      const lower = raw.toLowerCase().trim();
+
+      // 1. Exam Dates, Timetable, Schedule (handles cbsc, cbse, class 10, datesheet, time table)
+      if (
+        lower.includes('date') ||
+        lower.includes('datesheet') ||
+        lower.includes('date sheet') ||
+        lower.includes('time table') ||
+        lower.includes('timetable') ||
+        lower.includes('schedule') ||
+        lower.includes('when is exam') ||
+        lower.includes('when are exams') ||
+        lower.includes('exam time') ||
+        ((lower.includes('cbse') || lower.includes('cbsc') || lower.includes('board')) && (lower.includes('10') || lower.includes('exam')))
+      ) {
+        selectSubject('CBSE Board 2026');
+        const chapter = 'Official Date Sheet & Timetable';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.datesheet,
+          question: raw
+        };
+      }
+
+      // 2. Passing Criteria, 33% rule, Minimum marks
+      if (
+        lower.includes('pass') ||
+        lower.includes('passing') ||
+        lower.includes('33%') ||
+        lower.includes('criteria') ||
+        lower.includes('fail') ||
+        lower.includes('internal assessment') ||
+        lower.includes('grace') ||
+        lower.includes('compartment')
+      ) {
+        selectSubject('CBSE Board 2026');
+        const chapter = 'Passing Criteria & 33% Rule Explained';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.passing,
+          question: raw
+        };
+      }
+
+      // 3. Strategy, 95%+, Roadmap, Topper, Revision
+      if (
+        lower.includes('strategy') ||
+        lower.includes('roadmap') ||
+        lower.includes('how to score') ||
+        lower.includes('95%') ||
+        lower.includes('90%') ||
+        lower.includes('topper') ||
+        lower.includes('revision') ||
+        lower.includes('study plan') ||
+        lower.includes('routine') ||
+        lower.includes('blueprint')
+      ) {
+        selectSubject('CBSE Board 2026');
+        const chapter = 'Last 30-Day Revision Strategy (95%+)'
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.strategy,
+          question: raw
+        };
+      }
+
+      // 4. Kunal Rai, Mentorship, Trial, Gaur City, Contact
+      if (
+        lower.includes('kunal') ||
+        lower.includes('rai') ||
+        lower.includes('mentor') ||
+        lower.includes('trial') ||
+        lower.includes('gaur city') ||
+        lower.includes('contact') ||
+        lower.includes('demo') ||
+        lower.includes('admission') ||
+        lower.includes('fee') ||
+        lower.includes('batch')
+      ) {
+        selectSubject('CBSE Board 2026');
+        const chapter = 'Exam Day Instructions & Time Management';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.mentorship,
+          question: raw
+        };
+      }
+
+      // 5. Science queries
+      if (
+        lower.includes('hcl') || lower.includes('litmus') || lower.includes('chemical') ||
+        lower.includes('ohm') || lower.includes('reaction') || lower.includes('acid') ||
+        lower.includes('base') || lower.includes('respiration') || lower.includes('xylem') ||
+        lower.includes('phloem') || lower.includes('lens') || lower.includes('mirror') ||
+        lower.includes('electric') || lower.includes('heredity') || lower.includes('mendel') ||
+        lower.includes('photosynthesis') || lower.includes('refraction') || lower.includes('reflection') ||
+        lower.includes('magnetic') || lower.includes('science') || state.currentSubject === 'Science'
+      ) {
+        selectSubject('Science');
+        let chapter = 'Chem Ch 1: Chemical Reactions and Equations';
+        if (lower.includes('ohm') || lower.includes('electric') || lower.includes('current') || lower.includes('volt') || lower.includes('resistance')) {
+          chapter = 'Phy Ch 11: Electricity';
+        } else if (lower.includes('light') || lower.includes('lens') || lower.includes('mirror') || lower.includes('refraction') || lower.includes('reflection')) {
+          chapter = 'Phy Ch 9: Light – Reflection and Refraction';
+        } else if (lower.includes('acid') || lower.includes('base') || lower.includes('litmus') || lower.includes('ph') || lower.includes('salt')) {
+          chapter = 'Chem Ch 2: Acids, Bases and Salts';
+        } else if (lower.includes('xylem') || lower.includes('phloem') || lower.includes('heart') || lower.includes('nephron') || lower.includes('respiration') || lower.includes('life processes')) {
+          chapter = 'Bio Ch 5: Life Processes';
+        } else if (lower.includes('heredity') || lower.includes('mendel') || lower.includes('gene')) {
+          chapter = 'Bio Ch 8: Heredity';
+        }
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.chemical,
+          subject: 'Science',
+          chapter: chapter,
+          question: raw
+        };
+      }
+
+      // 6. Social Science queries
+      if (
+        lower.includes('germany') || lower.includes('bismarck') || lower.includes('nationalism') ||
+        lower.includes('satyagraha') || lower.includes('gandhi') || lower.includes('power sharing') ||
+        lower.includes('federalism') || lower.includes('democracy') || lower.includes('alluvial') ||
+        lower.includes('soil') || lower.includes('social') || lower.includes('sst') || state.currentSubject === 'Social Science'
+      ) {
+        selectSubject('Social Science');
+        let chapter = 'His Ch 1: The Rise of Nationalism in Europe';
+        if (lower.includes('satyagraha') || lower.includes('gandhi') || lower.includes('non-cooperation') || lower.includes('civil disobedience')) {
+          chapter = 'His Ch 2: Nationalism in India';
+        } else if (lower.includes('power sharing') || lower.includes('belgium') || lower.includes('sri lanka')) {
+          chapter = 'Civ Ch 1: Power-sharing';
+        } else if (lower.includes('federalism')) {
+          chapter = 'Civ Ch 2: Federalism';
+        }
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.mockdrill,
+          subject: 'Social Science',
+          chapter: chapter,
+          question: raw
+        };
+      }
+
+      // 7. English queries
+      if (
+        lower.includes('letter to god') || lower.includes('lencho') || lower.includes('nelson mandela') ||
+        lower.includes('apartheid') || lower.includes('anne frank') || lower.includes('analytical paragraph') ||
+        lower.includes('letter writing') || lower.includes('english') || state.currentSubject === 'English'
+      ) {
+        selectSubject('English');
+        const chapter = 'First Flight: A Letter to God & Nelson Mandela';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          subject: 'English',
+          chapter: chapter,
+          marks: '3 MARKS / 5 MARKS',
+          question: raw,
+          hintBody: `**Socratic Hint (English Lang & Lit - CBSE Class 10):**\nWhen answering CBSE English literature questions, structure your answer with:\n1. **Context & Theme:** Mention the character's motivation or author's intent.\n2. **Textual Evidence:** Quote or paraphrase key incidents from the NCERT text.\n3. **Tone & Vocabulary:** Use formal literary terms to fetch full marks.`,
+          solutionBody: `**CBSE Model Answer:**\n- **Content & Understanding (2M):** Directly address the central question using exact references from the chapter.\n- **Expression & Vocabulary (1M):** Maintain coherent sentence flow with accurate grammar, spelling, and tone.\n- **Conclusion:** Conclude with the underlying moral or thematic significance highlighted by the author.`,
+          checkBody: `**Step Audit — English Marking Criteria:**\n- In CBSE Class 10 English, 1/2 mark is deducted for 2 or more grammatical or spelling errors.\n- Check word count: 3-mark questions require 40–50 words; 5-mark questions require 100–120 words.`,
+          rubricSteps: [
+            { mark: '2M', title: 'Content & Key Details', desc: 'Direct answering with accurate NCERT textual reference.' },
+            { mark: '1M', title: 'Expression & Flow', desc: 'Coherence, rich vocabulary, and appropriate tone.' }
+          ],
+          examTip: 'Never exceed the word limit in English exams—concise, well-expressed answers score higher and save critical time for the reading comprehension section.'
+        };
+      }
+
+      // 8. Hindi Course A queries
+      if (
+        lower.includes('नेताजी') || lower.includes('चश्मा') || lower.includes('कैप्टन') ||
+        lower.includes('सूरदास') || lower.includes('बालगोबिन') || lower.includes('लखनवी') ||
+        lower.includes('वाच्य') || lower.includes('अलंकार') || lower.includes('hindi') || lower.includes('हिंदी') || state.currentSubject === 'Hindi Course A'
+      ) {
+        selectSubject('Hindi Course A');
+        const chapter = 'क्षितिज (गद्य): नेताजी का चश्मा, बालगोबिन भगत, लखनवी अंदाज़, मानवीय करुणा की दिव्य चमक';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          subject: 'Hindi Course A',
+          chapter: chapter,
+          marks: '3 अंक (CBSE बोर्ड प्रश्न)',
+          question: raw,
+          hintBody: `**सोक्रेटिक संकेत (क्षितिज भाग-2):**\nसीबीएसई हिंदी 'अ' में उत्तर लिखते समय भाषा की शुद्धता, वर्तनी (spelling) और पाठ के मुख्य भाव को स्पष्ट करना अत्यंत महत्वपूर्ण है।\n- उत्तर को 30-40 शब्दों में स्पष्ट और संतुलित रखें।`,
+          solutionBody: `**सीबीएसई आदर्श उत्तर (3 अंक):**\n1. **विषय-वस्तु (2 अंक):** पाठ्यपुस्तक के आधार पर प्रश्न के मूल भाव को प्रमाण सहित प्रस्तुत करना।\n2. **भाषा एवं प्रस्तुति (1 अंक):** व्याकरण सम्मत, शुद्ध हिंदी तथा वर्तनी की त्रुटि रहित प्रस्तुति।`,
+          checkBody: `**मूल्यांकन जांच (Step Audit):**\n- वर्तनी (spelling) और मात्राओं की जांच करें।\n- उत्तर में मुख्य पात्र या प्रसंग का नाम सही लिखा होना चाहिए।`,
+          rubricSteps: [
+            { mark: '2 अंक', title: 'विषय वस्तु व पाठ संदर्भ', desc: 'प्रश्नानुसार सटीक एवं तर्कसंगत उत्तर।' },
+            { mark: '1 अंक', title: 'भाषा शैली व वर्तनी शुद्धता', desc: 'व्याकरण व वर्तनी की शुद्धता।' }
+          ],
+          examTip: 'हिंदी की परीक्षा में उत्तर में काट-छाँट से बचें। उत्तर समाप्त होने पर पेंसिल से एक रेखा खींचें।'
+        };
+      }
+
+      // 9. Mathematics queries
+      if (
+        lower.includes('quadratic') || lower.includes('discriminant') || lower.includes('attempt') || attemptText ||
+        lower.includes('root') || lower.includes('b² - 4ac')
+      ) {
+        selectSubject('Mathematics');
+        const chapter = 'Ch 4: Quadratic Equations';
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.checksteps,
+          subject: 'Mathematics',
+          chapter: chapter,
+          question: raw
+        };
+      }
+
+      if (
+        lower.includes('√') || lower.includes('irrational') || lower.includes('real number') ||
+        lower.includes('hcf') || lower.includes('lcm') || lower.includes('co-prime') ||
+        lower.includes('bpt') || lower.includes('thales') || lower.includes('triangle') ||
+        lower.includes('trig') || lower.includes('sin') || lower.includes('cos') || lower.includes('tan') ||
+        lower.includes('circle') || lower.includes('tangent') || lower.includes('ap') || lower.includes('arithmetic progression') ||
+        state.currentSubject === 'Mathematics'
+      ) {
+        selectSubject('Mathematics');
+        let chapter = 'Ch 1: Real Numbers';
+        if (lower.includes('bpt') || lower.includes('thales') || lower.includes('triangle')) {
+          chapter = 'Ch 6: Triangles';
+        } else if (lower.includes('ap') || lower.includes('arithmetic progression')) {
+          chapter = 'Ch 5: Arithmetic Progressions';
+        } else if (lower.includes('trig') || lower.includes('sin') || lower.includes('cos') || lower.includes('tan')) {
+          chapter = 'Ch 8: Introduction to Trigonometry';
+        } else if (lower.includes('circle') || lower.includes('tangent')) {
+          chapter = 'Ch 10: Circles';
+        }
+        state.currentChapter = chapter;
+        updateActiveContextBadge();
+        const chSelect = document.getElementById('chapterSelect');
+        if (chSelect) chSelect.value = chapter;
+        return {
+          ...STARTER_PACKS.irrational,
+          subject: 'Mathematics',
+          chapter: chapter,
+          question: raw
+        };
+      }
+
+      // 10. Universal fallback: Dynamic structured answer for any general Class 10 question
+      return {
+        subject: state.currentSubject || 'CBSE Board 2026',
+        chapter: state.currentChapter || 'Official Date Sheet & Timetable',
+        marks: 'CBSE CLASS 10 CONCEPT',
+        question: raw,
+        hintBody: `**Socratic Guidance for: "${escapeHtml(raw)}":**\n- Identify the core CBSE NCERT principle or formula governing this question.\n- Recall which section or chapter of the Class 10 syllabus this belongs to.\n- Break down your answer into stepwise points matching the official CBSE marking scheme.`,
+        solutionBody: `**CBSE Structured Model Response:**\n\n1. **Core Concept & Definition:**\n   For **"${escapeHtml(raw)}"**, ensure your definition or explanation directly mirrors the standard NCERT formulation.\n2. **Key Steps / Supporting Evidence:**\n   - State all given values, assumptions, and primary formulas with units.\n   - Write each derivation or reasoning step on a separate line.\n3. **Conclusion & Final Statement:**\n   - Conclude with a clear statement directly answering the question prompt.\n   - In CBSE board exams, clear stepwise presentation guarantees maximum marks even if arithmetic slips occur.`,
+        checkBody: `**Examiner Step Audit:**\n- **Formula / Concept Stated:** 0.5–1 Mark\n- **Working / Justification:** 1–2 Marks\n- **Final Answer with Units:** 0.5–1 Mark`,
+        rubricSteps: [
+          { mark: 'Step 1', title: 'Conceptual Definition / Formula', desc: 'Direct NCERT-aligned statement or principle.' },
+          { mark: 'Step 2', title: 'Logical Derivation / Working', desc: 'Clear stepwise development with intermediate results.' },
+          { mark: 'Step 3', title: 'Final Answer & Conclusion', desc: 'Accurate conclusion with proper units and notation.' }
+        ],
+        examTip: 'CBSE follows strict step-marking: never leave a question blank. Even stating the relevant formula, theorem, or law fetches partial step credit.'
+      };
+    }
+
+    async function handleSendOrStop() {
+      if (state.isStreaming) {
+        stopStreaming();
+        return;
+      }
+      const input = document.getElementById('promptInput');
+      if (!input) return;
+      let raw = input.value.trim();
+      if (!raw) return;
+
+      if (raw.startsWith('/hint ')) {
+        setResponseMode('hint', document.getElementById('mode-hint'));
+        raw = raw.slice(6).trim();
+      } else if (raw.startsWith('/solution ')) {
+        setResponseMode('solution', document.getElementById('mode-solution'));
+        raw = raw.slice(10).trim();
+      } else if (raw.startsWith('/check ')) {
+        setResponseMode('check', document.getElementById('mode-check'));
+        raw = raw.slice(7).trim();
+      } else if (raw.startsWith('/pyq ')) {
+        raw = `CBSE PYQ Practice: ${raw.slice(5).trim()}`;
+      }
+
+      const attemptInput = document.getElementById('studentAttemptInput');
+      const attemptText = attemptInput ? attemptInput.value.trim() : '';
+      input.value = '';
+      input.style.height = 'auto';
+      toggleSlashMenu(false);
+
+      // Resolve query intelligently across all subjects and board information
+      const pack = resolveBoardQuery(raw, attemptText);
+
+      submitDoubt(raw, pack, attemptText);
+    }
+
+    async function submitDoubt(questionText, pack, attemptText = '') {
+      const zeroState = document.getElementById('zeroState');
+      if (zeroState) zeroState.classList.add('hidden');
+      const thread = document.getElementById('messageThread');
+      if (thread) {
+        thread.classList.remove('hidden');
+        thread.classList.add('flex');
+      }
+
+      appendStudentMessage(questionText, attemptText);
+      startStreamingState();
+
+      // Attempt live API if available, else render high-yield CBSE model response
+      let liveResponseRendered = false;
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 3500);
+        const resp = await fetch('/api/v1/ai/doubt-tutor', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question: questionText + (attemptText ? `\n\nStudent Working: ${attemptText}` : ''),
+            mode: state.responseMode,
+            subject: state.currentSubject,
+            chapter: state.currentChapter
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeout);
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && data.answer) {
+            appendTutorResponse({
+              ...pack,
+              hintBody: data.answer,
+              solutionBody: data.answer,
+              checkBody: data.answer
+            }, attemptText);
+            renderRubric(pack);
+            stopStreaming();
+            liveResponseRendered = true;
+          }
+        }
+      } catch (err) {
+        // Fall back to immediate CBSE starter pack
+      }
+
+      if (!liveResponseRendered) {
+        state.streamTimer = setTimeout(() => {
+          appendTutorResponse(pack, attemptText);
+          renderRubric(pack);
+          stopStreaming();
+        }, 700);
+      }
+    }
+
+    function startStreamingState() {
+      state.isStreaming = true;
+      const btn = document.getElementById('sendBtn');
+      const icon = document.getElementById('sendBtnIcon');
+      if (btn) {
+        btn.disabled = false;
+        btn.classList.replace('bg-orange-500', 'bg-rose-500');
+      }
+      if (icon) {
+        icon.setAttribute('data-lucide', 'square');
+      }
+      initIcons();
+
+      const thread = document.getElementById('messageThread');
+      if (thread) {
+        const loader = document.createElement('div');
+        loader.id = 'streamingLoader';
+        loader.className = 'flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 py-2';
+        loader.innerHTML = `
+          <div class="w-7 h-7 rounded-xl bw-spark-ring flex items-center justify-center animate-spark shrink-0">
+            <span class="font-mono font-bold text-[10px] text-orange-500">10B</span>
+          </div>
+          <span class="font-mono">10Boardwallah is checking CBSE marking scheme...</span>
+        `;
+        thread.appendChild(loader);
+        scrollChatToBottom();
+      }
+    }
+
+    function stopStreaming() {
+      state.isStreaming = false;
+      clearTimeout(state.streamTimer);
+      const loader = document.getElementById('streamingLoader');
+      if (loader) loader.remove();
+
+      const btn = document.getElementById('sendBtn');
+      const icon = document.getElementById('sendBtnIcon');
+      if (btn) {
+        btn.classList.replace('bg-rose-500', 'bg-orange-500');
+      }
+      if (icon) {
+        icon.setAttribute('data-lucide', 'arrow-up');
+      }
+      updateSendButtonState();
+      initIcons();
+    }
+
+    function appendStudentMessage(questionText, attemptText) {
+      const thread = document.getElementById('messageThread');
+      if (!thread) return;
+      const el = document.createElement('div');
+      el.className = 'flex justify-end';
+      const attemptHtml = attemptText
+        ? `<div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 text-xs font-mono text-sky-600 dark:text-sky-400 whitespace-pre-wrap">My Steps: ${escapeHtml(attemptText)}</div>`
+        : '';
+      el.innerHTML = `
+        <div class="max-w-[85%] sm:max-w-[75%] rounded-2xl rounded-tr-sm px-4 py-3 bg-white dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] text-sm text-slate-800 dark:text-slate-100 shadow-xs leading-relaxed">
+          <div class="text-[10px] font-mono text-orange-500 mb-1">${escapeHtml(state.currentSubject)} • ${escapeHtml(state.currentChapter)}</div>
+          <div>${escapeHtml(questionText)}</div>
+          ${attemptHtml}
+        </div>
+      `;
+      thread.appendChild(el);
+      scrollChatToBottom();
+    }
+
+    function appendTutorResponse(pack, attemptText) {
+      const thread = document.getElementById('messageThread');
+      if (!thread) return;
+      const el = document.createElement('div');
+      el.className = 'flex items-start gap-3.5';
+
+      let bodyMarkdown = pack.hintBody;
+      let modeBadge = '💡 SOCRATIC HINT';
+      if (state.responseMode === 'solution') {
+        bodyMarkdown = pack.solutionBody;
+        modeBadge = '📝 CBSE MODEL SOLUTION';
+      } else if (state.responseMode === 'check') {
+        bodyMarkdown = pack.checkBody + (attemptText ? `\n\n**Audited Student Attempt:** \`${attemptText}\`` : '');
+        modeBadge = '🔍 STEP AUDIT';
+      }
+
+      const rubricChipsHtml = (pack.rubricSteps || [])
+        .map((r) => `<span class="px-2 py-1 rounded-lg bg-slate-100 dark:bg-[#0D1117] border border-slate-200 dark:border-[#30363D] text-[11px] font-mono"><strong class="text-orange-500">${escapeHtml(r.mark)}</strong> ${escapeHtml(r.title)}</span>`)
+        .join('');
+
+      el.innerHTML = `
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-orange-500 to-sky-400 p-[1.5px] shrink-0 mt-0.5 shadow-xs">
+          <div class="w-full h-full rounded-[10px] bg-white dark:bg-[#0D1117] flex items-center justify-center font-mono font-bold text-[10px]">
+            <span class="text-orange-500">10</span><span class="text-slate-900 dark:text-white">B</span>
+          </div>
+        </div>
+
+        <div class="flex-1 min-w-0 space-y-3">
+          <div class="rounded-2xl border border-slate-200 dark:border-[#30363D] bg-white dark:bg-[#161B22] p-4 shadow-xs space-y-3">
+            <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+              <span class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-orange-500/15 text-orange-600 dark:text-orange-400">${modeBadge}</span>
+              <span class="text-[11px] font-mono text-slate-400">${escapeHtml(pack.marks || '3 MARKS')} • CBSE Class 10</span>
+            </div>
+
+            <div class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed space-y-2">
+              ${formatBoardMarkdown(bodyMarkdown)}
+            </div>
+
+            <!-- Step-Wise Marks Summary Strip -->
+            <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+              <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Step-Wise Marking Allocation</div>
+              <div class="flex flex-wrap gap-1.5">${rubricChipsHtml}</div>
+            </div>
+
+            <div class="pt-2 flex flex-wrap items-center gap-2">
+              <button onclick="openStudyDrawerTab('rubric')" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 hover:bg-orange-500/20 transition-colors">
+                Open Full Marking Rubric →
+              </button>
+              <button onclick="openStudyDrawerTab('flashcards')" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-100 dark:bg-[#21262D] text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-[#2b323b] transition-colors">
+                Practice Flashcards
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      thread.appendChild(el);
+      initIcons();
+      scrollChatToBottom();
+    }
+
+    function resetToNewSession(e) {
+      if (e) e.preventDefault();
+      stopStreaming();
+      const zero = document.getElementById('zeroState');
+      if (zero) zero.classList.remove('hidden');
+      const thread = document.getElementById('messageThread');
+      if (thread) {
+        thread.classList.add('hidden');
+        thread.innerHTML = '';
+      }
+      const pInput = document.getElementById('promptInput');
+      if (pInput) pInput.value = '';
+      const sInput = document.getElementById('studentAttemptInput');
+      if (sInput) sInput.value = '';
+      updateSendButtonState();
+      toggleMobileSidebar(false);
+    }
+
+    // =====================================================================
+    // RIGHT STUDY DRAWER: RUBRIC, 80 FLASHCARDS & 80-MARK MOCK TIMER
+    // =====================================================================
+    function toggleStudyDrawer(forceOpen) {
+      const drawer = document.getElementById('studyDrawer');
+      if (!drawer) return;
+      const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : drawer.classList.contains('hidden');
+      drawer.classList.toggle('hidden', !shouldOpen);
+      drawer.classList.toggle('flex', shouldOpen);
+    }
+
+    function openStudyDrawerTab(tabName) {
+      toggleStudyDrawer(true);
+      switchStudyTab(tabName);
+      toggleMobileSidebar(false);
+    }
+
+    function switchStudyTab(tabName) {
+      ['rubric', 'flashcards', 'mock'].forEach((t) => {
+        const btn = document.getElementById(`tab-${t}`);
+        const panel = document.getElementById(`panel-${t}`);
+        if (!btn || !panel) return;
+        if (t === tabName) {
+          btn.className = 'study-tab px-3 py-2 text-xs font-semibold border-b-2 border-orange-500 text-orange-600 dark:text-orange-400 whitespace-nowrap transition-colors';
+          panel.classList.remove('hidden');
+        } else {
+          btn.className = 'study-tab px-3 py-2 text-xs font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 whitespace-nowrap transition-colors';
+          panel.classList.add('hidden');
+        }
+      });
+    }
+
+    function renderRubric(pack) {
+      state.activeRubric = pack;
+      const subPill = document.getElementById('rubricSubjectPill');
+      const chapPill = document.getElementById('rubricChapterPill');
+      const qTitle = document.getElementById('rubricQuestionTitle');
+      const tip = document.getElementById('rubricExamTip');
+      if (subPill) subPill.textContent = `${(pack.subject || '').toUpperCase()} • ${pack.marks || '3 MARKS'}`;
+      if (chapPill) chapPill.textContent = pack.chapter || '';
+      if (qTitle) qTitle.textContent = pack.question || '';
+      if (tip) tip.textContent = pack.examTip || '';
+
+      const list = document.getElementById('rubricStepsList');
+      if (list && pack.rubricSteps) {
+        list.innerHTML = pack.rubricSteps
+          .map((step) => `
+            <div class="p-3.5 rounded-xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] flex items-start gap-3">
+              <span class="px-2 py-1 rounded-lg font-mono text-xs font-bold bg-orange-500/15 text-orange-600 dark:text-orange-400 shrink-0">${escapeHtml(step.mark)}</span>
+              <div>
+                <div class="text-xs font-bold text-slate-900 dark:text-white">${escapeHtml(step.title)}</div>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">${escapeHtml(step.desc)}</p>
+              </div>
+            </div>
+          `)
+          .join('');
+      }
+    }
+
+    // Flashcards Logic
+    function renderFlashcard() {
+      const card = FLASHCARDS[state.flashcardIndex];
+      if (!card) return;
+      const sBadge = document.getElementById('fcSubjectBadge');
+      const fText = document.getElementById('fcFrontText');
+      const bText = document.getElementById('fcBackText');
+      const counter = document.getElementById('flashcardCounter');
+      if (sBadge) sBadge.textContent = card.subject;
+      if (fText) fText.textContent = card.front;
+      if (bText) bText.innerHTML = card.back;
+      if (counter) counter.textContent = `Card ${state.flashcardIndex + 1} of ${FLASHCARDS.length} (80-Card CBSE Deck)`;
+
+      const box = document.getElementById('flashcardBox');
+      if (box) {
+        state.flashcardFlipped = false;
+        box.classList.remove('is-flipped');
+      }
+    }
+
+    function flipCurrentFlashcard() {
+      state.flashcardFlipped = !state.flashcardFlipped;
+      const box = document.getElementById('flashcardBox');
+      if (box) box.classList.toggle('is-flipped', state.flashcardFlipped);
+    }
+
+    function nextFlashcard() {
+      state.flashcardIndex = (state.flashcardIndex + 1) % FLASHCARDS.length;
+      renderFlashcard();
+    }
+
+    function prevFlashcard() {
+      state.flashcardIndex = (state.flashcardIndex - 1 + FLASHCARDS.length) % FLASHCARDS.length;
+      renderFlashcard();
+    }
+
+    // 80-Mark Mock Timer (3 Hours = 10,800s)
+    function updateMockTimerDisplay() {
+      const total = Math.max(0, state.mockSecondsRemaining);
+      const hrs = String(Math.floor(total / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+      const secs = String(total % 60).padStart(2, '0');
+      const display = document.getElementById('mockTimerDisplay');
+      if (display) display.textContent = `${hrs}:${mins}:${secs}`;
+    }
+
+    function startMockTimer() {
+      if (state.mockInterval) return;
+      state.mockInterval = setInterval(() => {
+        if (state.mockSecondsRemaining > 0) {
+          state.mockSecondsRemaining--;
+          updateMockTimerDisplay();
+        } else {
+          pauseMockTimer();
+          showToast('3-Hour CBSE Mock Exam time completed!');
+        }
+      }, 1000);
+      showToast('80-Mark Mock Timer started (3:00:00)');
+    }
+
+    function pauseMockTimer() {
+      clearInterval(state.mockInterval);
+      state.mockInterval = null;
+    }
+
+    function resetMockTimer() {
+      pauseMockTimer();
+      state.mockSecondsRemaining = 3 * 3600;
+      updateMockTimerDisplay();
+      showToast('Timer reset to 03:00:00');
+    }
+
+    // =====================================================================
+    // THEME, SIDEBAR & TOAST UTILITIES
+    // =====================================================================
+    function initTheme() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (icon) icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+      if (label) label.textContent = isDark ? 'Chalk Light Mode' : 'Slate Dark Mode';
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      try {
+        localStorage.setItem('bw_theme', isDark ? 'dark' : 'light');
+      } catch (e) {}
+      initTheme();
+      initIcons();
+    }
+
+    function toggleSidebarCollapse() {
+      const sidebar = document.getElementById('sidebar');
+      const expandBtn = document.getElementById('desktopSidebarExpandBtn');
+      if (!sidebar) return;
+      state.sidebarCollapsed = !state.sidebarCollapsed;
+      sidebar.style.width = state.sidebarCollapsed ? '64px' : '260px';
+      document.querySelectorAll('.sidebar-label').forEach((el) => {
+        el.classList.toggle('hidden', state.sidebarCollapsed);
+      });
+      if (expandBtn) {
+        expandBtn.classList.toggle('hidden', !state.sidebarCollapsed);
+      }
+    }
+
+    function toggleMobileSidebar(open) {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('mobileBackdrop');
+      if (sidebar) sidebar.classList.toggle('-translate-x-full', !open);
+      if (backdrop) backdrop.classList.toggle('hidden', !open);
+    }
+
+    function showTrialInfoToast() {
+      showToast('Kunal Rai • Free 60-Min Trial (Online or Gaur City 2 & VVIP Homes, 16:00–20:00 IST)');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMessage');
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 2800);
+    }
+
+    function scrollChatToBottom() {
+      const scroller = document.getElementById('chatScrollArea');
+      if (scroller) scroller.scrollTop = scroller.scrollHeight;
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function formatBoardMarkdown(text) {
+      let formatted = escapeHtml(text);
+
+      // Support simple markdown tables
+      if (formatted.includes('|')) {
+        const lines = formatted.split('\n');
+        let inTable = false;
+        let tableRows = [];
+        const newLines = [];
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (line.startsWith('|') && line.endsWith('|')) {
+            if (!inTable) {
+              inTable = true;
+              tableRows = [];
+            }
+            // Skip separator line like | :--- | :--- |
+            if (/^\|(\s*[:-]+[-| :]*)\|$/.test(line)) {
+              continue;
+            }
+            const cells = line.slice(1, -1).split('|').map(c => c.trim());
+            const isHeader = tableRows.length === 0;
+            const tag = isHeader ? 'th' : 'td';
+            const cellClass = isHeader 
+              ? 'py-2 px-3 text-left font-semibold text-orange-600 dark:text-orange-400 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#1C2128]' 
+              : 'py-2 px-3 border-b border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300';
+            const rowHtml = `<tr class="${isHeader ? '' : 'hover:bg-slate-50/50 dark:hover:bg-[#1C2128]/50'}">${cells.map(c => `<${tag} class="${cellClass}">${c}</${tag}>`).join('')}</tr>`;
+            tableRows.push(rowHtml);
+          } else {
+            if (inTable) {
+              newLines.push(`<div class="overflow-x-auto my-3 rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs font-mono border-collapse">${tableRows.join('')}</table></div>`);
+              inTable = false;
+              tableRows = [];
+            }
+            newLines.push(lines[i]);
+          }
+        }
+        if (inTable) {
+          newLines.push(`<div class="overflow-x-auto my-3 rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs font-mono border-collapse">${tableRows.join('')}</table></div>`);
+        }
+        formatted = newLines.join('\n');
+      }
+
+      return formatted
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-slate-900 dark:text-white">$1</strong>')
+        .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded text-xs font-mono bg-orange-500/10 text-orange-600 dark:text-orange-300">$1</code>')
+        .replace(/\n\n/g, '</p><p class="mt-2.5">')
+        .replace(/\n/g, '<br/>');
+    }
+  </script>
+
+  <style is:global>
+    /* Custom Scrollbars & Theme Variables */
+    :root {
+      --bw-bg-primary: #F8FAFC;
+      --bw-bg-secondary: #FFFFFF;
+      --bw-bg-tertiary: #F1F5F9;
+      --bw-text-primary: #1F1F1F;
+      --bw-text-secondary: #5F6368;
+      --bw-border: #E2E8F0;
+      --bw-accent: #EA580C;
+      --bw-cyan: #0284C7;
+    }
+
+    html.dark {
+      --bw-bg-primary: #0D1117;
+      --bw-bg-secondary: #161B22;
+      --bw-bg-tertiary: #21262D;
+      --bw-text-primary: #F0F6FC;
+      --bw-text-secondary: #8B949E;
+      --bw-border: #30363D;
+      --bw-accent: #F97316;
+      --bw-cyan: #38BDF8;
+    }
+
+    body {
+      background-color: var(--bw-bg-primary);
+      color: var(--bw-text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Reset button styling to prevent global.css theme bleed */
+    button {
+      background-color: transparent;
+      color: inherit;
+      font: inherit;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      text-decoration: none;
+    }
+
+    code, pre, .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-ligatures: contextual;
+    }
+
+    /* Subtle custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(139, 148, 158, 0.25);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(139, 148, 158, 0.45);
+    }
+
+    /* Brand Gradient Text & Ring */
+    .bw-gradient-text {
+      background: linear-gradient(135deg, #F97316 0%, #38BDF8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .bw-spark-ring {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(56, 189, 248, 0.2));
+      border: 1px solid rgba(249, 115, 22, 0.35);
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.65; transform: scale(0.95); }
+    }
+    .animate-spark {
+      animation: pulseGlow 1.8s infinite ease-in-out;
+    }
+
+    /* Flashcard 3D flip support */
+    .perspective-1000 { perspective: 1000px; }
+    .preserve-3d { transform-style: preserve-3d; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+    .backface-hidden { backface-visibility: hidden; }
+    .rotate-y-180 { transform: rotateY(180deg); }
+    .is-flipped .preserve-3d { transform: rotateY(180deg); }
+  </style>
+</Layout>
