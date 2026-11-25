@@ -9,4 +9,654 @@ import { magnetismLesson } from "../../../../data/physics/magnetism";
   description={magnetismLesson.subtitle}
 >
   <PhysicsViewer lesson={magnetismLesson} />
+
+  <!-- Comprehensive CBSE Board Rules & Educational Reference Guide -->
+  <section class="mag-rules-guide wrap" aria-label="CBSE Magnetism Rules and Principles">
+    <header class="mag-guide-header">
+      <span class="mag-badge">CBSE Class 10 Physics • Chapter 13</span>
+      <h2>Hand Rules in Magnetism: Complete Visual Reference Guide</h2>
+      <p class="mag-lead">
+        Master Maxwell&apos;s Right-Hand Thumb Rule, Fleming&apos;s Left-Hand Rule, and the Clock Face Rule with visual vector diagrams, mnemonics, and solved board exam questions.
+      </p>
+    </header>
+
+    <div class="mag-rules-grid">
+      <!-- Rule 1: Maxwell's Right-Hand Thumb Rule -->
+      <article class="mag-rule-card thumb-card">
+        <div class="mag-rule-badge">Rule 1 • Direction of Magnetic Field</div>
+        <h3>1. Maxwell&apos;s Right-Hand Thumb Rule</h3>
+        <p class="mag-rule-purpose">
+          <strong>Purpose:</strong> Determines the direction of concentric magnetic field lines (B) around a straight current-carrying conductor or circular loop.
+        </p>
+
+        <!-- SVG Diagram: Right-Hand Thumb Rule -->
+        <div class="mag-diagram-wrap">
+          <svg viewBox="0 0 460 220" class="mag-svg" aria-label="Maxwell Right-Hand Thumb Rule Diagram">
+            <!-- Background plane representing cardboard -->
+            <polygon points="60,150 400,150 360,205 20,205" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2" />
+            <!-- Concentric circular magnetic field lines on cardboard -->
+            <ellipse cx="210" cy="178" rx="140" ry="24" fill="none" stroke="#93c5fd" stroke-width="2" stroke-dasharray="4,4" />
+            <ellipse cx="210" cy="178" rx="90" ry="16" fill="none" stroke="#3b82f6" stroke-width="2.5" />
+            <ellipse cx="210" cy="178" rx="45" ry="9" fill="none" stroke="#1d4ed8" stroke-width="2.5" />
+            <!-- Circulation arrow on outer ellipse -->
+            <polygon points="120,186 112,180 122,176" fill="#1d4ed8" />
+            <polygon points="300,170 308,176 298,180" fill="#1d4ed8" />
+            <text x="325" y="180" font-size="12" font-weight="700" fill="#1d4ed8">Magnetic Field (B)</text>
+            <text x="325" y="196" font-size="11" fill="#475569">Anti-clockwise (from top)</text>
+
+            <!-- Vertical Conductor Wire -->
+            <rect x="206" y="25" width="8" height="175" fill="#d97706" rx="4" />
+            <!-- Current Arrow Upward -->
+            <line x1="210" y1="90" x2="210" y2="38" stroke="#ef4444" stroke-width="4" stroke-linecap="round" />
+            <polygon points="210,25 203,42 217,42" fill="#ef4444" />
+            <text x="224" y="38" font-size="14" font-weight="800" fill="#ef4444">Current (I) ↑</text>
+
+            <!-- Stylized Right Hand Grasping Conductor -->
+            <!-- Forearm -->
+            <path d="M 330 115 L 265 110 L 265 142 L 330 145 Z" fill="#3b82f6" opacity="0.9" rx="4" />
+            <text x="278" y="132" font-size="10" font-weight="700" fill="#ffffff">Right Hand</text>
+            <!-- Palm -->
+            <rect x="222" y="98" width="45" height="42" rx="8" fill="#f5be9e" stroke="#e09f7a" stroke-width="1.5" />
+            <!-- Curled Fingers wrapping around wire -->
+            <path d="M 224 105 C 195 105, 195 125, 222 125" fill="none" stroke="#e09f7a" stroke-width="12" stroke-linecap="round" />
+            <path d="M 224 118 C 198 118, 198 136, 222 136" fill="none" stroke="#e09f7a" stroke-width="11" stroke-linecap="round" />
+            <!-- Extended Thumb Pointing Upward -->
+            <path d="M 222 102 C 222 80, 218 65, 218 55 C 218 50, 228 50, 228 56 C 228 68, 232 85, 232 102 Z" fill="#f5be9e" stroke="#e09f7a" stroke-width="1.5" />
+            <!-- Thumb Label -->
+            <text x="135" y="70" font-size="12" font-weight="700" fill="#b45309">Thumb points along Current (I)</text>
+            <path d="M 185 75 L 214 75" stroke="#b45309" stroke-width="1.5" stroke-dasharray="2,2" />
+          </svg>
+        </div>
+
+        <div class="mag-statement-box">
+          <strong>Official CBSE Statement:</strong>
+          <p>
+            &ldquo;Imagine holding a current-carrying straight conductor in your right hand such that the thumb points towards the direction of current. Then your fingers will wrap around the conductor in the direction of the field lines of the magnetic field.&rdquo;
+          </p>
+        </div>
+
+        <div class="mag-key-points">
+          <h4>Key Applications &amp; Rules:</h4>
+          <ul>
+            <li>
+              <strong>Upward Current (&uarr;):</strong> Magnetic field lines circulate in an <em>Anti-Clockwise</em> direction (when viewed from above).
+            </li>
+            <li>
+              <strong>Downward Current (&darr;):</strong> Magnetic field lines circulate in a <em>Clockwise</em> direction.
+            </li>
+            <li>
+              <strong>Field Strength Formula:</strong> B = (&mu;&sub0; &middot; I) / (2&pi; &middot; r). Magnetic field strength is directly proportional to current (B &prop; I) and inversely proportional to radial distance (B &prop; 1/r).
+            </li>
+            <li>
+              <strong>Clock Face Rule (Poles of a Coil):</strong>
+              <div class="mag-sub-pill-wrap">
+                <span class="mag-sub-pill blue">Clockwise Current = South Pole (S)</span>
+                <span class="mag-sub-pill red">Anti-Clockwise Current = North Pole (N)</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Rule 2: Fleming's Left-Hand Rule -->
+      <article class="mag-rule-card fleming-card">
+        <div class="mag-rule-badge motor-badge">Rule 2 • Direction of Mechanical Force (Motor Effect)</div>
+        <h3>2. Fleming&apos;s Left-Hand Rule</h3>
+        <p class="mag-rule-purpose">
+          <strong>Purpose:</strong> Determines the direction of mechanical force (F) acting on a current-carrying conductor placed inside an external magnetic field.
+        </p>
+
+        <!-- SVG Diagram: Fleming's Left-Hand Rule -->
+        <div class="mag-diagram-wrap">
+          <svg viewBox="0 0 460 220" class="mag-svg" aria-label="Fleming Left-Hand Rule Diagram">
+            <!-- Horseshoe Magnet Poles -->
+            <!-- North Pole (Red) -->
+            <rect x="30" y="20" width="75" height="38" fill="#ef4444" rx="6" />
+            <text x="60" y="44" font-size="16" font-weight="800" fill="#ffffff">N</text>
+            <!-- South Pole (Blue) -->
+            <rect x="30" y="162" width="75" height="38" fill="#2563eb" rx="6" />
+            <text x="60" y="186" font-size="16" font-weight="800" fill="#ffffff">S</text>
+
+            <!-- Magnetic Field Lines from North to South (Downward) -->
+            <line x1="55" y1="62" x2="55" y2="158" stroke="#93c5fd" stroke-width="2" stroke-dasharray="4,4" />
+            <line x1="68" y1="62" x2="68" y2="158" stroke="#2563eb" stroke-width="2.5" />
+            <polygon points="68,158 63,146 73,146" fill="#2563eb" />
+            <line x1="80" y1="62" x2="80" y2="158" stroke="#93c5fd" stroke-width="2" stroke-dasharray="4,4" />
+            <text x="96" y="115" font-size="12" font-weight="700" fill="#2563eb">Field B (N &rarr; S)</text>
+
+            <!-- Conductor Rod passing horizontally through the field -->
+            <rect x="15" y="104" width="220" height="12" fill="#d97706" rx="6" />
+            <text x="12" y="98" font-size="10" font-weight="700" fill="#b45309">Current-Carrying Conductor</text>
+
+            <!-- Fleming's Stretched Left Hand Representation -->
+            <!-- Palm Block -->
+            <rect x="280" y="92" width="50" height="48" rx="8" fill="#f5be9e" stroke="#e09f7a" stroke-width="1.5" />
+            <!-- Forefinger: pointing along Field B (Downward) -->
+            <rect x="288" y="140" width="14" height="52" rx="7" fill="#f5be9e" stroke="#e09f7a" stroke-width="1.5" />
+            <!-- Arrow on Forefinger: Field B -->
+            <line x1="295" y1="150" x2="295" y2="198" stroke="#2563eb" stroke-width="3" stroke-linecap="round" />
+            <polygon points="295,204 290,192 300,192" fill="#2563eb" />
+            <text x="312" y="196" font-size="12" font-weight="800" fill="#2563eb">Forefinger = Field (B) &darr;</text>
+
+            <!-- Middle Finger: pointing along Current I (Leftward / Conductor) -->
+            <rect x="228" y="108" width="52" height="14" rx="7" fill="#f5be9e" stroke="#e09f7a" stroke-width="1.5" />
+            <!-- Arrow on Middle Finger: Current I -->
+            <line x1="270" y1="115" x2="222" y2="115" stroke="#ef4444" stroke-width="3" stroke-linecap="round" />
+            <polygon points="216,115 228,110 228,120" fill="#ef4444" />
+            <text x="210" y="88" font-size="12" font-weight="800" fill="#ef4444">Middle = Current (I) &larr;</text>
+
+            <!-- Thumb: pointing along Force F (Upward / Outward) -->
+            <rect x="288" y="32" width="16" height="60" rx="8" fill="#f5be9e" stroke="#e09f7a" stroke-width="1.5" />
+            <!-- Arrow on Thumb: Force F -->
+            <line x1="296" y1="80" x2="296" y2="28" stroke="#10b981" stroke-width="3.5" stroke-linecap="round" />
+            <polygon points="296,20 290,32 302,32" fill="#10b981" />
+            <text x="316" y="42" font-size="13" font-weight="800" fill="#059669">Thumb = Force / Motion (F) &uarr;</text>
+
+            <!-- Ring and Little fingers curled into palm -->
+            <ellipse cx="320" cy="110" rx="7" ry="12" fill="#e09f7a" />
+            <ellipse cx="326" cy="120" rx="6" ry="10" fill="#e09f7a" />
+          </svg>
+        </div>
+
+        <div class="mag-statement-box motor-box">
+          <strong>Official CBSE Statement:</strong>
+          <p>
+            &ldquo;Stretch the thumb, forefinger and middle finger of your left hand such that they are mutually perpendicular. If the first finger points in the direction of magnetic field and the second finger in the direction of current, then the thumb will point in the direction of motion or the force acting on the conductor.&rdquo;
+          </p>
+        </div>
+
+        <div class="mag-key-points">
+          <h4>Famous Mnemonics &amp; Formula:</h4>
+          <div class="mag-mnemonic-grid">
+            <div class="mag-mn-card">
+              <span class="mag-mn-letter green">F</span>
+              <div>
+                <strong>Father = Force (Motion)</strong>
+                <small>Thumb represents mechanical force</small>
+              </div>
+            </div>
+            <div class="mag-mn-card">
+              <span class="mag-mn-letter blue">M</span>
+              <div>
+                <strong>Mother = Magnetic Field</strong>
+                <small>Forefinger represents field (N &rarr; S)</small>
+              </div>
+            </div>
+            <div class="mag-mn-card">
+              <span class="mag-mn-letter red">C</span>
+              <div>
+                <strong>Child = Current</strong>
+                <small>Middle finger represents electric current (+ &rarr; -)</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="mag-formula-highlight">
+            <strong>Lorentz Force Magnitude:</strong>
+            <code>F = B &middot; I &middot; L &middot; sin(&theta;)</code>
+            <p>
+              &bull; <strong>Maximum Force:</strong> Conductor is perpendicular (&theta; = 90&deg;) to field lines: <code>F_max = B &middot; I &middot; L</code>.<br />
+              &bull; <strong>Zero Force:</strong> Conductor is parallel (&theta; = 0&deg; or 180&deg;) to field lines: <code>F = 0</code>.
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Quick Rule Comparison Table -->
+    <div class="mag-comparison-card">
+      <h3>Quick Comparison: Which Rule Should You Use in CBSE Exams?</h3>
+      <div class="table-responsive">
+        <table class="mag-comp-table">
+          <thead>
+            <tr>
+              <th>Rule Name</th>
+              <th>Hand Used</th>
+              <th>Given Quantities</th>
+              <th>Determined Quantity</th>
+              <th>Primary CBSE Application</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Maxwell&apos;s Right-Hand Thumb Rule</strong></td>
+              <td>Right Hand</td>
+              <td>Current Direction (Thumb)</td>
+              <td><strong>Magnetic Field Direction (Curled Fingers)</strong></td>
+              <td>Straight wires, circular wire loops, compass deflection direction.</td>
+            </tr>
+            <tr>
+              <td><strong>Fleming&apos;s Left-Hand Rule</strong></td>
+              <td>Left Hand</td>
+              <td>Field B (Forefinger) &amp; Current I (Middle Finger)</td>
+              <td><strong>Mechanical Force / Motion (Thumb)</strong></td>
+              <td>Electric motors, moving coil meters, deflection of alpha/beta particles.</td>
+            </tr>
+            <tr>
+              <td><strong>Clock Face Rule</strong></td>
+              <td>Observation (Face of Coil)</td>
+              <td>Current Circulation (Clockwise vs Anti-clockwise)</td>
+              <td><strong>Magnetic Polarity (South vs North Pole)</strong></td>
+              <td>Determining North and South poles of solenoids and circular electromagnets.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Top 5 CBSE Board Exam Solved Questions -->
+    <div class="mag-faq-card">
+      <h3>Top 5 CBSE Board Exam Questions on Magnetism Rules</h3>
+      <div class="mag-faq-list">
+        <details class="mag-faq-item" open>
+          <summary>
+            <strong>Q1: Why do two magnetic field lines never intersect each other? (CBSE 2024, 2022, 2019 — 2 Marks)</strong>
+          </summary>
+          <div class="mag-faq-ans">
+            <p>
+              <strong>Answer:</strong> The direction of the magnetic field at any point is given by the tangent to the field line at that point (which is the direction a magnetic compass needle points). If two field lines were to intersect, a compass needle placed at the point of intersection would have to point in two different directions at the same time, which is physically impossible. Therefore, two magnetic field lines never intersect each other.
+            </p>
+          </div>
+        </details>
+
+        <details class="mag-faq-item">
+          <summary>
+            <strong>Q2: An electron enters a magnetic field at right angles to it. What is the direction of force acting on the electron? (NCERT Exemplar — 2 Marks)</strong>
+          </summary>
+          <div class="mag-faq-ans">
+            <p>
+              <strong>Answer:</strong> According to Fleming&apos;s Left-Hand Rule, the middle finger represents the direction of conventional current. Because an electron has a negative charge, the conventional electric current flows in the direction <em>opposite</em> to the motion of the electron. Applying Fleming&apos;s Left-Hand Rule with the middle finger pointing opposite to electron velocity and the forefinger along the magnetic field, the thumb points into the page (perpendicular to both).
+            </p>
+          </div>
+        </details>
+
+        <details class="mag-faq-item">
+          <summary>
+            <strong>Q3: How does the deflection of a current-carrying rod change when: (i) current is increased, (ii) stronger horseshoe magnet is used, (iii) length of rod is increased? (3 Marks)</strong>
+          </summary>
+          <div class="mag-faq-ans">
+            <p>
+              <strong>Answer:</strong> The mechanical force experienced by the conductor is given by the Lorentz force formula: <code>F = B &middot; I &middot; L</code>.<br />
+              (i) <strong>Current is increased:</strong> Deflection increases because force is directly proportional to current (F &prop; I).<br />
+              (ii) <strong>Stronger horseshoe magnet:</strong> Deflection increases because force is directly proportional to magnetic field strength (F &prop; B).<br />
+              (iii) <strong>Length of rod is increased:</strong> Deflection increases because force is directly proportional to conductor length inside the field (F &prop; L).
+            </p>
+          </div>
+        </details>
+
+        <details class="mag-faq-item">
+          <summary>
+            <strong>Q4: Explain why the magnetic field inside a long current-carrying solenoid is uniform. (2 Marks)</strong>
+          </summary>
+          <div class="mag-faq-ans">
+            <p>
+              <strong>Answer:</strong> Inside a long solenoid, the magnetic field lines are in the form of parallel straight lines aligned along the cylinder axis. Parallel straight field lines indicate that the magnetic field has the same magnitude and direction at all points inside the solenoid, meaning the field is completely uniform. The field strength inside is given by: <code>B = &mu;&sub0; &middot; n &middot; I</code> (where n is turns per unit length).
+            </p>
+          </div>
+        </details>
+
+        <details class="mag-faq-item">
+          <summary>
+            <strong>Q5: What are the three ways to increase the strength of an electromagnet? (3 Marks)</strong>
+          </summary>
+          <div class="mag-faq-ans">
+            <p>
+              <strong>Answer:</strong><br />
+              1. <strong>Increase the electric current (I)</strong> flowing through the coil.<br />
+              2. <strong>Increase the number of turns (N)</strong> of the insulated copper wire.<br />
+              3. <strong>Insert a soft iron core</strong> inside the solenoid (soft iron has high magnetic permeability, which strongly concentrates the magnetic field lines).
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .mag-rules-guide {
+    margin-top: 2rem;
+    margin-bottom: 3.5rem;
+  }
+  .mag-guide-header {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto 1.75rem;
+  }
+  .mag-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+  }
+  .mag-guide-header h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+    color: #0f172a;
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+  }
+  .mag-lead {
+    font-size: 1.02rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .mag-rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .mag-rule-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .thumb-card {
+    border-top: 4px solid #1a73e8;
+  }
+  .fleming-card {
+    border-top: 4px solid #059669;
+  }
+
+  .mag-rule-badge {
+    align-self: flex-start;
+    padding: 0.2rem 0.65rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: #eff6ff;
+    color: #1e40af;
+  }
+  .mag-rule-badge.motor-badge {
+    background: #ecfdf5;
+    color: #065f46;
+  }
+
+  .mag-rule-card h3 {
+    font-size: 1.3rem;
+    color: #0f172a;
+    margin: 0;
+  }
+  .mag-rule-purpose {
+    font-size: 0.92rem;
+    color: #334155;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .mag-diagram-wrap {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .mag-svg {
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+    display: block;
+  }
+
+  .mag-statement-box {
+    background: #f0fdf4;
+    border-left: 4px solid #10b981;
+    padding: 0.85rem 1rem;
+    border-radius: 0 8px 8px 0;
+  }
+  .mag-statement-box.motor-box {
+    background: #eff6ff;
+    border-left: 4px solid #1d4ed8;
+  }
+  .mag-statement-box strong {
+    font-size: 0.84rem;
+    color: #065f46;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .mag-statement-box.motor-box strong {
+    color: #1e40af;
+  }
+  .mag-statement-box p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #1e293b;
+    line-height: 1.55;
+    font-style: italic;
+  }
+
+  .mag-key-points h4 {
+    font-size: 0.95rem;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+  }
+  .mag-key-points ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .mag-key-points li {
+    font-size: 0.88rem;
+    color: #334155;
+    line-height: 1.5;
+  }
+
+  .mag-sub-pill-wrap {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+    flex-wrap: wrap;
+  }
+  .mag-sub-pill {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .mag-sub-pill.blue {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+  }
+  .mag-sub-pill.red {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+
+  .mag-mnemonic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+  }
+  .mag-mn-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .mag-mn-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .mag-mn-letter.green {
+    background: #ecfdf5;
+    color: #065f46;
+  }
+  .mag-mn-letter.blue {
+    background: #eff6ff;
+    color: #1e40af;
+  }
+  .mag-mn-letter.red {
+    background: #fef2f2;
+    color: #b91c1c;
+  }
+  .mag-mn-card strong {
+    display: block;
+    font-size: 0.8rem;
+    color: #0f172a;
+    line-height: 1.25;
+  }
+  .mag-mn-card small {
+    display: block;
+    font-size: 0.7rem;
+    color: #64748b;
+  }
+
+  .mag-formula-highlight {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem;
+  }
+  .mag-formula-highlight strong {
+    font-size: 0.84rem;
+    color: #0f172a;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .mag-formula-highlight code {
+    background: #eff6ff;
+    color: #1e40af;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.88rem;
+  }
+  .mag-formula-highlight p {
+    margin: 0.35rem 0 0;
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.45;
+  }
+
+  /* Comparison Card */
+  .mag-comparison-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    margin-bottom: 1.75rem;
+  }
+  .mag-comparison-card h3 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    color: #0f172a;
+  }
+  .mag-comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .mag-comp-table th {
+    background: #f8fafc;
+    color: #334155;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.75rem 0.9rem;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .mag-comp-table td {
+    padding: 0.75rem 0.9rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e293b;
+    vertical-align: top;
+  }
+  .mag-comp-table tr:hover td {
+    background: #f8fafc;
+  }
+
+  /* FAQ / Solved Questions */
+  .mag-faq-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+  }
+  .mag-faq-card h3 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    color: #0f172a;
+  }
+  .mag-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .mag-faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    transition: all 0.15s ease;
+  }
+  .mag-faq-item[open] {
+    background: #ffffff;
+    border-color: #93c5fd;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.04);
+  }
+  .mag-faq-item summary {
+    font-size: 0.92rem;
+    color: #0f172a;
+    cursor: pointer;
+    font-weight: 600;
+    list-style-position: outside;
+  }
+  .mag-faq-ans {
+    margin-top: 0.65rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.88rem;
+    color: #334155;
+    line-height: 1.6;
+  }
+  .mag-faq-ans code {
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 900px) {
+    .mag-rules-grid {
+      grid-template-columns: 1fr;
+    }
+    .mag-mnemonic-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
