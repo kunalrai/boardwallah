@@ -2,26 +2,16 @@
 interface Props {
   hasSteps?: boolean;
 }
-const { hasSteps = true } = Astro.props;
+const { hasSteps = false } = Astro.props;
 ---
 
-<div class="p3d-playback-controls" role="group" aria-label="Animation and step playback controls">
+<div class="p3d-playback-controls" role="group" aria-label="Animation playback controls">
   <button type="button" class="p3d-play-btn" data-action="toggle-play" aria-label="Play or pause animation">
     ⏸ Pause
   </button>
   <button type="button" class="p3d-ctrl-btn" data-action="restart-anim" aria-label="Restart animation">
     ↺ Restart
   </button>
-  {hasSteps && (
-    <>
-      <button type="button" class="p3d-ctrl-btn" data-action="prev-step" aria-label="Previous learning step">
-        ◀ Prev Step
-      </button>
-      <button type="button" class="p3d-ctrl-btn" data-action="next-step" aria-label="Next learning step">
-        Next Step ▶
-      </button>
-    </>
-  )}
   <label class="p3d-speed-wrap">
     <span>Speed</span>
     <select data-action="speed-select" aria-label="Playback speed">
@@ -50,6 +40,10 @@ const { hasSteps = true } = Astro.props;
     border-radius: 999px;
     cursor: pointer;
     min-height: 34px;
+    transition: background 0.15s ease;
+  }
+  .p3d-play-btn:hover {
+    background: #1557b0;
   }
   .p3d-ctrl-btn {
     border: 1px solid #cbd5e1;
@@ -61,10 +55,12 @@ const { hasSteps = true } = Astro.props;
     border-radius: 999px;
     cursor: pointer;
     min-height: 34px;
+    transition: all 0.15s ease;
   }
   .p3d-ctrl-btn:hover {
     border-color: #1a73e8;
     color: #1a73e8;
+    background: #eff6ff;
   }
   .p3d-speed-wrap {
     display: inline-flex;
@@ -80,6 +76,8 @@ const { hasSteps = true } = Astro.props;
     border-radius: 8px;
     padding: 0.28rem 0.45rem;
     font-size: 0.78rem;
+    color: #1e293b;
     background: #ffffff;
+    cursor: pointer;
   }
 </style>

@@ -436,18 +436,6 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
         });
       });
 
-      root.querySelector('[data-action="prev-step"]')?.addEventListener("click", () => {
-        if (lesson.learningSteps.length === 0) return;
-        const prev = (currentStepIndex - 1 + lesson.learningSteps.length) % lesson.learningSteps.length;
-        applyStep(prev);
-      });
-
-      root.querySelector('[data-action="next-step"]')?.addEventListener("click", () => {
-        if (lesson.learningSteps.length === 0) return;
-        const next = (currentStepIndex + 1) % lesson.learningSteps.length;
-        applyStep(next);
-      });
-
       // Experimental parameter controls
       root.querySelectorAll<HTMLInputElement | HTMLSelectElement>("[data-param-key]").forEach((el) => {
         const eventName = el.tagName === "SELECT" || (el instanceof HTMLInputElement && el.type === "checkbox")
