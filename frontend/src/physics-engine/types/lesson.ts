@@ -26,6 +26,7 @@ export interface LessonLearningStep {
   animationClipId?: string;
   simulationParams?: SimulationParameters;
   videoUrl?: string;
+  videoTime?: number;
   videoCaption?: string;
 }
 

@@ -26,8 +26,8 @@ export const historyLessons: PhysicsLessonConfig[] = [
     slug: "/class-10/sst/history/nationalism-europe/",
     model: "/assets/sst/history/french-revolution-paris.glb",
     usesProceduralFallback: false,
-    videoFallback: "/assets/sst/history/french-revolution-bastille.mp4",
-    staticImageFallback: "/assets/sst/history/french-revolution-bastille-poster.jpg",
+    videoFallback: "/assets/sst/history/french-revolution-epic.mp4",
+    staticImageFallback: "/assets/sst/history/french-revolution-epic-poster.jpg",
     sceneConfig: {
       backgroundColor: 0xf5f3ea,
       showGrid: false,
@@ -81,6 +81,9 @@ export const historyLessons: PhysicsLessonConfig[] = [
         focusObject: "ThreeEstates_Pyramid",
         cameraPresetId: "estates",
         simulationParams: { era: 1789, highlight: 2 },
+        videoUrl: "/assets/sst/history/french-revolution-epic.mp4#t=4",
+        videoTime: 4,
+        videoCaption: "Cinematic Scene: Clergy and Nobility enjoying opulent privileges while the Third Estate peasant carries the entire burden.",
       },
       {
         stepNumber: 3,
@@ -97,8 +100,9 @@ export const historyLessons: PhysicsLessonConfig[] = [
         focusObject: "Bastille_Fortress",
         cameraPresetId: "bastille",
         simulationParams: { era: 1789, highlight: 4 },
-        videoUrl: "/assets/sst/history/french-revolution-bastille.mp4",
-        videoCaption: "Cinematic Recreation: Citizens' militia storming the Bastille fortress shouting 'À la Bastille ! Pour la liberté !' on 14 July 1789.",
+        videoUrl: "/assets/sst/history/french-revolution-epic.mp4#t=14",
+        videoTime: 14,
+        videoCaption: "Cinematic Scene: Furious citizens storm the Bastille, shatter the drawbridge chains, and raise the French Tricolor over the royal fortress.",
       },
       {
         stepNumber: 5,
@@ -107,6 +111,9 @@ export const historyLessons: PhysicsLessonConfig[] = [
         focusObject: "RightsOfMan_ParchmentTablet",
         cameraPresetId: "rights",
         simulationParams: { era: 1789, highlight: 5 },
+        videoUrl: "/assets/sst/history/french-revolution-epic.mp4#t=24",
+        videoTime: 24,
+        videoCaption: "Cinematic Scene: Revolutionary proclamation — 'All men are born free and equal! Liberty, equality, and fraternity are our ideals!'",
       },
       {
         stepNumber: 6,

@@ -96,8 +96,13 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
                 <strong>{step.title}</strong>
                 <p>{step.description.slice(0, 95)}...</p>
                 {step.videoUrl && (
-                  <span class="step-video-badge" data-trigger-video data-video-step={idx} title="Watch Bastille Storming Video">
-                    🎬 Watch Video
+                  <span
+                    class="step-video-badge"
+                    data-trigger-video
+                    data-video-time={step.videoTime ?? 0}
+                    title={step.videoCaption ?? "Watch Scene"}
+                  >
+                    🎬 Watch Scene ({step.videoTime ? `00:${step.videoTime.toString().padStart(2, '0')}` : 'HD'})
                   </span>
                 )}
               </div>
@@ -200,9 +205,9 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
         <div class="lesson-video-card">
           <div class="video-theater-header">
             <div class="theater-title-wrap">
-              <span class="video-badge">🎬 14 July 1789 — Storming of the Bastille</span>
-              <h3>Storming of the Bastille Fortress</h3>
-              <p class="video-subtitle">Watch Parisian citizens assemble a people's militia and storm the fortress prison.</p>
+              <span class="video-badge">🎬 Cinematic Historical Documentary</span>
+              <h3>The French Revolution: From Feudal Despotism to Liberty (1789)</h3>
+              <p class="video-subtitle">Watch the multi-scene cinematic recreation of the Three Estates, the storming of the Bastille, and the proclamation of rights.</p>
             </div>
             <button type="button" class="back-to-explore-btn" data-action="back-explore">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
@@ -210,21 +215,31 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
             </button>
           </div>
 
+          <!-- Interactive Scene Chapter Selector -->
+          <div class="video-chapters-row">
+            <span class="chap-label">Chapters:</span>
+            <button type="button" class="chap-pill active" data-seek="0">00:00 ⚔️ À la Bastille</button>
+            <button type="button" class="chap-pill" data-seek="4">00:04 👑 Three Estates Inequality</button>
+            <button type="button" class="chap-pill" data-seek="14">00:14 🏰 14 July 1789 Storming</button>
+            <button type="button" class="chap-pill" data-seek="24">00:24 📜 Rights of Man Decree</button>
+            <button type="button" class="chap-pill" data-seek="34">00:34 💥 Break the Chains!</button>
+          </div>
+
           <div class="video-frame-container">
             <video
-              src={lesson.videoFallback ?? "/assets/sst/history/french-revolution-bastille.mp4"}
-              poster={lesson.staticImageFallback ?? "/assets/sst/history/french-revolution-bastille-poster.jpg"}
+              src={lesson.videoFallback ?? "/assets/sst/history/french-revolution-epic.mp4"}
+              poster={lesson.staticImageFallback ?? "/assets/sst/history/french-revolution-epic-poster.jpg"}
               controls
               playsinline
               preload="metadata"
               data-bastille-video
               class="cinematic-bastille-video"
             ></video>
-            <div class="video-quote-banner">
-              <div class="quote-pill">French Battle Cry</div>
+            <div class="video-quote-banner" data-video-quote-banner>
+              <div class="quote-pill" data-quote-tag>Battle Cry</div>
               <div class="quote-text-wrap">
-                <span class="quote-french">"À la Bastille ! Pour la liberté !"</span>
-                <span class="quote-trans">("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")</span>
+                <span class="quote-french" data-quote-primary>"À la Bastille ! Pour la liberté !"</span>
+                <span class="quote-trans" data-quote-secondary>("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")</span>
               </div>
             </div>
           </div>
@@ -232,24 +247,24 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
           <!-- Video Timeline & NCERT Breakdown -->
           <div class="video-insights-grid">
             <div class="insight-box">
-              <div class="insight-icon">⚔️</div>
+              <div class="insight-icon">👑</div>
               <div class="insight-text">
-                <strong>7,000 Citizen Militia (National Guard)</strong>
-                <p>Alarmed by rumors that King Louis XVI ordered troops to march on Paris, 7,000 men and women assembled at Hôtel de Ville, broke into government buildings, and armed themselves to defend the revolution.</p>
+                <strong>1. Three Estates Inequality (00:04)</strong>
+                <p>Clergy (1st) &amp; Nobility (2nd) enjoyed feudal privileges and paid zero direct taxes (taille), while the Third Estate peasant bore 100% of state taxes and church tithes.</p>
               </div>
             </div>
             <div class="insight-box">
               <div class="insight-icon">🏰</div>
               <div class="insight-text">
-                <strong>Why was the Bastille Hated by All? (CBSE 1-Mark)</strong>
-                <p>The fortress prison stood as the tangible monument of royal despotism. Stormed to seize gunpowder and ammunition, the prison commander was killed and its seven prisoners released.</p>
+                <strong>2. Storming of the Bastille (00:14)</strong>
+                <p>On 14 July 1789, 7,000 armed citizens stormed the royal fortress prison to seize gunpowder, killing the governor and shattering the ultimate symbol of royal despotism.</p>
               </div>
             </div>
             <div class="insight-box">
-              <div class="insight-icon">🧱</div>
+              <div class="insight-icon">📜</div>
               <div class="insight-text">
-                <strong>Demolition & Souvenirs of Liberty</strong>
-                <p>The fortress was completely demolished stone by stone. Fragments were sold in Parisian markets so citizens could keep a souvenir of the destruction of absolute monarchy.</p>
+                <strong>3. Declaration of Rights (00:24)</strong>
+                <p>The National Assembly proclaimed: 'Men are born and remain free and equal in rights.' Liberty, equality, and fraternity became the foundational tenets of modern democracy.</p>
               </div>
             </div>
           </div>
@@ -704,13 +719,84 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
         container.requestFullscreen?.().catch(() => {});
       });
 
+      // Video Chapter Seeking & Synchronization
+      const chapPills = root.querySelectorAll<HTMLButtonElement>("[data-seek]");
+      const quoteTag = root.querySelector<HTMLElement>("[data-quote-tag]");
+      const quotePrimary = root.querySelector<HTMLElement>("[data-quote-primary]");
+      const quoteSecondary = root.querySelector<HTMLElement>("[data-quote-secondary]");
+
+      const videoChapters = [
+        {
+          time: 0,
+          tag: "Battle Cry",
+          primary: '"À la Bastille ! Pour la liberté !"',
+          secondary: '("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")'
+        },
+        {
+          time: 4,
+          tag: "Three Estates",
+          primary: '"French society was divided into three estates..."',
+          secondary: '("Clergy & nobility enjoyed feudal privileges while peasants carried all tax burdens.")'
+        },
+        {
+          time: 14,
+          tag: "14 July 1789",
+          primary: '"Furious citizens stormed the Bastille, challenging royal authority."',
+          secondary: '("Its fall became the supreme symbol of freedom and revolution.")'
+        },
+        {
+          time: 24,
+          tag: "Rights of Man",
+          primary: '"All men are born free and equal! Liberty, equality, and fraternity!"',
+          secondary: '("Declaration of the Rights of Man & Citizen abolishing aristocratic privileges.")'
+        },
+        {
+          time: 34,
+          tag: "Fortress Breach",
+          primary: '"To the Bastille! Charge! Break the chains!"',
+          secondary: '("Citizens shatter the drawbridge chains with axes, bringing down royal despotism.")'
+        }
+      ];
+
+      chapPills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          const seekTime = parseFloat(pill.dataset.seek || "0");
+          if (bastilleVideo) {
+            bastilleVideo.currentTime = seekTime;
+            bastilleVideo.play().catch(() => {});
+          }
+        });
+      });
+
+      if (bastilleVideo) {
+        bastilleVideo.addEventListener("timeupdate", () => {
+          const t = bastilleVideo.currentTime;
+          let activeIdx = 0;
+          for (let i = videoChapters.length - 1; i >= 0; i--) {
+            if (t >= videoChapters[i].time - 0.5) {
+              activeIdx = i;
+              break;
+            }
+          }
+          chapPills.forEach((p, idx) => {
+            p.classList.toggle("active", idx === activeIdx);
+          });
+          const activeChap = videoChapters[activeIdx];
+          if (quoteTag && activeChap) quoteTag.textContent = activeChap.tag;
+          if (quotePrimary && activeChap) quotePrimary.textContent = activeChap.primary;
+          if (quoteSecondary && activeChap) quoteSecondary.textContent = activeChap.secondary;
+        });
+      }
+
       // Video Trigger Handlers
       root.querySelectorAll("[data-trigger-video], [data-action='watch-video']").forEach((vBtn) => {
         vBtn.addEventListener("click", (e) => {
           e.stopPropagation();
+          const targetTime = parseFloat((vBtn as HTMLElement).dataset.videoTime || "0");
           const lessonTab = root.querySelector<HTMLButtonElement>('[data-mode-btn="lesson"]');
           lessonTab?.click();
           if (bastilleVideo) {
+            bastilleVideo.currentTime = targetTime;
             bastilleVideo.scrollIntoView({ behavior: "smooth", block: "center" });
             bastilleVideo.play().catch(() => {});
           }
@@ -1346,6 +1432,48 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
   .back-to-explore-btn:hover {
     background: #f8fafc;
     border-color: #94a3b8;
+  }
+  .video-chapters-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+  .chap-label {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .chap-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    font-size: 0.76rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .chap-pill:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+    color: #0f172a;
+  }
+  .chap-pill.active {
+    background: #1e3a8a;
+    border-color: #1e3a8a;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
   }
   .video-frame-container {
     position: relative;
