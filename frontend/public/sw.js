@@ -1,7 +1,7 @@
-// Boardwallah PWA Service Worker (v3)
+// Boardwallah PWA Service Worker (v4)
 // Caches core app shell, assets & offline CBSE revision resources
 
-const CACHE_NAME = 'boardwallah-pwa-v3';
+const CACHE_NAME = 'boardwallah-pwa-v4';
 
 const STATIC_ASSETS = [
   '/',
@@ -15,24 +15,25 @@ const STATIC_ASSETS = [
   '/icons/apple-touch-icon.png',
 ];
 
-// Install: Pre-cache core app shell
+// Install: Pre-cache core app shell and immediately activate
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] Pre-caching offline app shell');
+      console.log('[SW v4] Pre-caching offline app shell');
       return cache.addAll(STATIC_ASSETS);
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
-// Activate: Clean up old caches & take control immediately
+// Activate: Clean up ALL older caches (v1, v2, v3, etc.) & claim clients immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
-            console.log('[SW] Removing old cache:', key);
+            console.log('[SW v4] Purging obsolete cache:', key);
             return caches.delete(key);
           }
         })
@@ -46,7 +47,6 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
 
   // 1. Never intercept non-GET requests (e.g. POST to AI tutor API or Firestore)
-  // Let the browser handle all POST/PUT/DELETE requests directly and natively
   if (request.method !== 'GET') {
     return;
   }
@@ -57,7 +57,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 3. Navigation / HTML pages: Network first, fallback to cached '/'
+  // 3. Navigation / HTML pages: Always Network First!
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
@@ -70,8 +70,15 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(async () => {
           const cache = await caches.open(CACHE_NAME);
-          const cachedResponse = await cache.match('/') || await cache.match(request);
-          return cachedResponse || new Response('Offline — Boardwallah is ready once reconnected.', {
+          // Only serve root '/' from cache if requesting '/'
+          if (url.pathname === '/' || url.pathname === '') {
+            const cachedRoot = await cache.match('/');
+            if (cachedRoot) return cachedRoot;
+          }
+          const cachedSpecific = await cache.match(request);
+          if (cachedSpecific) return cachedSpecific;
+
+          return new Response('Offline — Boardwallah is ready once reconnected.', {
             headers: { 'Content-Type': 'text/html' }
           });
         })

@@ -81,12 +81,32 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
     <Analytics />
     <SpeedInsights />
     <script is:inline>
+      // Clean up any stale or legacy service worker caches
+      if ('caches' in window) {
+        caches.keys().then(function(keys) {
+          keys.forEach(function(key) {
+            if (key.startsWith('boardwallah-pwa-') && key !== 'boardwallah-pwa-v4') {
+              caches.delete(key);
+            }
+          });
+        });
+      }
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
           navigator.serviceWorker.register('/sw.js', { scope: '/' })
             .then(function(reg) {
               reg.update();
               console.log('[PWA] ServiceWorker registered with scope:', reg.scope);
+              reg.addEventListener('updatefound', function() {
+                var newWorker = reg.installing;
+                if (newWorker) {
+                  newWorker.addEventListener('statechange', function() {
+                    if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
+                      window.location.reload();
+                    }
+                  });
+                }
+              });
             })
             .catch(function(err) {
               console.warn('[PWA] ServiceWorker registration failed:', err);

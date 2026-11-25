@@ -306,6 +306,9 @@ const chatSchema = {
       <div class="capsule-dock-wrap">
         <!-- In-Chat Quick Action Chips -->
         <div class="capsule-quick-chips">
+          <a href="/subjects/" class="quick-chip-btn chip-subjects-btn" id="chip-open-subjects" title="CBSE Class 10 Subjects Hub & 3D Interactive Labs" style="text-decoration:none; color: #1a73e8; font-weight: 600; border-color: #93c5fd; background: #eff6ff;">
+            <span style="display:inline-flex; align-items:center; gap:0.35rem;"><CbseIcon name="solid" size={15} /> 🔬 Subjects &amp; 3D Labs &rarr;</span>
+          </a>
           <button type="button" class="quick-chip-btn" id="chip-open-library" title="Browse 58 CBSE Chapters & Notes">
             <span style="display:inline-flex; align-items:center; gap:0.35rem;"><CbseIcon name="book" size={15} /> 58 Chapters</span>
           </button>
@@ -424,7 +427,7 @@ const chatSchema = {
           <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: #5f6368;">Select any chapter to generate instant Socratic hints, PYQ proofs, or marking schemes.</p>
         </div>
         <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <a href="/subjects/" class="button secondary small" style="font-size: 0.76rem; text-decoration: none; padding: 0.3rem 0.65rem; white-space: nowrap; border-radius: 8px;">🔬 Interactive Labs &rarr;</a>
+          <a href="/subjects/" class="button primary small" style="font-size: 0.8rem; text-decoration: none; padding: 0.35rem 0.85rem; white-space: nowrap; border-radius: 999px; background: #2563eb; color: #fff; display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 600;">🔬 Subjects &amp; 3D Labs &rarr;</a>
           <button id="close-library-modal-btn" class="close-dialog-btn" type="button" aria-label="Close">✕</button>
         </div>
       </div>
@@ -820,7 +823,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   const currentModeLabel = document.getElementById('current-mode-label');
   const modeButtons = document.querySelectorAll('.mode-btn');
   const dropdownItems = document.querySelectorAll('.dropdown-item');
-  const starterBtns = document.querySelectorAll('.starter-pill-btn');
+  const starterBtns = document.querySelectorAll('.starter-pill-btn[data-query]');
   const topicPresetBtns = document.querySelectorAll('.topic-preset-btn');
   const recentItems = document.querySelectorAll('.recent-item');
   const attachBtn = document.getElementById('capsule-attach-btn');
@@ -2073,6 +2076,38 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
   function resolveChatDoubt(question) {
     const lower = (question || '').toLowerCase().trim();
 
+    // 0. Friendly Socratic Greeting
+    if (lower === 'hi' || lower === 'hello' || lower === 'hey' || lower === 'namaste' || lower === 'hi!' || lower === 'hello!') {
+      return {
+        answer: `### Hello, Class 10 Board Scholar! 👋\n\nI am your **Wallah AI Doubt Tutor**! I am here to help you conquer CBSE Class 10 Mathematics, Science, and Social Science with 100% NCERT accuracy and full board exam step-marking.\n\n**Here are quick ways to get started:**\n- 🔬 **Explore Interactive Labs:** Check out our [Class 10 Subjects Hub & 3D Optics Labs](/subjects/)\n- 📐 **Ask any numerical or proof:** E.g. *"Prove √5 is irrational"* or *"State Ohm's Law and explain the V-I graph"*\n- 🧪 **Request a formula diagram:** E.g. *"Draw Heights and Distances with 30° and 60° angles of elevation"*\n- 📷 **Snap a textbook photo:** Click the 📷 camera button below to solve your written homework steps.\n\nWhat concept or chapter would you like to master today?`,
+        keyTerms: ['NCERT Concept Mastery', 'CBSE Step Marking', 'Interactive 3D Labs', 'PYQ Proofs']
+      };
+    }
+
+    // 0b. Subjects & Interactive 3D Labs Navigation
+    if (lower.includes('subject') || lower.includes('lab') || lower.includes('interactive') || lower.includes('3d')) {
+      return {
+        answer: `### CBSE Class 10 Subjects Hub & Interactive Labs 🔬\n\nWe provide complete curriculum coverage with interactive SVG diagrams and 3D geometric models:\n\n1. **[Mathematics Hub](/subjects/#maths):** Real Numbers, Polynomials, Triangles, Trigonometry, Circles, Surface Areas & Volumes.\n2. **[Science Hub](/subjects/#science):** Chemical Reactions, Acids & Bases, Life Processes, Light (Reflection & Refraction), Electricity, Magnetic Effects.\n3. **[Interactive Ray Optics Lab](/subjects/#ray-optics-lab):** Live convex lens ray tracer with real-time slider controls for object distance $u$ and focal length $f$.\n4. **[3D Mensuration Solid Lab](/subjects/#solid-3d-lab):** 3D rotatable models for Cone, Cylinder, Frustum, and Hemisphere with live formula calculations.\n\n👉 **[Click here to open the full Subjects & Labs Hub](/subjects/)**`,
+        keyTerms: ['Interactive Ray Optics', '3D Mensuration Solid', 'NCERT Class 10 Hub', 'CBSE Blueprints']
+      };
+    }
+
+    // 0c. Real Numbers (Maths Chapter 1)
+    if (lower.includes('real number') || lower.includes('real numbers')) {
+      return {
+        answer: `### CBSE Class 10 Mathematics: Real Numbers (High-Yield 6-Mark Breakdown)\n\n**1. Fundamental Theorem of Arithmetic (Theorem 1.2):**\nEvery composite number can be expressed (factorized) as a product of primes, and this factorization is unique, apart from the order in which the prime factors occur.\n$$\\text{HCF}(a, b) \\times \\text{LCM}(a, b) = a \\times b$$\n*(Note: This relationship holds ONLY for two numbers, not for three!).*\n\n**2. Core 3-Mark Board PYQ (Irrationality Proof):**\nProve that $\\sqrt{5}$ or $\\sqrt{2}$ is irrational by the method of contradiction.\n- Assume $\\sqrt{5} = a/b$ where $a, b$ are co-prime integers ($b \\neq 0$).\n- $5b^2 = a^2 \\implies 5$ divides $a^2 \\implies 5$ divides $a$ (by Theorem 1.3).\n- Substitute $a = 5c \\implies 5b^2 = 25c^2 \\implies b^2 = 5c^2 \\implies 5$ divides $b$.\n- This contradicts the assumption that $a$ and $b$ are co-prime!\n- Hence, $\\sqrt{5}$ is irrational. [Full 3 Marks Awarded]\n\n**3. Official Marking Scheme Tip:**\nAlways write: *"Since $p$ divides $a^2$, $p$ divides $a$, where $p$ is a prime number (Theorem 1.3)"* to secure the 0.5-mark theorem statement rubric.`,
+        keyTerms: ['Fundamental Theorem', 'HCF × LCM = a × b', 'Proof by Contradiction', 'Co-prime Integers']
+      };
+    }
+
+    // 0d. Chemistry General Help
+    if (lower.includes('chemistry') || lower.includes('chemestry')) {
+      return {
+        answer: `### CBSE Class 10 Science: Chemistry Board Mastery (25 Marks)\n\nClass 10 Chemistry carries **25 marks** in the Science board examination across 4 high-yield chapters:\n\n1. **Chemical Reactions and Equations (Ch 1):**\n- Memorize color changes: Green $\\text{FeSO}_4 \\xrightarrow{\\Delta}$ Reddish-brown $\\text{Fe}_2\\text{O}_3 + \\text{SO}_2 \\uparrow + \\text{SO}_3 \\uparrow$.\n- Thermal decomposition of white Lead Nitrate $\\text{Pb(NO}_3)_2$ yielding brown fumes of $\\text{NO}_2$.\n- Balancing equations with state symbols ($s, l, g, aq$).\n\n2. **Acids, Bases and Salts (Ch 2):**\n- Chlor-alkali process ($2\\text{NaCl} + 2\\text{H}_2\\text{O} \\to 2\\text{NaOH} + \\text{Cl}_2 + \\text{H}_2$).\n- Chemical formulas for Bleaching Powder ($\\text{CaOCl}_2$), Baking Soda ($\\text{NaHCO}_3$), Washing Soda ($\\text{Na}_2\\text{CO}_3\\cdot 10\\text{H}_2\\text{O}$), and Plaster of Paris ($\\text{CaSO}_4\\cdot \\frac{1}{2}\\text{H}_2\\text{O}$).\n\n3. **Metals and Non-metals (Ch 3):**\n- Reactivity series & thermite reaction for railway tracks ($\\text{Fe}_2\\text{O}_3 + 2\\text{Al} \\to 2\\text{Fe} + \\text{Al}_2\\text{O}_3 + \\text{Heat}$).\n- Roasting (sulfide ores with excess air) vs Calcination (carbonate ores with limited air).\n\n4. **Carbon and Its Compounds (Ch 4):**\n- Covalent bonding, catenation, tetravalency of carbon.\n- Saponification & esterification reactions.\n\nWhich specific reaction or numerical should we solve right now?`,
+        keyTerms: ['State Symbols (s, l, g, aq)', 'Decomposition Reactions', 'Chlor-Alkali Process', 'Reactivity Series']
+      };
+    }
+
     // 1. Exam Dates & Timetable (strictly when user asks for dates or timetable)
     const isAskingDates = (
       lower.includes('datesheet') ||
@@ -2293,9 +2328,12 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       let terms = [];
 
       try {
+        const fetchCtrl = new AbortController();
+        const fetchTimeout = setTimeout(() => fetchCtrl.abort(), 12000);
         const resp = await fetch('/api/v1/ai/doubt-tutor', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          signal: fetchCtrl.signal,
           body: JSON.stringify({
             question: displayQuestion,
             mode: currentMode,
@@ -2304,6 +2342,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
             history: historyWindow
           }),
         });
+        clearTimeout(fetchTimeout);
 
         if (resp.ok) {
           const data = await resp.json();
@@ -2311,7 +2350,7 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
           terms = data.keyTerms || [];
         }
       } catch (err) {
-        console.warn('API error, falling back to local resolver:', err);
+        console.warn('API error or network timeout, falling back to local resolver:', err);
       }
 
       if (!ans) {
@@ -2341,6 +2380,9 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
       }
     } catch (criticalErr) {
       console.error('Critical submitQuery error:', criticalErr);
+      const fallbackAns = `### CBSE Doubt Tutor Guidance\n\nHere is model guidance for **${escapeHtml(displayQuestion)}**:\n\n1. State NCERT governing definitions and laws.\n2. Write step-by-step mathematical working or balanced chemical equations.\n3. Box your final numerical answer with SI units.`;
+      removeTypingAnimation();
+      appendBotResponse(fallbackAns, ['NCERT Mastery', 'Step Marking']);
     } finally {
       removeTypingAnimation();
       isWaiting = false;
@@ -3666,35 +3708,20 @@ x = (-b ± √(b^2 - 4ac)) / (2a)    [Discriminant D = b^2 - 4ac]
     showToast('Revision Vault print sheet ready! Click Print / Save as PDF.');
   }
 
-  // ── Global Single-Page Link & Navigation Interceptor ──
-  // Ensures clicking ANY link anywhere NEVER leaves the root single page layout
+  // ── Modal Trigger Interceptor ──
+  // Only intercept anchor links that explicitly request opening an in-page modal via data-open-modal
+  // All standard routes (/subjects/, /booking/, /login/, /plans/, /portal/, /resources/...) navigate naturally!
   document.addEventListener('click', (e) => {
-    const anchor = e.target.closest('a');
-    if (anchor) {
-      // Allow external / chapter resource pages to open
-      if (anchor.target === '_blank' || anchor.classList.contains('chapter-resource-link-btn') || anchor.classList.contains('inchat-res-btn')) {
-        return;
-      }
+    const modalAnchor = e.target && e.target.closest ? e.target.closest('a[data-open-modal]') : null;
+    if (modalAnchor) {
       e.preventDefault();
-      e.stopPropagation();
-      const href = (anchor.getAttribute('href') || '').toLowerCase();
-      if (href.includes('cal.com') || href.includes('booking') || href.includes('mentor')) {
-        if (mentorModal) mentorModal.showModal();
-      } else if (href.includes('flashcard') || href.includes('diagram') || href.includes('image')) {
-        if (imagesModal) imagesModal.showModal();
-      } else if (href.includes('mock') || href.includes('practice') || href.includes('arena')) {
-        if (practiceModal) practiceModal.showModal();
-      } else if (href.includes('resource') || href.includes('chapter') || href.includes('library')) {
-        if (libraryModal) libraryModal.showModal();
-      } else if (href.includes('login') || href.includes('account') || href.includes('auth')) {
-        const currentUser = getStoredUser();
-        if (currentUser) openAccountModal(currentUser);
-        else openSignInModal();
-      } else {
-        startNewChat();
-      }
+      const modalType = modalAnchor.getAttribute('data-open-modal');
+      if (modalType === 'library' && libraryModal) libraryModal.showModal();
+      else if (modalType === 'images' && imagesModal) imagesModal.showModal();
+      else if (modalType === 'practice' && practiceModal) practiceModal.showModal();
+      else if (modalType === 'mentor' && mentorModal) mentorModal.showModal();
     }
-  }, true);
+  });
 
   // ── PWA Installation Logic ──
   let deferredPwaPrompt = null;
