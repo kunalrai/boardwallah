@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { loadContent, whatsappLink } from "../lib/content";
 import { calBookingUrl, apiBase } from "../lib/site";
 import { firebaseConfig } from "../lib/firebase";
+import CbseIcon from "../components/CbseIcon.astro";
 
 const { provider } = loadContent();
 const waChatLink = whatsappLink(
@@ -247,35 +248,35 @@ const chatSchema = {
             <!-- Starter Prompt Pills -->
             <div class="starter-cards-grid">
               <button class="starter-pill-btn browse-library-pill-btn" id="browse-library-pill" type="button" style="border-color: #93c5fd; background: #eff6ff;">
-                <span class="pill-icon">📚</span>
+                <span class="pill-icon" style="color: #2563eb;"><CbseIcon name="book" size={20} /></span>
                 <span class="pill-text"><strong>Explore 58 Chapter Guides &amp; 20-Q Quizzes</strong></span>
               </button>
               <button class="starter-pill-btn quick-quiz-pill-btn" data-query="Quiz me on CBSE Class 10 Science: Give me a high-yield 4-option practice question to start with!" type="button" style="border-color: #fed7aa; background: #fffaf5;">
-                <span class="pill-icon">🧪</span>
+                <span class="pill-icon" style="color: #ea580c;"><CbseIcon name="flask" size={20} /></span>
                 <span class="pill-text"><strong>Start Instant CBSE Practice Quiz</strong></span>
               </button>
               <button class="starter-pill-btn" data-query="Draw a labeled diagram of Heights and Distances for a tower with 30° and 60° angles of elevation.">
-                <span class="pill-icon">📐</span>
+                <span class="pill-icon" style="color: #4f46e5;"><CbseIcon name="tower" size={20} /></span>
                 <span class="pill-text">Draw Heights &amp; Distances Diagram</span>
               </button>
               <button class="starter-pill-btn" data-query="How do I prove that √5 is irrational by contradiction for CBSE Class 10?">
-                <span class="pill-icon">📝</span>
+                <span class="pill-icon" style="color: #059669;"><CbseIcon name="pencil" size={20} /></span>
                 <span class="pill-text">Prove √5 is irrational (Contradiction)</span>
               </button>
               <button class="starter-pill-btn" data-query="Draw a circle with two tangents from an external point P and prove Theorem 10.2.">
-                <span class="pill-icon">⭕</span>
+                <span class="pill-icon" style="color: #e11d48;"><CbseIcon name="circle" size={20} /></span>
                 <span class="pill-text">Draw Circle &amp; Tangents (Theorem 10.2)</span>
               </button>
               <button class="starter-pill-btn" data-query="State Ohm's Law and explain the V-I graph. How do you calculate equivalent resistance in series and parallel?">
-                <span class="pill-icon">⚡</span>
+                <span class="pill-icon" style="color: #d97706;"><CbseIcon name="bolt" size={20} /></span>
                 <span class="pill-text">Ohm's Law &amp; Circuit Resistors</span>
               </button>
               <button class="starter-pill-btn" data-query="Give me an official CBSE Class 10 Case-Based Study Question (Section E, 4 Marks) on Science with 3 sub-parts and step-marking scheme.">
-                <span class="pill-icon">📊</span>
+                <span class="pill-icon" style="color: #7c3aed;"><CbseIcon name="stats" size={20} /></span>
                 <span class="pill-text">CBSE Case-Based Study Drill (Sec E 4M)</span>
               </button>
               <button class="starter-pill-btn" data-query="Explain Cartesian sign conventions for concave and convex mirrors and lenses with formulas.">
-                <span class="pill-icon">🔍</span>
+                <span class="pill-icon" style="color: #0284c7;"><CbseIcon name="light" size={20} /></span>
                 <span class="pill-text">Ray Diagram Cartesian Sign Conventions</span>
               </button>
             </div>
@@ -291,16 +292,16 @@ const chatSchema = {
         <!-- In-Chat Quick Action Chips -->
         <div class="capsule-quick-chips">
           <button type="button" class="quick-chip-btn" id="chip-open-library" title="Browse 58 CBSE Chapters & Notes">
-            <span>📚 58 Chapters</span>
+            <span style="display:inline-flex; align-items:center; gap:0.35rem;"><CbseIcon name="book" size={15} /> 58 Chapters</span>
           </button>
           <button type="button" class="quick-chip-btn" id="chip-start-quiz" title="Start an Interactive CBSE Quiz">
-            <span>🧪 Quiz Me</span>
+            <span style="display:inline-flex; align-items:center; gap:0.35rem;"><CbseIcon name="flask" size={15} /> Quiz Me</span>
           </button>
           <button type="button" class="quick-chip-btn" id="chip-open-diagrams" title="NCERT Science Diagrams">
-            <span>🖼️ Diagrams</span>
+            <span style="display:inline-flex; align-items:center; gap:0.35rem;"><CbseIcon name="diagram" size={15} /> Diagrams</span>
           </button>
           <button type="button" class="quick-chip-btn" id="chip-open-formulas" title="CBSE Formula Cheatsheet">
-            <span>⚡ Formulas</span>
+            <span style="display:inline-flex; align-items:center; gap:0.35rem;"><CbseIcon name="bolt" size={15} /> Formulas</span>
           </button>
         </div>
 

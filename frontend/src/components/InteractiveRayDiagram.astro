@@ -1,0 +1,699 @@
+---
+// InteractiveRayDiagram.astro - High-impact CBSE Class 10 Physics Ray Optics Interactive SVG Simulator
+---
+
+<div class="ray-optics-card" id="ray-optics-lab" aria-label="Interactive CBSE Class 10 Ray Optics Simulator">
+  <div class="ray-lab-header">
+    <div class="ray-lab-title-group">
+      <span class="ray-badge">CBSE Class 10 Physics • Chapter 9</span>
+      <h3 class="ray-title">Light – Reflection &amp; Refraction: Convex Lens Ray Tracer</h3>
+      <p class="ray-desc">
+        Drag the object or select textbook presets to observe live refraction through focal points $F_1, F_2$, sign conventions, and official CBSE marking rubrics.
+      </p>
+    </div>
+    <div class="ray-quick-presets" role="toolbar" aria-label="Textbook presets">
+      <button type="button" class="ray-preset-btn" data-u="-45" aria-label="Preset Beyond 2F1">Beyond $2F_1$</button>
+      <button type="button" class="ray-preset-btn active" data-u="-30" aria-label="Preset At 2F1">At $2F_1$</button>
+      <button type="button" class="ray-preset-btn" data-u="-22" aria-label="Preset Between F1 and 2F1">Between $F_1$ &amp; $2F_1$</button>
+      <button type="button" class="ray-preset-btn" data-u="-15" aria-label="Preset At Focus F1">At $F_1$ (Focus)</button>
+      <button type="button" class="ray-preset-btn" data-u="-9" aria-label="Preset Virtual Magnifier">Virtual ($u &lt; f$)</button>
+    </div>
+  </div>
+
+  <!-- Interactive SVG Canvas Area -->
+  <div class="ray-svg-container" id="ray-svg-container">
+    <svg
+      id="ray-optics-svg"
+      viewBox="0 0 840 380"
+      preserveAspectRatio="xMidYMid meet"
+      class="ray-svg-canvas"
+      role="img"
+      aria-label="Convex lens ray diagram showing real-time object and image formation"
+    >
+      <defs>
+        <!-- Marker for ray direction arrows -->
+        <marker id="ray-arrow-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#f59e0b" />
+        </marker>
+        <marker id="ray-arrow-cyan" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#0284c7" />
+        </marker>
+        <marker id="ray-arrow-rose" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#e11d48" />
+        </marker>
+        <marker id="ray-arrow-emerald" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#059669" />
+        </marker>
+
+        <!-- Lens glass gradient -->
+        <linearGradient id="lens-glass-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#bae6fd" stop-opacity="0.65" />
+          <stop offset="50%" stop-color="#e0f2fe" stop-opacity="0.85" />
+          <stop offset="100%" stop-color="#bae6fd" stop-opacity="0.65" />
+        </linearGradient>
+
+        <linearGradient id="object-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2563eb" />
+          <stop offset="100%" stop-color="#1d4ed8" />
+        </linearGradient>
+
+        <filter id="svg-subtle-shadow" x="-10%" y="-10%" width="120%" height="120%">
+          <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.15" />
+        </filter>
+      </defs>
+
+      <!-- Grid Background Lines -->
+      <g class="ray-grid" opacity="0.18">
+        <line x1="0" y1="70" x2="840" y2="70" stroke="#94a3b8" stroke-dasharray="2,4" />
+        <line x1="0" y1="130" x2="840" y2="130" stroke="#94a3b8" stroke-dasharray="2,4" />
+        <line x1="0" y1="250" x2="840" y2="250" stroke="#94a3b8" stroke-dasharray="2,4" />
+        <line x1="0" y1="310" x2="840" y2="310" stroke="#94a3b8" stroke-dasharray="2,4" />
+      </g>
+
+      <!-- Principal Axis (X-axis) -->
+      <line x1="20" y1="190" x2="820" y2="190" stroke="#334155" stroke-width="2" />
+      <text x="825" y="194" fill="#64748b" font-size="12" font-weight="600" text-anchor="start">X</text>
+      <text x="12" y="194" fill="#64748b" font-size="12" font-weight="600" text-anchor="end">X'</text>
+
+      <!-- Optical Centre plane (Vertical Aperture) -->
+      <line x1="420" y1="20" x2="420" y2="360" stroke="#0ea5e9" stroke-width="1.4" stroke-dasharray="4,4" opacity="0.6" />
+
+      <!-- Convex Lens Body (Biconvex silhouette) -->
+      <path
+        d="M 420 30 Q 385 190 420 350 Q 455 190 420 30 Z"
+        fill="url(#lens-glass-grad)"
+        stroke="#0284c7"
+        stroke-width="2.2"
+        filter="url(#svg-subtle-shadow)"
+      />
+
+      <!-- Cardinal Points on Principal Axis -->
+      <!-- O (Optical Centre at X=420) -->
+      <circle cx="420" cy="190" r="4.5" fill="#0284c7" />
+      <text x="420" y="210" fill="#0f172a" font-size="13" font-weight="700" text-anchor="middle">O</text>
+
+      <!-- F1 (X = 420 - 90 = 330) -->
+      <line x1="330" y1="184" x2="330" y2="196" stroke="#0f172a" stroke-width="2" />
+      <circle cx="330" cy="190" r="3.5" fill="#0284c7" />
+      <text x="330" y="210" fill="#0f172a" font-size="12" font-weight="600" text-anchor="middle">F₁</text>
+
+      <!-- 2F1 (X = 420 - 180 = 240) -->
+      <line x1="240" y1="184" x2="240" y2="196" stroke="#0f172a" stroke-width="2" />
+      <circle cx="240" cy="190" r="3.5" fill="#0284c7" />
+      <text x="240" y="210" fill="#0f172a" font-size="12" font-weight="600" text-anchor="middle">2F₁</text>
+
+      <!-- F2 (X = 420 + 90 = 510) -->
+      <line x1="510" y1="184" x2="510" y2="196" stroke="#0f172a" stroke-width="2" />
+      <circle cx="510" cy="190" r="3.5" fill="#0284c7" />
+      <text x="510" y="210" fill="#0f172a" font-size="12" font-weight="600" text-anchor="middle">F₂</text>
+
+      <!-- 2F2 (X = 420 + 180 = 600) -->
+      <line x1="600" y1="184" x2="600" y2="196" stroke="#0f172a" stroke-width="2" />
+      <circle cx="600" cy="190" r="3.5" fill="#0284c7" />
+      <text x="600" y="210" fill="#0f172a" font-size="12" font-weight="600" text-anchor="middle">2F₂</text>
+
+      <!-- Live Traced Rays Layer -->
+      <g id="svg-rays-group">
+        <!-- Ray 1: Parallel to Principal Axis -->
+        <path id="ray1-incident" d="" stroke="#f59e0b" stroke-width="2.2" fill="none" marker-mid="url(#ray-arrow-amber)" />
+        <path id="ray1-refracted" d="" stroke="#f59e0b" stroke-width="2.2" fill="none" marker-mid="url(#ray-arrow-amber)" />
+        <path id="ray1-virtual" d="" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="4,4" fill="none" opacity="0.75" />
+
+        <!-- Ray 2: Passing through Optical Centre (O) -->
+        <path id="ray2-path" d="" stroke="#0284c7" stroke-width="2.2" fill="none" marker-mid="url(#ray-arrow-cyan)" />
+        <path id="ray2-virtual" d="" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,4" fill="none" opacity="0.75" />
+      </g>
+
+      <!-- Object Arrow (AB) -->
+      <g id="svg-object-group" class="svg-interactive-object" cursor="ew-resize">
+        <line id="obj-line" x1="240" y1="190" x2="240" y2="135" stroke="#2563eb" stroke-width="4.5" stroke-linecap="round" />
+        <polygon id="obj-head" points="233,140 247,140 240,126" fill="#2563eb" />
+        <text id="obj-label-a" x="240" y="118" fill="#1e40af" font-size="13" font-weight="700" text-anchor="middle">A (h=3cm)</text>
+        <text id="obj-label-b" x="240" y="206" fill="#1e40af" font-size="12" font-weight="600" text-anchor="middle">B</text>
+      </g>
+
+      <!-- Image Arrow (A'B') -->
+      <g id="svg-image-group">
+        <line id="img-line" x1="600" y1="190" x2="600" y2="245" stroke="#e11d48" stroke-width="4" stroke-linecap="round" />
+        <polygon id="img-head" points="593,240 607,240 600,254" fill="#e11d48" />
+        <text id="img-label-a" x="600" y="268" fill="#be123c" font-size="13" font-weight="700" text-anchor="middle">A'</text>
+        <text id="img-label-b" x="600" y="182" fill="#be123c" font-size="12" font-weight="600" text-anchor="middle">B'</text>
+      </g>
+
+      <!-- Focal Length Dimension Indicator -->
+      <g opacity="0.75">
+        <line x1="420" y1="330" x2="510" y2="330" stroke="#0ea5e9" stroke-width="1.5" />
+        <line x1="420" y1="324" x2="420" y2="336" stroke="#0ea5e9" stroke-width="1.5" />
+        <line x1="510" y1="324" x2="510" y2="336" stroke="#0ea5e9" stroke-width="1.5" />
+        <text x="465" y="325" fill="#0369a1" font-size="11" font-weight="600" text-anchor="middle">f = +15 cm</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Interactive Control Slider & Live Readouts -->
+  <div class="ray-controls-grid">
+    <div class="ray-slider-box">
+      <div class="slider-header">
+        <label for="ray-u-slider" class="slider-label">
+          <strong>Object Distance ($u$):</strong>
+          <span id="ray-u-val-text" class="value-highlight">-30.0 cm</span>
+        </label>
+        <span class="sign-tag">Cartesian Sign: $u &lt; 0$</span>
+      </div>
+      <input
+        type="range"
+        id="ray-u-slider"
+        min="-55"
+        max="-8"
+        step="0.5"
+        value="-30"
+        aria-label="Object distance u slider in centimeters"
+        class="custom-ray-slider"
+      />
+      <div class="slider-scale-ticks">
+        <span>-55 cm (Beyond 2F)</span>
+        <span>-30 cm (2F₁)</span>
+        <span>-15 cm (F₁)</span>
+        <span>-8 cm (Virtual)</span>
+      </div>
+    </div>
+
+    <!-- Live Board Examination Metrics -->
+    <div class="ray-metrics-cards">
+      <div class="metric-card">
+        <span class="m-label">Image Distance ($v$)</span>
+        <strong id="metric-v" class="m-val text-rose">+30.0 cm</strong>
+        <small id="metric-v-sign">Real (Right of lens, $v &gt; 0$)</small>
+      </div>
+      <div class="metric-card">
+        <span class="m-label">Magnification ($m = v/u$)</span>
+        <strong id="metric-m" class="m-val text-blue">-1.00</strong>
+        <small id="metric-m-size">Same size as object</small>
+      </div>
+      <div class="metric-card">
+        <span class="m-label">Image Nature</span>
+        <strong id="metric-nature" class="m-val text-purple">Real &amp; Inverted</strong>
+        <small id="metric-pos">Position: At $2F_2$</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- CBSE Board Marking Scheme Tip Box -->
+  <div class="cbse-marking-callout">
+    <div class="marking-icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="16" x2="12" y2="12"/>
+        <line x1="12" y1="8" x2="12.01" y2="8"/>
+      </svg>
+    </div>
+    <div class="marking-text">
+      <strong>CBSE 2026 Marking Scheme Rubric (5-Mark Optics Numerical):</strong>
+      <ul class="marking-list">
+        <li><strong>Arrowhead Rule (1 Mark):</strong> In board exams, drawing ray diagrams without direction arrows on both incident and refracted rays loses 1 mark automatically!</li>
+        <li><strong>Cartesian Convention (1 Mark):</strong> All distances measured in direction of incident light are positive; opposite are negative (u = -30 cm, f = +15 cm).</li>
+        <li><strong>Lens Formula (1 Mark):</strong> 1/v - 1/u = 1/f &rArr; 1/v = 1/15 + 1/(-30) = 1/30 &rArr; v = +30 cm.</li>
+        <li><strong>Magnification &amp; Characteristics (2 Marks):</strong> m = v/u = (+30)/(-30) = -1.0. Negative sign confirms image is <em>real and inverted</em>.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  function initRayOpticsSimulator() {
+    const slider = document.getElementById('ray-u-slider');
+    const uText = document.getElementById('ray-u-val-text');
+    const metricV = document.getElementById('metric-v');
+    const metricVSign = document.getElementById('metric-v-sign');
+    const metricM = document.getElementById('metric-m');
+    const metricMSize = document.getElementById('metric-m-size');
+    const metricNature = document.getElementById('metric-nature');
+    const metricPos = document.getElementById('metric-pos');
+    const presetBtns = document.querySelectorAll('.ray-preset-btn');
+
+    // SVG elements
+    const objGroup = document.getElementById('svg-object-group');
+    const objLine = document.getElementById('obj-line');
+    const objHead = document.getElementById('obj-head');
+    const objLabelA = document.getElementById('obj-label-a');
+    const objLabelB = document.getElementById('obj-label-b');
+
+    const imgGroup = document.getElementById('svg-image-group');
+    const imgLine = document.getElementById('img-line');
+    const imgHead = document.getElementById('img-head');
+    const imgLabelA = document.getElementById('img-label-a');
+    const imgLabelB = document.getElementById('img-label-b');
+
+    const ray1Incident = document.getElementById('ray1-incident');
+    const ray1Refracted = document.getElementById('ray1-refracted');
+    const ray1Virtual = document.getElementById('ray1-virtual');
+
+    const ray2Path = document.getElementById('ray2-path');
+    const ray2Virtual = document.getElementById('ray2-virtual');
+
+    if (!slider || !objLine) return;
+
+    // Constants
+    const FOCAL_LENGTH_CM = 15; // cm
+    const SCALE_PX_PER_CM = 6;  // 1 cm = 6 px (f = 90px)
+    const O_X = 420;            // Optical centre X
+    const AXIS_Y = 190;         // Principal axis Y
+    const OBJ_HEIGHT_CM = 9.17; // gives h_o = 55px
+    const OBJ_H_PX = 55;
+
+    function updateSimulation(uCm) {
+      const u = parseFloat(uCm);
+      const f = FOCAL_LENGTH_CM;
+
+      // Update slider and display text
+      uText.textContent = `${u.toFixed(1)} cm`;
+      slider.value = u;
+
+      // Object pixel positions
+      const uPx = Math.abs(u) * SCALE_PX_PER_CM;
+      const objX = O_X - uPx;
+      const objTipY = AXIS_Y - OBJ_H_PX;
+
+      objLine.setAttribute('x1', objX);
+      objLine.setAttribute('x2', objX);
+      objLine.setAttribute('y1', AXIS_Y);
+      objLine.setAttribute('y2', objTipY);
+
+      objHead.setAttribute('points', `${objX - 7},${objTipY + 7} ${objX + 7},${objTipY + 7} ${objX},${objTipY - 7}`);
+      objLabelA.setAttribute('x', objX);
+      objLabelA.setAttribute('y', objTipY - 14);
+      objLabelA.textContent = `A (h=3cm)`;
+      objLabelB.setAttribute('x', objX);
+      objLabelB.setAttribute('y', AXIS_Y + 16);
+
+      // Ray 1: Parallel to axis from object tip to lens at (O_X, objTipY)
+      ray1Incident.setAttribute('d', `M ${objX} ${objTipY} L ${O_X} ${objTipY}`);
+
+      // Calculate Image Distance: 1/v = 1/f + 1/u => v = (u * f) / (u + f)
+      const denominator = u + f;
+      const isAtFocus = Math.abs(denominator) < 0.25;
+
+      if (isAtFocus) {
+        // At focus: Rays emerge parallel to infinity
+        metricV.textContent = '∞ (Infinity)';
+        metricVSign.textContent = 'Parallel rays do not converge';
+        metricM.textContent = 'Highly Enlarged';
+        metricMSize.textContent = 'Infinitely magnified';
+        metricNature.textContent = 'Real & Inverted';
+        metricPos.textContent = 'Position: At Infinity';
+
+        imgGroup.style.display = 'none';
+        ray1Virtual.setAttribute('d', '');
+        ray2Virtual.setAttribute('d', '');
+
+        // Refracted parallel rays
+        const slopeF2 = OBJ_H_PX / (f * SCALE_PX_PER_CM); // slope through F2 (510, 190)
+        const ray1EndY = objTipY + slopeF2 * (820 - O_X);
+        ray1Refracted.setAttribute('d', `M ${O_X} ${objTipY} L 820 ${ray1EndY}`);
+
+        // Ray 2 through O
+        const ray2EndY = AXIS_Y + (OBJ_H_PX / uPx) * (820 - O_X);
+        ray2Path.setAttribute('d', `M ${objX} ${objTipY} L 820 ${ray2EndY}`);
+        return;
+      }
+
+      imgGroup.style.display = 'block';
+      const v = (u * f) / denominator;
+      const m = v / u;
+      const vPx = v * SCALE_PX_PER_CM;
+      const imgX = O_X + vPx;
+      const imgHPx = OBJ_H_PX * m;
+      const imgTipY = AXIS_Y - imgHPx;
+
+      // Update metrics
+      metricV.textContent = `${v > 0 ? '+' : ''}${v.toFixed(1)} cm`;
+      metricM.textContent = `${m.toFixed(2)}`;
+
+      if (v > 0) {
+        // Real Image (Formed on the right side of lens)
+        metricVSign.textContent = `Real (Right of lens, v > 0)`;
+        metricNature.textContent = 'Real & Inverted';
+        metricNature.className = 'm-val text-rose';
+
+        if (Math.abs(m - (-1)) < 0.05) {
+          metricMSize.textContent = 'Same size as object (|m| = 1)';
+          metricPos.textContent = 'Position: Exactly at 2F₂';
+        } else if (Math.abs(m) < 0.95) {
+          metricMSize.textContent = 'Diminished (|m| < 1)';
+          metricPos.textContent = 'Position: Between F₂ and 2F₂';
+        } else {
+          metricMSize.textContent = 'Enlarged (|m| > 1)';
+          metricPos.textContent = 'Position: Beyond 2F₂';
+        }
+
+        // Image Arrow
+        imgLine.setAttribute('stroke', '#e11d48');
+        imgLine.setAttribute('stroke-dasharray', 'none');
+        imgHead.setAttribute('fill', '#e11d48');
+        imgHead.style.display = 'block';
+
+        imgLine.setAttribute('x1', imgX);
+        imgLine.setAttribute('x2', imgX);
+        imgLine.setAttribute('y1', AXIS_Y);
+        imgLine.setAttribute('y2', imgTipY);
+
+        imgHead.setAttribute('points', `${imgX - 6},${imgTipY - 6} ${imgX + 6},${imgTipY - 6} ${imgX},${imgTipY + 6}`);
+        imgLabelA.setAttribute('x', imgX);
+        imgLabelA.setAttribute('y', imgTipY + 18);
+        imgLabelA.textContent = `A' (h=${(3 * Math.abs(m)).toFixed(1)}cm)`;
+        imgLabelB.setAttribute('x', imgX);
+        imgLabelB.setAttribute('y', AXIS_Y - 6);
+
+        // Rays
+        const clampX = Math.min(Math.max(imgX + 40, 600), 820);
+        const ray1Slope = (imgTipY - objTipY) / (imgX - O_X);
+        const ray1FinalY = objTipY + ray1Slope * (clampX - O_X);
+        ray1Refracted.setAttribute('d', `M ${O_X} ${objTipY} L ${imgX} ${imgTipY} L ${clampX} ${ray1FinalY}`);
+        ray1Virtual.setAttribute('d', '');
+
+        const ray2FinalY = AXIS_Y + ((imgTipY - AXIS_Y) / (imgX - O_X)) * (clampX - O_X);
+        ray2Path.setAttribute('d', `M ${objX} ${objTipY} L ${O_X} ${AXIS_Y} L ${imgX} ${imgTipY} L ${clampX} ${ray2FinalY}`);
+        ray2Virtual.setAttribute('d', '');
+      } else {
+        // Virtual Image (Formed on left side of lens, u < f)
+        metricVSign.textContent = `Virtual (Same side as object, v < 0)`;
+        metricNature.textContent = 'Virtual & Erect';
+        metricNature.className = 'm-val text-emerald';
+        metricMSize.textContent = `Magnified (|m| = ${Math.abs(m).toFixed(2)})`;
+        metricPos.textContent = 'Position: On same side as object';
+
+        // Virtual Image Arrow (Dashed emerald arrow)
+        imgLine.setAttribute('stroke', '#059669');
+        imgLine.setAttribute('stroke-dasharray', '4,4');
+        imgHead.setAttribute('fill', '#059669');
+        imgHead.style.display = 'block';
+
+        imgLine.setAttribute('x1', imgX);
+        imgLine.setAttribute('x2', imgX);
+        imgLine.setAttribute('y1', AXIS_Y);
+        imgLine.setAttribute('y2', imgTipY);
+
+        imgHead.setAttribute('points', `${imgX - 6},${imgTipY + 6} ${imgX + 6},${imgTipY + 6} ${imgX},${imgTipY - 6}`);
+        imgLabelA.setAttribute('x', imgX);
+        imgLabelA.setAttribute('y', imgTipY - 10);
+        imgLabelA.textContent = `A' (Virtual)`;
+        imgLabelB.setAttribute('x', imgX);
+        imgLabelB.setAttribute('y', AXIS_Y + 16);
+
+        // Forward refracting divergent rays
+        const f2X = O_X + f * SCALE_PX_PER_CM;
+        const slope1 = (AXIS_Y - objTipY) / (f2X - O_X);
+        const fwd1Y = objTipY + slope1 * (780 - O_X);
+        ray1Refracted.setAttribute('d', `M ${O_X} ${objTipY} L 780 ${fwd1Y}`);
+        // Backward dashed extension to virtual image
+        ray1Virtual.setAttribute('d', `M ${O_X} ${objTipY} L ${imgX} ${imgTipY}`);
+
+        // Ray 2 through O
+        const slope2 = (AXIS_Y - objTipY) / (O_X - objX);
+        const fwd2Y = AXIS_Y + slope2 * (780 - O_X);
+        ray2Path.setAttribute('d', `M ${objX} ${objTipY} L ${O_X} ${AXIS_Y} L 780 ${fwd2Y}`);
+        ray2Virtual.setAttribute('d', `M ${O_X} ${AXIS_Y} L ${imgX} ${imgTipY}`);
+      }
+    }
+
+    // Bind slider input
+    slider.addEventListener('input', (e) => {
+      const val = parseFloat(e.target.value);
+      updateSimulation(val);
+      presetBtns.forEach(btn => {
+        btn.classList.toggle('active', Math.abs(parseFloat(btn.getAttribute('data-u')) - val) < 1);
+      });
+    });
+
+    // Bind presets
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        presetBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const targetU = parseFloat(btn.getAttribute('data-u'));
+        updateSimulation(targetU);
+      });
+    });
+
+    // Initial render at u = -30 cm (2F1)
+    updateSimulation(-30);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRayOpticsSimulator);
+  } else {
+    initRayOpticsSimulator();
+  }
+</script>
+
+<style>
+  .ray-optics-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    margin-bottom: 2.25rem;
+  }
+
+  .ray-lab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .ray-lab-title-group {
+    max-width: 600px;
+  }
+
+  .ray-badge {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0284c7;
+    background: #e0f2fe;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 0.35rem;
+  }
+
+  .ray-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.4rem;
+    line-height: 1.25;
+  }
+
+  .ray-desc {
+    font-size: 0.88rem;
+    color: #475569;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .ray-quick-presets {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-self: center;
+  }
+
+  .ray-preset-btn {
+    padding: 0.38rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .ray-preset-btn:hover {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+  }
+
+  .ray-preset-btn.active {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #0284c7;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+  }
+
+  .ray-svg-container {
+    width: 100%;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+  }
+
+  .ray-svg-canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    user-select: none;
+  }
+
+  .ray-controls-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1.7fr;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+    align-items: center;
+  }
+
+  @media (max-width: 860px) {
+    .ray-controls-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ray-slider-box {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+  }
+
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .slider-label {
+    font-size: 0.88rem;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .value-highlight {
+    font-weight: 700;
+    color: #2563eb;
+    background: #dbeafe;
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.84rem;
+  }
+
+  .sign-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748b;
+  }
+
+  .custom-ray-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #cbd5e1;
+    outline: none;
+    cursor: pointer;
+    accent-color: #2563eb;
+  }
+
+  .slider-scale-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #64748b;
+    margin-top: 0.35rem;
+  }
+
+  .ray-metrics-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+  }
+
+  @media (max-width: 580px) {
+    .ray-metrics-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .metric-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.75rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .m-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+
+  .m-val {
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .text-rose { color: #e11d48; }
+  .text-blue { color: #2563eb; }
+  .text-purple { color: #7c3aed; }
+  .text-emerald { color: #059669; }
+
+  .metric-card small {
+    font-size: 0.72rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cbse-marking-callout {
+    margin-top: 1.25rem;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 1px solid #fde68a;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+
+  .marking-icon {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .marking-text {
+    font-size: 0.84rem;
+    color: #78350f;
+    line-height: 1.45;
+  }
+
+  .marking-text strong {
+    color: #92400e;
+  }
+
+  .marking-list {
+    margin: 0.4rem 0 0;
+    padding-left: 1.15rem;
+  }
+
+  .marking-list li {
+    margin-bottom: 0.25rem;
+  }
+</style>

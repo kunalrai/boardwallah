@@ -20,8 +20,6 @@
     { "source": "/plans/(.*)", "destination": "/", "permanent": true },
     { "source": "/enquiry", "destination": "/", "permanent": true },
     { "source": "/enquiry/(.*)", "destination": "/", "permanent": true },
-    { "source": "/subjects", "destination": "/", "permanent": true },
-    { "source": "/subjects/(.*)", "destination": "/", "permanent": true },
     { "source": "/resources", "destination": "/", "permanent": true },
     { "source": "/resources/(.*)", "destination": "/", "permanent": true },
     { "source": "/policies", "destination": "/", "permanent": true },

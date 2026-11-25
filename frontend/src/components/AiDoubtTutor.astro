@@ -13,7 +13,55 @@ import { apiBase } from "../lib/site";
     aria-controls="ai-tutor-drawer"
     title="Open Wallah AI Doubt Tutor (CBSE Class 10 Socratic Problem Solver)"
   >
-    <span class="ai-fab-icon" aria-hidden="true">🤖</span>
+    <span class="ai-fab-icon" aria-hidden="true">
+      <svg class="wallah-mascot-svg fab-mascot" viewBox="0 0 44 44" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="fab-mascot-head" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#ecfeff"/>
+          </linearGradient>
+          <linearGradient id="fab-mascot-visor" x1="0" y1="13" x2="0" y2="33" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#0f172a"/>
+            <stop offset="100%" stop-color="#1e293b"/>
+          </linearGradient>
+          <linearGradient id="fab-mascot-pupil" x1="0" y1="0" x2="6" y2="6" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#38bdf8"/>
+            <stop offset="100%" stop-color="#0284c7"/>
+          </linearGradient>
+        </defs>
+        <!-- Antenna -->
+        <line x1="22" y1="8" x2="22" y2="3.5" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="22" cy="3" r="2.2" fill="#38bdf8"/>
+        <circle cx="22" cy="3" r="1" fill="#ffffff"/>
+        <!-- Ear Nodules -->
+        <rect x="2" y="18" width="3" height="8" rx="1.5" fill="#38bdf8"/>
+        <rect x="39" y="18" width="3" height="8" rx="1.5" fill="#38bdf8"/>
+        <!-- Head -->
+        <rect x="4.5" y="8" width="35" height="29" rx="11" fill="url(#fab-mascot-head)" stroke="#0284c7" stroke-width="1.8"/>
+        <!-- Dark Visor -->
+        <rect x="8.5" y="13" width="27" height="19" rx="7.5" fill="url(#fab-mascot-visor)"/>
+        <!-- Eyes Wrapper with CSS idle blink -->
+        <g class="mascot-eyes-wrap">
+          <!-- Eye Sockets -->
+          <rect x="11.5" y="16.5" width="8.5" height="10.5" rx="4.25" fill="#0369a1" fill-opacity="0.35"/>
+          <rect x="24" y="16.5" width="8.5" height="10.5" rx="4.25" fill="#0369a1" fill-opacity="0.35"/>
+          <!-- Left Pupil -->
+          <g id="left-pupil" class="mascot-pupil mascot-pupil-left">
+            <circle cx="15.75" cy="21.75" r="3" fill="url(#fab-mascot-pupil)"/>
+            <circle cx="15" cy="20.75" r="1" fill="#ffffff"/>
+            <circle cx="16.8" cy="22.8" r="0.5" fill="#ffffff" opacity="0.8"/>
+          </g>
+          <!-- Right Pupil -->
+          <g id="right-pupil" class="mascot-pupil mascot-pupil-right">
+            <circle cx="28.25" cy="21.75" r="3" fill="url(#fab-mascot-pupil)"/>
+            <circle cx="27.5" cy="20.75" r="1" fill="#ffffff"/>
+            <circle cx="29.3" cy="22.8" r="0.5" fill="#ffffff" opacity="0.8"/>
+          </g>
+        </g>
+        <!-- Friendly Smile -->
+        <path d="M18 28.5 Q22 31.5 26 28.5" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      </svg>
+    </span>
     <span class="ai-fab-text">
       <strong>Ask AI Tutor</strong>
       <small>Socratic CBSE Coach</small>
@@ -28,7 +76,55 @@ import { apiBase } from "../lib/site";
   <div id="ai-tutor-drawer" class="ai-tutor-drawer" role="dialog" aria-modal="true" aria-labelledby="ai-tutor-title">
     <div class="drawer-header">
       <div class="drawer-header-left">
-        <span class="drawer-avatar">🤖</span>
+        <span class="drawer-avatar" aria-hidden="true">
+          <svg class="wallah-mascot-svg drawer-mascot" viewBox="0 0 44 44" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="drw-mascot-head" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="100%" stop-color="#ecfeff"/>
+              </linearGradient>
+              <linearGradient id="drw-mascot-visor" x1="0" y1="13" x2="0" y2="33" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#0f172a"/>
+                <stop offset="100%" stop-color="#1e293b"/>
+              </linearGradient>
+              <linearGradient id="drw-mascot-pupil" x1="0" y1="0" x2="6" y2="6" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="100%" stop-color="#0284c7"/>
+              </linearGradient>
+            </defs>
+            <!-- Antenna -->
+            <line x1="22" y1="8" x2="22" y2="3.5" stroke="#0ea5e9" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="22" cy="3" r="2.2" fill="#0ea5e9"/>
+            <circle cx="22" cy="3" r="1" fill="#ffffff"/>
+            <!-- Ear Nodules -->
+            <rect x="2" y="18" width="3" height="8" rx="1.5" fill="#0ea5e9"/>
+            <rect x="39" y="18" width="3" height="8" rx="1.5" fill="#0ea5e9"/>
+            <!-- Head -->
+            <rect x="4.5" y="8" width="35" height="29" rx="11" fill="url(#drw-mascot-head)" stroke="#0284c7" stroke-width="1.8"/>
+            <!-- Dark Visor -->
+            <rect x="8.5" y="13" width="27" height="19" rx="7.5" fill="url(#drw-mascot-visor)"/>
+            <!-- Eyes Wrapper with CSS idle blink -->
+            <g class="mascot-eyes-wrap">
+              <!-- Eye Sockets -->
+              <rect x="11.5" y="16.5" width="8.5" height="10.5" rx="4.25" fill="#0369a1" fill-opacity="0.35"/>
+              <rect x="24" y="16.5" width="8.5" height="10.5" rx="4.25" fill="#0369a1" fill-opacity="0.35"/>
+              <!-- Left Pupil -->
+              <g class="mascot-pupil mascot-pupil-left">
+                <circle cx="15.75" cy="21.75" r="3" fill="url(#drw-mascot-pupil)"/>
+                <circle cx="15" cy="20.75" r="1" fill="#ffffff"/>
+                <circle cx="16.8" cy="22.8" r="0.5" fill="#ffffff" opacity="0.8"/>
+              </g>
+              <!-- Right Pupil -->
+              <g class="mascot-pupil mascot-pupil-right">
+                <circle cx="28.25" cy="21.75" r="3" fill="url(#drw-mascot-pupil)"/>
+                <circle cx="27.5" cy="20.75" r="1" fill="#ffffff"/>
+                <circle cx="29.3" cy="22.8" r="0.5" fill="#ffffff" opacity="0.8"/>
+              </g>
+            </g>
+            <!-- Friendly Smile -->
+            <path d="M18 28.5 Q22 31.5 26 28.5" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          </svg>
+        </span>
         <div>
           <h2 id="ai-tutor-title" class="drawer-title">Wallah AI Doubt Tutor</h2>
           <span class="drawer-subtitle">CBSE Class 10 Socratic Problem Solver</span>
@@ -843,6 +939,36 @@ import { apiBase } from "../lib/site";
         }
       });
     }
+
+    // Cursor-following eyes for Wallah AI Doubt Tutor mascot
+    const pupils = document.querySelectorAll('#left-pupil, #right-pupil, .mascot-pupil');
+    if (pupils.length && (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      let eyeRaf = null;
+      window.addEventListener('mousemove', (e) => {
+        if (eyeRaf) cancelAnimationFrame(eyeRaf);
+        eyeRaf = requestAnimationFrame(() => {
+          const clientX = e.clientX;
+          const clientY = e.clientY;
+
+          pupils.forEach((pupil) => {
+            const rect = pupil.getBoundingClientRect();
+            if (!rect.width || !rect.height) return;
+            const eyeX = rect.left + rect.width / 2;
+            const eyeY = rect.top + rect.height / 2;
+            const dx = clientX - eyeX;
+            const dy = clientY - eyeY;
+            const dist = Math.hypot(dx, dy);
+            // Translate pupils within 3.5px radius toward cursor
+            const maxRadius = 3.5;
+            const factor = Math.min(dist / 30, maxRadius);
+            const angle = Math.atan2(dy, dx);
+            const tx = Math.cos(angle) * factor;
+            const ty = Math.sin(angle) * factor;
+            pupil.style.transform = `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px)`;
+          });
+        });
+      }, { passive: true });
+    }
   }
 
   if (document.readyState === 'loading') {
@@ -884,8 +1010,55 @@ import { apiBase } from "../lib/site";
   }
 
   .ai-fab-icon {
-    font-size: 1.45rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .drawer-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  /* ── Wallah AI Mascot Cursor-Following & Blink ── */
+  .wallah-mascot-svg {
+    display: block;
+    overflow: visible;
+  }
+
+  .mascot-eyes-wrap {
+    transform-box: fill-box;
+    transform-origin: 22px 22px;
+    animation: mascotIdleBlink 4.2s infinite ease-in-out;
+  }
+
+  @keyframes mascotIdleBlink {
+    0%, 90%, 100% {
+      transform: scaleY(1);
+    }
+    93%, 95% {
+      transform: scaleY(0.1);
+    }
+  }
+
+  .mascot-pupil {
+    transition: transform 0.08s ease-out;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mascot-eyes-wrap {
+      animation: none !important;
+    }
+    .mascot-pupil {
+      transition: none !important;
+      transform: none !important;
+    }
   }
 
   .ai-fab-text {
@@ -997,10 +1170,6 @@ import { apiBase } from "../lib/site";
     gap: 0.75rem;
   }
 
-  .drawer-avatar {
-    font-size: 1.8rem;
-    line-height: 1;
-  }
 
   .drawer-title {
     font-size: 1.1rem;

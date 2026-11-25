@@ -30,7 +30,7 @@ const path = Astro.url.pathname;
 const isApp = isAppLayout ?? (path === "/" || path.startsWith("/chat") || path.startsWith("/portal"));
 const canonical = absoluteUrl(path);
 const links: { href: string; label: string; external?: boolean }[] = [
-  { href: "/", label: "Ask Boardwallah 🤖" },
+  { href: "/", label: "Ask Boardwallah" },
   { href: "/portal/", label: "Study Portal" },
   { href: "/subjects/", label: "Subjects" },
   { href: "/resources/", label: "Resources" },
@@ -101,7 +101,28 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
       <header class="site-header">
         <div class="wrap header-inner">
           <a class="brand" href="/" aria-label={`${provider.name} home`}>
-            <span class="brand-mark" aria-hidden="true">10</span>
+            <span class="brand-mark" aria-hidden="true">
+              <svg class="brand-logo-svg" width="38" height="38" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="header-bw-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#1d4ed8"/>
+                    <stop offset="50%" stop-color="#2563eb"/>
+                    <stop offset="100%" stop-color="#0284c7"/>
+                  </linearGradient>
+                  <linearGradient id="header-bw-gold" x1="7" y1="5" x2="29" y2="15" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#fde047"/>
+                    <stop offset="100%" stop-color="#f59e0b"/>
+                  </linearGradient>
+                </defs>
+                <rect width="36" height="36" rx="9" fill="url(#header-bw-grad)"/>
+                <rect x="1" y="1" width="34" height="34" rx="8" stroke="#93c5fd" stroke-width="1" stroke-opacity="0.4"/>
+                <path d="M18 6L29 11L18 16L7 11L18 6Z" fill="url(#header-bw-gold)"/>
+                <path d="M29 11V15.5" stroke="#fde047" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="29" cy="16.5" r="1" fill="#fde047"/>
+                <path d="M13 20L15.5 18.5V28.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="19.5" y="18.5" width="7" height="10" rx="3.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </span>
             <span>
               <strong>{provider.name}</strong>
               <small>CBSE Class 10, online or at home</small>
@@ -154,7 +175,28 @@ const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWit
         >
           <div class="drawer-header">
             <div class="drawer-brand">
-              <span class="brand-mark" aria-hidden="true">10</span>
+              <span class="brand-mark" aria-hidden="true">
+              <svg class="brand-logo-svg" width="38" height="38" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="header-bw-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#1d4ed8"/>
+                    <stop offset="50%" stop-color="#2563eb"/>
+                    <stop offset="100%" stop-color="#0284c7"/>
+                  </linearGradient>
+                  <linearGradient id="header-bw-gold" x1="7" y1="5" x2="29" y2="15" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#fde047"/>
+                    <stop offset="100%" stop-color="#f59e0b"/>
+                  </linearGradient>
+                </defs>
+                <rect width="36" height="36" rx="9" fill="url(#header-bw-grad)"/>
+                <rect x="1" y="1" width="34" height="34" rx="8" stroke="#93c5fd" stroke-width="1" stroke-opacity="0.4"/>
+                <path d="M18 6L29 11L18 16L7 11L18 6Z" fill="url(#header-bw-gold)"/>
+                <path d="M29 11V15.5" stroke="#fde047" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="29" cy="16.5" r="1" fill="#fde047"/>
+                <path d="M13 20L15.5 18.5V28.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="19.5" y="18.5" width="7" height="10" rx="3.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </span>
               <strong>{provider.name}</strong>
             </div>
             <button

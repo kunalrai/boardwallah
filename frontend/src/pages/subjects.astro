@@ -1,3 +1,609 @@
 ---
-return Astro.redirect('/', 308);
+import Layout from "../layouts/Layout.astro";
+import InteractiveRayDiagram from "../components/InteractiveRayDiagram.astro";
+import Interactive3DSolid from "../components/Interactive3DSolid.astro";
+import CbseIcon from "../components/CbseIcon.astro";
+import { loadContent } from "../lib/content";
+import { calBookingUrl } from "../lib/site";
+
+const { provider, subjects } = loadContent();
 ---
+
+<Layout
+  title={`CBSE Class 10 Subjects & Interactive Labs | ${provider.name}`}
+  description={`Master CBSE Class 10 Mathematics, Science, Social Science, English and Hindi with interactive 3D geometry, live ray optics simulators, and Wallah AI Doubt Tutor.`}
+>
+  <div class="wrap subjects-page-wrap">
+    <!-- Breadcrumb & Top Hero -->
+    <nav class="small breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <span aria-current="page">Subjects &amp; Interactive Labs</span>
+    </nav>
+
+    <div class="subjects-hero">
+      <div class="hero-left">
+        <span class="hero-kicker">
+          <CbseIcon name="sparkle" size={14} class="kicker-icon" />
+          CBSE Board 2026 Curriculum Hub
+        </span>
+        <h1 class="hero-title">CBSE Class 10 Subjects &amp; Interactive Labs</h1>
+        <p class="hero-lead">
+          Comprehensive NCERT syllabus coverage with live ray optics tracing, rotatable 3D mensuration models, and step-by-step board marking schemes. Available 1-on-1 online or home tuition with {provider.tutor_name}.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <a href={calBookingUrl} target="_blank" rel="noopener noreferrer" class="button primary hero-btn" aria-label="Book a free trial class">
+          Book a Free Trial Slot &rarr;
+        </a>
+        <a href="/resources/sample-papers/" class="button secondary hero-btn" aria-label="View 2026 CBSE Sample Papers">
+          2026 Sample Papers
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Subject Anchor Jump Navigation -->
+    <div class="subject-jump-bar" role="navigation" aria-label="Jump to subject or interactive lab">
+      <span class="jump-label">Jump to:</span>
+      <a href="#interactive-labs" class="jump-pill highlight">
+        <CbseIcon name="light" size={14} /> Interactive Labs
+      </a>
+      <a href="#subject-maths" class="jump-pill">
+        <CbseIcon name="math" size={14} /> Mathematics
+      </a>
+      <a href="#subject-science" class="jump-pill">
+        <CbseIcon name="flask" size={14} /> Science
+      </a>
+      <a href="#subject-social-science" class="jump-pill">
+        <CbseIcon name="globe" size={14} /> Social Science
+      </a>
+      <a href="#subject-english" class="jump-pill">
+        <CbseIcon name="quill" size={14} /> English
+      </a>
+      <a href="#subject-hindi" class="jump-pill">
+        <CbseIcon name="book" size={14} /> Hindi
+      </a>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 1: INTERACTIVE EDUCATIONAL VISUALS (SVG RAY OPTICS & 3D SOLID LAB) -->
+    <!-- ════════════════════════════════════════════════════════════════════════════ -->
+    <section class="section labs-section" id="interactive-labs" aria-labelledby="labs-heading">
+      <div class="section-intro">
+        <div class="intro-badge">
+          <CbseIcon name="solid" size={14} /> High-Yield Interactive Models
+        </div>
+        <h2 id="labs-heading" class="section-title">CBSE Class 10 Interactive Visual Labs</h2>
+        <p class="section-subtitle">
+          Directly manipulate angles, focal lengths, and solid dimensions to grasp complex board questions with 100% visual intuition.
+        </p>
+      </div>
+
+      <!-- Lab 1: Interactive Physics Ray Diagram (SVG) -->
+      <InteractiveRayDiagram />
+
+      <!-- Lab 2: Interactive 3D Mensuration Solid (Surface Areas & Volumes) -->
+      <Interactive3DSolid />
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 2: SUBJECT CURRICULUM & CHAPTER GUIDES (UNIFIED SVG ICONS)           -->
+    <!-- ════════════════════════════════════════════════════════════════════════════ -->
+    <section class="section curriculum-section" aria-labelledby="curriculum-heading">
+      <div class="section-intro">
+        <div class="intro-badge">
+          <CbseIcon name="book" size={14} /> Complete Syllabus
+        </div>
+        <h2 id="curriculum-heading" class="section-title">All CBSE Class 10 Subjects &amp; Chapter Guides</h2>
+        <p class="section-subtitle">
+          Detailed revision notes, formula cheat sheets, NCERT solutions, and 20-question practice quizzes for all chapters.
+        </p>
+      </div>
+
+      <div class="subjects-cards-grid">
+        {
+          subjects.map((subject) => (
+            <article class="card subject-hub-card" id={`subject-${subject.id}`} aria-labelledby={`title-${subject.id}`}>
+              <div class="subject-card-header">
+                <div class="subject-title-wrap">
+                  <div class="subject-icon-box">
+                    {subject.id === "maths" ? (
+                      <CbseIcon name="math" size={24} class="icon-accent-math" />
+                    ) : subject.id === "science" ? (
+                      <CbseIcon name="flask" size={24} class="icon-accent-science" />
+                    ) : subject.id === "social_science" ? (
+                      <CbseIcon name="globe" size={24} class="icon-accent-sst" />
+                    ) : subject.id === "english" ? (
+                      <CbseIcon name="quill" size={24} class="icon-accent-eng" />
+                    ) : (
+                      <CbseIcon name="book" size={24} class="icon-accent-hindi" />
+                    )}
+                  </div>
+                  <div>
+                    <h3 id={`title-${subject.id}`} class="subject-name">{subject.name}</h3>
+                    <span class="subject-meta">Board: {subject.board} • Class: {subject.class}</span>
+                  </div>
+                </div>
+                <a href={calBookingUrl} target="_blank" rel="noopener noreferrer" class="button secondary small-btn" aria-label={`Book trial for ${subject.name}`}>
+                  Book Trial
+                </a>
+              </div>
+
+              <!-- Subject Specific Chapter Grids with Unified-Stroke Icons -->
+              {subject.id === "maths" && (
+                <div class="subject-content-body">
+                  <p class="curriculum-desc">
+                    Includes step-by-step derivations for Thales Theorem (BPT), Tangents Theorem 10.2, and irrational proofs.
+                  </p>
+                  <strong class="group-title">Mathematics Chapter Guides &amp; Quizzes (All 14 Chapters):</strong>
+                  <ul class="chapter-pills-list">
+                    <li><a href="/resources/real-numbers/" class="chapter-pill"><CbseIcon name="numbers" size={16} /> Real Numbers</a></li>
+                    <li><a href="/resources/polynomials/" class="chapter-pill"><CbseIcon name="polynomials" size={16} /> Polynomials</a></li>
+                    <li><a href="/resources/linear-equations-in-two-variables/" class="chapter-pill"><CbseIcon name="linear" size={16} /> Linear Equations</a></li>
+                    <li><a href="/resources/quadratic-equations/" class="chapter-pill"><CbseIcon name="parabola" size={16} /> Quadratic Equations</a></li>
+                    <li><a href="/resources/arithmetic-progressions/" class="chapter-pill"><CbseIcon name="ladder" size={16} /> Arithmetic Progressions</a></li>
+                    <li><a href="/resources/triangles/" class="chapter-pill"><CbseIcon name="triangle" size={16} /> Triangles (BPT)</a></li>
+                    <li><a href="/resources/coordinate-geometry/" class="chapter-pill"><CbseIcon name="pin" size={16} /> Coordinate Geometry</a></li>
+                    <li><a href="/resources/introduction-to-trigonometry/" class="chapter-pill"><CbseIcon name="trig" size={16} /> Trigonometry</a></li>
+                    <li><a href="/resources/applications-of-trigonometry/" class="chapter-pill"><CbseIcon name="tower" size={16} /> Heights &amp; Distances</a></li>
+                    <li><a href="/resources/circles/" class="chapter-pill"><CbseIcon name="circle" size={16} /> Circles (Tangents)</a></li>
+                    <li><a href="/resources/areas-related-to-circles/" class="chapter-pill"><CbseIcon name="sector" size={16} /> Areas &amp; Circles</a></li>
+                    <li><a href="/resources/surface-areas-and-volumes/" class="chapter-pill"><CbseIcon name="cube" size={16} /> Surface Areas &amp; Volumes</a></li>
+                    <li><a href="/resources/statistics/" class="chapter-pill"><CbseIcon name="stats" size={16} /> Statistics</a></li>
+                    <li><a href="/resources/probability/" class="chapter-pill"><CbseIcon name="dice" size={16} /> Probability</a></li>
+                  </ul>
+                </div>
+              )}
+
+              {subject.id === "science" && (
+                <div class="subject-content-body">
+                  <p class="curriculum-desc">
+                    Covers chemical reactions, balancing equations, circuit diagrams, optics sign conventions, and life processes.
+                  </p>
+                  
+                  <!-- Chemistry -->
+                  <div class="sub-branch">
+                    <strong class="group-title text-cyan">Chemistry:</strong>
+                    <ul class="chapter-pills-list">
+                      <li><a href="/resources/chemical-reactions-equations/" class="chapter-pill"><CbseIcon name="flask" size={16} /> Chemical Reactions &amp; Equations</a></li>
+                      <li><a href="/resources/acids-bases-salts/" class="chapter-pill"><CbseIcon name="test-tube" size={16} /> Acids, Bases &amp; Salts</a></li>
+                      <li><a href="/resources/metals-non-metals/" class="chapter-pill"><CbseIcon name="metals" size={16} /> Metals &amp; Non-Metals</a></li>
+                      <li><a href="/resources/carbon-and-its-compounds/" class="chapter-pill"><CbseIcon name="carbon" size={16} /> Carbon &amp; Its Compounds</a></li>
+                    </ul>
+                  </div>
+
+                  <!-- Physics -->
+                  <div class="sub-branch">
+                    <strong class="group-title text-amber">Physics:</strong>
+                    <ul class="chapter-pills-list">
+                      <li><a href="/resources/light-reflection-refraction/" class="chapter-pill"><CbseIcon name="light" size={16} /> Light – Reflection &amp; Refraction</a></li>
+                      <li><a href="/resources/human-eye-colourful-world/" class="chapter-pill"><CbseIcon name="eye" size={16} /> The Human Eye &amp; Colourful World</a></li>
+                      <li><a href="/resources/electricity/" class="chapter-pill"><CbseIcon name="bolt" size={16} /> Electricity</a></li>
+                      <li><a href="/resources/magnetic-effects-electric-current/" class="chapter-pill"><CbseIcon name="magnet" size={16} /> Magnetic Effects of Current</a></li>
+                    </ul>
+                  </div>
+
+                  <!-- Biology -->
+                  <div class="sub-branch">
+                    <strong class="group-title text-emerald">Biology:</strong>
+                    <ul class="chapter-pills-list">
+                      <li><a href="/resources/life-processes/" class="chapter-pill"><CbseIcon name="leaf" size={16} /> Life Processes</a></li>
+                      <li><a href="/resources/control-and-coordination/" class="chapter-pill"><CbseIcon name="brain" size={16} /> Control &amp; Coordination</a></li>
+                      <li><a href="/resources/how-do-organisms-reproduce/" class="chapter-pill"><CbseIcon name="flower" size={16} /> How Do Organisms Reproduce?</a></li>
+                      <li><a href="/resources/heredity/" class="chapter-pill"><CbseIcon name="dna" size={16} /> Heredity</a></li>
+                      <li><a href="/resources/our-environment/" class="chapter-pill"><CbseIcon name="globe" size={16} /> Our Environment</a></li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {subject.id === "social_science" && (
+                <div class="subject-content-body">
+                  <p class="curriculum-desc">
+                    Complete History, Political Science, Economics, and Geography with map-work rubrics and case-based questions.
+                  </p>
+
+                  <div class="sub-branch">
+                    <strong class="group-title">History &amp; Political Science:</strong>
+                    <ul class="chapter-pills-list">
+                      <li><a href="/resources/the-rise-of-nationalism-in-europe/" class="chapter-pill"><CbseIcon name="book" size={16} /> Rise of Nationalism in Europe</a></li>
+                      <li><a href="/resources/nationalism-in-india/" class="chapter-pill"><CbseIcon name="book" size={16} /> Nationalism in India</a></li>
+                      <li><a href="/resources/the-making-of-a-global-world/" class="chapter-pill"><CbseIcon name="globe" size={16} /> Making of a Global World</a></li>
+                      <li><a href="/resources/print-culture-and-the-modern-world/" class="chapter-pill"><CbseIcon name="book" size={16} /> Print Culture</a></li>
+                      <li><a href="/resources/power-sharing/" class="chapter-pill"><CbseIcon name="book" size={16} /> Power Sharing</a></li>
+                      <li><a href="/resources/federalism/" class="chapter-pill"><CbseIcon name="book" size={16} /> Federalism</a></li>
+                      <li><a href="/resources/gender-religion-and-caste/" class="chapter-pill"><CbseIcon name="book" size={16} /> Gender, Religion &amp; Caste</a></li>
+                      <li><a href="/resources/political-parties/" class="chapter-pill"><CbseIcon name="book" size={16} /> Political Parties</a></li>
+                      <li><a href="/resources/outcomes-of-democracy/" class="chapter-pill"><CbseIcon name="book" size={16} /> Outcomes of Democracy</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="sub-branch">
+                    <strong class="group-title">Economics &amp; Geography:</strong>
+                    <ul class="chapter-pills-list">
+                      <li><a href="/resources/development/" class="chapter-pill"><CbseIcon name="stats" size={16} /> Development</a></li>
+                      <li><a href="/resources/sectors-of-the-indian-economy/" class="chapter-pill"><CbseIcon name="stats" size={16} /> Sectors of the Indian Economy</a></li>
+                      <li><a href="/resources/money-and-credit/" class="chapter-pill"><CbseIcon name="stats" size={16} /> Money and Credit</a></li>
+                      <li><a href="/resources/globalisation-and-the-indian-economy/" class="chapter-pill"><CbseIcon name="globe" size={16} /> Globalisation &amp; Indian Economy</a></li>
+                      <li><a href="/resources/resources-and-development/" class="chapter-pill"><CbseIcon name="globe" size={16} /> Resources &amp; Development</a></li>
+                      <li><a href="/resources/forest-and-wildlife-resources/" class="chapter-pill"><CbseIcon name="leaf" size={16} /> Forest &amp; Wildlife Resources</a></li>
+                      <li><a href="/resources/water-resources/" class="chapter-pill"><CbseIcon name="globe" size={16} /> Water Resources</a></li>
+                      <li><a href="/resources/agriculture/" class="chapter-pill"><CbseIcon name="leaf" size={16} /> Agriculture</a></li>
+                      <li><a href="/resources/minerals-and-energy-resources/" class="chapter-pill"><CbseIcon name="metals" size={16} /> Minerals &amp; Energy Resources</a></li>
+                      <li><a href="/resources/manufacturing-industries/" class="chapter-pill"><CbseIcon name="metals" size={16} /> Manufacturing Industries</a></li>
+                      <li><a href="/resources/lifelines-of-national-economy/" class="chapter-pill"><CbseIcon name="globe" size={16} /> Lifelines of National Economy</a></li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {subject.id === "english" && (
+                <div class="subject-content-body">
+                  <p class="curriculum-desc">
+                    NCERT First Flight prose &amp; poetry, Footprints Without Feet, analytical paragraphs, and formal letters.
+                  </p>
+                  <strong class="group-title">English Language &amp; Literature:</strong>
+                  <ul class="chapter-pills-list">
+                    <li><a href="/resources/english-first-flight-prose/" class="chapter-pill"><CbseIcon name="notes" size={16} /> First Flight Prose (All 9 Chapters)</a></li>
+                    <li><a href="/resources/english-first-flight-poetry/" class="chapter-pill"><CbseIcon name="quill" size={16} /> First Flight Poetry (All 10 Poems)</a></li>
+                    <li><a href="/resources/english-footprints-without-feet/" class="chapter-pill"><CbseIcon name="book" size={16} /> Footprints Without Feet</a></li>
+                    <li><a href="/resources/english-grammar-and-writing/" class="chapter-pill"><CbseIcon name="pencil" size={16} /> Grammar &amp; Formal Letters</a></li>
+                  </ul>
+                </div>
+              )}
+
+              {subject.id === "hindi" && (
+                <div class="subject-content-body">
+                  <p class="curriculum-desc">
+                    क्षितिज भाग-2 (गद्य एवं काव्य), कृतिका, व्यावहारिक व्याकरण और रचनात्मक लेखन।
+                  </p>
+                  <strong class="group-title">Hindi Course 'A' सम्पूर्ण पाठ्यक्रम:</strong>
+                  <ul class="chapter-pills-list">
+                    <li><a href="/resources/hindi-vyavaharik-vyakaran/" class="chapter-pill"><CbseIcon name="leaf" size={16} /> व्यावहारिक व्याकरण (16 अंक)</a></li>
+                    <li><a href="/resources/hindi-kshitij-gadhya-khand/" class="chapter-pill"><CbseIcon name="book" size={16} /> क्षितिज भाग-2 गद्य खंड</a></li>
+                    <li><a href="/resources/hindi-kshitij-kavya-khand/" class="chapter-pill"><CbseIcon name="quill" size={16} /> क्षितिज भाग-2 काव्य खंड</a></li>
+                    <li><a href="/resources/hindi-kritika/" class="chapter-pill"><CbseIcon name="notes" size={16} /> कृतिका भाग-2 पूरक पाठ्यपुस्तक</a></li>
+                    <li><a href="/resources/hindi-rachanatmak-lekhan/" class="chapter-pill"><CbseIcon name="pencil" size={16} /> रचनात्मक लेखन (20 अंक)</a></li>
+                  </ul>
+                </div>
+              )}
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Bottom Trial CTA Box -->
+    <section class="section trial-cta-section">
+      <div class="card trial-box">
+        <div class="trial-info">
+          <h2>Ready to Excel in Your CBSE Class 10 Board Exams?</h2>
+          <p>
+            Experience personalized 1-on-1 coaching with {provider.tutor_name}. 
+            Join online from anywhere or book a home visit across {provider.service_localities.join(" and ")}.
+          </p>
+        </div>
+        <div class="trial-actions">
+          <a class="button primary" href={calBookingUrl} target="_blank" rel="noopener noreferrer">
+            Choose Your Trial Slot &rarr;
+          </a>
+          <a class="button secondary" href="/enquiry/">
+            Send Enquiry
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .subjects-page-wrap {
+    padding-top: 1.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .breadcrumb {
+    margin-bottom: 1.25rem;
+    color: #64748b;
+  }
+
+  .breadcrumb a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .subjects-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-left {
+    max-width: 680px;
+  }
+
+  .hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+  }
+
+  .kicker-icon {
+    color: #2563eb;
+  }
+
+  .hero-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.15;
+    margin: 0 0 0.85rem;
+  }
+
+  .hero-lead {
+    font-size: 1.05rem;
+    color: #475569;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    min-width: 220px;
+  }
+
+  .hero-btn {
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Jump Bar */
+  .subject-jump-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.65rem 0.85rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 2.5rem;
+    scrollbar-width: none;
+  }
+
+  .jump-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-right: 0.25rem;
+  }
+
+  .jump-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #334155;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+
+  .jump-pill:hover {
+    border-color: #94a3b8;
+    background: #f1f5f9;
+  }
+
+  .jump-pill.highlight {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #0284c7;
+  }
+
+  /* Section Intros */
+  .section-intro {
+    margin-bottom: 1.75rem;
+  }
+
+  .intro-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0d9488;
+    background: #ccfbf1;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.4rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+    color: #475569;
+    margin: 0;
+    max-width: 720px;
+  }
+
+  /* Curriculum Cards Grid */
+  .subjects-cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .subject-hub-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  }
+
+  .subject-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.15rem;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 1.15rem;
+    flex-wrap: wrap;
+  }
+
+  .subject-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .subject-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    display: grid;
+    place-items: center;
+  }
+
+  .icon-accent-math { color: #2563eb; }
+  .icon-accent-science { color: #059669; }
+  .icon-accent-sst { color: #d97706; }
+  .icon-accent-eng { color: #7c3aed; }
+  .icon-accent-hindi { color: #dc2626; }
+
+  .subject-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .subject-meta {
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  .small-btn {
+    font-size: 0.82rem;
+    padding: 0.35rem 0.75rem;
+    min-height: 2.1rem;
+  }
+
+  .curriculum-desc {
+    font-size: 0.88rem;
+    color: #475569;
+    margin: 0 0 1rem;
+  }
+
+  .group-title {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0.75rem 0 0.5rem;
+  }
+
+  .sub-branch {
+    margin-bottom: 1rem;
+  }
+
+  .text-cyan { color: #0284c7; }
+  .text-amber { color: #d97706; }
+  .text-emerald { color: #059669; }
+
+  /* Chapter Pills List */
+  .chapter-pills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.45rem;
+  }
+
+  .chapter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: 8px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .chapter-pill:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+    transform: translateY(-1px);
+  }
+
+  /* Trial Box */
+  .trial-box {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .trial-info h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .trial-info p {
+    color: #94a3b8;
+    margin: 0;
+    max-width: 600px;
+    font-size: 0.94rem;
+    line-height: 1.5;
+  }
+
+  .trial-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+</style>

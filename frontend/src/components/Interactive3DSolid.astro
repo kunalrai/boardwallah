@@ -1,0 +1,983 @@
+---
+// Interactive3DSolid.astro - Interactive CBSE Class 10 3D Solid Geometry Visualizer for Surface Areas & Volumes
+---
+
+<div class="solid-3d-card" id="solid-3d-lab" aria-label="Interactive CBSE Class 10 3D Solid Visualizer">
+  <div class="solid-lab-header">
+    <div class="solid-lab-title-group">
+      <span class="solid-badge">CBSE Class 10 Mathematics • Chapter 12</span>
+      <h3 class="solid-title">Surface Areas &amp; Volumes: 3D Solid Geometry Lab</h3>
+      <p class="solid-desc">
+        Rotate 360° in 3D, adjust dimensions, and inspect live CBSE Board formulas with step-by-step substitution for Cone, Cylinder, Frustum, and Hemisphere.
+      </p>
+    </div>
+
+    <!-- Solid Shape Selector Tabs -->
+    <div class="solid-shape-tabs" role="tablist" aria-label="Select 3D Solid Geometry">
+      <button type="button" class="solid-tab active" data-solid="cone" role="tab" aria-selected="true">
+        Cone
+      </button>
+      <button type="button" class="solid-tab" data-solid="cylinder" role="tab" aria-selected="false">
+        Cylinder
+      </button>
+      <button type="button" class="solid-tab" data-solid="frustum" role="tab" aria-selected="false">
+        Frustum
+      </button>
+      <button type="button" class="solid-tab" data-solid="hemisphere" role="tab" aria-selected="false">
+        Hemisphere
+      </button>
+    </div>
+  </div>
+
+  <div class="solid-main-layout">
+    <!-- Left: 3D Interactive Canvas Viewport -->
+    <div class="canvas-wrapper" id="canvas-3d-wrapper">
+      <canvas id="solid-3d-canvas" width="560" height="420" class="canvas-3d" aria-label="Interactive rotatable 3D geometric solid"></canvas>
+      
+      <!-- Overlay 3D Controls -->
+      <div class="canvas-hud-controls">
+        <span class="hud-hint">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/>
+          </svg>
+          Drag to rotate 3D
+        </span>
+        <button type="button" id="btn-toggle-wireframe" class="hud-btn" aria-label="Toggle wireframe mode">
+          Wireframe
+        </button>
+        <button type="button" id="btn-reset-rotation" class="hud-btn" aria-label="Reset 3D camera rotation">
+          Reset View
+        </button>
+      </div>
+    </div>
+
+    <!-- Right: Dimension Sliders & Live CBSE Formula Cards -->
+    <div class="solid-panel-right">
+      <!-- Sliders Box -->
+      <div class="sliders-card">
+        <h4 class="panel-subtitle">Adjust Solid Dimensions</h4>
+
+        <!-- Radius Slider -->
+        <div class="slider-row" id="row-radius-1">
+          <div class="slider-meta">
+            <label for="slider-r" class="slider-lbl">Radius ($r$):</label>
+            <strong id="val-r" class="slider-val">5.0 cm</strong>
+          </div>
+          <input type="range" id="slider-r" min="2" max="10" step="0.5" value="5" class="solid-slider" aria-label="Base radius in cm" />
+        </div>
+
+        <!-- Frustum Top Radius Slider (Hidden for normal cone/cylinder) -->
+        <div class="slider-row" id="row-radius-top" style="display:none;">
+          <div class="slider-meta">
+            <label for="slider-r-top" class="slider-lbl">Top Radius ($r_1$):</label>
+            <strong id="val-r-top" class="slider-val">3.0 cm</strong>
+          </div>
+          <input type="range" id="slider-r-top" min="1.5" max="8" step="0.5" value="3" class="solid-slider" aria-label="Top radius in cm" />
+        </div>
+
+        <!-- Height Slider -->
+        <div class="slider-row" id="row-height">
+          <div class="slider-meta">
+            <label for="slider-h" class="slider-lbl">Vertical Height ($h$):</label>
+            <strong id="val-h" class="slider-val">12.0 cm</strong>
+          </div>
+          <input type="range" id="slider-h" min="4" max="20" step="0.5" value="12" class="solid-slider" aria-label="Vertical height in cm" />
+        </div>
+
+        <!-- Slant Height Output (for cone & frustum) -->
+        <div class="derived-metric" id="derived-slant-row">
+          <span class="derived-lbl">Slant Height (l = √(r² + h²)):</span>
+          <strong id="val-l" class="derived-val">13.0 cm</strong>
+        </div>
+      </div>
+
+      <!-- Live Formula & Calculation Card -->
+      <div class="formulas-card">
+        <h4 class="panel-subtitle" id="formula-title">Right Circular Cone Formulas</h4>
+        
+        <div class="formula-item">
+          <div class="f-name">Curved Surface Area (CSA):</div>
+          <div class="f-latex" id="f-csa-latex">CSA = π · r · l</div>
+          <div class="f-sub" id="f-csa-calc">= (22/7) × 5.0 × 13.0 ≈ 204.29 cm²</div>
+        </div>
+
+        <div class="formula-item">
+          <div class="f-name">Total Surface Area (TSA):</div>
+          <div class="f-latex" id="f-tsa-latex">TSA = π · r(l + r)</div>
+          <div class="f-sub" id="f-tsa-calc">= (22/7) × 5.0 × (13.0 + 5.0) ≈ 282.86 cm²</div>
+        </div>
+
+        <div class="formula-item">
+          <div class="f-name">Volume (V):</div>
+          <div class="f-latex" id="f-vol-latex">Volume = (1/3)π · r² · h</div>
+          <div class="f-sub" id="f-vol-calc">= (1/3) × (22/7) × 25.0 × 12.0 ≈ 314.29 cm³</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CBSE Exam Tip Footer -->
+  <div class="cbse-3d-tip">
+    <div class="tip-badge">CBSE 2026 Board Exam Tip</div>
+    <div class="tip-body">
+      When solving solid combination problems (e.g., cone mounted on a hemisphere, or ice cream cone),
+      <strong>never add the individual Total Surface Areas</strong>! Add only the <em>exposed Curved Surface Areas</em> (TSA_solid = CSA_cone + CSA_hemisphere).
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  function init3DSolidViewer() {
+    const root = document.getElementById('solid-3d-lab');
+    if (!root) return;
+
+    let hasStarted = false;
+
+    // Lazy load when scrolled near view
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !hasStarted) {
+            hasStarted = true;
+            observer.disconnect();
+            runEngine();
+          }
+        });
+      }, { rootMargin: '200px' });
+      observer.observe(root);
+    } else {
+      runEngine();
+    }
+
+    function runEngine() {
+      const canvas = document.getElementById('solid-3d-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      // Solid states
+      let currentSolid = 'cone';
+      let r = 5.0;
+      let rTop = 3.0; // for frustum
+      let h = 12.0;
+      let wireframe = false;
+
+      // Camera angles
+      let rotX = 0.35;
+      let rotY = -0.55;
+      let isDragging = false;
+      let lastMouseX = 0;
+      let lastMouseY = 0;
+
+      // DOM Elements
+      const tabs = root.querySelectorAll('.solid-tab');
+      const sliderR = document.getElementById('slider-r');
+      const sliderRTop = document.getElementById('slider-r-top');
+      const sliderH = document.getElementById('slider-h');
+      const valR = document.getElementById('val-r');
+      const valRTop = document.getElementById('val-r-top');
+      const valH = document.getElementById('val-h');
+      const valL = document.getElementById('val-l');
+      const rowRadiusTop = document.getElementById('row-radius-top');
+      const rowHeight = document.getElementById('row-height');
+      const derivedSlantRow = document.getElementById('derived-slant-row');
+
+      const formulaTitle = document.getElementById('formula-title');
+      const fCsaLatex = document.getElementById('f-csa-latex');
+      const fCsaCalc = document.getElementById('f-csa-calc');
+      const fTsaLatex = document.getElementById('f-tsa-latex');
+      const fTsaCalc = document.getElementById('f-tsa-calc');
+      const fVolLatex = document.getElementById('f-vol-latex');
+      const fVolCalc = document.getElementById('f-vol-calc');
+
+      const btnWireframe = document.getElementById('btn-toggle-wireframe');
+      const btnResetRot = document.getElementById('btn-reset-rotation');
+
+      function updateCalculations() {
+        const PI = 22 / 7;
+        valR.textContent = `${r.toFixed(1)} cm`;
+        valH.textContent = `${h.toFixed(1)} cm`;
+        valRTop.textContent = `${rTop.toFixed(1)} cm`;
+
+        if (currentSolid === 'cone') {
+          rowRadiusTop.style.display = 'none';
+          rowHeight.style.display = 'block';
+          derivedSlantRow.style.display = 'flex';
+
+          const l = Math.sqrt(r * r + h * h);
+          valL.textContent = `${l.toFixed(2)} cm`;
+
+          formulaTitle.textContent = 'Right Circular Cone Formulas';
+          fCsaLatex.textContent = 'CSA = π · r · l';
+          const csa = PI * r * l;
+          fCsaCalc.textContent = `= (22/7) × ${r.toFixed(1)} × ${l.toFixed(2)} ≈ ${csa.toFixed(2)} cm²`;
+
+          fTsaLatex.textContent = 'TSA = π · r(l + r)';
+          const tsa = PI * r * (l + r);
+          fTsaCalc.textContent = `= (22/7) × ${r.toFixed(1)} × ${(l + r).toFixed(2)} ≈ ${tsa.toFixed(2)} cm²`;
+
+          fVolLatex.textContent = 'Volume = (1/3)π · r² · h';
+          const vol = (1 / 3) * PI * r * r * h;
+          fVolCalc.textContent = `= (1/3) × (22/7) × ${(r * r).toFixed(1)} × ${h.toFixed(1)} ≈ ${vol.toFixed(2)} cm³`;
+        } else if (currentSolid === 'cylinder') {
+          rowRadiusTop.style.display = 'none';
+          rowHeight.style.display = 'block';
+          derivedSlantRow.style.display = 'none';
+
+          formulaTitle.textContent = 'Right Circular Cylinder Formulas';
+          fCsaLatex.textContent = 'CSA = 2 · π · r · h';
+          const csa = 2 * PI * r * h;
+          fCsaCalc.textContent = `= 2 × (22/7) × ${r.toFixed(1)} × ${h.toFixed(1)} ≈ ${csa.toFixed(2)} cm²`;
+
+          fTsaLatex.textContent = 'TSA = 2 · π · r(r + h)';
+          const tsa = 2 * PI * r * (r + h);
+          fTsaCalc.textContent = `= 2 × (22/7) × ${r.toFixed(1)} × ${(r + h).toFixed(1)} ≈ ${tsa.toFixed(2)} cm²`;
+
+          fVolLatex.textContent = 'Volume = π · r² · h';
+          const vol = PI * r * r * h;
+          fVolCalc.textContent = `= (22/7) × ${(r * r).toFixed(1)} × ${h.toFixed(1)} ≈ ${vol.toFixed(2)} cm³`;
+        } else if (currentSolid === 'frustum') {
+          rowRadiusTop.style.display = 'block';
+          rowHeight.style.display = 'block';
+          derivedSlantRow.style.display = 'flex';
+
+          const rDiff = Math.abs(r - rTop);
+          const l = Math.sqrt(h * h + rDiff * rDiff);
+          valL.textContent = `${l.toFixed(2)} cm`;
+
+          formulaTitle.textContent = 'Frustum of a Cone Formulas';
+          fCsaLatex.textContent = 'CSA = π · l · (r₁ + r₂)';
+          const csa = PI * l * (r + rTop);
+          fCsaCalc.textContent = `= (22/7) × ${l.toFixed(2)} × ${(r + rTop).toFixed(1)} ≈ ${csa.toFixed(2)} cm²`;
+
+          fTsaLatex.textContent = 'TSA = CSA + π·r₁² + π·r₂²';
+          const tsa = csa + PI * (r * r + rTop * rTop);
+          fTsaCalc.textContent = `≈ ${tsa.toFixed(2)} cm²`;
+
+          fVolLatex.textContent = 'Volume = (1/3)π·h · (r₁² + r₂² + r₁·r₂)';
+          const vol = (1 / 3) * PI * h * (r * r + rTop * rTop + r * rTop);
+          fVolCalc.textContent = `≈ ${vol.toFixed(2)} cm³`;
+        } else if (currentSolid === 'hemisphere') {
+          rowRadiusTop.style.display = 'none';
+          rowHeight.style.display = 'none';
+          derivedSlantRow.style.display = 'none';
+
+          formulaTitle.textContent = 'Hemisphere Formulas';
+          fCsaLatex.textContent = 'CSA = 2 · π · r²';
+          const csa = 2 * PI * r * r;
+          fCsaCalc.textContent = `= 2 × (22/7) × ${(r * r).toFixed(1)} ≈ ${csa.toFixed(2)} cm²`;
+
+          fTsaLatex.textContent = 'TSA = 3 · π · r² (Closed)';
+          const tsa = 3 * PI * r * r;
+          fTsaCalc.textContent = `= 3 × (22/7) × ${(r * r).toFixed(1)} ≈ ${tsa.toFixed(2)} cm²`;
+
+          fVolLatex.textContent = 'Volume = (2/3)π · r³';
+          const vol = (2 / 3) * PI * Math.pow(r, 3);
+          fVolCalc.textContent = `= (2/3) × (22/7) × ${Math.pow(r, 3).toFixed(1)} ≈ ${vol.toFixed(2)} cm³`;
+        }
+      }
+
+      // 3D Projection Engine
+      function project(x, y, z) {
+        // Rotate around Y
+        const cosY = Math.cos(rotY);
+        const sinY = Math.sin(rotY);
+        const x1 = x * cosY + z * sinY;
+        const z1 = -x * sinY + z * cosY;
+
+        // Rotate around X
+        const cosX = Math.cos(rotX);
+        const sinX = Math.sin(rotX);
+        const y2 = y * cosX - z1 * sinX;
+        const z2 = y * sinX + z1 * cosX;
+
+        // Camera perspective distance
+        const cameraDist = 480;
+        const scale = cameraDist / (cameraDist + z2);
+
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2 + 20;
+
+        return {
+          x: cx + x1 * scale,
+          y: cy + y2 * scale,
+          z: z2,
+          scale: scale
+        };
+      }
+
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Gradient Background
+        const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        bgGrad.addColorStop(0, '#f8fafc');
+        bgGrad.addColorStop(1, '#eef2f6');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Ground shadow ellipse
+        ctx.save();
+        const baseCenterProj = project(0, 100, 0);
+        ctx.beginPath();
+        ctx.ellipse(baseCenterProj.x, baseCenterProj.y + 10, r * 16 * baseCenterProj.scale, r * 7 * baseCenterProj.scale, 0, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.08)';
+        ctx.fill();
+        ctx.restore();
+
+        const SEGS = 32;
+        const scaleFactor = 12; // visual unit to px
+
+        const faces = [];
+
+        if (currentSolid === 'cone') {
+          const apexY = -h * scaleFactor / 2;
+          const baseY = h * scaleFactor / 2;
+          const apex = { x: 0, y: apexY, z: 0 };
+
+          const basePts = [];
+          for (let i = 0; i < SEGS; i++) {
+            const angle = (i / SEGS) * Math.PI * 2;
+            basePts.push({
+              x: Math.cos(angle) * r * scaleFactor,
+              y: baseY,
+              z: Math.sin(angle) * r * scaleFactor
+            });
+          }
+
+          // Side triangular faces
+          for (let i = 0; i < SEGS; i++) {
+            const next = (i + 1) % SEGS;
+            const pts = [apex, basePts[i], basePts[next]];
+            const avgZ = (apex.z + basePts[i].z + basePts[next].z) / 3;
+            // Normal approximation for lighting
+            const midAngle = ((i + 0.5) / SEGS) * Math.PI * 2;
+            const nx = Math.cos(midAngle);
+            const nz = Math.sin(midAngle);
+            const light = 0.5 + 0.45 * (nx * 0.57 - 0.57 * 0.3 + nz * 0.57);
+            faces.push({
+              type: 'tri',
+              pts,
+              avgZ,
+              light: Math.max(0.2, Math.min(1, light)),
+              color: '#0284c7'
+            });
+          }
+
+          // Base disc
+          const baseCenter = { x: 0, y: baseY, z: 0 };
+          for (let i = 0; i < SEGS; i++) {
+            const next = (i + 1) % SEGS;
+            faces.push({
+              type: 'tri',
+              pts: [baseCenter, basePts[next], basePts[i]],
+              avgZ: baseY,
+              light: 0.35,
+              color: '#0369a1'
+            });
+          }
+        } else if (currentSolid === 'cylinder') {
+          const topY = -h * scaleFactor / 2;
+          const botY = h * scaleFactor / 2;
+          const topPts = [];
+          const botPts = [];
+
+          for (let i = 0; i < SEGS; i++) {
+            const angle = (i / SEGS) * Math.PI * 2;
+            topPts.push({ x: Math.cos(angle) * r * scaleFactor, y: topY, z: Math.sin(angle) * r * scaleFactor });
+            botPts.push({ x: Math.cos(angle) * r * scaleFactor, y: botY, z: Math.sin(angle) * r * scaleFactor });
+          }
+
+          // Quad side panels
+          for (let i = 0; i < SEGS; i++) {
+            const next = (i + 1) % SEGS;
+            const pts = [topPts[i], topPts[next], botPts[next], botPts[i]];
+            const avgZ = (topPts[i].z + topPts[next].z + botPts[next].z + botPts[i].z) / 4;
+            const midAngle = ((i + 0.5) / SEGS) * Math.PI * 2;
+            const light = 0.5 + 0.45 * Math.cos(midAngle - 0.7);
+            faces.push({ type: 'quad', pts, avgZ, light: Math.max(0.2, Math.min(1, light)), color: '#059669' });
+          }
+
+          // Top Disc
+          const topCenter = { x: 0, y: topY, z: 0 };
+          for (let i = 0; i < SEGS; i++) {
+            const next = (i + 1) % SEGS;
+            faces.push({ type: 'tri', pts: [topCenter, topPts[i], topPts[next]], avgZ: topY, light: 0.85, color: '#10b981' });
+          }
+          // Bottom Disc
+          const botCenter = { x: 0, y: botY, z: 0 };
+          for (let i = 0; i < SEGS; i++) {
+            const next = (i + 1) % SEGS;
+            faces.push({ type: 'tri', pts: [botCenter, botPts[next], botPts[i]], avgZ: botY, light: 0.35, color: '#047857' });
+          }
+        } else if (currentSolid === 'frustum') {
+          const topY = -h * scaleFactor / 2;
+          const botY = h * scaleFactor / 2;
+          const topPts = [];
+          const botPts = [];
+
+          for (let i = 0; i < SEGS; i++) {
+            const angle = (i / SEGS) * Math.PI * 2;
+            topPts.push({ x: Math.cos(angle) * rTop * scaleFactor, y: topY, z: Math.sin(angle) * rTop * scaleFactor });
+            botPts.push({ x: Math.cos(angle) * r * scaleFactor, y: botY, z: Math.sin(angle) * r * scaleFactor });
+          }
+
+          // Tapered side quads
+          for (let i = 0; i < SEGS; i++) {
+            const next = (i + 1) % SEGS;
+            const pts = [topPts[i], topPts[next], botPts[next], botPts[i]];
+            const avgZ = (topPts[i].z + topPts[next].z + botPts[next].z + botPts[i].z) / 4;
+            const midAngle = ((i + 0.5) / SEGS) * Math.PI * 2;
+            const light = 0.5 + 0.45 * Math.cos(midAngle - 0.7);
+            faces.push({ type: 'quad', pts, avgZ, light: Math.max(0.2, Math.min(1, light)), color: '#d97706' });
+          }
+
+          // Top & Bottom discs
+          const topCenter = { x: 0, y: topY, z: 0 };
+          const botCenter = { x: 0, y: botY, z: 0 };
+          for (let i = 0; i < SEGS; i++) {
+            const next = (i + 1) % SEGS;
+            faces.push({ type: 'tri', pts: [topCenter, topPts[i], topPts[next]], avgZ: topY, light: 0.85, color: '#f59e0b' });
+            faces.push({ type: 'tri', pts: [botCenter, botPts[next], botPts[i]], avgZ: botY, light: 0.35, color: '#b45309' });
+          }
+        } else if (currentSolid === 'hemisphere') {
+          const R = r * scaleFactor * 1.35;
+          const RINGS = 12;
+          const SECTORS = 24;
+
+          for (let i = 0; i < RINGS; i++) {
+            const phi1 = (i / RINGS) * (Math.PI / 2);
+            const phi2 = ((i + 1) / RINGS) * (Math.PI / 2);
+
+            for (let j = 0; j < SECTORS; j++) {
+              const th1 = (j / SECTORS) * Math.PI * 2;
+              const th2 = ((j + 1) / SECTORS) * Math.PI * 2;
+
+              const p1 = { x: R * Math.cos(phi1) * Math.cos(th1), y: -R * Math.sin(phi1), z: R * Math.cos(phi1) * Math.sin(th1) };
+              const p2 = { x: R * Math.cos(phi1) * Math.cos(th2), y: -R * Math.sin(phi1), z: R * Math.cos(phi1) * Math.sin(th2) };
+              const p3 = { x: R * Math.cos(phi2) * Math.cos(th2), y: -R * Math.sin(phi2), z: R * Math.cos(phi2) * Math.sin(th2) };
+              const p4 = { x: R * Math.cos(phi2) * Math.cos(th1), y: -R * Math.sin(phi2), z: R * Math.cos(phi2) * Math.sin(th1) };
+
+              const avgZ = (p1.z + p2.z + p3.z + p4.z) / 4;
+              const light = 0.5 + 0.45 * ((p1.x + p3.x) / (2 * R) * 0.5 + (p1.z + p3.z) / (2 * R) * 0.5);
+              faces.push({ type: 'quad', pts: [p1, p2, p3, p4], avgZ, light: Math.max(0.2, Math.min(1, light)), color: '#7c3aed' });
+            }
+          }
+
+          // Flat circular base at equator (y = 0)
+          const baseCenter = { x: 0, y: 0, z: 0 };
+          for (let j = 0; j < SECTORS; j++) {
+            const th1 = (j / SECTORS) * Math.PI * 2;
+            const th2 = ((j + 1) / SECTORS) * Math.PI * 2;
+            const p1 = { x: R * Math.cos(th1), y: 0, z: R * Math.sin(th1) };
+            const p2 = { x: R * Math.cos(th2), y: 0, z: R * Math.sin(th2) };
+            faces.push({ type: 'tri', pts: [baseCenter, p2, p1], avgZ: 0, light: 0.35, color: '#6d28d9' });
+          }
+        }
+
+        // Depth sort faces back to front (Painter's Algorithm)
+        faces.sort((a, b) => {
+          const pA = project(0, 0, a.avgZ).z;
+          const pB = project(0, 0, b.avgZ).z;
+          return pB - pA;
+        });
+
+        // Draw sorted faces
+        faces.forEach(face => {
+          const projPts = face.pts.map(p => project(p.x, p.y, p.z));
+
+          ctx.beginPath();
+          ctx.moveTo(projPts[0].x, projPts[0].y);
+          for (let i = 1; i < projPts.length; i++) {
+            ctx.lineTo(projPts[i].x, projPts[i].y);
+          }
+          ctx.closePath();
+
+          if (wireframe) {
+            ctx.strokeStyle = '#0284c7';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          } else {
+            // Shaded fill with lighting
+            ctx.fillStyle = face.color;
+            ctx.globalAlpha = 0.88;
+            ctx.fill();
+
+            // Specular / Diffuse lighting overlay
+            ctx.fillStyle = face.light > 0.5 ? '#ffffff' : '#000000';
+            ctx.globalAlpha = Math.abs(face.light - 0.5) * 0.65;
+            ctx.fill();
+
+            ctx.globalAlpha = 1;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+            ctx.lineWidth = 0.75;
+            ctx.stroke();
+          }
+        });
+
+        // Draw Dimension Callout Overlay (Height axis & Radius arrow)
+        if (!wireframe) {
+          drawDimensionGuides();
+        }
+      }
+
+      function drawDimensionGuides() {
+        ctx.save();
+        const scaleFactor = 12;
+
+        if (currentSolid === 'cone' || currentSolid === 'frustum' || currentSolid === 'cylinder') {
+          const topY = -h * scaleFactor / 2;
+          const botY = h * scaleFactor / 2;
+
+          // Height axis (dashed white/amber line down the middle)
+          const pTop = project(0, topY, 0);
+          const pBot = project(0, botY, 0);
+
+          ctx.beginPath();
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = '#f59e0b';
+          ctx.lineWidth = 2;
+          ctx.moveTo(pTop.x, pTop.y);
+          ctx.lineTo(pBot.x, pBot.y);
+          ctx.stroke();
+
+          // Height label badge
+          const midH = { x: (pTop.x + pBot.x) / 2 - 18, y: (pTop.y + pBot.y) / 2 };
+          ctx.setLineDash([]);
+          ctx.fillStyle = '#fef3c7';
+          ctx.strokeStyle = '#f59e0b';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.roundRect(midH.x - 24, midH.y - 10, 48, 20, 4);
+          ctx.fill();
+          ctx.stroke();
+          ctx.fillStyle = '#92400e';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`h=${h}cm`, midH.x, midH.y);
+
+          // Radius line at base
+          const pBaseCenter = project(0, botY, 0);
+          const pBaseEdge = project(r * scaleFactor, botY, 0);
+
+          ctx.beginPath();
+          ctx.strokeStyle = '#2563eb';
+          ctx.lineWidth = 2;
+          ctx.moveTo(pBaseCenter.x, pBaseCenter.y);
+          ctx.lineTo(pBaseEdge.x, pBaseEdge.y);
+          ctx.stroke();
+
+          // Radius label badge
+          const midR = { x: (pBaseCenter.x + pBaseEdge.x) / 2, y: (pBaseCenter.y + pBaseEdge.y) / 2 + 14 };
+          ctx.fillStyle = '#dbeafe';
+          ctx.strokeStyle = '#2563eb';
+          ctx.beginPath();
+          ctx.roundRect(midR.x - 22, midR.y - 10, 44, 20, 4);
+          ctx.fill();
+          ctx.stroke();
+          ctx.fillStyle = '#1e40af';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText(`r=${r}cm`, midR.x, midR.y);
+        }
+        ctx.restore();
+      }
+
+      // Drag to rotate listeners
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+      });
+
+      window.addEventListener('mouseup', () => { isDragging = false; });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - lastMouseX;
+        const dy = e.clientY - lastMouseY;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+
+        rotY += dx * 0.012;
+        rotX = Math.max(-1.2, Math.min(1.2, rotX + dy * 0.012));
+        render();
+      });
+
+      // Touch events for mobile
+      canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          lastMouseX = e.touches[0].clientX;
+          lastMouseY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', () => { isDragging = false; });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging || e.touches.length !== 1) return;
+        const dx = e.touches[0].clientX - lastMouseX;
+        const dy = e.touches[0].clientY - lastMouseY;
+        lastMouseX = e.touches[0].clientX;
+        lastMouseY = e.touches[0].clientY;
+
+        rotY += dx * 0.012;
+        rotX = Math.max(-1.2, Math.min(1.2, rotX + dy * 0.012));
+        render();
+      }, { passive: true });
+
+      // HUD Button Listeners
+      btnWireframe.addEventListener('click', () => {
+        wireframe = !wireframe;
+        btnWireframe.textContent = wireframe ? 'Solid' : 'Wireframe';
+        render();
+      });
+
+      btnResetRot.addEventListener('click', () => {
+        rotX = 0.35;
+        rotY = -0.55;
+        render();
+      });
+
+      // Tab selector listeners
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+          currentSolid = tab.getAttribute('data-solid');
+          updateCalculations();
+          render();
+        });
+      });
+
+      // Slider listeners
+      sliderR.addEventListener('input', (e) => {
+        r = parseFloat(e.target.value);
+        updateCalculations();
+        render();
+      });
+
+      sliderRTop.addEventListener('input', (e) => {
+        rTop = parseFloat(e.target.value);
+        updateCalculations();
+        render();
+      });
+
+      sliderH.addEventListener('input', (e) => {
+        h = parseFloat(e.target.value);
+        updateCalculations();
+        render();
+      });
+
+      // Initial calculations & draw
+      updateCalculations();
+      render();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init3DSolidViewer);
+  } else {
+    init3DSolidViewer();
+  }
+</script>
+
+<style>
+  .solid-3d-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    margin-bottom: 2.25rem;
+  }
+
+  .solid-lab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .solid-lab-title-group {
+    max-width: 600px;
+  }
+
+  .solid-badge {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #7c3aed;
+    background: #f3e8ff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 0.35rem;
+  }
+
+  .solid-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.4rem;
+    line-height: 1.25;
+  }
+
+  .solid-desc {
+    font-size: 0.88rem;
+    color: #475569;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .solid-shape-tabs {
+    display: flex;
+    gap: 0.35rem;
+    background: #f1f5f9;
+    padding: 0.3rem;
+    border-radius: 10px;
+    align-self: center;
+  }
+
+  .solid-tab {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-radius: 7px;
+    border: none;
+    background: transparent;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .solid-tab:hover {
+    color: #0f172a;
+  }
+
+  .solid-tab.active {
+    background: #ffffff;
+    color: #7c3aed;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  }
+
+  .solid-main-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+
+  @media (max-width: 860px) {
+    .solid-main-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .canvas-wrapper {
+    position: relative;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+  }
+
+  .canvas-3d {
+    width: 100%;
+    height: 100%;
+    max-height: 420px;
+    display: block;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+  }
+
+  .canvas-3d:active {
+    cursor: grabbing;
+  }
+
+  .canvas-hud-controls {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  .hud-hint {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #475569;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+  }
+
+  .hud-btn {
+    pointer-events: auto;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #334155;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #cbd5e1;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .hud-btn:hover {
+    background: #ffffff;
+    border-color: #94a3b8;
+  }
+
+  .solid-panel-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .panel-subtitle {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.75rem;
+  }
+
+  .sliders-card,
+  .formulas-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem 1.15rem;
+  }
+
+  .slider-row {
+    margin-bottom: 0.75rem;
+  }
+
+  .slider-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+  }
+
+  .slider-lbl {
+    font-size: 0.82rem;
+    color: #334155;
+  }
+
+  .slider-val {
+    font-size: 0.82rem;
+    color: #7c3aed;
+    background: #f3e8ff;
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .solid-slider {
+    width: 100%;
+    height: 5px;
+    border-radius: 3px;
+    background: #cbd5e1;
+    outline: none;
+    cursor: pointer;
+    accent-color: #7c3aed;
+  }
+
+  .derived-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+  }
+
+  .derived-lbl {
+    font-size: 0.78rem;
+    color: #475569;
+  }
+
+  .derived-val {
+    font-size: 0.86rem;
+    color: #0f172a;
+  }
+
+  .formula-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .f-name {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+
+  .f-latex {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0.15rem 0;
+  }
+
+  .f-sub {
+    font-size: 0.76rem;
+    color: #475569;
+    font-family: monospace;
+    line-height: 1.35;
+  }
+
+  .cbse-3d-tip {
+    margin-top: 1.25rem;
+    background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+    border: 1px solid #ddd6fe;
+    border-radius: 12px;
+    padding: 0.9rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tip-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6d28d9;
+    letter-spacing: 0.04em;
+  }
+
+  .tip-body {
+    font-size: 0.84rem;
+    color: #4c1d95;
+    line-height: 1.45;
+  }
+</style>
