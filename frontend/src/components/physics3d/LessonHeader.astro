@@ -5,6 +5,20 @@ interface Props {
   lesson: PhysicsLessonConfig;
 }
 const { lesson } = Astro.props;
+
+const subjectKey = lesson.subject.toLowerCase();
+const labHref =
+  subjectKey === "chemistry"
+    ? "/class-10/science/chemistry/"
+    : subjectKey === "biology"
+      ? "/class-10/science/biology/"
+      : "/class-10/science/physics/";
+const labLabel =
+  subjectKey === "chemistry"
+    ? "3D Chemistry Lab"
+    : subjectKey === "biology"
+      ? "3D Biology Lab"
+      : "3D Physics Lab";
 ---
 
 <header class="p3d-lesson-header">
@@ -14,7 +28,7 @@ const { lesson } = Astro.props;
       <span aria-hidden="true">/</span>
       <a href="/subjects/">Class {lesson.class} {lesson.subject}</a>
       <span aria-hidden="true">/</span>
-      <a href="/class-10/science/physics/">3D Physics Lab</a>
+      <a href={labHref}>{labLabel}</a>
       <span aria-hidden="true">/</span>
       <span aria-current="page">{lesson.title}</span>
     </nav>
