@@ -14,6 +14,7 @@ import { acidsBasesLesson } from "../../data/chemistry/acids-bases-salts";
 import { metalsNonMetalsLesson } from "../../data/chemistry/metals-non-metals";
 import { carbonCompoundsLesson } from "../../data/chemistry/carbon-compounds";
 import { periodicClassificationLesson } from "../../data/chemistry/periodic-classification";
+import { realWorldReactionsLesson } from "../../data/chemistry/real-world-reactions";
 import { lifeProcessesLesson } from "../../data/biology/life-processes";
 import { controlCoordinationLesson } from "../../data/biology/control-and-coordination";
 import { reproductionLesson } from "../../data/biology/reproduction";
@@ -40,6 +41,7 @@ const chemistryLessons: PhysicsLessonConfig[] = [
   metalsNonMetalsLesson,
   carbonCompoundsLesson,
   periodicClassificationLesson,
+  realWorldReactionsLesson,
 ];
 
 const biologyLessons: PhysicsLessonConfig[] = [

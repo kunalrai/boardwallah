@@ -11,6 +11,7 @@ import { PhLabSimulation } from "../simulations/chemistry/PhLabSimulation";
 import { IonicBondSimulation } from "../simulations/chemistry/IonicBondSimulation";
 import { CarbonMoleculeSimulation } from "../simulations/chemistry/CarbonMoleculeSimulation";
 import { PeriodicTableSimulation } from "../simulations/chemistry/PeriodicTableSimulation";
+import { RealWorldChemistrySimulation } from "../simulations/chemistry/RealWorldChemistrySimulation";
 import { HeartCirculationSimulation } from "../simulations/biology/HeartCirculationSimulation";
 import { NeuronSimulation } from "../simulations/biology/NeuronSimulation";
 import { FlowerReproductionSimulation } from "../simulations/biology/FlowerReproductionSimulation";
@@ -43,6 +44,7 @@ export function registerDefaultSimulations(): void {
   simulationRegistry.register("chemistry-ionic", IonicBondSimulation);
   simulationRegistry.register("chemistry-molecule", CarbonMoleculeSimulation);
   simulationRegistry.register("chemistry-periodic", PeriodicTableSimulation);
+  simulationRegistry.register("chemistry-realworld", RealWorldChemistrySimulation);
   simulationRegistry.register("biology-heart", HeartCirculationSimulation);
   simulationRegistry.register("biology-neuron", NeuronSimulation);
   simulationRegistry.register("biology-flower", FlowerReproductionSimulation);
