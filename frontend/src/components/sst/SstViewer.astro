@@ -2,7 +2,6 @@
 import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
 import LessonHeader from "../physics3d/LessonHeader.astro";
 import { CBSE_SST_MAP_PINS } from "../../data/sst/sst-map-data";
-import { SST_VOICE_NARRATIONS } from "../../data/sst/sst-voice-data";
 
 interface Props {
   lesson: PhysicsLessonConfig;
@@ -12,7 +11,6 @@ const { lesson } = Astro.props;
 const viewerId = `bw-sst-viewer-${lesson.id}`;
 const configScriptId = `bw-sst-config-${lesson.id}`;
 const relevantPins = CBSE_SST_MAP_PINS.filter((p) => p.chapterId === lesson.id || lesson.id.includes(p.chapterId));
-const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
 ---
 
 <div class="sst-shell" id={viewerId} data-sst-viewer data-config-id={configScriptId}>
@@ -36,39 +34,6 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
       <span class="mode-icon">🎯</span> CBSE Exam Mode
     </button>
   </nav>
-
-  <!-- Voice Narration Toolbar (Hindi & English) -->
-  <div class="sst-voice-bar" aria-label="Voice Narration">
-    <div class="voice-controls">
-      <button type="button" class="voice-btn primary" data-voice-play title="Play voice explanation">
-        <svg class="voice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-        </svg>
-        <span class="voice-label">Listen (बोलकर समझाएं)</span>
-      </button>
-      <button type="button" class="voice-btn secondary" data-voice-stop title="Stop voice narration">
-        <svg class="voice-icon" viewBox="0 0 24 24" fill="currentColor">
-          <rect x="6" y="6" width="12" height="12" rx="2"/>
-        </svg>
-        <span>Stop</span>
-      </button>
-      <div class="voice-lang-picker">
-        <label for={`lang-${lesson.id}`}>Language:</label>
-        <select id={`lang-${lesson.id}`} data-voice-lang>
-          <option value="en-IN">🇬🇧 English</option>
-          <option value="hi-IN" selected>🇮🇳 हिंदी (Hindi)</option>
-        </select>
-      </div>
-      <div class="voice-wave" data-voice-wave hidden>
-        <span></span><span></span><span></span><span></span>
-      </div>
-    </div>
-    <div class="voice-transcript" data-voice-transcript>
-      Click "Listen" to hear a step-by-step audio explanation of this chapter in English or Hindi.
-    </div>
-  </div>
 
   <div class="sst-workspace-grid">
     <!-- Left Navigation: Historical Timeline & Steps -->
@@ -486,7 +451,7 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
   <script
     type="application/json"
     id={configScriptId}
-    set:html={JSON.stringify({ ...lesson, narrations })}
+    set:html={JSON.stringify(lesson)}
   ></script>
 </div>
 
@@ -507,9 +472,6 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
 
       const lesson: PhysicsLessonConfig = JSON.parse(configEl.textContent);
       const videoEl = root.querySelector<HTMLVideoElement>("[data-main-video]");
-      const transcriptEl = root.querySelector<HTMLElement>("[data-voice-transcript]");
-      const waveEl = root.querySelector<HTMLElement>("[data-voice-wave]");
-      const langSelect = root.querySelector<HTMLSelectElement>("[data-voice-lang]");
       const summaryEl = root.querySelector<HTMLElement>("[data-sim-summary]");
       const metricsEl = root.querySelector<HTMLElement>("[data-sim-metrics]");
       const obsEl = root.querySelector<HTMLElement>("[data-sim-observations]");
@@ -523,7 +485,6 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
       const quizView = root.querySelector<HTMLElement>("[data-quiz-view]");
 
       let currentStepIndex = 0;
-      let isPlayingVoice = false;
 
       // Video Chapters Configuration for French Revolution (All 8 CBSE Milestones)
       const videoChapters = [
@@ -732,13 +693,6 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
           videoEl.play().catch(() => {});
         }
 
-        if (transcriptEl) {
-          transcriptEl.textContent = `Step ${idx + 1}: ${currentStep.title}. Click "Listen" to hear voice explanation.`;
-        }
-
-        if (isPlayingVoice) {
-          playVoice();
-        }
       };
 
       // Initial render for step 0
@@ -768,50 +722,6 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
             videoStage?.scrollIntoView({ behavior: "smooth", block: "center" });
           }
         });
-      });
-
-      // Voice Narration (Web Speech Synthesis in English & Hindi)
-      const playVoice = () => {
-        if (!("speechSynthesis" in window)) {
-          if (transcriptEl) transcriptEl.textContent = "Speech synthesis not supported in this browser.";
-          return;
-        }
-
-        window.speechSynthesis.cancel();
-        const currentStep = lesson.learningSteps[currentStepIndex];
-        const isHindi = langSelect?.value === "hi-IN";
-        const narrationObj = (lesson as any).narrations?.[currentStepIndex];
-
-        const textToSpeak = isHindi
-          ? (narrationObj?.hindi || `${currentStep?.title || lesson.title}। ${currentStep?.description || lesson.subtitle}`)
-          : (narrationObj?.english || `${currentStep?.title || lesson.title}. ${currentStep?.description || lesson.subtitle}`);
-
-        if (transcriptEl) transcriptEl.textContent = `🗣️ Speaking: "${textToSpeak}"`;
-        if (waveEl) waveEl.hidden = false;
-
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
-        utterance.lang = isHindi ? "hi-IN" : "en-IN";
-        utterance.rate = 0.95;
-
-        const voices = window.speechSynthesis.getVoices();
-        const targetVoice = voices.find((v) => isHindi ? v.lang.startsWith("hi") : v.lang.startsWith("en-IN") || v.lang.startsWith("en"));
-        if (targetVoice) utterance.voice = targetVoice;
-
-        utterance.onend = () => {
-          if (waveEl) waveEl.hidden = true;
-          isPlayingVoice = false;
-        };
-
-        window.speechSynthesis.speak(utterance);
-        isPlayingVoice = true;
-      };
-
-      root.querySelector("[data-voice-play]")?.addEventListener("click", playVoice);
-      root.querySelector("[data-voice-stop]")?.addEventListener("click", () => {
-        window.speechSynthesis.cancel();
-        if (waveEl) waveEl.hidden = true;
-        if (transcriptEl) transcriptEl.textContent = "Voice narration stopped.";
-        isPlayingVoice = false;
       });
 
       // Step & Timeline Navigation Click Handlers
@@ -1144,107 +1054,6 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
     color: #ffffff;
     border-color: #1e3a8a;
     box-shadow: 0 2px 8px rgba(30, 58, 138, 0.2);
-  }
-
-  /* Voice Narration Bar */
-  .sst-voice-bar {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 0.65rem 1rem;
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-  }
-  .voice-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    flex-wrap: wrap;
-  }
-  .voice-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.42rem 0.95rem;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    line-height: 1.2;
-    transition: all 0.15s ease;
-  }
-  .voice-btn.primary {
-    background: #1e3a8a;
-    color: #ffffff;
-    border-color: #1e3a8a;
-    box-shadow: 0 1px 4px rgba(30, 58, 138, 0.2);
-  }
-  .voice-btn.primary:hover {
-    background: #2563eb;
-    border-color: #2563eb;
-  }
-  .voice-btn.secondary {
-    background: #ffffff;
-    color: #334155;
-    border-color: #cbd5e1;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
-  }
-  .voice-btn.secondary:hover {
-    background: #fee2e2;
-    border-color: #fca5a5;
-    color: #dc2626;
-  }
-  .voice-icon {
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-  }
-  .voice-lang-picker {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #334155;
-  }
-  .voice-lang-picker select {
-    padding: 0.3rem 0.6rem;
-    border-radius: 8px;
-    border: 1px solid #cbd5e1;
-    background: #ffffff;
-    color: #0f172a;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    outline: none;
-    transition: border-color 0.15s ease;
-  }
-  .voice-lang-picker select:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
-  }
-  .voice-transcript {
-    font-size: 0.82rem;
-    color: #475569;
-    font-style: italic;
-  }
-  .voice-wave {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-  }
-  .voice-wave span {
-    width: 3px;
-    height: 12px;
-    background: #2563eb;
-    animation: waveAnim 0.6s infinite ease-in-out alternate;
-  }
-  @keyframes waveAnim {
-    from { height: 4px; }
-    to { height: 16px; }
   }
 
   /* Grid Layout */
