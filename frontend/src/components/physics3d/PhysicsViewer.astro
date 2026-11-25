@@ -25,8 +25,8 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
 
   <!-- Mobile collapsible drawer toggles -->
   <div class="p3d-mobile-tabs" role="tablist" aria-label="Lesson panels">
-    <button type="button" class="p3d-mob-tab active" data-mob-toggle="left">Steps &amp; Parts</button>
     <button type="button" class="p3d-mob-tab active" data-mob-toggle="right">Controls &amp; Results</button>
+    <button type="button" class="p3d-mob-tab active" data-mob-toggle="left">Steps &amp; Parts</button>
   </div>
 
   <div class="p3d-workspace-grid">
@@ -503,7 +503,13 @@ const configScriptId = `bw-p3d-config-${lesson.id}`;
       display: flex;
     }
     .p3d-col-center {
-      order: -1;
+      order: 1;
+    }
+    .p3d-col-right {
+      order: 2;
+    }
+    .p3d-col-left {
+      order: 3;
     }
     .p3d-canvas-wrap {
       height: 380px;
