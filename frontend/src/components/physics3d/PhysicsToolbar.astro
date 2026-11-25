@@ -1,0 +1,101 @@
+---
+import type { CameraPreset } from "../../physics-engine/types/engine";
+import type { LessonFeatures } from "../../physics-engine/types/lesson";
+
+interface Props {
+  features: LessonFeatures;
+  cameraPresets?: CameraPreset[];
+}
+const { features, cameraPresets = [] } = Astro.props;
+---
+
+<div class="p3d-toolbar" role="toolbar" aria-label="3D Viewport Controls">
+  <div class="p3d-toolbar-group">
+    {features.zoom && (
+      <>
+        <button type="button" class="p3d-tool-btn" data-action="zoom-in" title="Zoom In" aria-label="Zoom in">
+          +
+        </button>
+        <button type="button" class="p3d-tool-btn" data-action="zoom-out" title="Zoom Out" aria-label="Zoom out">
+          −
+        </button>
+      </>
+    )}
+    <button type="button" class="p3d-tool-btn" data-action="reset-camera" title="Reset Camera View" aria-label="Reset camera">
+      Reset View
+    </button>
+    {features.labels && (
+      <button type="button" class="p3d-tool-btn active" data-action="toggle-labels" aria-pressed="true" aria-label="Toggle 3D labels">
+        Labels: On
+      </button>
+    )}
+    {features.fullscreen && (
+      <button type="button" class="p3d-tool-btn" data-action="fullscreen" aria-label="Toggle fullscreen">
+        Fullscreen
+      </button>
+    )}
+  </div>
+
+  {cameraPresets.length > 0 && (
+    <div class="p3d-toolbar-group">
+      <label class="p3d-preset-label" for="p3d-camera-preset">View:</label>
+      <select id="p3d-camera-preset" class="p3d-preset-select" data-camera-preset aria-label="Switch camera angle">
+        {cameraPresets.map((preset) => (
+          <option value={preset.id}>{preset.label}</option>
+        ))}
+      </select>
+    </div>
+  )}
+</div>
+
+<style>
+  .p3d-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.55rem 0.75rem;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .p3d-toolbar-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .p3d-tool-btn {
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #1e293b;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.65rem;
+    border-radius: 8px;
+    cursor: pointer;
+    min-height: 32px;
+  }
+  .p3d-tool-btn:hover {
+    border-color: #1a73e8;
+    color: #1a73e8;
+  }
+  .p3d-tool-btn.active {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+  }
+  .p3d-preset-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #475569;
+  }
+  .p3d-preset-select {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #0f172a;
+  }
+</style>

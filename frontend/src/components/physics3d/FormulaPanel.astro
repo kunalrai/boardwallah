@@ -1,0 +1,74 @@
+---
+import type { LessonFormula } from "../../physics-engine/types/lesson";
+
+interface Props {
+  formulas: LessonFormula[];
+}
+const { formulas } = Astro.props;
+---
+
+{formulas.length > 0 && (
+  <section class="p3d-panel-card" aria-label="Key Physics Formulas">
+    <h3>Key Formulas</h3>
+    <div class="p3d-formula-list">
+      {formulas.map((f) => (
+        <article class="p3d-formula-item">
+          <strong>{f.name}</strong>
+          <code class="p3d-formula-expr">{f.expression}</code>
+          <small class="p3d-formula-vars">{f.variables}</small>
+          {f.notes && <small class="p3d-formula-note">{f.notes}</small>}
+        </article>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .p3d-panel-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 0.9rem;
+  }
+  .p3d-panel-card h3 {
+    margin: 0 0 0.55rem;
+    font-size: 0.92rem;
+    color: #0f172a;
+  }
+  .p3d-formula-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .p3d-formula-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.55rem 0.65rem;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+  }
+  .p3d-formula-item strong {
+    font-size: 0.78rem;
+    color: #334155;
+  }
+  .p3d-formula-expr {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1d4ed8;
+    background: #eff6ff;
+    padding: 0.22rem 0.45rem;
+    border-radius: 6px;
+    display: inline-block;
+    width: fit-content;
+  }
+  .p3d-formula-vars {
+    font-size: 0.74rem;
+    color: #475569;
+  }
+  .p3d-formula-note {
+    font-size: 0.72rem;
+    color: #b45309;
+  }
+</style>

@@ -1,0 +1,86 @@
+---
+import type { LessonObjectInfo } from "../../physics-engine/types/lesson";
+
+interface Props {
+  objects: LessonObjectInfo[];
+}
+const { objects } = Astro.props;
+---
+
+<div class="p3d-object-selector">
+  <h3>Interactive Components</h3>
+  <p class="p3d-hint">Click a component below or tap directly on the 3D model.</p>
+  <ul class="p3d-object-list" role="listbox" aria-label="3D model components">
+    {objects.map((obj) => (
+      <li>
+        <button
+          type="button"
+          class="p3d-obj-btn"
+          data-select-mesh={obj.meshName}
+        >
+          <span class="p3d-obj-dot" aria-hidden="true"></span>
+          <span>{obj.name}</span>
+        </button>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .p3d-object-selector h3 {
+    margin: 0 0 0.25rem;
+    font-size: 0.92rem;
+    color: #0f172a;
+  }
+  .p3d-hint {
+    margin: 0 0 0.6rem;
+    font-size: 0.76rem;
+    color: #64748b;
+  }
+  .p3d-object-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    max-height: 240px;
+    overflow-y: auto;
+  }
+  .p3d-obj-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: left;
+    padding: 0.42rem 0.65rem;
+    border-radius: 9px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #1e293b;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .p3d-obj-btn:hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+  }
+  .p3d-obj-btn.active {
+    background: #1a73e8;
+    border-color: #1a73e8;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  .p3d-obj-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #1a73e8;
+    flex-shrink: 0;
+  }
+  .p3d-obj-btn.active .p3d-obj-dot {
+    background: #fde047;
+  }
+</style>

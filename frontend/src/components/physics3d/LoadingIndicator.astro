@@ -1,0 +1,61 @@
+---
+interface Props {
+  id?: string;
+}
+const { id = "p3d-loading" } = Astro.props;
+---
+
+<div id={id} class="p3d-loading-overlay" role="status" aria-live="polite">
+  <div class="p3d-spinner" aria-hidden="true"></div>
+  <p class="p3d-loading-text">Loading 3D Physics Engine &amp; Model...</p>
+  <span class="p3d-loading-progress" data-loading-progress>0%</span>
+</div>
+
+<style>
+  .p3d-loading-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    background: rgba(248, 250, 253, 0.92);
+    backdrop-filter: blur(4px);
+    color: #1f1f1f;
+  }
+  .p3d-loading-overlay[hidden] {
+    display: none;
+  }
+  .p3d-spinner {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid #dbeafe;
+    border-top-color: #1a73e8;
+    animation: p3d-spin 0.8s linear infinite;
+  }
+  .p3d-loading-text {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
+  .p3d-loading-progress {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #1a73e8;
+  }
+  @keyframes p3d-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .p3d-spinner {
+      animation: none;
+      border-top-color: #1a73e8;
+    }
+  }
+</style>

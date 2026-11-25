@@ -1,0 +1,83 @@
+---
+import type { AnimationClipConfig } from "../../physics-engine/types/animation";
+
+interface Props {
+  clips?: AnimationClipConfig[];
+}
+const { clips = [] } = Astro.props;
+---
+
+<div class="p3d-timeline-wrap">
+  <div class="p3d-timeline-row">
+    <span class="p3d-time-readout" data-time-readout>0.0s / 4.0s</span>
+    <input
+      type="range"
+      min="0"
+      max="4"
+      step="0.05"
+      value="0"
+      class="p3d-timeline-slider"
+      data-timeline-slider
+      aria-label="Animation timeline scrubber"
+    />
+  </div>
+  {clips.length > 1 && (
+    <div class="p3d-clips-row" role="group" aria-label="Animation clips">
+      {clips.map((clip, index) => (
+        <button
+          type="button"
+          class={`p3d-clip-btn ${index === 0 ? "active" : ""}`}
+          data-clip-id={clip.id}
+        >
+          {clip.label}
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  .p3d-timeline-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-top: 0.5rem;
+  }
+  .p3d-timeline-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .p3d-time-readout {
+    font-size: 0.76rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: #475569;
+    min-width: 72px;
+  }
+  .p3d-timeline-slider {
+    flex: 1;
+    accent-color: #1a73e8;
+    cursor: pointer;
+  }
+  .p3d-clips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .p3d-clip-btn {
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 0.24rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #334155;
+    cursor: pointer;
+  }
+  .p3d-clip-btn.active {
+    background: #1a73e8;
+    border-color: #1a73e8;
+    color: #ffffff;
+  }
+</style>

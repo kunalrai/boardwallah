@@ -1,0 +1,121 @@
+---
+import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+
+interface Props {
+  lesson: PhysicsLessonConfig;
+}
+const { lesson } = Astro.props;
+---
+
+<header class="p3d-lesson-header">
+  <div class="p3d-header-top">
+    <nav class="p3d-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">BoardWallah</a>
+      <span aria-hidden="true">/</span>
+      <a href="/subjects/">Class {lesson.class} {lesson.subject}</a>
+      <span aria-hidden="true">/</span>
+      <a href="/class-10/science/physics/">3D Physics Lab</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{lesson.title}</span>
+    </nav>
+    <div class="p3d-meta-badges">
+      <span class="p3d-badge class-badge">Class {lesson.class}</span>
+      <span class="p3d-badge chapter-badge">{lesson.chapter}</span>
+    </div>
+  </div>
+  <div class="p3d-header-main">
+    <div>
+      <h1>{lesson.title}</h1>
+      <p class="p3d-subtitle">{lesson.subtitle}</p>
+    </div>
+    {lesson.usesProceduralFallback && (
+      <span class="p3d-mode-pill" title={lesson.proceduralFallbackNote}>
+        Interactive 3D Engine Active
+      </span>
+    )}
+  </div>
+</header>
+
+<style>
+  .p3d-lesson-header {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+  }
+  .p3d-header-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.55rem;
+  }
+  .p3d-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+  .p3d-breadcrumb a {
+    color: #1a73e8;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .p3d-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+  .p3d-meta-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .p3d-badge {
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+  .class-badge {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+  }
+  .chapter-badge {
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+  }
+  .p3d-header-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .p3d-header-main h1 {
+    margin: 0 0 0.25rem;
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+    color: #0f172a;
+  }
+  .p3d-subtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #475569;
+    max-width: 72ch;
+  }
+  .p3d-mode-pill {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #047857;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+</style>

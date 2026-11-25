@@ -1,0 +1,91 @@
+---
+interface Props {
+  id?: string;
+  title: string;
+  staticImageFallback?: string;
+  videoFallback?: string;
+}
+const { id = "p3d-error-fallback", title, staticImageFallback, videoFallback } = Astro.props;
+---
+
+<div id={id} class="p3d-error-fallback" hidden role="alert">
+  <div class="p3d-error-card">
+    <span class="p3d-error-badge">3D Viewer Fallback</span>
+    <h4>Interactive WebGL view could not start</h4>
+    <p data-error-message>
+      Your browser or device may have WebGL disabled, or the 3D asset failed to load.
+    </p>
+    {staticImageFallback && (
+      <img src={staticImageFallback} alt={`${title} static diagram`} class="p3d-fallback-img" />
+    )}
+    {videoFallback && (
+      <video src={videoFallback} controls playsinline class="p3d-fallback-video"></video>
+    )}
+    <button type="button" class="p3d-retry-btn" data-retry-viewer>
+      Retry 3D Viewer
+    </button>
+  </div>
+</div>
+
+<style>
+  .p3d-error-fallback {
+    position: absolute;
+    inset: 0;
+    z-index: 25;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #f8fafd;
+  }
+  .p3d-error-fallback[hidden] {
+    display: none;
+  }
+  .p3d-error-card {
+    max-width: 420px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  }
+  .p3d-error-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: #fef2f2;
+    color: #dc2626;
+    margin-bottom: 0.5rem;
+  }
+  .p3d-error-card h4 {
+    margin: 0 0 0.4rem;
+    font-size: 1.02rem;
+    color: #0f172a;
+  }
+  .p3d-error-card p {
+    margin: 0 0 0.9rem;
+    font-size: 0.85rem;
+    color: #475569;
+  }
+  .p3d-fallback-img,
+  .p3d-fallback-video {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+  }
+  .p3d-retry-btn {
+    border: none;
+    background: #1a73e8;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+</style>

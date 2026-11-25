@@ -1,0 +1,158 @@
+---
+import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+import { getAllPhysicsLessons } from "../../physics-engine/registry/LessonRegistry";
+import ObjectSelector from "./ObjectSelector.astro";
+
+interface Props {
+  lesson: PhysicsLessonConfig;
+}
+const { lesson } = Astro.props;
+const allLessons = getAllPhysicsLessons();
+---
+
+<aside class="p3d-left-sidebar" aria-label="Lesson guide and component navigation">
+  <section class="p3d-panel-card">
+    <h3>Guided Learning Steps</h3>
+    <ol class="p3d-steps-list">
+      {lesson.learningSteps.map((step, idx) => (
+        <li>
+          <button
+            type="button"
+            class={`p3d-step-btn ${idx === 0 ? "active" : ""}`}
+            data-step-index={idx}
+          >
+            <span class="p3d-step-num">{step.stepNumber}</span>
+            <span class="p3d-step-body">
+              <strong>{step.title}</strong>
+              <small>{step.description}</small>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="p3d-panel-card">
+    <ObjectSelector objects={lesson.objects} />
+  </section>
+
+  <section class="p3d-panel-card">
+    <h3>Other 3D Physics Labs</h3>
+    <nav class="p3d-concept-nav" aria-label="Switch 3D Physics lesson">
+      {allLessons.map((item) => (
+        <a
+          href={item.slug}
+          class={`p3d-concept-link ${item.id === lesson.id ? "current" : ""}`}
+          aria-current={item.id === lesson.id ? "page" : undefined}
+        >
+          {item.title}
+        </a>
+      ))}
+    </nav>
+  </section>
+</aside>
+
+<style>
+  .p3d-left-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .p3d-panel-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 0.9rem;
+  }
+  .p3d-panel-card h3 {
+    margin: 0 0 0.55rem;
+    font-size: 0.92rem;
+    color: #0f172a;
+  }
+  .p3d-steps-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .p3d-step-btn {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    text-align: left;
+    padding: 0.5rem 0.6rem;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .p3d-step-btn:hover {
+    border-color: #93c5fd;
+  }
+  .p3d-step-btn.active {
+    background: #eff6ff;
+    border-color: #1a73e8;
+  }
+  .p3d-step-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .p3d-step-btn.active .p3d-step-num {
+    background: #1a73e8;
+    color: #ffffff;
+  }
+  .p3d-step-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .p3d-step-body strong {
+    font-size: 0.8rem;
+    color: #0f172a;
+  }
+  .p3d-step-body small {
+    font-size: 0.74rem;
+    color: #475569;
+    line-height: 1.38;
+  }
+  .p3d-concept-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .p3d-concept-link {
+    display: block;
+    padding: 0.4rem 0.65rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #1e293b;
+    text-decoration: none;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+  }
+  .p3d-concept-link:hover {
+    border-color: #1a73e8;
+    color: #1a73e8;
+  }
+  .p3d-concept-link.current {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+interface Props {
+  hasSteps?: boolean;
+}
+const { hasSteps = true } = Astro.props;
+---
+
+<div class="p3d-playback-controls" role="group" aria-label="Animation and step playback controls">
+  <button type="button" class="p3d-play-btn" data-action="toggle-play" aria-label="Play or pause animation">
+    ⏸ Pause
+  </button>
+  <button type="button" class="p3d-ctrl-btn" data-action="restart-anim" aria-label="Restart animation">
+    ↺ Restart
+  </button>
+  {hasSteps && (
+    <>
+      <button type="button" class="p3d-ctrl-btn" data-action="prev-step" aria-label="Previous learning step">
+        ◀ Prev Step
+      </button>
+      <button type="button" class="p3d-ctrl-btn" data-action="next-step" aria-label="Next learning step">
+        Next Step ▶
+      </button>
+    </>
+  )}
+  <label class="p3d-speed-wrap">
+    <span>Speed</span>
+    <select data-action="speed-select" aria-label="Playback speed">
+      <option value="0.5">0.5×</option>
+      <option value="1" selected>1.0×</option>
+      <option value="1.5">1.5×</option>
+      <option value="2">2.0×</option>
+    </select>
+  </label>
+</div>
+
+<style>
+  .p3d-playback-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .p3d-play-btn {
+    border: none;
+    background: #1a73e8;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.42rem 0.85rem;
+    border-radius: 999px;
+    cursor: pointer;
+    min-height: 34px;
+  }
+  .p3d-ctrl-btn {
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.38rem 0.7rem;
+    border-radius: 999px;
+    cursor: pointer;
+    min-height: 34px;
+  }
+  .p3d-ctrl-btn:hover {
+    border-color: #1a73e8;
+    color: #1a73e8;
+  }
+  .p3d-speed-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #475569;
+    margin-left: auto;
+  }
+  .p3d-speed-wrap select {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.28rem 0.45rem;
+    font-size: 0.78rem;
+    background: #ffffff;
+  }
+</style>

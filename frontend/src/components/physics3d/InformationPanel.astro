@@ -1,0 +1,151 @@
+---
+import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+
+interface Props {
+  lesson: PhysicsLessonConfig;
+}
+const { lesson } = Astro.props;
+---
+
+<section class="p3d-panel-card" aria-label="Selected component and live simulation results">
+  <!-- Live Calculated Results -->
+  <div class="p3d-results-block">
+    <h3>Live Calculated Observations</h3>
+    <p class="p3d-sim-summary" data-sim-summary>Initializing simulation...</p>
+    <dl class="p3d-metrics-grid" data-sim-metrics></dl>
+    <ul class="p3d-obs-list" data-sim-observations></ul>
+  </div>
+
+  <hr class="p3d-divider" />
+
+  <!-- Selected 3D Object Explanation -->
+  <div class="p3d-selected-info" data-selected-info>
+    <span class="p3d-info-kicker">Selected Component</span>
+    <h4 data-info-name>{lesson.objects[0]?.name ?? "Click any 3D part"}</h4>
+    <p data-info-desc>{lesson.objects[0]?.description ?? "Select a component in the 3D scene or sidebar to inspect its role."}</p>
+    <div class="p3d-info-detail">
+      <strong>Function:</strong>
+      <span data-info-fn>{lesson.objects[0]?.function ?? "—"}</span>
+    </div>
+    <div class="p3d-info-cbse" data-info-cbse hidden={!lesson.objects[0]?.cbseNote}>
+      <strong>CBSE Exam Tip:</strong>
+      <span data-info-cbse-text>{lesson.objects[0]?.cbseNote ?? ""}</span>
+    </div>
+  </div>
+
+  <!-- General CBSE Notes -->
+  {lesson.cbseExamNotes.length > 0 && (
+    <div class="p3d-exam-notes">
+      <h4>CBSE Board Exam Notes</h4>
+      <ul>
+        {lesson.cbseExamNotes.map((note) => (
+          <li>{note}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+</section>
+
+<style>
+  .p3d-panel-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 0.9rem;
+  }
+  .p3d-results-block h3 {
+    margin: 0 0 0.3rem;
+    font-size: 0.92rem;
+    color: #0f172a;
+  }
+  .p3d-sim-summary {
+    margin: 0 0 0.55rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1d4ed8;
+    background: #eff6ff;
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+  }
+  .p3d-metrics-grid {
+    margin: 0 0 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+  .p3d-metrics-grid :global(.p3d-metric-box) {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.35rem 0.5rem;
+  }
+  .p3d-metrics-grid :global(dt) {
+    font-size: 0.68rem;
+    color: #64748b;
+    font-weight: 600;
+  }
+  .p3d-metrics-grid :global(dd) {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #0f172a;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .p3d-obs-list {
+    margin: 0;
+    padding-left: 1rem;
+    font-size: 0.76rem;
+    color: #475569;
+  }
+  .p3d-divider {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 0.85rem 0;
+  }
+  .p3d-info-kicker {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #ea580c;
+  }
+  .p3d-selected-info h4 {
+    margin: 0.15rem 0 0.3rem;
+    font-size: 0.98rem;
+    color: #0f172a;
+  }
+  .p3d-selected-info p {
+    margin: 0 0 0.5rem;
+    font-size: 0.82rem;
+    color: #334155;
+  }
+  .p3d-info-detail {
+    font-size: 0.8rem;
+    color: #1e293b;
+    margin-bottom: 0.45rem;
+  }
+  .p3d-info-cbse {
+    font-size: 0.78rem;
+    color: #92400e;
+    background: #fef3c7;
+    border-radius: 8px;
+    padding: 0.45rem 0.6rem;
+  }
+  .p3d-exam-notes {
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  .p3d-exam-notes h4 {
+    margin: 0 0 0.35rem;
+    font-size: 0.84rem;
+    color: #0f172a;
+  }
+  .p3d-exam-notes ul {
+    margin: 0;
+    padding-left: 1.05rem;
+    font-size: 0.77rem;
+    color: #475569;
+  }
+</style>

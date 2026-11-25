@@ -1,0 +1,523 @@
+---
+import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+import LessonHeader from "./LessonHeader.astro";
+import LessonSidebar from "./LessonSidebar.astro";
+import PhysicsToolbar from "./PhysicsToolbar.astro";
+import LoadingIndicator from "./LoadingIndicator.astro";
+import ErrorFallback from "./ErrorFallback.astro";
+import PlaybackControls from "./PlaybackControls.astro";
+import AnimationTimeline from "./AnimationTimeline.astro";
+import ParameterControls from "./ParameterControls.astro";
+import InformationPanel from "./InformationPanel.astro";
+import FormulaPanel from "./FormulaPanel.astro";
+import QuizPanel from "./QuizPanel.astro";
+
+interface Props {
+  lesson: PhysicsLessonConfig;
+}
+const { lesson } = Astro.props;
+const viewerId = `bw-p3d-viewer-${lesson.id}`;
+const configScriptId = `bw-p3d-config-${lesson.id}`;
+---
+
+<div class="p3d-shell" id={viewerId} data-physics-viewer data-config-id={configScriptId}>
+  <LessonHeader lesson={lesson} />
+
+  <!-- Mobile collapsible drawer toggles -->
+  <div class="p3d-mobile-tabs" role="tablist" aria-label="Lesson panels">
+    <button type="button" class="p3d-mob-tab active" data-mob-toggle="left">Steps &amp; Parts</button>
+    <button type="button" class="p3d-mob-tab active" data-mob-toggle="right">Controls &amp; Results</button>
+  </div>
+
+  <div class="p3d-workspace-grid">
+    <!-- Left Sidebar -->
+    <div class="p3d-col-left" data-panel="left">
+      <LessonSidebar lesson={lesson} />
+    </div>
+
+    <!-- Center 3D Viewport & Playback -->
+    <section class="p3d-col-center" aria-label="Interactive 3D Physics Stage">
+      <div class="p3d-stage-card" data-stage-card>
+        <PhysicsToolbar features={lesson.features} cameraPresets={lesson.cameraPresets} />
+
+        <div class="p3d-canvas-wrap" data-canvas-container>
+          <LoadingIndicator />
+          <ErrorFallback
+            title={lesson.title}
+            staticImageFallback={lesson.staticImageFallback}
+            videoFallback={lesson.videoFallback}
+          />
+        </div>
+
+        <div class="p3d-bottom-controls">
+          <PlaybackControls hasSteps={lesson.learningSteps.length > 0} />
+          {lesson.features.animation && (
+            <AnimationTimeline clips={lesson.animationClips} />
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Sidebar -->
+    <aside class="p3d-col-right" data-panel="right" aria-label="Parameters, Observations and Formulas">
+      <ParameterControls controls={lesson.parameterControls} />
+      <InformationPanel lesson={lesson} />
+      <FormulaPanel formulas={lesson.formulas} />
+    </aside>
+  </div>
+
+  <QuizPanel questions={lesson.quiz} />
+
+  <script
+    type="application/json"
+    id={configScriptId}
+    set:html={JSON.stringify(lesson)}
+  ></script>
+</div>
+
+<script>
+  import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+  import type { SimulationParameters, SimulationResult } from "../../physics-engine/types/simulation";
+  import type { PhysicsEngine } from "../../physics-engine/core/Engine";
+
+  async function initAllPhysicsViewers() {
+    const roots = document.querySelectorAll<HTMLElement>("[data-physics-viewer]");
+    if (roots.length === 0) return;
+
+    const [{ PhysicsEngine: EngineClass }, { registerDefaultSimulations }] = await Promise.all([
+      import("../../physics-engine/core/Engine"),
+      import("../../physics-engine/registry/registerSimulations"),
+    ]);
+    registerDefaultSimulations();
+
+    roots.forEach((root) => {
+      if (root.dataset.initialized === "true") return;
+      root.dataset.initialized = "true";
+
+      const configId = root.dataset.configId;
+      const configEl = configId ? document.getElementById(configId) : null;
+      if (!configEl?.textContent) return;
+
+      const lesson: PhysicsLessonConfig = JSON.parse(configEl.textContent);
+      const container = root.querySelector<HTMLElement>("[data-canvas-container]");
+      const stageCard = root.querySelector<HTMLElement>("[data-stage-card]");
+      const loadingEl = root.querySelector<HTMLElement>("#p3d-loading");
+      const progressEl = root.querySelector<HTMLElement>("[data-loading-progress]");
+      const errorEl = root.querySelector<HTMLElement>("#p3d-error-fallback");
+      const errorMsgEl = root.querySelector<HTMLElement>("[data-error-message]");
+
+      if (!container) return;
+
+      let engine: PhysicsEngine | null = null;
+      let currentStepIndex = 0;
+
+      const showLoading = (pct = 0) => {
+        if (loadingEl) loadingEl.hidden = false;
+        if (progressEl) progressEl.textContent = `${pct}%`;
+        if (errorEl) errorEl.hidden = true;
+      };
+
+      const hideLoading = () => {
+        if (loadingEl) loadingEl.hidden = true;
+      };
+
+      const showError = (msg: string) => {
+        hideLoading();
+        if (errorEl) errorEl.hidden = false;
+        if (errorMsgEl) errorMsgEl.textContent = msg;
+      };
+
+      const renderSimulationResult = (raw: Record<string, unknown>) => {
+        const res = raw as unknown as SimulationResult;
+        const summaryEl = root.querySelector<HTMLElement>("[data-sim-summary]");
+        const metricsEl = root.querySelector<HTMLElement>("[data-sim-metrics]");
+        const obsEl = root.querySelector<HTMLElement>("[data-sim-observations]");
+
+        if (summaryEl && res.summary) {
+          summaryEl.textContent = res.summary;
+        }
+        if (metricsEl && res.metrics) {
+          metricsEl.innerHTML = Object.entries(res.metrics)
+            .map(
+              ([k, v]) =>
+                `<div class="p3d-metric-box"><dt>${k}</dt><dd>${String(v)}</dd></div>`
+            )
+            .join("");
+        }
+        if (obsEl && Array.isArray(res.observations)) {
+          obsEl.innerHTML = res.observations.map((o) => `<li>${o}</li>`).join("");
+        }
+      };
+
+      const updateSelectedObjectUI = (meshName: string | null) => {
+        root.querySelectorAll<HTMLButtonElement>("[data-select-mesh]").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.selectMesh === meshName);
+        });
+        if (!meshName) return;
+
+        const info = lesson.objects.find((o) => o.meshName === meshName);
+        if (!info) return;
+
+        const nameEl = root.querySelector<HTMLElement>("[data-info-name]");
+        const descEl = root.querySelector<HTMLElement>("[data-info-desc]");
+        const fnEl = root.querySelector<HTMLElement>("[data-info-fn]");
+        const cbseWrap = root.querySelector<HTMLElement>("[data-info-cbse]");
+        const cbseText = root.querySelector<HTMLElement>("[data-info-cbse-text]");
+
+        if (nameEl) nameEl.textContent = info.name;
+        if (descEl) descEl.textContent = info.description;
+        if (fnEl) fnEl.textContent = info.function;
+        if (cbseWrap && cbseText) {
+          if (info.cbseNote) {
+            cbseWrap.hidden = false;
+            cbseText.textContent = info.cbseNote;
+          } else {
+            cbseWrap.hidden = true;
+          }
+        }
+      };
+
+      const startEngine = async () => {
+        try {
+          showLoading(15);
+          engine?.dispose();
+
+          engine = new EngineClass(container, lesson, {
+            onLoadStart: () => showLoading(20),
+            onLoadProgress: (pct) => showLoading(pct),
+            onLoadComplete: () => hideLoading(),
+            onLoadError: (err) => showError(err.message),
+            onWebGLError: (msg) => showError(msg),
+            onObjectSelected: (meshName) => updateSelectedObjectUI(meshName),
+            onSimulationUpdate: (results) => renderSimulationResult(results),
+            onAnimationTimeUpdate: (time, dur) => {
+              const readout = root.querySelector<HTMLElement>("[data-time-readout]");
+              const slider = root.querySelector<HTMLInputElement>("[data-timeline-slider]");
+              if (readout) readout.textContent = `${time.toFixed(1)}s / ${dur.toFixed(1)}s`;
+              if (slider && document.activeElement !== slider) {
+                slider.max = String(dur);
+                slider.value = String(time);
+              }
+            },
+          });
+
+          await engine.loadLesson(lesson);
+        } catch (err) {
+          showError(err instanceof Error ? err.message : "Unable to initialize 3D Physics Engine.");
+        }
+      };
+
+      startEngine();
+
+      // Retry button
+      root.querySelector("[data-retry-viewer]")?.addEventListener("click", startEngine);
+
+      // Toolbar actions
+      root.querySelector('[data-action="zoom-in"]')?.addEventListener("click", () => engine?.zoomIn());
+      root.querySelector('[data-action="zoom-out"]')?.addEventListener("click", () => engine?.zoomOut());
+      root.querySelector('[data-action="reset-camera"]')?.addEventListener("click", () => engine?.resetCamera());
+
+      const labelsBtn = root.querySelector<HTMLButtonElement>('[data-action="toggle-labels"]');
+      labelsBtn?.addEventListener("click", () => {
+        if (!engine) return;
+        const next = engine.toggleLabels();
+        labelsBtn.textContent = next ? "Labels: On" : "Labels: Off";
+        labelsBtn.classList.toggle("active", next);
+        labelsBtn.setAttribute("aria-pressed", String(next));
+      });
+
+      root.querySelector('[data-action="fullscreen"]')?.addEventListener("click", () => {
+        if (!stageCard) return;
+        if (!document.fullscreenElement) {
+          stageCard.requestFullscreen?.().catch(() => {});
+        } else {
+          document.exitFullscreen?.().catch(() => {});
+        }
+      });
+
+      root.querySelector<HTMLSelectElement>("[data-camera-preset]")?.addEventListener("change", (e) => {
+        const val = (e.target as HTMLSelectElement).value;
+        engine?.applyCameraPreset(val);
+      });
+
+      // Playback controls
+      const playBtn = root.querySelector<HTMLButtonElement>('[data-action="toggle-play"]');
+      playBtn?.addEventListener("click", () => {
+        if (!engine) return;
+        const playing = engine.togglePlay();
+        playBtn.textContent = playing ? "⏸ Pause" : "▶ Play";
+      });
+
+      root.querySelector('[data-action="restart-anim"]')?.addEventListener("click", () => {
+        engine?.restartAnimation();
+      });
+
+      root.querySelector<HTMLSelectElement>('[data-action="speed-select"]')?.addEventListener("change", (e) => {
+        const speed = parseFloat((e.target as HTMLSelectElement).value);
+        engine?.setPlaybackSpeed(speed);
+      });
+
+      root.querySelector<HTMLInputElement>("[data-timeline-slider]")?.addEventListener("input", (e) => {
+        const val = parseFloat((e.target as HTMLInputElement).value);
+        engine?.scrubAnimation(val);
+      });
+
+      root.querySelectorAll<HTMLButtonElement>("[data-clip-id]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const clipId = btn.dataset.clipId;
+          if (!clipId || !engine) return;
+          root.querySelectorAll("[data-clip-id]").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          engine.selectAnimationClip(clipId);
+        });
+      });
+
+      // Object selector buttons
+      root.querySelectorAll<HTMLButtonElement>("[data-select-mesh]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const meshName = btn.dataset.selectMesh || null;
+          engine?.selectObject(meshName);
+        });
+      });
+
+      // Guided learning steps
+      const applyStep = (index: number) => {
+        const step = lesson.learningSteps[index];
+        if (!step) return;
+        currentStepIndex = index;
+
+        root.querySelectorAll<HTMLButtonElement>("[data-step-index]").forEach((btn, idx) => {
+          btn.classList.toggle("active", idx === index);
+        });
+
+        if (step.cameraPresetId) {
+          engine?.applyCameraPreset(step.cameraPresetId);
+        }
+        if (step.focusObject) {
+          engine?.selectObject(step.focusObject);
+        }
+        if (step.simulationParams) {
+          engine?.updateParameters(step.simulationParams);
+          // Sync UI parameter inputs
+          Object.entries(step.simulationParams).forEach(([key, val]) => {
+            const input = root.querySelector<HTMLInputElement | HTMLSelectElement>(`[data-param-key="${key}"]`);
+            if (!input) return;
+            if (input instanceof HTMLInputElement && input.type === "checkbox") {
+              input.checked = Boolean(val);
+            } else {
+              input.value = String(val);
+              const readout = root.querySelector<HTMLElement>(`[data-param-value="${key}"]`);
+              if (readout && input instanceof HTMLInputElement) {
+                readout.textContent = `${val}${input.dataset.paramUnit ?? ""}`;
+              }
+            }
+          });
+        }
+      };
+
+      root.querySelectorAll<HTMLButtonElement>("[data-step-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.dataset.stepIndex || "0", 10);
+          applyStep(idx);
+        });
+      });
+
+      root.querySelector('[data-action="prev-step"]')?.addEventListener("click", () => {
+        if (lesson.learningSteps.length === 0) return;
+        const prev = (currentStepIndex - 1 + lesson.learningSteps.length) % lesson.learningSteps.length;
+        applyStep(prev);
+      });
+
+      root.querySelector('[data-action="next-step"]')?.addEventListener("click", () => {
+        if (lesson.learningSteps.length === 0) return;
+        const next = (currentStepIndex + 1) % lesson.learningSteps.length;
+        applyStep(next);
+      });
+
+      // Experimental parameter controls
+      root.querySelectorAll<HTMLInputElement | HTMLSelectElement>("[data-param-key]").forEach((el) => {
+        const eventName = el.tagName === "SELECT" || (el instanceof HTMLInputElement && el.type === "checkbox")
+          ? "change"
+          : "input";
+
+        el.addEventListener(eventName, () => {
+          const key = el.dataset.paramKey!;
+          const type = el.dataset.paramType;
+          let value: number | string | boolean;
+
+          if (type === "number") {
+            value = parseFloat(el.value);
+            const readout = root.querySelector<HTMLElement>(`[data-param-value="${key}"]`);
+            if (readout) {
+              readout.textContent = `${value}${el.dataset.paramUnit ?? ""}`;
+            }
+          } else if (type === "boolean" && el instanceof HTMLInputElement) {
+            value = el.checked;
+          } else {
+            value = el.value;
+          }
+
+          const update: SimulationParameters = { [key]: value };
+          engine?.updateParameters(update);
+        });
+      });
+
+      root.querySelector('[data-action="reset-simulation"]')?.addEventListener("click", () => {
+        engine?.resetSimulation();
+        Object.entries(lesson.parameters).forEach(([key, val]) => {
+          const input = root.querySelector<HTMLInputElement | HTMLSelectElement>(`[data-param-key="${key}"]`);
+          if (!input) return;
+          if (input instanceof HTMLInputElement && input.type === "checkbox") {
+            input.checked = Boolean(val);
+          } else {
+            input.value = String(val);
+            const readout = root.querySelector<HTMLElement>(`[data-param-value="${key}"]`);
+            if (readout && input instanceof HTMLInputElement) {
+              readout.textContent = `${val}${input.dataset.paramUnit ?? ""}`;
+            }
+          }
+        });
+      });
+
+      // Quiz interaction
+      let score = 0;
+      const totalQ = lesson.quiz.length;
+      const scoreEl = root.querySelector<HTMLElement>("[data-quiz-score]");
+
+      root.querySelectorAll<HTMLElement>("[data-quiz-question]").forEach((card) => {
+        const correctIdx = parseInt(card.dataset.correctIndex || "0", 10);
+        const expEl = card.querySelector<HTMLElement>(".p3d-q-explanation");
+        const opts = card.querySelectorAll<HTMLButtonElement>("[data-opt-index]");
+
+        opts.forEach((optBtn) => {
+          optBtn.addEventListener("click", () => {
+            if (card.dataset.answered === "true") return;
+            card.dataset.answered = "true";
+
+            const picked = parseInt(optBtn.dataset.optIndex || "0", 10);
+            opts.forEach((b, i) => {
+              b.disabled = true;
+              if (i === correctIdx) b.classList.add("correct");
+            });
+
+            if (picked === correctIdx) {
+              score += 1;
+            } else {
+              optBtn.classList.add("incorrect");
+            }
+            if (scoreEl) scoreEl.textContent = `Score: ${score} / ${totalQ}`;
+            if (expEl) expEl.hidden = false;
+          });
+        });
+      });
+
+      // Mobile panel collapse toggles
+      root.querySelectorAll<HTMLButtonElement>("[data-mob-toggle]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.mobToggle;
+          const panel = root.querySelector<HTMLElement>(`[data-panel="${target}"]`);
+          if (!panel) return;
+          const isHidden = panel.classList.toggle("mob-collapsed");
+          btn.classList.toggle("active", !isHidden);
+        });
+      });
+
+      // Clean up WebGL & RAF loop when leaving page
+      const cleanup = () => {
+        engine?.dispose();
+        engine = null;
+      };
+      window.addEventListener("pagehide", cleanup, { once: true });
+      document.addEventListener("astro:before-swap", cleanup, { once: true });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAllPhysicsViewers);
+  } else {
+    initAllPhysicsViewers();
+  }
+</script>
+
+<style>
+  .p3d-shell {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  .p3d-mobile-tabs {
+    display: none;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .p3d-mob-tab {
+    flex: 1;
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .p3d-mob-tab.active {
+    background: #eff6ff;
+    border-color: #1a73e8;
+    color: #1d4ed8;
+  }
+  .p3d-workspace-grid {
+    display: grid;
+    grid-template-columns: 285px minmax(0, 1fr) 330px;
+    gap: 1rem;
+    align-items: start;
+  }
+  .p3d-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .p3d-stage-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+  }
+  .p3d-canvas-wrap {
+    position: relative;
+    width: 100%;
+    height: 490px;
+    background: #f4f7fb;
+  }
+  .p3d-bottom-controls {
+    padding: 0.75rem 0.9rem;
+    background: #f8fafd;
+    border-top: 1px solid #e2e8f0;
+  }
+  @media (max-width: 1180px) {
+    .p3d-workspace-grid {
+      grid-template-columns: 1fr;
+    }
+    .p3d-mobile-tabs {
+      display: flex;
+    }
+    .p3d-col-center {
+      order: -1;
+    }
+    .p3d-canvas-wrap {
+      height: 380px;
+    }
+    .mob-collapsed {
+      display: none !important;
+    }
+  }
+  @media (max-width: 600px) {
+    .p3d-shell {
+      padding: 0.65rem;
+    }
+    .p3d-canvas-wrap {
+      height: 320px;
+    }
+  }
+</style>
