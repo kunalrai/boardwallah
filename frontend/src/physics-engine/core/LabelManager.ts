@@ -49,7 +49,7 @@ export class LabelManager {
       btn.textContent = def.title;
       btn.setAttribute("aria-label", `Inspect ${def.title}`);
       btn.style.cssText =
-        "position:absolute;transform:translate(-50%,-50%);pointer-events:auto;background:rgba(255,255,255,0.92);color:#0f172a;border:1.5px solid #cbd5e1;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600;white-space:nowrap;box-shadow:0 2px 8px rgba(15,23,42,0.12);cursor:pointer;transition:border-color 0.15s,background 0.15s,color 0.15s;";
+        "position:absolute;transform:translate(-50%,-50%);pointer-events:auto;background:rgba(255,255,255,0.88);color:#0f172a;border:1px solid #94a3b8;border-radius:999px;padding:1px 7px;font-size:10px;font-weight:600;white-space:nowrap;box-shadow:0 1px 6px rgba(15,23,42,0.14);cursor:pointer;transition:border-color 0.15s,background 0.15s,color 0.15s;max-width:90px;overflow:hidden;text-overflow:ellipsis;";
 
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -127,12 +127,32 @@ export class LabelManager {
       const ax = (anchorVec.x * 0.5 + 0.5) * width;
       const ay = (-anchorVec.y * 0.5 + 0.5) * height;
 
-      const offset = item.def.offset ?? { x: 0, y: 0.45, z: 0 };
+      const offset = item.def.offset ?? { x: 0, y: 0.75, z: 0 };
       const labelVec = this.tempVec.clone().add(new THREE.Vector3(offset.x, offset.y, offset.z));
       labelVec.project(camera);
 
-      const lx = Math.max(48, Math.min(width - 48, (labelVec.x * 0.5 + 0.5) * width));
-      const ly = Math.max(20, Math.min(height - 20, (-labelVec.y * 0.5 + 0.5) * height));
+      // Raw projected label position
+      let lx = (labelVec.x * 0.5 + 0.5) * width;
+      let ly = (-labelVec.y * 0.5 + 0.5) * height;
+
+      // Push labels into the outer 30% margins so they never overlap the central diagram.
+      // For X: if in the inner 40%-60% range, nudge to the nearest outer zone.
+      const innerXMin = width * 0.25;
+      const innerXMax = width * 0.75;
+      const innerYMin = height * 0.20;
+      const innerYMax = height * 0.80;
+
+      if (lx > innerXMin && lx < innerXMax) {
+        // Snap to whichever horizontal margin is closer
+        lx = (lx < width / 2) ? Math.min(lx, innerXMin - 4) : Math.max(lx, innerXMax + 4);
+      }
+      if (ly > innerYMin && ly < innerYMax) {
+        // Snap to whichever vertical margin is closer
+        ly = (ly < height / 2) ? Math.min(ly, innerYMin - 4) : Math.max(ly, innerYMax + 4);
+      }
+
+      lx = Math.max(52, Math.min(width - 52, lx));
+      ly = Math.max(16, Math.min(height - 16, ly));
 
       item.buttonEl.style.display = "inline-block";
       item.buttonEl.style.left = `${lx}px`;
