@@ -1,8 +1,6 @@
 ---
 import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
 import LessonHeader from "../physics3d/LessonHeader.astro";
-import LoadingIndicator from "../physics3d/LoadingIndicator.astro";
-import ErrorFallback from "../physics3d/ErrorFallback.astro";
 import { CBSE_SST_MAP_PINS } from "../../data/sst/sst-map-data";
 import { SST_VOICE_NARRATIONS } from "../../data/sst/sst-voice-data";
 
@@ -22,14 +20,11 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
 
   <!-- SST Workstation Mode Switcher -->
   <nav class="sst-mode-bar" role="tablist" aria-label="SST Learning Modes">
-    <button type="button" class="sst-mode-tab active" data-mode-btn="explore" aria-selected="true">
-      <span class="mode-icon">🔍</span> 3D Explore
+    <button type="button" class="sst-mode-tab active" data-mode-btn="video" aria-selected="true">
+      <span class="mode-icon">🎬</span> Video Lesson
     </button>
     <button type="button" class="sst-mode-tab" data-mode-btn="map" aria-selected="false">
       <span class="mode-icon">🗺️</span> Interactive Map
-    </button>
-    <button type="button" class="sst-mode-tab" data-mode-btn="lesson" aria-selected="false">
-      <span class="mode-icon">🎬</span> Animated Lesson
     </button>
     <button type="button" class="sst-mode-tab" data-mode-btn="experiment" aria-selected="false">
       <span class="mode-icon">⚡</span> Virtual Experiment
@@ -132,39 +127,37 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
       )}
     </aside>
 
-    <!-- Center 3D Stage & Interactive Viewport -->
+    <!-- Center Interactive Video Stage -->
     <main class="sst-col-center">
-      <div class="sst-stage-card">
-        <!-- 3D Toolbar -->
+      <div class="sst-stage-card sst-video-stage" data-video-stage>
+        <!-- Video Stage Toolbar -->
         <div class="sst-toolbar">
           <div class="tool-left">
             <span class="live-dot"></span>
-            <strong>3D Interactive Stage</strong>
+            <strong>🎬 Interactive Video Stage</strong>
           </div>
           <div class="tool-actions">
-            {lesson.videoFallback && (
-              <button type="button" class="tool-btn video-tool-btn" data-action="watch-video" title="Watch Storming of the Bastille Video (HD)">
-                <svg viewBox="0 0 24 24" class="tool-icon" fill="currentColor">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
-                </svg>
-                <span>Video</span>
-              </button>
-            )}
-            <button type="button" class="tool-btn" data-action="reset-cam" title="Reset Camera View">
+            <button type="button" class="tool-btn" data-action="restart-video" title="Restart from 00:00">
               <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
                 <path d="M3 3v5h5"/>
               </svg>
-              <span>Reset</span>
+              <span>Restart</span>
             </button>
-            <button type="button" class="tool-btn" data-action="toggle-labels" title="Toggle 3D Labels">
-              <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-                <line x1="7" y1="7" x2="7.01" y2="7"/>
+            <button type="button" class="tool-btn" data-action="toggle-play" title="Play / Pause Video">
+              <svg viewBox="0 0 24 24" class="tool-icon" fill="currentColor" data-play-icon>
+                <polygon points="5 3 19 12 5 21 5 3"/>
               </svg>
-              <span>Labels</span>
+              <span data-play-label>Play</span>
             </button>
-            <button type="button" class="tool-btn" data-action="fullscreen" title="Fullscreen Stage">
+            <button type="button" class="tool-btn" data-action="toggle-mute" title="Mute / Unmute Audio">
+              <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              </svg>
+              <span data-mute-label>Mute</span>
+            </button>
+            <button type="button" class="tool-btn" data-action="fullscreen" title="Fullscreen Video">
               <svg viewBox="0 0 24 24" class="tool-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
               </svg>
@@ -173,14 +166,34 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
           </div>
         </div>
 
-        <!-- WebGL Canvas Container -->
-        <div class="sst-canvas-wrap" data-canvas-container>
-          <LoadingIndicator />
-          <ErrorFallback
-            title={lesson.title}
-            staticImageFallback={lesson.staticImageFallback}
-            videoFallback={lesson.videoFallback}
-          />
+        <!-- Interactive Scene Chapter Selector -->
+        <div class="video-chapters-row">
+          <span class="chap-label">Scenes:</span>
+          <button type="button" class="chap-pill active" data-seek="0">00:00 ⚔️ À la Bastille</button>
+          <button type="button" class="chap-pill" data-seek="4">00:04 👑 Three Estates Inequality</button>
+          <button type="button" class="chap-pill" data-seek="14">00:14 🏰 14 July 1789 Storming</button>
+          <button type="button" class="chap-pill" data-seek="24">00:24 📜 Rights of Man Decree</button>
+          <button type="button" class="chap-pill" data-seek="34">00:34 💥 Break the Chains!</button>
+        </div>
+
+        <!-- Primary Video Viewport -->
+        <div class="sst-video-viewport" data-video-container>
+          <video
+            src={lesson.videoFallback ?? "/assets/sst/history/french-revolution-epic.mp4"}
+            poster={lesson.staticImageFallback ?? "/assets/sst/history/french-revolution-epic-poster.jpg"}
+            controls
+            playsinline
+            preload="auto"
+            data-main-video
+            class="sst-primary-video"
+          ></video>
+          <div class="video-quote-banner" data-video-quote-banner>
+            <div class="quote-pill" data-quote-tag>Battle Cry</div>
+            <div class="quote-text-wrap">
+              <span class="quote-french" data-quote-primary>"À la Bastille ! Pour la liberté !"</span>
+              <span class="quote-trans" data-quote-secondary>("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")</span>
+            </div>
+          </div>
         </div>
 
         <!-- Timeline Scrubber Bar -->
@@ -198,78 +211,32 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
           />
           <button type="button" class="timeline-step-btn" data-step-next title="Next step">Next ▶</button>
         </div>
-      </div>
 
-      <!-- Mode 3: Animated Lesson View (Cinematic Video & Historical Analysis) -->
-      <section class="sst-lesson-view" data-lesson-view hidden>
-        <div class="lesson-video-card">
-          <div class="video-theater-header">
-            <div class="theater-title-wrap">
-              <span class="video-badge">🎬 Cinematic Historical Documentary</span>
-              <h3>The French Revolution: From Feudal Despotism to Liberty (1789)</h3>
-              <p class="video-subtitle">Watch the multi-scene cinematic recreation of the Three Estates, the storming of the Bastille, and the proclamation of rights.</p>
-            </div>
-            <button type="button" class="back-to-explore-btn" data-action="back-explore">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
-              <span>Back to 3D Scene</span>
-            </button>
-          </div>
-
-          <!-- Interactive Scene Chapter Selector -->
-          <div class="video-chapters-row">
-            <span class="chap-label">Chapters:</span>
-            <button type="button" class="chap-pill active" data-seek="0">00:00 ⚔️ À la Bastille</button>
-            <button type="button" class="chap-pill" data-seek="4">00:04 👑 Three Estates Inequality</button>
-            <button type="button" class="chap-pill" data-seek="14">00:14 🏰 14 July 1789 Storming</button>
-            <button type="button" class="chap-pill" data-seek="24">00:24 📜 Rights of Man Decree</button>
-            <button type="button" class="chap-pill" data-seek="34">00:34 💥 Break the Chains!</button>
-          </div>
-
-          <div class="video-frame-container">
-            <video
-              src={lesson.videoFallback ?? "/assets/sst/history/french-revolution-epic.mp4"}
-              poster={lesson.staticImageFallback ?? "/assets/sst/history/french-revolution-epic-poster.jpg"}
-              controls
-              playsinline
-              preload="metadata"
-              data-bastille-video
-              class="cinematic-bastille-video"
-            ></video>
-            <div class="video-quote-banner" data-video-quote-banner>
-              <div class="quote-pill" data-quote-tag>Battle Cry</div>
-              <div class="quote-text-wrap">
-                <span class="quote-french" data-quote-primary>"À la Bastille ! Pour la liberté !"</span>
-                <span class="quote-trans" data-quote-secondary>("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")</span>
-              </div>
+        <!-- High-Yield NCERT Insights Grid -->
+        <div class="video-insights-grid">
+          <div class="insight-box">
+            <div class="insight-icon">👑</div>
+            <div class="insight-text">
+              <strong>1. Three Estates Inequality (00:04)</strong>
+              <p>Clergy (1st) &amp; Nobility (2nd) enjoyed feudal privileges and paid zero direct taxes (taille), while the Third Estate peasant bore 100% of state taxes and church tithes.</p>
             </div>
           </div>
-
-          <!-- Video Timeline & NCERT Breakdown -->
-          <div class="video-insights-grid">
-            <div class="insight-box">
-              <div class="insight-icon">👑</div>
-              <div class="insight-text">
-                <strong>1. Three Estates Inequality (00:04)</strong>
-                <p>Clergy (1st) &amp; Nobility (2nd) enjoyed feudal privileges and paid zero direct taxes (taille), while the Third Estate peasant bore 100% of state taxes and church tithes.</p>
-              </div>
+          <div class="insight-box">
+            <div class="insight-icon">🏰</div>
+            <div class="insight-text">
+              <strong>2. Storming of the Bastille (00:14)</strong>
+              <p>On 14 July 1789, 7,000 armed citizens stormed the royal fortress prison to seize gunpowder, killing the governor and shattering the ultimate symbol of royal despotism.</p>
             </div>
-            <div class="insight-box">
-              <div class="insight-icon">🏰</div>
-              <div class="insight-text">
-                <strong>2. Storming of the Bastille (00:14)</strong>
-                <p>On 14 July 1789, 7,000 armed citizens stormed the royal fortress prison to seize gunpowder, killing the governor and shattering the ultimate symbol of royal despotism.</p>
-              </div>
-            </div>
-            <div class="insight-box">
-              <div class="insight-icon">📜</div>
-              <div class="insight-text">
-                <strong>3. Declaration of Rights (00:24)</strong>
-                <p>The National Assembly proclaimed: 'Men are born and remain free and equal in rights.' Liberty, equality, and fraternity became the foundational tenets of modern democracy.</p>
-              </div>
+          </div>
+          <div class="insight-box">
+            <div class="insight-icon">📜</div>
+            <div class="insight-text">
+              <strong>3. Declaration of Rights (00:24)</strong>
+              <p>The National Assembly proclaimed: 'Men are born and remain free and equal in rights.' Liberty, equality, and fraternity became the foundational tenets of modern democracy.</p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <!-- Mode 4: Virtual Experiment Panels -->
       <section class="sst-experiment-view" data-experiment-view hidden>
@@ -515,18 +482,10 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
 
 <script>
   import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
-  import type { SimulationResult } from "../../physics-engine/types/simulation";
-  import type { PhysicsEngine } from "../../physics-engine/core/Engine";
 
   async function initAllSstViewers() {
     const roots = document.querySelectorAll<HTMLElement>("[data-sst-viewer]");
     if (roots.length === 0) return;
-
-    const [{ PhysicsEngine: EngineClass }, { registerDefaultSimulations }] = await Promise.all([
-      import("../../physics-engine/core/Engine"),
-      import("../../physics-engine/registry/registerSimulations"),
-    ]);
-    registerDefaultSimulations();
 
     roots.forEach((root) => {
       if (root.dataset.initialized === "true") return;
@@ -537,85 +496,204 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
       if (!configEl?.textContent) return;
 
       const lesson: PhysicsLessonConfig = JSON.parse(configEl.textContent);
-      const container = root.querySelector<HTMLElement>("[data-canvas-container]");
-      const loadingEl = root.querySelector<HTMLElement>("#p3d-loading");
+      const videoEl = root.querySelector<HTMLVideoElement>("[data-main-video]");
       const transcriptEl = root.querySelector<HTMLElement>("[data-voice-transcript]");
       const waveEl = root.querySelector<HTMLElement>("[data-voice-wave]");
       const langSelect = root.querySelector<HTMLSelectElement>("[data-voice-lang]");
+      const summaryEl = root.querySelector<HTMLElement>("[data-sim-summary]");
+      const metricsEl = root.querySelector<HTMLElement>("[data-sim-metrics]");
+      const obsEl = root.querySelector<HTMLElement>("[data-sim-observations]");
+      const counterEl = root.querySelector<HTMLElement>("[data-step-counter]");
+      const timelineSlider = root.querySelector<HTMLInputElement>("[data-timeline-slider]");
+      const stepItems = root.querySelectorAll<HTMLButtonElement>("[data-step-nav]");
 
-      if (!container) return;
-
-      let engine: PhysicsEngine | null = null;
-      let currentStepIndex = 0;
-      let isPlayingVoice = false;
-
-      const renderSimulationResult = (raw: Record<string, unknown>) => {
-        const res = raw as unknown as SimulationResult;
-        const summaryEl = root.querySelector<HTMLElement>("[data-sim-summary]");
-        const metricsEl = root.querySelector<HTMLElement>("[data-sim-metrics]");
-        const obsEl = root.querySelector<HTMLElement>("[data-sim-observations]");
-
-        if (summaryEl && res.summary) summaryEl.textContent = res.summary;
-        if (metricsEl && res.metrics) {
-          metricsEl.innerHTML = Object.entries(res.metrics)
-            .map(([k, v]) => `<div class="metric-item"><dt>${k}</dt><dd>${String(v)}</dd></div>`)
-            .join("");
-        }
-        if (obsEl && Array.isArray(res.observations)) {
-          obsEl.innerHTML = res.observations.map((o) => `<li>${o}</li>`).join("");
-        }
-      };
-
-      const startEngine = async () => {
-        try {
-          if (loadingEl) loadingEl.hidden = false;
-          engine?.dispose();
-
-          engine = new EngineClass(container, lesson, {
-            onLoadComplete: () => {
-              if (loadingEl) loadingEl.hidden = true;
-            },
-            onSimulationUpdate: (results) => renderSimulationResult(results),
-          });
-
-          await engine.loadLesson(lesson);
-        } catch {
-          if (loadingEl) loadingEl.hidden = true;
-        }
-      };
-
-      startEngine();
-
-      // Mode Switcher Tab Functionality
-      const modeButtons = root.querySelectorAll<HTMLButtonElement>("[data-mode-btn]");
-      const lessonView = root.querySelector<HTMLElement>("[data-lesson-view]");
+      const videoStage = root.querySelector<HTMLElement>("[data-video-stage]");
       const expView = root.querySelector<HTMLElement>("[data-experiment-view]");
       const examView = root.querySelector<HTMLElement>("[data-exam-view]");
       const quizView = root.querySelector<HTMLElement>("[data-quiz-view]");
-      const bastilleVideo = root.querySelector<HTMLVideoElement>("[data-bastille-video]");
 
+      let currentStepIndex = 0;
+      let isPlayingVoice = false;
+
+      // Video Chapters Configuration for French Revolution
+      const videoChapters = [
+        {
+          time: 0,
+          tag: "Battle Cry",
+          primary: '"À la Bastille ! Pour la liberté !"',
+          secondary: '("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")',
+          stepIdx: 0,
+          summary: "France Before 1789 — Severe famine, debt & bread price crisis",
+          metrics: {
+            "Year": "1788–1789",
+            "Monarch": "King Louis XVI (Bourbon Dynasty)",
+            "Crisis": "Subsistence crisis & 80% daily wage spent on bread",
+            "CBSE Concept": "Subsistence Crisis — basic means of livelihood endangered"
+          },
+          obs: [
+            "Severe winter hailstorms in 1788 destroyed French agricultural crops.",
+            "Starving crowds of peasant women stormed Parisian bakeries in bread riots.",
+            "Royal debt soared from funding the American War of Independence."
+          ]
+        },
+        {
+          time: 4,
+          tag: "Three Estates",
+          primary: '"French society was divided into three estates..."',
+          secondary: '("Clergy & nobility enjoyed feudal privileges while peasants carried all tax burdens.")',
+          stepIdx: 1,
+          summary: "The Three Estates — Feudal privilege & extreme tax disparity",
+          metrics: {
+            "1st & 2nd Estates": "2% Population (Clergy & Nobility)",
+            "Land Owned": "60–70% of all French land",
+            "Taxes Paid": "0% (Exempt from direct royal taille)",
+            "3rd Estate": "97% Population carrying 100% tax burden"
+          },
+          obs: [
+            "The Catholic Church owned 10% of land and extracted 'tithes' (1/10th produce).",
+            "The nobility extracted hereditary feudal manorial dues from peasant tenants.",
+            "Abbé Sieyès published 'What is the Third Estate? Everything.'"
+          ]
+        },
+        {
+          time: 14,
+          tag: "14 July 1789",
+          primary: '"Furious citizens stormed the Bastille, challenging royal authority."',
+          secondary: '("Its fall became the supreme symbol of freedom and revolution.")',
+          stepIdx: 3,
+          summary: "Storming of the Bastille — Fall of royal despotism",
+          metrics: {
+            "Date": "14 July 1789 (French National Day)",
+            "Target": "Bastille Royal Fortress-Prison",
+            "Citizen Militia": "7,000 Parisian men & women",
+            "Ammunition": "Seized gunpowder & 28,000 muskets",
+            "CBSE Key Fact": "Bastille was hated because it stood for the despotic power of the king"
+          },
+          obs: [
+            "The fortress was demolished stone by stone and sold as souvenirs of liberty.",
+            "Louis XVI wrote 'Rien' (Nothing) in his diary, oblivious to the revolution.",
+            "The storming marked the emergence of people's active participation in history."
+          ]
+        },
+        {
+          time: 24,
+          tag: "Rights of Man",
+          primary: '"All men are born free and equal! Liberty, equality, and fraternity!"',
+          secondary: '("Declaration of the Rights of Man & Citizen abolishing aristocratic privileges.")',
+          stepIdx: 4,
+          summary: "Declaration of the Rights of Man & Citizen — Universal liberty & equality",
+          metrics: {
+            "Adoption Date": "26 August 1789",
+            "Article 1": "Men are born and remain free and equal in rights",
+            "Article 6": "Law is the expression of the general will",
+            "Foundational Motto": "Liberté, Égalité, Fraternité"
+          },
+          obs: [
+            "Enshrined natural and inalienable rights: liberty, property, security.",
+            "Abolished all hereditary aristocratic privileges and church tithes forever.",
+            "Established the legal foundation of modern constitutional human rights."
+          ]
+        },
+        {
+          time: 34,
+          tag: "Fortress Breach",
+          primary: '"To the Bastille! Charge! Break the chains!"',
+          secondary: '("Citizens shatter the drawbridge chains with axes, bringing down royal despotism.")',
+          stepIdx: 5,
+          summary: "Abolition of Feudalism & Royal Despotism Overthrown",
+          metrics: {
+            "Event": "Surrender of Royal Bastille Garrison",
+            "Despotism Fallen": "Absolute monarchy permanently dismantled",
+            "National Guard": "Led by Marquis de Lafayette with Tricolor cockade",
+            "Sovereignty": "Transferred from Crown to French Citizens"
+          },
+          obs: [
+            "On 4 August 1789, the National Assembly formally abolished feudal dues.",
+            "Lands of the Catholic Church were confiscated, raising 2 billion livres.",
+            "France transitioned into a Constitutional Monarchy under the 1791 Constitution."
+          ]
+        }
+      ];
+
+      const renderMetricsForStep = (idx: number) => {
+        const step = lesson.learningSteps[idx];
+        if (!step) return;
+
+        const chap = videoChapters.find((c) => c.stepIdx === idx) || videoChapters[0];
+        if (summaryEl) summaryEl.textContent = chap?.summary || step.title;
+
+        if (metricsEl) {
+          if (chap?.metrics) {
+            metricsEl.innerHTML = Object.entries(chap.metrics)
+              .map(([k, v]) => `<div class="metric-item"><dt>${k}</dt><dd>${String(v)}</dd></div>`)
+              .join("");
+          } else {
+            metricsEl.innerHTML = `
+              <div class="metric-item"><dt>Historical Era</dt><dd>Step ${step.stepNumber} of ${lesson.learningSteps.length}</dd></div>
+              <div class="metric-item"><dt>Focus Topic</dt><dd>${step.title}</dd></div>
+            `;
+          }
+        }
+
+        if (obsEl) {
+          if (chap?.obs && chap.obs.length > 0) {
+            obsEl.innerHTML = chap.obs.map((o) => `<li>${o}</li>`).join("");
+          } else {
+            obsEl.innerHTML = `<li>${step.description}</li>`;
+          }
+        }
+      };
+
+      const applyStep = (idx: number, seekVideo: boolean = true) => {
+        if (idx < 0 || idx >= lesson.learningSteps.length) return;
+        currentStepIndex = idx;
+
+        stepItems.forEach((b, i) => b.classList.toggle("active", i === idx));
+        if (counterEl) counterEl.textContent = `${idx + 1} / ${lesson.learningSteps.length}`;
+        if (timelineSlider) timelineSlider.value = String(idx);
+
+        const currentStep = lesson.learningSteps[idx];
+        renderMetricsForStep(idx);
+
+        if (seekVideo && videoEl && typeof currentStep.videoTime === "number") {
+          videoEl.currentTime = currentStep.videoTime;
+          videoEl.play().catch(() => {});
+        }
+
+        if (transcriptEl) {
+          transcriptEl.textContent = `Step ${idx + 1}: ${currentStep.title}. Click "Listen" to hear voice explanation.`;
+        }
+
+        if (isPlayingVoice) {
+          playVoice();
+        }
+      };
+
+      // Initial render for step 0
+      renderMetricsForStep(0);
+
+      // Mode Switcher Tab Functionality
+      const modeButtons = root.querySelectorAll<HTMLButtonElement>("[data-mode-btn]");
       modeButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
           modeButtons.forEach((b) => b.classList.remove("active"));
           btn.classList.add("active");
           const mode = btn.dataset.modeBtn;
 
-          if (lessonView) lessonView.hidden = mode !== "lesson";
+          if (videoStage) videoStage.hidden = mode === "experiment" || mode === "quiz" || mode === "exam";
           if (expView) expView.hidden = mode !== "experiment";
           if (examView) examView.hidden = mode !== "exam";
           if (quizView) quizView.hidden = mode !== "quiz";
 
-          if (mode !== "lesson" && bastilleVideo) {
-            bastilleVideo.pause();
+          if (mode !== "video" && videoEl) {
+            videoEl.pause();
           }
 
           if (mode === "map") {
-            engine?.applyCameraPreset("top");
-          } else if (mode === "explore") {
-            engine?.resetCamera();
-          } else if (mode === "lesson") {
-            engine?.applyCameraPreset("bastille");
-            bastilleVideo?.play().catch(() => {});
+            const mapPanel = root.querySelector(".sst-map-panel");
+            mapPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
+          } else if (mode === "video") {
+            videoStage?.scrollIntoView({ behavior: "smooth", block: "center" });
           }
         });
       });
@@ -642,7 +720,6 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
         utterance.lang = isHindi ? "hi-IN" : "en-IN";
         utterance.rate = 0.95;
 
-        // Try to pick a native Hindi/Indian English voice if available
         const voices = window.speechSynthesis.getVoices();
         const targetVoice = voices.find((v) => isHindi ? v.lang.startsWith("hi") : v.lang.startsWith("en-IN") || v.lang.startsWith("en"));
         if (targetVoice) utterance.voice = targetVoice;
@@ -664,59 +741,72 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
         isPlayingVoice = false;
       });
 
-      // Step & Timeline Navigation
-      const applyStep = (idx: number) => {
-        if (idx < 0 || idx >= lesson.learningSteps.length) return;
-        currentStepIndex = idx;
-        const step = lesson.learningSteps[idx];
-
-        root.querySelectorAll<HTMLButtonElement>("[data-step-nav]").forEach((b, i) => {
-          b.classList.toggle("active", i === idx);
-        });
-
-        const slider = root.querySelector<HTMLInputElement>("[data-timeline-slider]");
-        if (slider) slider.value = String(idx);
-
-        const counter = root.querySelector<HTMLElement>("[data-step-counter]");
-        if (counter) counter.textContent = `${idx + 1} / ${lesson.learningSteps.length}`;
-
-        if (step.simulationParams) {
-          engine?.updateParameters(step.simulationParams);
-        }
-        if (step.focusObject) {
-          engine?.selectObject(step.focusObject);
-        }
-        if (step.cameraPresetId) {
-          engine?.applyCameraPreset(step.cameraPresetId);
-        }
-
-        if (isPlayingVoice) {
-          playVoice();
-        }
-      };
-
-      root.querySelectorAll<HTMLButtonElement>("[data-step-nav]").forEach((b, i) => {
-        b.addEventListener("click", () => applyStep(i));
+      // Step & Timeline Navigation Click Handlers
+      stepItems.forEach((b, i) => {
+        b.addEventListener("click", () => applyStep(i, true));
       });
 
       root.querySelector("[data-step-prev]")?.addEventListener("click", () => {
-        applyStep((currentStepIndex - 1 + lesson.learningSteps.length) % lesson.learningSteps.length);
+        applyStep((currentStepIndex - 1 + lesson.learningSteps.length) % lesson.learningSteps.length, true);
       });
 
       root.querySelector("[data-step-next]")?.addEventListener("click", () => {
-        applyStep((currentStepIndex + 1) % lesson.learningSteps.length);
+        applyStep((currentStepIndex + 1) % lesson.learningSteps.length, true);
       });
 
-      root.querySelector<HTMLInputElement>("[data-timeline-slider]")?.addEventListener("input", (e) => {
+      timelineSlider?.addEventListener("input", (e) => {
         const idx = parseInt((e.target as HTMLInputElement).value, 10);
-        applyStep(idx);
+        applyStep(idx, true);
       });
 
       // Toolbar Controls
-      root.querySelector('[data-action="reset-cam"]')?.addEventListener("click", () => engine?.resetCamera());
-      root.querySelector('[data-action="toggle-labels"]')?.addEventListener("click", () => engine?.toggleLabels());
+      const playBtn = root.querySelector<HTMLButtonElement>('[data-action="toggle-play"]');
+      const playIcon = root.querySelector<HTMLElement>('[data-play-icon]');
+      const playLabel = root.querySelector<HTMLElement>('[data-play-label]');
+      const muteBtn = root.querySelector<HTMLButtonElement>('[data-action="toggle-mute"]');
+      const muteLabel = root.querySelector<HTMLElement>('[data-mute-label]');
+
+      const updatePlayState = () => {
+        if (!videoEl || !playLabel || !playIcon) return;
+        if (videoEl.paused) {
+          playLabel.textContent = "Play";
+          playIcon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>';
+        } else {
+          playLabel.textContent = "Pause";
+          playIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+        }
+      };
+
+      videoEl?.addEventListener("play", updatePlayState);
+      videoEl?.addEventListener("pause", updatePlayState);
+
+      playBtn?.addEventListener("click", () => {
+        if (!videoEl) return;
+        if (videoEl.paused) {
+          videoEl.play().catch(() => {});
+        } else {
+          videoEl.pause();
+        }
+      });
+
+      root.querySelector('[data-action="restart-video"]')?.addEventListener("click", () => {
+        if (!videoEl) return;
+        videoEl.currentTime = 0;
+        videoEl.play().catch(() => {});
+        applyStep(0, false);
+      });
+
+      muteBtn?.addEventListener("click", () => {
+        if (!videoEl || !muteLabel) return;
+        videoEl.muted = !videoEl.muted;
+        muteLabel.textContent = videoEl.muted ? "Unmute" : "Mute";
+      });
+
       root.querySelector('[data-action="fullscreen"]')?.addEventListener("click", () => {
-        container.requestFullscreen?.().catch(() => {});
+        if (!videoEl) return;
+        if (videoEl.requestFullscreen) {
+          videoEl.requestFullscreen().catch(() => {});
+        }
       });
 
       // Video Chapter Seeking & Synchronization
@@ -725,52 +815,19 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
       const quotePrimary = root.querySelector<HTMLElement>("[data-quote-primary]");
       const quoteSecondary = root.querySelector<HTMLElement>("[data-quote-secondary]");
 
-      const videoChapters = [
-        {
-          time: 0,
-          tag: "Battle Cry",
-          primary: '"À la Bastille ! Pour la liberté !"',
-          secondary: '("To the Bastille! For liberty! / बास्तील की ओर! आज़ादी के लिए!")'
-        },
-        {
-          time: 4,
-          tag: "Three Estates",
-          primary: '"French society was divided into three estates..."',
-          secondary: '("Clergy & nobility enjoyed feudal privileges while peasants carried all tax burdens.")'
-        },
-        {
-          time: 14,
-          tag: "14 July 1789",
-          primary: '"Furious citizens stormed the Bastille, challenging royal authority."',
-          secondary: '("Its fall became the supreme symbol of freedom and revolution.")'
-        },
-        {
-          time: 24,
-          tag: "Rights of Man",
-          primary: '"All men are born free and equal! Liberty, equality, and fraternity!"',
-          secondary: '("Declaration of the Rights of Man & Citizen abolishing aristocratic privileges.")'
-        },
-        {
-          time: 34,
-          tag: "Fortress Breach",
-          primary: '"To the Bastille! Charge! Break the chains!"',
-          secondary: '("Citizens shatter the drawbridge chains with axes, bringing down royal despotism.")'
-        }
-      ];
-
       chapPills.forEach((pill) => {
         pill.addEventListener("click", () => {
           const seekTime = parseFloat(pill.dataset.seek || "0");
-          if (bastilleVideo) {
-            bastilleVideo.currentTime = seekTime;
-            bastilleVideo.play().catch(() => {});
+          if (videoEl) {
+            videoEl.currentTime = seekTime;
+            videoEl.play().catch(() => {});
           }
         });
       });
 
-      if (bastilleVideo) {
-        bastilleVideo.addEventListener("timeupdate", () => {
-          const t = bastilleVideo.currentTime;
+      if (videoEl) {
+        videoEl.addEventListener("timeupdate", () => {
+          const t = videoEl.currentTime;
           let activeIdx = 0;
           for (let i = videoChapters.length - 1; i >= 0; i--) {
             if (t >= videoChapters[i].time - 0.5) {
@@ -785,35 +842,36 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
           if (quoteTag && activeChap) quoteTag.textContent = activeChap.tag;
           if (quotePrimary && activeChap) quotePrimary.textContent = activeChap.primary;
           if (quoteSecondary && activeChap) quoteSecondary.textContent = activeChap.secondary;
+
+          if (activeChap && typeof activeChap.stepIdx === "number" && activeChap.stepIdx !== currentStepIndex) {
+            applyStep(activeChap.stepIdx, false);
+          }
         });
       }
 
-      // Video Trigger Handlers
-      root.querySelectorAll("[data-trigger-video], [data-action='watch-video']").forEach((vBtn) => {
+      // Video Trigger Handlers (from sidebar steps)
+      root.querySelectorAll("[data-trigger-video]").forEach((vBtn) => {
         vBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           const targetTime = parseFloat((vBtn as HTMLElement).dataset.videoTime || "0");
-          const lessonTab = root.querySelector<HTMLButtonElement>('[data-mode-btn="lesson"]');
-          lessonTab?.click();
-          if (bastilleVideo) {
-            bastilleVideo.currentTime = targetTime;
-            bastilleVideo.scrollIntoView({ behavior: "smooth", block: "center" });
-            bastilleVideo.play().catch(() => {});
+          const videoTab = root.querySelector<HTMLButtonElement>('[data-mode-btn="video"]');
+          videoTab?.click();
+          if (videoEl) {
+            videoEl.currentTime = targetTime;
+            videoEl.scrollIntoView({ behavior: "smooth", block: "center" });
+            videoEl.play().catch(() => {});
           }
         });
-      });
-
-      root.querySelector('[data-action="back-explore"]')?.addEventListener("click", () => {
-        const exploreTab = root.querySelector<HTMLButtonElement>('[data-mode-btn="explore"]');
-        exploreTab?.click();
       });
 
       // Map Pin Focus
       root.querySelectorAll<HTMLButtonElement>("[data-focus-pin]").forEach((pinBtn) => {
         pinBtn.addEventListener("click", () => {
           const pinId = pinBtn.dataset.focusPin;
-          if (pinId) {
-            engine?.selectObject(pinId);
+          const pinObj = lesson.objects.find((o) => o.id === pinId);
+          if (pinObj) {
+            if (summaryEl) summaryEl.textContent = `📍 Map Location: ${pinObj.name}`;
+            if (obsEl) obsEl.innerHTML = `<li>${pinObj.description}</li><li>${pinObj.cbseNote ?? ""}</li>`;
           }
         });
       });
@@ -1337,11 +1395,18 @@ const narrations = SST_VOICE_NARRATIONS[lesson.id] ?? [];
     stroke: currentColor;
     flex-shrink: 0;
   }
-  .sst-canvas-wrap {
+  .sst-video-viewport {
     position: relative;
     width: 100%;
-    height: 480px;
-    background: #f8fafd;
+    background: #000000;
+    overflow: hidden;
+  }
+  .sst-primary-video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 520px;
+    display: block;
+    object-fit: cover;
   }
 
   /* Timeline Scrubber */

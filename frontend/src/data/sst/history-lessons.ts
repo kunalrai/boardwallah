@@ -21,7 +21,7 @@ export const historyLessons: PhysicsLessonConfig[] = [
     ...SST_HISTORY_SCENE as PhysicsLessonConfig,
     id: "sst-nationalism-europe",
     chapter: "The Rise of Nationalism in Europe",
-    title: "3D French Revolution & Rise of Nationalism (1789–1804)",
+    title: "Interactive French Revolution & Rise of Nationalism (1789–1804)",
     subtitle: "Complete CBSE Class 10 interactive learning environment across all 8 landmark phases: France Before 1789, Three Estates social pyramid, Tennis Court Oath, Bastille storming, Rights of Man declaration, French Republic, Reign of Terror, and Napoleonic Code of 1804.",
     slug: "/class-10/sst/history/nationalism-europe/",
     model: "/assets/sst/history/french-revolution-paris.glb",
@@ -73,6 +73,9 @@ export const historyLessons: PhysicsLessonConfig[] = [
         focusObject: "MarketTable_1",
         cameraPresetId: "street",
         simulationParams: { era: 1789, highlight: 1 },
+        videoUrl: "/assets/sst/history/french-revolution-epic.mp4#t=0",
+        videoTime: 0,
+        videoCaption: "Cinematic Scene: Parisian citizens rallying in the streets and mobilizing before the royal fortress.",
       },
       {
         stepNumber: 2,
@@ -92,6 +95,9 @@ export const historyLessons: PhysicsLessonConfig[] = [
         focusObject: "TennisCourt_OathMonument",
         cameraPresetId: "tenniscourt",
         simulationParams: { era: 1789, highlight: 3 },
+        videoUrl: "/assets/sst/history/french-revolution-epic.mp4#t=10",
+        videoTime: 10,
+        videoCaption: "Cinematic Scene: Third Estate demanding equality and democratic representation against feudal privileges.",
       },
       {
         stepNumber: 4,
@@ -122,6 +128,9 @@ export const historyLessons: PhysicsLessonConfig[] = [
         focusObject: "Republic_NationalAltar",
         cameraPresetId: "republic",
         simulationParams: { era: 1792, highlight: 6 },
+        videoUrl: "/assets/sst/history/french-revolution-epic.mp4#t=34",
+        videoTime: 34,
+        videoCaption: "Cinematic Scene: Royal despotism overthrown as citizens breach the fortress gates.",
       },
       {
         stepNumber: 7,
@@ -130,6 +139,9 @@ export const historyLessons: PhysicsLessonConfig[] = [
         focusObject: "ReignOfTerror_Tribunal",
         cameraPresetId: "terror",
         simulationParams: { era: 1793, highlight: 7 },
+        videoUrl: "/assets/sst/history/french-revolution-epic.mp4#t=38",
+        videoTime: 38,
+        videoCaption: "Cinematic Scene: Revolutionary defense and intense struggle for the survival of the Republic.",
       },
       {
         stepNumber: 8,
@@ -138,6 +150,9 @@ export const historyLessons: PhysicsLessonConfig[] = [
         focusObject: "Napoleonic_EagleStandard",
         cameraPresetId: "napoleon",
         simulationParams: { era: 1804, highlight: 8 },
+        videoUrl: "/assets/sst/history/french-revolution-epic.mp4#t=42",
+        videoTime: 42,
+        videoCaption: "Cinematic Scene: Triumph of revolutionary ideals across Europe under the Tricolor standard.",
       },
     ],
     objects: [
