@@ -13,25 +13,62 @@ const { lesson } = Astro.props;
 const viewerId = `bw-p2d-viewer-${lesson.id}`;
 const configScriptId = `bw-p2d-config-${lesson.id}`;
 const allLessons = getLessonsBySubject(lesson.subject);
+const currentIndex = allLessons.findIndex((l) => l.id === lesson.id);
+const nextLesson = allLessons[(currentIndex + 1) % allLessons.length];
+const prevLesson = allLessons[(currentIndex - 1 + allLessons.length) % allLessons.length];
 ---
 
-<div class="p3d-shell" id={viewerId} data-electricity-viewer data-config-id={configScriptId}>
+<div
+  class="p3d-shell"
+  id={viewerId}
+  data-electricity-viewer
+  data-config-id={configScriptId}
+  data-next-slug={nextLesson?.slug}
+  data-next-title={nextLesson?.title}
+  data-prev-slug={prevLesson?.slug}
+>
   <LessonHeader lesson={lesson} />
 
-  <!-- Horizontal Quick Labs Switcher -->
+  <!-- Horizontal Quick Labs Switcher with Auto-Cycle -->
   {allLessons.length > 1 && (
     <nav class="p3d-quick-labs-bar" aria-label="Other 3D Labs in this subject">
-      <span class="p3d-quick-label">⚡ Other {lesson.subject.toUpperCase()} Labs:</span>
-      <div class="p3d-quick-pills">
-        {allLessons.map((item) => (
-          <a
-            href={item.slug}
-            class={`p3d-quick-pill ${item.id === lesson.id ? "current" : ""}`}
-            aria-current={item.id === lesson.id ? "page" : undefined}
-          >
-            {item.title}
+      <div class="p3d-quick-top-row">
+        <span class="p3d-quick-label">⚡ {lesson.subject.toUpperCase()} LABS ({currentIndex + 1} / {allLessons.length}):</span>
+        <button
+          type="button"
+          class="p3d-cycle-toggle active"
+          data-action="toggle-auto-cycle"
+          title="Auto-advance to the next lab after completing steps"
+        >
+          <span class="p3d-cycle-dot"></span>
+          <span>Auto-Cycle Labs: <strong data-cycle-state>ON</strong></span>
+        </button>
+      </div>
+
+      <div class="p3d-pills-row">
+        {prevLesson && (
+          <a href={prevLesson.slug} class="p3d-nav-arrow" title={`Previous Lab: ${prevLesson.title}`}>
+            &larr; Prev
           </a>
-        ))}
+        )}
+
+        <div class="p3d-quick-pills">
+          {allLessons.map((item, idx) => (
+            <a
+              href={item.slug}
+              class={`p3d-quick-pill ${item.id === lesson.id ? "current" : ""}`}
+              aria-current={item.id === lesson.id ? "page" : undefined}
+            >
+              <span class="pill-idx">{idx + 1}.</span> {item.title}
+            </a>
+          ))}
+        </div>
+
+        {nextLesson && (
+          <a href={nextLesson.slug} class="p3d-nav-arrow next" title={`Next Lab: ${nextLesson.title}`}>
+            Next Lab &rarr;
+          </a>
+        )}
       </div>
     </nav>
   )}
@@ -113,7 +150,11 @@ const allLessons = getLessonsBySubject(lesson.subject);
             </div>
           )}
 
-          <PlaybackControls hasSteps={lesson.learningSteps.length > 0} />
+          <PlaybackControls
+            hasSteps={lesson.learningSteps.length > 0}
+            nextLabSlug={nextLesson?.slug}
+            nextLabTitle={nextLesson?.title}
+          />
         </div>
       </div>
     </section>
@@ -316,6 +357,34 @@ const allLessons = getLessonsBySubject(lesson.subject);
     const metricHeat = root.querySelector<HTMLElement>("[data-metric-heat]");
     const elSummary = root.querySelector<HTMLElement>("[data-el-summary]");
     const elObs = root.querySelector<HTMLElement>("[data-el-obs]");
+
+    // Auto-advance step timer & continuous lab cycling
+    let autoCycleLabs = localStorage.getItem("bw_autocycle_labs") !== "false";
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("autocycle") === "1" || urlParams.get("autocycle") === "true") {
+      autoCycleLabs = true;
+    }
+
+    const cycleStateEl = root.querySelector<HTMLElement>("[data-cycle-state]");
+    const cycleToggleBtn = root.querySelector<HTMLButtonElement>('[data-action="toggle-auto-cycle"]');
+    const nextLabSlug = root.dataset.nextSlug;
+    const nextLabTitle = root.dataset.nextTitle;
+    let isTransitioningToNextLab = false;
+
+    const updateCycleUI = () => {
+      if (cycleStateEl) cycleStateEl.textContent = autoCycleLabs ? "ON" : "OFF";
+      if (cycleToggleBtn) {
+        cycleToggleBtn.classList.toggle("active", autoCycleLabs);
+        cycleToggleBtn.classList.toggle("paused", !autoCycleLabs);
+      }
+    };
+    updateCycleUI();
+
+    cycleToggleBtn?.addEventListener("click", () => {
+      autoCycleLabs = !autoCycleLabs;
+      localStorage.setItem("bw_autocycle_labs", String(autoCycleLabs));
+      updateCycleUI();
+    });
 
     // Compute electrical properties
     function calculate() {
@@ -1087,16 +1156,30 @@ const allLessons = getLessonsBySubject(lesson.subject);
       lastTime = now;
       state.animTime += dt;
 
-      // Guided steps ticker
-      if (state.isAutoPlaying && lesson.learningSteps.length > 1) {
+      // Guided steps ticker & continuous lab cycling
+      if (state.isAutoPlaying && lesson.learningSteps.length > 0 && !isTransitioningToNextLab) {
         state.stepElapsedMs += dt * 1000 * state.playbackSpeed;
         const progress = Math.min(100, (state.stepElapsedMs / BASE_STEP_DURATION_MS) * 100);
         if (progressBar) progressBar.style.width = `${progress}%`;
 
         if (state.stepElapsedMs >= BASE_STEP_DURATION_MS) {
           state.stepElapsedMs = 0;
-          const nextIdx = (state.currentStepIndex + 1) % lesson.learningSteps.length;
-          applyStep(nextIdx);
+          if (state.currentStepIndex + 1 < lesson.learningSteps.length) {
+            applyStep(state.currentStepIndex + 1);
+          } else {
+            // Final step completed!
+            if (autoCycleLabs && nextLabSlug) {
+              isTransitioningToNextLab = true;
+              if (progressBar) progressBar.style.width = "100%";
+              if (npTitle) npTitle.textContent = `✨ Lab Complete! Next: ${nextLabTitle ?? "Next Lab"}`;
+              if (npDesc) npDesc.textContent = "Auto-advancing to the next lab in 2 seconds... Sit back and enjoy the tour!";
+              setTimeout(() => {
+                window.location.href = `${nextLabSlug}?autocycle=1`;
+              }, 2000);
+            } else {
+              applyStep(0);
+            }
+          }
         }
       }
 
@@ -1252,12 +1335,12 @@ const allLessons = getLessonsBySubject(lesson.subject);
     });
 
     // Restart button
-    root.querySelector<HTMLButtonElement>('[data-action="restart"]')?.addEventListener("click", () => {
+    root.querySelector<HTMLButtonElement>('[data-action="restart-anim"], [data-action="restart"]')?.addEventListener("click", () => {
       applyStep(0);
     });
 
     // Speed selector
-    root.querySelector<HTMLSelectElement>('[data-action="speed"]')?.addEventListener("change", (e) => {
+    root.querySelector<HTMLSelectElement>('[data-action="speed-select"], [data-action="speed"]')?.addEventListener("change", (e) => {
       state.playbackSpeed = parseFloat((e.target as HTMLSelectElement).value) || 1.0;
     });
 
@@ -1317,36 +1400,113 @@ const allLessons = getLessonsBySubject(lesson.subject);
     }
   }
 
-  /* Horizontal Quick Labs Bar */
+  /* Horizontal Quick Labs Bar with Auto-Cycle */
   .p3d-quick-labs-bar {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    flex-direction: column;
+    gap: 0.55rem;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: 0.6rem 0.9rem;
+    padding: 0.65rem 0.95rem;
     margin-bottom: 1rem;
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
   }
-  .p3d-quick-labs-bar::-webkit-scrollbar {
-    display: none;
+  .p3d-quick-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
   .p3d-quick-label {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
+    letter-spacing: 0.03em;
     color: #475569;
     white-space: nowrap;
     flex-shrink: 0;
+  }
+  .p3d-cycle-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.26rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    transition: all 0.2s ease;
+  }
+  .p3d-cycle-toggle.paused {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #64748b;
+  }
+  .p3d-cycle-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+    animation: p3d-pulse-dot 1.6s infinite ease-in-out;
+  }
+  .p3d-cycle-toggle.paused .p3d-cycle-dot {
+    background: #94a3b8;
+    box-shadow: none;
+    animation: none;
+  }
+  @keyframes p3d-pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+  }
+
+  .p3d-pills-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .p3d-nav-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.3rem 0.65rem;
+    border-radius: 8px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+  }
+  .p3d-nav-arrow:hover {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    color: #1d4ed8;
+  }
+  .p3d-nav-arrow.next {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
   }
   .p3d-quick-pills {
     display: flex;
     align-items: center;
     gap: 0.45rem;
-    flex-wrap: nowrap;
+    flex: 1;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .p3d-quick-pills::-webkit-scrollbar {
+    display: none;
   }
   .p3d-quick-pill {
     font-size: 0.78rem;
@@ -1360,6 +1520,11 @@ const allLessons = getLessonsBySubject(lesson.subject);
     white-space: nowrap;
     transition: all 0.15s ease;
     flex-shrink: 0;
+  }
+  .p3d-quick-pill .pill-idx {
+    font-size: 0.72rem;
+    opacity: 0.75;
+    margin-right: 0.2rem;
   }
   .p3d-quick-pill:hover {
     background: #eff6ff;

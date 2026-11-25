@@ -1,8 +1,10 @@
 ---
 interface Props {
   hasSteps?: boolean;
+  nextLabSlug?: string;
+  nextLabTitle?: string;
 }
-const { hasSteps = false } = Astro.props;
+const { hasSteps = false, nextLabSlug, nextLabTitle } = Astro.props;
 ---
 
 <div class="p3d-playback-controls" role="group" aria-label="Animation playback controls">
@@ -12,6 +14,15 @@ const { hasSteps = false } = Astro.props;
   <button type="button" class="p3d-ctrl-btn" data-action="restart-anim" aria-label="Restart animation">
     ↺ Restart
   </button>
+  {nextLabSlug && (
+    <a
+      href={`${nextLabSlug}?autocycle=1`}
+      class="p3d-ctrl-btn p3d-next-lab-btn"
+      title={`Skip to next lab: ${nextLabTitle ?? ""}`}
+    >
+      Next Lab &rarr;
+    </a>
+  )}
   <label class="p3d-speed-wrap">
     <span>Speed</span>
     <select data-action="speed-select" aria-label="Playback speed">
@@ -61,6 +72,19 @@ const { hasSteps = false } = Astro.props;
     border-color: #1a73e8;
     color: #1a73e8;
     background: #eff6ff;
+  }
+  .p3d-next-lab-btn {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+  }
+  .p3d-next-lab-btn:hover {
+    background: #dbeafe;
+    border-color: #3b82f6;
+    color: #1e40af;
   }
   .p3d-speed-wrap {
     display: inline-flex;
