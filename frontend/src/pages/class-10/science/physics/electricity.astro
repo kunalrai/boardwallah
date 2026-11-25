@@ -1,12 +1,313 @@
 ---
 import Layout from "../../../../layouts/Layout.astro";
-import PhysicsViewer from "../../../../components/physics3d/PhysicsViewer.astro";
+import Electricity2DViewer from "../../../../components/physics3d/Electricity2DViewer.astro";
 import { electricityLesson } from "../../../../data/physics/electricity";
 ---
 
 <Layout
-  title={`${electricityLesson.title} | Class 10 3D Physics | BoardWallah`}
+  title={`${electricityLesson.title} | Class 10 2D Physics Circuit Lab | BoardWallah`}
   description={electricityLesson.subtitle}
 >
-  <PhysicsViewer lesson={electricityLesson} />
+  <!-- 2D Interactive Circuit Laboratory -->
+  <Electricity2DViewer lesson={electricityLesson} />
+
+  <!-- Manocha Academy One-Shot Lecture Guide & CBSE Board Numerical Solutions -->
+  <section class="el-video-guide wrap" aria-label="Manocha Academy Complete Electricity Video Guide">
+    <header class="el-guide-header">
+      <span class="el-badge">Manocha Academy One-Shot Masterclass Reference</span>
+      <h2>Complete Electricity: Comprehensive Lecture Topics &amp; Solved Numericals</h2>
+      <p class="el-lead">
+        Comprehensive coverage aligned with the Manocha Academy One-Shot Lecture (<a href="https://youtu.be/uhKPG_LErRc?si=MNsOXJQk8RJogyLc" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>), covering all 6 syllabus modules and frequently asked board exam numericals.
+      </p>
+    </header>
+
+    <!-- 6 Video Modules Grid -->
+    <div class="el-modules-grid">
+      <article class="el-module-card">
+        <span class="mod-num">Module 1</span>
+        <h3>Electric Charge &amp; Current</h3>
+        <ul>
+          <li><strong>Quantization of Charge:</strong> Q = n &middot; e, where elementary charge e = 1.6 &times; 10⁻¹⁹ C.</li>
+          <li>1 Coulomb contains <strong>6.25 &times; 10¹⁸ electrons</strong>.</li>
+          <li><strong>Electric Current:</strong> I = Q / t (measured in Amperes, A).</li>
+          <li><strong>Ammeter:</strong> Connected in <em>series</em> (has very low resistance to avoid altering current).</li>
+        </ul>
+      </article>
+
+      <article class="el-module-card">
+        <span class="mod-num">Module 2</span>
+        <h3>Potential Difference &amp; Voltmeter</h3>
+        <ul>
+          <li><strong>Electric Potential Difference:</strong> V = W / Q (Work done per unit charge, in Volts, V).</li>
+          <li>1 Volt = 1 Joule per 1 Coulomb (1 V = 1 J/C).</li>
+          <li><strong>Voltmeter:</strong> Connected in <em>parallel</em> across components (has extremely high resistance to draw negligible current).</li>
+          <li>Direction of conventional current is positive (+) to negative (-); electrons drift opposite (- to +).</li>
+        </ul>
+      </article>
+
+      <article class="el-module-card">
+        <span class="mod-num">Module 3</span>
+        <h3>Ohm&apos;s Law &amp; Resistivity</h3>
+        <ul>
+          <li><strong>Ohm&apos;s Law:</strong> At constant temperature, V &prop; I &rArr; V = I &middot; R.</li>
+          <li>V-I graph is a straight line through the origin; its slope equals resistance R = &Delta;V / &Delta;I.</li>
+          <li><strong>Factors Affecting Resistance:</strong> R = &rho; &middot; (l / A).</li>
+          <li><strong>Wire Stretching Rule:</strong> If length is doubled (l&apos; = 2l), area halves (A&apos; = A/2) &rArr; new resistance quadruples (R&apos; = 4R). Resistivity &rho; stays unchanged.</li>
+        </ul>
+      </article>
+
+      <article class="el-module-card">
+        <span class="mod-num">Module 4</span>
+        <h3>Series vs Parallel Circuits</h3>
+        <ul>
+          <li><strong>Series (R_s = R₁ + R₂ + ...):</strong> Current I is constant; voltage divides (V = V₁ + V₂). Disadvantage: one faulty bulb breaks the whole circuit.</li>
+          <li><strong>Parallel (1/R_p = 1/R₁ + 1/R₂ + ...):</strong> Voltage V is constant; current divides (I = I₁ + I₂).</li>
+          <li><strong>Domestic Advantage:</strong> Every appliance gets 220 V and can be operated independently.</li>
+        </ul>
+      </article>
+
+      <article class="el-module-card">
+        <span class="mod-num">Module 5</span>
+        <h3>Joule&apos;s Heating Effect</h3>
+        <ul>
+          <li><strong>Heat Dissipated:</strong> H = I² &middot; R &middot; t (or H = V &middot; I &middot; t = (V²/R) &middot; t).</li>
+          <li><strong>Nichrome in Heaters:</strong> High resistivity, high melting point, and does not oxidize (burn) at red heat.</li>
+          <li><strong>Tungsten in Bulbs:</strong> Extremely high melting point (3380&deg;C) to glow white-hot without melting.</li>
+          <li><strong>Electric Fuse:</strong> Low-melting lead-tin alloy connected in series with the live wire.</li>
+        </ul>
+      </article>
+
+      <article class="el-module-card">
+        <span class="mod-num">Module 6</span>
+        <h3>Electric Power &amp; Commercial Energy</h3>
+        <ul>
+          <li><strong>Electric Power:</strong> P = V &middot; I = I² &middot; R = V² / R (measured in Watts, W).</li>
+          <li><strong>Commercial Energy Unit:</strong> 1 Unit = 1 Kilowatt-hour (kWh).</li>
+          <li><strong>Conversion:</strong> 1 kWh = 1000 W &times; 3600 s = <strong>3.6 &times; 10⁶ Joules</strong>.</li>
+          <li><strong>Electricity Bill Calculation:</strong> Energy (kWh) = (Power in Watts &times; Hours) / 1000.</li>
+        </ul>
+      </article>
+    </div>
+
+    <!-- Solved CBSE Numericals from Video -->
+    <div class="el-numericals-card">
+      <h3>Key Board Exam Numericals from the Lecture (Step-by-Step Solved)</h3>
+      <div class="el-faq-list">
+        <details class="el-faq-item" open>
+          <summary>
+            <strong>Problem 1: Wire Stretching to Double Length (CBSE Most Repeated)</strong>
+          </summary>
+          <div class="el-faq-ans">
+            <p><strong>Question:</strong> A piece of wire having resistance R is stretched such that its length becomes twice its original length. Find the new resistance of the wire.</p>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <ol>
+              <li>Initial resistance: R = &rho; &middot; (l / A).</li>
+              <li>When the wire is stretched, its volume remains constant: V = l &middot; A = l&apos; &middot; A&apos;.</li>
+              <li>Given l&apos; = 2l &rArr; A&apos; = A / 2.</li>
+              <li>New resistance: R&apos; = &rho; &middot; (l&apos; / A&apos;) = &rho; &middot; (2l / (A / 2)) = 4 &middot; [&rho; &middot; l / A] = <strong>4R</strong>.</li>
+              <li><em>Note on Resistivity:</em> Specific resistance (&rho;) does NOT change because it depends only on material and temperature, not dimensions.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="el-faq-item">
+          <summary>
+            <strong>Problem 2: Connecting 2 &Omega;, 3 &Omega;, and 6 &Omega; to get 4 &Omega; and 1 &Omega;</strong>
+          </summary>
+          <div class="el-faq-ans">
+            <p><strong>Question:</strong> Show how you would connect three resistors, each of resistance 2 &Omega;, 3 &Omega;, and 6 &Omega;, to give an equivalent resistance of: (a) 4 &Omega;, (b) 1 &Omega;.</p>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p><strong>(a) To get 4 &Omega;:</strong></p>
+            <ul>
+              <li>Connect 3 &Omega; and 6 &Omega; in parallel: 1/R_p = 1/3 + 1/6 = 3/6 = 1/2 &rArr; R_p = 2 &Omega;.</li>
+              <li>Connect this parallel combination in series with the 2 &Omega; resistor: R_total = 2 + 2 = <strong>4 &Omega;</strong>.</li>
+            </ul>
+            <p><strong>(b) To get 1 &Omega;:</strong></p>
+            <ul>
+              <li>Connect all three resistors in parallel: 1/R_p = 1/2 + 1/3 + 1/6 = (3 + 2 + 1) / 6 = 6/6 = 1 &rArr; R_p = <strong>1 &Omega;</strong>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="el-faq-item">
+          <summary>
+            <strong>Problem 3: Bulb Rated 220 V, 100 W Operated on 110 V</strong>
+          </summary>
+          <div class="el-faq-ans">
+            <p><strong>Question:</strong> An electric bulb is rated 220 V and 100 W. When it is operated on 110 V, calculate the power consumed.</p>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <ol>
+              <li>Filament resistance is constant: R = V² / P = (220)² / 100 = 48,400 / 100 = 484 &Omega;.</li>
+              <li>When voltage drops to V&apos; = 110 V: P&apos; = (V&apos;)² / R = (110)² / 484 = 12,100 / 484 = <strong>25 Watts</strong>.</li>
+              <li><em>Key Takeaway:</em> Halving the voltage reduces the power to one-fourth (because P &prop; V²).</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="el-faq-item">
+          <summary>
+            <strong>Problem 4: Rate of Heat Development in a 8 &Omega; Heater drawing 15 A</strong>
+          </summary>
+          <div class="el-faq-ans">
+            <p><strong>Question:</strong> An electric heater of resistance 8 &Omega; draws a current of 15 A from the service mains for 2 hours. Calculate the rate at which heat is developed in the heater.</p>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <ol>
+              <li>The <em>rate</em> at which heat is developed means heat per second, which is Electric Power: P = H / t.</li>
+              <li>P = I² &middot; R = (15 A)² &times; 8 &Omega; = 225 &times; 8 = <strong>1800 Joules/second (Watts)</strong>.</li>
+              <li><em>Caution:</em> Time (2 hours) is given to confuse students; do not multiply by time when the question asks for the <em>rate</em>.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="el-faq-item">
+          <summary>
+            <strong>Problem 5: Electricity Bill for Refrigerator &amp; Lamps in a Month</strong>
+          </summary>
+          <div class="el-faq-ans">
+            <p><strong>Question:</strong> An electric refrigerator rated 400 W operates 8 hours/day and two electric fans of 80 W each operate 12 hours/day. Calculate the total cost of energy for the month of June (30 days) at &amp;rupee; 4.00 per unit (kWh).</p>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <ol>
+              <li>Energy consumed by refrigerator per day: 400 W &times; 8 h = 3200 Wh.</li>
+              <li>Energy consumed by 2 fans per day: 2 &times; 80 W &times; 12 h = 1920 Wh.</li>
+              <li>Total daily energy: 3200 + 1920 = 5120 Wh = 5.12 kWh (Units/day).</li>
+              <li>Energy for 30 days: 5.12 kWh &times; 30 = 153.6 kWh (Units).</li>
+              <li>Total cost: 153.6 &times; &amp;rupee; 4.00 = <strong>&amp;rupee; 614.40</strong>.</li>
+            </ol>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .el-video-guide {
+    margin-top: 2rem;
+    margin-bottom: 3.5rem;
+  }
+  .el-guide-header {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto 1.75rem;
+  }
+  .el-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+  }
+  .el-guide-header h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+    color: #0f172a;
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+  }
+  .el-lead {
+    font-size: 1.02rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .el-lead a {
+    color: #1a73e8;
+    font-weight: 600;
+  }
+
+  .el-modules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+  .el-module-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+  }
+  .mod-num {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    margin-bottom: 0.45rem;
+  }
+  .el-module-card h3 {
+    font-size: 1.05rem;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .el-module-card ul {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.86rem;
+    color: #334155;
+    line-height: 1.45;
+  }
+
+  .el-numericals-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+  }
+  .el-numericals-card h3 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    color: #0f172a;
+  }
+  .el-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .el-faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+  }
+  .el-faq-item[open] {
+    background: #ffffff;
+    border-color: #93c5fd;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.04);
+  }
+  .el-faq-item summary {
+    font-size: 0.92rem;
+    color: #0f172a;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .el-faq-ans {
+    margin-top: 0.65rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.88rem;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 1024px) {
+    .el-modules-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

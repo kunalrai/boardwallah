@@ -1,0 +1,1856 @@
+---
+import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+import { getLessonsBySubject } from "../../physics-engine/registry/LessonRegistry";
+import LessonHeader from "./LessonHeader.astro";
+import PlaybackControls from "./PlaybackControls.astro";
+import FormulaPanel from "./FormulaPanel.astro";
+import QuizPanel from "./QuizPanel.astro";
+
+interface Props {
+  lesson: PhysicsLessonConfig;
+}
+const { lesson } = Astro.props;
+const viewerId = `bw-p2d-viewer-${lesson.id}`;
+const configScriptId = `bw-p2d-config-${lesson.id}`;
+const allLessons = getLessonsBySubject(lesson.subject);
+---
+
+<div class="p3d-shell" id={viewerId} data-electricity-viewer data-config-id={configScriptId}>
+  <LessonHeader lesson={lesson} />
+
+  <!-- Horizontal Quick Labs Switcher -->
+  {allLessons.length > 1 && (
+    <nav class="p3d-quick-labs-bar" aria-label="Other 3D Labs in this subject">
+      <span class="p3d-quick-label">⚡ Other {lesson.subject.toUpperCase()} Labs:</span>
+      <div class="p3d-quick-pills">
+        {allLessons.map((item) => (
+          <a
+            href={item.slug}
+            class={`p3d-quick-pill ${item.id === lesson.id ? "current" : ""}`}
+            aria-current={item.id === lesson.id ? "page" : undefined}
+          >
+            {item.title}
+          </a>
+        ))}
+      </div>
+    </nav>
+  )}
+
+  <div class="p3d-workspace-grid">
+    <!-- Main 2D Interactive Circuit Laboratory Stage (~70%) -->
+    <section class="p3d-col-main" aria-label="Interactive 2D Electric Circuit Laboratory">
+      <div class="p3d-stage-card">
+        <!-- Stage Toolbar -->
+        <div class="el2d-toolbar">
+          <div class="el2d-view-modes">
+            <button type="button" class="el2d-tool-btn active" data-view-mode="schematic">
+              <span class="icon">⚡</span> 2D Circuit Schematic
+            </button>
+            <button type="button" class="el2d-tool-btn" data-view-mode="graph">
+              <span class="icon">📈</span> Ohm&apos;s Law V-I Graph
+            </button>
+          </div>
+
+          <div class="el2d-quick-toggles">
+            <button type="button" class="el2d-switch-btn on" data-toggle-switch title="Click to Open or Close Circuit Key">
+              <span class="switch-icon">🔌</span> Key: <strong data-switch-label>CLOSED (ON)</strong>
+            </button>
+            <button type="button" class="el2d-topo-btn" data-toggle-topology title="Toggle Series or Parallel">
+              Mode: <strong data-topo-label>Series (R_s)</strong>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2D Canvas Viewport -->
+        <div class="el2d-canvas-wrap" data-canvas-wrap>
+          <canvas id="el2d-circuit-canvas" class="el2d-canvas" width="900" height="520"></canvas>
+          <div class="el2d-hint-badge">💡 Tip: Click directly on the Plug Key or Bulb on the diagram to interact!</div>
+        </div>
+
+        <!-- Guided Learning Steps (Auto-Advancing) -->
+        <div class="p3d-bottom-controls">
+          {lesson.learningSteps.length > 0 && (
+            <div class="p3d-now-playing-banner" data-now-playing-banner>
+              <div class="p3d-np-top">
+                <div class="p3d-np-meta">
+                  <span class="p3d-np-badge">
+                    Step <span data-step-counter>1 / {lesson.learningSteps.length}</span>
+                  </span>
+                  <span class="p3d-np-status auto" data-step-status>
+                    <span class="p3d-status-dot"></span>
+                    <span data-step-status-text>Auto-Playing</span>
+                  </span>
+                </div>
+                <div class="p3d-np-dots" role="tablist" aria-label="Learning steps">
+                  {lesson.learningSteps.map((step, idx) => (
+                    <button
+                      type="button"
+                      class={`p3d-np-dot ${idx === 0 ? "active" : ""}`}
+                      data-step-index={idx}
+                      title={`Step ${step.stepNumber}: ${step.title}`}
+                      aria-label={`Jump to Step ${step.stepNumber}: ${step.title}`}
+                    >
+                      <span>{step.stepNumber}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Animated step progress line -->
+              <div class="p3d-np-progress-bar-wrap" title="Auto-advance step timer">
+                <div class="p3d-np-progress-bar" data-step-progress style="width: 0%;"></div>
+              </div>
+
+              <!-- Active Step Content -->
+              <div class="p3d-np-body">
+                <strong class="p3d-np-title" data-now-playing-title>
+                  {lesson.learningSteps[0]?.title ?? ""}
+                </strong>
+                <p class="p3d-np-desc" data-now-playing-desc>
+                  {lesson.learningSteps[0]?.description ?? ""}
+                </p>
+              </div>
+            </div>
+          )}
+
+          <PlaybackControls hasSteps={lesson.learningSteps.length > 0} />
+        </div>
+      </div>
+    </section>
+
+    <!-- Side Panel: Interactive Circuit Controls, Live Observations, Formulas (~30%) -->
+    <aside class="p3d-col-side" aria-label="Circuit Parameters and Results">
+      <!-- Parameters Control Card -->
+      <section class="p3d-panel-card">
+        <div class="el2d-card-header">
+          <h3>Circuit Parameters</h3>
+          <button type="button" class="el2d-reset-btn" data-action="reset-circuit">Reset</button>
+        </div>
+
+        <div class="el2d-controls-list">
+          <!-- Switch Toggle -->
+          <div class="el2d-control-row">
+            <label>Circuit Key / Switch</label>
+            <button type="button" class="el2d-btn-toggle active" data-param-switch>
+              <span class="dot"></span> <span data-switch-text>Key Closed (Conduction Active)</span>
+            </button>
+          </div>
+
+          <!-- Combination Toggle -->
+          <div class="el2d-control-row">
+            <label>Resistor Combination</label>
+            <div class="el2d-segmented-pill">
+              <button type="button" class="seg-btn active" data-set-topo="series">Series (R₁ + R₂)</button>
+              <button type="button" class="seg-btn" data-set-topo="parallel">Parallel (1/R₁ + 1/R₂)</button>
+            </div>
+          </div>
+
+          <!-- Voltage Slider -->
+          <div class="el2d-control-row">
+            <div class="el2d-slider-header">
+              <span>Battery Voltage (V)</span>
+              <strong class="val-badge" data-val-v>12 V</strong>
+            </div>
+            <input type="range" min="2" max="24" step="1" value="12" class="el2d-slider" data-slider-v />
+          </div>
+
+          <!-- Resistor R1 Slider -->
+          <div class="el2d-control-row">
+            <div class="el2d-slider-header">
+              <span>Resistor R₁</span>
+              <strong class="val-badge amber" data-val-r1>4 Ω</strong>
+            </div>
+            <input type="range" min="1" max="24" step="1" value="4" class="el2d-slider" data-slider-r1 />
+          </div>
+
+          <!-- Resistor R2 Slider -->
+          <div class="el2d-control-row">
+            <div class="el2d-slider-header">
+              <span>Resistor R₂</span>
+              <strong class="val-badge blue" data-val-r2>6 Ω</strong>
+            </div>
+            <input type="range" min="1" max="24" step="1" value="6" class="el2d-slider" data-slider-r2 />
+          </div>
+
+          <!-- Wire Stretching Simulation Factor (Ohm's Law R = ρl/A) -->
+          <div class="el2d-control-row">
+            <div class="el2d-slider-header">
+              <span>Wire Stretching Factor (R = &rho;&middot;l/A)</span>
+              <strong class="val-badge green" data-val-wire>1x (Standard)</strong>
+            </div>
+            <div class="el2d-wire-presets">
+              <button type="button" class="wire-preset-btn active" data-wire-factor="1">Standard (l, A)</button>
+              <button type="button" class="wire-preset-btn" data-wire-factor="2">Stretched 2x (4R)</button>
+              <button type="button" class="wire-preset-btn" data-wire-factor="0.5">Thick 2A (R/2)</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Calculated Electrical Observations -->
+      <section class="p3d-panel-card">
+        <h3>Live Calculated Observations</h3>
+        <p class="p3d-sim-summary" data-el-summary>Closed Circuit • Conduction Active</p>
+        <div class="p3d-metrics-grid">
+          <div class="p3d-metric-box">
+            <dt>Equivalent Resistance (R_eq)</dt>
+            <dd data-metric-req>10.00 &Omega;</dd>
+          </div>
+          <div class="p3d-metric-box">
+            <dt>Total Current (I_total)</dt>
+            <dd data-metric-itotal>1.200 A</dd>
+          </div>
+          <div class="p3d-metric-box">
+            <dt>Branch 1 (R₁)</dt>
+            <dd data-metric-branch1>I = 1.20 A | V = 4.8 V</dd>
+          </div>
+          <div class="p3d-metric-box">
+            <dt>Branch 2 (R₂)</dt>
+            <dd data-metric-branch2>I = 1.20 A | V = 7.2 V</dd>
+          </div>
+          <div class="p3d-metric-box">
+            <dt>Electric Power (P = VI)</dt>
+            <dd data-metric-power>14.40 W</dd>
+          </div>
+          <div class="p3d-metric-box">
+            <dt>Heat Dissipation (H = I²Rt)</dt>
+            <dd data-metric-heat>144.0 J / 10s</dd>
+          </div>
+        </div>
+
+        <ul class="p3d-observations-list" data-el-obs>
+          <li>Ohm&apos;s Law verified: Current I = V / R_eq.</li>
+          <li>In series connection, identical current flows through R₁ and R₂.</li>
+          <li>Potential difference divides in proportion to resistances: V = V₁ + V₂.</li>
+        </ul>
+      </section>
+
+      <!-- Key Formulas -->
+      <FormulaPanel formulas={lesson.formulas} />
+    </aside>
+  </div>
+
+  <!-- Interactive Concept Quiz -->
+  <QuizPanel questions={lesson.quiz} />
+
+  <script
+    type="application/json"
+    id={configScriptId}
+    set:html={JSON.stringify(lesson)}
+  ></script>
+</div>
+
+<script>
+  import type { PhysicsLessonConfig } from "../../physics-engine/types/lesson";
+
+  function initElectricity2DViewer() {
+    const root = document.querySelector<HTMLElement>("[data-electricity-viewer]");
+    if (!root || root.dataset.initialized === "true") return;
+    root.dataset.initialized = "true";
+
+    const configId = root.dataset.configId;
+    const configEl = configId ? document.getElementById(configId) : null;
+    if (!configEl?.textContent) return;
+    const lesson: PhysicsLessonConfig = JSON.parse(configEl.textContent);
+
+    const canvas = root.querySelector<HTMLCanvasElement>("#el2d-circuit-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Internal reactive state
+    const state = {
+      voltageV: 12,
+      r1Ohm: 4,
+      r2Ohm: 6,
+      wireFactor: 1.0,
+      topology: "series" as "series" | "parallel",
+      switchClosed: true,
+      viewMode: "schematic" as "schematic" | "graph",
+      currentStepIndex: 0,
+      isAutoPlaying: true,
+      playbackSpeed: 1.0,
+      stepElapsedMs: 0,
+      animTime: 0,
+    };
+
+    const BASE_STEP_DURATION_MS = 6000;
+    let lastTime = performance.now();
+    let rafId: number | null = null;
+
+    // Charge particle animation tokens
+    const particles = Array.from({ length: 22 }, (_, idx) => ({
+      t: idx / 22,
+      branch: idx % 2, // for parallel division
+    }));
+
+    // Dom elements
+    const statusPill = root.querySelector<HTMLElement>("[data-step-status]");
+    const statusText = root.querySelector<HTMLElement>("[data-step-status-text]");
+    const stepCounter = root.querySelector<HTMLElement>("[data-step-counter]");
+    const progressBar = root.querySelector<HTMLElement>("[data-step-progress]");
+    const npTitle = root.querySelector<HTMLElement>("[data-now-playing-title]");
+    const npDesc = root.querySelector<HTMLElement>("[data-now-playing-desc]");
+    const playBtn = root.querySelector<HTMLButtonElement>('[data-action="toggle-play"]');
+
+    const switchBtn = root.querySelector<HTMLButtonElement>("[data-toggle-switch]");
+    const switchLabel = root.querySelector<HTMLElement>("[data-switch-label]");
+    const topoBtn = root.querySelector<HTMLButtonElement>("[data-toggle-topology]");
+    const topoLabel = root.querySelector<HTMLElement>("[data-topo-label]");
+    const paramSwitchBtn = root.querySelector<HTMLButtonElement>("[data-param-switch]");
+    const switchText = root.querySelector<HTMLElement>("[data-switch-text]");
+
+    const sliderV = root.querySelector<HTMLInputElement>("[data-slider-v]");
+    const sliderR1 = root.querySelector<HTMLInputElement>("[data-slider-r1]");
+    const sliderR2 = root.querySelector<HTMLInputElement>("[data-slider-r2]");
+    const valV = root.querySelector<HTMLElement>("[data-val-v]");
+    const valR1 = root.querySelector<HTMLElement>("[data-val-r1]");
+    const valR2 = root.querySelector<HTMLElement>("[data-val-r2]");
+    const valWire = root.querySelector<HTMLElement>("[data-val-wire]");
+
+    const metricReq = root.querySelector<HTMLElement>("[data-metric-req]");
+    const metricItotal = root.querySelector<HTMLElement>("[data-metric-itotal]");
+    const metricBranch1 = root.querySelector<HTMLElement>("[data-metric-branch1]");
+    const metricBranch2 = root.querySelector<HTMLElement>("[data-metric-branch2]");
+    const metricPower = root.querySelector<HTMLElement>("[data-metric-power]");
+    const metricHeat = root.querySelector<HTMLElement>("[data-metric-heat]");
+    const elSummary = root.querySelector<HTMLElement>("[data-el-summary]");
+    const elObs = root.querySelector<HTMLElement>("[data-el-obs]");
+
+    // Compute electrical properties
+    function calculate() {
+      const V = state.voltageV;
+      const R1 = state.r1Ohm * state.wireFactor;
+      const R2 = state.r2Ohm * state.wireFactor;
+      const isSeries = state.topology === "series";
+
+      const Req = isSeries ? R1 + R2 : (R1 * R2) / (R1 + R2);
+      const totalI = state.switchClosed && Req > 0 ? V / Req : 0;
+      const I1 = !state.switchClosed ? 0 : isSeries ? totalI : V / R1;
+      const I2 = !state.switchClosed ? 0 : isSeries ? totalI : V / R2;
+      const V1 = !state.switchClosed ? 0 : isSeries ? totalI * R1 : V;
+      const V2 = !state.switchClosed ? 0 : isSeries ? totalI * R2 : V;
+      const power = V * totalI;
+      const heat = totalI * totalI * Req * 10;
+
+      return { V, R1, R2, Req, totalI, I1, I2, V1, V2, power, heat };
+    }
+
+    // Sync UI Metrics
+    function updateUI() {
+      const res = calculate();
+
+      if (valV) valV.textContent = `${res.V} V`;
+      if (valR1) valR1.textContent = `${res.R1.toFixed(1)} Ω`;
+      if (valR2) valR2.textContent = `${res.R2.toFixed(1)} Ω`;
+
+      if (metricReq) metricReq.textContent = `${res.Req.toFixed(2)} Ω`;
+      if (metricItotal) metricItotal.textContent = `${res.totalI.toFixed(3)} A`;
+      if (metricBranch1) metricBranch1.textContent = `I₁ = ${res.I1.toFixed(2)} A | V₁ = ${res.V1.toFixed(1)} V`;
+      if (metricBranch2) metricBranch2.textContent = `I₂ = ${res.I2.toFixed(2)} A | V₂ = ${res.V2.toFixed(1)} V`;
+      if (metricPower) metricPower.textContent = `${res.power.toFixed(2)} W`;
+      if (metricHeat) metricHeat.textContent = `${res.heat.toFixed(1)} J / 10s`;
+
+      if (elSummary) {
+        elSummary.textContent = state.switchClosed
+          ? `Closed Circuit • Active Current: ${res.totalI.toFixed(2)} A • Power: ${res.power.toFixed(1)} W`
+          : "Open Circuit • Switch Disconnected (I = 0 A, P = 0 W)";
+      }
+
+      if (elObs) {
+        if (!state.switchClosed) {
+          elObs.innerHTML = `
+            <li>Plug key is OPEN: No complete conducting path exists, current drops to 0.00 A.</li>
+            <li>Voltmeter measures potential difference across terminals; ammeter reads 0 A.</li>
+          `;
+        } else if (state.topology === "series") {
+          elObs.innerHTML = `
+            <li><strong>Series Rule:</strong> Constant current (${res.totalI.toFixed(2)} A) flows through both R₁ and R₂.</li>
+            <li><strong>Voltage Divider:</strong> Total voltage (12 V) divides: V₁ = ${res.V1.toFixed(1)} V + V₂ = ${res.V2.toFixed(1)} V = ${(res.V1 + res.V2).toFixed(1)} V.</li>
+            <li>Equivalent resistance (R_s = ${res.Req.toFixed(1)} Ω) is GREATER than individual resistors, reducing total current.</li>
+          `;
+        } else {
+          elObs.innerHTML = `
+            <li><strong>Parallel Rule:</strong> Both branches receive the FULL voltage (${res.V} V) independently.</li>
+            <li><strong>Current Divider:</strong> Total current (${res.totalI.toFixed(2)} A) divides: I₁ = ${res.I1.toFixed(2)} A + I₂ = ${res.I2.toFixed(2)} A.</li>
+            <li>Equivalent resistance (R_p = ${res.Req.toFixed(2)} Ω) is LESS than the smallest resistor, maximizing current.</li>
+          `;
+        }
+      }
+
+      // Switch buttons
+      if (switchBtn) {
+        switchBtn.classList.toggle("on", state.switchClosed);
+        switchBtn.classList.toggle("off", !state.switchClosed);
+      }
+      if (switchLabel) {
+        switchLabel.textContent = state.switchClosed ? "CLOSED (ON)" : "OPEN (OFF)";
+      }
+      if (paramSwitchBtn) {
+        paramSwitchBtn.classList.toggle("active", state.switchClosed);
+      }
+      if (switchText) {
+        switchText.textContent = state.switchClosed
+          ? "Key Closed (Conduction Active)"
+          : "Key Open (Circuit Broken)";
+      }
+
+      // Topology buttons
+      if (topoLabel) {
+        topoLabel.textContent = state.topology === "series" ? "Series (R_s)" : "Parallel (R_p)";
+      }
+      root.querySelectorAll<HTMLButtonElement>("[data-set-topo]").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.setTopo === state.topology);
+      });
+    }
+
+    // Draw Zigzag Resistor
+    function drawZigZag(startX: number, endX: number, y: number, color: string, label: string, subLabel: string) {
+      const teeth = 6;
+      const len = endX - startX;
+      const step = len / (teeth * 2);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(startX, y);
+      for (let i = 0; i < teeth * 2; i++) {
+        const x = startX + (i + 0.5) * step;
+        const offset = i % 2 === 0 ? -16 : 16;
+        ctx.lineTo(x, y + offset);
+      }
+      ctx.lineTo(endX, y);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3.5;
+      ctx.lineJoin = "round";
+      ctx.stroke();
+
+      // Badge above
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      const textW = ctx.measureText(label).width;
+      ctx.beginPath();
+      ctx.roundRect((startX + endX) / 2 - textW / 2 - 8, y - 42, textW + 16, 22, 6);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillStyle = color;
+      ctx.textAlign = "center";
+      ctx.fillText(label, (startX + endX) / 2, y - 27);
+
+      // Sublabel below
+      ctx.font = "600 11px sans-serif";
+      ctx.fillStyle = "#475569";
+      ctx.fillText(subLabel, (startX + endX) / 2, y + 34);
+
+      ctx.restore();
+    }
+
+    // Render 2D Schematic
+    function drawSchematic(dt: number) {
+      const res = calculate();
+      const W = canvas.width;
+      const H = canvas.height;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Background subtle workbench
+      ctx.fillStyle = "#f8fafd";
+      ctx.fillRect(0, 0, W, H);
+
+      // Subtle blueprint grid dots
+      ctx.fillStyle = "#e2e8f0";
+      for (let x = 20; x < W; x += 30) {
+        for (let y = 20; y < H; y += 30) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      const loopLeft = 120;
+      const loopRight = 780;
+      const loopTop = 130;
+      const loopBottom = 420;
+
+      // 1. Draw Main Circuit Wire Frame
+      ctx.lineWidth = 3.5;
+      ctx.strokeStyle = "#334155";
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+
+      // Left wire (Battery segment)
+      ctx.beginPath();
+      ctx.moveTo(loopLeft, loopTop);
+      ctx.lineTo(loopLeft, 230);
+      ctx.moveTo(loopLeft, 320);
+      ctx.lineTo(loopLeft, loopBottom);
+      ctx.stroke();
+
+      // Bottom wire (Key & Ammeter segments)
+      ctx.beginPath();
+      ctx.moveTo(loopLeft, loopBottom);
+      ctx.lineTo(280, loopBottom); // to Switch
+      ctx.moveTo(360, loopBottom); // from Switch to Ammeter
+      ctx.lineTo(520, loopBottom);
+      ctx.moveTo(600, loopBottom); // from Ammeter to Right corner
+      ctx.lineTo(loopRight, loopBottom);
+      ctx.stroke();
+
+      // Right wire (Bulb segment)
+      ctx.beginPath();
+      ctx.moveTo(loopRight, loopBottom);
+      ctx.lineTo(loopRight, 310);
+      ctx.moveTo(loopRight, 240);
+      ctx.lineTo(loopRight, loopTop);
+      ctx.stroke();
+
+      // 2. DC Battery (Left side: 120, 275)
+      ctx.save();
+      const batY = 275;
+      // Cell 1
+      // Positive plate (Red long line)
+      ctx.strokeStyle = "#ef4444";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(loopLeft - 24, batY - 32);
+      ctx.lineTo(loopLeft + 24, batY - 32);
+      ctx.stroke();
+      ctx.fillStyle = "#ef4444";
+      ctx.font = "bold 14px sans-serif";
+      ctx.fillText("+", loopLeft - 38, batY - 28);
+
+      // Negative plate (Blue short thick line)
+      ctx.strokeStyle = "#1d4ed8";
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.moveTo(loopLeft - 14, batY - 14);
+      ctx.lineTo(loopLeft + 14, batY - 14);
+      ctx.stroke();
+
+      // Cell 2
+      ctx.strokeStyle = "#ef4444";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(loopLeft - 24, batY + 10);
+      ctx.lineTo(loopLeft + 24, batY + 10);
+      ctx.stroke();
+
+      ctx.strokeStyle = "#1d4ed8";
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.moveTo(loopLeft - 14, batY + 28);
+      ctx.lineTo(loopLeft + 14, batY + 28);
+      ctx.stroke();
+      ctx.fillStyle = "#1d4ed8";
+      ctx.fillText("−", loopLeft - 38, batY + 34);
+
+      // Connecting lead between cells
+      ctx.strokeStyle = "#64748b";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(loopLeft, batY - 14);
+      ctx.lineTo(loopLeft, batY + 10);
+      ctx.stroke();
+
+      // Battery Label
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "bold 12px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(`Battery (${res.V} V)`, loopLeft, batY + 54);
+      ctx.restore();
+
+      // 3. Plug Key / Switch (Bottom: 320, 420)
+      ctx.save();
+      const swX = 320;
+      const swY = loopBottom;
+      // Key terminals
+      ctx.fillStyle = "#475569";
+      ctx.beginPath();
+      ctx.arc(swX - 35, swY, 5, 0, Math.PI * 2);
+      ctx.arc(swX + 35, swY, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Brackets
+      ctx.font = "bold 24px monospace";
+      ctx.fillStyle = "#1e293b";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("(", swX - 22, swY - 2);
+      ctx.fillText(")", swX + 22, swY - 2);
+
+      if (state.switchClosed) {
+        // Closed plug key: Central solid brass dot inserted
+        ctx.fillStyle = "#0f172a";
+        ctx.beginPath();
+        ctx.arc(swX, swY, 6.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#10b981";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.font = "bold 11px sans-serif";
+        ctx.fillStyle = "#065f46";
+        ctx.fillText("CLOSED (•)", swX, swY + 28);
+      } else {
+        // Open plug key: gap with tilted lever
+        ctx.strokeStyle = "#ef4444";
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.moveTo(swX - 35, swY);
+        ctx.lineTo(swX + 15, swY - 24);
+        ctx.stroke();
+
+        ctx.font = "bold 11px sans-serif";
+        ctx.fillStyle = "#b91c1c";
+        ctx.fillText("OPEN (GAP)", swX, swY + 28);
+      }
+      ctx.font = "500 10px sans-serif";
+      ctx.fillStyle = "#64748b";
+      ctx.fillText("Click to Toggle", swX, swY + 44);
+      ctx.restore();
+
+      // 4. Ammeter (Bottom: 560, 420)
+      ctx.save();
+      const amX = 560;
+      const amY = loopBottom;
+      ctx.beginPath();
+      ctx.arc(amX, amY, 30, 0, Math.PI * 2);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+      ctx.strokeStyle = "#1d4ed8";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Symbol A
+      ctx.font = "800 18px sans-serif";
+      ctx.fillStyle = "#1d4ed8";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("A", amX, amY - 4);
+
+      // Analog Needle
+      const needleAngle = Math.min(Math.PI * 0.45, (res.totalI / 8) * Math.PI * 0.9 - Math.PI * 0.45);
+      ctx.strokeStyle = "#ef4444";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(amX, amY + 12);
+      ctx.lineTo(amX + Math.sin(needleAngle) * 22, amY - 4 - Math.cos(needleAngle) * 14);
+      ctx.stroke();
+
+      // Reading badge
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillStyle = "#1e40af";
+      ctx.fillText(`${res.totalI.toFixed(2)} A`, amX, amY + 42);
+      ctx.font = "500 10px sans-serif";
+      ctx.fillStyle = "#64748b";
+      ctx.fillText("In Series", amX, amY + 56);
+      ctx.restore();
+
+      // 5. Top Branch: Resistors & Voltmeter
+      if (state.topology === "series") {
+        // Wire up to R1 and R2
+        ctx.strokeStyle = "#334155";
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.moveTo(loopLeft, loopTop);
+        ctx.lineTo(260, loopTop);
+        ctx.moveTo(400, loopTop);
+        ctx.lineTo(460, loopTop);
+        ctx.moveTo(600, loopTop);
+        ctx.lineTo(loopRight, loopTop);
+        ctx.stroke();
+
+        // Resistor 1 (Series)
+        drawZigZag(260, 400, loopTop, "#d97706", `R₁ = ${res.R1.toFixed(1)} Ω`, `V₁ = ${res.V1.toFixed(1)} V (I = ${res.I1.toFixed(2)} A)`);
+        // Resistor 2 (Series)
+        drawZigZag(460, 600, loopTop, "#2563eb", `R₂ = ${res.R2.toFixed(1)} Ω`, `V₂ = ${res.V2.toFixed(1)} V (I = ${res.I2.toFixed(2)} A)`);
+
+        // Voltmeter bridging in parallel
+        ctx.save();
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(250, loopTop);
+        ctx.lineTo(250, 55);
+        ctx.lineTo(400, 55);
+        ctx.moveTo(460, 55);
+        ctx.lineTo(610, 55);
+        ctx.lineTo(610, loopTop);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Solder dots
+        ctx.fillStyle = "#475569";
+        ctx.beginPath();
+        ctx.arc(250, loopTop, 4.5, 0, Math.PI * 2);
+        ctx.arc(610, loopTop, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Voltmeter dial at (430, 55)
+        const vmX = 430;
+        const vmY = 55;
+        ctx.beginPath();
+        ctx.arc(vmX, vmY, 26, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+        ctx.strokeStyle = "#0891b2";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.font = "800 16px sans-serif";
+        ctx.fillStyle = "#0891b2";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("V", vmX, vmY - 2);
+
+        ctx.font = "bold 11px sans-serif";
+        ctx.fillStyle = "#0e7490";
+        ctx.fillText(`${res.V} V`, vmX, vmY + 36);
+        ctx.restore();
+      } else {
+        // Parallel Topology: Split at Node A (250, 130), merge at Node B (610, 130)
+        const nodeA = 250;
+        const nodeB = 610;
+        const topY = 75;
+        const botY = 175;
+
+        ctx.strokeStyle = "#334155";
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.moveTo(loopLeft, loopTop);
+        ctx.lineTo(nodeA, loopTop);
+        // Branch up to top rung
+        ctx.lineTo(nodeA, topY);
+        ctx.lineTo(360, topY);
+        ctx.moveTo(500, topY);
+        ctx.lineTo(nodeB, topY);
+        ctx.lineTo(nodeB, loopTop);
+
+        // Branch down to bottom rung
+        ctx.moveTo(nodeA, loopTop);
+        ctx.lineTo(nodeA, botY);
+        ctx.lineTo(360, botY);
+        ctx.moveTo(500, botY);
+        ctx.lineTo(nodeB, botY);
+        ctx.lineTo(nodeB, loopTop);
+
+        // Trunk to right corner
+        ctx.moveTo(nodeB, loopTop);
+        ctx.lineTo(loopRight, loopTop);
+        ctx.stroke();
+
+        // Solder Junctions at Node A and Node B
+        ctx.fillStyle = "#1e293b";
+        ctx.beginPath();
+        ctx.arc(nodeA, loopTop, 6, 0, Math.PI * 2);
+        ctx.arc(nodeB, loopTop, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillStyle = "#0f172a";
+        ctx.textAlign = "center";
+        ctx.fillText("Node A", nodeA - 26, loopTop + 4);
+        ctx.fillText("Node B", nodeB + 26, loopTop + 4);
+
+        // Draw R1 on top rung
+        drawZigZag(360, 500, topY, "#d97706", `R₁ = ${res.R1.toFixed(1)} Ω`, `I₁ = ${res.I1.toFixed(2)} A (V = ${res.V} V)`);
+        // Draw R2 on bottom rung
+        drawZigZag(360, 500, botY, "#2563eb", `R₂ = ${res.R2.toFixed(1)} Ω`, `I₂ = ${res.I2.toFixed(2)} A (V = ${res.V} V)`);
+
+        // Voltmeter bridged across parallel branches
+        ctx.save();
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(nodeA, botY);
+        ctx.lineTo(nodeA, 245);
+        ctx.lineTo(405, 245);
+        ctx.moveTo(465, 245);
+        ctx.lineTo(nodeB, 245);
+        ctx.lineTo(nodeB, botY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const vmX = 435;
+        const vmY = 245;
+        ctx.beginPath();
+        ctx.arc(vmX, vmY, 26, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+        ctx.strokeStyle = "#0891b2";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.font = "800 16px sans-serif";
+        ctx.fillStyle = "#0891b2";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("V", vmX, vmY - 2);
+
+        ctx.font = "bold 11px sans-serif";
+        ctx.fillStyle = "#0e7490";
+        ctx.fillText(`${res.V} V`, vmX, vmY + 36);
+        ctx.restore();
+      }
+
+      // 6. Light Bulb (Right side: 780, 275)
+      ctx.save();
+      const bulbX = loopRight;
+      const bulbY = 275;
+
+      // Glow halo if on
+      if (state.switchClosed && res.totalI > 0) {
+        const glowRad = Math.min(75, 32 + (res.power / 60) * 45);
+        const glowGrad = ctx.createRadialGradient(bulbX, bulbY, 10, bulbX, bulbY, glowRad);
+        glowGrad.addColorStop(0, "rgba(251, 191, 36, 0.85)");
+        glowGrad.addColorStop(0.5, "rgba(245, 158, 11, 0.35)");
+        glowGrad.addColorStop(1, "rgba(245, 158, 11, 0)");
+
+        ctx.fillStyle = glowGrad;
+        ctx.beginPath();
+        ctx.arc(bulbX, bulbY, glowRad, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Glass globe
+      ctx.beginPath();
+      ctx.arc(bulbX, bulbY, 26, 0, Math.PI * 2);
+      ctx.fillStyle = state.switchClosed && res.totalI > 0 ? "#fef3c7" : "#f1f5f9";
+      ctx.fill();
+      ctx.strokeStyle = state.switchClosed && res.totalI > 0 ? "#f59e0b" : "#94a3b8";
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Tungsten Filament
+      ctx.beginPath();
+      ctx.moveTo(bulbX - 8, bulbY + 12);
+      ctx.lineTo(bulbX - 4, bulbY - 6);
+      ctx.arc(bulbX, bulbY - 6, 4, Math.PI, 0, false);
+      ctx.lineTo(bulbX + 8, bulbY + 12);
+      ctx.strokeStyle = state.switchClosed && res.totalI > 0 ? "#ffffff" : "#64748b";
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Socket Base
+      ctx.fillStyle = "#475569";
+      ctx.fillRect(bulbX - 10, bulbY + 24, 20, 10);
+
+      // Bulb Label
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillStyle = state.switchClosed && res.totalI > 0 ? "#b45309" : "#64748b";
+      ctx.textAlign = "center";
+      ctx.fillText(state.switchClosed ? `Bulb (${res.power.toFixed(1)} W)` : "Bulb (OFF)", bulbX, bulbY + 52);
+      ctx.restore();
+
+      // 7. Animated Charge Particles
+      if (state.switchClosed && res.totalI > 0) {
+        const speed = Math.max(0.0008, res.totalI * 0.0016) * state.playbackSpeed;
+        ctx.save();
+        ctx.fillStyle = "#06b6d4";
+        ctx.shadowColor = "#0891b2";
+        ctx.shadowBlur = 6;
+
+        particles.forEach((p) => {
+          p.t = (p.t + speed) % 1;
+
+          let px = 0;
+          let py = 0;
+
+          if (state.topology === "series") {
+            // Simple single loop
+            if (p.t < 0.25) {
+              // Left wire upward
+              const u = p.t / 0.25;
+              px = loopLeft;
+              py = loopBottom - u * (loopBottom - loopTop);
+            } else if (p.t < 0.5) {
+              // Top wire rightward
+              const u = (p.t - 0.25) / 0.25;
+              px = loopLeft + u * (loopRight - loopLeft);
+              py = loopTop;
+            } else if (p.t < 0.75) {
+              // Right wire downward
+              const u = (p.t - 0.5) / 0.25;
+              px = loopRight;
+              py = loopTop + u * (loopBottom - loopTop);
+            } else {
+              // Bottom wire leftward
+              const u = (p.t - 0.75) / 0.25;
+              px = loopRight - u * (loopRight - loopLeft);
+              py = loopBottom;
+            }
+          } else {
+            // Parallel loop with branching
+            if (p.t < 0.2) {
+              // Left trunk up
+              const u = p.t / 0.2;
+              px = loopLeft;
+              py = loopBottom - u * (loopBottom - loopTop);
+            } else if (p.t < 0.3) {
+              // Trunk to Node A
+              const u = (p.t - 0.2) / 0.1;
+              px = loopLeft + u * (250 - loopLeft);
+              py = loopTop;
+            } else if (p.t < 0.6) {
+              // Branch through R1 or R2
+              const u = (p.t - 0.3) / 0.3;
+              px = 250 + u * (610 - 250);
+              py = p.branch === 0 ? 75 : 175;
+            } else if (p.t < 0.7) {
+              // Node B to Right corner
+              const u = (p.t - 0.6) / 0.1;
+              px = 610 + u * (loopRight - 610);
+              py = loopTop;
+            } else if (p.t < 0.85) {
+              // Right wire down
+              const u = (p.t - 0.7) / 0.15;
+              px = loopRight;
+              py = loopTop + u * (loopBottom - loopTop);
+            } else {
+              // Bottom wire back to left
+              const u = (p.t - 0.85) / 0.15;
+              px = loopRight - u * (loopRight - loopLeft);
+              py = loopBottom;
+            }
+          }
+
+          ctx.beginPath();
+          ctx.arc(px, py, 4, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.restore();
+      }
+    }
+
+    // Render Ohm's Law V-I Graph
+    function drawVIGraph() {
+      const res = calculate();
+      const W = canvas.width;
+      const H = canvas.height;
+
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, W, H);
+
+      const originX = 140;
+      const originY = 430;
+      const plotW = 680;
+      const plotH = 350;
+
+      // Coordinate axes
+      ctx.strokeStyle = "#0f172a";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      // Y-axis
+      ctx.moveTo(originX, originY);
+      ctx.lineTo(originX, originY - plotH);
+      // X-axis
+      ctx.moveTo(originX, originY);
+      ctx.lineTo(originX + plotW, originY);
+      ctx.stroke();
+
+      // Axis Arrows
+      ctx.fillStyle = "#0f172a";
+      ctx.beginPath();
+      ctx.moveTo(originX, originY - plotH - 12);
+      ctx.lineTo(originX - 6, originY - plotH);
+      ctx.lineTo(originX + 6, originY - plotH);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(originX + plotW + 12, originY);
+      ctx.lineTo(originX + plotW, originY - 6);
+      ctx.lineTo(originX + plotW, originY + 6);
+      ctx.fill();
+
+      // Axis Labels
+      ctx.font = "bold 14px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Electric Current I (Amperes)", originX + plotW / 2, originY + 44);
+
+      ctx.save();
+      ctx.translate(originX - 60, originY - plotH / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText("Potential Difference V (Volts)", 0, 0);
+      ctx.restore();
+
+      // Ticks & Grid
+      const maxI = 6.0; // Amperes max on graph
+      const maxV = 24.0; // Volts max on graph
+
+      ctx.font = "500 11px sans-serif";
+      ctx.fillStyle = "#64748b";
+      ctx.textAlign = "center";
+
+      // X ticks (every 1 A)
+      for (let i = 1; i <= maxI; i++) {
+        const tx = originX + (i / maxI) * plotW;
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(tx, originY);
+        ctx.lineTo(tx, originY - plotH);
+        ctx.stroke();
+
+        ctx.fillText(`${i} A`, tx, originY + 18);
+      }
+
+      // Y ticks (every 4 V)
+      ctx.textAlign = "right";
+      for (let v = 4; v <= maxV; v += 4) {
+        const ty = originY - (v / maxV) * plotH;
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(originX, ty);
+        ctx.lineTo(originX + plotW, ty);
+        ctx.stroke();
+
+        ctx.fillText(`${v} V`, originX - 12, ty + 4);
+      }
+
+      // Plot Ohm's Law Line: V = I * R_eq
+      // Find endpoint on graph boundary
+      const lineEndI = Math.min(maxI, maxV / res.Req);
+      const lineEndV = lineEndI * res.Req;
+
+      const pxEnd = originX + (lineEndI / maxI) * plotW;
+      const pyEnd = originY - (lineEndV / maxV) * plotH;
+
+      ctx.strokeStyle = "#2563eb";
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(originX, originY);
+      ctx.lineTo(pxEnd, pyEnd);
+      ctx.stroke();
+
+      // Operating Point on Graph
+      if (state.switchClosed && res.totalI > 0) {
+        const curX = originX + Math.min(1.0, res.totalI / maxI) * plotW;
+        const curY = originY - Math.min(1.0, res.V / maxV) * plotH;
+
+        // Dropline to X and Y
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = "#f59e0b";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(curX, originY);
+        ctx.lineTo(curX, curY);
+        ctx.lineTo(originX, curY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Pulsing Point
+        ctx.beginPath();
+        ctx.arc(curX, curY, 8, 0, Math.PI * 2);
+        ctx.fillStyle = "#ef4444";
+        ctx.fill();
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Point Coordinates Callout
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 13px sans-serif";
+        ctx.textAlign = "left";
+        ctx.fillText(`Operating Point (${res.totalI.toFixed(2)} A, ${res.V} V)`, curX + 12, curY - 10);
+      }
+
+      // Slope Box
+      ctx.fillStyle = "#eff6ff";
+      ctx.strokeStyle = "#93c5fd";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.roundRect(W - 320, 40, 280, 95, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = "bold 13px sans-serif";
+      ctx.fillStyle = "#1e40af";
+      ctx.textAlign = "left";
+      ctx.fillText("Ohm's Law: V = I · R", W - 305, 65);
+      ctx.font = "600 12px sans-serif";
+      ctx.fillStyle = "#0369a1";
+      ctx.fillText(`Slope (m) = ΔV / ΔI = R_eq = ${res.Req.toFixed(2)} Ω`, W - 305, 88);
+      ctx.font = "500 11px sans-serif";
+      ctx.fillStyle = "#475569";
+      ctx.fillText("Linear characteristic proves ohmic conductor.", W - 305, 110);
+    }
+
+    // Master Animation Loop
+    function frame(now: number) {
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+      state.animTime += dt;
+
+      // Guided steps ticker
+      if (state.isAutoPlaying && lesson.learningSteps.length > 1) {
+        state.stepElapsedMs += dt * 1000 * state.playbackSpeed;
+        const progress = Math.min(100, (state.stepElapsedMs / BASE_STEP_DURATION_MS) * 100);
+        if (progressBar) progressBar.style.width = `${progress}%`;
+
+        if (state.stepElapsedMs >= BASE_STEP_DURATION_MS) {
+          state.stepElapsedMs = 0;
+          const nextIdx = (state.currentStepIndex + 1) % lesson.learningSteps.length;
+          applyStep(nextIdx);
+        }
+      }
+
+      if (state.viewMode === "schematic") {
+        drawSchematic(dt);
+      } else {
+        drawVIGraph();
+      }
+
+      rafId = requestAnimationFrame(frame);
+    }
+
+    // Apply learning step
+    function applyStep(index: number) {
+      const step = lesson.learningSteps[index];
+      if (!step) return;
+      state.currentStepIndex = index;
+      state.stepElapsedMs = 0;
+      if (progressBar) progressBar.style.width = "0%";
+
+      if (stepCounter) {
+        stepCounter.textContent = `${index + 1} / ${lesson.learningSteps.length}`;
+      }
+
+      root.querySelectorAll<HTMLButtonElement>("[data-step-index]").forEach((btn) => {
+        const idx = parseInt(btn.dataset.stepIndex || "0", 10);
+        btn.classList.toggle("active", idx === index);
+      });
+
+      if (npTitle) npTitle.textContent = step.title;
+      if (npDesc) npDesc.textContent = step.description;
+
+      if (step.simulationParams) {
+        const p = step.simulationParams;
+        if (typeof p.voltageV === "number") state.voltageV = p.voltageV;
+        if (typeof p.resistor1Ohm === "number") state.r1Ohm = p.resistor1Ohm;
+        if (typeof p.resistor2Ohm === "number") state.r2Ohm = p.resistor2Ohm;
+        if (p.topology === "series" || p.topology === "parallel") state.topology = p.topology;
+        if (typeof p.switchClosed === "boolean") state.switchClosed = p.switchClosed;
+
+        if (sliderV) sliderV.value = String(state.voltageV);
+        if (sliderR1) sliderR1.value = String(state.r1Ohm);
+        if (sliderR2) sliderR2.value = String(state.r2Ohm);
+      }
+
+      updateUI();
+    }
+
+    // Wire Event Listeners
+    // Switch click
+    const toggleSwitch = () => {
+      state.switchClosed = !state.switchClosed;
+      updateUI();
+    };
+    switchBtn?.addEventListener("click", toggleSwitch);
+    paramSwitchBtn?.addEventListener("click", toggleSwitch);
+
+    // Click directly on canvas key hotspot
+    canvas.addEventListener("click", (evt) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const clickX = (evt.clientX - rect.left) * scaleX;
+      const clickY = (evt.clientY - rect.top) * scaleY;
+
+      // Switch hotspot around (320, 420)
+      if (clickX >= 270 && clickX <= 370 && clickY >= 380 && clickY <= 460) {
+        toggleSwitch();
+      }
+      // Bulb hotspot around (780, 275)
+      if (clickX >= 730 && clickX <= 830 && clickY >= 230 && clickY <= 320) {
+        toggleSwitch();
+      }
+    });
+
+    // Topology toggles
+    topoBtn?.addEventListener("click", () => {
+      state.topology = state.topology === "series" ? "parallel" : "series";
+      updateUI();
+    });
+    root.querySelectorAll<HTMLButtonElement>("[data-set-topo]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const t = btn.dataset.setTopo;
+        if (t === "series" || t === "parallel") {
+          state.topology = t;
+          updateUI();
+        }
+      });
+    });
+
+    // View mode buttons (Schematic vs Graph)
+    root.querySelectorAll<HTMLButtonElement>("[data-view-mode]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        root.querySelectorAll<HTMLButtonElement>("[data-view-mode]").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.viewMode = btn.dataset.viewMode === "graph" ? "graph" : "schematic";
+      });
+    });
+
+    // Sliders
+    sliderV?.addEventListener("input", (e) => {
+      state.voltageV = parseFloat((e.target as HTMLInputElement).value);
+      updateUI();
+    });
+    sliderR1?.addEventListener("input", (e) => {
+      state.r1Ohm = parseFloat((e.target as HTMLInputElement).value);
+      updateUI();
+    });
+    sliderR2?.addEventListener("input", (e) => {
+      state.r2Ohm = parseFloat((e.target as HTMLInputElement).value);
+      updateUI();
+    });
+
+    // Wire factor presets
+    root.querySelectorAll<HTMLButtonElement>("[data-wire-factor]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        root.querySelectorAll<HTMLButtonElement>("[data-wire-factor]").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.wireFactor = parseFloat(btn.dataset.wireFactor || "1");
+        if (valWire) {
+          valWire.textContent =
+            state.wireFactor === 1
+              ? "1x (Standard)"
+              : state.wireFactor === 2
+                ? "Stretched 2x (4R)"
+                : "Thick 2A (R/2)";
+        }
+        updateUI();
+      });
+    });
+
+    // Step dots click
+    root.querySelectorAll<HTMLButtonElement>("[data-step-index]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const idx = parseInt(btn.dataset.stepIndex || "0", 10);
+        applyStep(idx);
+      });
+    });
+
+    // Play/Pause button
+    playBtn?.addEventListener("click", () => {
+      state.isAutoPlaying = !state.isAutoPlaying;
+      if (statusPill) {
+        statusPill.classList.toggle("auto", state.isAutoPlaying);
+        statusPill.classList.toggle("paused", !state.isAutoPlaying);
+      }
+      if (statusText) {
+        statusText.textContent = state.isAutoPlaying ? "Auto-Playing" : "Paused";
+      }
+      if (playBtn) {
+        playBtn.textContent = state.isAutoPlaying ? "⏸ Pause" : "▶ Play";
+      }
+    });
+
+    // Restart button
+    root.querySelector<HTMLButtonElement>('[data-action="restart"]')?.addEventListener("click", () => {
+      applyStep(0);
+    });
+
+    // Speed selector
+    root.querySelector<HTMLSelectElement>('[data-action="speed"]')?.addEventListener("change", (e) => {
+      state.playbackSpeed = parseFloat((e.target as HTMLSelectElement).value) || 1.0;
+    });
+
+    // Reset Circuit button
+    root.querySelector<HTMLButtonElement>('[data-action="reset-circuit"]')?.addEventListener("click", () => {
+      state.voltageV = 12;
+      state.r1Ohm = 4;
+      state.r2Ohm = 6;
+      state.wireFactor = 1.0;
+      state.topology = "series";
+      state.switchClosed = true;
+      state.viewMode = "schematic";
+
+      if (sliderV) sliderV.value = "12";
+      if (sliderR1) sliderR1.value = "4";
+      if (sliderR2) sliderR2.value = "6";
+      root.querySelectorAll<HTMLButtonElement>("[data-view-mode]").forEach((b) => {
+        b.classList.toggle("active", b.dataset.viewMode === "schematic");
+      });
+      applyStep(0);
+      updateUI();
+    });
+
+    // Initialize and start animation loop
+    updateUI();
+    rafId = requestAnimationFrame(frame);
+
+    // Cleanup when leaving
+    const cleanup = () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    };
+    window.addEventListener("pagehide", cleanup, { once: true });
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initElectricity2DViewer);
+  } else {
+    initElectricity2DViewer();
+  }
+</script>
+
+<style>
+  .p3d-shell {
+    max-width: 1720px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+  }
+  @media (min-width: 1536px) {
+    .p3d-shell {
+      max-width: 1820px;
+      padding: 1.25rem 2rem;
+    }
+  }
+
+  /* Horizontal Quick Labs Bar */
+  .p3d-quick-labs-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .p3d-quick-labs-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .p3d-quick-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #475569;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .p3d-quick-pills {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: nowrap;
+  }
+  .p3d-quick-pill {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  .p3d-quick-pill:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+  }
+  .p3d-quick-pill.current {
+    background: #1a73e8;
+    border-color: #1a73e8;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.25);
+  }
+
+  .p3d-workspace-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  @media (min-width: 1536px) {
+    .p3d-workspace-grid {
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 1.5rem;
+    }
+  }
+
+  .p3d-col-side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .p3d-stage-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+  }
+
+  /* 2D Stage Toolbar */
+  .el2d-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 0.95rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .el2d-view-modes {
+    display: flex;
+    gap: 0.35rem;
+  }
+  .el2d-tool-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .el2d-tool-btn:hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+  }
+  .el2d-tool-btn.active {
+    background: #1a73e8;
+    color: #ffffff;
+    border-color: #1a73e8;
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.25);
+  }
+
+  .el2d-quick-toggles {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .el2d-switch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1.5px solid #10b981;
+    background: #ecfdf5;
+    color: #065f46;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .el2d-switch-btn.off {
+    border-color: #ef4444;
+    background: #fef2f2;
+    color: #b91c1c;
+  }
+  .el2d-topo-btn {
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* 2D Canvas Wrap */
+  .el2d-canvas-wrap {
+    position: relative;
+    width: 100%;
+    background: #f8fafd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .el2d-canvas {
+    width: 100%;
+    height: auto;
+    max-height: 560px;
+    display: block;
+    cursor: pointer;
+  }
+  @media (min-width: 1536px) {
+    .el2d-canvas {
+      max-height: 620px;
+    }
+  }
+  .el2d-hint-badge {
+    position: absolute;
+    bottom: 0.65rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.75);
+    color: #ffffff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+  }
+
+  .p3d-bottom-controls {
+    padding: 0.75rem 0.9rem;
+    background: #f8fafd;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  /* Step Banner */
+  .p3d-now-playing-banner {
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+    padding: 0.7rem 0.85rem;
+    margin-bottom: 0.65rem;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .p3d-np-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .p3d-np-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .p3d-np-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    white-space: nowrap;
+  }
+  .p3d-np-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+  }
+  .p3d-np-status.auto {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+  .p3d-np-status.paused {
+    background: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+  .p3d-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    display: inline-block;
+  }
+  .p3d-np-status.auto .p3d-status-dot {
+    animation: p3d-pulse 1.8s infinite;
+  }
+  @keyframes p3d-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.85); }
+  }
+  .p3d-np-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .p3d-np-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 0;
+  }
+  .p3d-np-dot:hover {
+    border-color: #1a73e8;
+    color: #1a73e8;
+    background: #eff6ff;
+  }
+  .p3d-np-dot.active {
+    background: #1a73e8;
+    color: #ffffff;
+    border-color: #1a73e8;
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
+  }
+  .p3d-np-progress-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .p3d-np-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+    border-radius: 999px;
+    transition: width 0.08s linear;
+  }
+  .p3d-np-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .p3d-np-title {
+    font-size: 0.85rem;
+    color: #0f172a;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .p3d-np-desc {
+    margin: 0;
+    font-size: 0.76rem;
+    color: #475569;
+    line-height: 1.42;
+  }
+
+  /* Side Panels */
+  .p3d-panel-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 0.95rem;
+  }
+  .el2d-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  .el2d-card-header h3,
+  .p3d-panel-card h3 {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #0f172a;
+  }
+  .el2d-reset-btn {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    cursor: pointer;
+  }
+  .el2d-reset-btn:hover {
+    background: #e2e8f0;
+  }
+
+  .el2d-controls-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .el2d-control-row label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 0.3rem;
+  }
+  .el2d-btn-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: 8px;
+    border: 1.5px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .el2d-btn-toggle .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #94a3b8;
+  }
+  .el2d-btn-toggle.active {
+    background: #ecfdf5;
+    border-color: #10b981;
+    color: #065f46;
+  }
+  .el2d-btn-toggle.active .dot {
+    background: #10b981;
+  }
+
+  .el2d-segmented-pill {
+    display: flex;
+    background: #f1f5f9;
+    padding: 0.2rem;
+    border-radius: 8px;
+    gap: 0.2rem;
+  }
+  .seg-btn {
+    flex: 1;
+    padding: 0.35rem 0.5rem;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .seg-btn.active {
+    background: #ffffff;
+    color: #1d4ed8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .el2d-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: #334155;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .val-badge {
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 0.1rem 0.45rem;
+    border-radius: 6px;
+    font-size: 0.76rem;
+    font-weight: 700;
+  }
+  .val-badge.amber {
+    background: #fef3c7;
+    color: #b45309;
+  }
+  .val-badge.blue {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+  .val-badge.green {
+    background: #dcfce7;
+    color: #15803d;
+  }
+  .el2d-slider {
+    width: 100%;
+    accent-color: #1a73e8;
+    cursor: pointer;
+  }
+
+  .el2d-wire-presets {
+    display: flex;
+    gap: 0.3rem;
+  }
+  .wire-preset-btn {
+    flex: 1;
+    font-size: 0.72rem;
+    padding: 0.3rem 0.4rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .wire-preset-btn.active {
+    background: #dcfce7;
+    border-color: #86efac;
+    color: #166534;
+  }
+
+  /* Metrics Grid */
+  .p3d-sim-summary {
+    font-size: 0.82rem;
+    color: #1e40af;
+    background: #eff6ff;
+    padding: 0.4rem 0.65rem;
+    border-radius: 8px;
+    margin: 0.5rem 0 0.75rem;
+    font-weight: 600;
+  }
+  .p3d-metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    margin-bottom: 0.75rem;
+  }
+  .p3d-metric-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.4rem 0.55rem;
+  }
+  .p3d-metric-box dt {
+    font-size: 0.68rem;
+    color: #64748b;
+    margin: 0;
+  }
+  .p3d-metric-box dd {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0.15rem 0 0;
+  }
+  .p3d-observations-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.76rem;
+    color: #475569;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 1100px) {
+    .p3d-workspace-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
