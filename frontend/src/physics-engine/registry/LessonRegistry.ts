@@ -18,6 +18,7 @@ import { controlCoordinationLesson } from "../../data/biology/control-and-coordi
 import { reproductionLesson } from "../../data/biology/reproduction";
 import { heredityLesson } from "../../data/biology/heredity";
 import { ourEnvironmentLesson } from "../../data/biology/our-environment";
+import { mathsLessons } from "../../data/maths/all-maths-lessons";
 
 const physicsLessons: PhysicsLessonConfig[] = [
   humanEyeLesson,
@@ -48,7 +49,7 @@ const biologyLessons: PhysicsLessonConfig[] = [
 ];
 
 const lessons = new Map<string, PhysicsLessonConfig>(
-  [...physicsLessons, ...chemistryLessons, ...biologyLessons].map((l) => [l.id, l])
+  [...physicsLessons, ...chemistryLessons, ...biologyLessons, ...mathsLessons].map((l) => [l.id, l])
 );
 
 export function getPhysicsLesson(id: string): PhysicsLessonConfig | undefined {
@@ -67,9 +68,14 @@ export function getAllBiologyLessons(): PhysicsLessonConfig[] {
   return biologyLessons;
 }
 
+export function getAllMathsLessons(): PhysicsLessonConfig[] {
+  return mathsLessons;
+}
+
 export function getLessonsBySubject(subject: string): PhysicsLessonConfig[] {
   const s = subject.toLowerCase();
   if (s === "chemistry") return chemistryLessons;
   if (s === "biology") return biologyLessons;
+  if (s === "mathematics" || s === "maths") return mathsLessons;
   return physicsLessons;
 }

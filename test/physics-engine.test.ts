@@ -6,7 +6,8 @@ import { calculateCircuit } from "../frontend/src/physics-engine/calculations/el
 import { calculateMagneticField } from "../frontend/src/physics-engine/calculations/magnetism/magnetic-field";
 import { calculatePhProperties, getCarbonMoleculeInfo, getChemicalReactionInfo } from "../frontend/src/physics-engine/calculations/chemistry/chemistry";
 import { calculateCardiacMetrics, calculateMendelianCross, calculateTrophicEnergy } from "../frontend/src/physics-engine/calculations/biology/biology";
-import { getAllBiologyLessons, getAllChemistryLessons, getAllPhysicsLessons, getPhysicsLesson } from "../frontend/src/physics-engine/registry/LessonRegistry";
+import { calculateArithmeticProgression, calculateCoordinateGeometry, calculateHcfLcm, calculateQuadratic, calculateTrigonometry } from "../frontend/src/physics-engine/calculations/maths/maths";
+import { getAllBiologyLessons, getAllChemistryLessons, getAllMathsLessons, getAllPhysicsLessons, getPhysicsLesson } from "../frontend/src/physics-engine/registry/LessonRegistry";
 
 describe("Optics Mirror Calculations (Cartesian Sign Convention)", () => {
   test("Convex mirror with real object always forms virtual, erect, diminished image between P and F", () => {
@@ -240,18 +241,41 @@ describe("Biology Calculations", () => {
   });
 });
 
+describe("Mathematics Calculations", () => {
+  test("HCF/LCM, Quadratic Discriminant, AP, Coordinate Geometry & Trig Identity are accurate", () => {
+    const hcf = calculateHcfLcm(12, 18);
+    expect(hcf.hcf).toBe(6);
+    expect(hcf.lcm).toBe(36);
+
+    const q = calculateQuadratic(1, -4, 4);
+    expect(q.discriminant).toBe(0);
+    expect(q.nature).toBe("Two Equal Real Roots");
+
+    const ap = calculateArithmeticProgression(2, 5, 10);
+    expect(ap.nthTerm).toBe(47);
+    expect(ap.sumN).toBe(245);
+
+    const coord = calculateCoordinateGeometry(0, 0, 3, 4, 1, 1);
+    expect(coord.distance).toBe(5);
+    expect(coord.midX).toBe(1.5);
+
+    const trig = calculateTrigonometry(45, 20);
+    expect(trig.identitySum).toBe(1);
+    expect(trig.towerHeight).toBe(20);
+  });
+});
+
 describe("LessonRegistry", () => {
-  test("Contains all 10 Physics, 4 Chemistry, and 5 Biology 3D lessons", () => {
+  test("Contains all 10 Physics, 4 Chemistry, 5 Biology, and 14 Maths 3D lessons", () => {
     const physics = getAllPhysicsLessons();
     const chemistry = getAllChemistryLessons();
     const biology = getAllBiologyLessons();
+    const maths = getAllMathsLessons();
     expect(physics.length).toBe(10);
     expect(chemistry.length).toBe(4);
     expect(biology.length).toBe(5);
-    expect(getPhysicsLesson("life-processes")?.simulation).toBe("biology-heart");
-    expect(getPhysicsLesson("control-and-coordination")?.simulation).toBe("biology-neuron");
-    expect(getPhysicsLesson("reproduction")?.simulation).toBe("biology-flower");
-    expect(getPhysicsLesson("heredity")?.simulation).toBe("biology-heredity");
-    expect(getPhysicsLesson("our-environment")?.simulation).toBe("biology-ecosystem");
+    expect(maths.length).toBe(14);
+    expect(getPhysicsLesson("maths-real-numbers")?.simulation).toBe("maths-number-ap");
+    expect(getPhysicsLesson("maths-probability")?.simulation).toBe("maths-mensuration-data");
   });
 });

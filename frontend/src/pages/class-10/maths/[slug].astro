@@ -1,0 +1,28 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import PhysicsViewer from "../../../components/physics3d/PhysicsViewer.astro";
+import { getAllMathsLessons } from "../../../physics-engine/registry/LessonRegistry";
+import type { PhysicsLessonConfig } from "../../../physics-engine/types/lesson";
+
+export function getStaticPaths() {
+  return getAllMathsLessons().map((lesson) => {
+    const slug = lesson.slug.replace(/^\/class-10\/maths\//, "").replace(/\/$/, "");
+    return {
+      params: { slug },
+      props: { lesson },
+    };
+  });
+}
+
+interface Props {
+  lesson: PhysicsLessonConfig;
+}
+const { lesson } = Astro.props;
+---
+
+<Layout
+  title={`${lesson.title} | Class 10 3D Maths | BoardWallah`}
+  description={lesson.subtitle}
+>
+  <PhysicsViewer lesson={lesson} />
+</Layout>

@@ -12,13 +12,17 @@ const labHref =
     ? "/class-10/science/chemistry/"
     : subjectKey === "biology"
       ? "/class-10/science/biology/"
-      : "/class-10/science/physics/";
+      : subjectKey === "mathematics" || subjectKey === "maths"
+        ? "/class-10/maths/"
+        : "/class-10/science/physics/";
 const labLabel =
   subjectKey === "chemistry"
     ? "3D Chemistry Lab"
     : subjectKey === "biology"
       ? "3D Biology Lab"
-      : "3D Physics Lab";
+      : subjectKey === "mathematics" || subjectKey === "maths"
+        ? "3D Maths Lab"
+        : "3D Physics Lab";
 ---
 
 <header class="p3d-lesson-header">
